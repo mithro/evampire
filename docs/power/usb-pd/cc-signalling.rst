@@ -510,3 +510,184 @@ in the cable's ground wire at full current (*vIRDropGNDC*,
 seen at the source moves up ([USBPD-BMCRX]_, Section 2). The receive masks
 allow for this shift.
 
+.. _usbpd-receiver:
+
+The receiver must accept the receive masks
+------------------------------------------
+
+The :ref:`PD specification <usb-pd-specification>` does not fix the
+receiver's switching levels. It gives *receive masks*: regions that the
+received signal, after filtering, noise and ground offset, stays out of
+(:pd:`Section 5.3.4.2`, :pd:`Figures 5.14 <Figure 5.14>` to
+:pd:`5.19 <Figure 5.19>`, :pd:`Table 5.8`). A receiver must decode any
+signal that stays out of them (:numref:`fig-usbpd-rx-mask`).
+
+.. figure:: rx-mask.svg
+   :name: fig-usbpd-rx-mask
+   :alt: Three plots of voltage against time over one bit, for a port
+         sinking power, a port neither sinking nor sourcing, and a port
+         sourcing power. Each has grey keep-out bands below -0.3325 V and
+         above 1.5325 V, and two inner keep-out regions from 0.07 UI to
+         0.43 UI and from 0.57 UI to 0.93 UI, centred at 0.4375 V,
+         0.5625 V and 0.6875 V.
+   :width: 100%
+
+   The BMC receive masks for a 1, which move with the port's power role.
+
+The mask for a ``0`` is the same with the two inner regions joined into one,
+from 0.07 UI to 0.93 UI. In time, the eye opens at 0.07 UI after each ideal
+edge, so a receiver must accept edges up to 0.07 UI from their ideal time,
+233 ns at 300 kbit/s. In level, the centre of the eye moves by 125 mV, half
+of *vIRDropGNDC*, with the port's power role (:numref:`tab-usbpd-rx-eye`).
+
+.. list-table:: Inner receive mask levels (:pd:`Table 5.8`)
+   :name: tab-usbpd-rx-eye
+   :header-rows: 1
+   :widths: 34 22 22 22
+
+   * - Port
+     - Lower edge (V)
+     - Centre (V)
+     - Upper edge (V)
+   * - Sinking power
+     - 0.2325
+     - 0.4375
+     - 0.6425
+   * - Neither
+     - 0.2325
+     - 0.5625
+     - 0.8925
+   * - Sourcing power
+     - 0.4825
+     - 0.6875
+     - 0.8925
+
+The sink and source eyes overlap only from 0.4825 V to 0.6425 V. A receiver
+with fixed switching levels either places both levels in this 160 mV band
+or changes its levels with the port's power role, as the example below
+does. :numref:`tab-usbpd-rx` lists the other
+receiver limits.
+
+.. list-table:: BMC receiver limits (:pd:`Table 5.11`)
+   :name: tab-usbpd-rx
+   :header-rows: 1
+   :widths: 40 20 20 20
+
+   * - Parameter
+     - Min
+     - Max
+     - Unit
+   * - tRxFilter
+     - 100
+     - none
+     - ns
+   * - vNoiseActive
+     - none
+     - 165
+     - mV
+   * - vNoiseIdle
+     - none
+     - 300
+     - mV
+   * - vIRDropGNDC
+     - none
+     - 250
+     - mV
+   * - cReceiver
+     - 200
+     - 600
+     - pF
+   * - rBmcRx
+     - 1
+     - none
+     - MΩ
+   * - nTransitionCount
+     - 3
+     - none
+     - edges
+   * - tTransitionWindow
+     - 12
+     - 20
+     - µs
+
+*tRxFilter*
+   Time constant of the input filter.
+*vNoiseActive*
+   Noise while a packet is sent, peak to peak.
+*vNoiseIdle*
+   Noise while the line is idle, peak to peak.
+*vIRDropGNDC*
+   Ground offset from cable current.
+*cReceiver*
+   CC capacitance while not sending.
+*rBmcRx*
+   Input resistance, Rp and Rd excluded.
+*nTransitionCount*
+   Edges that mark the line busy.
+*tTransitionWindow*
+   Time window in which *nTransitionCount* edges mark the line busy.
+
+The noise limits apply after the input filter, and come from *VBUS*, the
+USB 2.0 data pair and the :term:`SBU` wires. A receiver must treat any
+signal smaller than *vNoiseIdle* on an idle line as noise
+(:pd:`Section 5.3.4.2`, item 5).
+
+A filter and a comparator with hysteresis is one common receiver
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The specification requires a single-pole :wikipedia:`low-pass filter
+<Low-pass_filter>` with a time constant of at least 100 ns in front of the
+receiver's decision, analogue or digital (*tRxFilter*, :pd:`Table 5.11`).
+One common design follows it with a :term:`comparator` with
+:wikipedia:`hysteresis <Hysteresis>`, whose two switching levels sit inside
+the receive eye for the port's present role.
+
+For reference, the TI TPS65987D dual-role controller takes its switching
+levels and hysteresis from the receive masks ([USBPD-TPS65987D]_,
+Section 8.3.1.5). As a sink it switches at 525 mV rising and 250 mV falling,
+and as a source at 875 mV rising and 600 mV falling (typical values,
+[USBPD-TPS65987D]_, Section 6.9). Both pairs sit inside the eye for their
+role, and the hysteresis of 275 mV is larger than the 165 mV of
+*vNoiseActive*.
+
+Edge-detecting receivers ignore the ground offset
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The USB Implementers Forum publishes two receiver designs that detect edges
+instead of levels, and so need no change of levels with the power role
+([USBPD-BMCRX]_, Section 2). They are informative examples, not
+requirements ([USBPD-BMCRX]_, Section 1):
+
+* the *finite difference* receiver samples the filtered signal every
+  50 ns and subtracts the sample taken 300 ns to 500 ns earlier. An edge
+  gives a large difference of one sign or the other ([USBPD-BMCRX]_,
+  Sections 3.1 and 3.2);
+* the *subtraction* receiver subtracts the outputs of two low-pass filters
+  with time constants of 200 ns and 300 ns, which gives a similar result
+  ([USBPD-BMCRX]_, Sections 4.1 and 4.2).
+
+Both use thresholds of about ±0.2 V on the difference
+([USBPD-BMCRX]_, Section 3.3).
+
+A transmitter waits for an idle line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The receiver also tells the transmitter when the line is free. The line is
+busy when *nTransitionCount* edges arrive within *tTransitionWindow*, and
+idle after *tTransitionWindow* without them (:pd:`Section 5.2.2.1`). A
+transmitter checks that the line is idle immediately before it starts
+(:pd:`Section 5.2.2`, item 5), and then waits *tInterFrameGap* before the
+preamble (:pd:`Section 5.3.4.9`, item 2).
+
+Open questions
+--------------
+
+* How a compliance test places the transmit mask in time, and so whether
+  the ±0.015 UI edge window derived from the mask coordinates
+  (:ref:`usbpd-edge-placement`) applies to each edge against an ideal bit
+  grid. Measuring a transmitter against the mask would settle the ±50 ns
+  target.
+* Whether the RC edge model holds for evampire's BMC driver, and which edge
+  time it gives with the load model of :pd:`Section 5.3.4.3` at every
+  *vSwing*. A :term:`gf180mcu` simulation of the driver would establish the range
+  in :numref:`tab-usbpd-edge-range`.
