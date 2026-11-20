@@ -93,8 +93,8 @@ output, 250 kHz and 100 µH are illustrative values. Then
 
 .. math::
 
-   D = 1 - \frac{20}{54} = 0.630,
-   \qquad
+   D = 1 - \frac{20}{54} = 0.630
+
    I_\text{in} = \frac{P_\text{out}}{V_\text{in}} = \frac{30}{20} = 1.5 \ \text{A}
 
 .. math::

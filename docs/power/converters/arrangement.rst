@@ -335,8 +335,8 @@ is a third choice where the input is slightly above the output:
 
 .. math::
 
-   \eta_\text{lin} = \frac{V_\text{out}}{V_\text{in}} = \frac{52}{54} = 0.963,
-   \qquad
+   \eta_\text{lin} = \frac{V_\text{out}}{V_\text{in}} = \frac{52}{54} = 0.963
+
    P_\text{loss} = (54 - 52) \times 1.731 = 3.46 \ \text{W}
 
 (:doc:`why-switching`), while from 57 V to 44 V the same current would lose

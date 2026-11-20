@@ -229,10 +229,10 @@ documented linear current of the 10 V LDNMOS, 26.8 µA/µm at 6 V gate and
 
 .. math::
 
-   R_\text{on} \, W = \frac{V_\text{ds}}{I_\text{dlin}}
-                   = \frac{0.1}{26.8 \times 10^{-6}}
-                   = 3730 \ \Omega \, \mu\text{m}
-                   = 3.73 \ \Omega \, \text{mm}
+   R_\text{on} \, W &= \frac{V_\text{ds}}{I_\text{dlin}}
+                     = \frac{0.1}{26.8 \times 10^{-6}} \\
+                   &= 3730 \ \Omega \, \mu\text{m} \\
+                   &= 3.73 \ \Omega \, \text{mm}
 
 with the symbols in :numref:`tab-conv-sym-ron`. A 100 mΩ switch needs
 :math:`W = 3.73 / 0.1 = 37.3` mm of gate width. Its area is

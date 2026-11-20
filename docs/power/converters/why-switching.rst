@@ -21,10 +21,10 @@ of the input power that reaches the load, are
 
 .. math::
 
-   P_\text{loss} = (V_\text{in} - V_\text{out}) \, I_\text{out},
-   \qquad
-   \eta_\text{lin} = \frac{V_\text{out} \, I_\text{out}}{V_\text{in} \, I_\text{out}}
-                   = \frac{V_\text{out}}{V_\text{in}}
+   P_\text{loss} = (V_\text{in} - V_\text{out}) \, I_\text{out}
+
+   \eta_\text{lin} &= \frac{V_\text{out} \, I_\text{out}}{V_\text{in} \, I_\text{out}} \\
+                   &= \frac{V_\text{out}}{V_\text{in}}
 
 with the symbols in :numref:`tab-conv-sym-linear`. The regulator's own
 supply current is neglected, so the result is the best case.
@@ -133,9 +133,10 @@ These are illustrations from other designs, not evampire values.
 
 .. math::
 
-   P_\text{in} = \frac{P_\text{out}}{\eta}, \qquad
-   P_\text{loss} = P_\text{in} - P_\text{out}
-                 = P_\text{out} \left( \frac{1}{\eta} - 1 \right)
+   P_\text{in} = \frac{P_\text{out}}{\eta}
+
+   P_\text{loss} &= P_\text{in} - P_\text{out} \\
+                 &= P_\text{out} \left( \frac{1}{\eta} - 1 \right)
 
 with the symbols in :numref:`tab-conv-sym-switching`.
 

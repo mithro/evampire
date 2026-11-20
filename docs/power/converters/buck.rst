@@ -161,8 +161,9 @@ current is :math:`I_\text{out} = 25.5 / 12 = 2.125` A and
 
 .. math::
 
-   \Delta I_L = \frac{(48 - 12) \times 0.25}{47 \times 10^{-6} \times 250 \times 10^{3}}
-              = \frac{9}{11.75} = 0.766 \ \text{A}
+   \Delta I_L &= \frac{(48 - 12) \times 0.25}
+                      {47 \times 10^{-6} \times 250 \times 10^{3}} \\
+              &= \frac{9}{11.75} = 0.766 \ \text{A}
 
 The ripple is 36 % of the load current; designers commonly choose 20 % to
 40 % [CONV-SLVA477]_ (Equation 6). The inductor current swings between
@@ -180,9 +181,9 @@ the output voltage ripple is
 
 .. math::
 
-   \Delta V_\text{out} = \frac{\Delta I_L}{8 \, f_\text{sw} \, C}
-     = \frac{0.766}{8 \times 250 \times 10^{3} \times 22 \times 10^{-6}}
-     = 17.4 \ \text{mV}
+   \Delta V_\text{out} &= \frac{\Delta I_L}{8 \, f_\text{sw} \, C} \\
+     &= \frac{0.766}{8 \times 250 \times 10^{3} \times 22 \times 10^{-6}} \\
+     &= 17.4 \ \text{mV}
 
 for an illustrative 22 µF capacitor; this is [CONV-SLVA477]_ (Equation 12)
 solved for the ripple. A real
@@ -223,13 +224,13 @@ an illustrative 20 mΩ transistor:
 
 .. math::
 
-   P_\text{diode} = V_f \, I_\text{out} \, (1 - D)
-                  = 0.5 \times 2.125 \times 0.75 = 0.797 \ \text{W}
+   P_\text{diode} &= V_f \, I_\text{out} \, (1 - D) \\
+                  &= 0.5 \times 2.125 \times 0.75 = 0.797 \ \text{W}
 
 .. math::
 
-   P_\text{S2} = R_\text{on} \, I_\text{out}^2 \, (1 - D)
-               = 0.020 \times 2.125^2 \times 0.75 = 0.068 \ \text{W}
+   P_\text{S2} &= R_\text{on} \, I_\text{out}^2 \, (1 - D) \\
+               &= 0.020 \times 2.125^2 \times 0.75 = 0.068 \ \text{W}
 
 where :math:`V_f` is the diode forward voltage in V and :math:`R_\text{on}`
 the on-resistance of S2 in Ω (:numref:`tab-conv-sym-buck-loss`); ripple is

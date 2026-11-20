@@ -219,8 +219,8 @@ ratio :math:`N_p / N_s`,
 
 .. math::
 
-   \frac{V_\text{out}}{V_\text{in}} = \frac{N_s}{N_p} \, \frac{D}{1 - D},
-   \qquad
+   \frac{V_\text{out}}{V_\text{in}} = \frac{N_s}{N_p} \, \frac{D}{1 - D}
+
    V_\text{stress} = V_\text{in} + \frac{N_p}{N_s} \, V_\text{out}
 
 (symbols in :numref:`tab-conv-sym-bb`), where the stress neglects the extra
