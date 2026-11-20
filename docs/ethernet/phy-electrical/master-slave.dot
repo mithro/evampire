@@ -1,0 +1,32 @@
+// Master and slave clocking in 1000BASE-T. The master transmits on its own
+// crystal clock. The slave recovers that clock from the received signal and
+// transmits on it, so both directions of the link run at the same symbol
+// rate.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph masterslave {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.6"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.4, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7, penwidth=1.5];
+
+    g_m [pos="1.3,1.25!", width=2.4, height=2.4, label="Master", labelloc=t,
+         style="rounded", color="#548235", fillcolor="none", fontsize=12];
+    g_s [pos="6.1,1.25!", width=2.4, height=2.4, label="Slave", labelloc=t,
+         style="rounded", color="#548235", fillcolor="none", fontsize=12];
+
+    mx   [pos="0.75,0.55!", width=0.9, label="Crystal", fillcolor="#e2efda"];
+    mtx  [pos="1.75,1.65!", width=1.1, label="Transmit", fillcolor="#fbe5d6"];
+    mrx  [pos="1.75,0.55!", width=1.1, label="Receive", fillcolor="#fbe5d6"];
+    srec [pos="5.6,1.65!", width=1.4, label="Receive and\nclock recovery",
+          fillcolor="#fbe5d6"];
+    stx  [pos="5.75,0.55!", width=1.1, label="Transmit", fillcolor="#fbe5d6"];
+
+    mx   -> mtx  [style=dotted, xlabel="125 MHz"];
+    mtx  -> srec [penwidth=2.5, label="symbols at master's rate"];
+    srec -> stx  [style=dotted, xlabel="recovered\nclock"];
+    stx  -> mrx  [penwidth=2.5, label="symbols at the same rate"];
+}
