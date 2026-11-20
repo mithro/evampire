@@ -256,6 +256,16 @@ Voltage converters
      drivers, and then the power transistors, onto evampire is explored in
      later versions.
 
+USB serial port
+   * Each USB Type-C port can also carry a
+     :wikipedia:`USB 2.0 <USB_2.0>` full-speed (12 Mbit/s) data connection on
+     its D+ and D− wires, through which the RISC-V processor appears to a
+     computer as a :wikipedia:`USB serial port <USB_communications_device_class>`.
+   * The USB data protocol is implemented mostly in software on the
+     processor, with built-in hardware assistance only where the timing of
+     USB cannot be met in software. How the work is split between hardware
+     and software is analysed in :doc:`usb-serial`.
+
 Process
    * The chip targets the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
      process through `wafer.space <https://wafer.space/>`_.

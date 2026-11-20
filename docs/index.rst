@@ -25,4 +25,5 @@ standards.
    architecture/index
    ethernet/index
    power/index
+   usb-serial
    standards
