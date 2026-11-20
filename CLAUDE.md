@@ -148,8 +148,8 @@ publish copies of them, or quote from them at length.
 - **Sources:** cite IEEE 802.3-2022 directly, at the claim, using the roles.
   Datasheets and earlier designs are reference examples, not evidence.
 - **Negative claims:** "can't be done" needs a documented physical limit,
-  with the arithmetic. Leave positive claims light, since building it
-  validates it. Don't assume gf180mcu limits: custom transistors,
+  with the arithmetic. Leave positive claims light, since building the
+  design validates them. Don't assume gf180mcu limits: custom transistors,
   non-standard logic cells and parasitic bipolar transistors are in scope.
 - **Alternatives:** always cover them, including approaches others discarded,
   and say why they were discarded.
