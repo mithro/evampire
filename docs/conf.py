@@ -76,6 +76,11 @@ linkcheck_ignore = [
     # AIP Publishing answers 403 to automated clients; its DOIs redirect there.
     r"https://doi\.org/10\.1063/.*",
     r"https://pubs\.aip\.org/.*",
+    # Wiley and IOP Publishing also answer 403 to automated clients.
+    r"https://doi\.org/10\.1049/.*",
+    r"https://ietresearch\.onlinelibrary\.wiley\.com/.*",
+    r"https://doi\.org/10\.1088/.*",
+    r"https://iopscience\.iop\.org/.*",
 ]
 
 myst_enable_extensions = [
