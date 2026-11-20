@@ -34,10 +34,10 @@ The job of the transceiver
 A typical gigabit transceiver supports three speeds, each defined by its own
 part of the IEEE 802.3 Ethernet standard [PHY-8023]_ (see :doc:`/standards`):
 
-* **1000BASE-T**: 1000 Mbit/s over all four twisted pairs of the cable
+* **1000BASE-T**: 1000 Mbit/s over all four twisted pairs of the cable
   (:clause:`40`).
-* **100BASE-TX**: 100 Mbit/s over two of the pairs (:clause:`Clauses 24 <24>` and :clause:`25`).
-* **10BASE-T**: 10 Mbit/s over two of the pairs (:clause:`14`).
+* **100BASE-TX**: 100 Mbit/s over two of the pairs (:clause:`Clauses 24 <24>` and :clause:`25`).
+* **10BASE-T**: 10 Mbit/s over two of the pairs (:clause:`14`).
 
 In the names, the number is the data rate in Mbit/s, "BASE" means the
 signal is sent directly as voltage levels rather than modulated onto a
@@ -69,28 +69,28 @@ Symbol
    distinct levels are allowed.
 
 Symbol rate (baud)
-   The number of symbols sent per second on one pair. 125 Mbaud means
-   125 million symbols per second, one every 8 ns.
+   The number of symbols sent per second on one pair. 125 Mbaud means
+   125 million symbols per second, one every 8 ns.
 
 Differential signal
    Each pair carries the voltage difference between its two wires. All
    amplitudes on this page are differential voltages across the cable's
-   100 Ω impedance.
+   100 Ω impedance.
 
 The cable
 ---------
 
 An Ethernet cable holds four pairs of copper wires. The two wires of each
 pair are twisted around each other, which makes the pair a balanced
-transmission line with a characteristic impedance of 100 Ω, and makes it
+transmission line with a characteristic impedance of 100 Ω, and makes it
 pick up and radiate much less interference than untwisted wires would.
 
-1000BASE-T is designed for up to 100 m of "Category 5" cable, a grade of
+1000BASE-T is designed for up to 100 m of "Category 5" cable, a grade of
 cable defined by the structured-cabling standards TIA/EIA-568-A and
-ISO/IEC 11801 whose performance is specified up to 100 MHz [PHY-HEALEY]_
+ISO/IEC 11801 whose performance is specified up to 100 MHz [PHY-HEALEY]_
 (see also `Category 5 cable <https://en.wikipedia.org/wiki/Category_5_cable>`__).
-That 100 m channel includes up to 90 m of fixed building cable plus up to
-10 m of flexible patch cords and up to four connectors. IEEE 802.3 sets the
+That 100 m channel includes up to 90 m of fixed building cable plus up to
+10 m of flexible patch cords and up to four connectors. IEEE 802.3 sets the
 requirements for this channel in its link segment characteristics,
 :clause:`40.7` [PHY-UNH40]_. The design target is fewer than one bit error
 in every :math:`10^{10}` bits [PHY-HEALEY]_.
@@ -102,7 +102,7 @@ Insertion loss (attenuation)
    The signal gets smaller as it travels. The loss grows with frequency
    because of the skin effect: at higher frequencies the current flows in a
    thinner layer at the surface of each conductor, so the resistance rises.
-   On a 100 m channel the loss reaches 24 dB at 100 MHz (calculated in
+   On a 100 m channel the loss reaches 24 dB at 100 MHz (calculated in
    :ref:`phy-channel-limits`).
    A pulse sent down the cable therefore arrives both smaller and spread
    out in time, so that each symbol overlaps the next few. This overlap is
@@ -152,8 +152,8 @@ multiplied by :math:`10^{-L/20}`.
 where:
 
 * :math:`L_\text{IL}` is the insertion loss, in dB;
-* :math:`f` is the frequency, in MHz (the formula applies from 1 MHz to
-  100 MHz);
+* :math:`f` is the frequency, in MHz (the formula applies from 1 MHz to
+  100 MHz);
 * 2.1, 0.529 and 0.4 are the constants of the limit line, from the
   802.3ab tutorial [PHY-TUT98]_.
 
@@ -175,7 +175,7 @@ arrives is
 
    10^{-18.7/20} = 10^{-0.935} = 0.116
 
-that is, about 12 % of the transmitted voltage reaches the far end at this
+that is, about 12 % of the transmitted voltage reaches the far end at this
 frequency.
 
 **Near-end crosstalk loss.** How much weaker the signal coupled from one
@@ -207,7 +207,7 @@ where 17 and 20 are the constants of the limit line [PHY-TUT98]_. At
 The same three calculations at other frequencies give
 :numref:`tab-phy-channel-limits`.
 
-.. list-table:: 1000BASE-T channel limits on a 100 m Category 5 channel
+.. list-table:: 1000BASE-T channel limits on a 100 m Category 5 channel
    (calculated from the formulas above)
    :name: tab-phy-channel-limits
    :header-rows: 1
@@ -218,26 +218,26 @@ The same three calculations at other frequencies give
      - Voltage that arrives, :math:`10^{-L_\text{IL}/20}`
      - :math:`L_\text{NEXT}` (at least)
      - :math:`L_\text{FEXT}` (at least)
-   * - 10 MHz
-     - 7.1 dB
-     - 44 %
-     - 43.9 dB
-     - 37.0 dB
-   * - 31.25 MHz
-     - 13.0 dB
-     - 22 %
-     - 35.6 dB
-     - 27.1 dB
-   * - 62.5 MHz
-     - 18.7 dB
-     - 12 %
-     - 30.5 dB
-     - 21.1 dB
-   * - 100 MHz
-     - 24.0 dB
-     - 6 %
-     - 27.1 dB
-     - 17.0 dB
+   * - 10 MHz
+     - 7.1 dB
+     - 44 %
+     - 43.9 dB
+     - 37.0 dB
+   * - 31.25 MHz
+     - 13.0 dB
+     - 22 %
+     - 35.6 dB
+     - 27.1 dB
+   * - 62.5 MHz
+     - 18.7 dB
+     - 12 %
+     - 30.5 dB
+     - 21.1 dB
+   * - 100 MHz
+     - 24.0 dB
+     - 6 %
+     - 27.1 dB
+     - 17.0 dB
 
 **What this means.** Both the wanted signal and the near-end crosstalk start
 from transmitters of the same size. The wanted signal is reduced by the
@@ -249,9 +249,9 @@ therefore
 
    M(f) = L_\text{NEXT}(f) - L_\text{IL}(f)
 
-At 62.5 MHz, :math:`M = 30.5 - 18.7 = 11.8` dB; at 100 MHz,
+At 62.5 MHz, :math:`M = 30.5 - 18.7 = 11.8` dB; at 100 MHz,
 :math:`M = 27.1 - 24.0 = 3.1` dB. Near-end crosstalk from just one
-neighbour is therefore within about 3 dB to 12 dB of the wanted signal in
+neighbour is therefore within about 3 dB to 12 dB of the wanted signal in
 the upper half of the band. There are three neighbouring pairs, and the
 transceiver's own transmission on the same pair (the echo) is larger
 still, so the receiver cannot work unless it removes these signals, using
@@ -273,13 +273,13 @@ Inside a gigabit transceiver
    :align: center
 
 :numref:`fig-phy-blocks` shows the main blocks of a 10/100/1000 transceiver
-working at 1000 Mbit/s. Each of the four pairs has its own copy of the
+working at 1000 Mbit/s. Each of the four pairs has its own copy of the
 blocks in the middle; the blocks at the bottom are shared. The blocks are:
 
 Byte interface
-   Receives one byte every 8 ns from the frame logic and sends received
-   bytes back the same way. In an external transceiver this is RGMII (4 bits
-   on each edge of a 125 MHz clock, see :doc:`rgmii`); in an integrated
+   Receives one byte every 8 ns from the frame logic and sends received
+   bytes back the same way. In an external transceiver this is RGMII (4 bits
+   on each edge of a 125 MHz clock, see :doc:`rgmii`); in an integrated
    transceiver it is a plain on-chip interface of one byte per clock cycle.
 
 Scrambler and trellis encoder
@@ -329,14 +329,14 @@ Trellis decoder and descrambler
    sequence to recover the original bytes.
 
 Clock synthesis and clock recovery
-   A phase-locked loop multiplies a 25 MHz reference, from a crystal or an
-   oscillator, up to the 125 MHz symbol clock and the other internal clocks.
+   A phase-locked loop multiplies a 25 MHz reference, from a crystal or an
+   oscillator, up to the 125 MHz symbol clock and the other internal clocks.
    A second loop adjusts the phase of the ADC sampling clock so that each
    sample is taken at the best point in the symbol. Common commercial parts
    such as the TI DP83867 [PHY-DP83867]_ and Microchip KSZ9031
-   [PHY-KSZ9031]_ both use a 25 MHz crystal,
-   and both can output a 125 MHz clock for other chips on the board (the
-   DP83867 can also output 25 MHz).
+   [PHY-KSZ9031]_ both use a 25 MHz crystal,
+   and both can output a 125 MHz clock for other chips on the board (the
+   DP83867 can also output 25 MHz).
 
 Autonegotiation
    Sends and receives the link pulses used to agree on a speed before data
@@ -353,7 +353,7 @@ Management registers
 1000BASE-T in detail
 --------------------
 
-Where 1000 Mbit/s comes from
+Where 1000 Mbit/s comes from
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1000BASE-T sends on all four pairs at the same time, in both directions at
@@ -382,21 +382,21 @@ Substituting:
 One symbol period lasts :math:`1 / (125 \times 10^{6}) = 8` ns, and in that
 time the four pairs together carry :math:`4 \times 2 = 8` bits, exactly one
 byte, in each direction. This is the same byte rate as the RGMII interface
-(see :doc:`rgmii`), which carries one byte per 8 ns cycle of its 125 MHz
+(see :doc:`rgmii`), which carries one byte per 8 ns cycle of its 125 MHz
 clock, so no rate conversion is needed between the two. The cable side and
 evampire's side still run on clocks from different crystals, so a small
 buffer absorbs the difference between them (see
 :ref:`rate-matching buffers <arch-rate-matching>`).
 
-The symbol rate of 125 Mbaud is the one 100BASE-TX (see `100BASE-TX`_ and
+The symbol rate of 125 Mbaud is the one 100BASE-TX (see `100BASE-TX`_ and
 :clause:`25`) had already shown to work over Category 5 cable. Together with
 the transmit shaping, it keeps the transmitted spectrum below about
-80 MHz [PHY-DIMINICO]_, inside the 100 MHz for which the cable is specified.
+80 MHz [PHY-DIMINICO]_, inside the 100 MHz for which the cable is specified.
 The fastest pattern a symbol stream can contain changes level every symbol
-and so repeats every two symbols: at 125 Mbaud that is a 62.5 MHz signal.
+and so repeats every two symbols: at 125 Mbaud that is a 62.5 MHz signal.
 This frequency, half the symbol rate, is called the *Nyquist frequency*; a
 channel that passes frequencies up to it can carry the symbols, which is
-why 62.5 MHz is used as the reference frequency on this page.
+why 62.5 MHz is used as the reference frequency on this page.
 
 .. _phy-pam5:
 
@@ -448,17 +448,17 @@ half the noise voltage. Expressed in decibels, a voltage ratio of 2 is
 
    20 \log_{10} 2 = 20 \times 0.301 = 6.0\ \text{dB}
 
-so PAM-5 needs about 6 dB more signal-to-noise ratio than three-level
+so PAM-5 needs about 6 dB more signal-to-noise ratio than three-level
 signalling for the same error rate. The 802.3ab tutorial [PHY-TUT98]_
-gives the same 6 dB figure, and the error-correcting code described in
+gives the same 6 dB figure, and the error-correcting code described in
 `The trellis code`_ was chosen to win back about that much.
 
 **Amplitudes.** IEEE 802.3 defines four *transmitter test modes*, fixed
 patterns a 1000BASE-T transmitter sends on command so that its output can
 be measured (:clause:`40.6.1.1.2`). In test mode 1 the peak differential
-output must be between 0.67 V and 0.82 V into a 100 Ω load
+output must be between 0.67 V and 0.82 V into a 100 Ω load
 (:clause:`40.6.1.2.1`) [PHY-UNH40]_. The TI DP83867 datasheet gives
-0.745 V as typical [PHY-DP83867]_. The 802.3ab tutorial [PHY-TUT98]_
+0.745 V as typical [PHY-DP83867]_. The 802.3ab tutorial [PHY-TUT98]_
 describes a transmit shaping filter that mixes each symbol with the
 previous one, which reduces the energy at high frequencies:
 
@@ -517,7 +517,7 @@ groups are then legal. In 1000BASE-T the five levels are split into two
 subsets, {-1, +1} and {-2, 0, +2}, and the encoder state decides which
 subsets may follow which. The minimum distance between two legal *sequences*
 is larger than the distance between two adjacent levels, and this is where
-the coding gain of about 6 dB comes from [PHY-TUT98]_. (The general
+the coding gain of about 6 dB comes from [PHY-TUT98]_. (The general
 technique is called
 `trellis coded modulation <https://en.wikipedia.org/wiki/Trellis_modulation>`__.)
 
@@ -527,7 +527,7 @@ rather than deciding each symbol on its own, it keeps track of the most
 likely path through all the possible encoder states over the last several
 symbol periods and picks the legal sequence closest to what was received.
 The decoder and the equalizer's feedback loop have to complete their work in
-one 8 ns symbol period, which makes this the critical timing path of the
+one 8 ns symbol period, which makes this the critical timing path of the
 receiver [PHY-TUT98]_; :ref:`phy-int-decision-loop` compares ways to meet
 it.
 
@@ -554,10 +554,10 @@ where:
 
 * :math:`v_\text{pins}` is the differential voltage at the pins, in V;
 * :math:`v_\text{own}` is the transceiver's own transmitted signal, at
-  full size (below about 1 V peak);
+  full size (below about 1 V peak);
 * :math:`v_\text{far}` is the signal from the far end, the one the receiver
-  wants, reduced by the cable's insertion loss (up to 24 dB, that is to
-  6 % of its original voltage, at 100 MHz; see `How large these effects
+  wants, reduced by the cable's insertion loss (up to 24 dB, that is to
+  6 % of its original voltage, at 100 MHz; see `How large these effects
   are`_);
 * :math:`v_\text{refl}` is the transceiver's own signal reflected back from
   connectors and impedance changes along the cable;
@@ -570,7 +570,7 @@ than :math:`v_\text{own}`. Two stages remove :math:`v_\text{own}` and
 1. The **hybrid** is an analog bridge circuit. It drives a replica of the
    transmitted signal into a reference network matched to the line
    impedance, and the receiver takes the difference between the line side
-   and the reference side. If the cable were a perfect 100 Ω, the own
+   and the reference side. If the cable were a perfect 100 Ω, the own
    signal would cancel completely. In practice the cable and connectors are
    not perfect, and part of the own signal remains [PHY-HEALEY]_.
 2. The **echo canceller** removes what the hybrid misses, including the
@@ -583,8 +583,8 @@ than :math:`v_\text{own}`. Two stages remove :math:`v_\text{own}` and
    `least-mean-squares <https://en.wikipedia.org/wiki/Least_mean_squares_filter>`__
    method [PHY-TUT98]_). Reflections from far along the cable return
    long after the symbol that caused them, so the filter is long: the
-   designs in the 802.3ab tutorial [PHY-TUT98]_ used 60 to 120 taps at
-   125 MHz.
+   designs in the 802.3ab tutorial [PHY-TUT98]_ used 60 to 120 taps at
+   125 MHz.
 
 .. _fig-phy-impairments:
 
@@ -612,7 +612,7 @@ Far-end crosstalk comes from symbols the receiving transceiver did not send.
 It is weaker than near-end crosstalk because it has crossed the whole cable.
 To keep it small enough, the 1000BASE-T link segment requirements include a
 far-end crosstalk limit (:clause:`40.7`) [PHY-DIMINICO]_; the example design
-in the 802.3ab tutorial had 5.7 dB of margin with worst-case far-end
+in the 802.3ab tutorial had 5.7 dB of margin with worst-case far-end
 crosstalk and no far-end crosstalk canceller [PHY-TUT98]_. Adaptive filters
 can also be used to cancel it [PHY-HEALEY]_.
 
@@ -650,7 +650,7 @@ end's symbol timing. For the cancellers to stay matched to the received
 samples, the transmit and receive symbol clocks must have exactly the same
 frequency. 1000BASE-T achieves this by making one end the timing reference:
 
-* The **master** transmits using its own crystal-derived 125 MHz clock.
+* The **master** transmits using its own crystal-derived 125 MHz clock.
 * The **slave** recovers the master's clock from the received signal with
   its clock-recovery loop, and uses that recovered clock for its own
   transmitter.
@@ -658,10 +658,10 @@ frequency. 1000BASE-T achieves this by making one end the timing reference:
 The whole link therefore runs on the master's crystal. The Microchip
 KSZ9031 datasheet notes that without this, master and slave would drift
 apart, and that it also helps echo and near-end crosstalk cancellation
-[PHY-KSZ9031]_. Each end's local clock must be within ±0.01 % of 125 MHz
+[PHY-KSZ9031]_. Each end's local clock must be within ±0.01 % of 125 MHz
 (:clause:`40.6.1.2.6`) [PHY-UNH40]_. As a frequency, that is
 :math:`125\ \text{MHz} \times 0.0001 = 12.5\ \text{kHz}`; as a ratio,
-0.01 % is 100 parts per million. Which end is master is decided during
+0.01 % is 100 parts per million. Which end is master is decided during
 autonegotiation (:clause:`40.5.2`, see `Choosing the result`_)
 [PHY-UNH28M]_. Some datasheets, such as TI's, use the words *leader* and
 *follower* for the same roles [PHY-DP83867]_.
@@ -672,7 +672,7 @@ Delay between pairs and pair swaps
 The four pairs in a cable have slightly different lengths and propagation
 speeds, so symbols sent at the same moment arrive up to a few tens of
 nanoseconds apart; the Microchip KSZ9031 datasheet states that it corrects
-up to 50 ns of difference [PHY-KSZ9031]_. The receiver also detects and
+up to 50 ns of difference [PHY-KSZ9031]_. The receiver also detects and
 corrects swapped pairs and reversed wires within a pair, using the idle
 patterns sent before data starts [PHY-KSZ9031]_. Separately, many
 transceivers detect whether the cable is a straight or a crossed-over one
@@ -687,14 +687,14 @@ that names the connector pins, and is described in :clause:`40.8.2`
 Why this needs so much signal processing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Every 8 ns, for each of four pairs, the receiver must update and evaluate
+Every 8 ns, for each of four pairs, the receiver must update and evaluate
 five adaptive filters, run a Viterbi decoder step and update a
 decision-feedback loop. The example design point in the 1998 IEEE 802.3ab
-tutorial used an ADC with 6.5 bits of ideal resolution at 125 million
-samples per second per pair (the same tutorial elsewhere gives 7 bits),
-and per pair a 120-tap echo canceller, 72 taps of near-end crosstalk
+tutorial used an ADC with 6.5 bits of ideal resolution at 125 million
+samples per second per pair (the same tutorial elsewhere gives 7 bits),
+and per pair a 120-tap echo canceller, 72 taps of near-end crosstalk
 cancellation, a 16-tap feed-forward equalizer and a 12-tap
-decision-feedback equalizer, all at 125 MHz [PHY-TUT98]_. The ADC needed
+decision-feedback equalizer, all at 125 MHz [PHY-TUT98]_. The ADC needed
 on evampire is discussed in :ref:`phy-int-adc`.
 
 A *tap* is one coefficient of a digital filter; each tap does one
@@ -734,7 +734,7 @@ Substituting:
    = 1.1 \times 10^{11}\ \text{per second}
 
 This assumes the tutorial's 72 near-end crosstalk taps are the total for
-the three cancellers of a pair; if each of the three had 72 taps, the
+the three cancellers of a pair; if each of the three had 72 taps, the
 total would be :math:`4 \times (120 + 3 \times 72 + 16 + 12) = 1456` taps
 and :math:`1.8 \times 10^{11}` operations per second. Either way, the
 filters need on the order of :math:`10^{11}` multiply-and-add operations
@@ -743,13 +743,13 @@ coefficients.
 
 This arithmetic is done by *digital signal processing* (DSP): dedicated
 digital logic that runs the filters, decoder and adaptation every symbol
-period. The tutorial estimated about 330,000 gates and 4 W for this design
-point, and its layout study put the transceiver at about 400,000 gates and
-3.1 W in 0.25 µm CMOS at 2.5 V [PHY-TUT98]_. The same authors' estimate for
-a related design states that the 3.1 W figure includes the analog front end
+period. The tutorial estimated about 330,000 gates and 4 W for this design
+point, and its layout study put the transceiver at about 400,000 gates and
+3.1 W in 0.25 µm CMOS at 2.5 V [PHY-TUT98]_. The same authors' estimate for
+a related design states that the 3.1 W figure includes the analog front end
 [PHY-QAM97]_, so it is the power of the whole transceiver, not of the DSP
 alone. Present-day 10/100/1000 transceivers made in finer processes use
-around 0.5 W in total at 1000 Mbit/s (see `Power`_).
+around 0.5 W in total at 1000 Mbit/s (see `Power`_).
 
 .. _phy-100base-tx:
 
@@ -767,7 +767,7 @@ Coding steps on the transmit side:
 1. **4B5B coding** (:clause:`24`). Each 4-bit group of data is replaced by a
    5-bit code word chosen from a fixed table [PHY-DP83848]_. The 16 data
    code words all contain at
-   least two 1 bits, which become transitions on the line, and some of the
+   least two 1 bits, which become transitions on the line, and some of the
    other 16 code words mark the start and end of a frame and the idle
    state. Because every 4 data bits become 5 line bits, the rate on the
    line is 5/4 of the data rate:
@@ -779,11 +779,11 @@ Coding steps on the transmit side:
 
    where :math:`R = 100` Mbit/s is the data rate and :math:`f_\text{line}`
    is the number of line bits (here equal to symbols) per second. This is
-   why 100BASE-TX runs at 125 Mbaud.
+   why 100BASE-TX runs at 125 Mbaud.
 
 2. **Scrambling.** The 5-bit stream is combined with the output of an
    11-bit linear feedback shift register (polynomial
-   :math:`1 + x^9 + x^{11}`, which repeats every 2047 bits), as specified
+   :math:`1 + x^9 + x^{11}`, which repeats every 2047 bits), as specified
    in ANSI X3.263 [PHY-X3263]_ [PHY-CAM96]_ [PHY-KSZ9031]_. This spreads
    the transmitted power over the band. Without it, repetitive patterns
    such as the continuous idle code would concentrate the energy at a few
@@ -795,12 +795,12 @@ Coding steps on the transmit side:
    the levels -1, 0 and +1 [PHY-X3263]_ [PHY-DP83848]_. A 1 bit moves the
    output one step along the repeating cycle 0, +1, 0, -1, 0, ...; a 0 bit
    leaves the output where it is (:numref:`fig-phy-mlt3`). A full cycle of
-   the waveform (0, +1, 0, -1, back to 0) needs four 1 bits, so the fastest
-   repeating pattern, all 1 bits, has a period of four bit times. Its
+   the waveform (0, +1, 0, -1, back to 0) needs four 1 bits, so the fastest
+   repeating pattern, all 1 bits, has a period of four bit times. Its
    frequency is a quarter of the line rate:
-   :math:`125\ \text{MHz} / 4 = 31.25` MHz. At that frequency a 100 m
-   channel loses about 13 dB (:numref:`tab-phy-channel-limits`), much less
-   than the 24 dB at 100 MHz.
+   :math:`125\ \text{MHz} / 4 = 31.25` MHz. At that frequency a 100 m
+   channel loses about 13 dB (:numref:`tab-phy-channel-limits`), much less
+   than the 24 dB at 100 MHz.
 
 .. wavedrom::
    :caption: MLT-3 line coding. Each 1 bit moves the output one step along
@@ -819,10 +819,10 @@ Coding steps on the transmit side:
      "config": { "hscale": 1.2 }
    }
 
-**Amplitudes.** The peak differential output is 0.95 V to 1.05 V
-(nominally ±1 V) into 100 Ω, with rise and fall times between 3 ns and
-5 ns [PHY-X3263]_ [PHY-UNH25]_. The transmit clock must be within
-125 MHz ± 6.25 kHz [PHY-UNH25]_, that is
+**Amplitudes.** The peak differential output is 0.95 V to 1.05 V
+(nominally ±1 V) into 100 Ω, with rise and fall times between 3 ns and
+5 ns [PHY-X3263]_ [PHY-UNH25]_. The transmit clock must be within
+125 MHz ± 6.25 kHz [PHY-UNH25]_, that is
 :math:`6.25\ \text{kHz} / 125\ \text{MHz} = 50 \times 10^{-6}`, or ±50 parts
 per million.
 
@@ -839,14 +839,14 @@ stream by recognising the scrambled idle pattern [PHY-KSZ9031]_
 --------
 
 10BASE-T (:clause:`14`) also uses one pair in each direction, on the same
-pins as 100BASE-TX. It sends the data bits directly at 10 Mbit/s using
+pins as 100BASE-TX. It sends the data bits directly at 10 Mbit/s using
 *Manchester coding*: each bit period is split in two halves with opposite
 levels, so there is always a transition in the middle of the bit. A 1 bit
 is a transition from low to high in the middle of the bit, and a 0 bit is a
 transition from high to low [PHY-UNH10T]_ (:numref:`fig-phy-manchester`).
 The receiver recovers the clock from these mid-bit transitions. The price
 is that the signal changes at up to twice the bit rate, so the fundamental
-frequency is between 5 MHz and 10 MHz.
+frequency is between 5 MHz and 10 MHz.
 
 .. wavedrom::
    :caption: Manchester coding as used by 10BASE-T, 100 ns per bit. A 1 bit
@@ -863,19 +863,19 @@ frequency is between 5 MHz and 10 MHz.
      "config": { "hscale": 1 }
    }
 
-**Amplitudes.** The peak differential output is 2.2 V to 2.8 V into
-100 Ω (:clause:`14.3.1.2.1`) [PHY-UNH14]_. A lower-power variant called
+**Amplitudes.** The peak differential output is 2.2 V to 2.8 V into
+100 Ω (:clause:`14.3.1.2.1`) [PHY-UNH14]_. A lower-power variant called
 10BASE-Te, added to :clause:`14` by the Energy Efficient Ethernet amendment
-(`IEEE 802.3az <https://www.ieee802.org/3/az/>`__), uses 1.54 V to
-1.96 V [PHY-UNH14]_; the TI DP83822 datasheet describes it as fully
+(`IEEE 802.3az <https://www.ieee802.org/3/az/>`__), uses 1.54 V to
+1.96 V [PHY-UNH14]_; the TI DP83822 datasheet describes it as fully
 interoperable with 10BASE-T [PHY-DP83822]_. The receiver ignores signals
-below a threshold (about 300 mV in the Microchip KSZ9031 [PHY-KSZ9031]_),
+below a threshold (about 300 mV in the Microchip KSZ9031 [PHY-KSZ9031]_),
 so that noise on an idle line is not mistaken for data.
 
-Between frames the line is silent at 0 V, except for a single short
-*link pulse* (about 100 ns wide) every 16 ms ± 8 ms. These *normal link
+Between frames the line is silent at 0 V, except for a single short
+*link pulse* (about 100 ns wide) every 16 ms ± 8 ms. These *normal link
 pulses* tell the far end that the cable is connected and the transmitter is
-working. A receiver that sees no link pulses or data for 50 ms to 150 ms
+working. A receiver that sees no link pulses or data for 50 ms to 150 ms
 declares the link down [PHY-UNH14]_ [PHY-KSZ9031]_.
 
 Comparison of the three speeds
@@ -908,16 +908,16 @@ Comparison of the three speeds
      - 5 (PAM-5)
    * - Symbol rate per pair
      - 20 M half-bit periods per second
-     - 125 Mbaud
-     - 125 Mbaud
+     - 125 Mbaud
+     - 125 Mbaud
    * - Highest fundamental frequency
-     - 10 MHz
-     - 31.25 MHz
-     - 62.5 MHz (spectrum kept below about 80 MHz)
+     - 10 MHz
+     - 31.25 MHz
+     - 62.5 MHz (spectrum kept below about 80 MHz)
    * - Peak differential output
-     - 2.2 V to 2.8 V
-     - 0.95 V to 1.05 V
-     - 0.67 V to 0.82 V (test pattern)
+     - 2.2 V to 2.8 V
+     - 0.95 V to 1.05 V
+     - 0.67 V to 0.82 V (test pattern)
    * - Hybrid and echo cancelling
      - no
      - no
@@ -932,9 +932,9 @@ Comparison of the three speeds
      - master and slave
    * - Typical power, Microchip KSZ9031 (whole chip, from link up and idle
        to full traffic, over its supply options) [PHY-KSZ9031]_
-     - 44 mW to 149 mW
-     - 154 mW to 228 mW
-     - 419 mW to 621 mW
+     - 44 mW to 149 mW
+     - 154 mW to 228 mW
+     - 419 mW to 621 mW
 
 :numref:`tab-phy-speeds` summarises the three speeds; the values and their
 sources are in the sections above.
@@ -955,12 +955,12 @@ Fast link pulse bursts
 ~~~~~~~~~~~~~~~~~~~~~~
 
 A transceiver that supports autonegotiation replaces each single 10BASE-T
-link pulse with a *fast link pulse burst*. A burst lasts about 2 ms and
-contains 17 *clock pulses* spaced 125 µs ± 14 µs apart. Halfway between
-each pair of clock pulses (62.5 µs ± 7 µs after the first) there is either
+link pulse with a *fast link pulse burst*. A burst lasts about 2 ms and
+contains 17 *clock pulses* spaced 125 µs ± 14 µs apart. Halfway between
+each pair of clock pulses (62.5 µs ± 7 µs after the first) there is either
 a *data pulse*, meaning 1, or no pulse, meaning 0. A burst therefore holds
 16 data bits and contains between 17 and 33 pulses. Bursts are repeated
-every 16 ms ± 8 ms, the same spacing as normal link pulses
+every 16 ms ± 8 ms, the same spacing as normal link pulses
 (:clause:`28.3.2`) [PHY-UNH28]_ [PHY-KSZ9031]_. :numref:`fig-phy-flp` shows
 the start of a burst.
 
@@ -980,14 +980,14 @@ the start of a burst.
      "config": { "hscale": 1 }
    }
 
-The 16 bits are called a *page*. The first page, the *base page*
+The 16 bits are called a *page*. The first page, the *base page*
 (:clause:`28.2.1.2`), contains [PHY-UNH28]_:
 
 * a 5-bit selector, set to the value 00001 that means "this is IEEE 802.3
   Ethernet" (:clause:`Annex 28A <28>`);
 * 8 ability bits (:clause:`Annex 28B <28>`): whether 10BASE-T and 100BASE-TX
   are supported, each in half and full duplex, whether 100BASE-T4 (an older
-  100 Mbit/s mode over four pairs of lower-grade cable) is supported, and
+  100 Mbit/s mode over four pairs of lower-grade cable) is supported, and
   whether flow-control ("pause") frames can be handled [PHY-UNH28M]_;
 * a remote fault bit, an acknowledge bit, and a *next page* bit that says
   more pages follow.
@@ -1092,9 +1092,9 @@ Power
 -----
 
 The Microchip KSZ9031 datasheet gives the whole chip's power, at
-1000 Mbit/s with full traffic, as between 452 mW and 621 mW depending on
-how its supplies are generated, and at 100 Mbit/s as between 156 mW and
-228 mW [PHY-KSZ9031]_. The TI DP83867 datasheet gives 457 mW to 530 mW for
+1000 Mbit/s with full traffic, as between 452 mW and 621 mW depending on
+how its supplies are generated, and at 100 Mbit/s as between 156 mW and
+228 mW [PHY-KSZ9031]_. The TI DP83867 datasheet gives 457 mW to 530 mW for
 1000BASE-T, depending on package and supply arrangement [PHY-DP83867]_.
 
 Building the transceiver on evampire
@@ -1126,21 +1126,21 @@ References
 .. [PHY-TUT98] C. Mick, C. DiMinico, S. Raghavan, S. Rao, M. Hatamian,
    *802.3ab (1000BASE-T) Tutorial*, IEEE 802.3 plenary, March 1998.
    https://www.ieee802.org/3/tutorial/march98/mick_170398.pdf. Channel limit
-   formulas, 125 Mbaud PAM-5, the 0.75/0.25 shaping filter, the trellis
-   subsets, the 6 dB figures, and the design point (ADC resolution, filter
+   formulas, 125 Mbaud PAM-5, the 0.75/0.25 shaping filter, the trellis
+   subsets, the 6 dB figures, and the design point (ADC resolution, filter
    lengths, gate count and power).
 
 .. [PHY-DIMINICO] C. T. Di Minico, P. Kish, *Development of Equal Level
    Far-End Crosstalk (ELFEXT) and Return Loss Specifications for Gigabit
    Ethernet Operation on Category 5 Copper Cabling*.
    https://www.ieee802.org/3/an/public/material/diminico_IWCS.PDF.
-   250 Mbit/s per pair, transmit spectrum below 80 MHz, echo and crosstalk
+   250 Mbit/s per pair, transmit spectrum below 80 MHz, echo and crosstalk
    cancellation.
 
 .. [PHY-HEALEY] A. Healey, *1000BASE-T Technology Overview, Part 1: Design
    Challenges*, University of New Hampshire InterOperability Laboratory,
    1998. https://www.iol.unh.edu/sites/default/files/knowledgebase/ge/1000tcable.pdf.
-   Cable impairments, the 100 m channel, the error rate target, the
+   Cable impairments, the 100 m channel, the error rate target, the
    resistive hybrid, five adaptive filters per receiver.
 
 .. [PHY-UNH40] University of New Hampshire InterOperability Laboratory,
