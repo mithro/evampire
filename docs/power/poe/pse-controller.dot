@@ -1,0 +1,53 @@
+// One channel of a power sourcing equipment controller (low-side switch
+// arrangement, as in the TI TPS2388x family). Bold arrows: power path.
+// Thin arrows: measurement and control. Dashed arrows: host interface.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pse_controller {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.25,
+           ranksep=0.45, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    vpwr  [label="54 V supply\n(VPWR, 44–57 V)", fillcolor="#fbe5d6"];
+    port  [label="Port: positive\ncentre tap (to VPWR),\nnegative centre tap\n(to switch drain)", fillcolor="#ffffff"];
+    fet   [label="Power MOSFET\n100 V, external", fillcolor="#fbe5d6"];
+    rsns  [label="Sense resistor\n0.2 Ω, external", fillcolor="#ffffff"];
+    gnd   [label="Supply return\n(ground)", fillcolor="#ffffff"];
+    host  [label="Host processor\n(evampire)", fillcolor="#dbe8f5"];
+
+    subgraph cluster_ic {
+        label="Power sourcing equipment controller (one channel shown)";
+        labelloc="b"; style="rounded,bold"; color="#1f4e79";
+
+        det   [label="Detection current\nsources\n(160 µA, 270 µA)"];
+        vadc  [label="Voltage ADC\n(port voltage,\nsupply voltage)"];
+        iadc  [label="Current ADC\n(sense resistor)"];
+        gate  [label="Gate driver and\ncurrent-limit loop\n(inrush, class voltage,\nfoldback)"];
+        fast  [label="Fast short-circuit\ncomparator"];
+        logic [label="State machine and\ntimers (detect, class,\nmark, power on,\ndisconnect)"];
+        regs  [label="Registers and\nI2C interface"];
+        temp  [label="Thermal\nshutdown"];
+    }
+
+    vpwr -> port [penwidth=2.5];
+    port -> fet  [penwidth=2.5, label="drain"];
+    fet  -> rsns [penwidth=2.5, label="source"];
+    rsns -> gnd  [penwidth=2.5];
+
+    det  -> port;
+    port -> vadc;
+    rsns -> iadc;
+    rsns -> fast;
+    gate -> fet  [label="gate"];
+    fast -> gate;
+    vadc -> logic;
+    iadc -> logic;
+    temp -> logic;
+    logic -> det;
+    logic -> gate;
+    logic -> regs;
+    regs -> host [style=dashed, dir=both, label="I2C,\ninterrupt"];
+}

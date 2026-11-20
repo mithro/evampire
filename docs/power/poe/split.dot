@@ -1,5 +1,6 @@
 // Recommended split of Power over Ethernet functions between external
-// parts and evampire. Bold arrows: power. Dashed arrows: status signals.
+// parts and evampire, for both port roles. Bold arrows: power. Dashed
+// arrows: status and control.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -10,36 +11,45 @@ digraph poe_split {
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    subgraph cluster_hv {
-        label="External parts, 37–57 V side"; style="rounded,dashed";
-        color="#c55a11";
+    subgraph cluster_pd {
+        label="External, port A (powered device), 37–57 V";
+        labelloc="b"; style="rounded,dashed"; color="#c55a11";
         bridges [label="Input bridges\nand surge clamp", fillcolor="#fbe5d6"];
         pdc     [label="Powered-device\ncontroller chip", fillcolor="#fbe5d6"];
-        conv    [label="DC-DC converter\n(flyback or buck)", fillcolor="#fbe5d6"];
-        div     [label="Resistor divider\n(non-isolated\ndesigns only)", fillcolor="#fbe5d6"];
+        conv    [label="Input converter", fillcolor="#fbe5d6"];
     }
 
-    subgraph cluster_if {
-        label="External parts, low-voltage side"; labelloc="b"; style="rounded,dashed";
-        color="#888888";
-        opto [label="Optocouplers\n(isolated designs)\nor pull-ups", fillcolor="#ffffff"];
+    subgraph cluster_pse {
+        label="External, port B (power sourcing equipment), 44–57 V";
+        labelloc="b"; style="rounded,dashed"; color="#c55a11";
+        boost [label="Boost converter\nto 54 V", fillcolor="#fbe5d6"];
+        psec  [label="PSE controller chip,\nMOSFETs, sense\nresistors, port TVS", fillcolor="#fbe5d6"];
     }
+
+    div [label="Resistor dividers\n(optional)", fillcolor="#ffffff"];
+    opto [label="Optocouplers or\npull-ups", fillcolor="#ffffff"];
 
     subgraph cluster_chip {
         label="evampire (3.3 V devices)"; labelloc="b"; style="rounded,bold";
         color="#1f4e79";
-        gpio [label="Status inputs:\npower good,\nallocated power", fillcolor="#dbe8f5"];
-        adc  [label="Supply monitor:\ncomparator or ADC\n(open decision)", fillcolor="#dbe8f5"];
-        cpu  [label="RISC-V software:\nread status,\nlimit load,\nLLDP power request", fillcolor="#dbe8f5"];
+        gpio [label="Status inputs and\nenable outputs", fillcolor="#dbe8f5"];
+        i2c  [label="I2C controller\n(open decision)", fillcolor="#dbe8f5"];
+        adc  [label="Comparator or ADC\n(open decision)", fillcolor="#dbe8f5"];
+        cpu  [label="RISC-V software:\npower budget,\nLLDP on both ports", fillcolor="#dbe8f5"];
     }
 
-    bridges -> pdc  [penwidth=2.5];
-    pdc     -> conv [penwidth=2.5];
-    conv    -> cpu  [penwidth=2.5, label="3.3 V"];
-    pdc     -> opto [style=dashed];
-    opto    -> gpio [style=dashed];
-    pdc     -> div  [style=dashed];
-    div     -> adc  [style=dashed, label="0–3 V"];
-    gpio    -> cpu;
-    adc     -> cpu;
+    bridges -> pdc   [penwidth=2.5];
+    pdc     -> conv  [penwidth=2.5];
+    conv    -> boost [penwidth=2.5, label="bus"];
+    boost   -> psec  [penwidth=2.5];
+
+    pdc  -> opto [style=dashed];
+    opto -> gpio [style=dashed];
+    psec -> i2c  [style=dashed, dir=both];
+    conv -> div  [style=dashed];
+    boost -> div [style=dashed];
+    div  -> adc  [style=dashed, label="0–3 V"];
+    gpio -> cpu;
+    i2c  -> cpu;
+    adc  -> cpu;
 }

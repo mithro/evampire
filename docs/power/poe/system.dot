@@ -1,48 +1,57 @@
-// Power over Ethernet: how power reaches an evampire board.
-// Bold arrows: power. Thin arrows: data. Dashed arrows: status signals.
+// Power over Ethernet on a first-version evampire board: port A receives
+// power as a powered device, port B supplies power as power sourcing
+// equipment. Bold arrows: power. Thin arrows: data. Dashed arrows: control.
 //
 // SPDX-License-Identifier: Apache-2.0
 
 digraph poe_system {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.35,
-           ranksep=0.45, newrank=true];
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.3,
+           ranksep=0.4, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    pse [label="Power source\n(switch or injector)\n44–57 V", fillcolor="#fbe5d6"];
-    cable [label="Cable\n4 twisted pairs\nup to 100 m", shape=box, style="rounded",
-           fillcolor="#ffffff"];
+    up   [label="Power sourcing\nequipment\n(switch or injector)\n44–57 V", fillcolor="#fbe5d6"];
+    down [label="Powered device\n(camera, access\npoint, ...)", fillcolor="#fbe5d6"];
 
     subgraph cluster_board {
-        label="Powered device: a board built around evampire";
+        label="Board built around evampire"; labelloc="b";
         style="rounded,dashed"; color="#888888";
 
-        rj45 [label="RJ45\nsocket", fillcolor="#ffffff"];
-        mag  [label="Magnetics\n(transformers with\ncentre taps)", fillcolor="#ffffff"];
-        phy  [label="Ethernet\ntransceiver A", fillcolor="#ffffff"];
+        subgraph cluster_a {
+            label="Port A: powered device"; style="rounded"; color="#c55a11";
+            maga [label="RJ45 and\nmagnetics A", fillcolor="#ffffff"];
+            brg  [label="Two polarity\nbridges", fillcolor="#fff2cc"];
+            pdc  [label="Powered-device\ncontroller", fillcolor="#fff2cc"];
+            conv [label="Input\nconverter", fillcolor="#fff2cc"];
+        }
 
-        bra  [label="Bridge\npairs 1-2 / 3-6", fillcolor="#fff2cc"];
-        brb  [label="Bridge\npairs 4-5 / 7-8", fillcolor="#fff2cc"];
+        bus  [label="Internal\npower bus", style="filled,bold", fillcolor="#dbe8f5"];
+        evp  [label="evampire", style="rounded,filled,bold", fillcolor="#dbe8f5"];
 
-        pdc  [label="Powered-device\ncontroller\n(signature, class,\nisolation switch)", fillcolor="#fff2cc"];
-        dcdc [label="DC-DC\nconverter", fillcolor="#fff2cc"];
-        evp  [label="evampire", fillcolor="#dbe8f5", style="rounded,filled,bold"];
+        subgraph cluster_b {
+            label="Port B: power sourcing equipment"; style="rounded";
+            color="#c55a11";
+            boost [label="Boost converter\nto 44–57 V", fillcolor="#fff2cc"];
+            psec  [label="PSE controller,\nswitches and\ncurrent sense", fillcolor="#fff2cc"];
+            magb  [label="RJ45 and\nmagnetics B", fillcolor="#ffffff"];
+        }
     }
 
-    { rank=same; bra; brb; }
+    { rank=same; bus; evp; }
 
-    pse  -> cable [penwidth=2.5, dir=both];
-    cable -> rj45 [penwidth=2.5, dir=both];
-    rj45 -> mag  [penwidth=2.5, dir=both];
-    mag  -> phy  [dir=both, label="data"];
-    phy  -> evp  [dir=both, label="RGMII"];
+    up   -> maga  [penwidth=2.5, label="cable"];
+    maga -> brg   [penwidth=2.5, label="centre\ntaps"];
+    brg  -> pdc   [penwidth=2.5];
+    pdc  -> conv  [penwidth=2.5, label="37–57 V"];
+    conv -> bus   [penwidth=2.5];
+    bus  -> boost [penwidth=2.5];
+    boost -> psec [penwidth=2.5];
+    psec -> magb  [penwidth=2.5, label="centre\ntaps"];
+    magb -> down  [penwidth=2.5, label="cable"];
 
-    mag  -> bra  [penwidth=2.5, label="centre taps"];
-    mag  -> brb  [penwidth=2.5];
-    bra  -> pdc  [penwidth=2.5];
-    brb  -> pdc  [penwidth=2.5];
-    pdc  -> dcdc [penwidth=2.5, label="37–57 V"];
-    dcdc -> evp  [penwidth=2.5, label="3.3 V"];
-    pdc  -> evp  [style=dashed, label="power good,\nallocated power"];
+    pdc  -> evp   [style=dashed, label="power good,\nallocated power"];
+    evp  -> psec  [style=dashed, dir=both, label="I2C or\nenable/status"];
+    maga -> evp   [dir=both, label="data (via\ntransceiver A)", constraint=false];
+    evp  -> magb  [dir=both, label="data (via\ntransceiver B)", constraint=false];
 }
