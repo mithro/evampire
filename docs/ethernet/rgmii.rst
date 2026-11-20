@@ -29,7 +29,7 @@ An Ethernet port is split between two chips.
 signals between these two chips. "Media independent" means the digital side
 does not need to know what kind of cable the transceiver drives. RGMII is not
 an IEEE standard; it was published as a short industry specification
-([RGMII13]_, [RGMII20]_) and is supported by many gigabit Ethernet
+([RGMII-V13]_, [RGMII-V20]_) and is supported by many gigabit Ethernet
 transceivers, including the ones referred to on this page.
 
 .. _fig-rgmii-connection:
@@ -49,22 +49,22 @@ How RGMII relates to MII and GMII
 ---------------------------------
 
 RGMII is a pin-saving version of two older interfaces defined in the IEEE
-802.3 Ethernet standard [IEEE8023]_:
+802.3 Ethernet standard [RGMII-IEEE8023]_:
 
 MII (Media Independent Interface)
    Used for 10 and 100 Mbit/s. It moves 4 bits per clock cycle on one edge
-   of a 2.5 MHz or 25 MHz clock ([RGMII20]_ section 5.0).
+   of a 2.5 MHz or 25 MHz clock ([RGMII-V20]_ section 5.0).
 
 GMII (Gigabit Media Independent Interface)
    Used for 1000 Mbit/s. It moves 8 bits per clock cycle on the rising edge
    of a 125 MHz clock, together with a "data valid" and an "error" signal in
-   each direction ([RGMII20]_ section 3.4, [DP83867]_ sections 6.10 and
+   each direction ([RGMII-V20]_ section 3.4, [RGMII-DP83867]_ sections 6.10 and
    6.11).
 
 RGMII carries exactly the same information as GMII, but uses both edges of
 the clock so that only 4 data wires are needed in each direction, and folds
 the "valid" and "error" signals into one control wire per direction. This
-reduces the interface from 24 to 12 signals ([DP83867]_ section 7.4.1.1).
+reduces the interface from 24 to 12 signals ([RGMII-DP83867]_ section 7.4.1.1).
 The names of the GMII signals (for example "receive data valid", RX_DV, and
 "receive error", RX_ER) are still used to describe what the RGMII control
 wire means.
@@ -133,7 +133,7 @@ Signals
        (see `Between frames`_).
 
 These definitions come from Table 1 of the RGMII specification
-([RGMII13]_, [RGMII20]_). Transceiver datasheets often use slightly different
+([RGMII-V13]_, [RGMII-V20]_). Transceiver datasheets often use slightly different
 names for the same pins, for example GTX_CLK or TX_CLK for TXC, RX_CLK for
 RXC, TX_EN or TX_CTRL for TX_CTL, RX_DV or RX_CTRL for RX_CTL, and TD/RD for
 TXD/RXD.
@@ -146,7 +146,7 @@ A link runs in *full duplex*, where both ends may send at the same time,
 or in *half duplex*, where only one end may send at a time. Half duplex
 needs two extra indications: "carrier sense" (the other end is sending) and
 "collision" (both ends sent at once). RGMII has no separate wires for these;
-they are recovered from RX_CTL and RXD ([RGMII20]_ section 3.4.2). evampire
+they are recovered from RX_CTL and RXD ([RGMII-V20]_ section 3.4.2). evampire
 uses full duplex only (see `Speed and duplex of the two ports`_), so it does
 not need them.
 
@@ -177,28 +177,31 @@ Data rates and clocking
      - Same as 100 Mbit/s, ten times slower.
 
 The clock frequencies and the allowed cycle durations are from Table 2 of
-[RGMII20]_ (including its note 2 for 10 and 100 Mbit/s). The data
-arrangement at 10 and 100 Mbit/s is from section 5.0 of [RGMII20]_.
+[RGMII-V20]_ (including its note 2 for 10 and 100 Mbit/s). The data
+arrangement at 10 and 100 Mbit/s is from section 5.0 of [RGMII-V20]_.
 
 1000 Mbit/s
 ~~~~~~~~~~~
 
 At 1000 Mbit/s each clock cycle carries one byte: the low nibble (bits 3:0)
 around the rising edge and the high nibble (bits 7:4) around the falling edge
-([RGMII20]_ section 3.2). The two directions work the same way: the
+([RGMII-V20]_ section 3.2). The two directions work the same way: the
 transmitting chip sends its clock together with its data, and the receiving
 chip uses that clock to sample the data. This is called *source-synchronous*
 timing.
 
 .. wavedrom::
    :name: fig-rgmii-1000-byte
+   :alt: Timing diagram: TXC with TXD carrying nibbles 1, 0, 3, 2, 5, 4 on
+         successive clock edges while TX_CTL is high, forming the bytes 0x01,
+         0x23 and 0x45.
    :caption: Three bytes (0x01, 0x23, 0x45) sent at 1000 Mbit/s, as seen by
              the receiving chip after the clock has been delayed (see
              `Timing`_). Each byte takes one clock cycle: low nibble first,
              then high nibble.
 
    { "signal": [
-       { "name": "TXC",      "wave": "p....", "period": 2, "phase": -1 },
+       { "name": "TXC",      "wave": "p....", "period": 2, "phase": -0.5 },
        { "name": "TXD[3:0]", "wave": "x.======x.",
          "data": ["1", "0", "3", "2", "5", "4"] },
        { "name": "TX_CTL",   "wave": "0.1.....0." },
@@ -206,14 +209,14 @@ timing.
        { "name": "byte",     "wave": "x.=.=.=.x.",
          "data": ["0x01", "0x23", "0x45"] }
      ],
-     "config": { "hscale": 2 }
+     "config": { "hscale": 1 }
    }
 
 :numref:`fig-rgmii-1000-byte` shows the order. A byte with the value 0x23
 is sent as the nibble 3 on the rising edge followed by the nibble 2 on the
 falling edge. Ethernet sends the least significant bit first on the cable,
 and on the 4-bit MII data bit 0 is the bit that goes out first
-([LAN91C111]_ section 7.5.4). RGMII keeps the same order: lower bits first.
+([RGMII-LAN91C111]_ section 7.5.4). RGMII keeps the same order: lower bits first.
 
 10 and 100 Mbit/s
 ~~~~~~~~~~~~~~~~~
@@ -221,13 +224,17 @@ and on the 4-bit MII data bit 0 is the bit that goes out first
 At 10 and 100 Mbit/s the clock slows to 2.5 MHz or 25 MHz and each clock
 cycle carries one nibble instead of one byte. The specification says the
 interface works "exactly the same way" as at 1000 Mbit/s, except that the
-data may be repeated on the falling edge ([RGMII20]_ section 5.0). In
+data may be repeated on the falling edge ([RGMII-V20]_ section 5.0). In
 practice the data signals are sampled on the rising edge only, while
-RX_CTL and TX_CTL are still sampled on both edges ([KSZ9031]_ section 7.1).
+RX_CTL and TX_CTL are still sampled on both edges ([RGMII-KSZ9031]_ section 7.1).
 A byte takes two clock cycles: low nibble first, then high nibble.
 
 .. wavedrom::
    :name: fig-rgmii-100-nibble
+   :alt: Timing diagram at 100 Mbit/s: RXC with one nibble per clock cycle
+         on RXD (5, 5, D, 1, 0, 3) while RX_CTL stays high; the nibbles form
+         the end of the preamble, the start-of-frame byte 0xD5 and the byte
+         0x01.
    :caption: Start of a frame at 100 Mbit/s: the last preamble nibble, the
              start-of-frame byte 0xD5 (nibble 5 then nibble D) and the first
              byte of the destination address (0x01). One clock cycle is 40 ns
@@ -250,16 +257,16 @@ The transceiver generates RXC at every speed. evampire generates TXC at
 every speed. The clocks may have one stretched high or low pulse when the
 transceiver changes speed, or when RXC switches from its free-running clock
 to the clock recovered from a newly arriving frame, but they must not glitch
-([RGMII20]_ section 5.0 and Table 2 note 3). Before evampire starts a frame
+([RGMII-V20]_ section 5.0 and Table 2 note 3). Before evampire starts a frame
 at a new speed, it must already be sending TXC at that speed: the
 specification requires the digital side to hold TX_CTL low until it is
-running at the same speed as the transceiver ([RGMII20]_ section 5.0).
+running at the same speed as the transceiver ([RGMII-V20]_ section 5.0).
 
 Control signal encoding
 -----------------------
 
 The control wire carries two GMII signals per clock cycle
-([RGMII20]_ section 3.4):
+([RGMII-V20]_ section 3.4):
 
 * on the **rising edge**: "data valid" (receive) or "transmit enable"
   (transmit);
@@ -300,29 +307,32 @@ middle of a clock cycle when something unusual happens, such as an error.
      - Not a frame byte. The value on RXD/TXD gives the meaning, for example
        0x0E "false carrier" (receive only), 0x0F "carrier extend" or 0xFF
        "carrier sense" (receive only). Carrier extend applies only at
-       1000 Mbit/s ([RGMII20]_ section 3.4.2). evampire treats every
+       1000 Mbit/s ([RGMII-V20]_ section 3.4.2). evampire treats every
        code in this row as "no frame".
 
-The table summarises Tables 3 and 4 of [RGMII20]_; those tables list every
+The table summarises Tables 3 and 4 of [RGMII-V20]_; those tables list every
 code, most of which are reserved.
 
 .. wavedrom::
    :name: fig-rgmii-ctl-encoding
+   :alt: Timing diagram: RX_CTL is low while idle, high on both edges for
+         good bytes, high then low for the byte with an error, and low again
+         when idle; decoded data valid and error signals are shown below.
    :caption: RX_CTL over seven clock cycles: idle, two good bytes, a byte
              received with an error, one more good byte, and idle again. The
              error shows as RX_CTL going low for the second half of that
              cycle.
 
    { "signal": [
-       { "name": "RXC",     "wave": "p......", "period": 2, "phase": -1 },
+       { "name": "RXC",     "wave": "p......", "period": 2, "phase": -0.5 },
        { "name": "RX_CTL",  "wave": "0.1.....01.0.." },
        {},
-       { "name": "data valid", "wave": "01...0.", "period": 2 },
-       { "name": "error",      "wave": "0..10..", "period": 2 },
-       { "name": "meaning",    "wave": "233532.", "period": 2,
+       { "name": "valid",   "wave": "01...0.", "period": 2 },
+       { "name": "error",   "wave": "0..10..", "period": 2 },
+       { "name": "meaning", "wave": "233532.", "period": 2,
          "data": ["idle", "byte", "byte", "error", "byte", "idle"] }
      ],
-     "config": { "hscale": 2 }
+     "config": { "hscale": 1 }
    }
 
 In :numref:`fig-rgmii-ctl-encoding`, RX_CTL is high on both edges for each
@@ -340,7 +350,7 @@ Between frames
 When RX_CTL is low on both edges, no frame is being received. The
 specification defines an optional *in-band status*: during these gaps the
 transceiver puts its link state on RXD[3:0], repeated on both edges
-([RGMII20]_ section 3.4.1 and Table 4).
+([RGMII-V20]_ section 3.4.1 and Table 4).
 
 .. list-table:: In-band status on RXD[3:0] while RX_CTL is 0, 0
    :header-rows: 1
@@ -362,10 +372,10 @@ transceiver puts its link state on RXD[3:0], repeated on both edges
 
 For example, a gigabit full-duplex link that is up shows the nibble 1101
 (0xD) between frames. While the link is down, the reported speed and duplex
-are the transceiver's own settings ([RGMII20]_ section 3.4.1).
+are the transceiver's own settings ([RGMII-V20]_ section 3.4.1).
 
 Because this status is optional, not every transceiver sends it. The
-Microchip KSZ9031RNX always sends it ([KSZ9031]_ section 3.9.4). evampire
+Microchip KSZ9031RNX always sends it ([RGMII-KSZ9031]_ section 3.9.4). evampire
 therefore reads the link state through the management interface, which every
 transceiver supports, and can use in-band status as an extra, faster
 indication where it is available.
@@ -377,8 +387,8 @@ A *frame* is one Ethernet message. On RXD and TXD it is sent as a sequence
 of bytes, each byte as two nibbles, low nibble first.
 
 .. list-table:: Fields of a frame in the order they are sent
-                ([ENC28J60]_ section 5.1; preamble and SFD bit patterns from
-                [LAN91C111]_ section 7.5.4)
+                ([RGMII-ENC28J60]_ section 5.1; preamble and SFD bit patterns from
+                [RGMII-LAN91C111]_ section 7.5.4)
    :header-rows: 1
    :widths: 24 14 62
 
@@ -413,39 +423,43 @@ of bytes, each byte as two nibbles, low nibble first.
 
 A *MAC address* is the 48-bit address that identifies a device on an
 Ethernet network. From the destination address to the checksum, a normal
-frame is 64 to 1518 bytes long ([ENC28J60]_ section 5.1). An optional 4-byte
+frame is 64 to 1518 bytes long ([RGMII-ENC28J60]_ section 5.1). An optional 4-byte
 tag that separates virtual networks on the same cable increases the maximum
 to 1522 bytes; larger "jumbo" frames are also used on some networks (the
-KSZ9031RNX supports frames up to 16 KB, [KSZ9031]_ features list).
+KSZ9031RNX supports frames up to 16 KB, [RGMII-KSZ9031]_ features list).
 
 On the cable the preamble and SFD together are 62 bits of alternating
-1,0,1,0,... followed by 1,1 ([LAN91C111]_ section 7.5.4). Because the bits
+1,0,1,0,... followed by 1,1 ([RGMII-LAN91C111]_ section 7.5.4). Because the bits
 are sent least significant first, the last eight of these bits,
 1,0,1,0,1,0,1,1, form the byte 1101 0101 = 0xD5, and each earlier group of
 eight forms the byte 0x55. On a 4-bit interface this is the nibble 5
 repeated, followed by the nibbles 5 and D; the LAN91C111 looks for exactly
-this "5Dh" pattern to find the start of a frame ([LAN91C111]_
+this "5Dh" pattern to find the start of a frame ([RGMII-LAN91C111]_
 section 7.5.4). On RGMII the preamble is therefore the nibble 5 repeated
 fourteen times, and the SFD is the nibble 5 followed by the nibble D.
 
 .. wavedrom::
    :name: fig-rgmii-frame-start
+   :alt: Timing diagram at 1000 Mbit/s: RXD shows the in-band status nibble
+         D while RX_CTL is low, then RX_CTL goes high and RXD carries
+         preamble nibbles 5, the start-of-frame nibbles 5 and D, and the
+         first destination address nibbles 1 and 0.
    :caption: Start of a frame at 1000 Mbit/s. Before the frame, RXD carries
              the in-band status 0xD (link up, 1000 Mbit/s, full duplex). The
-             frame starts when RX_CTL goes high. The break marks part of the
+             frame starts when RX_CTL goes high, with the preamble, the SFD
+             and then the destination address. The break marks part of the
              preamble that is not drawn.
 
    { "signal": [
-       { "name": "RXC",      "wave": "p...|...", "period": 2, "phase": -1 },
-       { "name": "RX_CTL",   "wave": "0...1....|......" },
-       { "name": "RXD[3:0]", "wave": "=...=====|======",
-         "data": ["D", "5", "5", "5", "5", "5", "5", "D",
-                  "1", "0", "3", "2"] },
+       { "name": "RXC",      "wave": "p...|..", "period": 2, "phase": -0.5 },
+       { "name": "RX_CTL",   "wave": "0...1....|...." },
+       { "name": "RXD[3:0]", "wave": "=...=====|====",
+         "data": ["D", "5", "5", "5", "5", "5", "5", "D", "1", "0"] },
        {},
-       { "name": "field",    "wave": "2...3....|4.5...",
-         "data": ["gap", "preamble (0x55 x 7)", "SFD", "destination address"] }
+       { "name": "field",    "wave": "2...3....|4.5.",
+         "data": ["gap", "preamble", "SFD", "address"] }
      ],
-     "config": { "hscale": 2 }
+     "config": { "hscale": 1 }
    }
 
 Two details matter for a design that forwards frames:
@@ -453,18 +467,18 @@ Two details matter for a design that forwards frames:
 * **The preamble may arrive shorter than 7 bytes.** A transceiver is not
   required to pass the whole preamble through. For example, the KSZ9031RNX
   removes all 7 preamble bytes when receiving at 10 Mbit/s and starts the
-  frame on RXD with the SFD ([KSZ9031]_ section 3.1.5), and the 10 Mbit/s
+  frame on RXD with the SFD ([RGMII-KSZ9031]_ section 3.1.5), and the 10 Mbit/s
   receiver of the LAN91C111 loses part of the preamble while it locks on,
-  passing at least 6 nibbles of it ([LAN91C111]_ section 7.7.4.3). The
+  passing at least 6 nibbles of it ([RGMII-LAN91C111]_ section 7.7.4.3). The
   receiving logic
   must therefore look for the SFD byte instead of counting preamble bytes,
   and the transmit side must generate a full preamble itself.
 * **There is a minimum gap between frames.** A transmitter must leave a
   minimum gap between the end of one frame and the start of the next
   preamble. At 10 Mbit/s this is "the minimum IEEE specified Inter-Packet
-  Gap (IPG) of 9.6 µs" ([ENC28J60]_ register MABBIPG), which is 96 bit
+  Gap (IPG) of 9.6 µs" ([RGMII-ENC28J60]_ register MABBIPG), which is 96 bit
   times. IEEE 802.3 gives the gap as 96 bit times at every speed
-  ([IEEE8023]_ clause 4.4.2), which is 12 byte times or 96 ns at
+  ([RGMII-IEEE8023]_ clause 4.4.2), which is 12 byte times or 96 ns at
   1000 Mbit/s.
 
 Timing
@@ -474,7 +488,7 @@ Why the clock must be delayed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The transmitting chip launches its clock and its data at the same moment:
-the data changes at every clock edge ([RGMII20]_ section 3.3). If the
+the data changes at every clock edge ([RGMII-V20]_ section 3.3). If the
 receiving chip sampled the data with that clock unchanged, it would sample
 exactly while the data is changing. The clock therefore has to be delayed,
 somewhere between the two chips' flip-flops, so that each clock edge arrives
@@ -492,22 +506,24 @@ That is where the "2 ns" in every RGMII document comes from.
 
 .. wavedrom::
    :name: fig-rgmii-clock-delay
+   :alt: Timing diagram: data changing at every edge of the clock at the
+         transmitter, and a second copy of the clock delayed by 2 ns whose
+         edges fall in the middle of each data value.
    :caption: The clock-to-data relationship. Clock and data leave the
              transmitter together (edge aligned). Delaying the clock by
              2 ns, a quarter of the 8 ns period, places each clock edge in
              the middle of the data it samples.
 
    { "signal": [
-       { "name": "data",                  "wave": "x=======x",
-         "data": ["n0", "n1", "n2", "n3", "n4", "n5", "n6"],
-         "node": "" },
-       { "name": "clock at transmitter",  "wave": "p...", "period": 2,
+       { "name": "data",         "wave": "x====x",
+         "data": ["n0", "n1", "n2", "n3"] },
+       { "name": "clock sent",   "wave": "p..", "period": 2,
          "node": ".A" },
-       { "name": "clock delayed by 2 ns", "wave": "p...", "period": 2,
-         "phase": -1.5, "node": ".B" }
+       { "name": "clock + 2 ns", "wave": "p..", "period": 2,
+         "phase": -1, "node": ".B" }
      ],
      "edge": ["A|->B 2 ns"],
-     "config": { "hscale": 3 }
+     "config": { "hscale": 2 }
    }
 
 Who adds the delay
@@ -520,18 +536,18 @@ Version 1.3 (2000-12-10): delay added by the circuit board
    (TskewT). The receiving chip needs the clock to arrive 1.0 to 2.6 ns
    after the data (TskewR). The specification states that this "implies"
    that the circuit board adds 1.5 to 2.0 ns of extra trace delay to each
-   clock signal ([RGMII13]_ Table 2 and note 1).
+   clock signal ([RGMII-V13]_ Table 2 and note 1).
 
 Version 2.0 (2002-04-01): delay added inside a chip
    A chip may instead delay the clock internally. A transmitter with an
    internal delay guarantees at least 1.2 ns of setup and 1.2 ns of hold
    time at its own pins (TsetupT, TholdT), and the receiver must accept as
    little as 1.0 ns of setup and 1.0 ns of hold (TsetupR, TholdR). A device
-   with an internal delay is called "RGMII-ID" ([RGMII20]_ Table 2, note 4).
+   with an internal delay is called "RGMII-ID" ([RGMII-V20]_ Table 2, note 4).
    A device may offer both modes and still meet the specification.
 
-.. list-table:: RGMII timing at 1000 Mbit/s ([RGMII20]_ Table 2, repeated in
-                [DP83867]_ section 6.9)
+.. list-table:: RGMII timing at 1000 Mbit/s ([RGMII-V20]_ Table 2, repeated in
+                [RGMII-DP83867]_ section 6.9)
    :header-rows: 1
    :widths: 14 54 8 8 8 8
 
@@ -602,11 +618,11 @@ Version 2.0 (2002-04-01): delay added inside a chip
      - 0.75
      - ns
 
-Timing is measured at half the I/O supply voltage ([RGMII20]_ section 3.3).
+Timing is measured at half the I/O supply voltage ([RGMII-V20]_ section 3.3).
 The skew numbers are defined only for 1000 Mbit/s. At 10 and 100 Mbit/s the
 clock period is 5 or 50 times longer, so the margins are much larger; the
 KSZ9031RNX datasheet relaxes the maximum TskewR to 16 ns at 100 Mbit/s and
-160 ns at 10 Mbit/s ([KSZ9031]_ section 7.1).
+160 ns at 10 Mbit/s ([RGMII-KSZ9031]_ section 7.1).
 
 For each direction, the delay must be added **exactly once**: by the board,
 by the transmitting chip or by the receiving chip. Adding it twice moves the
@@ -631,7 +647,7 @@ adding it at all.
      - evampire delays RXC internally
 
 At the propagation delay quoted in the DP83867 layout guidelines (11 ps per
-60 mil, about 7.2 ps/mm, on standard FR-4 board material; [DP83867]_
+60 mil, about 7.2 ps/mm, on standard FR-4 board material; [RGMII-DP83867]_
 section 9.2.2.1.1), a 2 ns board delay needs about
 
 .. math::
@@ -656,14 +672,14 @@ Delay options in real transceivers
      - On or off (RGMIICTL register 0x0032 bit 1, default on). Adjustable
        from 0.25 to 4.00 ns in 0.25 ns steps (RGMIIDCTL register 0x0086
        bits 7:4); the reset value is set by pins sampled at power-up
-       ([DP83867]_ sections 7.4.1.1.2, 8.32, 8.44).
+       ([RGMII-DP83867]_ sections 7.4.1.1.2, 8.32, 8.44).
      - Same controls: RGMIICTL bit 0, RGMIIDCTL bits 3:0.
    * - Microchip KSZ9031RNX
      - No delay by default; expects the digital side to delay TXC. Its
        pad-skew registers can add at most 1.38 ns
-       ([KSZ9031]_ section 3.9.3).
+       ([RGMII-KSZ9031]_ section 3.9.3).
      - 1.2 ns typical delay by default, adjustable up to 2.58 ns with the
-       pad-skew registers ([KSZ9031]_ section 3.9.3).
+       pad-skew registers ([RGMII-KSZ9031]_ section 3.9.3).
 
 TI's application note SNLA243 gives a worked timing budget for the
 transmit path into a DP83867 with its delay set to 2.0 ns. It subtracts
@@ -671,15 +687,15 @@ transmit path into a DP83867 with its delay set to 2.0 ns. It subtracts
 I/O buffer skew, 0.1 ns of board skew and the DP83867's own input
 requirement (0.5 ns setup, 0.25 ns hold), and uses a 3.6 ns clock high time
 (45 % duty cycle) for the hold side. That leaves 0.35 ns of setup margin and
-0.2 ns of hold margin ([SNLA243]_ sections 3.2 and 3.3). The margins are
+0.2 ns of hold margin ([RGMII-SNLA243]_ sections 3.2 and 3.3). The margins are
 small even with a well-behaved transmitter.
 
 Clock frequency and duty cycle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * **Frequency.** The RGMII specification gives TXC and RXC as 125, 25 or
-  2.5 MHz "±50 ppm" ([RGMII20]_ Table 1). The 125 MHz GMII transmit clock
-  of the DP83867 is specified at ±100 ppm ([DP83867]_ section 6.10,
+  2.5 MHz "±50 ppm" ([RGMII-V20]_ Table 1). The 125 MHz GMII transmit clock
+  of the DP83867 is specified at ±100 ppm ([RGMII-DP83867]_ section 6.10,
   parameter T5). RXC follows the crystal of the device at the far end of the
   cable, so evampire is designed for a receive clock that differs from its
   own transmit clock by up to 200 ppm (two crystals each up to 100 ppm away
@@ -689,7 +705,7 @@ Clock frequency and duty cycle
   the average frequency.
 * **Duty cycle.** 45 % to 55 % at 1000 Mbit/s, so each half of the clock is
   at least 3.6 ns long. 40 % to 60 % at 10 and 100 Mbit/s. The duty cycle
-  may be stretched briefly during speed changes ([RGMII20]_ Table 2,
+  may be stretched briefly during speed changes ([RGMII-V20]_ Table 2,
   note 3).
 * **Edges.** Rise and fall times (20 % to 80 %) of at most 0.75 ns.
 
@@ -702,9 +718,9 @@ voltage.
 * **Version 1.3** uses 2.5 V CMOS levels (JEDEC JESD8-5), for the data
   signals and also for MDC and MDIO: output high at least 2.0 V, output low
   at most 0.40 V (at 1 mA), input high at least 1.7 V, input low at most
-  0.70 V ([RGMII13]_ section 4.0, Table 5).
+  0.70 V ([RGMII-V13]_ section 4.0, Table 5).
 * **Version 2.0** changed this to 1.5 V HSTL Class 1 levels (HSTL is a
-  1.5 V signalling standard, JEDEC JESD8-6) ([RGMII20]_ section 4.0).
+  1.5 V signalling standard, JEDEC JESD8-6) ([RGMII-V20]_ section 4.0).
 * **Real transceivers** use neither choice exclusively. Their RGMII pins run
   from a separate I/O supply that the board designer chooses.
 
@@ -718,10 +734,10 @@ voltage.
    * - TI DP83867
      - 3.3 V, 2.5 V or 1.8 V (each ±5 %)
      - Input high ≥ 1.7 V, input low ≤ 0.7 V. Output high ≥ 2.0 V and
-       output low ≤ 0.6 V at 4 mA ([DP83867]_ sections 5, 6.3, 6.5).
+       output low ≤ 0.6 V at 4 mA ([RGMII-DP83867]_ sections 5, 6.3, 6.5).
    * - Microchip KSZ9031RNX
      - 3.3 V, 2.5 V or 1.8 V
-     - Input high ≥ 2.0 V, input low ≤ 1.3 V ([KSZ9031]_ section 2, DVDDH
+     - Input high ≥ 2.0 V, input low ≤ 1.3 V ([RGMII-KSZ9031]_ section 2, DVDDH
        pins, and section 6).
 
 Both devices accept 3.3 V, which is the level evampire uses (see
@@ -732,23 +748,23 @@ Board design
 
 * **Trace impedance and length.** The DP83867 layout guidelines ask for
   50 Ω traces, kept shorter than 2 inches (51 mm) where possible and never
-  longer than 6 inches (152 mm) ([DP83867]_ section 9.2.2.1.1).
+  longer than 6 inches (152 mm) ([RGMII-DP83867]_ section 9.2.2.1.1).
 * **Length matching.** All transmit traces must match each other in length,
   and so must all receive traces. The DP83867 guidelines limit the skew
   within TXD[3:0] and within RXD[3:0] to 11 ps, about 60 mil (1.5 mm) of
-  trace ([DP83867]_ sections 9.2.2.1.1 and 9.4.1).
+  trace ([RGMII-DP83867]_ sections 9.2.2.1.1 and 9.4.1).
 * **Source termination.** A trace a few centimetres long is long compared
   with sub-nanosecond edges, so it behaves as a transmission line.
   Reflections are controlled by making the driver's
   output resistance plus any series resistor equal to the trace impedance,
   with the resistor placed next to the driving pin. The DP83867 trims its
   own RGMII output impedance to about 50 Ω (adjustable from about 35 to
-  70 Ω) so that it needs no external resistor ([DP83867]_ register 0x0170,
+  70 Ω) so that it needs no external resistor ([RGMII-DP83867]_ register 0x0170,
   IO_IMPEDANCE_CTRL). evampire's outputs (TXC, TX_CTL, TXD) need a series
   resistor whose value depends on the output resistance of the gf180mcu pad,
   which is not given in the I/O library documentation and must be found by
   simulation or measurement.
-* **Avoid vias and stubs** on the RGMII traces ([DP83867]_ section 9.4.1).
+* **Avoid vias and stubs** on the RGMII traces ([RGMII-DP83867]_ section 9.4.1).
 
 Management interface (MDC and MDIO)
 -----------------------------------
@@ -756,19 +772,19 @@ Management interface (MDC and MDIO)
 Each transceiver has a few dozen 16-bit registers that report its status
 (is a cable connected, at what speed, in which duplex mode) and control its
 settings (reset, speed choice, clock delays). They are read and written over
-a two-wire serial interface defined in Clause 22 of IEEE 802.3 [IEEE8023]_:
+a two-wire serial interface defined in Clause 22 of IEEE 802.3 [RGMII-IEEE8023]_:
 
 MDC
    Management clock, always driven by evampire. Data is sampled on its
-   rising edge ([DP83867]_ section 7.4.2). It does not need to run
+   rising edge ([RGMII-DP83867]_ section 7.4.2). It does not need to run
    continuously.
 
 MDIO
    Management data, bidirectional. Driven by evampire, except during the
    data part of a read, when the transceiver drives it. A pull-up resistor
    keeps it high when nobody drives it: 2.2 kΩ for the DP83867
-   ([DP83867]_ section 7.4.2), 1.0 kΩ to 4.7 kΩ for the KSZ9031RNX
-   ([KSZ9031]_ pin description of MDIO).
+   ([RGMII-DP83867]_ section 7.4.2), 1.0 kΩ to 4.7 kΩ for the KSZ9031RNX
+   ([RGMII-KSZ9031]_ pin description of MDIO).
 
 Several transceivers can share one MDC/MDIO pair. Each transceiver has an
 address set by pins sampled at power-up, and responds only to frames carrying
@@ -778,16 +794,16 @@ configuration pins.
 
 Clock rate
    Clause 22 sets a minimum MDC period of 400 ns, that is at most 2.5 MHz.
-   The Linux MDIO driver uses this limit ([LINUX-MDIO]_ comment on
+   The Linux MDIO driver uses this limit ([RGMII-LINUX-MDIO]_ comment on
    MDIO_DELAY), and the KSZ9031RNX datasheet gives 2.5 MHz as the typical
-   rate ([KSZ9031]_ Table 7-3). Many transceivers accept more (the DP83867
-   up to 25 MHz, [DP83867]_ section 6.8), but evampire uses 2.5 MHz or less
+   rate ([RGMII-KSZ9031]_ Table 7-3). Many transceivers accept more (the DP83867
+   up to 25 MHz, [RGMII-DP83867]_ section 6.8), but evampire uses 2.5 MHz or less
    so that any transceiver works. One register access takes 64 MDC cycles,
    about 26 µs at 2.5 MHz, which is far faster than the link status changes.
 
 Frame format
    Every access is one 64-bit frame, sent most significant bit first within
-   each field ([KSZ9031]_ Table 3-8; bit order as in [LINUX-MDIO]_):
+   each field ([RGMII-KSZ9031]_ Table 3-8; bit order as in [RGMII-LINUX-MDIO]_):
 
 .. list-table:: MDIO frame fields (Clause 22)
    :header-rows: 1
@@ -822,24 +838,44 @@ Frame format
 
 .. wavedrom::
    :name: fig-rgmii-mdio-read
-   :caption: An MDIO read. evampire drives the preamble, start, operation and
-             addresses; during the turnaround it releases the line, and the
-             transceiver then drives a 0 followed by the 16 data bits. Breaks
-             mark parts of the 32-bit preamble and of the data that are not
-             drawn.
+   :alt: Timing diagram, first part of an MDIO read: MDC clock, and MDIO
+         driven by evampire with the end of the preamble, start bits 01,
+         operation bits 10 and the 5-bit PHY address.
+   :caption: An MDIO read, first part. evampire drives the end of the 32-bit
+             preamble of ones (the break marks the part not drawn), the
+             start bits 01, the operation bits 10 (read) and the 5-bit PHY
+             address.
 
    { "signal": [
-       { "name": "MDC",
-         "wave": "p..|.......................|..." },
-       { "name": "MDIO",
-         "wave": "1..|.01.0=....=....z0=.....|.z.",
-         "data": ["PHYAD", "REGAD", "DATA (16 bits)"] },
-       { "name": "driven by",
-         "wave": "3..|...............z4......|.z.",
+       { "name": "MDC",       "wave": "p.|........." },
+       { "name": "MDIO",      "wave": "1.|01.0=....",
+         "data": ["PHYAD"] },
+       { "name": "driven by", "wave": "3.|.........",
+         "data": ["evampire"] },
+       { "name": "field",     "wave": "2.|4.5.6....",
+         "data": ["preamble", "ST", "OP", "PHYAD"] }
+     ],
+     "config": { "hscale": 1 }
+   }
+
+.. wavedrom::
+   :name: fig-rgmii-mdio-read-2
+   :alt: Timing diagram, second part of an MDIO read: evampire drives the
+         5-bit register address, releases MDIO for one bit, then the
+         transceiver drives a 0 followed by the 16 data bits.
+   :caption: An MDIO read, second part. evampire drives the 5-bit register
+             address, then releases the line for the first turnaround bit.
+             The transceiver drives a 0 for the second turnaround bit and
+             then the 16 data bits (the break marks the bits not drawn).
+
+   { "signal": [
+       { "name": "MDC",       "wave": "p...........|.." },
+       { "name": "MDIO",      "wave": "=....z0=....|z.",
+         "data": ["REGAD", "DATA (16 bits)"] },
+       { "name": "driven by", "wave": "3....z4.....|z.",
          "data": ["evampire", "transceiver"] },
-       { "name": "field",
-         "wave": "2..|.5.6.7....8....9.4.....|.x.",
-         "data": ["preamble", "ST", "OP", "PHYAD", "REGAD", "TA", "DATA"] }
+       { "name": "field",     "wave": "2....3.4....|x.",
+         "data": ["REGAD", "TA", "DATA"] }
      ],
      "config": { "hscale": 1 }
    }
@@ -854,9 +890,9 @@ name for 1000 Mbit/s over the usual four-pair copper cable.
 
 Registers 0 to 15 are defined by IEEE 802.3 and have the same meaning in
 every transceiver; registers 16 to 31 are specific to each manufacturer
-([KSZ9031]_ section 4.2). The bit definitions below are taken from the
-DP83867 datasheet ([DP83867]_ sections 8.1 to 8.13) and agree with the
-KSZ9031RNX datasheet ([KSZ9031]_ section 4.2).
+([RGMII-KSZ9031]_ section 4.2). The bit definitions below are taken from the
+DP83867 datasheet ([RGMII-DP83867]_ sections 8.1 to 8.13) and agree with the
+KSZ9031RNX datasheet ([RGMII-KSZ9031]_ section 4.2).
 
 .. list-table:: Standard transceiver registers used by evampire
    :header-rows: 1
@@ -902,11 +938,11 @@ offered by both ends (in registers 4 and 9 at this end, 5 and 10 at the far
 end). Most transceivers also report the result directly in a
 manufacturer-specific register, for example register 0x11 of the DP83867
 (bits 15:14 speed, bit 13 duplex, bit 11 "speed and duplex resolved",
-bit 10 link up; [DP83867]_ section 8.15).
+bit 10 link up; [RGMII-DP83867]_ section 8.15).
 
 Registers above 15, and most of the extended registers reached indirectly
 through registers 13 and 14 (0x0D and 0x0E), are specific to each
-transceiver model ([DP83867]_ section 8.12, [KSZ9031]_ section 3.9.3). The clock
+transceiver model ([RGMII-DP83867]_ section 8.12, [RGMII-KSZ9031]_ section 3.9.3). The clock
 delay settings described in `Delay options in real transceivers`_ are in
 this space, so the processor's start-up code depends on which transceiver is
 fitted. It identifies the transceiver from registers 2 and 3.
@@ -957,8 +993,8 @@ Pins
 
 The 125 MHz reference clock can come from an oscillator or from a clock
 output of one of the transceivers: the DP83867 has a 25 MHz or 125 MHz clock
-output (CLK_OUT, [DP83867]_ sections 1 and 7.3) and the KSZ9031RNX a 125 MHz
-reference clock output (CLK125_NDO, [KSZ9031]_ section 3.9).
+output (CLK_OUT, [RGMII-DP83867]_ sections 1 and 7.3) and the KSZ9031RNX a 125 MHz
+reference clock output (CLK125_NDO, [RGMII-KSZ9031]_ section 3.9).
 
 I/O voltage
 ~~~~~~~~~~~
@@ -967,23 +1003,23 @@ evampire runs its RGMII and MDIO pins at **3.3 V**.
 
 * The wafer.space gf180mcu project template offers its I/O pad libraries,
   including the foundry library gf180mcu_fd_io, at 5 V or 3.3 V
-  ([WAFERSPACE]_). With gf180mcu_fd_io the I/O supply and the core supply
+  ([RGMII-WAFERSPACE]_). With gf180mcu_fd_io the I/O supply and the core supply
   are connected together, so the core logic also runs at 3.3 V.
 * The transceivers' RGMII pins run at 3.3 V at most. 5 V signalling is
   outside their ratings: with its 3.3 V I/O option the DP83867 allows at
-  most 3.8 V on its RGMII pins ([DP83867]_ section 6.1), and the KSZ9031RNX
-  allows at most 5.0 V on any input ([KSZ9031]_ section 5.1), below the
+  most 3.8 V on its RGMII pins ([RGMII-DP83867]_ section 6.1), and the KSZ9031RNX
+  allows at most 5.0 V on any input ([RGMII-KSZ9031]_ section 5.1), below the
   5.5 V upper limit of a 5 V supply.
 * The gf180mcu_fd_io library is also characterised with a 2.5 V supply
   (liberty corners 2v25, 2v50 and 2v75 for gf180mcu_fd_io__bi_t,
-  [GF180IO]_), but the wafer.space template does not list 2.5 V as an
+  [RGMII-GF180IO]_), but the wafer.space template does not list 2.5 V as an
   option, and the gf180mcu_fd_sc_mcu9t5v0 standard cells are characterised
-  only around 1.8 V, 3.3 V and 5 V ([GF180SC]_). Because this pad library
+  only around 1.8 V, 3.3 V and 5 V ([RGMII-GF180SC]_). Because this pad library
   ties the core supply to the I/O supply, 2.5 V is not used.
 
 The gf180mcu_fd_io datasheet gives input thresholds of 0.8 V (low) and
 2.0 V (high) and output currents for a 4.5 V to 5.5 V supply only
-([GF180IO]_ "Electrical Characteristics"). The thresholds at 3.3 V are
+([RGMII-GF180IO]_ "Electrical Characteristics"). The thresholds at 3.3 V are
 **to be checked** against the 3.3 V output levels of the chosen transceiver
 (for example output high at least 2.0 V and output low at most 0.6 V for the
 DP83867).
@@ -993,7 +1029,7 @@ Pad speed
 
 The table gives the delay and edge time of the gf180mcu_fd_io__bi_t pad at
 3.3 V, taken from the liberty timing tables of the I/O library
-([GF180IO]_), for the 16 mA drive setting (PDRV1 = PDRV0 = 1), fast slew
+([RGMII-GF180IO]_), for the 16 mA drive setting (PDRV1 = PDRV0 = 1), fast slew
 (SL = 0), a fast input edge (0.08 ns) and a load of about 9 pF (the
 table point 8.98 pF, 8.85 pF and 9.10 pF at the three corners), which
 covers a short trace and one transceiver input. The input delay is given
@@ -1040,12 +1076,46 @@ What this means:
   checked with a board-level simulation of the pad, trace and transceiver
   input.
 
+These limits belong to the standard gf180mcu_fd_io cells, which are
+general-purpose 5 V pads, not to the gf180mcu process.
+
+Standard or custom I/O cells
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whether the RGMII pins use the standard pad cells or a custom I/O cell is an
+open design decision.
+
+* **Standard cells (gf180mcu_fd_io__bi_t).** Already characterised and
+  supported by the wafer.space template. 10 and 100 Mbit/s work with
+  margin. At 1000 Mbit/s the edge times and rise/fall imbalance above leave
+  little or no margin, which board simulation must confirm.
+* **A custom I/O cell.** Possible improvements are a stronger or faster
+  output driver, an output impedance set to match a 50 Ω trace (on-chip
+  series termination, removing the external resistor), lower output
+  voltage swing (2.5 V or 1.8 V signalling, which both transceivers above
+  support and which stays within the ratings of the 3.3 V transistors),
+  balanced rising and falling delays, and input paths matched between RXC
+  and RXD. Such a cell needs, at minimum, a defined drive strength or
+  output impedance, a defined edge rate at the expected load, ESD protection
+  equivalent to the standard pads, and characterisation (liberty timing and
+  a board-level model) at all corners.
+
+Existing open work that a custom cell can build on:
+
+* gf180mcu_ocd_io, a community pad library listed by wafer.space as
+  silicon-verified, which keeps the I/O and core supplies separate (for
+  example I/O at 5 V and core at 3.3 V) ([RGMII-WAFERSPACE]_). It is used
+  in an open padframe design ([RGMII-OCDPADFRAME]_).
+* Schematics of the gf180mcu_fd_io__bi_24t pad, reverse-engineered from the
+  published layout; the author notes that they may contain errors
+  ([RGMII-IORE]_).
+
 Transmit path: generating both-edge data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The gf180mcu standard-cell libraries have flip-flops that load on the rising
 edge (dffq) and on the falling edge (dffnq), and a two-input selector
-(mux2) ([GF180SC]_). Each RGMII output is built from these, as shown in
+(mux2) ([RGMII-GF180SC]_). Each RGMII output is built from these, as shown in
 :numref:`fig-rgmii-tx-ddr`.
 
 .. _fig-rgmii-tx-ddr:
@@ -1074,7 +1144,7 @@ to each other and routed alike. The paths from the byte register to
 flip-flop A are half-cycle paths (4 ns) and must be kept short; at the slow
 corner (SS, 125 °C, 3.0 V) a gf180mcu_fd_sc_mcu9t5v0 dffq_1 flip-flop alone
 has a clock-to-output delay of about 1.4 to 1.5 ns with a light load
-([GF180SC]_ liberty tables).
+([RGMII-GF180SC]_ liberty tables).
 
 An alternative output stage uses one rising-edge and one falling-edge
 flip-flop whose outputs are combined by an XOR gate. Either works; the
@@ -1112,7 +1182,7 @@ transceiver, evampire must accept data that is valid only 1.0 ns before and
 1.0 ns after each RXC edge (TsetupR, TholdR). Inside the chip, any delay on
 the clock path that the data path does not have moves the sampling point
 later and eats into the 1.0 ns hold time. With a slow-corner buffer delay of
-about 0.36 ns per stage (gf180mcu_fd_sc_mcu9t5v0 buf_2, [GF180SC]_), two
+about 0.36 ns per stage (gf180mcu_fd_sc_mcu9t5v0 buf_2, [RGMII-GF180SC]_), two
 stages of clock buffering would already use most of it. The clock buffer is
 therefore balanced by an equal delay in the data paths, or compensated by
 setting a slightly shorter delay in the transceiver (see the next section).
@@ -1135,7 +1205,7 @@ The reasons are:
 * **gf180mcu has no accurate on-chip delay.** The delay of a standard cell
   changes by about a factor of three between the fast and slow corners
   (gf180mcu_fd_sc_mcu9t5v0 buf_2 with a light load: about 0.12 ns at FF,
-  0.19 ns at TT and 0.36 ns at SS, [GF180SC]_). A chain of cells that gives
+  0.19 ns at TT and 0.36 ns at SS, [RGMII-GF180SC]_). A chain of cells that gives
   2 ns at the typical corner would give about 1.3 ns at the fast corner and
   3.8 ns at the slow corner, outside the 1.0 to 2.6 ns window of TskewR.
   A delay that tracks the clock period would need a delay-locked loop or a
@@ -1150,7 +1220,7 @@ The reasons are:
 
 This choice limits which transceivers can be used without board changes.
 The DP83867 supports it directly. The KSZ9031RNX can add only up to 1.38 ns
-on its transmit clock input ([KSZ9031]_ section 3.9.3), so with that part
+on its transmit clock input ([RGMII-KSZ9031]_ section 3.9.3), so with that part
 the board must add the rest of the transmit delay (about 0.6 ns or more,
 roughly 85 mm of extra TXC trace at 7.2 ps/mm). The processor's start-up code
 sets the delay registers of the fitted transceiver over MDIO, so the
@@ -1305,7 +1375,7 @@ the frame is already being sent, it cannot be dropped instead.
 Summary of evampire-specific numbers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. list-table::
+.. list-table:: evampire-specific numbers and how far they are confirmed
    :header-rows: 1
    :widths: 50 25 25
 
@@ -1314,10 +1384,10 @@ Summary of evampire-specific numbers
      - Status
    * - RGMII and MDIO I/O voltage
      - 3.3 V
-     - Offered by the wafer.space template ([WAFERSPACE]_)
+     - Offered by the wafer.space template ([RGMII-WAFERSPACE]_)
    * - Pad delay and edge times at 3.3 V
      - See `Pad speed`_
-     - From the gf180mcu_fd_io liberty files ([GF180IO]_)
+     - From the gf180mcu_fd_io liberty files ([RGMII-GF180IO]_)
    * - Liberty edge time measurement thresholds
      - Not stated in the cell files
      - To be checked
@@ -1328,75 +1398,86 @@ Summary of evampire-specific numbers
      - Not given in the datasheet
      - To be checked
    * - Signal quality at the transceiver input at 1000 Mbit/s
-     - Edge times up to about 1.9 ns
+     - Edge times up to about 1.9 ns with the standard pad cells
      - To be checked by board simulation
    * - TXC duty cycle at the slow corner
-     - About 53 % from pad rise/fall imbalance alone
+     - About 53 % from the standard pad cells' rise/fall imbalance alone
      - To be checked including the internal clock
+   * - Standard pad cells or a custom I/O cell for the RGMII pins
+     - See `Standard or custom I/O cells`_
+     - Open design decision
    * - Receive capture setup and hold margins
      - Window of 1.0 ns before and after each RXC edge at the pins
      - To be checked by static timing analysis
    * - Standard-cell delay spread FF / TT / SS (buf_2, light load)
      - About 0.12 / 0.19 / 0.36 ns
-     - From the gf180mcu_fd_sc_mcu9t5v0 liberty files ([GF180SC]_)
+     - From the gf180mcu_fd_sc_mcu9t5v0 liberty files ([RGMII-GF180SC]_)
 
 References
 ----------
 
-.. [RGMII13] Hewlett-Packard and others, *Reduced Gigabit Media Independent
+.. [RGMII-V13] Hewlett-Packard and others, *Reduced Gigabit Media Independent
    Interface (RGMII)*, version 1.3, 2000-12-10. Originally published at
-   http://www.hp.com/rnd/pdfs/RGMIIv1_3.pdf (available through the Internet
-   Archive).
+   www.hp.com/rnd/pdfs/RGMIIv1_3.pdf; archived copy:
+   http://web.archive.org/web/20160303212629/http://www.hp.com/rnd/pdfs/RGMIIv1_3.pdf
 
-.. [RGMII20] Hewlett-Packard and others, *Reduced Gigabit Media Independent
+.. [RGMII-V20] Hewlett-Packard and others, *Reduced Gigabit Media Independent
    Interface (RGMII)*, version 2.0, 2002-04-01. Originally published at
-   http://www.hp.com/rnd/pdfs/RGMIIv2_0_final_hp.pdf (available through the
-   Internet Archive).
+   www.hp.com/rnd/pdfs/RGMIIv2_0_final_hp.pdf; archived copy:
+   http://web.archive.org/web/20160303171328/http://www.hp.com/rnd/pdfs/RGMIIv2_0_final_hp.pdf
 
-.. [IEEE8023] IEEE Std 802.3-2022, *IEEE Standard for Ethernet*. Clause 3
+.. [RGMII-IEEE8023] IEEE Std 802.3-2022, *IEEE Standard for Ethernet*. Clause 3
    (frame format), Clause 4 (gap between frames), Clause 22 (MII and the
    management interface), Clause 35 (GMII). The text of the standard was not
    consulted directly for this page; the values quoted come from the vendor
    documents listed here, which implement and restate it.
    https://standards.ieee.org/ieee/802.3/10422/
 
-.. [DP83867] Texas Instruments, *DP83867IR/CR Robust, High Immunity
+.. [RGMII-DP83867] Texas Instruments, *DP83867IR/CR Robust, High Immunity
    10/100/1000 Ethernet Physical Layer Transceiver*, datasheet SNLS484J,
    February 2015, revised June 2026.
    https://www.ti.com/lit/ds/symlink/dp83867ir.pdf
 
-.. [SNLA243] Texas Instruments, *RGMII Interface Timing Budgets*,
+.. [RGMII-SNLA243] Texas Instruments, *RGMII Interface Timing Budgets*,
    application report SNLA243, October 2015.
    https://www.ti.com/lit/an/snla243/snla243.pdf
 
-.. [KSZ9031] Microchip Technology, *KSZ9031RNX Gigabit Ethernet Transceiver
+.. [RGMII-KSZ9031] Microchip Technology, *KSZ9031RNX Gigabit Ethernet Transceiver
    with RGMII Support*, datasheet DS00002117F, 2016–2017.
    https://ww1.microchip.com/downloads/en/DeviceDoc/00002117F.pdf
 
-.. [ENC28J60] Microchip Technology, *ENC28J60 Stand-Alone Ethernet
+.. [RGMII-ENC28J60] Microchip Technology, *ENC28J60 Stand-Alone Ethernet
    Controller with SPI Interface*, datasheet DS39662E, 2006–2012. Section 5
    (Ethernet overview) and register MABBIPG.
    https://ww1.microchip.com/downloads/en/DeviceDoc/39662e.pdf
 
-.. [LAN91C111] Microchip Technology (formerly SMSC), *LAN91C111 10/100
+.. [RGMII-LAN91C111] Microchip Technology (formerly SMSC), *LAN91C111 10/100
    Non-PCI Ethernet Single Chip MAC + PHY*, datasheet DS00002276A,
    2011–2016. Section 7.5.4 (MII packet data) and section 7.7.4.3 (clock
    recovery at 10 Mbit/s).
    https://ww1.microchip.com/downloads/en/DeviceDoc/00002276A.pdf
 
-.. [LINUX-MDIO] The Linux kernel, *drivers/net/mdio/mdio-bitbang.c*
+.. [RGMII-LINUX-MDIO] The Linux kernel, *drivers/net/mdio/mdio-bitbang.c*
    (software implementation of the Clause 22 management interface).
    https://github.com/torvalds/linux/blob/master/drivers/net/mdio/mdio-bitbang.c
 
-.. [GF180IO] GlobalFoundries and Google, *gf180mcu_fd_io* I/O cell library
+.. [RGMII-GF180IO] GlobalFoundries and Google, *gf180mcu_fd_io* I/O cell library
    (datasheet and liberty timing files, cell gf180mcu_fd_io__bi_t).
    https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io
 
-.. [GF180SC] GlobalFoundries and Google, *gf180mcu_fd_sc_mcu9t5v0*
+.. [RGMII-GF180SC] GlobalFoundries and Google, *gf180mcu_fd_sc_mcu9t5v0*
    9-track standard-cell library (liberty timing files, cells buf_2 and
    dffq_1).
    https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 
-.. [WAFERSPACE] wafer.space, *gf180mcu Project Template* (README, sections
+.. [RGMII-WAFERSPACE] wafer.space, *gf180mcu Project Template* (README, sections
    "SCL - Standard Cell Libraries" and "PAD - I/O Pad Libraries").
    https://github.com/wafer-space/gf180mcu-project-template
+
+.. [RGMII-OCDPADFRAME] R. Timothy Edwards, *gf180mcu_caravel_padframe*,
+   "Caravel harness chip padframe using gf180mcu_ocd_io".
+   https://github.com/RTimothyEdwards/gf180mcu_caravel_padframe
+
+.. [RGMII-IORE] *gf180mcu_io_re*, "Reverse-engineered schematics of gf180MCU
+   IO pad cells (currently only gf180mcu_fd_io__bi_24t)".
+   https://github.com/89Mods/gf180mcu_io_re
