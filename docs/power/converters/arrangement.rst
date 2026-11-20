@@ -19,7 +19,7 @@ voltage at which that power is allowed.
 Input converter: Power over Ethernet in
    Takes the powered device input, after the powered device front end, to
    the board's power bus (:ref:`power-flow`). Its input current is largest
-   at the lowest input voltage.
+   at the lowest input voltage (:numref:`tab-conv-input-ranges`).
 
 .. list-table:: Input converter: powered device input by type
    :name: tab-conv-input-ranges
@@ -58,7 +58,7 @@ Power and voltages: :clause:`33` and :clause:`145`, as tabulated on
 High-voltage converter: Power over Ethernet out
    Produces the power sourcing equipment voltage from the bus. The
    standard fixes a voltage window for each type; its output current is
-   largest at the bottom of the window.
+   largest at the bottom of the window (:numref:`tab-conv-hv-ranges`).
 
 .. list-table:: High-voltage converter: power sourcing equipment output by type
    :name: tab-conv-hv-ranges
@@ -97,7 +97,8 @@ Voltages: [CONV-EA-BT]_ (Table 15); power: :clause:`145` as tabulated on
 USB converter: USB Power Delivery out, and in
    As a source it produces the negotiated VBUS voltage (VBUS is the USB
    power wire). As a sink the same port delivers the negotiated voltage to
-   the board. Both directions span the same range.
+   the board. Both directions span the same range
+   (:numref:`tab-conv-usb-ranges`).
 
 .. list-table:: USB Type-C port voltage and current in each USB Power Delivery range
    :name: tab-conv-usb-ranges

@@ -328,6 +328,9 @@ Isolated circuits above the substrate
 What each step needs from the process
 -------------------------------------
 
+:numref:`tab-conv-process-needs` lists what each integration step needs
+from the gf180mcu process.
+
 .. list-table:: Process needs for each integration step
    :name: tab-conv-process-needs
    :header-rows: 1

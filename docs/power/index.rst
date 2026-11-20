@@ -17,7 +17,7 @@ The pages in this section explain each part of the power path:
 :doc:`usb-pd`
    The circuits that let the processor carry out the USB Power Delivery
    negotiation in software on the configuration channel.
-:doc:`converters`
+:doc:`converters/index`
    How the switching voltage converters in the power path work, and what
    evampire needs to control them.
 
@@ -103,7 +103,7 @@ The software first works out the power left for the outputs:
 
 where :math:`P_\text{in}` is the power granted on the input port,
 :math:`\eta` is the efficiency of the voltage converters (see
-:doc:`converters`), and :math:`P_\text{board}` is the power the board itself
+:doc:`converters/index`), and :math:`P_\text{board}` is the power the board itself
 uses. All three are in watts, except :math:`\eta`, which is a fraction.
 
 It then builds the offer for each output port:
@@ -271,7 +271,7 @@ software to react.
 evampire also controls the voltage converters: the input converter, the USB
 converter and the high-voltage converter. Which converter parts are external
 in each board configuration is given in :numref:`tab-power-board-configs`.
-:doc:`converters` explains how these converters work and how more of each
+:doc:`converters/index` explains how these converters work and how more of each
 can move onto the chip.
 
 Many of these circuits handle voltages of up to 57 V on an Ethernet cable
@@ -285,7 +285,7 @@ Custom structures, such as transistors stacked in isolated wells,
 drain-extended transistors and high-voltage capacitors, extend the voltages
 that circuits on the chip can handle (see :ref:`the process requirements <req-process>`). Which
 functions are built on evampire and which use external parts is chosen per
-function. The pages on :doc:`poe`, :doc:`usb-pd` and :doc:`converters`
+function. The pages on :doc:`poe`, :doc:`usb-pd` and :doc:`converters/index`
 analyse the choice for each standard.
 
 .. [#gf180-supply] `gf180mcu design manual, section 14.1, "Power supply
@@ -306,4 +306,4 @@ analyse the choice for each standard.
 
    poe
    usb-pd
-   converters
+   converters/index
