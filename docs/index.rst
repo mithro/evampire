@@ -21,5 +21,6 @@ standards.
    :caption: Contents
 
    overview
+   architecture/index
    ethernet/index
    power/index

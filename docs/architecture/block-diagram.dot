@@ -1,0 +1,101 @@
+// evampire block diagram.
+// Bold arrows: Ethernet frame data. Dashed arrows: control.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph evampire {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.3,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.4];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    subgraph cluster_ext_a {
+        label="Off chip: port A"; style="dashed"; color="#888888";
+        rj45_a [label="RJ45\nsocket A", fillcolor="#ffffff"];
+        mag_a  [label="Magnetics", fillcolor="#ffffff"];
+        phy_a  [label="Ethernet\ntransceiver A", fillcolor="#ffffff"];
+    }
+
+    subgraph cluster_ext_b {
+        label="Off chip: port B"; style="dashed"; color="#888888";
+        phy_b  [label="Ethernet\ntransceiver B", fillcolor="#ffffff"];
+        mag_b  [label="Magnetics", fillcolor="#ffffff"];
+        rj45_b [label="RJ45\nsocket B", fillcolor="#ffffff"];
+    }
+
+    subgraph cluster_chip {
+        label="evampire"; style="rounded,bold"; color="#1f4e79";
+        fontsize=14;
+
+        rgmii_a [label="RGMII\ninterface A", fillcolor="#dbe8f5"];
+        rgmii_b [label="RGMII\ninterface B", fillcolor="#dbe8f5"];
+
+        subgraph cluster_fwd {
+            label="Cut-through forwarding"; style="rounded";
+            color="#5b9bd5";
+            fifo_ab [label="Rate-matching\nbuffer A to B"];
+            mux_a   [label="Output\nselector A"];
+            mux_b   [label="Output\nselector B"];
+            fifo_ba [label="Rate-matching\nbuffer B to A"];
+        }
+
+        subgraph cluster_int {
+            label="Internal port"; style="rounded"; color="#70ad47";
+            filt  [label="Address filter\nand checksum\ncheck"];
+            rxbuf [label="Receive frame\nbuffer (SRAM)"];
+            txbuf [label="Transmit frame\nbuffer (SRAM)"];
+            txgen [label="Start pattern\nand checksum\ngenerator"];
+        }
+
+        subgraph cluster_cpu {
+            label="Microcontroller"; style="rounded"; color="#ed7d31";
+            mem  [label="Program and\ndata memory", fillcolor="#fbe5d6"];
+            cpu  [label="RISC-V core\n(32-bit)", fillcolor="#fbe5d6"];
+            mdio [label="Transceiver\nconfiguration\n(to A and B)", fillcolor="#fbe5d6"];
+            pwr  [label="Power\nnegotiation", fillcolor="#fbe5d6"];
+        }
+
+        clk [label="Clock and reset\n(125 MHz)", fillcolor="#e2e2e2"];
+    }
+
+    // Column placement, left to right.
+    { rank=same; fifo_ab; mux_a; filt; txgen; mem; }
+    { rank=same; rxbuf; txbuf; cpu; clk; }
+    { rank=same; mux_b; fifo_ba; mdio; pwr; }
+
+    // Cable side.
+    rj45_a -> mag_a  [dir=both];
+    mag_a  -> phy_a  [dir=both];
+    phy_a  -> rgmii_a [dir=both, label="RGMII", penwidth=2];
+    rgmii_b -> phy_b [dir=both, label="RGMII", penwidth=2];
+    phy_b  -> mag_b  [dir=both];
+    mag_b  -> rj45_b [dir=both];
+
+    // Forwarding, A to B.
+    rgmii_a -> fifo_ab [penwidth=2];
+    fifo_ab -> mux_b   [penwidth=2];
+    mux_b   -> rgmii_b [penwidth=2];
+
+    // Forwarding, B to A.
+    fifo_ba -> rgmii_b [penwidth=2, dir=back];
+    mux_a   -> fifo_ba [penwidth=2, dir=back];
+    rgmii_a -> mux_a   [penwidth=2, dir=back];
+
+    // Frames copied to the processor.
+    fifo_ab -> filt;
+    filt    -> fifo_ba [dir=back];
+    filt    -> rxbuf;
+    rxbuf   -> cpu;
+
+    // Frames sent by the processor.
+    txbuf -> cpu [dir=back];
+    txgen -> txbuf [dir=back];
+    txgen -> mux_b;
+    txgen -> mux_a;
+
+    // Control.
+    mem  -> cpu  [dir=both];
+    cpu  -> mdio [style=dashed];
+    cpu  -> pwr  [style=dashed];
+}
