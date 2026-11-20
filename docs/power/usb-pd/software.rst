@@ -1,344 +1,351 @@
-What USB Power Delivery needs from software and hardware
-========================================================
+.. _usbpd-software:
 
-What the processor must do to send and receive messages in software, and which hardware helpers reduce that.
+What USB Power Delivery needs from the processor
+================================================
 
-Implementing USB Power Delivery in software
--------------------------------------------
+The processor time, sampling rate, edge accuracy and reply deadlines that
+sending and receiving :term:`USB Power Delivery` messages in software needs,
+and the hardware helper that removes each need.
 
-The :ref:`requirement <requirements>` is that USB Power Delivery runs mostly
-in software on the RISC-V processor, with dedicated digital hardware only
-where software cannot meet the timing. This section starts from the absolute
-minimum hardware, works out what software then has to do and how fast, and
-adds a helper only where the numbers show software is not enough.
+USB Power Delivery runs mostly in software on the RISC-V processor, with
+digital helpers only where software cannot meet the timing
+(:ref:`req-power-bridging`). The processor core and its clock are open
+(:ref:`req-processor`), so each need is given as a function of its
+parameters. A core meets an instruction rate when its clock frequency
+divided by its average
+:wikipedia:`cycles per instruction <Cycles_per_instruction>` on that code is
+at least that rate. The USB serial port uses the same method for USB data
+(:doc:`/usb-serial/software-cost`).
 
-Baseline: analog front end and plain input and output bits
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The instruction counts are estimates for hand-written
+:wikipedia:`assembly <Assembly_language>` in RV32I, the 32-bit base RISC-V
+instruction set (:std:`RISC-V ISA <riscv-unpriv>`), to be confirmed by
+implementation.
 
-The minimum hardware per port is the analog front end described in
-`Analog blocks`_ (:numref:`fig-usbpd-port-blocks`: switchable Rp, Rd and
-dead-battery Rd, VCONN switch, comparators, BMC driver) connected to plain
-processor-visible bits:
+Software does all the digital work in the simplest design
+---------------------------------------------------------
 
-* outputs: Rp level and enable, Rd enable, VCONN enable per CC pin, driver
-  enable and driver data, comparator threshold selection;
-* inputs: the comparator outputs.
+The minimum hardware per port is the analogue front end
+(:ref:`usbpd-analogue`), connected to plain bits that the processor reads and
+writes:
 
-Everything else is firmware: BMC encoding and decoding, 4b5b, CRC-32, SOP
-detection, GoodCRC generation, retries, all timers, the Type-C attach,
-toggling, Try.SRC and Try.SNK state machines, and the PD protocol and policy
-including power role swap, source capabilities and cable discovery.
+* outputs: Rp level and enable, Rd enable, VCONN enable for each CC pin,
+  driver enable, driver data and comparator threshold selection;
+* inputs: the :term:`comparator` outputs.
 
-The time scales are very different (:numref:`tab-usbpd-timescales`):
+Software does the rest: :term:`BMC` encoding and decoding
+(:ref:`usbpd-bmc`), :wikipedia:`4B5B` coding, the CRC-32 and the start of
+packet (:ref:`usbpd-packets`), the :term:`GoodCRC` reply, retries and all
+timers, the attach state machines, and the protocol and policy. The time
+limits of this work span five orders of magnitude
+(:numref:`tab-usbpd-timescales`).
 
-.. list-table:: Time scales of the work
+.. list-table:: The time limits that software has to meet
    :name: tab-usbpd-timescales
    :header-rows: 1
-   :widths: 30 25 45
+   :widths: 36 30 18 16
 
    * - Task
-     - Time scale
-     - Difficulty in software
-   * - Bit timing (receive and transmit)
-     - 1.5 µs between edges; ± 50 ns edge placement
-     - Hard; analysed below
-   * - GoodCRC reply
-     - 25 µs to 195 µs after a message
-     - Moderate; analysed below
-   * - FRS detection (if supported)
-     - 30 µs to 50 µs
-     - Moderate
-   * - Protocol replies, attach, toggling, swaps
-     - 15 ms and longer
-     - Easy
+     - Spec name
+     - Time (µs)
+     - PD table
+   * - Place a sent edge
+     - X1Tx
+     - 0.05
+     - :pd:`5.6 <Table 5.6>`
+   * - Time a received edge
+     - X1Rx
+     - 0.33
+     - :pd:`5.8 <Table 5.8>`
+   * - GoodCRC, earliest
+     - tInterFrameGap
+     - 25
+     - :pd:`5.10 <Table 5.10>`
+   * - GoodCRC, latest
+     - tTransmit
+     - 195
+     - :pd:`7.10 <Table 7.10>`
+   * - Fast role swap signal
+     - tFRSwapRx
+     - 30 to 50
+     - :pd:`10.1 <Table 10.1>`
 
-The processor clock
-~~~~~~~~~~~~~~~~~~~
+The first two times are derived from the masks in :ref:`usbpd-receive` and
+:ref:`usbpd-transmit`. Fast role swap is described in
+:ref:`usbpd-fast-role-swap`. Replies to protocol messages have 15 ms or
+more, such as tReceiverResponse (:pd:`Table 7.10`).
 
-The numbers below depend on the processor's clock and on how many clock
-cycles it needs per instruction (*CPI*). Neither is fixed yet, so two cases
-are used:
+.. _usbpd-receive:
 
-* a **multi-cycle core** such as PicoRV32, with an average CPI of about 4
-  (load 5 cycles, taken branch 5 to 6, simple ALU 3; [USBPD-PICORV32]_, CPI
-  table);
-* a **pipelined core**, assumed here to reach a CPI of about 1.3 on this kind
-  of code (an assumption, not a measured value).
+Receiving needs each edge timed to within 333 ns
+------------------------------------------------
 
-For the clock, evampire already has a 125 MHz reference
-(:ref:`clock <arch-clock>`), so 31.25 MHz (÷ 4) and 62.5 MHz (÷ 2) are
-natural choices. The gf180mcu 7-track standard cell library, at its typical
-corner (5 V, 25 °C), gives a D flip-flop clock-to-output delay of 0.676 ns
-(with the minimum load) and a setup time of 0.229 ns ([USBPD-GF180-SC]_, cell
-gf180mcu_fd_sc_mcu7t5v0__dffq_1 and databook conditions page). At 50 MHz that
-leaves :math:`20\ \text{ns} - (0.676 + 0.229)\ \text{ns} = 19.1\ \text{ns}`
-per clock for logic and wiring. How many gate levels fit in that depends on
-the core and the layout and is not derived here; as an order of magnitude,
-the PicoRV32-based "Raven" chip, made in a different 180 nm process (X-FAB
-XH018), was reported to run at 100 MHz [USBPD-RAVEN]_. This page uses
-**50 MHz as a working assumption** and shows how the results change with the
-clock.
+The receiver measures the time between successive edges on the
+configuration channel. An interval of about 1 :term:`UI` is a ``0``, and two
+intervals of about 0.5 UI are a ``1`` (:ref:`usbpd-bmc`). The decoder
+compares each interval with 0.75 UI.
 
-Receive by polling
-~~~~~~~~~~~~~~~~~~
-
-With only a plain input bit, the processor reads the comparator in a loop,
-notes the time of each change with the cycle counter, and decodes as it
-goes.
-
-*How often it must sample.* The decoder tells a ``0`` (an interval of 1 UI)
-from half of a ``1`` (0.5 UI) by comparing each interval with 0.75 UI. Each
-edge can be up to 0.07 UI from its ideal time (receive mask, :pd:`Table 5.8`),
-so an interval can be off by up to :math:`2 \times 0.07 = 0.14` UI. That
-leaves a margin of :math:`0.25 - 0.14 = 0.11` UI, which at the fastest rate
-(`Bit rate`_) is :math:`0.11 \times 3.030\ \mu\text{s} = 333\ \text{ns}`. The
-sampling period adds up to one period of error to each interval, so it must
-be shorter than about 333 ns. This page uses :math:`T_\text{poll}` = 250 ns,
-4 million samples per second. The number of samples per bit is then:
+Each received edge may be up to 0.07 UI from its ideal time
+(:pd:`Table 5.8`, X1Rx), so an interval may be wrong by twice that. What is
+left of the 0.25 UI margin is the largest error the timing may add, and so
+the longest sampling period:
 
 .. math::
 
-   N_\text{poll} = \frac{T_\text{UI,min}}{T_\text{poll}}
-                 = \frac{3.030\ \mu\text{s}}{0.250\ \mu\text{s}}
-                 = 12.1 \approx 12
+   T_\text{s,max} = (0.25 - 2 \times x_\text{rx}) \times T_\text{UI,min}
 
-*How many instructions per bit.* These counts
-(:numref:`tab-usbpd-poll-instr`) are **estimates** for hand-written RV32I
-assembly (RV32I is the 32-bit base RISC-V instruction set), not
-measurements. The poll itself is two instructions: a load of the input word
-and a compare-and-branch back to the load while the value is unchanged.
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
 
-.. list-table:: Estimated instructions for receiving one bit by polling
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`T_\text{s,max}`
+     - Longest sampling period, or largest timestamp error
+     - s
+   * - :math:`x_\text{rx}`
+     - Edge displacement a receiver must accept, 0.07 (:pd:`Table 5.8`)
+     - UI
+   * - :math:`T_\text{UI,min}`
+     - Shortest unit interval, 3.03 µs at 330 kbit/s (:pd:`Table 5.9`)
+     - s
+
+The relation neglects filter delay and noise. For the values above:
+
+.. math::
+
+   T_\text{s,max} = (0.25 - 2 \times 0.07) \times 3.03\ \mu\text{s}
+                  = 333\ \text{ns}
+
+A sampled receiver therefore takes at least 3.0 million samples per second.
+For reference, the Chromium OS EC firmware times edges with a 2.4 MHz counter,
+417 ns per count ([USBPD-CROS-EC]_, ``pd_hw_init_rx()``). That is coarser than
+this bound, which assumes both edges of an interval displaced by the full
+0.07 UI.
+
+Polling costs a fixed rate plus the work per edge
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+With only a plain input bit, the processor reads the comparator in a
+:wikipedia:`polling <Polling_(computer_science)>` loop, and the time of one
+loop iteration is the sampling period. At each change it reads a counter,
+classifies the interval and updates the decoder
+(:numref:`tab-usbpd-poll-instr`).
+
+.. list-table:: Estimated instructions for receiving in software
    :name: tab-usbpd-poll-instr
    :header-rows: 1
-   :widths: 40 15 15 30
+   :widths: 56 22 22
 
    * - Work
-     - Instructions each
-     - Times per bit
-     - Instructions per bit
-   * - Poll: load input, compare-and-branch
+     - Instructions
+     - Done once per
+   * - Load the input word, compare and branch back
      - 2
-     - 12
-     - 24
-   * - Edge: read cycle counter, subtract, compare with 0.75 UI, update state
+     - sample
+   * - Read the counter, subtract, compare with 0.75 UI, update state
      - 10
-     - 2 (worst case, a ``1``)
-     - 20
-   * - Bit: shift into symbol, count
+     - edge
+   * - Shift the bit into the symbol, count bits
      - 4
-     - 1
-     - 4
-   * - Symbol: 4b5b table lookup and CRC-32 nibble update
+     - bit
+   * - Look up the 4B5B code, update the CRC-32
      - 16
-     - 1/5
-     - 3.2
-   * - **Total**
-     -
-     -
-     - **51.2**
+     - symbol of 5 bits
 
-The instruction rate and clock needed are then:
+The instruction rate needed while a message arrives is:
 
 .. math::
 
-   R_\text{instr} &= N_\text{instr/bit} \cdot f_\text{bit,max} \\
-                  &= 51.2 \times 330\,000\ \text{s}^{-1}
-                   = 16.9 \times 10^{6}\ \text{s}^{-1}
+   R_\text{poll} = \frac{k_\text{poll}}{T_\text{s}}
+     + f_\text{edge} \times N_\text{edge}
+     + f_\text{bit} \times N_\text{bit}
 
-.. math::
-
-   f_\text{clk} = R_\text{instr} \cdot \text{CPI}
-
-where :math:`R_\text{instr}` is the instruction rate,
-:math:`N_\text{instr/bit}` = 51.2 (estimate above), :math:`f_\text{bit,max}`
-= 330 kbit/s (:pd:`Table 5.9`) and CPI is cycles per instruction. With CPI
-1.3, :math:`f_\text{clk} = 16.9 \times 1.3 = 22` MHz; with CPI 4,
-:math:`16.9 \times 4 = 68` MHz.
-
-Polling also has a fixed cost per sample regardless of edges: a multi-cycle
-core needs about 10 cycles per poll iteration (load 5 + taken branch 5,
-[USBPD-PICORV32]_), so 4 million polls per second alone take 40 MHz; a
-pipelined core needing about 4 cycles per iteration (an estimate) takes
-16 MHz.
-
-*What this means.* On a pipelined core at 50 MHz, polled receive fits, using
-about :math:`22 / 50 = 44\ \%` of the processor while a message is on the
-wire. On a multi-cycle core at 62.5 MHz or below it does not fit (68 MHz
-needed). In both cases interrupts must be off for the whole message, because
-any interrupt longer than about 333 ns corrupts the timing.
-
-Receive by interrupt on each edge
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-An interrupt per comparator edge avoids polling between edges. The worst case
-is a run of ``1`` bits, two edges per UI:
-:math:`2 \times 330\,000 = 660\,000` edges per second. If entering and
-leaving the interrupt and handling the edge costs 40 to 60 cycles (an
-**estimate** for saving and restoring a few registers on a small core), the
-load is :math:`660\,000 \times 40 = 26.4` to
-:math:`660\,000 \times 60 = 39.6` million cycles per second, and the timestamp
-is only as accurate as the interrupt latency. This is worse than polling and
-is not considered further.
-
-Transmit by cycle-counted output
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To transmit, the processor computes the next edge time, waits in a loop on
-the cycle counter, and writes the output bit. The edge is late by up to one
-loop iteration, so the timing uncertainty (peak to peak) is:
-
-.. math::
-
-   \Delta t_\text{edge} = \frac{N_\text{loop}}{f_\text{clk}}
-
-where :math:`N_\text{loop}` is the number of cycles in one iteration of the
-wait loop (read counter, compare-and-branch) and :math:`f_\text{clk}` is the
-core clock. **Estimates** of :math:`N_\text{loop}`: about 4 cycles on a
-pipelined core and about 12 on a multi-cycle core
-(:numref:`tab-usbpd-tx-jitter`).
-
-.. list-table:: Transmit edge uncertainty (peak to peak) against the ± 50 ns
-   reading of the mask
-   :name: tab-usbpd-tx-jitter
+.. list-table::
    :header-rows: 1
-   :widths: 25 25 25 25
+   :widths: 22 58 20
 
-   * - Core clock
-     - Pipelined (4 cycles)
-     - Multi-cycle (12 cycles)
-     - Meets ± 50 ns?
-   * - 31.25 MHz
-     - 4 / 31.25 MHz = 128 ns
-     - 12 / 31.25 MHz = 384 ns
-     - No / No
-   * - 50 MHz
-     - 80 ns
-     - 240 ns
-     - Yes, barely / No
-   * - 62.5 MHz
-     - 64 ns
-     - 192 ns
-     - Yes / No
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{poll}`
+     - Instruction rate needed to receive by polling
+     - instructions/s
+   * - :math:`k_\text{poll}`
+     - Instructions in one poll iteration, 2 (estimate)
+     - instructions
+   * - :math:`T_\text{s}`
+     - Sampling period, at most :math:`T_\text{s,max}`
+     - s
+   * - :math:`f_\text{edge}`
+     - Edge rate, at most twice the bit rate (all ``1`` bits)
+     - edges/s
+   * - :math:`N_\text{edge}`
+     - Instructions per edge, 10 (estimate)
+     - instructions
+   * - :math:`f_\text{bit}`
+     - Bit rate, at most 330 kbit/s (:pd:`Table 5.9`)
+     - bit/s
+   * - :math:`N_\text{bit}`
+     - Instructions per bit, 4 plus 16 per 5-bit symbol, 7.2 (estimate)
+     - instructions
 
-Measuring edge time from the cycle counter, rather than counting loop
-iterations, keeps the average bit rate exact, so the 0.25 % drift limit is not
-a problem. The ± 50 ns edge placement is.
-
-The GoodCRC deadline
-~~~~~~~~~~~~~~~~~~~~
-
-After the EOP of a received message the processor must start sending GoodCRC
-between 25 µs and 195 µs later. With the CRC updated nibble by nibble during
-reception (included in the receive estimate above), checking it at the EOP is
-one comparison with the fixed remainder. The GoodCRC packet for each of the
-eight MessageID values, including its own CRC, can be prepared in advance. So
-the work after the EOP is a few tens of instructions, about 1 µs, plus the
-25 µs wait. The deadline is met as long as interrupts stay off from the start
-of the message to the end of the GoodCRC. As source and as sink the deadline
-is the same; no source-side timing is tighter than this (the next tightest is
-`Fast role swap`_ detection, 30 µs to 50 µs, and then the millisecond
-limits).
-
-What the processor cannot do during a message
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-With polled receive and cycle-counted transmit, the processor is fully busy
-from the first preamble edge of a received message to the end of its
-GoodCRC. The worst case is a seven-object message at the slowest bit rate:
+The relation counts poll iterations during the edge work too, so it slightly
+overestimates. For :math:`T_\text{s}` = 333 ns, :math:`f_\text{bit}` =
+330 kbit/s and :math:`f_\text{edge}` = 660 000 edges/s:
 
 .. math::
 
-   t_\text{busy} &= t_\text{msg} + t_\text{gap} + t_\text{GoodCRC} \\
-                 &= 1589\ \mu\text{s} + 195\ \mu\text{s} + 552\ \mu\text{s}
-                  = 2336\ \mu\text{s}
+   R_\text{poll}
+     &= \frac{2}{333\ \text{ns}} \\
+     &\quad + 660\,000\ \text{s}^{-1} \times 10 \\
+     &\quad + 330\,000\ \text{s}^{-1} \times 7.2 \\
+     &= 15.0 \times 10^{6}\ \text{instructions/s}
 
-where :math:`t_\text{msg}` = 429 bits × 3.704 µs
-(:numref:`tab-usbpd-duration`), :math:`t_\text{gap}` = 195 µs is the longest
-allowed gap (tTransmit, :pd:`Section 7.31.1`) and :math:`t_\text{GoodCRC}` =
-149 bits × 3.704 µs.
+That is 45.4 instructions per bit (estimate). Any pause in the loop adds to
+the timing error, so :math:`T_\text{s}` plus the longest pause must stay
+below 333 ns. Interrupts stay off from the first edge of a message to the end
+of the GoodCRC reply (:ref:`usbpd-goodcrc-deadline`). For reference, PicoRV32
+takes 5 clock cycles for a load and 5 for a taken branch
+([USBPD-PICORV32]_, "Cycles per Instruction Performance"). Its poll iteration
+of 10 cycles takes at most 333 ns with a clock of 30 MHz or more.
 
-During those 2.3 ms the processor cannot service the Ethernet frame buffers
-or the transceiver :ref:`configuration interface <arch-config-interface>`
-(the management interface of :clause:`22`). The forwarding path between the
-Ethernet ports is entirely hardware and is not affected (see
-:doc:`../architecture/index`). Frames for the processor wait in the receive
-buffer, which holds one or two frames; at the processor's expected traffic of
-well below 1 Mbit/s (:ref:`requirements`), a full-size 1522-byte frame
-arrives on average no more often than every
-:math:`1522 \times 8\ \text{bit} / 1\ \text{Mbit/s} = 12.2\ \text{ms}`, so a
-2.3 ms pause rarely loses a frame, and a lost frame is resent by higher-level
-protocols. A burst of frames during a USB message can be lost.
+An interrupt on each edge trades polling for overhead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Two ports in software
-~~~~~~~~~~~~~~~~~~~~~
+An :wikipedia:`interrupt <Interrupt>` on each comparator edge removes the
+polling between edges. Each edge then costs the interrupt entry and exit plus
+the edge work:
 
-With two ports, messages on both can arrive at the same time: as a sink the
-port cannot control when the other side transmits, and even as a source the
-other side may transmit when Rp allows it. A single polling loop could read
-both comparators in one input word, but the per-edge work doubles: the
-24 poll instructions plus twice the 27.2 instructions of edge, bit and symbol
-work, :math:`24 + 2 \times 27.2 = 78.4` instructions per bit, or
-:math:`78.4 \times 330\,000 = 25.9` million instructions per second
-(estimate). Transmitting on one port while receiving on the other is not
-possible with a cycle-counted transmit loop. In practice software serves one
-port at a time; a message lost on the other port is resent by its sender up
-to twice (tReceive, then tRetry), so an occasional collision costs about
-1 ms, and three losses in a row lead to a Soft_Reset.
+.. math::
 
-Hardware helpers, in order of need
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   R_\text{irq} = f_\text{edge} \times (N_\text{irq} + N_\text{edge})
+     + f_\text{bit} \times N_\text{bit}
 
-From the numbers above, whether a digital helper is needed depends on the
-processor core, which is not yet chosen:
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
 
-1. **Transmit edge timing** cannot be met on a multi-cycle core at any clock
-   up to 62.5 MHz, nor on a pipelined core below about 50 MHz
-   (:numref:`tab-usbpd-tx-jitter`). A **timer compare output** (a counter, a
-   compare register and an output bit that changes when they match) places
-   each edge to one clock period (16 ns to 32 ns at 62.5 MHz to 31.25 MHz)
-   whatever the processor is doing. Software loads the next edge time after
-   each edge, 1.5 µs ahead. This is a generic microcontroller timer feature,
-   not USB-specific.
-2. **Receive timing** cannot be met by polling on a multi-cycle core at
-   62.5 MHz or below. A **timer capture input** (the counter value latched
-   into a small FIFO on each comparator edge) removes polling. Per bit,
-   software then reads up to two timestamps (about 12 instructions each with
-   the classification) plus the bit and symbol work:
-   :math:`2 \times 12 + 4 + 3.2 = 31.2` instructions per bit, or
-   :math:`31.2 \times 330\,000 = 10.3` million per second (estimate): 13 MHz
-   at CPI 1.3, 41 MHz at CPI 4. Interrupts can stay on as long as the FIFO
-   does not overflow: at one edge per 1.515 µs, a FIFO of 8, 16 or 32 entries
-   gives :math:`8 \times 1.515 = 12.1`, 24.2 or 48.5 µs of tolerance to
-   interrupt latency. This too is a generic timer feature.
-3. **CRC-32** is not needed in hardware: a 16-entry table (64 bytes of
-   read-only memory) and about 6 instructions per nibble are included in the
-   estimates above. The RISC-V carry-less multiply instructions of the Zbc
-   bit-manipulation extension (https://github.com/riscv/riscv-bitmanip) could
-   speed it up but are not needed.
-4. **USB-specific helpers** (a BMC decoder, automatic GoodCRC as in the onsemi
-   FUSB302B [USBPD-FUSB302B]_, or a BMC transceiver as in the STUSB1602
-   [USBPD-STUSB1602]_, which decodes BMC and hands the bits to a
-   microcontroller over a serial interface) are not required by the numbers
-   above for one port.
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{irq}`
+     - Instruction rate needed to receive with an interrupt per edge
+     - instructions/s
+   * - :math:`N_\text{irq}`
+     - Instructions to enter and leave the interrupt handler, saving and
+       restoring registers
+     - instructions
 
-Recommended split
-~~~~~~~~~~~~~~~~~
+For :math:`N_\text{irq}` = 30 (estimate), at the rates above:
 
-* **Hardware, per port:** the analog front end (switchable Rp, Rd and
-  dead-battery Rd, VCONN switch with current limit, comparators with
-  selectable thresholds, BMC driver with controlled edges), connected to
-  plain processor-visible input and output bits.
-* **Software:** everything else, including BMC, 4b5b, CRC, GoodCRC, retries,
-  the attach and toggling state machines, the protocol, cable discovery,
-  power role swap and the :ref:`power budget <power-budget>`.
-* **Digital helpers:** none, if the processor is a pipelined core running at
-  50 MHz or faster. If it is a multi-cycle core, or runs slower, the
-  arithmetic above shows that one timer compare output (for transmit) and
-  one timer capture input with a FIFO (for receive) per port are needed;
-  both are generic timer features.
+.. math::
 
-With no helper, interrupts are disabled for up to 2.3 ms per message, and two
-ports rely on retries when their messages overlap. Adding the timer channels
-anyway, to remove these limits, is listed as an option under
-`Open design decisions`_.
+   R_\text{irq}
+     &= 660\,000\ \text{s}^{-1} \times (30 + 10) \\
+     &\quad + 330\,000\ \text{s}^{-1} \times 7.2 \\
+     &= 28.8 \times 10^{6}\ \text{instructions/s}
+
+That is 87.2 instructions per bit. Interrupts cost less than polling when the
+overhead is below the polling cost per edge:
+
+.. math::
+
+   N_\text{irq} &< \frac{k_\text{poll}}{T_\text{s} \times f_\text{edge}} \\
+     &= \frac{2}{333\ \text{ns} \times 660\,000\ \text{s}^{-1}} \\
+     &= 9.1
+
+On a core where the load and the branch of the poll loop take longer than
+the average instruction, both sides are counted in clock cycles instead. For
+reference, PicoRV32's 10-cycle poll iteration gives a break-even of 45 cycles
+per edge.
+
+The limit is accuracy rather than cost. The handler reads the counter after
+the :wikipedia:`interrupt latency <Interrupt_latency>`, so the timestamp is
+only as accurate as the variation in that latency. The variation has to stay
+below 333 ns, so no other interrupt may run during a message. For reference,
+V-USB receives low-speed USB in software with one edge-triggered interrupt
+and no timer or input capture unit ([USBSER-VUSB]_, home page).
+
+.. _usbpd-transmit:
+
+Transmitting needs each edge within 50 ns of its time
+-----------------------------------------------------
+
+The transmit mask leaves 0.015 UI between the ideal edge time and the start
+of the inner mask (:pd:`Table 5.6`, X1Tx). Read strictly, each edge has to
+cross the mid-level within ± 0.015 UI, which is ± 50 ns at the nominal
+300 kbit/s. This figure is a target derived from the mask, to be confirmed
+by measuring a transmitter against it (:ref:`usbpd-transmitter`). Computing
+each edge time from a counter, rather than counting loop iterations, keeps
+the average bit rate within the 0.25 % pBitRate limit (:pd:`Table 5.10`).
+
+A counter wait loop needs a short iteration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The processor computes the next edge time, waits in a
+:wikipedia:`busy-wait <Busy_waiting>` loop until a counter reaches it, and
+writes the output. The edge comes late by up to one loop iteration, so the
+iteration must fit in the 100 ns window:
+
+.. math::
+
+   R_\text{wait} = \frac{k_\text{wait}}{2 \times x_\text{tx} \times T_\text{UI}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{wait}`
+     - Instruction rate the core must run the wait loop at
+     - instructions/s
+   * - :math:`k_\text{wait}`
+     - Instructions in one wait iteration: read counter, compare, branch
+     - instructions
+   * - :math:`x_\text{tx}`
+     - Edge placement target, 0.015 (:pd:`Table 5.6`)
+     - UI
+   * - :math:`T_\text{UI}`
+     - Unit interval of the transmitter, 3.33 µs at 300 kbit/s
+     - s
+
+The relation leaves no allowance for other edge errors, such as variation in
+the driver's delay. For :math:`k_\text{wait}` = 3 (estimate):
+
+.. math::
+
+   R_\text{wait} &= \frac{3}{2 \times 0.015 \times 3.33\ \mu\text{s}} \\
+     &= 30 \times 10^{6}\ \text{instructions/s}
+
+That is 100 instructions per bit at 300 kbit/s. The core is busy and
+interrupts are off for the whole message, 1430 µs for the longest one
+(:ref:`usbpd-durations`).
+
+Cycle-exact code removes the loop jitter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+On an in-order core whose instructions each take a fixed, known number of
+clock cycles, straight-line code can place every edge an exact number of
+cycles after the previous one. The edge error is then the clock's own
+:wikipedia:`jitter <Jitter>`. This is :wikipedia:`bit banging <Bit_banging>`
+with counted cycles. It needs:
+
+* a half UI that is a whole number of clock cycles, giving a bit rate within
+  270 kbit/s to 330 kbit/s (:pd:`Table 5.9`);
+* both paths of every data-dependent branch padded to the same number of
+  cycles;
+* no :wikipedia:`cache <CPU_cache>` misses, memory wait states or interrupts
+  during the message;
+* the work of each half UI done within that half UI, about 15.2 instructions
+  per bit in total (estimate).
+
+At 300 kbit/s the useful work is :math:`4.6 \times 10^{6}` instructions/s,
+but the core is occupied for the whole message. For reference, V-USB sends
+and receives low-speed USB, 1.5 Mbit/s, in software on AVR microcontrollers
+clocked at 12 MHz to 20 MHz ([USBSER-VUSB]_, home page). That is 8 to
+13 clock cycles per bit.
+
