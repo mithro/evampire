@@ -68,7 +68,7 @@ The model assumes a constant efficiency over load. The values of
 converters; :ref:`conv-efficiency` discusses converter efficiency. The
 highest class is also limited by the type and pair sets port B supports:
 classes 5 to 8 need 4-pair power, and classes 7 and 8 Type 4
-(:numref:`tab-poe-classes`).
+(:numref:`tab-poe-types`).
 
 USB Power Delivery in, Ethernet out
 -----------------------------------

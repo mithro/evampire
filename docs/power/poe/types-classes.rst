@@ -58,60 +58,51 @@ ends of the cable.
 .. list-table:: The power of each class
    :name: tab-poe-classes
    :header-rows: 1
-   :widths: 13 22 22 21 22
+   :widths: 16 28 28 28
 
    * - Class
      - At powered device (W)
      - At power sourcing equipment (W)
      - Peak at powered device (W)
-     - Lowest type that assigns it
    * - 0
      - 13
      - 15.4
      - 14.4
-     - 1
    * - 1
      - 3.84
      - 4
      - 5
-     - 1
    * - 2
      - 6.49
      - 6.7
      - 8.36
-     - 1
    * - 3
      - 13
      - 14
      - 14.4
-     - 1
    * - 4
      - 25.5
      - 30
      - 28.3
-     - 2
    * - 5
      - 40
      - 45
      - 42
-     - 3
    * - 6
      - 51
      - 60
      - 53.5
-     - 3
    * - 7
      - 62
      - 75
      - 65.1
-     - 4
    * - 8
      - 71.3
      - 90
      - 74.9
-     - 4
 
-The powers at the powered device come from :clause:`Table 145-29 <145>`
+:numref:`tab-poe-types` gives the type each class needs. The powers at
+the powered device come from :clause:`Table 145-29 <145>`
 (items 8 and 10). The powers at the power sourcing equipment come from
 :clause:`Table 145-11 <145>`, also summarised in [POE-EA-BT]_ (Tables 6, 7
 and 14). Class 0 is from :clause:`Table 33-7 <33>` and

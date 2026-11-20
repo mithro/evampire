@@ -95,11 +95,13 @@ External divider
 
    .. math::
 
-      V_\text{out} &= V_\text{in} \times \frac{R_2}{R_1 + R_2}
-        = 57\ \text{V} \times \frac{56\ \text{k}\Omega}{1056\ \text{k}\Omega}
-        = 3.0\ \text{V} \\
-      I_\text{div} &= \frac{V_\text{in}}{R_1 + R_2}
-        = \frac{57\ \text{V}}{1.056\ \text{M}\Omega} = 54\ \mu\text{A}
+      V_\text{out} &= V_\text{in} \times \frac{R_2}{R_1 + R_2} \\
+      &= 57\ \text{V} \times
+        \frac{56\ \text{k}\Omega}{1056\ \text{k}\Omega} \\
+      &= 3.0\ \text{V} \\
+      I_\text{div} &= \frac{V_\text{in}}{R_1 + R_2} \\
+      &= \frac{57\ \text{V}}{1.056\ \text{M}\Omega} \\
+      &= 54\ \mu\text{A}
 
    .. list-table::
       :header-rows: 1
@@ -198,14 +200,16 @@ silicon as thick as the heat spreads during the pulse:
 
 .. math::
 
-   L &= \sqrt{\alpha \times \tau_\text{surge}}
-     = \sqrt{88\ \text{mm}^2/\text{s} \times 462\ \mu\text{s}}
-     = 0.20\ \text{mm} \\
+   L &= \sqrt{\alpha \times \tau_\text{surge}} \\
+   &= \sqrt{88\ \text{mm}^2/\text{s} \times 462\ \mu\text{s}} \\
+   &= 0.20\ \text{mm} \\
    A &= \frac{E_\text{surge}}{\rho \times c \times L \times \Delta T} \\
-   &= \frac{1.5\ \text{J}}
-     {2330\ \text{kg/m}^3 \times 705\ \text{J/(kg K)}
-      \times 0.20\ \text{mm} \times 100\ \text{K}} \\
-   &= 46\ \text{mm}^2
+   \rho \times c &= 2330\ \text{kg/m}^3 \times 705\ \text{J/(kg K)} \\
+   &= 1.64\ \text{J/(cm}^3\,\text{K)} \\
+   A &= \frac{1.5\ \text{J}}
+     {1.64\ \text{J/(cm}^3\,\text{K)} \times 0.020\ \text{cm}
+      \times 100\ \text{K}} \\
+   &= 0.46\ \text{cm}^2 = 46\ \text{mm}^2
 
 .. list-table::
    :header-rows: 1

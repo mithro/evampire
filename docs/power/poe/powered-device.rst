@@ -52,8 +52,10 @@ resistor, the bridge and the controller's leakage:
 
 .. math::
 
-   R_\text{low} &= R_\text{nom} \times (1 - 0.05) = 23.75\ \text{k}\Omega \\
-   R_\text{high} &= R_\text{nom} \times (1 + 0.05) = 26.25\ \text{k}\Omega
+   R_\text{low} &= R_\text{nom} \times (1 - 0.05) \\
+   &= 23.75\ \text{k}\Omega \\
+   R_\text{high} &= R_\text{nom} \times (1 + 0.05) \\
+   &= 26.25\ \text{k}\Omega
 
 .. list-table::
    :header-rows: 1
@@ -81,8 +83,9 @@ allowance the LT4275's worst case is:
 
 .. math::
 
-   R_\text{sig,max} = R_\text{int,max} + R_\text{bridge,max}
-     = 25.2\ \text{k}\Omega + 1.1\ \text{k}\Omega = 26.3\ \text{k}\Omega
+   R_\text{sig,max} &= R_\text{int,max} + R_\text{bridge,max} \\
+   &= 25.2\ \text{k}\Omega + 1.1\ \text{k}\Omega \\
+   &= 26.3\ \text{k}\Omega
 
 .. list-table::
    :header-rows: 1
@@ -106,8 +109,9 @@ little; its highest power is at the top of the detection range:
 
 .. math::
 
-   P_\text{sig} = \frac{V_\text{det,max}^2}{R_\text{sig}}
-     = \frac{(10.1\ \text{V})^2}{24.9\ \text{k}\Omega} = 4.1\ \text{mW}
+   P_\text{sig} &= \frac{V_\text{det,max}^2}{R_\text{sig}} \\
+   &= \frac{(10.1\ \text{V})^2}{24.9\ \text{k}\Omega} \\
+   &= 4.1\ \text{mW}
 
 .. list-table::
    :header-rows: 1
@@ -216,10 +220,11 @@ holds 2.5 V across the class resistor (as the TPS2378 does
 
 .. math::
 
-   P_\text{class} &= V_\text{class,max} \times I_\text{class,max}
-     = 20.5\ \text{V} \times 44\ \text{mA} = 0.90\ \text{W} \\
-   P_\text{reg} &= (V_\text{class,max} - V_\text{CLS}) \times I_\text{class,max}
-     = 18\ \text{V} \times 44\ \text{mA} = 0.79\ \text{W}
+   P_\text{class} &= V_\text{class,max} \times I_\text{class,max} \\
+   &= 20.5\ \text{V} \times 44\ \text{mA} = 0.90\ \text{W} \\
+   P_\text{reg} &= (V_\text{class,max} - V_\text{CLS}) \\
+   &\quad \times I_\text{class,max} \\
+   &= 18\ \text{V} \times 44\ \text{mA} = 0.79\ \text{W}
 
 .. list-table::
    :header-rows: 1
@@ -317,9 +322,9 @@ Charging the capacitor at a constant current takes:
 
 .. math::
 
-   t_\text{charge} = \frac{C_\text{bulk} \times V_\text{max}}{I_\text{inrush}}
-     = \frac{100\ \mu\text{F} \times 57\ \text{V}}{140\ \text{mA}}
-     = 41\ \text{ms}
+   t_\text{charge} &= \frac{C_\text{bulk} \times V_\text{max}}{I_\text{inrush}} \\
+   &= \frac{100\ \mu\text{F} \times 57\ \text{V}}{140\ \text{mA}} \\
+   &= 41\ \text{ms}
 
 .. list-table::
    :header-rows: 1
@@ -357,8 +362,8 @@ minimum at the highest input voltage, where the current is smallest:
 
 .. math::
 
-   P_\text{steady} = V_\text{max} \times I_\text{MPS}
-     = 57\ \text{V} \times 10\ \text{mA} = 0.57\ \text{W}
+   P_\text{steady} &= V_\text{max} \times I_\text{MPS} \\
+   &= 57\ \text{V} \times 10\ \text{mA} = 0.57\ \text{W}
 
 .. list-table::
    :header-rows: 1
@@ -383,8 +388,9 @@ at a 54 V supply is:
 
    d &= \frac{t_\text{on}}{t_\text{on} + t_\text{off}}
      = \frac{7\ \text{ms}}{317\ \text{ms}} = 0.022 \\
-   P_\text{pulse} &= V \times I_\text{MPS} \times d
-     = 54\ \text{V} \times 10\ \text{mA} \times 0.022 = 12\ \text{mW}
+   P_\text{pulse} &= V \times I_\text{MPS} \times d \\
+   &= 54\ \text{V} \times 10\ \text{mA} \times 0.022 \\
+   &= 12\ \text{mW}
 
 .. list-table::
    :header-rows: 1
