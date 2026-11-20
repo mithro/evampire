@@ -1,0 +1,48 @@
+/*
+ * Site-wide styling for diagrams.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Diagrams are drawn with dark lines and text. Graphviz output has a white
+ * background; WaveDrom output is transparent. Give both a light panel so they
+ * stay readable when the page uses the dark theme. */
+object.graphviz,
+img[src*="wavedrom-"],
+img[src$=".svg"] {
+  border-radius: 0.4rem;
+  box-sizing: border-box;
+}
+
+body[data-theme="dark"] object.graphviz,
+body[data-theme="dark"] img[src*="wavedrom-"],
+body[data-theme="dark"] img[src$=".svg"] {
+  background: #ffffff;
+  padding: 0.5rem;
+  filter: brightness(0.92);
+}
+
+@media (prefers-color-scheme: dark) {
+  body[data-theme="auto"] object.graphviz,
+  body[data-theme="auto"] img[src*="wavedrom-"],
+  body[data-theme="auto"] img[src$=".svg"] {
+    background: #ffffff;
+    padding: 0.5rem;
+    filter: brightness(0.92);
+  }
+}
+
+/* On narrow screens, keep diagrams at a readable size and let them scroll
+ * sideways inside their figure instead of shrinking the text. */
+div.graphviz,
+figure {
+  overflow-x: auto;
+}
+
+@media (max-width: 46em) {
+  object.graphviz,
+  img[src*="wavedrom-"] {
+    max-width: none;
+    width: auto;
+  }
+}
