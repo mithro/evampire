@@ -478,7 +478,7 @@ Two details matter for a design that forwards frames:
   preamble. At 10 Mbit/s this is "the minimum IEEE specified Inter-Packet
   Gap (IPG) of 9.6 µs" ([RGMII-ENC28J60]_ register MABBIPG), which is 96 bit
   times. IEEE 802.3 gives the gap as 96 bit times at every speed
-  ([RGMII-IEEE8023]_ clause 4.4.2), which is 12 byte times or 96 ns at
+  ([RGMII-IEEE8023]_ :clause:`4.4.2`), which is 12 byte times or 96 ns at
   1000 Mbit/s.
 
 Timing
@@ -772,7 +772,7 @@ Management interface (MDC and MDIO)
 Each transceiver has a few dozen 16-bit registers that report its status
 (is a cable connected, at what speed, in which duplex mode) and control its
 settings (reset, speed choice, clock delays). They are read and written over
-a two-wire serial interface defined in Clause 22 of IEEE 802.3 [RGMII-IEEE8023]_:
+a two-wire serial interface defined in :clause:`22` of IEEE 802.3 [RGMII-IEEE8023]_:
 
 MDC
    Management clock, always driven by evampire. Data is sampled on its
@@ -793,7 +793,7 @@ pair of pins, provided the two are set to different addresses by their
 configuration pins.
 
 Clock rate
-   Clause 22 sets a minimum MDC period of 400 ns, that is at most 2.5 MHz.
+   :clause:`22` sets a minimum MDC period of 400 ns, that is at most 2.5 MHz.
    The Linux MDIO driver uses this limit ([RGMII-LINUX-MDIO]_ comment on
    MDIO_DELAY), and the KSZ9031RNX datasheet gives 2.5 MHz as the typical
    rate ([RGMII-KSZ9031]_ Table 7-3). Many transceivers accept more (the DP83867
@@ -805,7 +805,7 @@ Frame format
    Every access is one 64-bit frame, sent most significant bit first within
    each field ([RGMII-KSZ9031]_ Table 3-8; bit order as in [RGMII-LINUX-MDIO]_):
 
-.. list-table:: MDIO frame fields (Clause 22)
+.. list-table:: MDIO frame fields (:clause:`22`)
    :header-rows: 1
    :widths: 16 10 74
 
@@ -817,7 +817,7 @@ Frame format
      - All ones. Lets the transceiver find the start of the frame.
    * - Start (ST)
      - 2
-     - 01.
+     - Always 01.
    * - Operation (OP)
      - 2
      - 10 = read, 01 = write.
@@ -1454,9 +1454,9 @@ References
    www.hp.com/rnd/pdfs/RGMIIv2_0_final_hp.pdf; archived copy:
    http://web.archive.org/web/20160303171328/http://www.hp.com/rnd/pdfs/RGMIIv2_0_final_hp.pdf
 
-.. [RGMII-IEEE8023] IEEE Std 802.3-2022, *IEEE Standard for Ethernet*. Clause 3
-   (frame format), Clause 4 (gap between frames), Clause 22 (MII and the
-   management interface), Clause 35 (GMII). The text of the standard was not
+.. [RGMII-IEEE8023] IEEE Std 802.3-2022, *IEEE Standard for Ethernet*. :clause:`3`
+   (frame format), :clause:`4` (gap between frames), :clause:`22` (MII and the
+   management interface), :clause:`35` (GMII). The text of the standard was not
    consulted directly for this page; the values quoted come from the vendor
    documents listed here, which implement and restate it.
    https://standards.ieee.org/ieee/802.3/10422/
@@ -1486,7 +1486,7 @@ References
    https://ww1.microchip.com/downloads/en/DeviceDoc/00002276A.pdf
 
 .. [RGMII-LINUX-MDIO] The Linux kernel, *drivers/net/mdio/mdio-bitbang.c*
-   (software implementation of the Clause 22 management interface).
+   (software implementation of the :clause:`22` management interface).
    https://github.com/torvalds/linux/blob/master/drivers/net/mdio/mdio-bitbang.c
 
 .. [RGMII-GF180IO] GlobalFoundries and Google, *gf180mcu_fd_io* I/O cell library
