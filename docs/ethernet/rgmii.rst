@@ -2,10 +2,12 @@ RGMII interface
 ===============
 
 This page describes the RGMII interface used between evampire and each
-external Ethernet transceiver. It covers the signals, clocking, data rates,
+external Ethernet transceiver in the first version of the chip. It covers the signals, clocking, data rates,
 timing and electrical levels, the separate management interface used to
 configure the transceiver, and what all of this means for building the
-interface in the gf180mcu process.
+interface in the gf180mcu process. The full design integrates the
+transceiver on evampire; `The internal byte interface`_ describes which parts
+of this page still apply then.
 
 What RGMII is
 -------------
@@ -20,8 +22,8 @@ An Ethernet port is split between two chips.
 * The **digital side**, which Ethernet documentation calls the *MAC* (short
   for "media access controller"), deals only in bytes. It sends and receives
   whole frames: it adds and checks the start pattern and the checksum, and
-  decides when a frame may be sent. In this design evampire is the digital
-  side of two ports.
+  decides when a frame may be sent. evampire is the digital side of its two
+  ports.
 
 *RGMII* (Reduced Gigabit Media Independent Interface) is the set of digital
 signals between these two chips. "Media independent" means the digital side
@@ -39,9 +41,9 @@ transceivers, including the ones referred to on this page.
              optional source of evampire's 125 MHz clock.
    :align: center
 
-:numref:`fig-rgmii-connection` shows one port. evampire has two of these
-interfaces, one for port A and one for port B, each wired to its own
-transceiver.
+:numref:`fig-rgmii-connection` shows one port. In the first version
+evampire has two of these interfaces, one for port A and one for port B,
+each wired to its own external transceiver.
 
 How RGMII relates to MII and GMII
 ---------------------------------
@@ -912,7 +914,8 @@ fitted. It identifies the transceiver from registers 2 and 3.
 evampire on gf180mcu
 --------------------
 
-This section applies the above to evampire. Numbers taken from the gf180mcu
+This section applies the above to the RGMII ports of evampire's first
+version. Numbers taken from the gf180mcu
 I/O and standard-cell libraries are marked with the library they come from.
 Everything marked "to be checked" has not been confirmed for this process
 and must be confirmed in simulation before tape-out.
@@ -1173,6 +1176,45 @@ uses a clock enable instead of a slower clock:
   nibble D after a run of nibble 5 is the high nibble of the SFD, and the
   next nibble is the low nibble of the first byte of the frame. RX_CTL is
   still decoded from both edges.
+
+The internal byte interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Behind the both-edge input and output stages, each RGMII port presents a
+simple interface to the rest of evampire: one byte per clock cycle in each
+direction, with a "data valid" flag and an "error" flag, plus a clock enable
+at 10 and 100 Mbit/s. On the receive side these come from the byte register
+of :numref:`fig-rgmii-rx-ddr` and the decoded RX_CTL; on the transmit side
+they feed the byte register of :numref:`fig-rgmii-tx-ddr` and TX_CTL. This
+is the same information as the GMII signals described in
+`How RGMII relates to MII and GMII`_.
+
+This interface is the boundary between the port and the forwarding logic.
+An integrated transceiver in the full design connects to the forwarding
+logic through the same interface, so the rate-matching buffers, output
+selectors, address filter and frame buffers are the same in both cases.
+
+.. list-table:: What changes with an integrated transceiver
+   :header-rows: 1
+   :widths: 50 50
+
+   * - Specific to RGMII, not needed with an integrated transceiver
+     - Still needed with an integrated transceiver
+   * - Both-edge output and capture stages and their I/O pads
+     - Three link speeds and the switch between them, with a clock enable
+       at 10 and 100 Mbit/s
+   * - The 2 ns clock delay and the pin timing of `Timing`_
+     - A receive clock recovered from the cable, and the clock-domain
+       crossing from it into the 125 MHz clock (`Clock domains`_)
+   * - In-band status on RXD
+     - Rate matching between the receive and transmit clocks
+   * - MDC/MDIO access to an external chip, and the transceiver-specific
+       delay registers
+     - Finding the SFD and regenerating a full preamble on transmit
+   * - RGMII electrical levels and board rules
+     - Keeping both ports at the same speed for cut-through forwarding
+       (`Speed and duplex of the two ports`_), and the link status, speed
+       and autonegotiation results that the processor reads
 
 Clock domains
 ~~~~~~~~~~~~~
