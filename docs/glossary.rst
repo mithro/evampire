@@ -17,6 +17,12 @@ gives a short description and a link to the full explanation.
       during classification. Each class has a maximum power at the powered
       device (:clause:`145`, see :doc:`power/poe/index`).
 
+   Class event
+      A step of Power over Ethernet classification in which the power
+      sourcing equipment holds the cable at 15.5 V to 20.5 V and the powered
+      device answers with a fixed current, its class signature
+      (:clause:`145.2.8`, see :doc:`power/poe/sequence`).
+
    Configuration channel
    CC
       The two wires of a USB Type-C connector, CC1 and CC2, that detect a
@@ -31,9 +37,28 @@ gives a short description and a link to the full explanation.
       :wikipedia:`Cut-through switching <Cut-through_switching>` and
       :ref:`the forwarding requirements <req-forwarding>`).
 
+   Detection signature
+      The resistance of about 25 kΩ that a powered device shows at 2.7 V to
+      10.1 V, so that power sourcing equipment can tell that a powered
+      device is connected (:clause:`145.3.4`, see
+      :doc:`power/poe/powered-device`).
+
    Dual-role port
       A USB Type-C port that can attach as either a source or a sink, and
       can swap roles while connected (see :ref:`the power roles <power-roles>`).
+
+   Inrush current
+      The current that flows when a supply is first switched on and the
+      input capacitors charge. Power over Ethernet limits it for the first
+      50 ms to 75 ms (:clause:`145.2.10.7`, see
+      :wikipedia:`Inrush current <Inrush_current>` and
+      :doc:`power/poe/power-sourcing`).
+
+   Isolation switch
+      The switch in a powered device that keeps its converter and input
+      capacitor disconnected from the cable until the turn-on voltage, then
+      connects them with a limited current (see
+      :doc:`power/poe/pd-controller`).
 
    Ethernet transceiver
    PHY
@@ -80,6 +105,17 @@ gives a short description and a link to the full explanation.
       socket. They isolate the board from the cable and give a path for
       Power over Ethernet current (see :doc:`ethernet/magnetics/index`).
 
+   Maintain power signature
+      The minimum current that a powered device keeps drawing once powered,
+      so that the power sourcing equipment keeps the power on
+      (:clause:`145.3.9`, see :doc:`power/poe/sequence`).
+
+   Mark event
+      A step of Power over Ethernet classification, between class events,
+      in which the cable is held at 7 V to 10 V and the powered device draws
+      a small current (:clause:`145.2.8.1`, see
+      :doc:`power/poe/sequence`).
+
    MDIO
    Management data input/output
       The two-wire serial interface, a clock and a bidirectional data line,
@@ -93,6 +129,11 @@ gives a short description and a link to the full explanation.
       The generic Ethernet role that sends and receives frames on a link
       (:clause:`4`). In evampire the forwarding logic and the processor
       share this role.
+
+   Pair set
+      Two pairs of an Ethernet cable, one positive and one negative, that
+      carry Power over Ethernet current out and back (see
+      :doc:`power/poe/basics`).
 
    Power budget
       The power that the processor may offer on the output ports: the power
@@ -164,6 +205,11 @@ gives a short description and a link to the full explanation.
    Source
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
+
+   Type (Power over Ethernet)
+      One of four sets of rules for Power over Ethernet equipment. Types 1
+      and 2 are specified in :clause:`33`, Types 3 and 4 in :clause:`145`
+      (see :doc:`power/poe/types-classes`).
 
    USB Power Delivery
    USB PD
