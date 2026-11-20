@@ -25,6 +25,7 @@ transformers.
 
 .. toctree::
    :maxdepth: 1
+   :hidden:
 
    phy-electrical/integration
 
