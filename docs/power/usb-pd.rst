@@ -5,13 +5,24 @@ This page describes the analog circuits needed for the RISC-V processor to
 carry out the USB Power Delivery negotiation in software, by directly driving
 and sampling the configuration channel.
 
-A board built around evampire can take its power from a USB Type-C
-connector. In USB terms the board is a *sink*: it only receives power. The
-page first explains how a USB Type-C power source and sink find each other
-and agree on a voltage, then describes the signal on the wire in enough
-detail to build a receiver and transmitter for it, then the time limits that
-the processor has to meet, and finally the analog blocks that are needed and
-which of them can be built on the gf180mcu process.
+A board built around evampire bridges power between Ethernet and USB Type-C
+in both directions (see :doc:`index`). Every USB Type-C port on the board is
+therefore *dual-role*: it can supply power (act as a *source*) or receive
+power (act as a *sink*), it settles on one of the two when a cable is plugged
+in, and it can swap roles with the other end while the cable stays connected.
+The first version of the board has one USB Type-C port; the full design has
+two, each dual-role.
+
+USB Power Delivery is implemented mostly in software on the RISC-V processor.
+The dedicated hardware is kept to the minimum: the analog circuits that
+connect to the configuration channel wires, and only those digital helpers
+whose timing cannot be met in software (:doc:`../overview`).
+
+The page first explains how two USB Type-C ports find each other and decide
+who supplies power, then how they agree on a voltage, then the signal on the
+wire in enough detail to receive and send it in software, the source side,
+cables, role changes, two ports, the cost of doing all of this in software,
+the analog blocks, and which of them can be built on the gf180mcu process.
 
 Two specifications are quoted throughout. Both are free to download from
 usb.org (see `References`_):
@@ -19,7 +30,7 @@ usb.org (see `References`_):
 * **Type-C** means the *USB Type-C Cable and Connector Specification*,
   Release 2.5, March 2026.
 * **PD** means the *USB Power Delivery Specification*, Revision 3.3,
-  Version 1.0, October 2026.
+  Version 1.0, 2026-10-16.
 
 Section and table numbers given in brackets, such as (PD Table 5.10), refer to
 these documents.
@@ -32,32 +43,40 @@ Terms
 -----
 
 Source
-   The device that supplies power, for example a mains charger or a laptop
-   port.
+   The end of a cable that supplies power, for example a mains charger, or a
+   board built around evampire when it is powered from Ethernet.
 
 Sink
-   The device that receives power. A board built around evampire is a sink.
+   The end that receives power, for example a phone, or a board built around
+   evampire when it takes its power from USB.
+
+Dual-role port
+   A port that can act as either source or sink. The USB documents call it a
+   *DRP* (dual-role power port).
 
 VBUS
    The power wire of the USB cable. It carries 5 V by default and, after a
-   USB Power Delivery agreement, up to 20 V (or up to 48 V in the extended
-   range described below).
+   USB Power Delivery agreement, up to 20 V, or up to 48 V in the extended
+   range described below.
 
 CC (configuration channel)
-   A signal wire in the USB Type-C cable used first to detect that a cable
-   is plugged in and which way round, and then to carry the USB Power
-   Delivery messages.
+   A signal wire in the USB Type-C cable used first to detect that a cable is
+   plugged in and which way round, and then to carry the USB Power Delivery
+   messages.
 
-Rp and Rd
-   *Rp* is a pull-up resistor (or current source) that a source connects to
-   its CC pins. *Rd* is a 5.1 kΩ pull-down resistor that a sink connects to
-   its CC pins. The voltage that results on the CC wire tells each side what
-   is at the other end.
+Rp, Rd and Ra
+   *Rp* is a pull-up (a resistor or a current source) that a source connects
+   to its CC pins. *Rd* is a 5.1 kΩ pull-down that a sink connects to its CC
+   pins. *Ra* is a pull-down of about 1 kΩ found inside some cable plugs. The
+   voltage that results on a CC pin tells each side what is at the other end.
 
 VCONN
-   A 3.0 V to 5.5 V supply that a source can put on its unused CC pin to
-   power small chips inside the cable plug. A sink does not normally need it
-   (see `VCONN`_).
+   A 3.0 V to 5.5 V supply that the source puts on its unused CC pin to power
+   a small chip inside the cable plug. See `Cables and VCONN`_.
+
+E-marker
+   The chip inside an *electronically marked* cable plug that reports the
+   cable's current and voltage rating when asked.
 
 BMC (biphase mark coding)
    The way bits are turned into voltage changes on the CC wire. See
@@ -67,33 +86,40 @@ UI (unit interval)
    The duration of one bit on the wire, about 3.3 µs.
 
 SOP (start of packet)
-   A fixed 20-bit pattern at the start of each message that marks the
-   beginning of the message and says who it is addressed to.
+   A fixed 20-bit pattern at the start of each message that marks its start
+   and says who it is for: the other port (SOP) or a cable plug (SOP' or
+   SOP'').
 
 PDO (power data object)
-   A 32-bit word in which the source describes one supply it can provide,
-   for example "9 V at up to 3 A".
+   A 32-bit word in which a source describes one supply it can provide, for
+   example "9 V at up to 3 A".
 
 RDO (request data object)
-   A 32-bit word in which the sink asks for one of the offered PDOs.
+   A 32-bit word in which a sink asks for one of the offered PDOs.
 
 GoodCRC
-   A short acknowledgement message. Every received message whose checksum is
-   correct must be acknowledged with a GoodCRC message within 195 µs.
+   A short acknowledgement message. Every correctly received message must be
+   acknowledged with a GoodCRC message within 195 µs.
 
 Contract
    The agreement between source and sink about voltage and current. Before
    any message exchange, the sink may draw the current advertised by the
    source's Rp. After a USB Power Delivery agreement (an *explicit
-   contract*), it may draw the current it requested.
+   contract*) it may draw the current it requested.
+
+DFP and UFP
+   *Downstream facing port* (the USB host side for data) and *upstream facing
+   port* (the device side). These are *data roles*. A port that attaches as
+   a source starts as DFP and one that attaches as a sink starts as UFP. A
+   board without USB data still has to carry these roles in its messages.
 
 The connector and the CC wire
 -----------------------------
 
-A USB Type-C receptacle has 24 contacts, but a sink that only takes power
-uses four kinds of them (Type-C Table 3-4 and Section 4.2):
+A USB Type-C receptacle has 24 contacts. A port that only moves power uses
+four kinds of them (Type-C Table 3-4 and Section 4.2):
 
-.. list-table:: Type-C receptacle contacts used by a power-only sink
+.. list-table:: Type-C receptacle contacts used by a power-only port
    :header-rows: 1
    :widths: 15 25 60
 
@@ -102,7 +128,7 @@ uses four kinds of them (Type-C Table 3-4 and Section 4.2):
      - Use
    * - VBUS
      - A4, A9, B4, B9
-     - Power from the source. Absent until the source detects a sink.
+     - Power. Not driven by a source until it has detected a sink.
    * - GND
      - A1, A12, B1, B12
      - Power return.
@@ -113,50 +139,47 @@ uses four kinds of them (Type-C Table 3-4 and Section 4.2):
      - B5
      - Configuration channel, second position.
 
-The remaining contacts carry USB data (USB 2.0 and the faster SuperSpeed
-pairs) and sideband signals. A board that does not use USB data can leave
-them unconnected.
+The remaining contacts carry USB data and sideband signals. A board that does
+not use USB data can leave them unconnected.
 
 **Why there are two CC pins.** The plug can be inserted either way up. The
 cable has only one CC wire, which in each plug is connected to contact A5.
 Contact B5 of each plug is called VCONN and is not carried through to the
 other end of the cable (Type-C Section 2.5; Table 3-10). Each receptacle
-therefore has a CC contact in both positions (CC1 on A5 and CC2 on B5), and
-only one of them meets the CC wire. Which one tells each side which way round
-the plug was inserted (Type-C Section 2.3.2). A power-only sink does not
-care about the orientation itself, but it must find out which CC pin carries
-the CC wire, because that is where the messages arrive.
+therefore has a CC contact in both positions, CC1 and CC2, and only one of
+them meets the CC wire. Which one tells each side which way round the plug
+was inserted (Type-C Section 2.3.2). A power-only port does not need the
+orientation itself, but it must know which CC pin carries the CC wire,
+because that is where messages arrive, and the source must know which pin is
+left over, because that is where it supplies VCONN.
 
 .. _fig-usbpd-cc-wiring:
 
 .. graphviz:: usb-pd/cc-wiring.dot
    :caption: The single CC wire through a USB Type-C cable. In this example
              the plug at the sink end is turned over, so the source's CC1
-             meets the sink's CC2. The sink's other CC pin meets the plug's
-             VCONN contact, which is not connected to the source.
+             meets the sink's CC2. Each port's other CC pin meets the plug's
+             VCONN contact, which is not connected to the far end.
    :align: center
 
 Two layers of power negotiation
 -------------------------------
 
-A sink can learn how much power is available in two ways, and uses them in
-order.
-
 1. **Resistor advertisement ("USB Type-C Current").** The source's Rp value
    says how much current the sink may draw at 5 V: the default USB amount,
-   1.5 A or 3.0 A. The sink measures the voltage on its CC pin to find out.
-   No messages are exchanged. This works even with no protocol logic at
-   all.
+   1.5 A or 3.0 A. The sink measures the voltage on its CC pin. No messages
+   are exchanged.
 2. **USB Power Delivery messages.** Source and sink exchange messages on the
-   CC wire. The source lists the voltages and currents it can provide and
-   the sink asks for one. This is the only way to get more than 5 V.
+   CC wire. The source lists the voltages and currents it can supply and the
+   sink asks for one. This is the only way to get more than 5 V or more than
+   3 A.
 
 Layer 1: the resistor advertisement
 -----------------------------------
 
 The source pulls each of its CC pins up with Rp, and the sink pulls each of
 its CC pins down with Rd. When a cable joins them, the CC wire forms a
-voltage divider between Rp and Rd.
+voltage divider (or, with a current-source Rp, a current flowing into Rd).
 
 .. list-table:: Source pull-up (Rp) choices (Type-C Table 4-27)
    :header-rows: 1
@@ -183,36 +206,68 @@ voltage divider between Rp and Rd.
 single-lane USB 3.2 port (Type-C Table 4-20).
 
 The sink's Rd is 5.1 kΩ to ground. It may be accurate to ± 10 %, which lets
-the sink tell the three current levels apart, or ± 20 %, which only lets the
-sink detect that a source is present (Type-C Table 4-28). A sink can also use
-a voltage clamp of 1.1 V ± 20 % instead of a resistor, which is useful while
-it has no power (see `Rd while unpowered ("dead battery")`_), but a clamp
-prevents USB Power Delivery communication.
+the sink tell the three current levels apart, or ± 20 %, which only lets it
+detect that a source is present (Type-C Table 4-28). An unpowered sink may
+instead present a 1.1 V ± 20 % clamp, which stops USB Power Delivery
+communication until it switches to a real Rd (Type-C Table 4-28, note 1).
 
-With nominal values, the CC voltage seen by the sink is:
-
-.. math::
-
-   V_\mathrm{CC} = V_\mathrm{pull\text{-}up} \cdot \frac{R_d}{R_p + R_d}
-   \qquad\text{or}\qquad V_\mathrm{CC} = I_p \cdot R_d
+**The CC voltage for each Rp level.** Both ends decide what is attached by
+measuring the CC voltage, so the circuit designer needs to know what voltage
+each combination produces. With a resistor Rp the CC voltage is set by the
+divider; with a current-source Rp it is the current times Rd:
 
 .. math::
 
-   \begin{aligned}
-   \text{Default:}\quad & 5\,\mathrm{V} \cdot \frac{5.1}{56 + 5.1} = 0.42\,\mathrm{V},
-     & 80\,\mu\mathrm{A} \cdot 5.1\,\mathrm{k\Omega} = 0.41\,\mathrm{V} \\
-   \text{1.5 A:}\quad & 5\,\mathrm{V} \cdot \frac{5.1}{22 + 5.1} = 0.94\,\mathrm{V},
-     & 180\,\mu\mathrm{A} \cdot 5.1\,\mathrm{k\Omega} = 0.92\,\mathrm{V} \\
-   \text{3.0 A:}\quad & 5\,\mathrm{V} \cdot \frac{5.1}{10 + 5.1} = 1.69\,\mathrm{V},
-     & 330\,\mu\mathrm{A} \cdot 5.1\,\mathrm{k\Omega} = 1.68\,\mathrm{V}
-   \end{aligned}
+   V_\text{CC} = V_\text{pull} \cdot \frac{R_d}{R_p + R_d}
+   \qquad\text{or}\qquad
+   V_\text{CC} = I_p \cdot R_d
 
-Type-C Section 4.11.3.1 gives the method for working out the full ranges,
-including resistor tolerances and up to 250 mV of ground offset caused by
-current flowing in the cable. For an Rd of ± 10 % the result is
-(Type-C Table 4-36):
+where:
 
-.. list-table:: CC voltage measured by the sink (Rd ± 10 %, Type-C Table 4-36)
+* :math:`V_\text{CC}` is the voltage on the connected CC pin, in volts;
+* :math:`V_\text{pull}` is the voltage the resistor Rp is connected to:
+  5 V or 3.3 V (Type-C Table 4-27);
+* :math:`R_p` is the source's pull-up resistor (Type-C Table 4-27);
+* :math:`I_p` is the source's pull-up current (Type-C Table 4-27);
+* :math:`R_d` is the sink's pull-down, 5.1 kΩ nominal (Type-C Table 4-28).
+
+The model assumes nominal values, no current in the cable and a negligible
+cable resistance (the same assumption Type-C Section 4.11.3.1 makes). As an
+example of the steps, for 22 kΩ to 5 V:
+:math:`R_p + R_d = 22 + 5.1 = 27.1\ \text{k}\Omega`, and
+:math:`5\ \text{V} \times 5.1 / 27.1 = 0.941\ \text{V}`. The same steps for
+every level give:
+
+.. list-table:: Nominal CC voltage with Rd = 5.1 kΩ
+   :header-rows: 1
+   :widths: 25 25 25 25
+
+   * - Advertised current
+     - Resistor to 5 V
+     - Resistor to 3.3 V
+     - Current source
+   * - Default USB power
+     - 5 × 5.1 / 61.1 = 0.417 V
+     - 3.3 × 5.1 / 41.1 = 0.409 V
+     - 80 µA × 5.1 kΩ = 0.408 V
+   * - 1.5 A
+     - 5 × 5.1 / 27.1 = 0.941 V
+     - 3.3 × 5.1 / 17.1 = 0.984 V
+     - 180 µA × 5.1 kΩ = 0.918 V
+   * - 3.0 A
+     - 5 × 5.1 / 15.1 = 1.689 V
+     - 3.3 × 5.1 / 9.8 = 1.717 V
+     - 330 µA × 5.1 kΩ = 1.683 V
+
+The three methods give nearly the same voltage for each level, which is what
+lets a sink read the level without knowing how the source made it. The three
+levels are about 0.4 V, 0.9 V and 1.7 V.
+
+**What the sink measures.** Type-C Section 4.11.3.1 gives the method for
+including all tolerances and up to 250 mV of ground offset caused by current
+in the cable. For an Rd of ± 10 % the result is (Type-C Table 4-36):
+
+.. list-table:: CC voltage measured by a sink (Rd ± 10 %, Type-C Table 4-36)
    :header-rows: 1
    :widths: 50 25 25
 
@@ -238,87 +293,229 @@ current flowing in the cable. For an Rd of ± 10 % the result is
      - below 0.276 V
      -
 
-A sink therefore needs, on each CC pin, a way of comparing the voltage with
-about three thresholds: roughly 0.28 V (connected or not), 0.68 V and
-1.27 V (centres of the allowed threshold windows). With Rd of ± 20 % only
-the first threshold is meaningful (0.248 V, Type-C Table 4-35).
+**What the source measures.** A source uses its own CC voltage to tell an Rd
+(a sink), an Ra (a cable plug with an e-marker) and nothing (an open pin)
+apart. Because a source knows its own Rp, it has one set of thresholds per Rp
+level. For a current-source Rp (the type that suits an integrated circuit,
+see `Switchable Rp`_) the thresholds are (Type-C Table 4-37):
 
-**Attach.** The steps for a sink are set out in the Type-C connection state
-machine (Type-C Section 4.5.2.2.3 to 4.5.2.2.5):
+.. list-table:: CC voltage thresholds for a source with a current-source Rp (Type-C Table 4-37)
+   :header-rows: 1
+   :widths: 25 25 25 25
 
-#. With nothing attached, the sink presents Rd on both CC pins and waits.
-#. The source sees Rd on one of its CC pins, waits for it to stay stable
-   for *tCCDebounce*, 100 ms to 200 ms (Type-C Table 4-34), and then turns
-   VBUS on, reaching 5 V within *tVBUSON*, at most 275 ms
-   (Type-C Table 4-32).
-#. On the sink side, when one CC pin rises above the "nothing connected"
-   threshold, the sink waits for the CC state to stay stable for
-   tCCDebounce and for VBUS to be present. It is then attached.
-#. The CC pin that shows Rp is the one connected through the cable. This is
-   how the orientation is found. The other CC pin stays near 0 V.
+   * - Rp level
+     - Ra below, Rd above (window)
+     - Rd range (vRd)
+     - Open above (minimum)
+   * - Default (80 µA)
+     - 0.116 V to 0.260 V
+     - 0.261 V to 1.32 V
+     - 1.321 V
+   * - 1.5 A (180 µA)
+     - 0.234 V to 0.675 V
+     - 0.676 V to 1.32 V
+     - 1.441 V
+   * - 3.0 A (330 µA)
+     - 0.429 V to 0.879 V
+     - 0.88 V to 2.181 V
+     - 2.432 V
 
-A sink that is powered only from VBUS cannot start this process until VBUS
-is present, so it must show Rd before it has any power (see
-`Rd while unpowered ("dead battery")`_). It then completes its own debounce
-after it has powered up.
+The "open" thresholds allow 250 mV of ground offset (Type-C Table 4-37,
+note 1). A commercial example is the TI TPS65987D, which as a source detects
+an Ra below 0.15-0.25 V, 0.35-0.45 V or 0.75-0.85 V and an open pin above
+1.5-1.65 V, 1.5-1.65 V or 2.45-2.615 V for the three Rp levels (TPS65987D
+datasheet, Section 6.8). A dual-role port therefore needs, per CC pin, about
+four thresholds as a sink and three per Rp level as a source.
 
-**Detach.** The sink treats the cable as removed when VBUS falls below
-*vSinkDisconnect* (3.67 V at 5 V operation) and must react within
-*tSinkDisconnect*, 40 ms (Type-C Table 4-3). It may also watch the CC voltage
-fall below the vRd-USB range for *tPDDebounce*, 10 ms to 20 ms.
-
-**Following a change of Rp.** A sink that uses 1.5 A or 3.0 A must keep
-watching the CC voltage and reduce its current within *tSinkAdj*, 60 ms, if
-the source lowers its advertisement (Type-C Section 4.6.2.1). During a USB
-Power Delivery contract this no longer applies, and the source reuses its Rp
-value for a different purpose: an Rp of the 3.0 A value means "the sink may
-start a message exchange", the 1.5 A value means "it may not" (PD Section
-5.2.2, Table 5.1). A sink that starts exchanges of its own must therefore
-still be able to tell those two levels apart.
-
-Layer 2: USB Power Delivery
+Attach for a dual-role port
 ---------------------------
 
-Once VBUS is present, the source sends a list of what it can supply, and the
-sink picks one item from the list.
+The Type-C specification describes attach as a state machine for each kind of
+port (Type-C Section 4.5.2.2). A source sees each CC pin as *SRC.Open*,
+*SRC.Rd* or *SRC.Ra*; a sink sees each CC pin as *SNK.Rp* or *SNK.Open*
+(Type-C Tables 4-16 and 4-17).
 
-**Standard Power Range (SPR).** The fixed voltages are 5 V, 9 V, 15 V and
-20 V. Which of them a source must offer depends on its power rating: a source
-of more than 15 W must offer 9 V, more than 27 W must add 15 V, and more than
-45 W must add 20 V, at up to 3 A, or 5 A at 20 V with a suitable cable
-(PD Section 3.2.4, Table 3.1 and Figure 3.1). Fixed supplies have a voltage
-tolerance of ± 5 % (PD Section 3.2.5.1). The SPR maximum is 100 W.
+Toggling between Rp and Rd
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Extended Power Range (EPR).** Sources rated above 100 W and up to 240 W
-can also offer 28 V, 36 V and 48 V (PD Section 3.2.5.3, Table 3.6). The sink
-must first ask to enter "EPR mode" with a separate message exchange, the cable
-must be marked as EPR-capable, and in EPR mode the sink must send a
-keep-alive message whenever there has been no other traffic for
-*tSinkEPRKeepAlive*, 250 ms to 500 ms. A source that sees no traffic for
-*tSourceEPRKeepAlive*, 750 ms to 1000 ms, sends Hard Reset (PD Sections
-7.31.18.2 and 7.31.18.3, Table 7.10). Any part of the
-cable assembly powered from VBUS must tolerate up to 50.9 V (48 V + 5 % +
-500 mV) in EPR operation (Type-C Section 4.6.2).
+When nothing is attached, a dual-role port alternates between presenting Rd
+on both CC pins (state Unattached.SNK) and presenting Rp on both CC pins
+(Unattached.SRC), so that it can be found by a source, by a sink, or by
+another dual-role port (Type-C Section 4.5.1.3.3).
 
-**Programmable Power Supply (PPS).** A source may also offer a supply whose
-voltage the sink adjusts in 20 mV steps, within 5 V to 11 V, 5 V to 16 V or
-5 V to 21 V depending on the range (PD Table 4.2, Table 6.21), with a current
-limit set by the sink. This is aimed at charging batteries directly. A sink
-using it must repeat its request at least every *tPPSRequest*, 10 s (PD
-Section 7.31.16.1). A board that only needs a fixed supply has no use for
-it. A related "adjustable voltage supply" (AVS) mode exists for 9 V to 20 V
-and, in EPR, 15 V to 48 V (PD Tables 4.3 and 4.4).
+.. list-table:: Toggling timing (Type-C Table 4-33)
+   :header-rows: 1
+   :widths: 25 20 55
 
-Before any message exchange, the source supplies 5 V. A sink that never
-sends a message still gets 5 V at the current set by Rp, which may be enough
-for a board in a low-power mode.
+   * - Name
+     - Value
+     - Meaning
+   * - tDRP
+     - 50 ms to 100 ms
+     - Period of one complete Rp and Rd cycle.
+   * - dcSRC.DRP
+     - 30 % to 70 %
+     - Fraction of tDRP spent presenting Rp.
+   * - tDRPTransition
+     - at most 1 ms
+     - Time allowed to change between Rp and Rd.
+
+The clock that sets these times should *not* come from a precise source such
+as a crystal, so that two dual-role ports do not stay locked in step and fail
+to find each other (Type-C Section 4.11.2, text before Table 4-33). In
+software this means adding a random variation to the period and duty cycle.
+
+.. wavedrom::
+
+   {"signal": [
+     {"name": "CC1 and CC2", "wave": "=...=...=...=...", "data": ["Rp", "Rd", "Rp", "Rd"]},
+     {"name": "", "wave": "", "node": "A.......B......."},
+     {"name": "", "wave": "", "node": "C...D..........."}
+   ],
+   "edge": ["A<->B tDRP: 50 ms to 100 ms", "C<->D dcSRC.DRP x tDRP"],
+   "head": {"text": "Toggling while unattached (shown with a 50 % duty cycle)"},
+   "config": {"hscale": 2}}
+
+How long a connection takes to be noticed depends on who toggles: at most
+*tNoToggleConnect* (5 ms) when neither side toggles, *tOnePortToggleConnect*
+(80 ms) when one side toggles, and *tTwoPortToggleConnect* (510 ms) when both
+do (Type-C Table 4-34).
+
+The attach sequence
+~~~~~~~~~~~~~~~~~~~
+
+.. _fig-usbpd-drp-states:
+
+.. graphviz:: usb-pd/drp-states.dot
+   :caption: Simplified attach state machine for a dual-role port that
+             prefers the source role (Type-C Section 4.5.2.2, Figure 4-16).
+             Accessory and debug states are left out.
+   :align: center
+
+**Attaching to a source** (for example a charger). While presenting Rd, the
+port sees Rp on one CC pin and enters AttachWait.SNK. When that pin has shown
+Rp for *tCCDebounce* (100 ms to 200 ms, Type-C Table 4-34) and VBUS is
+present, the port enters Attached.SNK. The source meanwhile has debounced
+the Rd it sees and turned VBUS on within *tVBUSON*, at most 275 ms (Type-C
+Table 4-32; Sections 4.5.2.2.4 and 4.5.2.2.5).
+
+**Attaching to a sink** (for example a phone). While presenting Rp, the port
+sees Rd on one CC pin and enters AttachWait.SRC. It makes sure VBUS is at
+*vSafe0V* (at most 0.8 V, PD Table 4.9), loading VBUS if needed to discharge
+it within *tVsafe0V* (650 ms), waits until exactly one CC pin has shown Rd for
+tCCDebounce, enters Attached.SRC and turns VBUS on within tVBUSON (Type-C
+Sections 4.5.2.2.8 and 4.5.2.2.9; Table 4-32).
+
+**Attaching to another dual-role port.** Both sides toggle; whichever happens
+to present Rp when the other presents Rd becomes the source. The outcome is
+random unless one side uses a preference mechanism (Type-C Section
+4.5.2.2.7.2, note).
+
+**Detach.** A source detects that the sink has gone when the monitored CC pin
+reads SRC.Open, within *tSRCDisconnect* (20 ms, Type-C Table 4-34), and must
+then remove VBUS within *tVBUSOFF* (650 ms, Type-C Table 4-32). A sink
+detects detach when VBUS falls below *vSinkDisconnect* (3.67 V at 5 V) within
+*tSinkDisconnect* (40 ms, Type-C Table 4-3).
+
+Try.SRC and Try.SNK
+~~~~~~~~~~~~~~~~~~~
+
+A dual-role port can bias the outcome with one of two optional mechanisms;
+only one may be enabled at a time (Type-C Sections 4.5.1.4.1, 4.5.2.2.10 to
+4.5.2.2.13):
+
+* **Try.SRC** (prefers to be source). When the port finds itself heading for
+  Attached.SNK, it presents Rp instead (state Try.SRC) for up to *tDRPTry*
+  (75 ms to 150 ms). If the other side shows Rd for *tTryCCDebounce* (10 ms to
+  20 ms), it becomes source; otherwise it goes back to presenting Rd
+  (TryWait.SNK) and attaches as sink.
+* **Try.SNK** (prefers to be sink). The mirror image: when heading for
+  Attached.SRC it presents Rd for tDRPTry and waits for Rp.
+
+These mechanisms work only once, at attach. After that, both sides can use
+USB Power Delivery messages to swap roles (see `Role changes`_). Type-C
+Table 4-12 recommends Try.SRC for a port that prefers to be a source and
+Try.SNK for one that prefers to be a sink.
+
+Choosing the initial role
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For evampire the preferred role follows from the power budget (see
+:doc:`index`):
+
+* If the board has input power from Ethernet and can spare power for USB, the
+  port prefers to be a source and uses Try.SRC.
+* If the board has no other input, it can only be a sink.
+* If the board has input power but no spare power, it prefers to be a sink
+  (Try.SNK), or attaches as a source offering no power and then asks for a
+  role swap.
+
+Even with Try.SRC, a port attached to a charger (which can only be a source)
+ends up as a sink, and a port attached to a phone that only sinks ends up as
+a source, so the processor has to handle both outcomes.
+
+Unpowered board ("dead battery")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A board that has no power from Ethernet and is plugged into a USB charger is
+completely unpowered at that moment. The charger turns VBUS on only after it
+sees Rd. The port must therefore present Rd without any supply (Type-C
+Section 4.5.2.2.3: "A port with a dead battery shall enter this state while
+unpowered"; Section 4.8.5). Once the board has powered up from VBUS, the
+processor takes over the CC pins, keeping Rd present, and continues as a
+sink in Attached.SNK.
+
+ErrorRecovery
+~~~~~~~~~~~~~
+
+Every port that supports USB Power Delivery must support the *ErrorRecovery*
+state, in which it removes all terminations and presents at least *zOPEN*
+(126 kΩ) on both CC pins for *tErrorRecovery* (at least 25 ms, or 240 ms if it
+was supplying VCONN), forcing the other side to see a detach (Type-C Sections
+4.5.2.2.2, Table 4-30, Table 4-34). The Rp and Rd circuits must therefore
+both be switchable off.
+
+Layer 2: USB Power Delivery power levels
+----------------------------------------
+
+Once VBUS is present the source sends a list of what it can supply and the
+sink picks one item. The board's supported maximum is not yet fixed, so all
+power levels are listed here.
+
+**Standard Power Range (SPR).** Fixed voltages of 5 V, 9 V, 15 V and 20 V.
+Which ones a source must offer depends on its power rating: up to 15 W only
+5 V; above 15 W also 9 V; above 27 W also 15 V; above 45 W also 20 V
+(PD Section 3.2.4, Table 3.1). Currents are up to 3 A, and up to 5 A at 20 V
+(100 W) with a 5 A cable (PD Table 3.1, note 1; Section 8.6.1.2.2). Fixed
+supplies have a tolerance of ± 5 % (PD Table 4.7, *vSrcNew*).
+
+**Extended Power Range (EPR).** Sources rated above 100 W and up to 240 W can
+also offer 28 V, 36 V and 48 V at up to 5 A (PD Section 3.2.5.3, Table 3.6).
+The sink must first ask to enter "EPR mode" with a separate message exchange,
+the source must check that the cable is EPR-capable (PD Section 8.6.1.2.3),
+and in EPR mode the sink sends a keep-alive message whenever there has been
+no other traffic for *tSinkEPRKeepAlive* (250 ms to 500 ms); a source that
+sees no traffic for *tSourceEPRKeepAlive* (750 ms to 1000 ms) sends Hard
+Reset (PD Sections 7.31.18.2 and 7.31.18.3, Table 7.10). Cable electronics
+powered from VBUS must tolerate 50.9 V (48 V + 5 % + 500 mV) (Type-C Section
+4.6.2). Power role swaps are not allowed in EPR mode (PD Section 7.10).
+
+**Programmable Power Supply (PPS).** A supply whose voltage the sink adjusts
+in 20 mV steps (*vPpsStep*, PD Table 4.7) within 5 V to 11 V, 5 V to 16 V or
+5 V to 21 V (PD Table 4.2), with a current limit the sink sets in 50 mA
+steps (*iPpsCLStep*, PD Table 4.7). It is aimed at charging batteries
+directly. The sink repeats its request at least every *tPPSRequest*, 10 s
+(PD Section 7.31.16.1). A source that offers PPS must also offer the related
+*adjustable voltage supply* (AVS) mode (PD Section 3.2.5.2), which covers
+9 V to 20 V in SPR and 15 V to 48 V in EPR in 100 mV steps (PD Tables 4.3,
+4.4 and 4.7).
 
 Signalling on the CC wire
 -------------------------
 
-Every USB Power Delivery message is sent on the same CC wire that carries
-the Rp/Rd voltage. Communication is half-duplex: only one side transmits at
-a time (PD Section 5.1).
+Every USB Power Delivery message is sent on the same CC wire that carries the
+Rp/Rd voltage. Communication is half-duplex: only one side transmits at a
+time (PD Section 5.1). Source and sink use exactly the same signalling.
 
 Biphase mark coding
 ~~~~~~~~~~~~~~~~~~~
@@ -330,13 +527,9 @@ Bits are sent using *biphase mark coding* (BMC), a form of Manchester coding
 * for a ``1``, the line also changes level in the middle of the bit;
 * for a ``0``, there is no change in the middle.
 
-Only the presence or absence of the middle transition carries the data; the
-absolute level does not matter. A receiver therefore does not care which
-way round the signal is, and a long run of ``0`` or ``1`` still has at least
-one transition per bit, which lets the receiver follow the transmitter's
-clock. Over any two ``0`` bits or any one ``1`` bit, the signal spends equal
-time high and low, so the average level stays almost constant (PD Section
-5.3.3).
+Only the presence or absence of the middle transition carries the data. A
+receiver does not care which way round the signal is, and every bit has at
+least one transition, which lets the receiver follow the transmitter's clock.
 
 .. wavedrom::
 
@@ -349,36 +542,53 @@ time high and low, so the average level stays almost constant (PD Section
    "config": {"hscale": 2}}
 
 A receiver measures the time between successive edges. An interval of about
-one UI means a ``0``. Two intervals of about half a UI in a row mean a
-``1``.
+one UI means a ``0``; two intervals of about half a UI in a row mean a ``1``.
 
 Bit rate
 ~~~~~~~~
 
-The bit rate *fBitRate* is 300 kbit/s nominal, with a permitted range of
-270 kbit/s to 330 kbit/s (PD Table 5.9). This wide range lets a source or
-sink use an inaccurate on-chip oscillator. Within one message the rate must
-stay much more constant: after the first part of the message (the preamble,
-see below), the rate may differ from the rate measured over the last 32 bits
-of the preamble by no more than *pBitRate* = 0.25 % (PD Section 5.3.4.8,
-Table 5.10). A receiver can therefore measure the bit time on the preamble
-and use it for the rest of the message.
+The bit rate *fBitRate* is 300 kbit/s nominal, within 270 kbit/s to
+330 kbit/s (PD Table 5.9). Within one message the rate may differ by no more
+than *pBitRate* = 0.25 % from the rate measured over the last 32 bits of the
+preamble (PD Section 5.3.4.8, Table 5.10), so a receiver can measure the bit
+time on the preamble and use it for the rest of the message.
+
+The bit time (UI) sets every software timing on this page, so it is worth
+calculating at the extremes:
 
 .. math::
 
-   \mathrm{UI} = \frac{1}{f_\mathrm{BitRate}}:\quad
-   \frac{1}{330\,\mathrm{kbit/s}} = 3.03\,\mu\mathrm{s},\quad
-   \frac{1}{300\,\mathrm{kbit/s}} = 3.33\,\mu\mathrm{s},\quad
-   \frac{1}{270\,\mathrm{kbit/s}} = 3.70\,\mu\mathrm{s}
+   T_\text{UI} = \frac{1}{f_\text{bit}}
 
-The shortest time between edges is half a UI, 1.52 µs at the highest
-permitted rate.
+where :math:`T_\text{UI}` is the unit interval in seconds and
+:math:`f_\text{bit}` is the bit rate in bit/s (PD Table 5.9).
+
+.. list-table:: Unit interval at the bit-rate limits
+   :header-rows: 1
+   :widths: 30 35 35
+
+   * - Bit rate
+     - UI
+     - Half UI
+   * - 330 kbit/s (fastest)
+     - 1 / 330 000 = 3.030 µs
+     - 1.515 µs
+   * - 300 kbit/s (nominal)
+     - 1 / 300 000 = 3.333 µs
+     - 1.667 µs
+   * - 270 kbit/s (slowest)
+     - 1 / 270 000 = 3.704 µs
+     - 1.852 µs
+
+The shortest time between two edges is half a UI at the fastest rate,
+1.515 µs. Any receiver, in hardware or software, must be able to measure
+intervals this short.
 
 Transmitter levels, output impedance and edge rate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The transmitter is a tri-state driver: it drives the CC wire between 0 V and
-*vSwing* while sending, and lets go of the wire (high impedance) at all other
+*vSwing* while sending and lets go of the wire (high impedance) at all other
 times (PD Section 5.3.4, Table 5.10):
 
 .. list-table:: BMC transmitter requirements (PD Table 5.10)
@@ -389,7 +599,7 @@ times (PD Section 5.3.4, Table 5.10):
      - Meaning
      - Value
    * - vSwing
-     - Driven high level (low level is 0 V)
+     - Driven high level (low level is 0 V ± 75 mV)
      - 1.05 V to 1.20 V, nominal 1.125 V
    * - zDriver
      - Output impedance while driving, measured at 750 kHz
@@ -410,71 +620,91 @@ times (PD Section 5.3.4, Table 5.10):
      - Gap from the end of one message to the start of the next
      - at least 25 µs
 
-The low level must be within ± 75 mV of ground, and the whole waveform must
-fit a *transmit mask* when driving a model of the worst cable and receiver
-(PD Section 5.3.4.1, Figures 5.12 and 5.13, Tables 5.6 and 5.7; the load
-model is in Section 5.3.4.3). The mask has an outer limit of -75 mV to
-1.2 V and an inner "eye" that the waveform must stay out of. Reading the
-mask coordinates gives a feel for how precise the edges must be:
+The waveform must also fit a *transmit mask* when driving a model of the
+worst cable and receiver (PD Section 5.3.4.1, Figures 5.12 and 5.13, Tables
+5.6 and 5.7). The mask has an outer limit of -75 mV to 1.2 V and an inner
+"eye" that the waveform must stay out of. Its coordinates give the edge
+precision:
 
 * the inner eye touches the mid-level (0.5625 V) at 0.015 UI and 0.985 UI,
-  and, for a ``1``, again at 0.485 UI and 0.515 UI. Each edge must therefore
-  cross the mid-level within about ± 0.015 UI (± 50 ns at 300 kbit/s) of
-  its ideal time;
+  and, for a ``1``, again at 0.485 UI and 0.515 UI. Read strictly, each edge
+  must therefore cross the mid-level within about ± 0.015 UI of its ideal
+  time, which is ± 50 ns at 300 kbit/s (0.015 × 3.333 µs). This is our
+  reading of the mask, not a number stated in the specification;
 * by 0.07 UI after the ideal edge time the signal must be below 0.325 V or
-  above 0.80 V, and by 0.25 UI it must be below 0.075 V or above 1.04 V.
+  above 0.80 V, and by 0.25 UI below 0.075 V or above 1.04 V.
 
-**Why the edges are slowed down.** The 300 ns minimum rise and fall time is
-there to limit coupling from the CC wire into neighbouring wires in the
-cable, in particular the USB 2.0 data pair (PD Section 5.3.4, item 1). The
-specification allows the slope to be set either by the design of the driver
-or by an RC filter at its output. The inner mask sets the other limit: the
-edges may not be so slow that they eat into the eye. For an RC-shaped edge
-with a 10 %-90 % time of 300 ns the time constant is
+**Why the edges are slowed down.** The 300 ns minimum rise and fall time
+limits coupling from the CC wire into neighbouring wires in the cable, in
+particular the USB 2.0 data pair (PD Section 5.3.4, item 1). The slope may be
+set by the driver design or by an RC filter at its output.
+
+The inner mask sets the opposite limit: edges must not be so slow that they
+eat into the eye. To see how much room there is, model the edge as a single
+RC time constant. *Assumption:* the driver output behaves like a step through
+a first-order RC filter; real drivers are close to this when the slope is
+set by an RC network. For such an edge, the 10 %-90 % time is
+:math:`\tau \ln 9`, so the time constant that gives the minimum allowed edge
+time is:
 
 .. math::
 
-   \tau = \frac{t_{10\text{-}90}}{\ln 9} = \frac{300\,\mathrm{ns}}{2.197}
-   \approx 137\,\mathrm{ns},
+   \tau = \frac{t_{10\text{-}90}}{\ln 9}
+        = \frac{300\ \text{ns}}{2.197}
+        = 136.5\ \text{ns}
 
-and an edge starting from 0 V passes 1.04 V (the inner mask limit, 92 % of
-1.125 V) after
-:math:`\tau \ln\bigl(1.125 / (1.125 - 1.04)\bigr) \approx 2.6\,\tau \approx 350\,\mathrm{ns}`,
-inside the 0.25 UI (760 ns at 330 kbit/s) that the mask allows. A driver
-with a minimum edge time of 300 ns therefore has margin, but one with edges
-much slower than about 600 ns would not.
+where :math:`\tau` is the RC time constant and :math:`t_{10\text{-}90}` is
+the 10 %-90 % edge time, 300 ns (PD Table 5.10).
 
-The output impedance limit (*zDriver*) is defined as
-:math:`z_\mathrm{Driver} = r_\mathrm{Output} / (1 + s\,r_\mathrm{Output}\,c_\mathrm{Shunt})`
-(PD Section 5.3.4.7). It bounds how much noise picked up along the cable
-reaches the receiver, since a low-impedance driver holds the line firmly at
-its level. Any extra capacitance used for edge shaping must be disconnected
-again within *tInterFrameGap* after the message, so that the port presents
-only its normal receive capacitance (PD Section 5.3.4.6).
+Next, the time for a rising edge to reach the inner-mask limit of 1.04 V
+(PD Table 5.7, *Y8Tx*) from 0 V, with a final level of 1.125 V:
+
+.. math::
+
+   t_\text{mask} = \tau \ln\frac{V_\text{swing}}{V_\text{swing} - V_\text{Y8}}
+                 = 136.5\ \text{ns} \times \ln\frac{1.125}{1.125 - 1.04}
+                 = 136.5\ \text{ns} \times \ln 13.24
+                 = 136.5\ \text{ns} \times 2.583
+                 = 353\ \text{ns}
+
+where :math:`V_\text{swing}` = 1.125 V (nominal *vSwing*, PD Table 5.10) and
+:math:`V_\text{Y8}` = 1.04 V (PD Table 5.7). The mask requires this level by
+0.25 UI, which at the fastest bit rate is
+:math:`0.25 \times 3.030\ \mu\text{s} = 758\ \text{ns}`. Turning this around,
+the slowest RC edge that still passes is
+:math:`\tau_\text{max} = 758\ \text{ns} / 2.583 = 293\ \text{ns}`, a 10 %-90 %
+time of :math:`293\ \text{ns} \times 2.197 = 644\ \text{ns}`. So a driver
+with a 10 %-90 % edge time between 300 ns and about 640 ns meets both limits
+(an estimate under the RC assumption).
+
+The output impedance limit (*zDriver*) bounds how much noise picked up along
+the cable reaches the receiver, since a low-impedance driver holds the line
+firmly at its level (PD Section 5.3.4.7). Any extra capacitance used for edge
+shaping must be disconnected within *tInterFrameGap* after the message (PD
+Section 5.3.4.6). The transmitter must also survive its output being shorted
+to ground for 120 µs, which happens when the other side signals a fast role
+swap (PD Section 5.3.4.10).
 
 The DC level the signal starts and ends on
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When neither side is transmitting, the CC wire sits at the level set by the
-source's Rp and the sink's Rd: about 0.4 V, 0.9 V or 1.7 V for the three Rp
-values, as calculated above. The transmitter does not add its signal on top
-of this level. It overdrives the wire with its low output impedance
-(33 Ω to 75 Ω against kilohms of Rp and Rd), so while it transmits the wire
-swings between 0 V and vSwing, and when it lets go the wire returns to the
-Rp/Rd level. A message therefore starts with a step from the idle level to
-0 V and ends with a return from 0 V to the idle level:
+When neither side transmits, the CC wire sits at the level set by Rp and Rd:
+about 0.4 V, 0.9 V or 1.7 V for the three Rp levels (table above). The
+transmitter does not add its signal on top of this level; it overdrives the
+wire with its low output impedance (33 Ω to 75 Ω against kilohms of Rp and
+Rd). While it transmits the wire swings between 0 V and vSwing, and when it
+lets go the wire returns to the Rp/Rd level (TPS25750 datasheet, Section
+9.3.1.4). Therefore:
 
 * the transmitter starts by driving low (PD Section 5.3.4, item 2);
-* the receiver must tolerate losing the first edge, because depending on the
-  idle level the step into the first bit may be small or in the wrong
-  direction (PD Section 5.3.4, item 3);
-* the last bit is followed by one more edge so that the receiver can time
-  the last bit. If that edge goes low, the transmitter holds the line low
-  for at least *tHoldLowBMC* (1 µs) and then lets go. If it goes high, the
-  transmitter holds it high for 1 UI, then low for at least 1 µs, then lets
-  go. In either case it must have let go within *tEndDriveBMC* (23 µs) of
-  the end of the last bit (PD Section 5.3.4, items 4 to 6; Figures 5.8 to
-  5.11).
+* the receiver must tolerate losing the first edge (PD Section 5.3.4,
+  item 3);
+* the last bit is followed by one more edge. If that edge goes low, the
+  transmitter holds the line low for at least *tHoldLowBMC* (1 µs) and then
+  lets go; if it goes high, it holds high for 1 UI, then low for at least
+  1 µs, then lets go. Either way it must have let go within *tEndDriveBMC*
+  (23 µs) of the end of the last bit (PD Section 5.3.4, items 4 to 6; Figures
+  5.8 to 5.11).
 
 .. wavedrom::
 
@@ -503,25 +733,24 @@ Rp/Rd level. A message therefore starts with a step from the idle level to
    "head": {"text": "End of a message: a final edge after the last bit, a short low hold, then release to the Rp/Rd level"},
    "config": {"hscale": 1}}
 
-The idle level also shifts with current. Up to 250 mV can be lost in the
-cable's ground wire at full current (*vIRDropGNDC*, PD Table 5.11), which
-moves the received signal down at the sink and up at the source. The receive
-requirements below allow for this.
+Up to 250 mV can be lost in the cable's ground wire at full current
+(*vIRDropGNDC*, PD Table 5.11). This moves the received signal down at the
+sink and up at the source; the receive masks below allow for it.
 
 Receiver thresholds, filtering and noise
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The PD specification does not fix the receiver's switching thresholds.
 Instead it gives *receive masks*: regions the received signal will stay out
-of, after noise and ground offset, which the receiver must decode correctly
-(PD Section 5.3.4.2, Figures 5.14 to 5.19, Table 5.8). For a sink the centre
-of the receive eye is at 0.4375 V and the eye spans 0.2325 V to 0.6425 V
-(0.4375 V ± 0.205 V). For comparison, the eye centre is 0.5625 V when no
-current flows and 0.6875 V at a source. The outer limits are -0.3325 V and
-1.5325 V. Horizontally, the eye of a ``1`` is open from 0.07 UI to 0.43 UI
-and from 0.57 UI to 0.93 UI, and the eye of a ``0`` from 0.07 UI to
-0.93 UI, so a receiver must accept edges displaced by up to about 0.07 UI
-from their ideal times.
+of, after noise and ground offset (PD Section 5.3.4.2, Figures 5.14 to 5.19,
+Table 5.8). The centre of the receive eye is 0.4375 V for a sink, 0.5625 V
+when no current flows and 0.6875 V for a source, and the eye extends
+± 0.205 V around that centre for a sink or source (± 0.33 V with no
+current). The outer limits are -0.3325 V and 1.5325 V. Horizontally the eye
+of a ``1`` is open from 0.07 UI to 0.43 UI and from 0.57 UI to 0.93 UI, and
+that of a ``0`` from 0.07 UI to 0.93 UI, so a receiver must accept edges
+displaced by about 0.07 UI from their ideal times. A dual-role port therefore
+needs receiver thresholds that change with its power role.
 
 .. list-table:: BMC receiver requirements (PD Table 5.11)
    :header-rows: 1
@@ -531,8 +760,8 @@ from their ideal times.
      - Meaning
      - Value
    * - tRxFilter
-     - Time constant of a single-pole filter (analog or digital) in front of
-       the decision, to reject broadband noise
+     - Time constant of a single-pole filter (analog or digital) in front
+       of the decision, to reject broadband noise
      - at least 100 ns
    * - vNoiseActive
      - Peak-to-peak noise from VBUS, USB 2.0 and SBU lines, after that
@@ -548,33 +777,29 @@ from their ideal times.
      - Capacitance on the CC pin while not transmitting
      - 200 pF to 600 pF
    * - rBmcRx
-     - Receiver input resistance (Rd excluded)
+     - Receiver input resistance (Rp or Rd excluded)
      - at least 1 MΩ
    * - nTransitionCount, tTransitionWindow
      - The line counts as busy after 3 transitions within 12 µs to 20 µs
      - 3; 12 µs to 20 µs
 
-In practice a sink receiver is a low-pass filter followed by a comparator
-with hysteresis. As an example, TI's TPS25750 uses a rising threshold of
-499 mV to 551 mV and a falling threshold of 230 mV to 270 mV in sink mode,
-and 784 mV to 866 mV rising / 523 mV to 578 mV falling in source mode
-(TPS25750 datasheet, Section 7.14). These thresholds sit either side of the
-sink eye centre, and the hysteresis of about 275 mV is larger than the
-165 mV of active noise. Note that the falling threshold is close to the
-lowest idle level (about 0.3 V with a default-power Rp and full ground
-offset), so the receiver must also rely on edge timing, not only on the
-level, to decide whether a message is present.
+A receiver is a low-pass filter followed by a comparator with hysteresis.
+TI's TPS65987D, a dual-role controller, switches thresholds with the role:
+504-546 mV rising and 240-260 mV falling as a sink, 840-910 mV rising and
+576-624 mV falling as a source (TPS65987D datasheet, Section 6.9). In both
+roles the thresholds sit either side of the eye centre for that role, and the
+hysteresis of about 275 mV is larger than the 165 mV of active noise.
 
-The USB-IF publishes an informative white paper, *Alternate BMC Receiver
-Design Examples* (Revision 1.1, 2026-01-01), with two receivers that are
-insensitive to the DC offset: one compares the signal with a copy of itself
-delayed by 300 ns to 500 ns (sampled every 50 ns), the other subtracts the
-outputs of two low-pass filters with 200 ns and 300 ns time constants. Both
-detect edges rather than levels.
+The USB-IF also publishes an informative white paper, *Alternate BMC Receiver
+Design Examples* (Revision 1.1, 2026-01-01), with two receivers that detect
+edges rather than levels and so ignore the DC offset: one compares the signal
+with a copy of itself delayed by 300 ns to 500 ns (sampled every 50 ns), the
+other subtracts the outputs of two low-pass filters with 200 ns and 300 ns
+time constants.
 
-The line is considered *idle* after *tTransitionWindow* without 3
-transitions (PD Section 5.2.2.1). A transmitter must check that the line is
-idle immediately before it starts (PD Section 5.2.2).
+The line is *idle* after *tTransitionWindow* without 3 transitions (PD
+Section 5.2.2.1). A transmitter must check that the line is idle immediately
+before it starts (PD Section 5.2.2).
 
 Packet structure
 ~~~~~~~~~~~~~~~~
@@ -596,7 +821,7 @@ A packet on the wire has five parts (PD Section 5.3.1.1, Figure 5.1):
    * - SOP
      - 20 bits
      - Four 5-bit special symbols that mark the start and say who the
-       message is for (see below).
+       message is for.
    * - Message header and data
      - 20 bits per 16-bit header, 40 bits per 32-bit data object
      - 4b5b coded, least significant byte first and least significant
@@ -670,7 +895,7 @@ first.
      -
      - EOP: 01101
 
-All other 5-bit values are invalid. A receiver that sees one discards the
+All other 5-bit values are invalid; a receiver that sees one discards the
 packet (PD Section 5.3.2.3).
 
 **Start of packet (SOP).** The four K-codes after the preamble form an
@@ -692,19 +917,19 @@ packet (PD Section 5.3.2.3).
      - Sync-1
      - Sync-1
      - Sync-2
-     - Between source and sink
+     - Between the two ports
    * - SOP'
      - Sync-1
      - Sync-1
      - Sync-3
      - Sync-3
-     - To the near cable plug
+     - To or from the near cable plug
    * - SOP''
      - Sync-1
      - Sync-3
      - Sync-1
      - Sync-3
-     - To the far cable plug
+     - To or from the far cable plug
    * - Hard Reset
      - RST-1
      - RST-1
@@ -718,68 +943,61 @@ packet (PD Section 5.3.2.3).
      - Sync-3
      - Resets the cable plugs
 
-Two further debug ordered sets exist (SOP'_Debug, SOP''_Debug). A receiver
-must accept an ordered set with all four K-codes correct, and may accept one
-with three of the four correct (PD Section 5.3.2.2, Table 5.5). A sink only
-acts on SOP messages and Hard Reset. Before a contract, a source may talk to
-the cable with SOP' messages; the sink must ignore those and must not
-acknowledge them.
+A receiver must accept an ordered set with all four K-codes correct, and may
+accept one with three of the four correct (PD Section 5.3.2.2, Table 5.5).
+The source (more precisely, the port supplying VCONN) talks to the cable with
+SOP' messages; the other port must ignore those and must not acknowledge
+them.
 
 **CRC.** The checksum is CRC-32 with polynomial 04C1 1DB7h, initial value
-FFFF FFFFh, calculated bit 0 first over the header and data bytes, and
-complemented before sending; a receiver that runs the CRC over data and
-checksum together gets the fixed remainder C704 DD7Bh (PD Section
-5.3.1.1.4). The specification states that it is the CRC used by USB 3. It is
-also the Ethernet frame checksum: the worked example in PD Figure 5.1, a
+FFFF FFFFh, calculated bit 0 first over the header and data, and complemented
+before sending; a receiver that runs the CRC over data and checksum together
+gets the fixed remainder C704 DD7Bh (PD Section 5.3.1.1.4). It is the same
+CRC as the Ethernet frame checksum: the worked example in PD Figure 5.1, a
 GoodCRC message with bytes 41h 02h, has the checksum 46B5 0D97h, which is
-exactly what a standard Ethernet/zlib CRC-32 routine returns for those two
-bytes. evampire already checks this checksum on Ethernet frames (see
-:doc:`../architecture/index`).
+what a standard Ethernet/zlib CRC-32 routine returns for those two bytes
+(checked with ``calc.py`` in ``docs/power/usb-pd/``).
 
-**End of packet (EOP).** A single EOP K-code. It is not covered by the CRC
-(PD Section 5.3.1.1.5).
+**End of packet (EOP).** A single EOP K-code, not covered by the CRC (PD
+Section 5.3.1.1.5).
 
 Message format
 ~~~~~~~~~~~~~~
 
 Each message starts with a 16-bit header (PD Section 6.2.1, Table 6.2).
-*Control* messages (for example GoodCRC, Accept, PS_RDY) consist of the
-header alone. *Data* messages (for example Source_Capabilities, Request)
-add one to seven 32-bit data objects (PD Section 6.1.1). A third kind,
-*extended* messages, carries up to 260 bytes and is not needed for a basic
-sink.
+*Control* messages (for example GoodCRC, Accept, PS_RDY, PR_Swap) consist of
+the header alone. *Data* messages (for example Source_Capabilities, Request)
+add one to seven 32-bit data objects (PD Section 6.1.1). *Extended* messages
+carry up to 260 bytes and are needed only for optional features.
 
 .. wavedrom::
 
    {"reg": [
      {"name": "Message type", "bits": 5, "attr": "e.g. 00001 GoodCRC"},
-     {"name": "DR", "bits": 1, "attr": "0"},
+     {"name": "DR", "bits": 1},
      {"name": "Revision", "bits": 2, "attr": "10 = 3.x"},
-     {"name": "PR", "bits": 1, "attr": "0"},
+     {"name": "PR", "bits": 1},
      {"name": "MessageID", "bits": 3},
      {"name": "Data objects", "bits": 3},
      {"name": "Ext", "bits": 1}
    ],
    "config": {"hspace": 900, "bits": 16, "lanes": 1}}
 
-* **Message type** (bits 4 to 0): the meaning depends on whether there are
-  data objects. Control messages used by a sink include GoodCRC (00001),
+* **Message type** (bits 4 to 0): control messages include GoodCRC (00001),
   Accept (00011), Reject (00100), PS_RDY (00110), Get_Source_Cap (00111),
-  Wait (01100) and Soft_Reset (01101) (PD Table 6.4). Data messages include
-  Source_Capabilities (00001) and Request (00010) (PD Table 6.5).
-* **MessageID** (bits 11 to 9): a 3-bit counter kept by the sender of each
-  message. A GoodCRC carries the MessageID of the message it acknowledges
-  (PD Sections 6.1.2 and 6.3.1). A receiver uses it to recognise a message
-  it has already received when the sender repeats it.
+  Get_Sink_Cap (01000), DR_Swap (01001), PR_Swap (01010), VCONN_Swap
+  (01011), Wait (01100), Soft_Reset (01101), Not_Supported (10000) and
+  FR_Swap (10011) (PD Table 6.4). Data messages include Source_Capabilities
+  (00001), Request (00010), Sink_Capabilities (00100), Alert (00110) and
+  Vendor_Defined (01111), which carries the cable query (PD Table 6.5).
+* **MessageID** (bits 11 to 9): a 3-bit counter kept by the sender. A
+  GoodCRC carries the MessageID of the message it acknowledges, and a
+  receiver uses it to recognise a repeated message (PD Sections 6.1.2 and
+  6.3.1).
 * **Number of data objects** (bits 14 to 12): zero for control messages.
-* **Power role** (PR, bit 8), **data role** (DR, bit 5) and **specification
-  revision** (bits 7 to 6): a sink sets the power role bit to 0. Before any
-  data role swap, a sink is also the "upstream" side and sets the data role
-  bit to 0. The revision is agreed
-  from the first Source_Capabilities and Request (PD Section 6.1.3.1).
-
-The two data objects a sink must understand are the *fixed supply PDO* in
-Source_Capabilities and the *fixed supply RDO* in Request.
+* **Power role** (PR, bit 8: 1 = source) and **data role** (DR, bit 5:
+  1 = DFP) of the sender, and the **specification revision** (bits 7 to 6),
+  agreed from the first Source_Capabilities and Request (PD Section 6.1.3.1).
 
 Fixed supply PDO (bits 31 to 30 are ``00`` for a fixed supply):
 
@@ -807,18 +1025,32 @@ Fixed supply RDO:
    ],
    "config": {"hspace": 900, "bits": 32, "lanes": 1}}
 
-In a fixed PDO, bits 31 to 30 are ``00``, bits 19 to 10 give the voltage in
-50 mV units and bits 9 to 0 the maximum current in 10 mA units (PD Tables
-6.6, 6.8 and 6.10). The first PDO is always 5 V and its upper bits carry
-flags about the source. In the RDO, bits 31 to 28 select a PDO by position
-(1 = the first), bits 19 to 10 give the current the sink will draw, and bits
-9 to 0 must repeat the same value (PD Table 6.19). For example, offered
-"9 V, 3 A" is the PDO ``0002 D12Ch`` (voltage field 180, current field
-300), and a request for 2 A from the second PDO is the RDO ``2003 20C8h``.
+The first PDO is always 5 V, and its upper bits carry flags about the port,
+including *Dual-Role Power* (bit 29), *Unconstrained Power* (bit 27) and,
+in a sink's list, the current it needs during a fast role swap (bits 24 to
+23) (PD Tables 6.8 and 6.9). In the RDO, bits 31 to 28 select a PDO by
+position (1 = the first), bits 19 to 10 give the current the sink will draw,
+and bits 9 to 0 repeat the same value (PD Table 6.19). For example, an offer
+of 9 V at 3 A has voltage field 9 V / 50 mV = 180 and current field
+3 A / 10 mA = 300, giving the PDO ``0002 D12Ch``; a request for 2 A from the
+second PDO is the RDO ``2003 20C8h``.
 
-**Length of typical messages.** With the packet structure above, a packet
-with *n* data objects is :math:`64 + 20 + 20 + 40n + 40 + 5 = 149 + 40n`
-bits long:
+**How long a message takes on the wire.** The software timing budget depends
+on how long the CPU is busy with each message. The packet length in bits,
+from the parts listed above, is:
+
+.. math::
+
+   N_\text{bits} = N_\text{pre} + N_\text{SOP} + N_\text{hdr} + 40\,n + N_\text{CRC} + N_\text{EOP}
+                 = 64 + 20 + 20 + 40\,n + 40 + 5
+                 = 149 + 40\,n
+
+where :math:`n` is the number of 32-bit data objects (0 to 7),
+:math:`N_\text{pre}` = 64 preamble bits, :math:`N_\text{SOP}` = 4 symbols ×
+5 bits = 20, :math:`N_\text{hdr}` = 4 nibbles × 5 bits = 20, each data object
+is 8 nibbles × 5 bits = 40, :math:`N_\text{CRC}` = 8 nibbles × 5 bits = 40
+and :math:`N_\text{EOP}` = 5 (PD Section 5.3.1.1). The duration is
+:math:`N_\text{bits} \times T_\text{UI}`:
 
 .. list-table:: Packet duration
    :header-rows: 1
@@ -828,27 +1060,35 @@ bits long:
      - Bits
      - At 300 kbit/s
      - At 270 kbit/s
-   * - GoodCRC, Accept, PS_RDY (no data objects)
+   * - GoodCRC, Accept, PS_RDY, PR_Swap (n = 0)
      - 149
-     - 497 µs
-     - 552 µs
-   * - Request (one data object)
+     - 149 × 3.333 µs = 497 µs
+     - 149 × 3.704 µs = 552 µs
+   * - Request (n = 1)
      - 189
      - 630 µs
      - 700 µs
-   * - Source_Capabilities with seven PDOs
+   * - Source_Capabilities with seven PDOs (n = 7)
      - 429
      - 1430 µs
      - 1589 µs
 
-Time limits and the negotiation sequence
-----------------------------------------
+The longest message a port normally has to handle lasts about 1.6 ms.
 
-The timers below are the ones a sink has to meet or can rely on.
+Negotiation and time limits
+---------------------------
 
-.. list-table:: Timing values relevant to a sink
+.. _fig-usbpd-negotiation:
+
+.. graphviz:: usb-pd/negotiation.dot
+   :caption: A source and a sink negotiating a fixed 9 V supply. Each
+             message that has a correct CRC is answered with GoodCRC. Either
+             end can be a board built around evampire.
+   :align: center
+
+.. list-table:: Timing values for both roles
    :header-rows: 1
-   :widths: 25 20 55
+   :widths: 24 20 56
 
    * - Name
      - Value
@@ -859,18 +1099,14 @@ The timers below are the ones a sink has to meet or can rely on.
        GoodCRC preamble (PD Section 7.31.1, Table 7.10).
    * - tInterFrameGap
      - at least 25 µs
-     - Minimum gap before any transmission, including a GoodCRC (PD Section
-       5.3.4.9, Table 5.10).
+     - Minimum gap before any transmission (PD Table 5.10).
    * - tReceive
      - 0.9 ms to 1.1 ms
-     - How long a sender waits for GoodCRC before deciding the message was
-       lost (PD Section 7.31.1, Table 7.10).
-   * - tRetry
-     - at most 195 µs
-     - From giving up waiting to starting the repeat (PD Section 7.31.1).
-   * - nRetryCount
-     - 2
-     - Number of repeats after the first attempt (PD Table 7.12).
+     - How long a sender waits for GoodCRC (PD Section 7.31.1).
+   * - tRetry, nRetryCount
+     - at most 195 µs; 2
+     - A message without GoodCRC is repeated within tRetry, at most twice
+       (PD Section 7.31.1, Table 7.12).
    * - tReceiverResponse
      - at most 15 ms
      - From the GoodCRC of a message that needs an answer to the start of
@@ -880,29 +1116,40 @@ The timers below are the ones a sink has to meet or can rely on.
      - How long the asking side waits for the answer (PD Table 7.10).
    * - tFirstSourceCap
      - at most 250 ms
-     - From VBUS reaching 5 V to the first Source_Capabilities (PD Section
-       7.31.3.3).
+     - Source: from VBUS reaching 5 V to the first Source_Capabilities (PD
+       Section 7.31.3.3).
    * - tTypeCSendSourceCap
      - 100 ms to 200 ms
-     - Interval at which the source repeats Source_Capabilities until it is
-       acknowledged (PD Section 7.31.3.1). After nCapsCount (50) attempts
-       it may slow down.
+     - Source: interval for repeating Source_Capabilities until it is
+       acknowledged, for nCapsCount (50) attempts (PD Section 7.31.3.1).
    * - tTypeCSinkWaitCap
      - 310 ms to 620 ms
-     - After this long without Source_Capabilities, the sink may send Hard
-       Reset to make the source start again (PD Section 7.31.3.2).
+     - Sink: may send Hard Reset if no Source_Capabilities arrives (PD
+       Section 7.31.3.2).
+   * - tSrcTransition
+     - at least 25 ms
+     - Source: wait after Accept before changing the voltage (PD Table 4.7).
+   * - tSrcTransReq
+     - at most 325 ms (SPR)
+     - Source: from the GoodCRC of Accept to the start of PS_RDY (PD Table
+       4.7).
    * - tPSTransition
-     - 450 ms to 550 ms
-     - How long the sink waits for PS_RDY after Accept (SPR; PD Table 7.10).
+     - 450 ms to 550 ms (SPR)
+     - Sink: how long it waits for PS_RDY before Hard Reset (PD Sections
+       7.31.5.1 and 9.2.4.8).
    * - tSinkTx
      - 16 ms to 20 ms
-     - Time allowed for a source to change Rp for collision avoidance (PD
-       Table 7.10).
+     - Source: wait after changing Rp to "sink may not transmit" before
+       starting its own exchange (PD Section 7.31.13.1).
+   * - tSnkStdby
+     - at most 15 ms
+     - Sink: time to cut its current to iSnkStdby (500 mA) before a voltage
+       change (PD Table 4.8).
 
-**Acknowledgement.** Every correctly received SOP message must be answered
-with GoodCRC so that its first preamble bit starts between 25 µs and 195 µs
-after the last bit of the received EOP. If the CRC is wrong, the message is
-discarded silently and no GoodCRC is sent.
+**Acknowledgement.** Every correctly received message addressed to the port
+must be answered with GoodCRC so that its first preamble bit starts between
+25 µs and 195 µs after the last bit of the received EOP. If the CRC is wrong,
+the message is discarded silently.
 
 .. wavedrom::
 
@@ -916,361 +1163,877 @@ discarded silently and no GoodCRC is sent.
    "head": {"text": "Acknowledgement timing (not to scale)"},
    "config": {"hscale": 2}}
 
-**Retries.** A sender that has not received GoodCRC within tReceive
-(0.9 ms to 1.1 ms after its EOP) sends the same message again, starting
-within tRetry (195 µs), up to nRetryCount = 2 times, so each message is sent
-at most three times (PD Section 7.31.1). The repeat has the same MessageID,
-and the receiver acknowledges it again but does not act on it twice.
+**Retries.** A sender that has not received GoodCRC within tReceive sends the
+same message again within tRetry, up to twice, so each message is sent at
+most three times (PD Section 7.31.1). After that it sends Soft_Reset (PD
+Section 7.31.8.1), and a failing Soft_Reset leads to Hard Reset (PD Section
+7.1.1). A missed GoodCRC is therefore recovered automatically as long as it
+does not happen three times in a row.
 
-**What happens if the sink is too slow.** Before a contract, a missed
-GoodCRC simply means the source keeps resending Source_Capabilities every
-100 ms to 200 ms. After a contract, a message that fails to arrive or a
-timeout is a *protocol error*, which leads to a Soft_Reset message exchange
-or to *Hard Reset* (PD Section 7.1.1). A sink that does not receive PS_RDY
-in time also sends Hard Reset (PD Section 9.2.4.8). On a Hard Reset, the
-source switches VBUS off (to *vSafe0V*, at most 0.8 V), waits *tSrcRecover*
-(0.66 s to 1.0 s in SPR) and then supplies 5 V again (PD Section 4.4; Tables
-4.7 and 4.9). For a board that takes all of its power from VBUS, a Hard
-Reset is a complete power cycle.
+The source side
+---------------
 
-The negotiation sequence
-~~~~~~~~~~~~~~~~~~~~~~~~
+Switchable Rp
+~~~~~~~~~~~~~
 
-.. _fig-usbpd-negotiation:
+The level a source advertises with Rp is a promise about current at 5 V:
 
-.. graphviz:: usb-pd/negotiation.dot
-   :caption: A sink negotiating a fixed 9 V supply. Each message that has a
-             correct CRC is answered with GoodCRC. For 20 V the sequence is
-             the same with a different object position in the Request.
-   :align: center
+* **Before a contract**, the source must be able to supply the advertised
+  current, and its first Source_Capabilities must offer at least that much at
+  5 V (Type-C Section 4.5.2.2.9.1; PD Section 3.2.1, item 5). A board with
+  little spare power advertises "default"; one that can spare 7.5 W or 15 W
+  at 5 V advertises 1.5 A or 3.0 A.
+* **During a contract**, the Rp value no longer means current. The source
+  uses it to control who may start a message exchange: the 3.0 A value
+  ("SinkTxOK") lets the sink start one, the 1.5 A value ("SinkTxNG") reserves
+  the line for the source, which then waits *tSinkTx* (16 ms to 20 ms) before
+  starting (PD Sections 5.2.2, 7.2 and 7.31.13.1; Table 5.1).
 
-After Accept, the sink must reduce its current to at most *iSnkStdby*
-(500 mA) before the source starts changing the voltage (PD Section 4.5.1.1,
-Table 4.8). After PS_RDY it may draw up to the current it
-requested. The source decides whether to accept: it answers Reject if the
-request is not possible, or Wait if it cannot do it now (the sink then waits
-at least *tSinkRequest*, 100 ms, before asking again; PD Section 7.31.4.1).
+A source therefore changes its Rp level during normal operation, and its Rp
+circuit must provide at least the 1.5 A and 3.0 A levels whatever power it
+offers. A current source suits an integrated circuit: the three currents
+(80, 180 and 330 µA) can come from one reference and switchable current
+mirrors, and the open-circuit voltage must rise above the 2.432 V "open"
+threshold for the 3.0 A level. TI specifies its TPS65987D current sources as
+73.6-86.4 µA, 165.6-194.4 µA and 303.6-356.4 µA, with the 3.0 A level valid
+up to a CC voltage of 2.6 V (TPS65987D datasheet, Section 6.8).
 
-A sink that boots slowly does not miss the negotiation: if it is not ready to
-answer the first Source_Capabilities, the source keeps repeating it (50
-times at 100 ms to 200 ms intervals, then possibly less often; PD Section
-7.31.3.1). The sink may also send Hard Reset after tTypeCSinkWaitCap to make
-the source start again, but a sink powered only from VBUS should avoid this,
-because the source answers a Hard Reset by switching VBUS off.
+Source sequence
+~~~~~~~~~~~~~~~
 
-What these timings mean for software
-------------------------------------
+After attach (Attached.SRC) the source:
 
-The processor in evampire is a small 32-bit RISC-V core, which may run from a
-clock derived from the 125 MHz reference (see :doc:`../architecture/index`).
-The task divides into three parts with very different time scales:
+#. turns VBUS on to *vSafe5V* (4.75 V to 5.5 V, PD Table 4.9) within tVBUSON
+   (275 ms), supplies VCONN if needed (see `Cables and VCONN`_), and must not
+   start messages until VBUS has reached vSafe5V (Type-C Section
+   4.5.2.2.9.1);
+#. optionally queries the cable (required before offering more than 3 A or
+   EPR voltages);
+#. sends Source_Capabilities within tFirstSourceCap (250 ms) and repeats it
+   every 100 ms to 200 ms until it gets a GoodCRC (PD Section 7.31.3);
+#. evaluates the Request (see below) and answers Accept or Reject within
+   tReceiverResponse (15 ms);
+#. after Accept, waits at least tSrcTransition (25 ms), changes the voltage
+   at no more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, PD Table 4.7), and
+   sends PS_RDY within tSrcTransReq (325 ms in SPR) of the GoodCRC for Accept
+   (PD Section 4.5.1.1; Table 4.7). The new voltage must be within ± 5 % of
+   the offered value, plus 0.5 V while settling (*vSrcNew*, *vSrcValid*, PD
+   Table 4.7).
 
-* **Bit level** (microseconds): find edges, decode BMC, generate BMC with
-  edges placed within about ± 50 ns.
-* **Packet level** (hundreds of microseconds): 4b5b decode, SOP detection,
-  CRC, and the GoodCRC reply within 195 µs.
-* **Protocol and policy** (milliseconds to seconds): choose a PDO, send
-  Request, wait for Accept and PS_RDY, handle Reject, Wait, Soft_Reset and
-  Hard Reset. Everything here has a deadline of 15 ms or more and is easy
-  in software.
+The slew limit exists to limit the current that charges the sink's input
+capacitors: PD Table 4.7 states it is based on a 3 A connector rating and at
+most 100 µF of sink capacitance. The source's own output capacitance must be
+at least 10 µF (*cSrcBulk*, PD Table 4.7), while a dual-role port that is not
+supplying VBUS may present at most 10 µF on VBUS (Type-C Table 4-2), so the
+larger bulk capacitance has to sit behind the source switch.
 
-Receive at the bit level
-~~~~~~~~~~~~~~~~~~~~~~~~
+Building the offer from the power budget
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The shortest interval between edges is 1.52 µs (half a UI at 330 kbit/s),
-and the decision between "half UI" and "full UI" has to be made with edges
-displaced by up to about 0.07 UI (230 ns). A practical decoder measures the
-UI on the preamble and then classifies each interval against 0.75 UI.
+The processor decides what to offer from the power it has available. The
+power it can offer on the USB port is what the input grants, less what the
+board uses, less what the converter loses:
 
-*Pure software sampling.* The processor reads the receiver comparator in a
-loop and looks for changes. To place each edge to within, say, one eighth of
-the shortest interval needs a sample every 190 ns, about 5.3 million samples
-per second. Each sample costs at least a load, a compare and a branch, so
-the loop alone needs a core clock of several tens of MHz, with interrupts
-disabled for the whole message (up to about 1.6 ms) and the core doing
-nothing else. The processor would also have to watch the line continuously,
-because a message can arrive at any time, or at least have an interrupt on
-the first edge, which with a 64-bit preamble leaves time to start the loop.
-This is possible in principle, but it ties up the core and any interrupt
-latency from other work (for example Ethernet frame handling) corrupts the
-message.
+.. math::
 
-*Edge-time capture.* A free-running counter is latched into a small FIFO on
-every comparator edge. With the counter clocked at 15.625 MHz (125 MHz / 8),
-each timestamp has 64 ns resolution, enough to separate 0.5 UI from 1 UI by
-a wide margin. The worst case is a run of ``1`` bits: two edges per UI, about
-660 000 edges per second at 330 kbit/s. Taking one interrupt per edge is
-not practical on a small core, but reading the FIFO in bursts is: a message
-of up to 429 bits has at most about 860 edges. If classifying one interval
-and shifting the result into a symbol takes 20 to 30 instructions (an
-estimate, not a measurement), the core spends roughly 13 to 20 million
-instructions per second while a message is arriving, which is a large but
-manageable share of a core running at 50 MHz or more, for at most about
-1.6 ms per message. With a FIFO of 16 to 32 entries, the processor needs to
-empty the FIFO about every 20 µs to 40 µs during a message, which it can do
-in a loop started by an interrupt on the first edge.
+   P_\text{offer} = (P_\text{in} - P_\text{board}) \cdot \eta
 
-*Hardware BMC bit decoder.* A small state machine that does the
-interval-classification itself and delivers decoded bits (or 5-bit symbols)
-in a shift register cuts the software work to one action per 5-bit symbol,
-about 60 000 per second. The logic is a counter, a comparator against a
-programmable "0.75 UI" value and a few flip-flops.
+where:
 
-Transmit at the bit level
-~~~~~~~~~~~~~~~~~~~~~~~~~
+* :math:`P_\text{offer}` is the power offered on the USB port, in watts (the
+  *Port Present PDP* in PD terms, PD Section 3.2);
+* :math:`P_\text{in}` is the power granted on the input port, for example by
+  Power over Ethernet (see :doc:`poe`);
+* :math:`P_\text{board}` is the power the board itself uses;
+* :math:`\eta` is the efficiency of the USB source converter.
 
-Edges must land within about ± 50 ns of their ideal times, and the bit rate
-must not drift by more than 0.25 % within a message. Toggling an output from
-software in an interrupt routine cannot meet this. A cycle-counted loop with
-interrupts disabled can, if the core's timing is fully predictable, but it
-ties up the core for the whole message. A *timer-driven serializer* is the
-robust option: software loads the bits (already 4b5b coded, or as nibbles if
-the 4b5b table is in hardware) into a FIFO or shift register, and a counter
-toggles the output every half UI according to the BMC rule, then performs
-the end-of-message hold-low and release automatically. The analog driver
-behind it sets the swing and the edge rate.
+*Example with assumed numbers* (none of them is a design value): with
+:math:`P_\text{in}` = 25 W, :math:`P_\text{board}` = 5 W and
+:math:`\eta` = 0.90,
 
-Packet level and the GoodCRC deadline
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. math::
 
-The 195 µs GoodCRC deadline is the tightest requirement above the bit level.
-It is manageable in software because:
+   P_\text{offer} = (25\ \text{W} - 5\ \text{W}) \times 0.90 = 20\ \text{W} \times 0.90 = 18\ \text{W}
 
-* the CRC can be calculated while the message arrives, a nibble or a byte at
-  a time, so only the last few bytes remain when the EOP arrives. A
-  table-driven CRC needs a 16-entry table per nibble or a 256-entry table per
-  byte;
-* a GoodCRC message from a sink differs only in its MessageID (and possibly
-  the revision bits), so all eight possible GoodCRC packets, including their
-  CRCs, can be prepared in advance;
-* the transmitter must also wait at least 25 µs, so the useful window for
-  software is about 25 µs to 150 µs after the EOP, allowing some margin.
+For a source rated between 15 W and 27 W, PD Table 3.1 requires a 5 V offer
+of 3 A and a 9 V offer of :math:`P_\text{offer} / 9\ \text{V}`; here
+:math:`18\ \text{W} / 9\ \text{V} = 2.00\ \text{A}`. Currents are rounded to
+10 mA (PD Section 3.2.1, item 1). So the Source_Capabilities message lists
+"5 V 3 A" and "9 V 2 A". Other rules shape the list: the first PDO is always
+5 V; a higher-voltage PDO may not offer more power than the next higher
+required one; currents above 3 A need a 5 A cable (PD Section 3.2.1; Section
+8.6.1.2.2). A port with nothing to offer sends a single "5 V 0 A" PDO (PD
+Section 7.9.1.5).
 
-The risk is interrupt latency from other tasks. If the Ethernet code can
-hold off interrupts for more than about 100 µs, the GoodCRC deadline will be
-missed. Commercial controllers such as the onsemi FUSB302B solve this by
-sending GoodCRC and repeating unacknowledged messages in hardware
-("Automatic GoodCRC Packet Response" and "Automatic Retries", FUSB302B
-datasheet, features list), so that the processor only has to answer within
-the millisecond-scale protocol deadlines.
+**Evaluating the request.** The source checks that the requested object
+exists and that the requested current does not exceed the offered maximum,
+then answers Accept, Reject or Wait (PD Section 6.4.2; Table 6.19).
 
-A possible split
+**Changing the offer.** When the input power changes, the processor sends new
+Source_Capabilities and the sink must request again. When lowering the offer,
+the source should first send an Alert message, up to *tReducePowerAlert*
+(2.0 s to 2.4 s) before the reduced capabilities (PD Section 6.4.5.5; Table
+4.7). If the input drops faster than that, the source's own over-current
+protection or a Hard Reset is the remaining option, so the power budget
+should keep a margin.
+
+Current limit and over-current response
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A source must have over-current protection that does not trip within the
+contract, should send Hard Reset (and later an Alert) when it trips, and,
+when it shuts down a port above 5 V, must bring VBUS down to vSafe5V within
+*tSafe5V* (275 ms) and to vSafe0V within *tSafe0V* (650 ms) (PD Section
+4.1.5.1; Table 4.9). The current limit is in the external source converter.
+For example, TPS65987D has a firmware-selectable over-current clamp from
+1.267 A to 6.33 A in 21 steps and a fast-acting limit of 10 A (TPS65987D
+datasheet, Section 6.7).
+
+Discharging VBUS
 ~~~~~~~~~~~~~~~~
 
-.. list-table:: Hardware and software split options
+A source must bring VBUS to vSafe0V within tSafe0V (650 ms) after detach,
+and to below vSafe5V (max) within tSafe5V (275 ms) (PD Section 4.1.5.5). It
+must also discharge VBUS before attaching (AttachWait.SRC, Type-C Section
+4.5.2.2.8.1) and during a role swap. A switched load from VBUS to ground,
+controlled by the processor, does this.
+
+The sink side
+-------------
+
+A sink presents Rd, waits for VBUS and Source_Capabilities, chooses a PDO,
+sends Request within tReceiverResponse (15 ms), and after Accept cuts its
+current to *iSnkStdby* (500 mA) within *tSnkStdby* (15 ms) until PS_RDY
+arrives (PD Section 4.5.1.1; Table 4.8). A sink that uses the 1.5 A or 3.0 A
+Rp level before a contract must follow changes of Rp within *tSinkAdj*
+(60 ms, Type-C Table 4-32). During a contract it must check the Rp level
+before starting an exchange of its own (PD Section 7.2). A sink should
+tolerate up to 24 V on VBUS without damage (*vSprMax*, PD Table 4.8).
+
+A slow sink does not miss the negotiation: the source repeats
+Source_Capabilities 50 times. The sink may send Hard Reset after
+tTypeCSinkWaitCap to restart the source, but a board powered only from VBUS
+should avoid this, because the source answers a Hard Reset by switching VBUS
+off (see `Hard Reset in each role`_).
+
+Cables and VCONN
+----------------
+
+**Why the source checks the cable.** Every USB Type-C cable carries at least
+3 A at 20 V. Cables rated for 5 A, and all EPR cables, are electronically
+marked (Type-C Sections 3.4.1.1, 3.4.2.1 and 3.11.2). A source that can offer
+more than 3 A must query the cable and limit its offer to what the cable
+supports; an EPR source must check that the cable supports EPR (PD Sections
+8.6.1.2.2 and 8.6.1.2.3). A port that can be a source offering more than 3 A
+must therefore support the *Discover Identity* query (PD Section 7.5,
+applicability table).
+
+**How the query works.** The query is a Vendor_Defined message, *Discover
+Identity*, sent with the SOP' ordered set to the near cable plug. The e-marker
+answers with its identity and a *cable VDO*, a 32-bit word whose fields
+include the maximum VBUS voltage (20 V or 50 V) and the VBUS current
+capability (3 A or 5 A) (PD Table 6.45). If there is no GoodCRC, the source
+repeats the query every *tDiscoverIdentity* (40 ms to 50 ms) and gives up
+after *nDiscoverIdentityCount* (20) attempts (PD Section 7.31.12.4; Tables
+7.10 and 7.12). Before a contract any source may talk to the cable; after one,
+only the port supplying VCONN may (Type-C Section 4.9).
+
+**VCONN power.** The e-marker is powered by VCONN, which the source supplies
+on the CC pin not connected to the CC wire (the pin showing Ra, or
+unconditionally on the unused pin) within *tVCONNON* (2 ms) of VBUS reaching
+5 V (Type-C Section 4.5.2.2.9.1; Table 4-32). How much VCONN power is
+required depends on what the port does (Type-C Table 4-4):
+
+.. list-table:: VCONN requirements relevant to evampire (Type-C Tables 4-4 to 4-6)
    :header-rows: 1
-   :widths: 22 38 40
+   :widths: 40 60
 
-   * - Option
-     - Hardware
-     - Software load and risk
-   * - A. Software only
-     - Comparator, driver, a plain input and output bit.
-     - Core busy for every message; edges cannot be placed within ± 50 ns
-       without a fully predictable cycle-counted loop; GoodCRC timing
-       depends on interrupt latency. Fragile.
-   * - B. Edge capture and serializer
-     - As A, plus edge-timestamp capture with FIFO and a timer-driven BMC
-       serializer with end-of-message handling.
-     - Software decodes intervals, 4b5b, SOP and CRC. Moderate load during
-       messages only. GoodCRC still a software deadline (195 µs).
-   * - C. Bit-level PHY
-     - As B, plus BMC bit decoder producing 5-bit symbols, and 4b5b
-       encode/decode.
-     - Software handles symbols, CRC and protocol. Light load.
-   * - D. Packet-level PHY
-     - As C, plus SOP detection, CRC-32 generation and checking, automatic
-       GoodCRC and retries (as in FUSB302B).
-     - Software only handles the protocol, with deadlines of 15 ms and
-       above.
+   * - Situation
+     - Requirement
+   * - No USB data, offering 3 A or less
+     - VCONN not required.
+   * - No USB data, offering more than 3 A
+     - Source at least 100 mW; may be switched off after reading the cable's
+       rating.
+   * - VCONN voltage
+     - 3.0 V to 5.5 V (*vVCONNValid*).
+   * - Load presented by a passive e-marked cable
+     - At most 20 mW (75 mW briefly after VCONN is applied) and at most
+       10 µF of inrush capacitance.
+   * - Discharge after detach
+     - Resistance *Rdch* of 30 Ω to 6120 Ω on the VCONN pin until it is
+       below 0.8 V (Type-C Section 4.5.2.2.6; Table 4-5).
 
-The recommended minimum is option B. It keeps the protocol in software, as
-intended, and puts in hardware only the two things software cannot do
-reliably: timing edges to tens of nanoseconds on receive, and placing edges
-to ± 50 ns on transmit. If the worst-case interrupt latency of the rest of
-the firmware cannot be kept well below 100 µs, the automatic GoodCRC reply
-from option D can be added on its own. Option B is the smallest addition
-that makes software decoding robust: a
-counter, a timestamp FIFO, a half-UI timer and a shift register. Option D
-removes all sub-millisecond deadlines from software at the cost of packet
-buffers and more control logic; its CRC-32 logic is the same as the
-Ethernet checksum logic.
+*How much current the VCONN switch must pass.* The switch has to charge the
+cable's capacitance to the minimum valid VCONN voltage within tVCONNON.
+Assuming a constant charging current (a current-limited switch behaves this
+way), the current needed is:
+
+.. math::
+
+   I_\text{inrush} = \frac{C_\text{cable} \cdot V_\text{min}}{t_\text{on}}
+                   = \frac{10\ \mu\text{F} \times 3.0\ \text{V}}{2\ \text{ms}}
+                   = \frac{30\ \mu\text{C}}{2\ \text{ms}}
+                   = 15\ \text{mA}
+
+where :math:`C_\text{cable}` = 10 µF is the largest inrush capacitance a cable
+may present (Type-C Table 4-6), :math:`V_\text{min}` = 3.0 V is the minimum
+valid VCONN (Type-C Table 4-5) and :math:`t_\text{on}` = 2 ms is tVCONNON
+(Type-C Table 4-32). The steady load is at most 100 mW, which at 5 V is
+:math:`0.1\ \text{W} / 5\ \text{V} = 20\ \text{mA}`. A VCONN switch with a
+current limit of a few tens of milliamps therefore meets the requirement for
+a port without USB data; commercial controllers, which also serve USB data
+cables needing 1 W to 1.5 W, have limits of hundreds of milliamps
+(TPS65987D *ILIMPPCC* 0.6-0.9 A, Section 6.7; STUSB1602 programmable 100 mA
+to 600 mA, datasheet features; CYPD5126-class CCG5C over-current detection
+from 550 mA, datasheet SID.DC.20VCONN.9).
+
+**VCONN swap.** The two ports can exchange the VCONN duty with a VCONN_Swap
+message exchange, done make-before-break (Type-C Section 4.5.2.2.9.1; PD
+Section 7.13). A port that cannot supply VCONN answers Reject or
+Not_Supported; the port currently supplying VCONN may not reject (PD Section
+7.13). A dual-role port that keeps its VCONN switch after a power role swap
+is still the VCONN supplier, because a power role swap does not move VCONN
+(PD Section 7.10; Type-C Table 4-13).
+
+Role changes
+------------
+
+Power role swap
+~~~~~~~~~~~~~~~
+
+Either port can ask to swap power roles with a PR_Swap message; the other
+answers Accept, Reject or Wait (PD Section 7.10). Data roles and the VCONN
+duty do not change (Type-C Table 4-13). PR_Swap is not allowed in EPR mode.
+
+.. _fig-usbpd-prswap:
+
+.. graphviz:: usb-pd/pr-swap.dot
+   :caption: Power role swap (PD Section 4.3.3, Figure 4.14; Section 7.10).
+             The initial sink asks in this example; the sequence after Accept
+             is the same when the initial source asks.
+   :align: center
+
+.. list-table:: Power role swap timing (PD Tables 4.7, 4.8, 7.10)
+   :header-rows: 1
+   :widths: 25 20 55
+
+   * - Name
+     - Value
+     - Meaning
+   * - tSnkSwapStdby, iSnkSwapStdby
+     - at most 15 ms; at most 2.5 mA
+     - Initial sink: time to cut its VBUS current, and the current allowed
+       until the new source has VBUS up.
+   * - tSrcSwapStdby
+     - at most 650 ms
+     - Initial source: time to discharge VBUS to vSafe0V after
+       tSrcTransition.
+   * - tSrcTransOff
+     - at most 690 ms
+     - Initial source: from the GoodCRC for Accept to the start of its
+       PS_RDY.
+   * - tPSSourceOff
+     - 750 ms to 920 ms
+     - Initial sink: gives up waiting for that PS_RDY.
+   * - tNewSrc
+     - at most 275 ms
+     - Initial sink: time to start operating as a source.
+   * - tSrcTransOn
+     - at most 280 ms
+     - New source: from the GoodCRC of the first PS_RDY to the start of its
+       own PS_RDY, with VBUS at vSafe5V.
+   * - tPSSourceOn
+     - 390 ms to 480 ms
+     - New sink: gives up waiting for that PS_RDY.
+   * - tSwapSourceStart
+     - at least 20 ms
+     - New source: wait before its first Source_Capabilities.
+
+The VBUS slew-rate limit does not apply when VBUS is switched off or on as
+part of a swap (PD Section 4.1.4). During the swap VBUS falls below 5 V but
+the initial sink must not treat this as a detach (PD Section 7.10).
+
+**When the swap fails.** If the expected PS_RDY does not arrive in time
+(tPSSourceOff or tPSSourceOn), the port goes to Type-C ErrorRecovery (PD
+Sections 7.31.5.2 and 7.31.5.3): it removes its terminations, both ports see
+a detach, and attach starts again. If the board was running from VBUS at that
+moment it loses power.
+
+**Effect on the power budget.** After a swap the board's input and output
+change places. The processor must update the budget, and, if the board now
+sources power, offer only what the new input allows.
+
+Data role swap
+~~~~~~~~~~~~~~
+
+A DR_Swap message exchange swaps the data roles (DFP and UFP) and nothing
+else: VBUS, Rp/Rd and VCONN stay as they are (PD Section 7.12.1; Type-C Table
+4-13). A board without USB data can answer Reject or Not_Supported. Data role
+matters to evampire mainly because it decides which port may send certain
+messages and because the data-role bit must be correct in every header.
+
+Fast role swap
+~~~~~~~~~~~~~~
+
+A *fast role swap* (FRS) is a power role swap that happens without first
+exchanging messages, to keep power flowing when the source suddenly loses
+its own supply. It is designed for charge-through accessories, such as a hub
+that powers a laptop from a wall supply and must let the laptop take over
+when the wall supply is removed (PD Section 10.1).
+
+*Signalling.* The initial source, on losing its supply, pulls the CC wire
+below *vFRSwapCableTx* (490 mV to 550 mV) through at most *rFRSwapTx* (5 Ω)
+for *tFRSwapTx* (60 µs to 120 µs). The initial sink recognises a low lasting
+*tFRSwapRx* (30 µs to 50 µs), stops drawing current, and must be supplying
+VBUS at vSafe5V within *tSrcFRSwap* (150 µs) of VBUS falling to vSafe5V; the
+FR_Swap, Accept and PS_RDY messages follow (PD Sections 10.4 and 10.4.1;
+Table 10.2). A BMC low never lasts longer than 1 UI (3.7 µs), so a low of
+30 µs cannot be part of a message. During a contract the idle level is set by
+the 1.5 A or 3.0 A Rp (about 0.9 V or 1.7 V), above the FRS threshold, so the
+signal is unambiguous.
+
+*Is it needed for evampire?* The case where it would apply is a board that
+sources power to a laptop from Power over Ethernet and loses the Ethernet
+supply. With FRS the laptop could take over and keep the board running. FRS
+only works if the laptop supports it and was initialised for it after
+reading the board's sink capabilities, and the board must then run on at most
+15 W at 5 V (PD Section 10.1). Without FRS, the board loses power with its
+Ethernet supply, which is acceptable if the board does not need to stay up.
+This is an open decision.
+
+*Analog needs.* As the side that signals: a strong pull-down (at most 5 Ω) on
+each CC pin and enough stored energy to keep the board alive for the swap
+(at least tSnkFRSwap, 200 µs, plus the message exchange). As the side that
+receives: a comparator at about 0.52 V on the CC pin, a timer to measure the
+30 µs low, and a source converter that can deliver 5 V within 150 µs, which
+means it must already be running. TPS65987D, for example, specifies a VBUS
+turn-on time of 150 µs for this case (*tON_FRS*, Section 6.7) and an FRS
+detection threshold of 490-550 mV (*VTH_FRS*, Section 6.8).
+
+Hard Reset in each role
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A Hard Reset returns both power supplies to their default state; it does not
+change Rp and Rd, so the power roles after a swap are kept, and it changes
+data roles back to DFP for the Rp side and UFP for the Rd side (PD Section
+7.1.3).
+
+* **As source:** the port drives VBUS to vSafe0V, starting *tPSHardReset*
+  (25 ms to 35 ms) after the Hard Reset, waits *tSrcRecover* (0.66 s to
+  1.0 s in SPR), then restores 5 V and VCONN (PD Section 4.4; Tables 4.7 and
+  7.10). If the board is powered from Ethernet it stays up; only the USB
+  output is interrupted.
+* **As sink:** VBUS goes to 0 V and back to 5 V. A sink powered only from
+  VBUS loses power: a Hard Reset is a full power cycle of the board. It
+  should draw no more than *iSafe0mA* (1 mA) while VBUS is at vSafe0V (PD
+  Table 4.8).
+
+Two ports
+---------
+
+In the full design the board has two dual-role USB Type-C ports. This
+changes:
+
+* **Roles.** One port can sink while the other sources, which makes the board
+  a USB-to-USB power bridge as well as a USB-to-Ethernet one. The power budget
+  then has two outputs sharing one input, or one USB input feeding a USB
+  output and Ethernet.
+* **Budget.** The offers on both outputs together must fit the budget. When
+  a second device attaches, the processor may have to lower the first port's
+  offer, with the Alert and new Source_Capabilities described above. PD
+  calls this a *Managed Capability Port* (PD Section 3.2.3).
+* **Analog circuits.** Each port needs its own CC front end: both ports must
+  present terminations and detect attach at the same time, and messages on
+  the two ports arrive independently. Only slow measurements (attach levels,
+  VBUS level) can share one comparator or ADC through a multiplexer.
+* **Processor time.** Two negotiations can overlap. See
+  `Two ports in software`_.
+
+Implementing USB Power Delivery in software
+-------------------------------------------
+
+The requirement is that USB Power Delivery runs mostly in software on the
+RISC-V processor, with dedicated hardware only where software cannot meet the
+timing. This section starts from the absolute minimum hardware, works out
+what software then has to do and how fast, and adds a helper only where the
+numbers show software is not enough.
+
+Baseline: analog front end and plain input and output bits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The minimum hardware per port is the analog front end described in
+`Analog blocks`_ (switchable Rp, Rd and dead-battery Rd, VCONN switch,
+comparators, BMC driver) connected to plain processor-visible bits:
+
+* outputs: Rp level and enable, Rd enable, VCONN enable per CC pin, driver
+  enable and driver data, comparator threshold selection;
+* inputs: the comparator outputs.
+
+Everything else is firmware: BMC encoding and decoding, 4b5b, CRC-32, SOP
+detection, GoodCRC generation, retries, all timers, the Type-C attach,
+toggling, Try.SRC and Try.SNK state machines, and the PD protocol and policy
+including power role swap, source capabilities and cable discovery.
+
+The time scales are very different:
+
+.. list-table:: Time scales of the work
+   :header-rows: 1
+   :widths: 30 25 45
+
+   * - Task
+     - Time scale
+     - Difficulty in software
+   * - Bit timing (receive and transmit)
+     - 1.5 µs between edges; ± 50 ns edge placement
+     - Hard; analysed below
+   * - GoodCRC reply
+     - 25 µs to 195 µs after a message
+     - Moderate; analysed below
+   * - FRS detection (if supported)
+     - 30 µs to 50 µs
+     - Moderate
+   * - Protocol replies, attach, toggling, swaps
+     - 15 ms and longer
+     - Easy
+
+The processor clock
+~~~~~~~~~~~~~~~~~~~
+
+The numbers below depend on the processor's clock and on how many clock
+cycles it needs per instruction (*CPI*). Neither is fixed yet, so two cases
+are used:
+
+* a **multi-cycle core** such as PicoRV32, with an average CPI of about 4
+  (load 5 cycles, taken branch 5 to 6, simple ALU 3; PicoRV32 README, CPI
+  table);
+* a **pipelined core**, assumed here to reach a CPI of about 1.3 on this kind
+  of code (an assumption, not a measured value).
+
+For the clock, evampire already has a 125 MHz reference, so 31.25 MHz
+(÷ 4) and 62.5 MHz (÷ 2) are natural choices. The gf180mcu 7-track standard
+cell library, at its typical corner (5 V, 25 °C), gives a D flip-flop
+clock-to-output delay of 0.676 ns and a setup time of 0.229 ns (PDK
+documentation, cell gf180mcu_fd_sc_mcu7t5v0__dffq_1; databook conditions
+page). At 50 MHz that leaves
+:math:`20\ \text{ns} - (0.676 + 0.229)\ \text{ns} = 19.1\ \text{ns}` per
+clock for logic and wiring. How many gate levels fit in that depends on the
+core and the layout and is not derived here; as an order of magnitude, the
+PicoRV32-based "Raven" chip, made in a different 180 nm process (X-FAB
+XH018), was reported to run at 100 MHz (eeNews Europe). This page uses
+**50 MHz as a working assumption** and shows how the results change with the
+clock.
+
+Receive by polling
+~~~~~~~~~~~~~~~~~~
+
+With only a plain input bit, the processor reads the comparator in a loop,
+notes the time of each change with the cycle counter, and decodes as it
+goes.
+
+*How often it must sample.* The decoder tells a ``0`` (an interval of 1 UI)
+from half of a ``1`` (0.5 UI) by comparing each interval with 0.75 UI. Each
+edge can be up to 0.07 UI from its ideal time (receive mask, PD Table 5.8),
+so an interval can be off by up to :math:`2 \times 0.07 = 0.14` UI. That
+leaves a margin of :math:`0.25 - 0.14 = 0.11` UI, which at the fastest rate is
+:math:`0.11 \times 3.030\ \mu\text{s} = 333\ \text{ns}`. The sampling period
+adds up to one period of error to each interval, so it must be shorter than
+about 333 ns. This page uses :math:`T_\text{poll}` = 250 ns, 4 million
+samples per second. The number of samples per bit is then:
+
+.. math::
+
+   N_\text{poll} = \frac{T_\text{UI,min}}{T_\text{poll}}
+                 = \frac{3.030\ \mu\text{s}}{0.250\ \mu\text{s}}
+                 = 12.1 \approx 12
+
+*How many instructions per bit.* These counts are **estimates** for
+hand-written RV32 assembly, not measurements:
+
+.. list-table:: Estimated instructions for receiving one bit by polling
+   :header-rows: 1
+   :widths: 40 15 15 30
+
+   * - Work
+     - Instructions each
+     - Times per bit
+     - Instructions per bit
+   * - Poll: load input, compare, branch
+     - 3
+     - 12
+     - 36
+   * - Edge: read cycle counter, subtract, compare with 0.75 UI, update state
+     - 10
+     - 2 (worst case, a ``1``)
+     - 20
+   * - Bit: shift into symbol, count
+     - 4
+     - 1
+     - 4
+   * - Symbol: 4b5b table lookup and CRC-32 nibble update
+     - 16
+     - 1/5
+     - 3.2
+   * - **Total**
+     -
+     -
+     - **63.2**
+
+The instruction rate and clock needed are then:
+
+.. math::
+
+   R_\text{instr} = N_\text{instr/bit} \cdot f_\text{bit,max}
+                  = 63.2 \times 330\,000\ \text{s}^{-1}
+                  = 20.9 \times 10^{6}\ \text{s}^{-1}
+
+.. math::
+
+   f_\text{clk} = R_\text{instr} \cdot \text{CPI}
+
+where :math:`R_\text{instr}` is the instruction rate,
+:math:`N_\text{instr/bit}` = 63.2 (estimate above), :math:`f_\text{bit,max}`
+= 330 kbit/s (PD Table 5.9) and CPI is cycles per instruction. With CPI 1.3,
+:math:`f_\text{clk} = 20.9 \times 1.3 = 27` MHz; with CPI 4,
+:math:`20.9 \times 4 = 83` MHz.
+
+Polling also has a fixed cost per sample regardless of edges: a multi-cycle
+core needs about 10 cycles per poll iteration (load 5 + taken branch 5,
+PicoRV32 CPI table), so 4 million polls per second alone take 40 MHz; a
+pipelined core needing about 4 cycles per iteration takes 16 MHz.
+
+*What this means.* On a pipelined core at 50 MHz, polled receive fits, using
+about half of the processor while a message is on the wire. On a multi-cycle
+core at 62.5 MHz or below it does not fit. In both cases interrupts must be
+off for the whole message, because any interrupt longer than about 333 ns
+corrupts the timing.
+
+Receive by interrupt on each edge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An interrupt per comparator edge avoids polling between edges. The worst case
+is a run of ``1`` bits, two edges per UI:
+:math:`2 \times 330\,000 = 660\,000` edges per second. If entering and
+leaving the interrupt and handling the edge costs 40 to 60 cycles (an
+**estimate** for saving and restoring a few registers on a small core), the
+load is :math:`660\,000 \times 40 = 26.4` to
+:math:`660\,000 \times 60 = 39.6` million cycles per second, and the timestamp
+is only as accurate as the interrupt latency. This is worse than polling and
+is not considered further.
+
+Transmit by cycle-counted output
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To transmit, the processor computes the next edge time, waits in a loop on
+the cycle counter, and writes the output bit. The edge is late by up to one
+loop iteration, so the timing uncertainty (peak to peak) is:
+
+.. math::
+
+   \Delta t_\text{edge} = \frac{N_\text{loop}}{f_\text{clk}}
+
+where :math:`N_\text{loop}` is the number of cycles in one iteration of the
+wait loop (read counter, compare, branch) and :math:`f_\text{clk}` is the
+core clock. **Estimates** of :math:`N_\text{loop}`: about 4 cycles on a
+pipelined core and about 12 on a multi-cycle core.
+
+.. list-table:: Transmit edge uncertainty (peak to peak) against the ± 50 ns reading of the mask
+   :header-rows: 1
+   :widths: 25 25 25 25
+
+   * - Core clock
+     - Pipelined (4 cycles)
+     - Multi-cycle (12 cycles)
+     - Meets ± 50 ns?
+   * - 31.25 MHz
+     - 4 / 31.25 MHz = 128 ns
+     - 12 / 31.25 MHz = 384 ns
+     - No / No
+   * - 50 MHz
+     - 80 ns
+     - 240 ns
+     - Yes, barely / No
+   * - 62.5 MHz
+     - 64 ns
+     - 192 ns
+     - Yes / No
+
+Measuring edge time from the cycle counter, rather than counting loop
+iterations, keeps the average bit rate exact, so the 0.25 % drift limit is not
+a problem. The ± 50 ns edge placement is.
+
+The GoodCRC deadline
+~~~~~~~~~~~~~~~~~~~~
+
+After the EOP of a received message the processor must start sending GoodCRC
+between 25 µs and 195 µs later. With the CRC updated nibble by nibble during
+reception (included in the receive estimate above), checking it at the EOP is
+one comparison with the fixed remainder. The GoodCRC packet for each of the
+eight MessageID values, including its own CRC, can be prepared in advance. So
+the work after the EOP is a few tens of instructions, about 1 µs, plus the
+25 µs wait. The deadline is met as long as interrupts stay off from the start
+of the message to the end of the GoodCRC. As source and as sink the deadline
+is the same; no source-side timing is tighter than this (the next tightest is
+FRS detection, 30 µs to 50 µs, and then the millisecond limits).
+
+What the processor cannot do during a message
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With polled receive and cycle-counted transmit, the processor is fully busy
+from the first preamble edge of a received message to the end of its
+GoodCRC. The worst case is a seven-object message at the slowest bit rate:
+
+.. math::
+
+   t_\text{busy} = t_\text{msg} + t_\text{gap} + t_\text{GoodCRC}
+                 = 1589\ \mu\text{s} + 195\ \mu\text{s} + 552\ \mu\text{s}
+                 = 2336\ \mu\text{s}
+
+where :math:`t_\text{msg}` = 429 bits × 3.704 µs (packet duration table),
+:math:`t_\text{gap}` = 195 µs is the longest allowed gap (tTransmit, PD
+Section 7.31.1) and :math:`t_\text{GoodCRC}` = 149 bits × 3.704 µs.
+
+During those 2.3 ms the processor cannot service the Ethernet frame buffers or
+the transceiver configuration interface. The forwarding path between the
+Ethernet ports is entirely hardware and is not affected (see
+:doc:`../architecture/index`). Frames for the processor wait in the receive
+buffer, which holds one or two frames; at the processor's expected traffic of
+well below 1 Mbit/s (:doc:`../overview`), a full-size 1522-byte frame arrives
+on average no more often than every
+:math:`1522 \times 8\ \text{bit} / 1\ \text{Mbit/s} = 12.2\ \text{ms}`, so a
+2.3 ms pause rarely loses a frame, and a lost frame is resent by higher-level
+protocols. A burst of frames during a USB message can be lost.
+
+Two ports in software
+~~~~~~~~~~~~~~~~~~~~~
+
+With two ports, messages on both can arrive at the same time: as a sink the
+port cannot control when the other side transmits, and even as a source the
+other side may transmit when Rp allows it. A single polling loop could read
+both comparators in one input word, but the per-edge work doubles, about
+:math:`36 + 2 \times 27.2 = 90` instructions per bit, or
+:math:`90 \times 330\,000 = 30` million instructions per second (estimate),
+and transmit on one port while receiving on the other is not possible with a
+cycle-counted transmit loop. In practice software serves one port at a time;
+a message lost on the other port is resent by its sender up to twice
+(tReceive, then tRetry), so an occasional collision costs about 1 ms, and
+three losses in a row lead to a Soft_Reset.
+
+Hardware helpers, in order of need
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+From the numbers above:
+
+1. **Transmit edge timing** cannot be met on a multi-cycle core at any clock
+   up to 62.5 MHz, and only barely on a pipelined core at 50 MHz. A **timer
+   compare output** (a counter, a compare register and an output bit that
+   changes when they match) places each edge to one clock period (16 ns to
+   32 ns at 62.5 MHz to 31.25 MHz) whatever the processor is doing. Software
+   loads the next edge time after each edge, 1.5 µs ahead. This is a generic
+   microcontroller timer feature, not USB-specific.
+2. **Receive timing** cannot be met by polling on a multi-cycle core. A
+   **timer capture input** (the counter value latched into a small FIFO on
+   each comparator edge) removes polling. Per bit, software then reads up to
+   two timestamps (about 12 instructions each with the classification) plus
+   the bit and symbol work:
+   :math:`2 \times 12 + 4 + 3.2 = 31.2` instructions per bit, or
+   :math:`31.2 \times 330\,000 = 10.3` million per second (estimate): 13 MHz
+   at CPI 1.3, 41 MHz at CPI 4. Interrupts can stay on as long as the FIFO
+   does not overflow: at one edge per 1.515 µs, a FIFO of 8, 16 or 32 entries
+   gives :math:`8 \times 1.515 = 12.1`, 24.2 or 48.5 µs of tolerance to
+   interrupt latency. This too is a generic timer feature.
+3. **CRC-32** is not needed in hardware: a 16-entry table (64 bytes of
+   read-only memory) and about 6 instructions per nibble are included in the
+   estimates above. The RISC-V carry-less multiply extension (Zbc) could
+   speed it up but is not needed.
+4. **USB-specific helpers** (a BMC decoder, automatic GoodCRC as in the onsemi
+   FUSB302B, or a full PHY as in the STUSB1602, which decodes BMC and hands
+   the bits to a microcontroller over a serial interface) are not required
+   by the numbers above for one port. They would become necessary if both
+   ports must receive and transmit at the same time without relying on
+   retries, or if the processor's interrupt latency cannot be kept below the
+   FIFO tolerance.
+
+Recommended split
+~~~~~~~~~~~~~~~~~
+
+* **Hardware, per port:** the analog front end (switchable Rp, Rd and
+  dead-battery Rd, VCONN switch with current limit, comparators with
+  selectable thresholds, BMC driver with controlled edges), plus one channel
+  of a generic timer with capture (with a FIFO of 16 to 32 entries) on the
+  BMC receive comparator and compare on the BMC driver data.
+* **Software:** everything else, including BMC, 4b5b, CRC, GoodCRC, retries,
+  the attach and toggling state machines, the protocol, cable discovery,
+  power role swap and the power budget.
+
+If the chosen core is pipelined and runs at 50 MHz or faster, the timer
+channels could be left out for a single port, at the cost of disabling
+interrupts for up to 2.3 ms per message. The timer channels are recommended
+because they remove the dependence on the core's design and clock, cost
+little, and are useful for other purposes.
 
 Analog blocks
 -------------
 
-.. _fig-usbpd-blocks:
+.. _fig-usbpd-port-blocks:
 
-.. graphviz:: usb-pd/sink-blocks.dot
-   :caption: Circuits for a USB Power Delivery sink controlled by the evampire
-             processor. Solid arrows carry signals, bold arrows carry power,
-             dashed arrows carry control and status.
+.. graphviz:: usb-pd/port-blocks.dot
+   :caption: Circuits for one dual-role USB Type-C port with the minimum
+             dedicated hardware. Solid arrows carry signals, bold arrows
+             carry power, dashed arrows carry control. The processor also
+             controls the board's power circuits (sink switch, source
+             converter, discharge load); those connections are not drawn.
    :align: center
 
-Switchable Rd on each CC pin
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Each block below lists the requirement, how commercial controllers implement
+it, and what it means on gf180mcu. Everything is per port; the full design
+has two of each. Examples are TI TPS65987D (dual-role controller with
+integrated power paths), TI TPS25750, onsemi FUSB302B (a PHY controlled by an
+external processor, which can toggle as a dual-role port), ST STUSB1602
+(source, sink or dual-role, with a BMC line driver for an external
+microcontroller), Infineon CCG5C (dual-role controller with an Arm Cortex-M0)
+and Infineon CYPD3177 (sink only).
 
-*Requirement.* 5.1 kΩ to ground on both CC1 and CC2, ± 10 % if the sink
-wants to read the Rp level and ± 20 % otherwise (Type-C Table 4-28). The
-value is the total resistance into the pin, including the switch
-(Type-C Table 4-28, note 2). The sink must also be able to remove Rd and
-present at least *zOPEN* = 126 kΩ when the Type-C state machine requires it
-(Type-C Table 4-30).
+Switchable Rp
+~~~~~~~~~~~~~
 
-*How it is normally done.* A resistor in series with a switch, often trimmed
-during production. Examples: TPS25750 *RSNK* 4.6 kΩ to 5.6 kΩ after
-trimming; onsemi FUSB302B *RDEVICE* 4.6 kΩ to 5.6 kΩ; Infineon CYPD3177
-*Rd* 4.59 kΩ to 5.61 kΩ (datasheet Table 15).
+*Requirement.* Per CC pin, a pull-up of 80 µA, 180 µA or 330 µA (or the
+equivalent resistors), switchable off (Type-C Table 4-27).
 
-*On gf180mcu.* The CC voltage with Rd connected is at most 2.18 V, and up
-to 5.5 V if Rd is removed while the source's pull-up is still there (Type-C
-Section 4.11.1 allows pull-up voltages up to 5.5 V). A poly resistor and a
-5 V or 6 V MOS switch cover this.
+*Commercial practice.* Current sources: TPS65987D 73.6-86.4 / 165.6-194.4 /
+303.6-356.4 µA (Section 6.8); FUSB302B 64-96 / 166-194 / 304-356 µA (Table
+10); CCG5C integrates current sources for all three levels (datasheet
+features).
 
-Rd while unpowered ("dead battery")
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*On gf180mcu.* Switchable current mirrors from a reference current, supplied
+from 3.3 V or 5 V so that the open-circuit voltage exceeds the 2.432 V "open"
+threshold of the 3.0 A level. 5 V or 6 V devices at the pin.
 
-*Requirement.* A source turns VBUS on only after it sees Rd. If the board's
-only power comes from VBUS, evampire is unpowered at the moment of
-connection, so Rd must be present without any supply (Type-C Section 4.8.5;
-Type-C Section 4.5.2.2.3: "A port with a dead battery shall enter this state
-while unpowered").
+Switchable Rd and dead-battery Rd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*How it is normally done.* Type-C Section 4.8.5 gives the standard
-circuit: an Rd of ± 20 % in series with a MOS transistor whose gate is
-weakly pulled up to the CC pin itself, with a threshold voltage below the
-maximum clamp voltage (1.32 V). The source's pull-up then turns the
-transistor on through its gate, the CC pin settles inside the allowed range,
-and once the chip is powered it can switch this path off and use the trimmed
-Rd instead. Switching between the two must keep the CC voltage inside the
-band that indicates a connection (Type-C Section 4.11.1). Examples:
+*Requirement.* 5.1 kΩ to ground on both CC pins, ± 10 % to read the Rp
+level, switchable off to at least 126 kΩ (Type-C Tables 4-28 and 4-30), and
+present without any supply.
 
-* TPS25750: "dead battery Rd clamp" *VCLAMP* of 0.25 V to 1.32 V, 0.65 V to
-  1.32 V and 1.20 V to 2.18 V for the three Rp currents, measured with no
-  supply (datasheet Section 7.12).
-* STUSB4500: separate pins CC1DB and CC2DB, connected to CC1 and CC2 on the
-  board, provide the pull-down when the chip is unpowered (datasheet DS12499
-  Section 3.5).
-* CYPD3177: *Rd_DB* of 4.08 kΩ to 6.12 kΩ with all supplies at 0 V
-  (datasheet Table 15).
-* TI TPD8S300A (a CC protection chip): integrated dead-battery resistors,
-  4.1 kΩ to 6.1 kΩ in series with a FET whose threshold *VTH_DB* is 0.5 V to
-  1.2 V (datasheet Section 7.6).
-* TI TUSB320 (a Type-C detection chip without USB Power Delivery): CC pins
-  default to 5.1 kΩ ± 20 % pull-downs when VDD is absent (datasheet Section
-  7.4.3).
+*Commercial practice.* Type-C Section 4.8.5 gives the standard dead-battery
+circuit: an Rd of ± 20 % in series with a transistor whose gate is weakly
+pulled up to the CC pin itself, with a threshold below the maximum clamp
+voltage (1.32 V); the source's pull-up turns it on. Once the chip is powered
+it switches this path off and uses the trimmed Rd, keeping the CC voltage in
+the band that indicates a connection (Type-C Section 4.11.1). Examples:
+TPS65987D *RD_CC* 4.59-5.61 kΩ powered and *RD_DB* 4.08-6.12 kΩ unpowered
+(Section 6.8); CCG5C "Dead Battery (DB) Rd termination removed after MCU
+boots up"; STUSB4500 and STUSB1602 use separate CC1DB/CC2DB pins wired to the
+CC pins; TI TPD8S300A (a protection chip) integrates dead-battery resistors in
+series with a FET whose threshold is 0.5-1.2 V (Section 7.6).
 
-*On gf180mcu.* The PDK includes a 6 V native NMOS (*nfet_06v0_nvt*) with a
-threshold voltage of -0.32 V to 0.08 V (PDK electrical specification
-section 4.0). Its threshold is well below the 1.32 V limit, so it can serve
-as the self-biased switch in series with a poly resistor. Its leakage when
-"off" and the behaviour of the ESD structures on an unpowered pad must be
-checked in simulation.
+*On gf180mcu.* The PDK has a 6 V native NMOS (*nfet_06v0_nvt*) with a
+threshold of -0.32 V to 0.08 V (PDK electrical specification, section 4.0),
+well below 1.32 V, which can serve as the self-biased switch in series with a
+poly resistor. On a dual-role port the dead-battery path must be switched off
+when the port presents Rp, otherwise it loads the Rp current source.
 
-CC level comparators or ADC
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-*Requirement.* On each CC pin, detect "nothing connected" (below about
-0.28 V) and, when the Rp level is wanted, the two thresholds at about
-0.68 V and 1.27 V (Type-C Table 4-36), with debouncing over 100 ms to
-200 ms. The debouncing is easily done in software if the comparator outputs
-are readable.
-
-*How it is normally done.* FUSB302B has three fixed comparators with
-thresholds of 0.15 V to 0.25 V, 0.61 V to 0.70 V and 1.16 V to 1.31 V and
-20 mV of hysteresis, plus a 6-bit DAC with 42 mV steps and a comparator for
-finer measurements (datasheet Table 10). CYPD3177 uses an 8-bit ADC with a
-2.0 V reference (datasheet Table 23).
-
-*On gf180mcu.* All voltages are below 2.2 V in normal operation. A resistor
-ladder or small DAC with one comparator multiplexed between the two CC pins
-and the VBUS divider output is enough, since none of these signals needs to
-be measured faster than about once per millisecond. An accurate reference
-voltage is needed; the open gf180mcu PDK lists no bandgap reference among its
-IP blocks, so one has to be designed or the thresholds made ratiometric to a
-supply that is accurate enough.
-
-BMC transmitter
-~~~~~~~~~~~~~~~
-
-*Requirement.* Drive 0 V and 1.05 V to 1.20 V, output impedance 33 Ω to
-75 Ω, 10 %-90 % edge time of at least 300 ns while still meeting the
-transmit mask, high impedance when not sending, and tolerate being shorted
-to ground (PD Section 5.3.4.10). One driver is connected to the active CC
-pin (chosen after attach), or one driver per pin.
-
-*How it is normally done.* TPS25750 drives 1.05 V to 1.2 V high, -75 mV to
-75 mV low, with an output impedance of 33 Ω to 75 Ω (typically 54 Ω) and
-rise and fall times of at least 300 ns unloaded, the maximum being set by
-the transmit mask (datasheet Section 7.14). Its block diagram shows the
-driver supplied from the chip's internal 3.3 V regulator, with level
-shifters between the logic and the pins (datasheet Figure 9-7). FUSB302B
-gives the same limits (datasheet Table 9).
-
-*On gf180mcu.* The driver runs from a regulated rail of about 1.125 V
-(± 6 %), which needs a small linear regulator and a reference. The edge rate
-can be set by limiting the gate drive current of the output transistors or
-by a series resistor and a switched capacitor that is disconnected after the
-message. 3.3 V devices are adequate for the driver itself, but the pin must
-withstand the CC voltages listed above (up to 5.5 V), which calls for 5 V or
-6 V devices on the pad side or a protecting series switch.
-
-BMC receiver
+VCONN switch
 ~~~~~~~~~~~~
 
-*Requirement.* Decode signals that stay outside the receive masks (sink eye
-0.2325 V to 0.6425 V), with a filter of at least 100 ns time constant,
-ignoring up to 300 mV of noise when idle, input resistance of at least
-1 MΩ, total pin capacitance of 200 pF to 600 pF (PD Tables 5.8 and 5.11).
+*Requirement.* Connect a 3.0 V to 5.5 V supply to either CC pin, with a
+current limit, within 2 ms of VBUS; discharge the pin through 30 Ω to
+6120 Ω after detach (see `Cables and VCONN`_). For a board without USB data,
+tens of milliamps are enough.
 
-*How it is normally done.* An RC or switched filter and a comparator with
-hysteresis; see the TPS25750 thresholds above. The pin capacitance is
-usually made up with an external capacitor, since the chip's own is much
-lower (TPS25750 lists at most 120 pF and recommends adding capacitance
-externally, datasheet Section 7.14; FUSB302B lists 50 pF typical).
+*Commercial practice.* TPS65987D PP_CABLE switch 222-325 mΩ, current limit
+0.6-0.9 A (Section 6.7); STUSB1602 100-600 mA programmable with over-current,
+over-voltage and thermal protection; CCG5C over-current detection from
+550 mA.
 
-*On gf180mcu.* A comparator with thresholds of about 0.25 V and 0.53 V and
-an RC filter of about 100 ns to 150 ns. A digital glitch filter after the
-comparator (for example rejecting pulses shorter than 300 ns) adds
-robustness. The edge-detecting receivers of the USB-IF white paper are an
-alternative if ground offset turns out to be a problem.
+*On gf180mcu.* A 5 V or 6 V PMOS switch per CC pin from a 5 V supply, with a
+current limit of a few tens of milliamps, can be on chip. The pin carrying
+VCONN is the one not used for messages, so the switch and the BMC circuits
+are never active on the same pin at the same time.
 
-VBUS sensing
-~~~~~~~~~~~~
+CC comparators
+~~~~~~~~~~~~~~
 
-*Requirement.* Detect that VBUS is present (for attach; *vSafe5V* is 4.75 V
-to 5.5 V, PD Table 4.9) and that it has fallen below
-*vSinkDisconnect* (3.67 V at 5 V; Type-C Table 4-3). After a voltage change,
-checking the new voltage is good practice and protects the board against a
-faulty source.
+*Requirement.* Per CC pin, thresholds for attach and Rp level as a sink (about
+0.28, 0.68 and 1.27 V), for Ra, Rd and open as a source (three per Rp level,
+Type-C Table 4-37), for BMC receive with role-dependent thresholds and
+hysteresis (about 0.25/0.53 V as sink, 0.60/0.88 V as source) and, if FRS is
+supported, about 0.52 V.
 
-*How it is normally done.* A resistor divider into a comparator or ADC.
-TUSB320 uses an external 887 kΩ resistor from VBUS to its VBUS_DET pin
-(which tolerates at most 4 V) with an internal 95 kΩ pull-down, giving a
-detection threshold of 2.95 V to 3.8 V at VBUS (datasheet Section 6.5).
-STUSB4500 has VBUS sense pins rated to 28 V and a window comparator around
-the expected voltage (datasheet Section 3.4.1). FUSB302B measures VBUS up to
-20 V with 420 mV steps (datasheet Table 10).
+*Commercial practice.* TPS65987D lists all of these as fixed thresholds
+(Sections 6.8 and 6.9); FUSB302B uses three fixed comparators plus a 6-bit DAC
+(42 mV steps) and comparator (Table 10).
 
-*On gf180mcu.* VBUS is up to about 21 V in SPR (20 V + 5 %) and up to
-50.9 V in EPR. The top resistor of the divider must be outside the chip; the
-chip sees only the divided voltage.
+*On gf180mcu.* One fast comparator per CC pin with a low-pass filter
+(time constant at least 100 ns) for BMC and FRS, with its threshold selected
+by a small DAC or resistor ladder; attach and Rp-level checks are slow and
+can use the same comparator between messages, or a shared ADC. A reference
+voltage is needed; the open gf180mcu PDK lists no bandgap among its IP blocks
+(PDK documentation, IPs page).
+
+BMC driver
+~~~~~~~~~~
+
+*Requirement.* Drive 0 V and 1.05-1.2 V with 33-75 Ω output impedance, edges
+of 300 ns to about 640 ns (10 %-90 %, see the calculation above),
+high impedance otherwise, survive a 120 µs short to ground (PD Section
+5.3.4.10).
+
+*Commercial practice.* TPS65987D: 1.05-1.2 V, 33-75 Ω, rise and fall at least
+300 ns (Section 6.9); STUSB1602 drives the line from bits supplied by an
+external microcontroller.
+
+*On gf180mcu.* A small linear regulator for the 1.125 V rail and a slew
+controlled tri-state stage; the pin side must withstand the 5.5 V the CC pin
+can see, so 5 V or 6 V devices at the pad.
+
+VBUS sensing and discharge
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*Requirement.* Detect VBUS presence (vSafe5V 4.75 V to 5.5 V), vSafe0V
+(0.8 V) before attaching as source, vSinkDisconnect (3.67 V), and check the
+voltage after each change; discharge VBUS on detach, role swap and Hard Reset.
+
+*Commercial practice.* A divider into an ADC or comparator; TPS65987D, CCG5C
+and STUSB1602 integrate VBUS monitoring and discharge paths (STUSB1602
+datasheet features).
+
+*On gf180mcu.* VBUS reaches about 21 V in SPR (20 V + 5 %) and 50.9 V in EPR,
+so the divider (at least the top resistor) and the discharge load are
+external; the comparator or ADC input on chip sees only the divided voltage.
+
+Bidirectional VBUS power path
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*Requirement.* As a sink, a switch from VBUS to the board's power bus; as a
+source, a converter from the bus to the negotiated voltage (5 V to 20 V, or up
+to 48 V in EPR) with a current limit; neither may feed power backwards (for
+example, the bus must not appear on VBUS through the sink switch while the
+port is unattached), and VBUS capacitance when not sourcing is at most 10 µF
+(Type-C Table 4-2).
+
+*Commercial practice.* TPS65987D has two 5 A internal power paths with
+reverse-current blocking that turns off at 3-6 mV (comparator mode) and
+configurable soft start (Section 6.7); CCG5C drives external P-channel MOSFETs
+on separate "consumer" and "provider" paths, with gate drivers tolerant to
+24 V (datasheet features).
+
+*On gf180mcu.* All of this is external (see :doc:`index`); evampire provides
+control outputs and monitors the VBUS voltage.
 
 Over-voltage protection on the CC pins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Requirement.* In normal operation the CC pins see at most 5.5 V. But the CC
 contact sits next to VBUS in the connector, and damaged or non-compliant
-cables and debris can short the two. TI explains that twisting or sliding
-the plug, debris or moisture can short 20 V VBUS onto CC (TPD8S300A
-datasheet, Section 3). Infineon notes that such a short rings because of the
-cable's inductance and capacitance and can reach about twice the VBUS
-voltage, 44 V for 21.5 V, if nothing clamps it (CYPD3177 datasheet Section
-1.1.3). The Type-C specification itself allows any port to clamp its CC pins
-at 2.9 V or above to protect them (Type-C Table 4-40).
-
-*How it is normally done.* Commercial controllers either make their CC pins
-tolerate VBUS, or rely on an external protection chip:
+cables and debris can short them. TI explains that twisting or sliding the
+plug, debris or moisture can short 20 V VBUS onto CC (TPD8S300A datasheet,
+Section 3). Infineon notes that such a short rings and can reach about twice
+the VBUS voltage, 44 V for 21.5 V, if nothing clamps it (CYPD3177 datasheet,
+Section 1.1.3). Type-C allows a port to clamp its CC pins at 2.9 V or above
+(Type-C Table 4-40), but a dual-role port that supplies VCONN needs up to
+5.5 V on the VCONN pin, so its clamp must sit above 5.5 V.
 
 .. list-table:: CC pin voltage ratings of commercial parts
    :header-rows: 1
@@ -1279,99 +2042,42 @@ tolerate VBUS, or rely on an external protection chip:
    * - Part
      - CC pin rating
      - Source
-   * - TI TPS25750 (PD controller)
-     - -0.5 V to 26 V absolute maximum; disconnects its PD transmitter when
-       CC exceeds 5.5 V to 8.5 V
-     - Datasheet SLVSFR7A, Sections 7.1, 7.14, 9.3.5
-   * - ST STUSB4500 (PD sink controller)
-     - 22 V absolute maximum ("short-to-VBUS protections on CC pins")
-     - Datasheet DS12499 Rev 3, Table 20
-   * - Infineon CYPD3177 (PD sink controller)
-     - 22 V absolute maximum; 17 V indefinitely, 17 V to 22 V for 1000 hours
-     - Datasheet 002-25383 Rev. \*C, Section 1.1.3 and absolute maximum
-       ratings
-   * - onsemi FUSB302B (PD PHY)
+   * - TI TPS65987D (dual-role)
+     - -0.5 V to 6 V absolute maximum
+     - Datasheet SLVSES1D, Section 6.1
+   * - TI TPS25750 (dual-role)
+     - -0.5 V to 26 V absolute maximum
+     - Datasheet SLVSFR7A, Section 7.1
+   * - Infineon CCG5C (dual-role)
+     - 24 V maximum
+     - Datasheet 002-23803 Rev. \*D, absolute maximum ratings
+   * - ST STUSB1602 (dual-role)
+     - 22 V short-to-VBUS protection
+     - Datasheet DocID028319 Rev 2, features
+   * - onsemi FUSB302B (PHY, dual-role capable)
      - -0.5 V to 6.0 V absolute maximum
      - Datasheet Rev. 5, Table 7
-   * - TI TUSB320 (Type-C detection only)
-     - -0.3 V to 6 V absolute maximum
-     - Datasheet SLLSEN9F, Section 6.1
    * - TI TPD8S300A (external protector)
      - 24 V short-to-VBUS tolerance; series switches open when CC exceeds
        5.75 V to 6.2 V, typically within 70 ns
      - Datasheet SLVSEL9, Sections 7.6 and 7.7
 
-The usual arrangement for a controller with low-voltage CC pins is the last
-row: a high-voltage series switch on each CC line that opens when the voltage
-rises above about 6 V, followed by the controller. The switch must pass the
-BMC signal and the Rd current without noticeable resistance in normal
-operation, and for a sink it must also keep the dead-battery Rd visible.
+A controller with low-voltage CC pins (6 V class) uses an external protector
+like the last row; its series switches must pass the BMC signal, the Rp and
+Rd currents, the dead-battery Rd and the VCONN current.
 
-*On gf180mcu.* None of the PDK devices withstands 20 V (see below), so the
-protection against a VBUS short has to be outside the chip. Protection
-against electrostatic discharge at the connector, specified with the
-IEC 61000-4-2 system-level test (as TPD8S300A and CYPD3177 do for their CC
-pins), is also expected to be external.
-
-Power path switch
-~~~~~~~~~~~~~~~~~
-
-*Requirement.* Connects VBUS to the board's load. A sink must limit its
-current to the advertised value before a contract, to 500 mA (iSnkStdby)
-during a voltage change, and must not be damaged by the highest voltage it
-may receive.
-
-*How it is normally done.* An external MOSFET switch driven by the
-controller. CYPD3177 drives external P-channel MOSFETs with a soft start to
-limit inrush current (datasheet Section 1.1.4). STUSB4500 has an output,
-VBUS_EN_SNK, to enable the external switch (datasheet Section 3.5).
-TPS25750 has gate drivers for external N-channel MOSFETs with over-voltage
-and reverse-current protection (datasheet Section 9.3.3).
-
-*On gf180mcu.* The switch itself is external. evampire can provide a logic
-output; a 5 V or 6 V output (or an open-drain output tolerant to that
-voltage) can drive an external gate driver or the gate of a P-channel MOSFET
-through a level-shifting transistor. Because evampire itself is powered from
-VBUS through the board's regulators, there are two possible arrangements:
-
-* the regulators that feed evampire are always connected to VBUS and must
-  accept the full range of voltages the sink may request, while only the
-  rest of the load is switched; or
-* everything is connected directly and the board draws little enough
-  current at 5 V that no switch is needed before the contract.
-
-VCONN
-~~~~~
-
-VCONN is a 3.0 V to 5.5 V supply of up to 1 W to 1.5 W (Type-C Table 4-5)
-that the source puts on its CC pin that is *not* connected to the CC wire.
-Through the plug's VCONN contact it powers small chips inside the cable
-plugs, called *e-markers*, which report the cable's current rating and other
-properties. Full-featured USB Type-C cables, cables rated for more than
-3 A, and EPR cables all contain an e-marker (Type-C Sections 3.4.1.1,
-3.4.2.1, 3.11.2 and 4.9). VCONN is isolated from the other end of the cable
-(Type-C Section 2.5), so the source's VCONN never reaches the sink.
-
-A sink does not supply VCONN when it attaches (Type-C Section 4.5.2.2.5.1:
-"VCONN shall not be supplied in the Attached.SNK state"). VCONN is needed
-by the side that talks to the cable, which is normally the source: for
-example, a source may only operate in EPR with an EPR-capable cable (PD
-Section 3.2.5.3, item 5), and the cable's 5 A rating decides whether more
-than 3 A may be offered (PD Table 3.4, note 2). The two sides can exchange
-the VCONN duty with a VCONN_Swap message exchange, but the receiving side
-may answer Reject or Not_Supported (PD Section 7.13), so a sink that always
-refuses needs no VCONN switch. Its unused
-CC pin may see the e-marker's pull-down *Ra* (800 Ω to 1.2 kΩ, Type-C
-Table 4-29) or nothing.
+*On gf180mcu.* No PDK device withstands 20 V (see below), so protection
+against a VBUS short is external, as is protection against electrostatic
+discharge at the connector (specified with the IEC 61000-4-2 system-level
+test, as TPD8S300A and CCG5C do for their CC pins).
 
 What can be built on gf180mcu
 -----------------------------
 
 The gf180mcu PDK documentation describes the process as "0.18 µm 3.3V/(5V)6V
 dual-gate MCU technology" (PDK Design Manual, Section 1.0), with low-voltage
-(LV) devices at 3.3 V and high-voltage (HV) devices at 5 V or 6 V (Section
-2.7). The device list for models and layout-versus-schematic checking also
-contains 10 V lateral double-diffused MOS (LDMOS) transistors (Appendix A).
+devices at 3.3 V and high-voltage devices at 5 V or 6 V (Section 2.7). The
+device list also contains 10 V LDMOS transistors (Appendix A).
 
 .. list-table:: gf180mcu device voltage ratings from the PDK documentation
    :header-rows: 1
@@ -1382,27 +2088,24 @@ contains 10 V lateral double-diffused MOS (LDMOS) transistors (Appendix A).
      - Breakdown data
    * - nfet_03v3, pfet_03v3
      - 3.3 V
-     - BVDSS at least 7 V (N) and 6.5 V (P); gate oxide breakdown at least
-       7 V (electrical specification sections 1.0 and 5.4)
+     - BVDSS at least 7 V (N) and 6.5 V (P); gate oxide at least 7 V
+       (electrical specification sections 1.0 and 5.4)
    * - nfet_05v0, pfet_05v0
      - 5 V (same devices as 6 V, with a 5 V marker layer)
      - BVDSS at least 8.5 V (section 3.0)
    * - nfet_06v0, pfet_06v0
      - 6 V
-     - BVDSS at least 8.5 V; gate oxide breakdown at least 12 V
-       (sections 2.0 and 5.4)
+     - BVDSS at least 8.5 V; gate oxide at least 12 V (sections 2.0 and 5.4)
    * - nfet_06v0_nvt (native)
      - 6 V
      - Threshold -0.32 V to 0.08 V; BVDSS at least 8 V (section 4.0)
    * - nfet_10v0_asym, pfet_10v0_asym (LDMOS)
      - 10 V drain, 6 V gate
-     - BVDSS at least 13.2 V (sections 8.1 and 8.2; layout rules in Design
-       Manual Section 10.12)
+     - BVDSS at least 13.2 V (sections 8.1 and 8.2; Design Manual Section
+       10.12)
    * - N-well to substrate junction
      -
      - Breakdown at least 10 V (section 5.5)
-
-Comparing these with the voltages on the pins of a USB Type-C sink:
 
 .. list-table:: Pin voltages and where each function can be built
    :header-rows: 1
@@ -1412,61 +2115,59 @@ Comparing these with the voltages on the pins of a USB Type-C sink:
      - Voltage
      - Placement
    * - CC1, CC2, normal operation
-     - 0 V to 2.18 V with Rd; up to 5.5 V with Rd removed; BMC 0 V to
-       1.2 V
-     - On chip, with 5 V or 6 V devices at the pin. Rd, dead-battery Rd,
-       comparators, receiver and transmitter can all be on chip.
+     - 0 V to 2.2 V with Rd; up to 5.5 V with Rd removed or as VCONN; BMC 0
+       V to 1.2 V
+     - On chip with 5 V or 6 V devices at the pin: Rp, Rd, dead-battery Rd,
+       VCONN switch, comparators, BMC driver.
    * - CC1, CC2, fault (shorted to VBUS)
-     - Up to about 21 V (SPR), 50.9 V (EPR), with ringing up to about twice
-       that
-     - External series protection switch that opens above about 6 V, plus
-       ESD protection. Not possible with PDK devices (10 V LDMOS is the
-       highest rating).
-   * - VBUS sense
-     - 5 V to about 21 V (SPR) or 50.9 V (EPR)
-     - External divider (at least the top resistor), on-chip comparator or
-       ADC on the divided voltage.
+     - Up to about 21 V (SPR) or 50.9 V (EPR), with ringing up to about
+       twice that
+     - External series protection switch and ESD protection.
+   * - VBUS sense and discharge
+     - 0 V to about 21 V (SPR) or 50.9 V (EPR)
+     - External divider and discharge load; on-chip comparator or ADC on the
+       divided voltage.
    * - VBUS power path
-     - Same as VBUS, at up to 3 A or 5 A
-     - External switch and regulators; evampire provides a control output.
-   * - VCONN
-     - Not used by a sink
-     -
+     - Same, at up to 3 A or 5 A
+     - External sink switch and source converter; on-chip control outputs.
+   * - VCONN supply
+     - 5 V
+     - External 5 V rail; switch on chip.
 
 Open design decisions
 ---------------------
 
-The following choices are not yet made:
-
-* **Hardware and software split** for the BMC physical layer: options B, C or
-  D in the table above. This decides whether GoodCRC timing is a software
-  deadline.
-* **Requested voltage and power.** The total power the evampire board needs
-  sets the minimum source rating it can work with at 5 V, and whether it
-  should ask for 9 V, 15 V or 20 V. Staying in SPR (20 V or less) avoids
-  EPR's 48 V and its keep-alive messages, and keeps the CC fault voltage
-  lower. Whether to support only fixed supplies (the simplest case) is part
-  of this decision.
-* **Where the CC protection sits.** The proposal above uses an external
-  protection chip. The alternative is a discrete high-voltage switch per CC
-  line; either way the dead-battery Rd must stay visible through it.
-* **Dead-battery Rd implementation.** On chip (native NMOS and poly
-  resistor) or in the external protection chip, which some parts provide.
-* **Reference voltage** for the BMC driver level and the CC thresholds:
-  whether an on-chip bandgap reference is designed or an external reference
-  is used.
-* **Clock and timer resolution** available to the edge-capture and
-  serializer logic, which depends on the clock chosen for the processor
-  subsystem.
-* **Power path arrangement**: which parts of the board are switched and
-  whether the regulators feeding evampire must accept 20 V.
-* **Interaction with Power over Ethernet** if a board supports both power
-  inputs; see :doc:`poe`.
+* **Processor core and clock.** Multi-cycle or pipelined, and 31.25 MHz,
+  62.5 MHz or another clock. This decides whether the generic timer capture
+  and compare channels are strictly required or only recommended.
+* **Timer channels.** Whether each port gets a capture channel with a FIFO
+  (and its depth) and a compare output, or whether interrupts are disabled for
+  up to 2.3 ms per message instead.
+* **Behaviour with two ports at once.** Whether occasional message loss and
+  retries on the second port are acceptable, or a USB-specific receive helper
+  per port is added.
+* **Supported power levels.** Whether the board offers and accepts only SPR
+  fixed supplies, also 5 A (which requires VCONN and cable discovery as
+  source), PPS/AVS, or EPR (48 V on VBUS and on the CC pins in a fault, and
+  keep-alive messages).
+* **Role preference policy.** When to use Try.SRC or Try.SNK, and when to
+  ask for a power role swap, given the power budget.
+* **Fast role swap.** Whether the board signals or accepts FRS; this needs a
+  strong CC pull-down, hold-up energy, and a source converter kept running.
+* **CC protection.** An external protector chip or discrete high-voltage
+  switches; either must pass VCONN and keep the dead-battery Rd visible.
+* **Dead-battery Rd.** On chip (native NMOS and poly resistor) or in the
+  external protector.
+* **Reference voltage** for the BMC driver level, Rp currents and
+  thresholds: an on-chip bandgap reference or an external one.
+* **Power path and budget margins**, including how fast the board can react
+  when the Ethernet input is reduced or lost (see :doc:`index` and
+  :doc:`poe`).
 
 References
 ----------
 
-Specifications (both free from usb.org):
+Specifications (free from usb.org):
 
 * USB Implementers Forum, *USB Type-C Cable and Connector Specification*,
   Release 2.5, March 2026. Document library:
@@ -1482,33 +2183,53 @@ Specifications (both free from usb.org):
 
 Datasheets:
 
+* Texas Instruments, *TPS65987D USB Type-C and USB PD Controller with
+  Integrated Source and Sink Power Path*, SLVSES1D, revised October 2022.
+  https://www.ti.com/lit/ds/symlink/tps65987d.pdf
 * Texas Instruments, *TPS25750 USB Type-C and USB PD Controller with
   Integrated Power Switches*, SLVSFR7A, revised November 2020.
   https://www.ti.com/lit/ds/symlink/tps25750.pdf
-* Texas Instruments, *TUSB320 USB Type-C Configuration Channel Logic and
-  Port Control*, SLLSEN9F, revised March 2022.
-  https://www.ti.com/lit/ds/symlink/tusb320.pdf
-* Texas Instruments, *TPD8S300A USB Type-C Port Protector: Short-to-VBUS
-  Overvoltage and IEC ESD Protection*, SLVSEL9, June 2018.
-  https://www.ti.com/lit/ds/symlink/tpd8s300a.pdf
+* Texas Instruments, *TPD8S300A USB Type-C Port Protector*, SLVSEL9, June
+  2018. https://www.ti.com/lit/ds/symlink/tpd8s300a.pdf
+* onsemi, *FUSB302B Programmable USB Type-C Controller with PD*, Rev. 5,
+  August 2021. https://www.onsemi.com/download/data-sheet/pdf/fusb302b-d.pdf
+* STMicroelectronics, *STUSB1602 USB Type-C controller with TX/RX line driver
+  and BMC*, DocID028319 Rev 2, April 2017. Product page:
+  https://www.st.com/en/interfaces-and-transceivers/stusb1602.html
 * STMicroelectronics, *STUSB4500 Standalone USB PD Controller (Sink)*,
   DS12499 Rev 3, December 2019.
   https://www.st.com/resource/en/datasheet/stusb4500.pdf
-* onsemi, *FUSB302B Programmable USB Type-C Controller with PD*, Rev. 5,
-  August 2021. https://www.onsemi.com/download/data-sheet/pdf/fusb302b-d.pdf
+* Infineon (Cypress), *EZ-PD CCG5C USB Type-C Port Controller*, 002-23803
+  Rev. \*D, 2019-02-18.
+  https://www.infineon.com/assets/row/public/documents/24/49/infineon-ez-pd-ccg5c-usb-type-c-port-controller-datasheet-en.pdf
 * Infineon, *EZ-PD BCR USB Type-C Port Controller for Power Sinks
   (CYPD3177)*, 002-25383 Rev. \*C, 2024-09-18.
   https://www.infineon.com/assets/row/public/documents/24/49/infineon-cypd3177-24lqxq-datasheet-en.pdf
+
+Processor references:
+
+* YosysHQ, *PicoRV32 - A Size-Optimized RISC-V CPU*, README (CPI table).
+  https://github.com/YosysHQ/picorv32
+* eeNews Europe, "X-FAB Silicon Foundries tapes out open source RISC-V MCU"
+  (Raven, PicoRV32 in X-FAB XH018).
+  https://www.eenewseurope.com/news/x-fab-silicon-foundries-tapes-out-open-source-risc-v-mcu
 
 gf180mcu process:
 
 * GlobalFoundries GF180MCU PDK documentation:
   https://gf180mcu-pdk.readthedocs.io/
-* Design Manual, Sections 1.0 and 2.0 (process and operating voltages):
+* Design Manual, Section 2.0 (process and operating voltages):
   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_02.html
 * Design Manual, Appendix A (device list):
   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_15.html
 * Design Manual, Section 10.12 (10 V LDMOS rules):
   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_10_12.html
-* Electrical Parameters Specification (device voltages, breakdown):
+* Electrical Parameters Specification:
   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs.html
+* 7-track standard cell library, D flip-flop gf180mcu_fd_sc_mcu7t5v0__dffq_1
+  and databook conditions:
+  https://gf180mcu-pdk.readthedocs.io/en/latest/digital/standard_cells/gf180mcu_fd_sc_mcu7t5v0/cells/dffq/gf180mcu_fd_sc_mcu7t5v0__dffq_1.html
+  and
+  https://gf180mcu-pdk.readthedocs.io/en/latest/digital/standard_cells/gf180mcu_fd_sc_mcu7t5v0/setup.html
+* IPs and macros (I/O and SRAM only):
+  https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/ips.html
