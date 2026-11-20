@@ -1,0 +1,29 @@
+// MDI and MDI-X at 10 and 100 Mbit/s: a straight-through cable joins the
+// transmitter at one end to the receiver at the other only when one end
+// uses the MDI assignment and the other end uses MDI-X.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph crossover {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.3,
+           ranksep=1.15];
+    node  [fontname="Helvetica", fontsize=10, shape=plain];
+    edge  [fontname="Helvetica", fontsize=9, penwidth=1.4];
+
+    left [label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#dbe8f5">
+        <tr><td colspan="2"><b>Port using MDI</b><br/><font point-size="9">(for example a computer)</font></td></tr>
+        <tr><td>transmitter</td><td port="t" bgcolor="#ffffff">pins 1, 2</td></tr>
+        <tr><td>receiver</td><td port="r" bgcolor="#ffffff">pins 3, 6</td></tr>
+      </table>>];
+
+    right [label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#e2efda">
+        <tr><td colspan="2"><b>Port using MDI-X</b><br/><font point-size="9">(for example a switch)</font></td></tr>
+        <tr><td port="r" bgcolor="#ffffff">pins 1, 2</td><td>receiver</td></tr>
+        <tr><td port="t" bgcolor="#ffffff">pins 3, 6</td><td>transmitter</td></tr>
+      </table>>];
+
+    left:t  -> right:r [label="pair on pins 1, 2", color="#2e75b6"];
+    left:r  -> right:t [dir=back, label="pair on pins 3, 6", color="#c55a11"];
+}

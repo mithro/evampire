@@ -73,9 +73,9 @@ twisted pair.
 
    * - Name
      - Clauses
-     - Rate (Mbit/s)
-     - Pairs used
-     - Levels on the wire
+     - Mbit/s
+     - Pairs
+     - Levels
    * - :doc:`10BASE-T <10base-t>`
      - :clause:`14`
      - 10

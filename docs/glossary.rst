@@ -12,17 +12,45 @@ gives a short description and a link to the full explanation.
       (:clause:`40`). Every evampire port supports it (see
       :ref:`the transceiver requirements <req-transceivers>`).
 
+<<<<<<< HEAD
    Autonegotiation
       The exchange of link pulse bursts by which the two transceivers on a
       twisted-pair Ethernet cable agree on speed, duplex mode and, for
       1000BASE-T, which end is master (:clause:`28`, see
       :doc:`ethernet/phy-electrical/autonegotiation` and
       :wikipedia:`Autonegotiation`).
+=======
+   Baseline wander
+      A slow drift of the average level of a received signal, caused when a
+      high-pass filter in the path, such as a transformer or coupling
+      capacitor, removes the low-frequency part of the data (see
+      :doc:`ethernet/magnetics/matching-and-droop`).
+
+   Bob Smith termination
+      A network of 75 Ω resistors from each pair's centre tap to a shared
+      capacitor to chassis ground, which absorbs common-mode currents on an
+      Ethernet cable (see :doc:`ethernet/magnetics/functions`).
+
+   Centre tap
+      A connection to the middle of a transformer or inductor winding (see
+      :doc:`ethernet/magnetics/standard-port`).
+>>>>>>> origin/main
 
    Class
       In Power over Ethernet, the power level that a powered device asks for
       during classification. Each class has a maximum power at the powered
       device (:clause:`145`, see :doc:`power/poe/index`).
+
+   Common-mode choke
+      Two windings on one core, one in each wire of a pair, that block
+      current flowing the same way on both wires while passing the
+      differential signal (see :doc:`ethernet/magnetics/functions` and
+      :wikipedia:`Choke (electronics) <Choke_(electronics)>`).
+
+   Common-mode voltage
+      The average voltage of the two wires of a pair, measured against a
+      ground. It carries no data (see :doc:`ethernet/magnetics/functions`
+      and :wikipedia:`Common-mode signal <Common-mode_signal>`).
 
    Configuration channel
    CC
@@ -46,6 +74,17 @@ gives a short description and a link to the full explanation.
       needs only a few bytes of storage on each path (see
       :wikipedia:`Cut-through switching <Cut-through_switching>` and
       :ref:`the forwarding requirements <req-forwarding>`).
+
+   Differential-mode voltage
+      The voltage difference between the two wires of a pair, which carries
+      the data (see :doc:`ethernet/magnetics/cable` and
+      :wikipedia:`Differential signalling <Differential_signalling>`).
+
+   Droop
+      The decay of a transmitted voltage that is held constant, caused by a
+      high-pass filter in the path. IEEE 802.3 limits it for 1000BASE-T
+      transmitters (:clause:`40.6.1.2.2`, see
+      :doc:`ethernet/magnetics/matching-and-droop`).
 
    Dual-role port
       A USB Type-C port that can attach as either a source or a sink, and
@@ -84,6 +123,7 @@ gives a short description and a link to the full explanation.
       receiver detect a damaged frame (:clause:`3`, see
       :wikipedia:`Frame check sequence <Frame_check_sequence>`).
 
+<<<<<<< HEAD
    Hybrid
       The analogue circuit that lets one pair carry both directions at once,
       by subtracting a replica of the transceiver's own transmitted signal
@@ -95,6 +135,24 @@ gives a short description and a link to the full explanation.
       cable or component. In a cable it grows with frequency and length
       (:clause:`40.7.2.1`, see :doc:`ethernet/phy-electrical/job` and
       :wikipedia:`Insertion loss`).
+=======
+   Galvanic isolation
+      The absence of any conducting path between two circuits, so that no
+      direct current flows between them and a large voltage between them
+      does no harm (see :wikipedia:`Galvanic isolation
+      <Galvanic_isolation>` and :doc:`ethernet/magnetics/functions`).
+
+   GMII
+   Gigabit media independent interface
+      The interface between a media access controller and a gigabit Ethernet
+      transceiver: 8 data bits in each direction on the rising edge of a
+      125 MHz clock (:clause:`35`, see :doc:`ethernet/rgmii/signals`).
+
+   In-band status
+      The link status, speed and duplex that an Ethernet transceiver can put
+      on the RGMII receive data signals between frames (see
+      :doc:`ethernet/rgmii/data`).
+>>>>>>> origin/main
 
    LLDP
    Link Layer Discovery Protocol
@@ -115,6 +173,17 @@ gives a short description and a link to the full explanation.
       socket. They isolate the board from the cable and give a path for
       Power over Ethernet current (see :doc:`ethernet/magnetics/index`).
 
+   MDI
+   Medium dependent interface
+      The connection between an Ethernet transceiver and the cable: the
+      contacts of the socket and the electrical requirements on them. Also
+      the name of the pin assignment in which a port transmits on contacts
+      1 and 2 (see :doc:`ethernet/magnetics/cable`).
+
+   MDI-X
+      The crossed pin assignment, in which a port transmits on the contacts
+      where an MDI port receives (see :doc:`ethernet/magnetics/cable`).
+
    MDIO
    Management data input/output
       The two-wire serial interface, a clock and a bidirectional data line,
@@ -129,12 +198,21 @@ gives a short description and a link to the full explanation.
       (:clause:`4`). In evampire the forwarding logic and the processor
       share this role.
 
+<<<<<<< HEAD
    PAM-5
       Five-level pulse amplitude modulation: each symbol is one of the
       levels −2, −1, 0, +1 and +2. 1000BASE-T uses it on all four pairs
       (:clause:`40.1.3`, see :doc:`ethernet/phy-electrical/1000base-t-coding`
       and :wikipedia:`Pulse-amplitude modulation
       <Pulse-amplitude_modulation>`).
+=======
+   MII
+   Media independent interface
+      The interface between a media access controller and a 10 Mbit/s or
+      100 Mbit/s Ethernet transceiver: 4 data bits in each direction on the
+      rising edge of a 2.5 MHz or 25 MHz clock (:clause:`22`, see
+      :doc:`ethernet/rgmii/signals`).
+>>>>>>> origin/main
 
    Power budget
       The power that the processor may offer on the output ports: the power
@@ -158,11 +236,24 @@ gives a short description and a link to the full explanation.
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
 
+<<<<<<< HEAD
    Return loss
       How much weaker, in decibels, a reflection is than the signal that
       caused it. A port matched to the cable has a high return loss
       (:clause:`40.8.3.1`, see :doc:`ethernet/phy-electrical/job` and
       :wikipedia:`Return loss`).
+=======
+   Preamble
+      The 7 bytes of alternating ones and zeros at the start of every
+      Ethernet frame on the wire, which let the receiver lock on to the
+      signal (:clause:`3.2.1`, see :doc:`ethernet/rgmii/frames`).
+
+   Return loss
+      How much weaker the signal reflected from a port is than the signal
+      arriving at it, in decibels. IEEE 802.3 sets a minimum for each
+      Ethernet port (see :wikipedia:`Return loss <Return_loss>` and
+      :doc:`ethernet/magnetics/matching-and-droop`).
+>>>>>>> origin/main
 
    RGMII
       Reduced Gigabit Media Independent Interface. A digital interface
@@ -172,34 +263,6 @@ gives a short description and a link to the full explanation.
       :doc:`ethernet/rgmii/index` and
       :wikipedia:`Media-independent interface
       <Media-independent_interface>`).
-
-   GMII
-   Gigabit media independent interface
-      The interface between a media access controller and a gigabit Ethernet
-      transceiver: 8 data bits in each direction on the rising edge of a
-      125 MHz clock (:clause:`35`, see :doc:`ethernet/rgmii/signals`).
-
-   In-band status
-      The link status, speed and duplex that an Ethernet transceiver can put
-      on the RGMII receive data signals between frames (see
-      :doc:`ethernet/rgmii/data`).
-
-   MII
-   Media independent interface
-      The interface between a media access controller and a 10 Mbit/s or
-      100 Mbit/s Ethernet transceiver: 4 data bits in each direction on the
-      rising edge of a 2.5 MHz or 25 MHz clock (:clause:`22`, see
-      :doc:`ethernet/rgmii/signals`).
-
-   Preamble
-      The 7 bytes of alternating ones and zeros at the start of every
-      Ethernet frame on the wire, which let the receiver lock on to the
-      signal (:clause:`3.2.1`, see :doc:`ethernet/rgmii/frames`).
-
-   Start frame delimiter
-   SFD
-      The byte 0xD5 that follows the preamble and marks the start of an
-      Ethernet frame (:clause:`3.2.2`, see :doc:`ethernet/rgmii/frames`).
 
    RJ45
       The 8-position modular socket and plug used on Ethernet cables (see
@@ -213,6 +276,7 @@ gives a short description and a link to the full explanation.
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
 
+<<<<<<< HEAD
    Symbol
       One voltage level held on a pair for one fixed time slot. Depending on
       how many levels are allowed, it carries less than one bit, one bit or
@@ -231,6 +295,18 @@ gives a short description and a link to the full explanation.
       with eight states (:clause:`40.3.1.3.4`, see
       :doc:`ethernet/phy-electrical/1000base-t-coding` and
       :wikipedia:`Trellis modulation <Trellis_modulation>`).
+=======
+   Start frame delimiter
+   SFD
+      The byte 0xD5 that follows the preamble and marks the start of an
+      Ethernet frame (:clause:`3.2.2`, see :doc:`ethernet/rgmii/frames`).
+
+   Twisted pair
+      Two wires twisted around each other and carrying equal and opposite
+      signals. An Ethernet cable holds four (see
+      :wikipedia:`Twisted pair <Twisted_pair>` and
+      :doc:`ethernet/magnetics/cable`).
+>>>>>>> origin/main
 
    USB Power Delivery
    USB PD

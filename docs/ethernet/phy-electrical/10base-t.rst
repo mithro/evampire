@@ -52,9 +52,9 @@ The signal is 2.2 V to 2.8 V and the receiver ignores less than 300 mV
    :widths: 40 15 15 30
 
    * - Quantity
-     - Minimum
-     - Maximum
-     - Subclause
+     - Min
+     - Max
+     - Clause
    * - Peak differential output into 100 Ω (V)
      - 2.2
      - 2.8

@@ -11,7 +11,7 @@ or IEC 61000-4-2, must use the ``:std:`` role (for example
 plain text.
 
 The title of a cited document in a citation entry (a ``.. [KEY]`` block)
-names the standard by design, so the ``:std:`` patterns are not applied
+names the standard by design, so no pattern is applied
 there.
 
 Usage: python check_source.py <docs-source-directory>
@@ -78,9 +78,10 @@ def main(argv):
             elif line.strip() and not line[0].isspace():
                 in_citation = False
             stripped = ROLE.sub("", line)
-            found = [(m, ":clause:, :pd: or :typec:")
-                     for m in PLAIN.finditer(stripped)]
+            found = []
             if not in_citation:
+                found += [(m, ":clause:, :pd: or :typec:")
+                          for m in PLAIN.finditer(stripped)]
                 found += [(m, ":std:") for m in PLAIN_STD.finditer(stripped)]
             for match, roles in found:
                 problems += 1
