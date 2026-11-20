@@ -398,3 +398,9 @@ gives a short description and a link to the full explanation.
       In USB Power Delivery, one of six 5-bit symbols that never stand for
       data. K-codes mark the start of a packet, a reset and the end of a
       packet (:pd:`Table 5.2`, see :ref:`usbpd-4b5b`).
+
+   Managed Capability Port
+      A USB Power Delivery source port whose present power, the Port Present
+      PDP, may be lower than its maximum and may change during operation, for
+      example because it shares one supply with other ports
+      (:pd:`Section 3.2.3`, see :doc:`power/usb-pd/two-ports`).
