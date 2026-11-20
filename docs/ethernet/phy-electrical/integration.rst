@@ -1,27 +1,29 @@
 Integrating the transceiver on evampire
 =======================================
 
-Every Ethernet port of evampire must work at 1000 Mbit/s over four pairs
-(1000BASE-T), in the first version through an external transceiver and in
-the full design through a transceiver integrated on the chip. The full
-design also connects to the cable without coupling transformers. Whether the
-integrated transceiver also supports 100 Mbit/s (100BASE-TX) and 10 Mbit/s
-(10BASE-T) is not yet fixed.
+The requirements (see :ref:`requirements`) make 1000BASE-T mandatory on
+every port and leave 100 Mbit/s and 10 Mbit/s open; in the full design the
+transceiver is integrated on evampire and the cable is connected without
+coupling transformers.
 
 This page therefore treats the integrated 1000BASE-T transceiver as the main
 design. It gives its block-level specification, works through each design
-problem with the candidate approaches compared, estimates area and power on
-the gf180mcu process, and then lists what 100BASE-TX and 10BASE-T would add.
-It builds on the explanation in :doc:`../phy-electrical`. The circuits that
-replace the coupling transformers are described in :doc:`../magnetics`;
-where a result here depends on them, this page links there.
+problem with the candidate approaches compared, gives rough area and power
+estimates on the gf180mcu process [PHY-GF180PDK]_ (made through
+`wafer.space <https://wafer.space/>`__), and then lists what 100BASE-TX and
+10BASE-T would add. It builds on the explanation in :doc:`../phy-electrical`.
+The circuits that replace the coupling transformers are described in
+:doc:`../magnetics`; where a result here depends on them, this page links
+there.
 
 Three kinds of value appear on this page, and each is labelled:
 
 Required
-   A limit from the IEEE 802.3 standard, taken from the conformance test
-   documents that quote it ([PHY-UNH14]_, [PHY-UNH25]_, [PHY-UNH40]_,
-   [PHY-UNH28]_).
+   A limit from the IEEE 802.3 standard (see :doc:`/standards`), taken from
+   the conformance test documents that quote it ([PHY-UNH14]_,
+   [PHY-UNH25]_, [PHY-UNH40]_, [PHY-UNH28]_). Subclause numbers are given
+   as those documents quote them; they come from the 2002 to 2012 editions
+   of the standard and may differ slightly in the current edition.
 
 Published
    A measured or reported result from a paper, presentation or datasheet,
@@ -37,14 +39,15 @@ The interface to the forwarding logic
 
 The forwarding logic exchanges one byte per clock cycle with each port, plus
 a "frame in progress" flag and an "error" flag in each direction (see
-:doc:`../../architecture/index`). An integrated transceiver presents exactly
-this interface, so the forwarding logic is the same in the first version and
-in the full design.
+:ref:`RGMII interfaces <arch-rgmii>`). An integrated transceiver presents
+exactly this interface, so the forwarding logic is the same in the first
+version and in the full design.
 
 At 1000 Mbit/s a byte moves every 8 ns, one per cycle of a 125 MHz clock.
 In the receive direction the bytes are timed by the clock recovered from the
-cable, as they are with RGMII, and the existing rate-matching buffer moves
-them onto evampire's own 125 MHz clock.
+cable, as they are with RGMII (see :doc:`../rgmii`), and the
+:ref:`rate-matching buffer <arch-rate-matching>` moves them onto
+evampire's own 125 MHz clock.
 
 The gigabit transceiver
 -----------------------
@@ -52,79 +55,107 @@ The gigabit transceiver
 Required performance
 ~~~~~~~~~~~~~~~~~~~~
 
+IEEE 802.3 defines four *transmitter test modes* (:clause:`40.6.1.1.2`):
+fixed patterns that a 1000BASE-T transmitter sends on command so that its
+output can be measured with no receiver involved [PHY-UNH40]_.
+:numref:`tab-phy-int-reqs` lists the requirements.
+
 .. list-table:: 1000BASE-T transmitter and link requirements (required,
    [PHY-UNH40]_)
+   :name: tab-phy-int-reqs
    :header-rows: 1
-   :widths: 45 55
+   :widths: 40 40 20
 
    * - Quantity
      - Limit
+     - Subclause
    * - Peak output in test mode 1
      - 0.67 V to 0.82 V; peaks matched within 1 %
+     - :clause:`40.6.1.2.1`
    * - Droop in test mode 1
      - Output keeps more than 73.1 % of its peak value
+     - :clause:`40.6.1.2.2`
    * - Peak distortion in test mode 4
      - Less than 10 mV for at least 60 % of the symbol period
+     - :clause:`40.6.1.2.4`
    * - Common-mode output
      - Less than 50 mV peak-to-peak
-   * - Return loss, 1 MHz to 40 MHz
-     - At least 16 dB
+     - :clause:`40.8.3.3`
+   * - Return loss
+     - At least 16 dB from 1 MHz to 40 MHz; at least
+       :math:`10 - 20\log_{10}(f/80)` dB from 40 MHz to 100 MHz
+       (:math:`f` in MHz)
+     - :clause:`40.8.3.1`
    * - Transmit clock jitter, unfiltered
      - Less than 1.4 ns peak-to-peak
+     - :clause:`40.6.1.2.5`
    * - Transmit clock jitter, filtered
      - Less than 0.3 ns (master), 0.4 ns (slave) peak-to-peak
+     - :clause:`40.6.1.2.5`
    * - Transmit clock frequency
      - 125 MHz ± 12.5 kHz (±100 parts per million)
+     - :clause:`40.6.1.2.6`
    * - Bit error rate over the worst-case 100 m channel
      - Better than :math:`10^{-10}`
+     - :clause:`40.4.2.3`, :clause:`40.7`
 
 Blocks
 ~~~~~~
 
-The transceiver for one port contains the blocks below (see the block
-diagram in :doc:`../phy-electrical`). The analog front end and the
-per-pair signal processing are repeated four times, once per pair.
+The transceiver for one port contains the blocks below (see
+:numref:`fig-phy-blocks`). The analog front end and the per-pair signal
+processing are repeated four times, once per pair.
 
 .. list-table:: Blocks of one integrated 1000BASE-T port
+   :name: tab-phy-int-blocks
    :header-rows: 1
    :widths: 26 10 64
 
    * - Block
      - Per port
-     - Specification (sections below)
+     - Specification
    * - DAC and line driver
      - 4
      - 17 shaped levels at 125 MHz, at least 7 bits of linearity, about
        1 V peak into 100 Ω from a matched source
+       (:ref:`phy-int-transmitter`)
    * - Termination and line protection
      - 4
      - About 73 Ω to 138 Ω across process and temperature; connection
        without transformers per :doc:`../magnetics`
+       (:ref:`phy-int-cable`)
    * - Hybrid (and optional analog echo pre-cancellation)
      - 4
      - Removes the transceiver's own signal before the ADC
+       (:ref:`phy-int-echo`)
    * - Receive amplifier, filter and ADC
      - 4
-     - 125 million samples per second, about 7 effective bits
+     - 125 million samples per second, about 7 effective bits (ENOB,
+       defined in :ref:`phy-int-adc`)
    * - Echo canceller, 3 near-end crosstalk cancellers, equalizers
      - 4
      - Adaptive digital filters, about 220 taps per pair at 125 MHz
+       (:ref:`phy-int-dsp`)
    * - Trellis decoder with decision feedback
      - 1
-     - One 8 ns loop across all four pairs
+     - One 8 ns loop across all four pairs (:ref:`phy-int-decision-loop`)
    * - Scrambler, coding, delimiters
      - 1
      - IEEE 802.3 :clause:`40` coding
    * - Clock synthesis and recovery
      - 1
      - 25 MHz reference, 125 MHz PLL, sampling phase adjustment, master and
-       slave timing
+       slave timing (:ref:`phy-int-clock`)
    * - Link pulses and autonegotiation
      - 1
      - :clause:`28` state machines and timers, 1000BASE-T next pages
+       (:ref:`phy-int-autoneg`)
    * - Management registers
      - 1
      - :clause:`22` register set, including registers 9 and 10
+       (:numref:`tab-phy-int-registers`)
+
+.. _phy-int-transmitter:
 
 Transmitter: DAC and line driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -154,8 +185,7 @@ where :math:`e_\text{max}` is the largest error in V and
 So the DAC and line driver together need at least 7 bits of linearity
 (estimate, counting rounding error only; for 7 bits,
 :math:`e_\text{max} = 0.745 / 128 = 5.8` mV, leaving about 4 mV for all
-other errors). The 17 shaped levels of PAM-5 (see :doc:`../phy-electrical`)
-need at least 5 bits of DAC resolution, so linearity, not the number of
+other errors). The 17 shaped levels of PAM-5 (see :ref:`phy-pam5`) need at least 5 bits of DAC resolution, so linearity, not the number of
 levels, sets the DAC.
 
 **Swing.** The driver's output impedance must match the 100 Ω line, so it
@@ -173,11 +203,13 @@ the 802.3ab design point [PHY-TUT98]_, :math:`V_\text{line} = 1` V and
 :math:`V_\text{src} = 2` V. A differential driver whose outputs each swing
 between 0 V and its supply can produce at most :math:`\pm V_\text{DD}`, so
 a 3.3 V supply gives 1.3 V of headroom for the output transistors
-(estimate). The 3.3 V transistors of gf180mcu are therefore enough for the
-gigabit swing.
+(estimate). The 3.3 V transistors of gf180mcu (see :ref:`phy-int-devices`)
+are therefore enough for the gigabit swing.
 
-**Power.** PAM-5 symbols are equally likely to take each of the five levels
--2, -1, 0, +1, +2. With level 2 at 1 V, the mean square level is
+**Power.** Assume that PAM-5 symbols are equally likely to take each of the
+five levels -2, -1, 0, +1, +2 (an assumption; scrambling makes the symbols
+look random, but the trellis code and idle patterns make the levels not
+exactly equally likely). With level 2 at 1 V, the mean square level is
 :math:`(4 + 1 + 0 + 1 + 4)/5 = 2`, in units of
 :math:`(0.5\ \text{V})^2`, so the rms line voltage is
 
@@ -196,17 +228,22 @@ The matching resistance dissipates the same again, so a perfect driver uses
 10 mW per pair (estimate, ignoring shaping). Real drivers use more because
 their output stage must be biased for linearity: line drivers "dominate the
 GPHY power consumption" according to a 2014 gigabit line-driver paper
-[PHY-PAN14]_, and published 180 nm drivers for the same ±1 V swing at
-100 Mbit/s use 24 mW to 38 mW [PHY-BUHR18]_ [PHY-RICHTER14]_. The estimates
-below use 24 mW to 38 mW per pair.
+[PHY-PAN14]_ (*GPHY* is industry shorthand for a gigabit transceiver), and
+published 180 nm drivers for the same ±1 V swing at 100 Mbit/s use 24 mW
+[PHY-BUHR18]_ to 38 mW [PHY-RICHTER14]_. The estimates below use 24 mW to
+38 mW per pair from the same two sources.
+
+.. _phy-int-cable:
 
 The cable interface
 ~~~~~~~~~~~~~~~~~~~
 
 Each pair must look like a 100 Ω resistor to the cable, so that signals
 arriving from the cable are not reflected back. The standard sets this as a
-minimum *return loss* of 16 dB from 1 MHz to 40 MHz (required,
-[PHY-UNH40]_). Return loss is the size of the reflection in decibels. The
+minimum *return loss* (:clause:`40.8.3.1`): 16 dB from 1 MHz to 40 MHz, and
+:math:`10 - 20\log_{10}(f/80)` dB from 40 MHz to 100 MHz, which falls to
+8.1 dB at 100 MHz (required, [PHY-UNH40]_). The 16 dB below 40 MHz is the
+tighter limit and is used here. Return loss is the size of the reflection in decibels. The
 reflection coefficient :math:`\Gamma` (the reflected voltage divided by the
 incident voltage) is
 
@@ -257,7 +294,7 @@ an active termination whose impedance is set by feedback; a published
 
 The cable also carries voltages that are not part of the signal: voltage
 common to both wires of a pair, surges, and in the full design Power over
-Ethernet. Without transformers, these reach evampire's pins through the
+Ethernet (see :doc:`../../power/poe`). Without transformers, these reach evampire's pins through the
 external components described in :doc:`../magnetics`, and the common-mode
 range, isolation and protection that the line driver and receiver must
 withstand are set there. The standard analog pads of gf180mcu contain only
@@ -267,12 +304,14 @@ The line driver and receiver are custom circuits and can use custom
 protection structures and higher-voltage or stacked transistors where the
 line interface needs them.
 
+.. _phy-int-echo:
+
 Hybrid and echo cancellation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **The problem.** The receiver sees its own transmission at full size while
 the far-end signal may be reduced to 6 % of its voltage at 100 MHz (24 dB;
-see :doc:`../phy-electrical`). The echo must be removed to below the noise
+see :ref:`phy-echo` and :numref:`tab-phy-channel-limits`). The echo must be removed to below the noise
 before the receiver can decide symbols. The removal is shared between an
 analog hybrid, an optional analog pre-canceller, and the digital echo
 canceller. Whatever the analog stages leave sets the input range the ADC
@@ -283,6 +322,7 @@ its balance depends on how well the on-chip replica network matches the
 line and the external components of :doc:`../magnetics`.
 
 .. list-table:: Approaches to echo removal (published results)
+   :name: tab-phy-int-echo
    :header-rows: 1
    :widths: 26 37 37
 
@@ -296,8 +336,8 @@ line and the external components of :doc:`../magnetics`.
      - ADC needs about 7 effective bits; the most digital taps
    * - Hybrid plus a 4-tap analog echo pre-canceller before the ADC
      - 10 dB echo suppression measured, 43 mW from 3 V, about 1 mm² in
-       0.4 µm; removes about 50 digital canceller taps [PHY-LEE00]_; with a
-       few more taps it can relax the ADC by one bit [PHY-LEE01]_
+       0.4 µm, and with a few more taps it can relax the ADC by one bit
+       [PHY-LEE01]_; removes about 50 digital canceller taps [PHY-LEE00]_
      - About 1 ADC bit and 50 taps saved per pair, for about 43 mW and
        1 mm² per pair
    * - Driver and receiver merged into one circuit
@@ -306,26 +346,38 @@ line and the external components of :doc:`../magnetics`.
        1000BASE-T tests from 2.5 V in 28 nm [PHY-PAN14]_
      - Abstract only; no figures for a 180 nm process
 
-The same paper notes that near-end crosstalk from the other pairs is only
-about 16 dB below the uncorrected echo, so more than about 10 dB to 15 dB
-of analog echo cancellation brings no further benefit [PHY-LEE01]_. In
-gf180mcu, the 4-tap pre-canceller's area and power per pair are roughly
-the area of one ADC; it is worth it only if it allows a simpler ADC.
+Lee and Razavi also note that near-end crosstalk from the other pairs is
+only about 16 dB below the uncorrected echo, so more than about 10 dB to
+15 dB of analog echo cancellation brings no further benefit [PHY-LEE01]_.
+Their pre-canceller, about 1 mm² and 43 mW, is of the same order as one of
+the ADCs in :numref:`tab-phy-int-adcs` (estimate, comparing published
+designs in different processes); it is worth adding only if it allows a
+simpler ADC.
+
+.. _phy-int-adc:
 
 ADC
 ~~~
 
 Each of the four pairs needs an analog-to-digital converter (ADC) running at
-the 125 MHz symbol rate. For an ideal :math:`N`-bit converter, the ratio of a
-full-scale sine wave to the rounding noise is
+the 125 MHz symbol rate. An ideal :math:`N`-bit converter spanning a
+full-scale range :math:`V_\text{FS}` has steps of
+:math:`q = V_\text{FS}/2^N`. Its rounding error is spread evenly between
+:math:`-q/2` and :math:`+q/2`, which has a mean-square value (noise power) of
+:math:`q^2/12`. A full-scale sine wave has amplitude :math:`V_\text{FS}/2`
+and power :math:`V_\text{FS}^2/8`. The ratio of the two, the
+*signal-to-quantisation-noise ratio* (SQNR), is
+:math:`(V_\text{FS}^2/8)/(q^2/12) = 1.5 \times 2^{2N}`, which in decibels is
 
 .. math::
 
-   \text{SQNR} = 6.02\,N + 1.76\ \text{dB}
+   \text{SQNR} = 10\log_{10}(1.5) + 20 N \log_{10} 2
+   = 6.02\,N + 1.76\ \text{dB}
 
-where SQNR is the signal-to-quantisation-noise ratio. A real converter is
-described by its *effective number of bits* (ENOB), found by putting its
-measured signal-to-noise-and-distortion ratio (SNDR) into the same formula:
+A real converter is described by its *effective number of bits* (ENOB, see
+`effective number of bits <https://en.wikipedia.org/wiki/Effective_number_of_bits>`__),
+found by putting its measured signal-to-noise-and-distortion ratio (SNDR)
+into the same formula:
 
 .. math::
 
@@ -340,6 +392,7 @@ canceller paper states at least 7 bits, and 8 bits in practice
 
 .. list-table:: Published 7-bit to 8-bit ADCs at 100 to 200 million samples
    per second
+   :name: tab-phy-int-adcs
    :header-rows: 1
    :widths: 30 20 14 12 10 14
 
@@ -380,8 +433,10 @@ canceller paper states at least 7 bits, and 8 bits in practice
      - 0.53 mm²
      - 7.43 ENOB at 1 MHz, 6.94 at 80 MHz
 
-The ENOB values in brackets follow from the formula above; for example
-:math:`(45.4 - 1.76) / 6.02 = 7.2`. The architectures compare as follows:
+SFDR is the *spurious-free dynamic range*: how far below the signal the
+largest unwanted tone lies. The ENOB values in parentheses follow from the
+formula above; for example :math:`(45.4 - 1.76) / 6.02 = 7.2`. The
+architectures compare as follows:
 
 * **Folding** converters reach 125 MS/s to 200 MS/s in 0.35 µm (at 3.3 V
   in [PHY-HEO02]_), the closest published match to the gf180mcu 3.3 V
@@ -390,29 +445,38 @@ The ENOB values in brackets follow from the formula above; for example
   accuracy at 22 mW to 71 mW, but the published examples use 1.8 V
   transistors, which gf180mcu does not have. With 3.3 V transistors they
   would need redesign; their power in gf180mcu is not known.
-* No 8-bit SAR converter at 125 MS/s or above in 0.18 µm was found.
+* No 8-bit *successive-approximation* (SAR) converter, which finds each
+  bit in turn with one comparator and a capacitor DAC, at 125 MS/s or above
+  in 0.18 µm was found.
 
 The estimates below use 71 mW to 120 mW and 0.53 mm² to 1.02 mm² per ADC;
 the low end comes from 1.8 V designs and is optimistic for gf180mcu.
 
+.. _phy-int-dsp:
+
 Signal processing
 ~~~~~~~~~~~~~~~~~
 
-:doc:`../phy-electrical` derives the arithmetic rate: about 880 filter taps,
+:ref:`phy-dsp-rate` derives the arithmetic rate: about 880 filter taps,
 :math:`1.1 \times 10^{11}` multiply-and-add operations per second, for the
 802.3ab design point; a published Broadcom analysis gives "over 150 Giga
 operations per second" [PHY-HATAMIAN98]_. Two properties reduce the cost:
 
 * The echo and near-end crosstalk cancellers multiply a coefficient by a
-  transmitted symbol, which is one of -2, -1, 0, +1, +2 (or one of 17
-  shaped levels). Multiplying by these needs only a shift, a negation or
-  zero, not a general multiplier.
+  transmitted symbol. If the symbol is one of the five PAM-5 levels -2, -1,
+  0, +1, +2, multiplying needs only a shift, a negation or zero, not a
+  general multiplier. If it is one of the 17 shaped levels (multiples of
+  0.25 from -2 to +2), each product needs at most one shift-and-add, since
+  every whole number from -8 to 8 is a sum or difference of at most two
+  powers of two.
 * Only the feed-forward equalizer multiplies full ADC samples.
 
 All the filters can be pipelined (registers inserted between stages, with
 the matching delay accounted for) and split into parallel paths, so their
 speed is a matter of area, not of feasibility. The one part that cannot
 simply be pipelined is the loop discussed next.
+
+.. _phy-int-decision-loop:
 
 The 8 ns decision loop
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -421,12 +485,12 @@ The 8 ns decision loop
 symbols the receiver has just decided, and the trellis decoder's decisions
 depend on that subtraction. The decision for one symbol period must
 therefore be complete before the next one starts: a loop that must close in
-8 ns [PHY-TUT98]_. A 14-tap *parallel decision-feedback decoder* (one
-decision-feedback equalizer per decoder state, 8 in all) synthesised in
-3.3 V 0.16 µm standard cells reached only about 500 Mbit/s, half the needed
-rate, and used 158,000 gates [PHY-AZADET-PAT]_.
+8 ns [PHY-TUT98]_. The usual structure is a *parallel decision-feedback
+decoder*, with one decision-feedback equalizer per decoder state (8 in all).
+:numref:`tab-phy-int-loop` compares published ways to make it fast enough.
 
 .. list-table:: Published approaches to the decision loop
+   :name: tab-phy-int-loop
    :header-rows: 1
    :widths: 30 30 40
 
@@ -457,12 +521,26 @@ precomputed candidates for each possible previous decision, leaving only a
 selection inside the loop [PHY-PARHI91]_. Applied to the gigabit decoder it
 removed the speed problem in 3.3 V standard cells in a 0.25 µm process
 [PHY-HARATSCH01]_. The gf180mcu standard cells use longer transistors
-(0.5 µm and 0.6 µm, see below), so whether the same structure closes in
-8 ns there must be checked by synthesis and timing analysis. Taking half of
-the 158,000 gates gives about 79,000 gates for the decoder (estimate).
+(0.5 µm and 0.6 µm, see :ref:`phy-int-cells`), so whether the same structure
+closes in 8 ns there must be checked by synthesis and timing analysis.
 
-**Logic per cycle in gf180mcu.** The time left for logic in one clock
-period :math:`T` is
+For the gate count, the look-ahead design is reported to need half the
+gates of a 14-tap parallel decision-feedback decoder [PHY-HARATSCH01]_, and
+a 14-tap decoder of that kind has been reported at 158,000 gates
+[PHY-AZADET-PAT]_. Applying the factor of two to that figure gives
+
+.. math::
+
+   \frac{158{,}000}{2} = 79{,}000\ \text{gates}
+
+for the decoder (estimate; the two numbers come from different
+implementations by the same group, so the result is approximate).
+
+**Logic per cycle in gf180mcu.** The gf180mcu standard-cell libraries come
+in a *7-track* and a *9-track* version: the number of routing tracks that
+fit in the height of one cell row (3.92 µm and 5.04 µm) [PHY-GF180SC]_.
+Taller cells have larger transistors and are faster. The time left for
+logic in one clock period :math:`T` is
 
 .. math::
 
@@ -484,6 +562,7 @@ fit. For example, at the typical 3.3 V corner and :math:`T = 8` ns:
 .. list-table:: Full-adder carry stages per clock period, gf180mcu 7-track
    cells (``dffq_1`` and ``addf_1``, input slew 0.287 ns, load 0.0122 pF,
    worst of rise and fall [PHY-GF180SC]_; estimate)
+   :name: tab-phy-int-timing
    :header-rows: 1
    :widths: 30 20 16 17 17
 
@@ -522,18 +601,29 @@ from the 5 V transistors (gate lengths 0.6 µm and 0.5 µm) even when run from
   look-ahead structure above, and every other path must be pipelined
   finely.
 * **5 V-transistor cells at 1.8 V** (characterised). Switching energy falls
-  to about a quarter (calculated below), but a 125 MHz clock does not work:
-  even at 62.5 MHz with every path split into two parallel halves, less
-  than one carry stage fits at the slow corner. Running the DSP at reduced
-  voltage therefore needs both deeper parallelism and a supply between the
-  characterised corners, which would need its own characterisation.
-* **Custom cells built from the 3.3 V transistors** (0.28 µm gate length,
-  not in the standard library). These are faster and smaller per gate than
-  the 5 V-transistor cells, but would need to be designed, characterised
-  and verified; no measured delay data was found.
+  to about a quarter (see :ref:`switching energy <phy-int-energy>`), but
+  at 1.8 V even the
+  typical corner fits only 1.4 carry stages in 8 ns, and the slow corner
+  (1.62 V, 125 °C) none. The decision loop would need at least two parallel
+  paths at 62.5 MHz, and at the slow corner even 62.5 MHz leaves 0.8 carry
+  stages (:numref:`tab-phy-int-timing`), so in practice it would also need a
+  supply between 1.8 V and 3.3 V, which is not characterised. Because the
+  parallelism and supply such a design needs are not known, the power
+  estimates below do not include a reduced-voltage case.
+* **Custom cells built from the 3.3 V transistors** (0.28 µm gate length
+  [PHY-GF180PDK]_, not in the standard library). These are faster and
+  smaller per gate than the 5 V-transistor cells, but would need to be
+  designed, characterised and verified; no measured delay data was found.
 
-**Switching energy.** The energy to charge a node of capacitance :math:`C`
-to voltage :math:`V` is :math:`E = C V^2`. Taking the switched capacitance
+.. _phy-int-energy:
+
+
+**Switching energy.** Charging a node of capacitance :math:`C` to voltage
+:math:`V` stores
+:math:`\tfrac{1}{2} C V^2` in the capacitance and dissipates another
+:math:`\tfrac{1}{2} C V^2` in the transistors; discharging it dissipates the
+stored half. One full charge and discharge therefore draws
+:math:`E = C V^2` from the supply. Taking the switched capacitance
 of one gate as three times the input capacitance of a 2-input NAND gate
 (the gate's own output and wiring plus two inputs it drives; an assumption)
 gives:
@@ -553,7 +643,8 @@ where 4.70 fF and 4.275 fF are the input capacitances of ``nand2_1`` at the
 :math:`41.6 / 154 = 0.27`.
 
 **DSP power (estimate).** The power of :math:`N_\text{gates}` gates, of which
-a fraction :math:`\alpha` switches in each cycle of a clock :math:`f`, is
+a fraction :math:`\alpha` completes a charge and discharge in each cycle of
+a clock :math:`f`, is
 
 .. math::
 
@@ -563,25 +654,26 @@ where:
 
 * :math:`N_\text{gates}` = 250,000 to 400,000 gate equivalents. The upper
   value is the 802.3ab layout study [PHY-TUT98]_; the lower value assumes
-  the 330,000-gate design point with its decoder reduced from about 158,000
-  to 79,000 gates by look-ahead, :math:`330{,}000 - 79{,}000 = 251{,}000`;
+  the 330,000-gate design point [PHY-TUT98]_ with its decoder reduced from
+  about 158,000 to 79,000 gates by look-ahead (estimate above),
+  :math:`330{,}000 - 79{,}000 = 251{,}000`;
 * :math:`\alpha` = 0.1 to 0.2, an assumed activity for datapath logic;
 * :math:`f = 125 \times 10^{6}` per second;
 * :math:`E` = 154 fJ at 3.3 V.
 
 Low end: :math:`250{,}000 \times 0.1 \times 125 \times 10^{6} \times 154\
 \text{fJ} = 0.48` W. High end: :math:`400{,}000 \times 0.2 \times 125
-\times 10^{6} \times 154\ \text{fJ} = 1.54` W. At 1.8 V, with an assumed
-30 % more gates for the extra parallel paths, the range is 0.17 W to
-0.54 W. These figures leave out the clock network and leakage and rest on
-the assumed activity; they are rough estimates.
+\times 10^{6} \times 154\ \text{fJ} = 1.54` W. These figures are for the
+standard cells at 3.3 V; they leave out the clock network and leakage and
+rest on the assumed activity, so they are rough estimates.
 
 For comparison, scaling the 802.3ab tutorial's 3.1 W at 2.5 V
 [PHY-TUT98]_ to 3.3 V with the square of the supply gives
-:math:`3.1 \times (3.3/2.5)^2 = 5.4` W. The same authors' estimate for an
-earlier, related design gives the same 3.1 W in 0.25 µm as including the
-analog front end [PHY-QAM97]_, so the scaled figure is treated as an upper
-bound rather than a prediction.
+:math:`3.1 \times (3.3/2.5)^2 = 5.4` W. The same authors' estimate for a
+related design states that the 3.1 W figure includes the analog front end
+[PHY-QAM97]_, so it is the power of a whole transceiver, and the scaled
+5.4 W is an upper bound rather than a prediction (see also
+:ref:`phy-dsp-rate`).
 
 **DSP area (estimate).** Taking one gate as one 2-input NAND gate,
 
@@ -599,12 +691,15 @@ the area filled by cells. For 250,000 gates in the 7-track library:
 
 and for 400,000 gates in the 9-track library, 8.1 mm².
 
+.. _phy-int-clock:
+
 Clock recovery and master/slave timing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The slave recovers the master's clock and transmits with it; the master
 transmits with its own crystal clock and recovers the slave's phase for its
-receiver. The required unfiltered jitter limit of 1.4 ns peak-to-peak is
+receiver. The required unfiltered jitter limit (:clause:`40.6.1.2.5`,
+measured with the transmitter test modes) of 1.4 ns peak-to-peak is
 
 .. math::
 
@@ -623,15 +718,16 @@ tolerable degradation in PAM-5 [PHY-OSCAR97]_. A published 180 nm PLL and
 standard cells [PHY-BUHR21]_.
 
 To compare an rms jitter :math:`\sigma` with a peak-to-peak limit, assume a
-Gaussian distribution. The peak-to-peak value exceeded with probability
-:math:`10^{-12}` is
+Gaussian distribution, and take as the peak-to-peak value the range whose
+ends are exceeded on each side with probability :math:`10^{-12}`:
 
 .. math::
 
    J_\text{pp} = 2\,Q\,\sigma
 
-where :math:`Q = 7.03` is the number of standard deviations at which the
-Gaussian tail probability is :math:`10^{-12}`. With :math:`\sigma = 4.9` ps:
+where :math:`Q = 7.03` is the number of standard deviations beyond which a
+single tail of the Gaussian distribution holds probability
+:math:`10^{-12}`. With :math:`\sigma = 4.9` ps:
 
 .. math::
 
@@ -641,27 +737,33 @@ Gaussian tail probability is :math:`10^{-12}`. With :math:`\sigma = 4.9` ps:
 master/slave clock-recovery circuit was found; the timing-recovery loop
 itself is digital and can be developed on samples captured from the ADCs.
 
+.. _phy-int-autoneg:
+
 Link pulses and autonegotiation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Autonegotiation (explained in :doc:`../phy-electrical`) is required for
+Autonegotiation (explained in :ref:`phy-autoneg`) is required for
 1000BASE-T, so a gigabit-only transceiver still needs:
 
 * a **link pulse transmitter**: single pulses about 100 ns wide, in bursts
   of 17 to 33 pulses with clock pulses 125 µs ± 14 µs apart, bursts
-  repeated every 16 ms ± 8 ms (required, [PHY-UNH28]_). Each pulse is a
-  10BASE-T link pulse, so the line driver must be able to produce one;
+  repeated every 16 ms ± 8 ms (required, :clause:`28.3.2`) [PHY-UNH28]_.
+  Each pulse is a 10BASE-T link pulse, so the line driver must be able to
+  produce one;
 * a **link pulse receiver**: a comparator with a threshold, and timers that
   check pulse spacing;
 * three **state machines** defined in IEEE 802.3 :clause:`28`: the transmit
-  state diagram (:clause:`Figure 28-16 <28>`), the receive state diagram (:clause:`Figure 28-17 <28>`) and
-  the arbitration state diagram (:clause:`Figure 28-18 <28>`) [PHY-UNH28]_;
-* the 1000BASE-T **next page** exchange carrying the 1000BASE-T abilities,
-  the port type and the 11-bit random seed, and the master/slave resolution
-  rules [PHY-UNH28M]_;
-* **timers** with the required ranges below.
+  state diagram (:clause:`Figure 28-16 <28>`), the receive state diagram
+  (:clause:`Figure 28-17 <28>`) and the arbitration state diagram
+  (:clause:`Figure 28-18 <28>`) [PHY-UNH28]_;
+* the 1000BASE-T **next page** exchange (:clause:`40.5.1.2`) carrying the
+  1000BASE-T abilities, the port type and the 11-bit random seed, and the
+  master/slave resolution rules (:clause:`40.5.2`) [PHY-UNH28M]_;
+* **timers** with the required ranges in :numref:`tab-phy-int-timers`
+  (:clause:`28.3.2`).
 
 .. list-table:: Autonegotiation timers (required, [PHY-UNH28]_ [PHY-UNH14]_)
+   :name: tab-phy-int-timers
    :header-rows: 1
    :widths: 40 30 30
 
@@ -711,6 +813,8 @@ comparator. Whether the link pulses need full 10BASE-T amplitude is an open
 question (see `Open design questions`_), because it decides how much of the
 higher-swing 10BASE-T driver a gigabit-only transceiver still needs.
 
+.. _phy-int-registers:
+
 Management registers and reference clock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -719,10 +823,11 @@ transceiver provides, so that the same software can control any of them
 [PHY-8023]_. With an integrated transceiver the processor reads and writes
 them directly as on-chip registers; keeping the standard layout lets the
 same software drive both the external transceiver of the first version and
-the integrated one.
+the integrated one. :numref:`tab-phy-int-registers` lists them.
 
 .. list-table:: Standard transceiver registers (IEEE 802.3 :clause:`22`; the
    same addresses are used by the TI DP83867 [PHY-DP83867]_)
+   :name: tab-phy-int-registers
    :header-rows: 1
    :widths: 15 85
 
@@ -749,23 +854,34 @@ the integrated one.
    * - 15
      - Extended status (1000 Mbit/s abilities)
 
-Register 9 also selects the four transmitter test modes that 1000BASE-T
-conformance testing needs [PHY-UNH40]_; the integrated transceiver must
-provide them to be tested.
+Register 9 also selects the four transmitter test modes
+(:clause:`40.6.1.1.2`, see :numref:`tab-phy-int-reqs`) that 1000BASE-T
+conformance testing needs [PHY-UNH40]_ [PHY-DP83867]_; the integrated
+transceiver must provide them to be tested.
 
 The symbol clock must be within ±100 parts per million of 125 MHz
-(required, [PHY-UNH40]_). Commercial transceivers use a 25 MHz crystal of
-±50 parts per million [PHY-DP83867]_ and a PLL to 125 MHz.
+(required, :clause:`40.6.1.2.6`) [PHY-UNH40]_. Commercial transceivers use a
+25 MHz crystal of ±50 parts per million [PHY-DP83867]_ and a PLL to
+125 MHz.
+
+.. _phy-int-area-power:
 
 Area and power of the gigabit transceiver
 -----------------------------------------
 
 This section adds up the estimates above for one port and for evampire's
-two ports. Every value is an estimate built from the stated published
-results and assumptions.
+two ports. Every value is a rough estimate derived from published designs
+in other processes and from the stated assumptions, with large
+uncertainty; the actual area and power of a gigabit transceiver on
+gf180mcu are not known and remain open questions (see
+`Open design questions`_). The signal-processing values are for the
+standard cells at 3.3 V; reduced-voltage operation is not included because
+the parallelism and supply it would need are not known (see
+:ref:`phy-int-decision-loop`).
 
 .. list-table:: Estimated area and power of one 1000BASE-T port on gf180mcu
-   (estimate)
+   (rough estimate)
+   :name: tab-phy-int-area-power
    :header-rows: 1
    :widths: 34 22 22 22
 
@@ -774,11 +890,12 @@ results and assumptions.
      - Area
      - Power
    * - 4 ADCs
-     - 0.53–1.02 mm², 71–120 mW each (ADC table)
+     - 0.53–1.02 mm², 71–120 mW each (:numref:`tab-phy-int-adcs`)
      - 2.1–4.1 mm²
      - 0.28–0.48 W
    * - 4 DACs and line drivers
-     - 0.13–0.16 mm², 24–38 mW each [PHY-BUHR21]_ [PHY-RICHTER14]_
+     - 0.13–0.16 mm² [PHY-BUHR21]_, 24 mW [PHY-BUHR18]_ to 38 mW
+       [PHY-RICHTER14]_ each
      - 0.5–0.6 mm²
      - 0.10–0.15 W
    * - PLL and phase interpolator
@@ -786,21 +903,13 @@ results and assumptions.
      - 0.07 mm²
      - 0.004 W
    * - Signal processing at 3.3 V
-     - 250,000–400,000 gates (section above)
+     - 250,000–400,000 gates (:ref:`switching energy <phy-int-energy>`)
      - 3.9–8.1 mm²
      - 0.48–1.54 W
-   * - **Total at 3.3 V**
+   * - **Total**
      -
      - **6.6–12.8 mm²**
      - **0.86–2.17 W**
-   * - Signal processing at 1.8 V instead
-     - 30 % more gates assumed for parallel paths
-     -
-     - 0.17–0.54 W
-   * - **Total with 1.8 V signal processing**
-     -
-     -
-     - **0.55–1.18 W**
 
 Not included: receive amplifiers and filters, the hybrids, protection,
 clock distribution and leakage (no published gigabit figures were found for
@@ -812,78 +921,80 @@ For the two ports:
 .. math::
 
    A_\text{2 ports} = 2 \times (6.6\ \text{to}\ 12.8)\ \text{mm}^2
-   = 13.2\ \text{to}\ 25.7\ \text{mm}^2
+   = 13\ \text{to}\ 26\ \text{mm}^2
 
 .. math::
 
-   P_\text{2 ports} = 2 \times (0.55\ \text{to}\ 2.17)\ \text{W}
-   = 1.1\ \text{to}\ 4.3\ \text{W}
+   P_\text{2 ports} = 2 \times (0.86\ \text{to}\ 2.17)\ \text{W}
+   = 1.7\ \text{to}\ 4.3\ \text{W}
 
-(the two-port area total is from unrounded per-port values).
-
-**Compared with the die.** A wafer.space gf180mcu slot provides a die of
-:math:`3.88 \times 5.07 = 19.67` mm² [PHY-WAFERSPACE]_. The two ports alone
-would take :math:`13.2 / 19.67 = 67\,\%` to :math:`25.7 / 19.67 = 131\,\%`
-of it (estimate), before the forwarding logic, the processor, its memory
-and the pads. Area is therefore as serious a constraint as power, and the
-lower end of the DSP range (look-ahead decoder, reduced tap counts, smaller
-custom cells) matters as much for area as for power.
+These are rough, literature-derived ranges. The area in particular depends
+on choices that are not yet made (decoder architecture, tap counts, cell
+library, ADC architecture) and on blocks with no published figure, so it is
+not compared with a die size here.
 
 **Compared with commercial transceivers.** Published 0.13 µm parts use about
 0.64 W per port (VSC8244 [PHY-VSC8244]_), and the external transceivers of
-the first version 0.45 W to 0.62 W per chip (see :doc:`../phy-electrical`).
-The gf180mcu estimate per port, 0.55 W to 2.17 W, is
-:math:`0.55 / 0.64 = 0.9` to :math:`2.17 / 0.64 = 3.4` times the VSC8244
+the first version 0.45 W to 0.62 W per chip (see :ref:`phy-power`). The
+gf180mcu estimate per port, 0.86 W to 2.17 W, is
+:math:`0.86 / 0.64 = 1.3` to :math:`2.17 / 0.64 = 3.4` times the VSC8244
 figure.
 
-**Compared with the power budget.** A board powered over Ethernet receives
-at most the powered-device power of its class [PHY-EA-BT]_. The two
-gigabit ports take the following share of it (estimate):
+**Compared with the power budget (estimate).** A board powered over
+Ethernet (see :doc:`../../power/poe` and :clause:`145`) receives at most
+the powered-device power of its type and class [PHY-EA-BT]_. The two
+gigabit ports would take the share of it in :numref:`tab-phy-int-poe`.
 
 .. list-table:: Two gigabit ports as a share of the Power over Ethernet
    input (estimate)
+   :name: tab-phy-int-poe
    :header-rows: 1
    :widths: 30 20 25 25
 
    * - Powered device type
      - Power at the device
-     - Share at 1.1 W
+     - Share at 1.7 W
      - Share at 4.3 W
    * - Type 1 (class 3)
      - 13 W
-     - 8.5 %
+     - 13 %
      - 33 %
    * - Type 2 (class 4)
      - 25.5 W
-     - 4.3 %
+     - 6.8 %
      - 17 %
    * - Type 3 (class 6)
      - 51 W
-     - 2.2 %
+     - 3.4 %
      - 8.5 %
    * - Type 4 (class 8)
      - 71.3 W
-     - 1.6 %
+     - 2.4 %
      - 6.1 %
 
 Each share is the two-port power divided by the input power, for example
-:math:`4.34 / 13 = 33\,\%`. The power bridging requirement (see
-:doc:`../../power/index`) passes the input power on to a USB or Ethernet
-output after the board's own consumption, so every watt the transceivers
-use is a watt less for the output port. With a 13 W input, the upper
-estimate leaves about 8.7 W for the rest of the board, the converters'
-losses and the output port.
+:math:`4.34 / 13 = 33\,\%` and :math:`1.73 / 13 = 13\,\%`. The power
+bridging requirement passes the input power on to a USB or Ethernet output
+after the board's own consumption and the converters' losses (see
+:ref:`power budget <power-budget>`), so every watt the transceivers use is
+a watt less for the output port. With a 13 W input, the upper estimate
+leaves about 8.7 W for the rest of the board, the converters' losses and
+the output port.
 
 Building it on gf180mcu
 -----------------------
 
-The assessment separates three kinds of limit.
+The assessment separates three kinds of limit: the ratings and speed of the
+standard cells, the physical limits of the devices, and what custom circuits
+have reached in comparable processes.
+
+.. _phy-int-cells:
 
 Ratings and speed of the standard cells
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The standard-cell libraries are characterised conservatively and are the
-starting point for the signal-processing estimates above [PHY-GF180SC]_:
+The standard-cell libraries are the starting point for the
+signal-processing estimates above [PHY-GF180SC]_:
 
 * Both libraries (7-track, 3.92 µm rows; 9-track, 5.04 µm rows) use 5 V
   transistors, characterised at 1.8 V, 3.3 V and 5 V corners.
@@ -894,6 +1005,8 @@ starting point for the signal-processing estimates above [PHY-GF180SC]_:
   16 mA) from a 5 V I/O supply; analog pads contain only protection
   diodes [PHY-GF180IO]_.
 
+.. _phy-int-devices:
+
 Devices and their physical limits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -901,13 +1014,14 @@ From the gf180mcu PDK electrical specifications and design manual
 [PHY-GF180PDK]_:
 
 .. list-table:: gf180mcu transistors (typical values)
+   :name: tab-phy-int-devices
    :header-rows: 1
    :widths: 24 14 16 22 24
 
    * - Device
      - Gate length
      - Threshold voltage
-     - Saturation current, W/L = 10 µm/min
+     - Saturation current, W = 10 µm, L = minimum
      - Breakdown
    * - 3.3 V n-channel
      - 0.28 µm
@@ -946,11 +1060,14 @@ any transistor, and any inductor model. These matter for the 125 MHz ADC,
 DAC and line driver, and must be obtained by simulation with the PDK models
 or by measurement.
 
+.. _phy-int-published:
+
 What custom circuits have reached
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. list-table:: Published Ethernet transceivers and blocks in 0.16 µm to
    0.6 µm CMOS
+   :name: tab-phy-int-published
    :header-rows: 1
    :widths: 36 14 50
 
@@ -982,13 +1099,14 @@ What custom circuits have reached
      - 0.18 µm, 1.8 V
      - 45.4 dB SNDR, 71 mW
    * - 100BASE-TX transceiver [PHY-BUHR21]_ [PHY-BUHR19]_
-     - 180 nm GF
-     - 2.6 mm², at most 69 mW, error-free to 100 m (measured)
+     - 180 nm GlobalFoundries
+     - 2.6 mm², at most 69 mW, error-free over 100 m of Category 5 cable,
+       with coupling transformers (measured)
    * - Line driver, active impedance [PHY-BUHR20B]_
      - 180 nm
      - 80 Ω to 130 Ω, 200 MHz bandwidth, 24.3 mW
    * - PLL and phase interpolator [PHY-BUHR21]_
-     - 180 nm GF
+     - 180 nm GlobalFoundries
      - 125 MHz, 4.9 ps rms, 4.0 mW, 0.065 mm²
 
 No physical limit found in the gf180mcu documentation rules out
@@ -1001,59 +1119,67 @@ decoders above were, however, built from 3.3 V standard cells in 0.16 µm and
 Design problems and how to reduce their risk
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Several checks below use an *FPGA* (field-programmable gate array), a
+reprogrammable logic chip on which the signal processing can be run on
+real cable samples before it is built in silicon.
+
 .. list-table:: Gigabit design problems, candidate approaches and
    verification
+   :name: tab-phy-int-risks
    :header-rows: 1
    :widths: 20 45 35
 
    * - Problem
-     - Candidate approaches (sections above)
+     - Candidate approaches
      - How it can be verified before the whole transceiver exists
    * - Signal-processing area and power
+       (:ref:`phy-int-dsp`, :ref:`phy-int-area-power`)
      - Shift-and-add cancellers; look-ahead or reduced-state decoder (about
        half the decoder gates); reduced tap counts; custom 3.3 V-transistor
        cells; lower supply with parallel paths
      - Synthesis and power estimation of the filters and decoder for
        gf180mcu; FPGA implementation on captured cable samples
-   * - 8 ns decision loop
+   * - 8 ns decision loop (:ref:`phy-int-decision-loop`)
      - Look-ahead prefilter and 1-tap decoder (125 MHz shown at 3.3 V in
        0.25 µm); pipelined decoder; faster custom cells
      - Static timing of the loop at the slow corner after synthesis and
        layout
-   * - Four 125 MHz ADCs of about 7 effective bits
+   * - Four 125 MHz ADCs of about 7 effective bits (:ref:`phy-int-adc`)
      - Folding (shown at 3.3 V in 0.35 µm); pipelined or time-interleaved
        redesigned for 3.3 V transistors; one bit fewer with analog echo
        pre-cancellation
      - A test chip with one ADC, measured for ENOB at 125 MS/s
-   * - Hybrid without a transformer
+   * - Hybrid without a transformer (:ref:`phy-int-echo`)
      - Replica hybrid on the capacitor-coupled pins; analog echo
        pre-canceller; merged driver and receiver
      - Measurement of echo rejection on a test chip with a real cable and
        the external components of :doc:`../magnetics`
-   * - Echo and crosstalk cancellation
+   * - Echo and crosstalk cancellation (:ref:`phy-int-dsp`)
      - Adaptive filters with symbol inputs; tap counts set by simulation
        against the channel limits
      - Simulation with measured cable responses; FPGA on captured samples
-   * - Clock recovery and master/slave timing
+   * - Clock recovery and master/slave timing (:ref:`phy-int-clock`)
      - PLL plus phase interpolator (180 nm example: 31.25 ps steps,
        4.9 ps rms); digital timing recovery
      - Jitter measurement of the PLL on a test chip; timing recovery on an
        FPGA
-   * - Line driver linearity and swing
+   * - Line driver linearity and swing (:ref:`phy-int-transmitter`)
      - Matched voltage-mode or active-termination driver from 3.3 V
      - The four transmitter test modes need no receiver and can be measured
        on the driver alone
 
-Optional: 100BASE-TX and 10BASE-T
----------------------------------
+Optional slower speeds
+----------------------
 
-Whether the integrated transceiver also supports the slower speeds is not
-yet fixed. On top of the gigabit design, they would add the following.
+Whether the integrated transceiver also supports 100BASE-TX and 10BASE-T is
+not yet fixed. On top of the gigabit design, they would add the following.
 
 100BASE-TX
 ~~~~~~~~~~
 
-.. list-table:: 100BASE-TX requirements (required, [PHY-UNH25]_)
+.. list-table:: 100BASE-TX requirements (required, :clause:`25`,
+   [PHY-UNH25]_)
+   :name: tab-phy-int-100
    :header-rows: 1
    :widths: 45 55
 
@@ -1073,27 +1199,35 @@ yet fixed. On top of the gigabit design, they would add the following.
 What it adds:
 
 * **Coding**: 4B5B, an 11-bit scrambler and MLT-3 (see
-  :doc:`../phy-electrical`); small digital logic.
+  :ref:`phy-100base-tx`); small digital logic.
 * **Transmit edge control**: a rise time between 3 ns and 5 ns. For a
-  single-pole response the bandwidth is :math:`f_\text{3dB} = 0.35 /
-  t_\text{r}`, where :math:`t_\text{r}` is the 10 % to 90 % rise time:
-  :math:`0.35 / 5\ \text{ns} = 70` MHz and :math:`0.35 / 3\ \text{ns} =
-  117` MHz. The gigabit DAC and driver can produce MLT-3 at the same ±1 V
-  swing, with the edge shaping done in the DAC codes (estimate).
+  single-pole (first-order) response with time constant :math:`\tau`, the
+  output reaches 10 % of its final value at :math:`0.105\,\tau` and 90 % at
+  :math:`2.303\,\tau`, so the 10 % to 90 % rise time is
+  :math:`t_\text{r} = 2.2\,\tau`; the bandwidth is
+  :math:`f_\text{3dB} = 1/(2\pi\tau)`. Eliminating :math:`\tau`:
+
+  .. math::
+
+     f_\text{3dB} = \frac{2.2}{2\pi\,t_\text{r}} = \frac{0.35}{t_\text{r}}
+
+  For :math:`t_\text{r} = 5` ns this is :math:`0.35 / 5\ \text{ns} = 70`
+  MHz, and for 3 ns, :math:`0.35 / 3\ \text{ns} = 117` MHz. The gigabit DAC
+  and driver can produce MLT-3 at the same ±1 V swing, with the edge
+  shaping done in the DAC codes (estimate).
 * **Receiver**: 100BASE-TX uses one pair in each direction, so no echo or
   crosstalk cancellation is needed; the gigabit ADC and equalizer on one
   pair can receive it. A separate low-power alternative, published in a
   180 nm GlobalFoundries process, uses an analog equalizer and five
-  comparators instead of an ADC [PHY-BUHR21]_ [PHY-BUHR20A]_.
-
-A complete 100BASE-TX transceiver has been built and measured in a 180 nm
-GlobalFoundries process: 2.6 mm², at most 69 mW, error-free over 100 m of
-Category 5 cable, with coupling transformers [PHY-BUHR21]_ [PHY-BUHR19]_.
+  comparators instead of an ADC [PHY-BUHR21]_ [PHY-BUHR20A]_; that
+  transceiver's measured results are in :numref:`tab-phy-int-published`.
 
 10BASE-T
 ~~~~~~~~
 
-.. list-table:: 10BASE-T requirements (required, [PHY-UNH14]_)
+.. list-table:: 10BASE-T requirements (required, :clause:`14`,
+   [PHY-UNH14]_)
+   :name: tab-phy-int-10
    :header-rows: 1
    :widths: 45 55
 
@@ -1122,7 +1256,7 @@ What it adds:
   10BASE-T signal of about 2.5 V amplitude from 3.3 V, at 62 mW
   [PHY-BUHR21]_ [PHY-BUHR20B]_; a 0.4 µm current-feedback driver delivered
   5 V peak-to-peak into 50 Ω from 3.3 V [PHY-BABANEZHAD99]_. gf180mcu also
-  has 5 V, 6 V and 10 V transistors [PHY-GF180PDK]_.
+  has 5 V, 6 V and 10 V transistors (:numref:`tab-phy-int-devices`).
 
 Blocks evampire would need
 --------------------------
@@ -1150,7 +1284,8 @@ slower speeds follow.
    5, and synthesised for gf180mcu to confirm area, power and timing before
    it is committed to silicon.
 7. **Byte interface to the forwarding logic**: the same interface as the
-   RGMII block, verified with the first-version forwarding logic.
+   :ref:`RGMII block <arch-rgmii>`, verified with the first-version
+   forwarding logic.
 8. **Optional 100BASE-TX coding and edge shaping**, reusing blocks 3, 5
    and 6.
 9. **Optional 10BASE-T Manchester coding and higher-swing driver.**
@@ -1171,12 +1306,13 @@ Open design questions
   paths, or custom cells built from 3.3 V transistors.
 * Which decision-loop architecture is used, and how many filter taps are
   needed per pair for the worst-case channel.
-* Whether the two gigabit ports, the forwarding logic, the processor and
-  the pads fit on one die, given the estimated 13 mm² to 26 mm² for the two
-  transceivers.
-* Whether the two-port transceiver power (estimated 1.1 W to 4.3 W) fits
-  the power budget of a board powered over Ethernet, and the package's
-  thermal limit.
+* How large the gigabit transceivers will be. The rough, literature-derived
+  range of 13 mm² to 26 mm² for two ports (:ref:`phy-int-area-power`) has
+  large uncertainty.
+* How much power the gigabit transceivers will use, and whether it fits the
+  :ref:`power budget <power-budget>` of a board powered over Ethernet (see
+  :doc:`../../power/poe`) and the package's thermal limit; the rough
+  estimate is 1.7 W to 4.3 W for two ports.
 * How much echo the analog hybrid must remove before the ADC, given the
   transformer-free connection, and therefore the ADC resolution and whether
   an analog echo pre-canceller is used.
@@ -1197,11 +1333,11 @@ as [PHY-8023]_, [PHY-UNH40]_ and [PHY-DP83867]_, are listed on
 
 .. [PHY-HARATSCH01] E. F. Haratsch, K. Azadet, "A 1-Gb/s joint equalizer
    and trellis decoder for 1000BASE-T Gigabit Ethernet", IEEE JSSC
-   36(3):374-384, 2001. doi:10.1109/4.910476.
+   36(3):374-384, 2001. https://doi.org/10.1109/4.910476.
 
 .. [PHY-HARATSCH01B] E. F. Haratsch, K. Azadet, "A pipelined 14-tap
    parallel decision-feedback decoder for 1000BASE-T Gigabit Ethernet",
-   VLSI-TSA 2001, pp. 117-120. doi:10.1109/VTSA.2001.934497.
+   VLSI-TSA 2001, pp. 117-120. https://doi.org/10.1109/VTSA.2001.934497.
 
 .. [PHY-AZADET-PAT] K. Azadet, E. F. Haratsch, "Method and apparatus for
    pipelined joint equalization and decoding for gigabit communications",
@@ -1210,15 +1346,16 @@ as [PHY-8023]_, [PHY-UNH40]_ and [PHY-DP83867]_, are listed on
 
 .. [PHY-GU07] Y. Gu, K. K. Parhi, "Pipelined Parallel Decision-Feedback
    Decoders for High-Speed Ethernet Over Copper", IEEE Transactions on
-   Signal Processing 55(2):707-715, 2007. doi:10.1109/TSP.2006.885776.
+   Signal Processing 55(2):707-715, 2007. https://doi.org/10.1109/TSP.2006.885776.
 
 .. [PHY-ZHU07] Zhu Yue, Rong Mengtian, Mao Junfa, M-algorithm joint decoder
    and equalizer for 1000BASE-T, Journal of Shanghai Jiaotong University
-   41(8):1358-1361, 2007.
+   41(8):1358-1361, 2007. Print journal; no DOI or online copy was found
+   (abstract seen through the journal's index).
 
 .. [PHY-PARHI91] K. K. Parhi, "Pipelining in algorithms with quantizer
    loops", IEEE Transactions on Circuits and Systems 38(7):745-754, 1991.
-   doi:10.1109/31.135746.
+   https://doi.org/10.1109/31.135746.
 
 .. [PHY-QAM97] O. Agazzi, M. Hatamian, H. Samueli, "Update on QAM-Based
    1000BASE-T Transceiver", IEEE 802.3, May 1997.
@@ -1228,36 +1365,31 @@ as [PHY-8023]_, [PHY-UNH40]_ and [PHY-DP83867]_, are listed on
 .. [PHY-HEO02] Heo, Jang, Park, Park, "An 8-bit 200 MS/s CMOS
    folding/interpolating ADC with a reduced number of preamplifiers using an
    averaging technique", IEEE ASIC Conference 2002, pp. 80-83.
-   doi:10.1109/ASIC.2002.1158035.
+   https://doi.org/10.1109/ASIC.2002.1158035.
 
 .. [PHY-LIMOTYRAKIS05] S. Limotyrakis, S. D. Kulchycki, D. K. Su,
    B. A. Wooley, "A 150-MS/s 8-b 71-mW CMOS time-interleaved ADC", IEEE
-   JSSC 40(5):1057-1067, 2005. doi:10.1109/JSSC.2005.845992.
+   JSSC 40(5):1057-1067, 2005. https://doi.org/10.1109/JSSC.2005.845992.
 
 .. [PHY-ZHANG10] Zhang, Yuan, Guo, Cheng, Zeng, "An 8-bit 100-MS/s pipelined
    ADC without dedicated sample-and-hold amplifier", Journal of
    Semiconductors 31(7):075006, 2010.
-   doi:10.1088/1674-4926/31/7/075006.
+   https://doi.org/10.1088/1674-4926/31/7/075006.
 
 .. [PHY-PAN14] Pan et al., "A Full-Duplex Line Driver for Gigabit Ethernet
    With Rail-to-Rail Class-AB Output Stage in 28 nm CMOS", IEEE JSSC
-   49(12):3141-3155, 2014, doi:10.1109/JSSC.2014.2353796; and the ISSCC
-   2014 paper of the same title, doi:10.1109/ISSCC.2014.6757376.
+   49(12):3141-3155, 2014, https://doi.org/10.1109/JSSC.2014.2353796; and the ISSCC
+   2014 paper of the same title, https://doi.org/10.1109/ISSCC.2014.6757376.
 
 .. [PHY-LEE00] C. Lee, B. Razavi, "A 125-MHz mixed-signal echo canceller
    for Gigabit Ethernet on copper wire", IEEE CICC 2000.
-   doi:10.1109/CICC.2000.852708. Reduction of the digital cancellers by
+   https://doi.org/10.1109/CICC.2000.852708. Reduction of the digital cancellers by
    50 taps.
 
 .. [PHY-EA-BT] L. Yseboodt, D. Abramson, *Overview of 802.3bt - Power over
    Ethernet standard*, Ethernet Alliance white paper, 2019-12.
    https://ethernetalliance.org/wp-content/uploads/2019/12/WP_EA_Overview8023bt_V2p1_FINAL.pdf.
    Powered-device power of each type and class.
-
-.. [PHY-WAFERSPACE] "wafer.space lets you design your custom silicon just
-   for $7 per die", CNX Software, 2025-10-07.
-   https://www.cnx-software.com/2025/10/07/wafer-space-lets-you-design-your-custom-silicon-just-for-7-per-die/.
-   Run 1 slot die area of 3.88 mm × 5.07 mm (19.67 mm²).
 
 .. [PHY-BUHR21] S. Buhr, *Energieeffiziente integrierte Schaltungen zur
    Basisbandsignalverarbeitung und Zeitsynchronisation für drahtgebundene
@@ -1270,53 +1402,53 @@ as [PHY-8023]_, [PHY-UNH40]_ and [PHY-DP83867]_, are listed on
 
 .. [PHY-BUHR19] S. Buhr, X. Xu, M. Kreißig, F. Ellinger, "A Low Power Fast
    Ethernet Physical Layer Transceiver", IEEE ICECS 2019, pp. 478-481.
-   doi:10.1109/ICECS46596.2019.8964920.
+   https://doi.org/10.1109/ICECS46596.2019.8964920.
 
 .. [PHY-BUHR20A] S. Buhr, X. Xu, M. Kreißig, C. Matthus, F. Ellinger, "Low
    power analogue equaliser with adaptive digital tuning for fast
    ethernet", IET Circuits, Devices & Systems 14(5):600-610, 2020.
-   doi:10.1049/iet-cds.2019.0370.
+   https://doi.org/10.1049/iet-cds.2019.0370.
 
 .. [PHY-BUHR18] S. Buhr, M. Kreißig, S. Protze, F. Ellinger, "Ultra Low
    Power Class-AB Voltage Mode Line Driver for Fast Ethernet", IEEE MWSCAS
-   2018, pp. 17-20. doi:10.1109/MWSCAS.2018.8623924.
+   2018, pp. 17-20. https://doi.org/10.1109/MWSCAS.2018.8623924.
 
 .. [PHY-BUHR20B] S. Buhr, M. Kreißig, C. Matthus, S. Protze, F. Ellinger,
    "Low Power Class-AB Line Driver with Adaptive Digital Impedance Control
    for Fast Ethernet", IEEE NorCAS 2020.
-   doi:10.1109/NorCAS51424.2020.9265004.
+   https://doi.org/10.1109/NorCAS51424.2020.9265004.
 
 .. [PHY-RICHTER14] A. Richter, C. Tzschoppe, F. Ellinger, "Low power fast
    Ethernet line driver", IEEE ICECS 2014, pp. 52-55.
-   doi:10.1109/ICECS.2014.7049919.
+   https://doi.org/10.1109/ICECS.2014.7049919.
 
 .. [PHY-BABANEZHAD99] J. N. Babanezhad, "A 100-MHz, 50-Ω, -45-dB
    distortion, 3.3-V CMOS line driver for Ethernet and fast Ethernet
    networking applications", IEEE JSSC 34(8):1044-1050, 1999.
-   doi:10.1109/4.777101.
+   https://doi.org/10.1109/4.777101.
 
 .. [PHY-HE01] R. He, N. Nazari, S. Sutardja, "A DSP based receiver for
    1000BASE-T PHY", IEEE ISSCC 2001, pp. 308-309.
-   doi:10.1109/ISSCC.2001.912651.
+   https://doi.org/10.1109/ISSCC.2001.912651.
 
 .. [PHY-HATAMIAN98] M. Hatamian et al., "Design considerations for gigabit
    Ethernet 1000Base-T twisted pair transceivers", IEEE CICC 1998,
-   pp. 335-342. doi:10.1109/CICC.1998.694994.
+   pp. 335-342. https://doi.org/10.1109/CICC.1998.694994.
 
 .. [PHY-LEE01] C. Lee, B. Razavi, "A 125-MHz mixed-signal echo canceller
    for Gigabit Ethernet on copper wire", IEEE JSSC 36(3):366-373, 2001.
-   doi:10.1109/4.910475.
+   https://doi.org/10.1109/4.910475.
 
 .. [PHY-YOON00] Yoon, Lee, Jeong, Kim, "An 8-bit 125 MS/s CMOS folding ADC
    for Gigabit Ethernet LSI", Symposium on VLSI Circuits 2000,
-   pp. 212-213. doi:10.1109/VLSIC.2000.852893.
+   pp. 212-213. https://doi.org/10.1109/VLSIC.2000.852893.
 
 .. [PHY-JIANG08] Jiang, Do, Yeo, Lim, "An 8-bit 200-MSample/s Pipelined ADC
    With Mixed-Mode Front-End S/H Circuit", IEEE TCAS-I 55(6):1430-1440,
-   2008. doi:10.1109/TCSI.2008.916613.
+   2008. https://doi.org/10.1109/TCSI.2008.916613.
 
 .. [PHY-NTU04] Lin, Chen, Lai, Wu, "1000BASE-T Gigabit Ethernet baseband
-   DSP IC design", IEEE ISCAS 2004. doi:10.1109/ISCAS.2004.1329025.
+   DSP IC design", IEEE ISCAS 2004. https://doi.org/10.1109/ISCAS.2004.1329025.
 
 .. [PHY-OSCAR97] O. Agazzi, M. Hatamian, H. Samueli, "Jitter Specifications
    for 1000Base-T", IEEE 802.3ab, September 1997.
