@@ -151,7 +151,7 @@ Which IEEE 802.3 requirements a transformer-free port meets
 -----------------------------------------------------------
 
 :numref:`tbl-magnetics-ieee` lists the IEEE 802.3 requirements that a
-transformer normally helps meet, and where the passive front end stands on
+transformer helps meet, and where the passive front end stands on
 each. The "Status" column uses three values: "met" where the analysis on
 these pages shows a way, "conditional" where it depends on parts or
 choices, and "open" where only a measurement answers it.

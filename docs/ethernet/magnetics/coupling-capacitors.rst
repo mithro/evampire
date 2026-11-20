@@ -50,7 +50,7 @@ Capacitor-coupled 1000BASE-T
 
 Capacitor coupling is therefore shown for gigabit Ethernet over a full
 cable in one vendor report. :doc:`gigabit-risk` works through what else
-could limit it.
+can limit it.
 
 The data path becomes a capacitor in each wire
 ----------------------------------------------
@@ -141,7 +141,7 @@ With :math:`Z_0 = 100\ \Omega`:
 
    C_\text{w} \ge 9.9\ \text{nF}
 
-This uses the whole 16 dB budget for the capacitors alone, so real
+The capacitors alone then use the whole 16 dB budget, so real
 capacitors must be larger.
 
 Droop needs at least 16 nF
@@ -197,7 +197,7 @@ A 100BASE-TX transmitter in a Type 3 or Type 4 Power over Ethernet port
 can instead meet an equivalent time constant above 2.4 µs
 (:clause:`25.4.5.1`, :doc:`matching-and-droop`). In the model this needs
 :math:`C_\text{w} \ge 2 \times 2.4\ \mu\text{s} / 200\ \Omega = 24\ \text{nF}`.
-Whether a port without a transformer may use this route in place of the
+Whether a port without a transformer can use this route in place of the
 inductance requirement is an open question below.
 
 The results give a working range
@@ -238,7 +238,7 @@ received signal, and :doc:`isolation` how many high-voltage parts it takes.
 Capacitors on the chip cost area
 --------------------------------
 
-The capacitors could also be built on evampire, if they hold the voltages
+The capacitors can also be built on evampire, if they hold the voltages
 of :doc:`events` or sit behind another isolation barrier
 (:doc:`isolation`). The area of one capacitor is its capacitance divided
 by the capacitance per area. A capacitor that must hold a voltage beyond
@@ -329,7 +329,7 @@ about 5 µm thick (:doc:`isolation`), has a much lower capacitance per area:
 
 At that density a 16 nF capacitor takes about 2300 mm². Small on-chip
 capacitors can instead isolate a signal that has first been turned into a
-high-frequency form, as :wikipedia:`digital isolators <Digital_isolator>`
+high-frequency form, as digital isolators (see :wikipedia:`Galvanic isolation <Galvanic_isolation>`)
 do, with active circuits on both sides of the barrier. That is the
 on-die route of :doc:`isolation`.
 

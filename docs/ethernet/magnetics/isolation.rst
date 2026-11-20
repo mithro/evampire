@@ -108,8 +108,8 @@ values used on these pages.
 :std:`Annex J.1 <802.3>` counts as breakdown only a current that rises
 rapidly and without control, so a steady capacitive current does not fail
 the test. The test equipment must still supply it, and many testers stop at
-a set current. A capacitor-coupled port is therefore most simply qualified
-with the direct-voltage test.
+a set current. The direct-voltage test avoids the issue for a
+capacitor-coupled port.
 
 External high-voltage capacitors are the most direct route
 ----------------------------------------------------------
@@ -130,9 +130,9 @@ that needs 20 nF takes two in parallel:
    N = 8\ \text{wires} \times 2 = 16\ \text{capacitors per port}
 
 If the rated voltage, not the test voltage, had to exceed 2250 V, each path
-would need two parts in series, 5 nF at a 4000 V rating, and four such
-strings in parallel for 20 nF: 64 capacitors per port. 33 nF to 100 nF per
-wire needs more parts, or larger high-voltage capacitors.
+would need two parts in series: 5 nF at a 4000 V rating. Four such strings
+in parallel give 20 nF, so a port would need 64 capacitors. 33 nF to
+100 nF per wire needs more parts, or larger high-voltage capacitors.
 
 Capacitors certified for bridging insulation in mains equipment, class Y2
 under IEC 60384-14 ([MAG-IEC60384-14]_), are another option. The

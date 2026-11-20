@@ -8,7 +8,7 @@ built on evampire. The choice between them is open. Isolation has its own
 page, :doc:`isolation`, and the capacitor size is worked out on
 :doc:`coupling-capacitors`.
 
-Options on evampire may use custom devices and cells beyond the standard
+Options on evampire can use custom devices and cells beyond the standard
 devices of the gf180mcu process design kit (:ref:`req-process`). Prior work
 from other processes and products is given as a reference example of what
 has been built, not as a prediction for evampire.
@@ -119,7 +119,7 @@ frequencies, sized on :doc:`coupling-capacitors`.
 Active termination, also called synthesised impedance, sets the driver's
 output impedance by feedback instead of by a resistor. It saves transmit
 power. For reference, it is used in line drivers for telephone-line data
-links ([MAG-US6538500]_). It could also cancel part of the coupling
+links ([MAG-US6538500]_). It can also cancel part of the coupling
 capacitors' reactance. Whether it reaches the 1000BASE-T return loss over
 1 MHz to 100 MHz is an open question.
 

@@ -66,7 +66,7 @@ meets the limit:
 
    Z_\text{min} &= Z_0 \frac{1 - 0.158}{1 + 0.158} = 73\ \Omega
 
-The port alone could be anywhere from 73 Ω to 138 Ω on a 100 Ω cable. The
+The port alone can be anywhere from 73 Ω to 138 Ω on a 100 Ω cable. The
 transceiver and everything between it and the cable share that budget.
 Microchip recommends magnetics with at least 2 dB of margin on the limit
 ([MAG-ENT98]_, section 4.2).
@@ -107,7 +107,7 @@ The transformer's inductance sets the droop
 
 A transformer cannot pass direct current, and passes low frequencies
 poorly. The reason is its
-:wikipedia:`magnetising inductance <Magnetizing_inductance>`: the
+magnetising inductance (see :wikipedia:`Transformer`): the
 inductance of one winding with the other left open, given in data sheets as
 the open-circuit inductance. This inductance sits across the signal path
 and shunts low frequencies away.

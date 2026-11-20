@@ -37,7 +37,7 @@ Discrete module
    transceiver and an ordinary RJ45 socket. The 75 Ω resistors and the
    high-voltage capacitor are separate parts.
 RJ45 socket with integrated magnetics
-   The magnetics, usually the termination, and often two LEDs driven by
+   The magnetics, in most parts the termination, and often two LEDs driven by
    the transceiver, inside the socket.
 
 Integrated sockets save board area and screen the cable-side wiring inside

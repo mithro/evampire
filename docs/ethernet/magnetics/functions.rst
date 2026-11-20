@@ -144,7 +144,7 @@ These pages take a part as suitable when its maker states a withstand
 (test) voltage at least as high as that test voltage: 2121 V peak for the
 alternating test, or 2250 V for the direct test. Its rated working voltage
 can be lower. Magnetics data sheets state the isolation of the whole part,
-usually 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
+most often 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
 
 .. _magnetics-common-mode:
 
@@ -170,7 +170,7 @@ H5007NL ([MAG-PULSE]_, electrical table), and 30 dB to 35 dB for the Bel
 0826-1G1T-23-F ([MAG-BEL]_, electrical table).
 
 IEEE 802.3 sets the related requirement at the MDI as an impedance balance
-(:clause:`40.8.3.2`). A common-mode voltage applied to the pair may produce
+(:clause:`40.8.3.2`). A common-mode voltage applied to the pair must produce
 only a small differential voltage: the ratio must exceed
 :math:`34 - 19.2 \log_{10}(f / 50\ \text{MHz})` dB from 1 MHz to 100 MHz.
 This is 66.6 dB at 1 MHz and 28.2 dB at 100 MHz.
@@ -193,7 +193,7 @@ describes the network reports about 10 dB less emission and susceptibility
 [MAG-SMITH]_. The network is called the
 :term:`Bob Smith termination` after its inventor.
 
-The shared node goes to chassis ground through one capacitor, usually
+The shared node goes to chassis ground through one capacitor, most often
 1000 pF rated 2 kV ([MAG-KSZ9031]_, section 12; [MAG-WURTH]_;
 [MAG-BEL]_). The capacitor is not part of the patent ([MAG-ENT98]_, section
 3.2). Its impedance falls with frequency:
@@ -253,7 +253,7 @@ radiation is what fails radio-emission limits such as
 up common-mode noise from its surroundings, and the choke and transformer
 keep it from the receiver ([MAG-ENT98]_, section 2.1.2).
 
-The choke usually sits on the cable side of the transformer. Microchip
+In most parts the choke sits on the cable side of the transformer. Microchip
 reports less margin in the transmit waveform tests with the choke on the
 transceiver side ([MAG-ENT98]_, section 3.5). Some magnetics add a third
 part on each pair, an :wikipedia:`autotransformer <Autotransformer>`: one
@@ -275,7 +275,7 @@ pair, passes through the transformer like a signal and is clamped by
 protection diodes.
 
 Texas Instruments places these diodes on the transceiver side of the
-magnetics, because on the cable side large common-mode voltages could make
+magnetics, because on the cable side large common-mode voltages can make
 them conduct and fail ([MAG-SNLA387]_, section 2, "ESD Device Selection and Layout"). The sizes of these
 events are given on :doc:`events`.
 

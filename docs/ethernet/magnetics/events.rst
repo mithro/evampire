@@ -199,4 +199,4 @@ Sustained voltages
 
 Conventional designs protect against system-level discharges and surges
 with external protection devices ([MAG-SLVA711]_, sections 1.1 and 3.2). Which events evampire's
-on-chip clamps could take is discussed on :doc:`without-transformer`.
+on-chip clamps can take is discussed on :doc:`without-transformer`.

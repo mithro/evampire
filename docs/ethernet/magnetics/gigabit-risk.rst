@@ -1,8 +1,8 @@
 Capacitor-coupled gigabit Ethernet over long cables
 ===================================================
 
-This page works through what could stop gigabit Ethernet, 1000BASE-T,
-from working through coupling capacitors over a long cable, and gives the
+This page works through what can limit gigabit Ethernet, 1000BASE-T,
+running through coupling capacitors over a long cable, and gives the
 measurements that would show whether it does. Capacitor coupling is shown
 for short links and backplanes, and in one vendor test for cables up to
 100 m ([MAG-ADIWIKI]_). Cable reach of the integrated transceiver is a
@@ -191,7 +191,9 @@ symbols, the last row of :numref:`tbl-magnetics-lowfreq`. For reference,
 the echo canceller of the design in the 1000BASE-T tutorial spans 120
 symbols ([MAG-AB-TUTORIAL]_, slide 51). The tail is therefore left to the
 baseline-wander correction, as it already is for transformer tails
-([MAG-US6775529]_). The echo can be up to 10 dB stronger than the far-end
+([MAG-US6775529]_).
+
+The echo can be up to 10 dB stronger than the far-end
 signal, so its baseline wander matters more ([MAG-US7738567]_). With
 capacitors at the near end and a transformer at the far end, the echo
 passes through one high-pass filter and the far-end signal through two;
@@ -241,8 +243,8 @@ and :math:`V_\text{dm} = 30\ \text{mV}`:
    \text{CMRR} \ge 20 \log_{10} \frac{2.83\ \text{V}}{0.030\ \text{V}}
    = 39.5\ \text{dB}
 
-This is an estimate: it assumes the clamp puts the full 1.0 V rms on the
-pair at the receiver. It is consistent with the 30 dB to 43 dB that
+The result is an estimate: it assumes the clamp puts the full 1.0 V rms on
+the pair at the receiver. It is consistent with the 30 dB to 43 dB that
 magnetics give (:doc:`functions`). For reference, Analog Devices
 recommends an external choke for capacitor-coupled cables longer than
 about 1 m for this reason ([MAG-ADIWIKI]_).
@@ -279,8 +281,8 @@ traces. A capacitance across a 100 Ω port reflects part of the signal:
      - Port resistance, 100 Ω
      - Ω
 
-This is the reflection of a capacitor in parallel with a matched 100 Ω
-port, from the reflection coefficient of :doc:`matching-and-droop`. At
+The formula gives the reflection of a capacitor in parallel with a matched
+100 Ω port, from the reflection coefficient of :doc:`matching-and-droop`. At
 40 MHz, where the limit is still 16 dB (:math:`\lvert\Gamma\rvert = 0.1585`):
 
 .. math::

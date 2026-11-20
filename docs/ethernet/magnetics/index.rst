@@ -43,7 +43,7 @@ Without coupling transformers
    Two candidate transformer-free ports, the specifications they set for
    the circuits on evampire, and the IEEE 802.3 requirements they meet.
 :doc:`gigabit-risk`
-   What could stop capacitor-coupled gigabit Ethernet working over a long
+   What can limit capacitor-coupled gigabit Ethernet over a long
    cable, as a function of cable reach, and how to find out.
 
 Reference
