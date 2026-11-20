@@ -46,6 +46,355 @@ In the receive direction the bytes are timed by the clock recovered from the
 cable, as they are with RGMII, and the existing rate-matching buffer moves
 them onto evampire's own 125 MHz clock.
 
+The gigabit transceiver
+-----------------------
+
+Required performance
+~~~~~~~~~~~~~~~~~~~~
+
+.. list-table:: 1000BASE-T transmitter and link requirements (required,
+   [PHY-UNH40]_)
+   :header-rows: 1
+   :widths: 45 55
+
+   * - Quantity
+     - Limit
+   * - Peak output in test mode 1
+     - 0.67 V to 0.82 V; peaks matched within 1 %
+   * - Droop in test mode 1
+     - Output keeps more than 73.1 % of its peak value
+   * - Peak distortion in test mode 4
+     - Less than 10 mV for at least 60 % of the symbol period
+   * - Common-mode output
+     - Less than 50 mV peak-to-peak
+   * - Return loss, 1 MHz to 40 MHz
+     - At least 16 dB
+   * - Transmit clock jitter, unfiltered
+     - Less than 1.4 ns peak-to-peak
+   * - Transmit clock jitter, filtered
+     - Less than 0.3 ns (master), 0.4 ns (slave) peak-to-peak
+   * - Transmit clock frequency
+     - 125 MHz ± 12.5 kHz (±100 parts per million)
+   * - Bit error rate over the worst-case 100 m channel
+     - Better than :math:`10^{-10}`
+
+Blocks
+~~~~~~
+
+The transceiver for one port contains the blocks below (see the block
+diagram in :doc:`../phy-electrical`). The analog front end and the
+per-pair signal processing are repeated four times, once per pair.
+
+.. list-table:: Blocks of one integrated 1000BASE-T port
+   :header-rows: 1
+   :widths: 26 10 64
+
+   * - Block
+     - Per port
+     - Specification (sections below)
+   * - DAC and line driver
+     - 4
+     - 17 shaped levels at 125 MHz, at least 7 bits of linearity, about
+       1 V peak into 100 Ω from a matched source
+   * - Termination and line protection
+     - 4
+     - About 73 Ω to 138 Ω across process and temperature; connection
+       without transformers per :doc:`../magnetics`
+   * - Hybrid (and optional analog echo pre-cancellation)
+     - 4
+     - Removes the transceiver's own signal before the ADC
+   * - Receive amplifier, filter and ADC
+     - 4
+     - 125 million samples per second, about 7 effective bits
+   * - Echo canceller, 3 near-end crosstalk cancellers, equalizers
+     - 4
+     - Adaptive digital filters, about 220 taps per pair at 125 MHz
+   * - Trellis decoder with decision feedback
+     - 1
+     - One 8 ns loop across all four pairs
+   * - Scrambler, coding, delimiters
+     - 1
+     - IEEE 802.3 :clause:`40` coding
+   * - Clock synthesis and recovery
+     - 1
+     - 25 MHz reference, 125 MHz PLL, sampling phase adjustment, master and
+       slave timing
+   * - Link pulses and autonegotiation
+     - 1
+     - :clause:`28` state machines and timers, 1000BASE-T next pages
+   * - Management registers
+     - 1
+     - :clause:`22` register set, including registers 9 and 10
+
+Transmitter: DAC and line driver
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Linearity.** The distortion limit sets how linear the transmitter must be.
+The worst error at any symbol must stay below 10 mV, against a peak of
+about 0.745 V [PHY-DP83867]_, that is :math:`0.010 / 0.745 = 1.3\,\%` of the
+peak. An ideal digital-to-analog converter (DAC) with :math:`N` bits
+spanning :math:`\pm V_\text{pk}` has steps of :math:`2V_\text{pk}/2^N` and a
+worst rounding error of half a step:
+
+.. math::
+
+   e_\text{max} = \frac{V_\text{pk}}{2^N}
+
+where :math:`e_\text{max}` is the largest error in V and
+:math:`V_\text{pk} = 0.745` V. Requiring :math:`e_\text{max} < 10` mV:
+
+.. math::
+
+   2^N > \frac{0.745}{0.010} = 74.5
+
+.. math::
+
+   N > \log_2 74.5 = 6.2
+
+So the DAC and line driver together need at least 7 bits of linearity
+(estimate, counting rounding error only; for 7 bits,
+:math:`e_\text{max} = 0.745 / 128 = 5.8` mV, leaving about 4 mV for all
+other errors). The 17 shaped levels of PAM-5 (see :doc:`../phy-electrical`)
+need at least 5 bits of DAC resolution, so linearity, not the number of
+levels, sets the DAC.
+
+**Swing.** The driver's output impedance must match the 100 Ω line, so it
+forms a voltage divider with the line and half of its internal voltage
+appears on the line:
+
+.. math::
+
+   V_\text{src} = 2\,V_\text{line}
+
+where :math:`V_\text{line}` is the peak differential voltage on the line
+and :math:`V_\text{src}` the peak differential voltage the driver generates
+behind its matching resistance. With the 2 V peak-to-peak launch level of
+the 802.3ab design point [PHY-TUT98]_, :math:`V_\text{line} = 1` V and
+:math:`V_\text{src} = 2` V. A differential driver whose outputs each swing
+between 0 V and its supply can produce at most :math:`\pm V_\text{DD}`, so
+a 3.3 V supply gives 1.3 V of headroom for the output transistors
+(estimate). The 3.3 V transistors of gf180mcu are therefore enough for the
+gigabit swing.
+
+**Power.** PAM-5 symbols are equally likely to take each of the five levels
+-2, -1, 0, +1, +2. With level 2 at 1 V, the mean square level is
+:math:`(4 + 1 + 0 + 1 + 4)/5 = 2`, in units of
+:math:`(0.5\ \text{V})^2`, so the rms line voltage is
+
+.. math::
+
+   V_\text{rms} = 0.5\ \text{V} \times \sqrt{2} = 0.707\ \text{V}
+
+and the power delivered into the 100 Ω line is
+
+.. math::
+
+   P_\text{line} = \frac{V_\text{rms}^2}{R} = \frac{0.707^2}{100}
+   = 5.0\ \text{mW}
+
+The matching resistance dissipates the same again, so a perfect driver uses
+10 mW per pair (estimate, ignoring shaping). Real drivers use more because
+their output stage must be biased for linearity: line drivers "dominate the
+GPHY power consumption" according to a 2014 gigabit line-driver paper
+[PHY-PAN14]_, and published 180 nm drivers for the same ±1 V swing at
+100 Mbit/s use 24 mW to 38 mW [PHY-BUHR18]_ [PHY-RICHTER14]_. The estimates
+below use 24 mW to 38 mW per pair.
+
+The cable interface
+~~~~~~~~~~~~~~~~~~~
+
+Each pair must look like a 100 Ω resistor to the cable, so that signals
+arriving from the cable are not reflected back. The standard sets this as a
+minimum *return loss* of 16 dB from 1 MHz to 40 MHz (required,
+[PHY-UNH40]_). Return loss is the size of the reflection in decibels. The
+reflection coefficient :math:`\Gamma` (the reflected voltage divided by the
+incident voltage) is
+
+.. math::
+
+   |\Gamma| = 10^{-L_\text{RL}/20}
+
+and a termination of impedance :math:`Z` reflects
+
+.. math::
+
+   |\Gamma| = \frac{|Z - R|}{Z + R}
+
+where :math:`L_\text{RL}` is the return loss in dB and :math:`R` is the
+reference impedance in Ω. Solving the second equation for :math:`Z` gives
+the allowed range:
+
+.. math::
+
+   Z_\text{min} = R\,\frac{1 - |\Gamma|}{1 + |\Gamma|}
+
+.. math::
+
+   Z_\text{max} = R\,\frac{1 + |\Gamma|}{1 - |\Gamma|}
+
+With :math:`L_\text{RL} = 16` dB and :math:`R = 100` Ω:
+
+.. math::
+
+   |\Gamma| = 10^{-16/20} = 10^{-0.8} = 0.158
+
+.. math::
+
+   Z_\text{min} = 100 \times \frac{0.842}{1.158} = 72.6\ \Omega
+
+.. math::
+
+   Z_\text{max} = 100 \times \frac{1.158}{0.842} = 137.7\ \Omega
+
+So the termination must stay within about 73 Ω to 138 Ω across frequency,
+temperature and process (estimate, from the required return loss). The
+gf180mcu unsalicided P+ poly resistor ranges from 280 to 420 Ω per square,
+±20 % around its typical value [PHY-GF180PDK]_, which uses most of that
+range before any other error. The termination therefore needs trimming, or
+an active termination whose impedance is set by feedback; a published
+180 nm line driver with digital impedance control covers 80 Ω to 130 Ω
+[PHY-BUHR20B]_.
+
+The cable also carries voltages that are not part of the signal: voltage
+common to both wires of a pair, surges, and in the full design Power over
+Ethernet. Without transformers, these reach evampire's pins through the
+external components described in :doc:`../magnetics`, and the common-mode
+range, isolation and protection that the line driver and receiver must
+withstand are set there. The standard analog pads of gf180mcu contain only
+protection diodes [PHY-GF180IO]_, which are sized for short,
+energy-limited discharge events rather than for continuous voltage stress.
+The line driver and receiver are custom circuits and can use custom
+protection structures and higher-voltage or stacked transistors where the
+line interface needs them.
+
+Hybrid and echo cancellation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**The problem.** The receiver sees its own transmission at full size while
+the far-end signal may be reduced to 6 % of its voltage at 100 MHz (24 dB;
+see :doc:`../phy-electrical`). The echo must be removed to below the noise
+before the receiver can decide symbols. The removal is shared between an
+analog hybrid, an optional analog pre-canceller, and the digital echo
+canceller. Whatever the analog stages leave sets the input range the ADC
+must handle, and so its resolution.
+
+Without a transformer, the hybrid works on the capacitor-coupled pins, and
+its balance depends on how well the on-chip replica network matches the
+line and the external components of :doc:`../magnetics`.
+
+.. list-table:: Approaches to echo removal (published results)
+   :header-rows: 1
+   :widths: 26 37 37
+
+   * - Approach
+     - Published result
+     - Effect on the rest of the design
+   * - Analog hybrid, then a long digital echo canceller only
+     - 802.3ab design point: 120-tap digital echo canceller, ADC input
+       range 2.2 V peak-to-peak for a 2 V peak-to-peak launch
+       [PHY-TUT98]_
+     - ADC needs about 7 effective bits; the most digital taps
+   * - Hybrid plus a 4-tap analog echo pre-canceller before the ADC
+     - 10 dB echo suppression measured, 43 mW from 3 V, about 1 mm² in
+       0.4 µm; removes about 50 digital canceller taps [PHY-LEE00]_; with a
+       few more taps it can relax the ADC by one bit [PHY-LEE01]_
+     - About 1 ADC bit and 50 taps saved per pair, for about 43 mW and
+       1 mm² per pair
+   * - Driver and receiver merged into one circuit
+     - Merges transmission, reception and termination, removes the
+       separate hybrid, and enables adaptive echo cancellation; passes the
+       1000BASE-T tests from 2.5 V in 28 nm [PHY-PAN14]_
+     - Abstract only; no figures for a 180 nm process
+
+The same paper notes that near-end crosstalk from the other pairs is only
+about 16 dB below the uncorrected echo, so more than about 10 dB to 15 dB
+of analog echo cancellation brings no further benefit [PHY-LEE01]_. In
+gf180mcu, the 4-tap pre-canceller's area and power per pair are roughly
+the area of one ADC; it is worth it only if it allows a simpler ADC.
+
+ADC
+~~~
+
+Each of the four pairs needs an analog-to-digital converter (ADC) running at
+the 125 MHz symbol rate. For an ideal :math:`N`-bit converter, the ratio of a
+full-scale sine wave to the rounding noise is
+
+.. math::
+
+   \text{SQNR} = 6.02\,N + 1.76\ \text{dB}
+
+where SQNR is the signal-to-quantisation-noise ratio. A real converter is
+described by its *effective number of bits* (ENOB), found by putting its
+measured signal-to-noise-and-distortion ratio (SNDR) into the same formula:
+
+.. math::
+
+   \text{ENOB} = \frac{\text{SNDR} - 1.76}{6.02}
+
+The 802.3ab design points give the requirement: 6.5 bits ideal (SQNR
+:math:`6.02 \times 6.5 + 1.76 = 40.9` dB) in one, 7 bits ideal
+(:math:`6.02 \times 7 + 1.76 = 43.9` dB) in another [PHY-TUT98]_; an echo
+canceller paper states at least 7 bits, and 8 bits in practice
+[PHY-LEE01]_. The target is therefore an ADC of about 7 effective bits at
+125 MHz (estimate), one bit fewer with analog echo pre-cancellation.
+
+.. list-table:: Published 7-bit to 8-bit ADCs at 100 to 200 million samples
+   per second
+   :header-rows: 1
+   :widths: 30 20 14 12 10 14
+
+   * - Design
+     - Process, supply
+     - Rate (MS/s)
+     - Power
+     - Area
+     - Accuracy
+   * - Folding and interpolating [PHY-HEO02]_
+     - 0.35 µm, 3.3 V
+     - 200
+     - 120 mW
+     - 1.02 mm²
+     - 42.5 dB SFDR
+   * - Folding, for Gigabit Ethernet [PHY-YOON00]_
+     - 0.35 µm
+     - 125
+     - 110 mW
+     - 0.8 mm²
+     - 6.4 ENOB
+   * - Time-interleaved pipelined [PHY-LIMOTYRAKIS05]_
+     - 0.18 µm, 1.8 V
+     - 150
+     - 71 mW
+     - —
+     - 45.4 dB SNDR (7.2 ENOB)
+   * - Pipelined [PHY-JIANG08]_
+     - 0.18 µm, 1.8 V
+     - 200
+     - 22 mW
+     - —
+     - 45 dB SNDR (7.2 ENOB)
+   * - Pipelined, no sample-and-hold [PHY-ZHANG10]_
+     - 0.18 µm, 1.8 V
+     - 100
+     - 23.4 mW
+     - 0.53 mm²
+     - 7.43 ENOB at 1 MHz, 6.94 at 80 MHz
+
+The ENOB values in brackets follow from the formula above; for example
+:math:`(45.4 - 1.76) / 6.02 = 7.2`. The architectures compare as follows:
+
+* **Folding** converters reach 125 MS/s to 200 MS/s in 0.35 µm (at 3.3 V
+  in [PHY-HEO02]_), the closest published match to the gf180mcu 3.3 V
+  transistors, at about 110 mW to 120 mW each.
+* **Pipelined** and **time-interleaved** converters reach the same
+  accuracy at 22 mW to 71 mW, but the published examples use 1.8 V
+  transistors, which gf180mcu does not have. With 3.3 V transistors they
+  would need redesign; their power in gf180mcu is not known.
+* No 8-bit SAR converter at 125 MS/s or above in 0.18 µm was found.
+
+The estimates below use 71 mW to 120 mW and 0.53 mm² to 1.02 mm² per ADC;
+the low end comes from 1.8 V designs and is optimistic for gf180mcu.
+
 References
 ----------
 
