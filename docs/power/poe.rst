@@ -150,28 +150,28 @@ Types and classes
      - Power sourcing equipment output, maximum
      - Power at powered device, maximum
    * - 1
-     - IEEE 802.3af (2003), Clause 33
+     - IEEE 802.3af (2003), :clause:`33`
      - 2
      - 44–57 V
      - 37 V
      - 15.4 W
      - 13 W
    * - 2
-     - IEEE 802.3at (2009), Clause 33
+     - IEEE 802.3at (2009), :clause:`33`
      - 2
      - 50–57 V
      - 42.5 V
      - 30 W
      - 25.5 W
    * - 3
-     - IEEE 802.3bt (2018), Clause 145
+     - IEEE 802.3bt (2018), :clause:`145`
      - 2 or 4 (4 for classes 5 and 6)
      - 50–57 V
      - 42.5 V
      - 60 W
      - 51 W
    * - 4
-     - IEEE 802.3bt (2018), Clause 145
+     - IEEE 802.3bt (2018), :clause:`145`
      - 2 or 4 (4 for classes 5 to 8)
      - 52–57 V
      - 41.2 V
@@ -257,9 +257,9 @@ powered-device voltages from [TPS2372]_, Table 6.
      - 4
 
 Classes 1 to 8, peak powers and power sourcing equipment powers are from
-the Clause 145 tables summarised in [EA-bt]_ (Tables 6, 7 and 14). Class 0
-exists only in Clause 33 and is treated as class 3 by Type 3 and Type 4
-power sourcing equipment. Under the Clause 33 rules (Types 1 and 2, with a
+the :clause:`145` tables summarised in [EA-bt]_ (Tables 6, 7 and 14). Class 0
+exists only in :clause:`33` and is treated as class 3 by Type 3 and Type 4
+power sourcing equipment. Under the :clause:`33` rules (Types 1 and 2, with a
 20 Ω cable allowance for Type 1) the power sourcing equipment supplies
 4.0 W, 7.0 W and 15.4 W for classes 1, 2 and 3 [EA-bt]_. A powered device
 may draw more than its average limit, up to the peak power, for at most
@@ -405,7 +405,7 @@ from the type table.
 
 So a Type 1 powered device must work down to 37 V, and higher-power
 powered devices down to about 42 V, which agrees with [TPS2372]_ Table 6
-(37 V, 42.5 V and 41.2 V). The Ethernet Alliance summary of Clause 145
+(37 V, 42.5 V and 41.2 V). The Ethernet Alliance summary of :clause:`145`
 lists 43.0 V for class 8 on Type 4 power sourcing equipment [EA-bt]_; this
 difference from the simple model has not been resolved here, and a design
 should take the value from the standard itself.
@@ -906,7 +906,7 @@ device is linear between the two points; a capacitive or non-linear load
 breaks it, which is why controllers wait for the voltage to settle and
 some take more than two points. During detection the power
 sourcing equipment may never produce more than 30 V or source more than
-5 mA [EA-bt]_. Under the Clause 33 rules the test points must be at least
+5 mA [EA-bt]_. Under the :clause:`33` rules the test points must be at least
 2 ms apart and the whole detection must take at most 500 ms [UNH-PSE]_.
 Type 3 and Type 4 power sourcing equipment detects each pair set
 separately before powering it [EA-bt]_.
@@ -972,7 +972,7 @@ devices that show a large capacitor instead of a resistor.
 
 If detection fails, the power sourcing equipment waits and tries again.
 The TPS23881 pauses 300–500 ms between attempts [TPS23881]_. Under the
-Clause 33 rules, power sourcing equipment that uses Alternative B must
+:clause:`33` rules, power sourcing equipment that uses Alternative B must
 wait at least 2 s after a failed detection, keeping the port below 2.8 V
 [UNH-PSE]_.
 
@@ -980,7 +980,7 @@ Classification
 ~~~~~~~~~~~~~~
 
 After a valid detection the power sourcing equipment raises the port to
-15.5–20.5 V, limits the current (to at most 100 mA under the Clause 33
+15.5–20.5 V, limits the current (to at most 100 mA under the :clause:`33`
 rules [UNH-PSE]_), and measures the class current. It decides the class
 signature from fixed current bands:
 
@@ -1059,7 +1059,7 @@ long and later events 6.5–12 ms, and makes mark events 6–12 ms long
 Power on
 ~~~~~~~~
 
-Under the Clause 33 rules the power sourcing equipment applies the
+Under the :clause:`33` rules the power sourcing equipment applies the
 operating voltage within 400 ms of a valid detection (otherwise it must
 detect again), with a rise time of at least 15 µs [UNH-PSE]_. For the
 first 50–75 ms it limits the current so that the powered device's
@@ -1084,7 +1084,7 @@ capacitor charges gently:
 
 Sources: [EA-bt]_, [TPS2372]_. The full inrush current is required only
 when the port voltage is above 30 V; between 10 V and 30 V at least 60 mA
-must be available (Clause 33) [UNH-PSE]_ [EA-bt]_. This lets the power
+must be available (:clause:`33`) [UNH-PSE]_ [EA-bt]_. This lets the power
 MOSFET carry less current, and so dissipate less power, while most of the
 supply voltage is across it.
 
@@ -1189,7 +1189,7 @@ Transients
    shorter than 30 µs; between 30 µs and 250 µs it must keep the port
    above 45.3 V (Type 3) or 48.4 V (Type 4) [EA-bt]_.
 
-The supply must also be quiet. Under the Clause 33 rules the ripple and
+The supply must also be quiet. Under the :clause:`33` rules the ripple and
 noise at the port must be below 0.5 V peak-to-peak below 500 Hz, 0.2 V
 from 500 Hz to 150 kHz, 0.15 V from 150 kHz to 500 kHz, and 0.1 V from
 500 kHz to 1 MHz [UNH-PSE]_.
@@ -1200,12 +1200,12 @@ Disconnect detection
 The power sourcing equipment watches for the maintain power signature and
 removes power when it disappears:
 
-* Clause 33 (Types 1 and 2): power must be removed when the current stays
+* :clause:`33` (Types 1 and 2): power must be removed when the current stays
   below 5 mA for longer than 300–400 ms; power must be kept while the
   current exceeds 10 mA for at least 60 ms in every 300–400 ms
   [UNH-PSE]_ [TPS23881]_. Once the decision is taken, the port must be
   below 2.8 V within 500 ms [UNH-PSE]_.
-* Clause 145 (Types 3 and 4): a pulse counts if it lasts at least 6 ms;
+* :clause:`145` (Types 3 and 4): a pulse counts if it lasts at least 6 ms;
   power must be removed when the current stays below 2 mA for more than
   400 ms, and may be removed when the signature has been missing for more
   than 300 ms [EA-bt]_.
@@ -1290,7 +1290,7 @@ In software: LLDP
    Discovery Protocol* (LLDP, IEEE 802.1AB). These are small frames sent
    only to the next device on the cable, with destination MAC address
    01-80-C2-00-00-0E and type field 0x88CC [PoE-LLDP]_. IEEE 802.3
-   Clause 79 defines a "Power via MDI" field carried in them. Its main
+   :clause:`79` defines a "Power via MDI" field carried in them. Its main
    entries are a *PD requested power value* sent by the powered device, a
    *PSE allocated power value* sent by the power sourcing equipment, and
    a *PSE maximum available power* hint; power values are in units of
@@ -1739,7 +1739,7 @@ Two power sourcing equipment ports connected together
    Each sees the other's detection voltage source instead of a 25 kΩ
    signature, so neither detects a valid powered device and neither
    applies power. The detection circuits must survive being driven by the
-   other end: under the Clause 33 rules power sourcing equipment must
+   other end: under the :clause:`33` rules power sourcing equipment must
    withstand a backdrive current of 5 mA at a voltage up to its operating
    voltage and still detect correctly afterwards [UNH-PSE]_. In the full
    design a cable between port A and port B of the same board, with both
@@ -2106,7 +2106,7 @@ Isolation test
    Power over Ethernet ports must withstand one of: 1500 V rms at
    50–60 Hz for 60 s, 2250 V DC for 60 s, or ten 1500 V impulses of
    10/700 µs shape [TI-SLUA736]_. A task-force contribution to IEEE 802.3
-   summarises that Clauses 33 and 145 require this isolation for all
+   summarises that :clause:`Clauses 33 <33>` and :clause:`145` require this isolation for all
    power sourcing equipment and powered devices [PoE-Iso]_ (the Analog
    Devices article cited above describes exceptions for fully enclosed
    devices [ADI-PoE]_; the text of the standard should decide). This
@@ -2362,8 +2362,8 @@ References
 ----------
 
 .. [PoE-IEEE802.3] IEEE Std 802.3-2022, *IEEE Standard for Ethernet*,
-   Clause 33 "Power over Ethernet over 2 pairs" (Types 1 and 2),
-   Clause 145 "Power over Ethernet" (Types 3 and 4) and Clause 79
+   :clause:`33` "Power over Ethernet over 2 pairs" (Types 1 and 2),
+   :clause:`145` "Power over Ethernet" (Types 3 and 4) and :clause:`79`
    (link-layer discovery power fields).
    https://standards.ieee.org/ieee/802.3/10422/ . The standard text was not
    accessible while writing this page; values are taken from the summaries,
@@ -2375,8 +2375,8 @@ References
    https://ethernetalliance.org/wp-content/uploads/2019/12/WP_EA_Overview8023bt_V2p1_FINAL.pdf
 
 .. [UNH-PSE] University of New Hampshire InterOperability Laboratory,
-   Power over Ethernet Consortium, *Clause 33 PSE Parametric Test Suite*,
-   version 2.2 (references IEEE Std 802.3-2005 Clause 33).
+   Power over Ethernet Consortium, :clause:`Clause 33 <33>` *PSE Parametric Test Suite*,
+   version 2.2 (references IEEE Std 802.3-2005 :clause:`33`).
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/CL33_PSE/PSE_Test_Suite_v2.2.pdf
 
 .. [Sifos-PD] Sifos Technologies, *802.3bt PD Conformance Test Suite
