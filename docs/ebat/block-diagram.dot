@@ -1,0 +1,82 @@
+// ebat block diagram.
+// Bold arrows: power negotiation signals between the chip and the board
+// (detection, classification, configuration channel, USB data). Dashed
+// arrows: control and measurements.
+// Fill colours: white with a dashed outline, parts outside the chip; yellow,
+// Power over Ethernet circuits; blue, USB Type-C circuits; green, power
+// monitoring and converter control; orange, the processor.
+//
+// The blocks are placed on a fixed grid (positions in inches) so that the
+// diagram reads top to bottom and fits the width of a documentation page:
+//
+//   row 1 (y=7.6)  connectors and front ends outside the chip
+//   row 2 (y=5.9)  per-port circuits inside the chip
+//   row 3 (y=4.3)  processor
+//   row 4 (y=2.7)  monitoring and converter control
+//   row 5 (y=1.0)  voltage converters outside the chip
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph ebat {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=12, width=1.75, height=0.75,
+           fixedsize=true];
+    edge  [arrowsize=0.8];
+
+    // Outline of the chip, drawn first so it sits behind the blocks.
+    chip [label="ebat", labelloc=b, fontsize=15, fontcolor="#1f4e79",
+          pos="4.0,4.3!", width=8.0, height=4.1, style="rounded,bold",
+          color="#1f4e79", fillcolor="none"];
+
+    // Off-chip connectors and front ends.
+    port_a [pos="1.0,7.6!", width=1.8, height=0.85,
+            label="Port A: RJ45,\npowered-device\nfront end",
+            style="rounded,filled,dashed", fillcolor="#ffffff"];
+    usbc   [pos="4.0,7.6!", width=1.9, height=0.85,
+            label="USB Type-C\nconnector and\npower path",
+            style="rounded,filled,dashed", fillcolor="#ffffff"];
+    port_b [pos="7.0,7.6!", width=1.8, height=0.85,
+            label="Port B: RJ45,\npower sourcing\nswitch",
+            style="rounded,filled,dashed", fillcolor="#ffffff"];
+    conv   [pos="4.0,1.0!", width=3.0, height=0.7,
+            label="Voltage converters\n(input, USB, high-voltage)",
+            style="rounded,filled,dashed", fillcolor="#ffffff"];
+
+    // Per-port circuits.
+    seq  [pos="1.0,5.9!", label="Start-up\nsequencer and\nclass signature",
+          fillcolor="#fff2cc"];
+    cc   [pos="3.05,5.9!", label="Configuration\nchannel\ncircuits",
+          fillcolor="#dbe8f5"];
+    usbd [pos="4.95,5.9!", label="USB serial\nfront end\n(D+, D−)",
+          fillcolor="#dbe8f5"];
+    pse  [pos="7.0,5.9!", label="Detection and\nclassification\nsequencing",
+          fillcolor="#fff2cc"];
+
+    // Processor.
+    cpu [pos="4.0,4.3!", label="RISC-V processor\nand memory",
+         fillcolor="#fbe5d6", width=1.9];
+
+    // Monitoring and converter control.
+    mon  [pos="2.4,2.7!", label="Power monitoring\nand limiting",
+          fillcolor="#e2f0d9"];
+    ctrl [pos="5.6,2.7!", label="Converter\ncontrol",
+          fillcolor="#e2f0d9"];
+
+    // Signals between the chip and the board.
+    port_a -> seq  [dir=both, penwidth=2.5];
+    usbc   -> cc   [dir=both, penwidth=2.5];
+    usbc   -> usbd [dir=both, penwidth=2.5];
+    port_b -> pse  [dir=both, penwidth=2.5];
+
+    // Control.
+    seq  -> cpu  [style=dashed, dir=both];
+    cc   -> cpu  [style=dashed, dir=both];
+    usbd -> cpu  [style=dashed, dir=both];
+    pse  -> cpu  [style=dashed, dir=both];
+    cpu  -> mon  [style=dashed, dir=both];
+    cpu  -> ctrl [style=dashed];
+    conv -> mon  [style=dashed];
+    ctrl -> conv [style=dashed];
+}

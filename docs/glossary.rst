@@ -330,6 +330,27 @@ Glossary
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
 
+   Dual-signature powered device
+      A powered device that presents its own detection signature and class
+      signature on each pair set, so that power sourcing equipment detects,
+      classifies and powers each pair set separately (:clause:`145.3.5`,
+      :clause:`Table 145-27 <145>`, see :ref:`ebat-dual-signature`).
+
+   Single-signature powered device
+      A powered device that presents one detection signature and one class
+      signature for both pair sets together (:clause:`145.3.5`, see
+      :doc:`ebat/power-without-lldp`).
+
+   Midspan
+   Injector
+      Power sourcing equipment placed in the cable between an Ethernet
+      switch and the device it powers. It passes the data through and adds
+      power to the pairs (:clause:`145.2.3`, see :ref:`ebat-pass-through`).
+
+   ebat
+      A reduced variant of evampire that has the power functions only, with
+      no Ethernet data path (see :doc:`ebat/index`).
+
    Return loss
       How much weaker, in decibels, a reflection is than the signal that
       caused it. A port matched to the cable has a high return loss. IEEE

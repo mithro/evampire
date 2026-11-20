@@ -1,0 +1,60 @@
+// A board built around ebat that passes Ethernet data between port A and
+// port B on its own wiring. Power arrives on port A and leaves on port B.
+// Thin edges carry data, bold edges carry power, dashed edges carry control.
+// Every edge carries a text label.
+//
+// Fill colours: far-end equipment #fbe5d6, sockets and magnetics #ffffff,
+// power circuits on the board #fff2cc, ebat #dbe8f5.
+//
+// The blocks are placed on a fixed grid (positions in inches) so that the
+// diagram fits the width of a documentation page:
+//
+//   row 1 (y=4.2)  far-end equipment, sockets and magnetics, data path
+//   row 2 (y=2.4)  powered-device front end and power sourcing switch
+//   row 3 (y=0.8)  ebat
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pass_through {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#ffffff",
+           fontname="Helvetica", fontsize=12, width=1.6, height=0.8,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.8];
+
+    // Outline of the board, drawn first so it sits behind the blocks.
+    board [label="Board built around ebat", labelloc=b, fontsize=12,
+           fontcolor="#555555", pos="4.35,2.6!", width=5.0, height=4.5,
+           style="rounded,dashed", color="#888888", fillcolor="none"];
+
+    up   [pos="0.6,4.2!", label="Upstream\npower sourcing\nequipment",
+          width=1.45, height=0.9, fillcolor="#fbe5d6"];
+    mag_a [pos="2.95,4.2!", label="Port A:\nRJ45 and\nmagnetics"];
+    mag_b [pos="5.75,4.2!", label="Port B:\nRJ45 and\nmagnetics"];
+    down [pos="8.1,4.2!", label="Downstream\npowered\ndevice",
+          width=1.45, height=0.9, fillcolor="#fbe5d6"];
+
+    pd  [pos="2.95,2.5!", label="Powered-device\nfront end",
+         fillcolor="#fff2cc"];
+    pse [pos="5.75,2.5!", label="Power sourcing\nswitch",
+         fillcolor="#fff2cc"];
+
+    ebat [pos="4.35,0.95!", label="ebat", width=3.2, height=0.6,
+          fillcolor="#dbe8f5"];
+
+    // Data, including LLDP frames, passes from cable to cable.
+    up    -> mag_a [dir=both, label="cable"];
+    mag_a -> mag_b [dir=both, label="data pairs,\nLLDP included"];
+    mag_b -> down  [dir=both, label="cable"];
+
+    // Power through the cable-side centre taps.
+    mag_a -> pd    [penwidth=2.5, label="centre taps"];
+    pse   -> mag_b [penwidth=2.5, label="centre taps"];
+
+    // ebat controls the power circuits only.
+    pd  -> ebat [style=dashed, dir=both, headport=nw,
+                 label="class, status  "];
+    pse -> ebat [style=dashed, dir=both, headport=ne,
+                 label="  detection, class"];
+}
