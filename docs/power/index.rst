@@ -117,7 +117,7 @@ Ethernet in, USB out
 USB in, Ethernet out
    The Ethernet port that supplies power advertises the highest Power over
    Ethernet type and class whose power at the power sourcing equipment does
-   not exceed :math:`P_\text{out}`. :doc:`poe/index` explains how the class is
+   not exceed :math:`P_\text{out}`. :doc:`poe/translation` explains how the class is
    advertised and gives worked examples for each USB Power Delivery offer.
 
 Ethernet in, Ethernet out
@@ -160,7 +160,7 @@ The software uses these changes to move power between ports. When a device
 on one port is unplugged or uses less than its share, the software raises
 the offer on another port. When a new device is plugged in, the software
 first lowers the offers on the other ports to make room. :doc:`usb-pd/index` and
-:doc:`poe/index` describe how the budget is divided, and how a port's offer is
+:doc:`poe/sharing` describe how the budget is divided, and how a port's offer is
 reduced safely while a device is using it.
 
 .. _power-board-configs:

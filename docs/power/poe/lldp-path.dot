@@ -1,0 +1,33 @@
+// LLDP frames on an evampire board: each port's LLDP frames go only to the
+// processor, and all other frames are forwarded between the ports. Every
+// edge carries a text label.
+//
+// Fill colours: far-end equipment #fbe5d6, evampire #dbe8f5, ports
+// #ffffff.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph lldp_path {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.5,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
+
+    up   [label="Power sourcing\nequipment upstream", fillcolor="#fbe5d6"];
+    down [label="Powered device\ndownstream", fillcolor="#fbe5d6"];
+    pa   [label="Port A", fillcolor="#ffffff"];
+    pb   [label="Port B", fillcolor="#ffffff"];
+    fwd  [label="Forwarding logic", fillcolor="#dbe8f5"];
+    cpu  [label="Processor", fillcolor="#dbe8f5"];
+
+    { rank=same; up; down; }
+    { rank=same; pa; pb; }
+
+    up  -> pa   [dir=both, label="cable"];
+    down -> pb  [dir=both, label="cable"];
+    pa  -> fwd  [dir=both, label="other frames"];
+    fwd -> pb   [dir=both, label="other frames"];
+    pa  -> cpu  [dir=both, style=dashed, label="LLDP, port A"];
+    pb  -> cpu  [dir=both, style=dashed, label="LLDP, port B"];
+}

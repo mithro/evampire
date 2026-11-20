@@ -1,0 +1,47 @@
+// An Ethernet port that can take either Power over Ethernet role. Every
+// edge carries a text label; bold edges carry power, dashed edges carry
+// control and status.
+//
+// Fill colours: power circuits #fff2cc, evampire and the power bus
+// #dbe8f5, connectors #ffffff.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph dual_role {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.3,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
+
+    cable [label="RJ45 and cable-side\npower path", fillcolor="#ffffff"];
+
+    swpd  [label="Disconnect switch,\npowered-device path", fillcolor="#fff2cc"];
+    swpse [label="Disconnect switch,\npower sourcing path", fillcolor="#fff2cc"];
+
+    pd    [label="Powered-device\nblocks", fillcolor="#fff2cc"];
+    pse   [label="Power sourcing\nequipment channels", fillcolor="#fff2cc"];
+
+    conv  [label="Input converter", fillcolor="#fff2cc"];
+    hv    [label="High-voltage\nconverter", fillcolor="#fff2cc"];
+    bus   [label="Internal\npower bus", style="filled,bold", fillcolor="#dbe8f5"];
+    evp   [label="evampire", fillcolor="#dbe8f5"];
+
+    { rank=same; swpd; swpse; }
+    { rank=same; pd; pse; }
+    { rank=same; conv; hv; }
+
+    cable -> swpd  [penwidth=2.5, label="power in"];
+    swpse -> cable [penwidth=2.5, label="power out"];
+    swpd  -> pd    [penwidth=2.5, label="power"];
+    pd    -> conv  [penwidth=2.5, label="power"];
+    conv  -> bus   [penwidth=2.5, label="power"];
+    pse   -> swpse [penwidth=2.5, label="power"];
+    hv    -> pse   [penwidth=2.5, label="power"];
+    bus   -> hv    [penwidth=2.5, label="power"];
+
+    evp -> swpd  [style=dashed, label="select"];
+    evp -> swpse [style=dashed, label="select"];
+    evp -> pse   [style=dashed, label="sequence"];
+    pd  -> evp   [style=dashed, label="status"];
+}

@@ -1,0 +1,61 @@
+// Circuit blocks of a powered-device controller, as in commercial
+// controller chips. Every edge carries a text label; bold edges carry
+// power, thin edges carry control, dashed edges are outputs.
+//
+// Fill colours: power circuits #fff2cc, evampire #dbe8f5, external parts
+// #ffffff.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pd_controller {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.2,
+           ranksep=0.35, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
+
+    vin   [label="Bridge outputs\nVDD and VSS, 0–57 V", fillcolor="#ffffff"];
+    rdet  [label="Signature\nresistor 24.9 kΩ", fillcolor="#ffffff"];
+    rcls  [label="Class\nresistor", fillcolor="#ffffff"];
+    cbulk [label="Input capacitor and\ninput converter", fillcolor="#ffffff"];
+    evp   [label="evampire", fillcolor="#dbe8f5"];
+
+    subgraph cluster_ic {
+        label="Powered-device controller"; labelloc="t"; labeljust="l";
+        style="rounded,bold"; color="#1f4e79";
+
+        ref    [label="Reference", fillcolor="#fff2cc"];
+        cmp    [label="Window\ncomparators", fillcolor="#fff2cc"];
+        otsd   [label="Thermal\nshutdown", fillcolor="#fff2cc"];
+        fsm    [label="State logic", fillcolor="#fff2cc"];
+        detsw  [label="Signature\nswitch", fillcolor="#fff2cc"];
+        markr  [label="Mark-event\nload", fillcolor="#fff2cc"];
+        clsreg [label="Class current\nregulator", fillcolor="#fff2cc"];
+        hs     [label="Isolation switch\nwith current limit", fillcolor="#fff2cc"];
+        pg     [label="Power good and\nassigned class", fillcolor="#fff2cc"];
+    }
+
+    { rank=same; ref; cmp; otsd; }
+    { rank=same; detsw; markr; clsreg; }
+    { rank=same; hs; pg; }
+    { rank=same; rdet; rcls; }
+    { rank=same; cbulk; evp; }
+    markr -> pg [style=invis];
+    detsw -> hs [style=invis];
+    rdet -> cbulk [style=invis];
+
+    vin  -> cmp    [label="sense"];
+    vin  -> hs     [penwidth=2.5, label="  VSS"];
+    ref  -> cmp    [label="thresholds"];
+    otsd -> fsm    [label="hot"];
+    cmp  -> fsm    [label="step"];
+    fsm  -> detsw  [label="on"];
+    fsm  -> markr  [label="on"];
+    fsm  -> clsreg [label="on"];
+    fsm  -> hs     [label="on"];
+    fsm  -> pg     [label="count"];
+    detsw -> rdet  [dir=both, label="25 kΩ"];
+    clsreg -> rcls [dir=both, label="current"];
+    hs   -> cbulk  [penwidth=2.5, label="  RTN"];
+    pg   -> evp    [style=dashed, label="status"];
+}
