@@ -71,6 +71,8 @@ linkcheck_ignore = [
     r"https://www\.analog\.com/.*",
     r"https://www\.st\.com/.*",
     r"https://www\.microchip\.com/.*",
+    # JEDEC answers 403 to the GitHub Actions runners.
+    r"https://www\.jedec\.org/.*",
 ]
 
 myst_enable_extensions = [
