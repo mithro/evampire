@@ -64,10 +64,10 @@ How evampire uses the power
 How the messages are carried
 ----------------------------
 
-:doc:`cc-signalling`
-   The electrical signal on the configuration channel.
 :doc:`packets`
    How a message is framed, coded and checked.
+:doc:`cc-signalling`
+   The electrical signal on the configuration channel.
 
 What evampire needs to build it
 -------------------------------
@@ -100,8 +100,8 @@ What evampire needs to build it
    power-translation
    two-ports
    monitoring
-   cc-signalling
    packets
+   cc-signalling
    software
    analogue
    cc-protection
