@@ -7,12 +7,14 @@ What the chip does
 evampire is a three-port gigabit Ethernet hub on a single chip.
 
 * **Two external ports** (called *port A* and *port B*) each connect to an
-  external Ethernet transceiver chip. The transceiver is the part that drives
-  and receives the electrical signals on the Ethernet cable. Ethernet
-  documentation usually calls this transceiver a *PHY*, short for "physical
-  layer device". Each transceiver connects to an RJ45 Ethernet socket.
-* **One internal port** connects to a small RISC-V microcontroller inside the
-  chip.
+  Ethernet cable through an Ethernet transceiver. The transceiver is the part
+  that drives and receives the electrical signals on the cable (see
+  :doc:`ethernet/phy-electrical`). Ethernet documentation usually calls it a
+  *PHY*, short for "physical layer device". In the first version the
+  transceiver is a separate chip; in the full design it is part of evampire.
+  Each port ends in an RJ45 Ethernet socket (see :doc:`ethernet/magnetics`).
+* **One internal port** connects to a small `RISC-V <https://riscv.org/>`_
+  microcontroller inside the chip.
 
 Data arriving on port A is sent out of port B, and data arriving on port B is
 sent out of port A. The chip does not wait for a whole frame to arrive before
@@ -26,7 +28,8 @@ frames into the stream.
 The processor also manages power. A board built around evampire can be
 powered from an Ethernet cable and supply power over USB Type-C, or be
 powered from USB Type-C and supply power over an Ethernet cable. The
-processor negotiates the role and power level on each port.
+processor negotiates the role and power level on each port (see
+:doc:`power/index`).
 
 Terms used in this documentation
 --------------------------------
@@ -34,11 +37,13 @@ Terms used in this documentation
 Frame
    One Ethernet message. A frame starts with the 6-byte destination address
    and the 6-byte source address, carries between 46 and 1500 bytes of
-   payload in a normal frame, and ends with a 4-byte checksum.
+   payload in a normal frame, and ends with a 4-byte checksum
+   (:clause:`3`).
 
 MAC address
    The 48-bit address that identifies a device on an Ethernet network. Every
-   frame carries a destination MAC address and a source MAC address.
+   frame carries a destination MAC address and a source MAC address
+   (:clause:`3`).
 
 RGMII
    *Reduced Gigabit Media Independent Interface*. A digital interface
@@ -59,7 +64,8 @@ Ethernet transceivers
      speed negotiation. The forwarding logic connects to an integrated
      transceiver through the same one-byte-per-clock interface it uses with
      an RGMII interface. See :doc:`ethernet/phy-electrical`.
-   * Gigabit Ethernet (1000BASE-T, 1000 Mbit/s over four pairs) is a hard
+   * Gigabit Ethernet (1000BASE-T, 1000 Mbit/s over four pairs,
+     :clause:`40`) is a hard
      requirement for every port, in both the first version and the full
      design. The integrated transceiver must therefore implement 1000BASE-T.
      Whether it also supports 100 Mbit/s and 10 Mbit/s is not yet fixed.
@@ -70,7 +76,8 @@ Connection to the cable
    * The full design connects the cable to the board without coupling
      transformers. The jobs the transformers normally do, such as electrical
      isolation, rejecting voltage that is common to both wires of a pair,
-     and giving a path for Power over Ethernet current, are done instead by
+     and giving a path for Power over Ethernet current (see
+     :doc:`power/poe`), are done instead by
      active analog circuits on evampire together with a small number of
      external passive components. See :doc:`ethernet/magnetics`.
 
@@ -105,7 +112,7 @@ Memory
      1522 bytes in each direction. That is 1500 bytes of payload plus the
      two addresses, the 2-byte type field, the 4-byte checksum and an
      optional 4-byte tag used to separate virtual networks sharing the same
-     cable. With two frames, the processor can work on
+     cable (:clause:`3`). With two frames, the processor can work on
      one frame while the hardware fills or empties the other.
    * Frames longer than the processor's buffer (for example "jumbo" frames of
      up to about 9000 bytes) are still forwarded between ports A and B, but
@@ -116,13 +123,15 @@ Processor
    * The processor's network traffic is expected to be well below
      1 Mbit/s. The processor does not need to keep up with gigabit traffic.
    * The processor also controls the configuration interface of each
-     external transceiver.
+     external transceiver (:clause:`22`, see :doc:`ethernet/rgmii`).
 
 Power bridging
    * A board built around evampire can take its power from an Ethernet
-     cable (Power over Ethernet) or from a USB Type-C connector (USB Power
-     Delivery), and can pass that power on through the other kind of port.
-     See :doc:`power/index`.
+     cable (Power over Ethernet, see :doc:`power/poe`) or from a USB Type-C
+     connector (USB Power Delivery, see :doc:`power/usb-pd`), and can pass
+     that power on through the other kind of port. See :doc:`power/index`;
+     the names of the two ends of a powered cable used below are explained
+     in :ref:`power-roles`.
    * **Ethernet in, USB out:** evampire receives power from an Ethernet
      port as a *powered device* and supplies power on a USB Type-C port as
      a USB Power Delivery *source*.
@@ -143,10 +152,13 @@ Power bridging
      either role and has two USB Type-C ports.
    * USB Power Delivery is implemented mostly in software on the RISC-V
      processor. The dedicated hardware is kept to the minimum needed: the
-     analog circuits that connect to the configuration channel wires, and
-     only those digital helpers whose timing cannot be met in software.
+     analog circuits that connect to the configuration channel wires (the
+     two wires of a USB Type-C connector that carry the power negotiation,
+     see :doc:`power/usb-pd`), and only those digital helpers whose timing
+     cannot be met in software.
    * All Power over Ethernet types and all USB Power Delivery voltage ranges
      are documented. The maximum power the board supports is not yet fixed.
 
 Process
-   * The chip targets the gf180mcu process through wafer.space.
+   * The chip targets the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
+     process through `wafer.space <https://wafer.space/>`_.

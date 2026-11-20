@@ -13,7 +13,9 @@ The Ethernet standard is IEEE Std 802.3-2022, *IEEE Standard for Ethernet*
 divided into numbered clauses, each covering one part of Ethernet, and each
 clause into numbered subclauses. A PDF copy of the standard is available at
 no cost through the `IEEE GET Program
-<https://ieeexplore.ieee.org/browse/standards/get-program/page/series?id=68>`_,
+<https://standards.ieee.org/products-programs/ieee-get-program/>`_ (`IEEE 802
+standards in the programme
+<https://ieeexplore.ieee.org/browse/standards/get-program/page/series?id=68>`_),
 after accepting its terms of use.
 
 The short descriptions below say what each clause covers, in the terms used
@@ -116,3 +118,29 @@ Clause 146
 
 Clause 147
    10BASE-T1S: 10 Mbit/s over a single twisted pair over short distances.
+
+USB
+---
+
+Both USB specifications are free to download from the USB Implementers
+Forum document library, each as a zip file containing the PDF. They are
+divided into numbered sections, tables and figures. A reference such as
+"PD Table 5.10" or "Type-C Section 4.5.2.2" links to the entry for the whole
+specification below; the number locates the part within the PDF.
+
+.. _usb-pd-specification:
+
+USB Power Delivery Specification ("PD")
+   Revision 3.3, Version 1.0, 2026-10-16. The messages, timing and power
+   levels used to negotiate power over a USB Type-C cable.
+   `Document library page <https://www.usb.org/document-library/usb-power-delivery>`__
+   (download ``USB_PD_R3.3_V1.0.zip``).
+
+.. _usb-type-c-specification:
+
+USB Type-C Cable and Connector Specification ("Type-C")
+   Release 2.5, March 2026. The connector, the cable, and the configuration
+   channel wires that detect a connection, its orientation and the basic
+   current a source offers.
+   `Document library page <https://www.usb.org/document-library/usb-type-cr-cable-and-connector-specification-release-25>`__
+   (download ``USB Type-C 2.5 Release 202603``).

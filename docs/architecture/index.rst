@@ -2,7 +2,8 @@ Architecture
 ============
 
 This page gives a high-level view of the blocks inside evampire and how data
-moves between them. Later pages describe each external interface in detail.
+moves between them. The :doc:`../ethernet/index` and :doc:`../power/index`
+pages describe each external interface in detail.
 
 Block diagram
 -------------
@@ -36,8 +37,9 @@ Rate-matching buffers
    Received data arrives on the clock that the transceiver recovers from the
    cable, which is set by the crystal at the far end of the cable.
    Transmitted data leaves on evampire's own 125 MHz clock. These two clocks
-   have the same nominal frequency but are not identical. Ethernet allows
-   each end to be up to 100 parts per million away from 125 MHz, so the two
+   have the same nominal frequency but are not identical. Gigabit Ethernet
+   allows each end to be up to 100 parts per million away from 125 MHz
+   (:clause:`40`, see :doc:`../ethernet/phy-electrical`), so the two
    can differ by up to 200 parts per million. A small buffer of a few bytes
    in each direction crosses the data from the receive clock to the transmit
    clock and absorbs this difference over the length of one frame. The gap
@@ -58,8 +60,8 @@ Output selectors A and B
 Destination address filter and checksum check
    Watches the frames received on both external ports, taking them from the
    output of the rate-matching buffers so that all of its logic runs on the
-   one 125 MHz clock. The first 6 bytes of
-   every frame are its destination MAC address. The filter compares those
+   one 125 MHz clock. The first 6 bytes of every frame are its destination
+   MAC address (:clause:`3`). The filter compares those
    bytes with a programmed address, using a programmed mask to select which
    bits must match. A matching frame is copied into the receive frame
    buffer. The 4-byte checksum at the end of the frame is checked as the
@@ -76,12 +78,14 @@ Receive and transmit frame buffers
 
 Start pattern and checksum generator
    Every Ethernet frame on the wire starts with a fixed 8-byte pattern that
-   lets the receiver lock on to the frame, and ends with a 4-byte checksum.
+   lets the receiver lock on to the frame, and ends with a 4-byte checksum
+   (:clause:`3`; see also the frame structure on :doc:`../ethernet/rgmii`).
    This block adds both to frames from the processor, so that the processor
    only writes the addresses, type field and payload.
 
 Microcontroller
-   A small 32-bit RISC-V core with its own program and data memory. It
+   A small 32-bit `RISC-V <https://riscv.org/>`_ core with its own program
+   and data memory. It
    reads frames from the receive buffer, writes frames to the transmit
    buffer, sets the address filter, and handles any higher-level network
    protocol in software. Its network traffic is well below 1 Mbit/s.
@@ -90,7 +94,8 @@ Transceiver configuration interface
    A two-wire serial interface (a clock and a bidirectional data line) that
    every Ethernet transceiver provides for reading its status, such as
    whether a cable is connected and at what speed, and for changing its
-   settings.
+   settings. The interface and its standard registers are defined in
+   :clause:`22`; :doc:`../ethernet/rgmii` describes how evampire uses it.
 
 Power negotiation interface
    The analog and digital circuits the processor uses to negotiate power on
@@ -103,9 +108,10 @@ Power negotiation interface
 
 Clock and reset
    A 125 MHz reference clock drives the transmit side of both RGMII
-   interfaces, the forwarding logic and the address filter. Many Ethernet
-   transceivers can output a 125 MHz clock for this purpose. The processor
-   may run from a slower clock derived from it.
+   interfaces, the forwarding logic and the address filter. Where this clock
+   comes from (a separate oscillator, or a clock output of an external
+   transceiver) is discussed on :doc:`../ethernet/rgmii`. The processor may
+   run from a slower clock derived from it.
 
 Data paths
 ----------
