@@ -25,3 +25,4 @@ standards.
    architecture/index
    ethernet/index
    power/index
+   standards
