@@ -1,0 +1,38 @@
+// How the centre tap of the transformer winding on the transceiver side is
+// connected for the two kinds of line driver. Left: a current-mode driver
+// draws its current through the winding from the analogue supply. Right: a
+// voltage-mode driver sets its own common-mode voltage, and the centre tap
+// goes to ground only through a capacitor.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph centretap {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.0"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.3, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, penwidth=1.5];
+
+    t_c [pos="1.6,3.05!", shape=plaintext, style="", width=3.0, height=0.3,
+         fontsize=12, label="Current-mode driver"];
+    t_v [pos="5.6,3.05!", shape=plaintext, style="", width=3.0, height=0.3,
+         fontsize=12, label="Voltage-mode driver"];
+
+    // Current-mode.
+    c_sup [pos="1.6,2.5!", width=1.6, label="Analogue supply", fillcolor="#e2efda"];
+    c_win [pos="1.6,1.5!", width=1.6, label="Winding,\ncentre tap", fillcolor="#ffffff"];
+    c_drv [pos="1.6,0.4!", width=1.9, label="Driver: current\nsinks on each wire",
+           fillcolor="#fbe5d6"];
+
+    // Voltage-mode.
+    v_cap [pos="5.6,2.5!", width=1.6, label="0.1 µF to ground", fillcolor="#e2efda"];
+    v_win [pos="5.6,1.5!", width=1.6, label="Winding,\ncentre tap", fillcolor="#ffffff"];
+    v_drv [pos="5.6,0.4!", width=1.9, label="Driver: sets its own\ncommon-mode voltage",
+           fillcolor="#fbe5d6"];
+
+    c_sup -- c_win [label="  DC current and bias"];
+    c_win -- c_drv [label="  both wires of the pair"];
+    v_cap -- v_win [style=dashed, label="  AC path only, no DC"];
+    v_win -- v_drv [label="  both wires of the pair"];
+}

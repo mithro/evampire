@@ -251,6 +251,14 @@ ANSI X3.263 (FDDI over twisted pair)
 Safety and electromagnetic compatibility
 ----------------------------------------
 
+.. _std-iec-60384-14:
+
+IEC 60384-14 (safety capacitors)
+   IEC 60384-14:2023. The safety classes (X and Y) of capacitors used for
+   interference suppression and across the supply mains, including those
+   that may bridge an isolation barrier.
+   `IEC webstore page <https://webstore.iec.ch/publication/64361>`__.
+
 .. _std-iec-62368-1:
 
 IEC 62368-1 (equipment safety)
