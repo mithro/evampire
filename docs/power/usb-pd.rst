@@ -247,14 +247,20 @@ the first threshold is meaningful (0.248 V, Type-C Table 4-35).
 machine (Type-C Section 4.5.2.2.3 to 4.5.2.2.5):
 
 #. With nothing attached, the sink presents Rd on both CC pins and waits.
-#. When at least one CC pin rises above the "nothing connected" threshold,
-   the sink waits for the CC state to stay stable for *tCCDebounce*,
-   100 ms to 200 ms (Type-C Table 4-34), and for VBUS to appear.
-#. The sink is then attached. The CC pin that shows Rp is the one connected
-   through the cable. This is how the orientation is found. The other CC pin
-   stays near 0 V.
-#. The source, which has been doing the same debounce on its side, turns
-   VBUS on within *tVBUSON*, at most 275 ms (Type-C Table 4-32).
+#. The source sees Rd on one of its CC pins, waits for it to stay stable
+   for *tCCDebounce*, 100 ms to 200 ms (Type-C Table 4-34), and then turns
+   VBUS on, reaching 5 V within *tVBUSON*, at most 275 ms
+   (Type-C Table 4-32).
+#. On the sink side, when one CC pin rises above the "nothing connected"
+   threshold, the sink waits for the CC state to stay stable for
+   tCCDebounce and for VBUS to be present. It is then attached.
+#. The CC pin that shows Rp is the one connected through the cable. This is
+   how the orientation is found. The other CC pin stays near 0 V.
+
+A sink that is powered only from VBUS cannot start this process until VBUS
+is present, so it must show Rd before it has any power (see
+`Rd while unpowered ("dead battery")`_). It then completes its own debounce
+after it has powered up.
 
 **Detach.** The sink treats the cable as removed when VBUS falls below
 *vSinkDisconnect* (3.67 V at 5 V operation) and must react within
@@ -605,9 +611,10 @@ A packet on the wire has five parts (PD Section 5.3.1.1, Figure 5.1):
 **4b5b coding.** Except for the preamble, the data is sent in 5-bit
 *symbols*. Each 4-bit nibble is replaced by a 5-bit code from a fixed table,
 and a few further 5-bit codes are reserved as special symbols (*K-codes*)
-that never appear in data (PD Section 5.3.1.1.2, Table 5.2). The table is
-chosen so that the coded stream never has long runs without ``1`` bits.
-Within each symbol, bit b0 is sent first.
+that never appear in data (PD Section 5.3.1.1.2, Table 5.2). Because the
+special symbols cannot occur in data, a receiver can find the start and end
+of a message without counting bits. Within each symbol, bit b0 is sent
+first.
 
 .. list-table:: 4b5b codes (PD Table 5.2), written b4 b3 b2 b1 b0
    :header-rows: 1
