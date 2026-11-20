@@ -107,9 +107,9 @@ The instruction rate needed while a packet arrives is:
 
 .. math::
 
-   R_\text{rx} = N_\text{rx} \cdot f_\text{bit}
-              = 10.25 \times 12 \times 10^{6}\ \text{s}^{-1}
-              = 123 \times 10^{6}\ \text{instructions/s}
+   R_\text{rx} &= N_\text{rx} \cdot f_\text{bit} \\
+               &= 10.25 \times 12 \times 10^{6}\ \text{s}^{-1} \\
+               &= 123 \times 10^{6}\ \text{instructions/s}
 
 .. list-table::
    :header-rows: 1
@@ -154,9 +154,9 @@ here. This gives:
 
 .. math::
 
-   R_\text{tx} = N_\text{tx} \cdot f_\text{bit}
-              = 8.25 \times 12 \times 10^{6}\ \text{s}^{-1}
-              = 99 \times 10^{6}\ \text{instructions/s}
+   R_\text{tx} &= N_\text{tx} \cdot f_\text{bit} \\
+               &= 8.25 \times 12 \times 10^{6}\ \text{s}^{-1} \\
+               &= 99 \times 10^{6}\ \text{instructions/s}
 
 .. list-table::
    :header-rows: 1
@@ -190,9 +190,9 @@ which need an instruction rate during that interval of:
 
 .. math::
 
-   R_\text{reply} = \frac{N_\text{reply}}{t_\text{reply}}
-                  \ge \frac{15}{541.7\ \text{ns}}
-                  = 27.7 \times 10^{6}\ \text{instructions/s}
+   R_\text{reply} &= \frac{N_\text{reply}}{t_\text{reply}}
+                   \ge \frac{15}{541.7\ \text{ns}} \\
+                  &= 27.7 \times 10^{6}\ \text{instructions/s}
 
 .. list-table::
    :header-rows: 1
@@ -290,10 +290,10 @@ of 12 MHz; it needs fewer fast flip-flops but a finer phase adjustment.
 
 The sampling logic runs at 48 MHz or more in the oversampling case. On
 gf180mcu, a D flip-flop of the 7-track standard cell library has a
-clock-to-output delay of 0.676 ns and a setup time of 0.229 ns, at the
-typical corner, 5 V and 25 °C ([USBSER-GF180-SC]_, cell
+clock-to-output delay of 0.676 ns and a setup time of 0.229 ns, at the
+typical corner, 5 V and 25 °C ([USBSER-GF180-SC]_, cell
 ``gf180mcu_fd_sc_mcu7t5v0__dffq_1``). Together they take a small part of the
-20.8 ns period of 48 MHz. Custom fast cells, for example
+20.8 ns period of 48 MHz. Custom fast cells, for example
 :wikipedia:`current-mode logic <Current-mode_logic>`, are an option for a
 higher oversampling rate.
 
@@ -375,29 +375,29 @@ Summary of the steps
    :widths: 30 22 22 26
 
    * - Hardware added
-     - Receive rate (instructions/s)
-     - Transmit rate (instructions/s)
-     - Deadline for software
+     - Receive (10\ :sup:`6` instr./s)
+     - Transmit (10\ :sup:`6` instr./s)
+     - Shortest deadline
    * - None
-     - 123 × 10\ :sup:`6`
-     - 99 × 10\ :sup:`6`
-     - Every sample, ± 23.2 ns; reply within 541.7 ns
-   * - Receive deserialiser
-     - 18 × 10\ :sup:`6`
-     - 99 × 10\ :sup:`6`
-     - Each byte, :math:`D \times 666.7` ns; reply within 541.7 ns
-   * - and transmit serialiser
-     - 18 × 10\ :sup:`6`
-     - 3 × 10\ :sup:`6`
-     - Each byte; reply within 541.7 ns
-   * - and CRC in hardware
-     - 7.5 × 10\ :sup:`6`
-     - 3 × 10\ :sup:`6`
-     - Each byte; reply within 541.7 ns
-   * - and automatic handshakes
-     - At the data rate
-     - At the data rate
-     - None at packet level; 50 ms for requests
+     - 123
+     - 99
+     - Each sample
+   * - Deserialiser
+     - 18
+     - 99
+     - Reply, 541.7 ns
+   * - and serialiser
+     - 18
+     - 3
+     - Reply, 541.7 ns
+   * - and CRC
+     - 7.5
+     - 3
+     - Reply, 541.7 ns
+   * - and handshakes
+     - Data rate
+     - Data rate
+     - Request, 50 ms
 
 Working plan for the split
 --------------------------
@@ -428,50 +428,50 @@ other hardware; the figures for evampire come from the analysis above.
 .. list-table:: USB device implementations and their hardware
    :name: tab-usbser-refs
    :header-rows: 1
-   :widths: 18 10 24 26 22
+   :widths: 22 12 30 36
 
    * - Project
      - Speed
      - Hardware and clock
      - Done in hardware
-     - Source
    * - V-USB
      - Low
-     - AVR microcontroller, 12 MHz to 20 MHz
-     - Nothing; one edge-triggered interrupt. CRC not checked except at
-       18 MHz
-     - [USBSER-VUSB]_, ``usbdrv.h``, ``Readme.txt``
+     - AVR, 12 MHz to 20 MHz
+     - Nothing; one interrupt on an edge. CRC not checked, except at 18 MHz
    * - rv003usb
      - Low
-     - CH32V003 RISC-V microcontroller, 48 MHz
+     - CH32V003 RISC-V, 48 MHz
      - Nothing; a pin-change interrupt. CRC computed while receiving
-     - [USBSER-RV003USB]_, ``README.md``
    * - Pico-PIO-USB
      - Full
-     - RP2040 programmable I/O, system clock a multiple of 12 MHz
-     - Receive edge detection, NRZI decode, end of packet; transmit line
-       driving. Stuffing on transmit, CRC and handshakes in software
-     - [USBSER-PICO-PIO-USB]_, ``src/usb_rx.pio``, ``src/pio_usb.c``
+     - RP2040 I/O state machines, a multiple of 12 MHz
+     - Receive edge detection, NRZI decode, end of packet; transmit line driving
    * - ValentyUSB with eptri
      - Full
      - iCE40UP5K FPGA (Fomu), 48 MHz and 12 MHz
-     - 4× oversampling, NRZI, stuffing, CRC, handshakes, endpoint FIFOs
-     - [USBSER-VALENTYUSB]_, ``cpu/eptri.py``; [USBSER-FOBOOT]_
+     - Sampling at 4 times the bit rate, NRZI, stuffing, CRC, replies, endpoint buffers
    * - TinyFPGA bootloader
      - Full
      - FPGA, 48 MHz
-     - Whole CDC-ACM serial port in logic
-     - [USBSER-TINYFPGA]_, ``usb_serial_ctrl_ep.v``
-   * - ulixxe ``usb_cdc``
+     - The whole CDC-ACM serial port
+   * - ``usb_cdc``
      - Full
-     - FPGA logic, 48 MHz
-     - Whole CDC-ACM serial port in logic, 1158 iCE40 logic cells
-     - [USBSER-ULIXXE]_, ``README.md``
-   * - Tiny Tapeout GF 0.2, project 130
+     - FPGA, 48 MHz
+     - The whole CDC-ACM serial port, in 1158 iCE40 logic cells
+   * - Tiny Tapeout GF 0.2 project 130
      - Full
-     - gf180mcu chip, ordinary digital I/O, 48 MHz
-     - CDC-ACM to UART bridge in logic, based on the TinyFPGA design
-     - [USBSER-TTGF130]_
+     - gf180mcu chip, standard digital I/O, 48 MHz
+     - A CDC-ACM to UART bridge, based on the TinyFPGA design
+
+The sources are: V-USB [USBSER-VUSB]_, ``usbdrv.h`` and ``Readme.txt``;
+rv003usb [USBSER-RV003USB]_, ``README.md``; Pico-PIO-USB
+[USBSER-PICO-PIO-USB]_, ``src/usb_rx.pio`` and ``src/pio_usb.c``, where
+transmit bit stuffing, the CRC and the handshakes are in software;
+ValentyUSB [USBSER-VALENTYUSB]_, ``cpu/eptri.py``, and the Fomu bootloader
+[USBSER-FOBOOT]_; TinyFPGA [USBSER-TINYFPGA]_, ``usb_serial_ctrl_ep.v``;
+``usb_cdc`` [USBSER-ULIXXE]_, ``README.md``; and the Tiny Tapeout project
+page [USBSER-TTGF130]_.
+
 
 The pure-software projects run at low speed, where a bit lasts 666.7 ns;
 the low-speed limits they work around are discussed in :doc:`alternatives`.

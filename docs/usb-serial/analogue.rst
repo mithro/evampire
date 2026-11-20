@@ -30,40 +30,33 @@ The full-speed driver
    7.1.1, section 7.1.2.1, Table 7‑7, Table 7‑9)
    :name: tab-usbser-driver
    :header-rows: 1
-   :widths: 40 15 15 15 15
+   :widths: 55 15 15 15
 
    * - Parameter
-     - Symbol
      - Minimum
      - Maximum
      - Unit
-   * - Output low voltage, 1.5 kΩ load to 3.6 V
-     - VOL
+   * - Output low voltage, VOL, 1.5 kΩ load to 3.6 V
      - 0.0
      - 0.3
      - V
-   * - Output high voltage, 15 kΩ load to ground
-     - VOH
+   * - Output high voltage, VOH, 15 kΩ load to ground
      - 2.8
      - 3.6
      - V
-   * - Crossover voltage of D+ and D−
-     - VCRS
+   * - Crossover voltage of D+ and D−, VCRS
      - 1.3
      - 2.0
      - V
-   * - Rise and fall time, 10 % to 90 %, 50 pF load
-     - TFR, TFF
+   * - Rise and fall time, TFR and TFF, 10 % to 90 %, 50 pF load
      - 4
      - 20
      - ns
-   * - Rise time divided by fall time
-     - TFRFM
+   * - Rise time divided by fall time, TFRFM
      - 90
      - 111.11
      - %
-   * - Output impedance of each driver, series resistor included
-     - ZDRV
+   * - Output impedance of each driver, ZDRV, series resistor included
      - 28
      - 44
      - Ω
