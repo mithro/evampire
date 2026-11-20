@@ -28,6 +28,13 @@ IMAGE = os.environ.get("IIC_OSIC_IMAGE", "fd31cb46f41b")
 NGSPICE = "/foss/tools/ngspice/bin/ngspice"
 PDK = "/foss/pdks/gf180mcuD/libs.tech/ngspice"
 
+# Every ngspice run happens in a container whose cgroup caps memory (with no
+# swap on top) and process count, so a runaway simulation is OOM-killed inside
+# its own cgroup instead of exhausting the host. Docker size suffixes: k/m/g
+# are KiB/MiB/GiB. Override with e.g. SIM_MEMORY=16g.
+SIM_MEMORY = os.environ.get("SIM_MEMORY", "4g")
+SIM_PIDS = int(os.environ.get("SIM_PIDS", "256"))
+
 N = 10                 # transistors in the stack
 W = 10e-6              # channel width (m)
 L = 0.6e-6             # channel length (m), nfet_05v0 minimum / default
@@ -101,20 +108,66 @@ def netlist(variant: str) -> str:
     return "\n".join(lines) + "\n"
 
 
-def run_ngspice(variant: str) -> Path:
-    cir = RESULTS / f"{variant}.cir"
-    cir.write_text(netlist(variant))
-    log = RESULTS / f"{variant}.log"
+def size_bytes(size: str) -> int:
+    """Docker-style size ('512m', '4g', '1073741824') to bytes."""
+    mult = {"k": 1 << 10, "m": 1 << 20, "g": 1 << 30}
+    s = size.strip().lower().removesuffix("b")
+    return int(float(s[:-1]) * mult[s[-1]]) if s[-1] in mult else int(s)
+
+
+def ngspice_in_cgroup(cir: Path) -> Path:
+    """Run `ngspice -b <cir>` in a memory-capped container; return the log.
+
+    The container first records its own cgroup limits in the log, and the
+    run is rejected unless the memory limit matches SIM_MEMORY, so a
+    simulation can never silently run uncapped.
+    """
+    log = cir.with_suffix(".log")
+    script = ('echo "cgroup memory.max=$(cat /sys/fs/cgroup/memory.max)'
+              ' memory.swap.max=$(cat /sys/fs/cgroup/memory.swap.max)'
+              ' pids.max=$(cat /sys/fs/cgroup/pids.max)"; '
+              f'exec {NGSPICE} -b "$0"')
     cmd = [
         "docker", "run", "--rm", "-u", f"{os.getuid()}:{os.getgid()}",
-        "-e", f"HOME={RESULTS}", "-v", f"{HERE}:{HERE}", "-w", str(RESULTS),
-        "--entrypoint", NGSPICE, IMAGE, "-b", cir.name,
+        "--memory", SIM_MEMORY, "--memory-swap", SIM_MEMORY,
+        "--pids-limit", str(SIM_PIDS),
+        "-e", f"HOME={cir.parent}", "-v", f"{HERE}:{HERE}", "-w", str(cir.parent),
+        "--entrypoint", "/bin/bash", IMAGE, "-c", script, cir.name,
     ]
     with log.open("w") as fh:
         rc = subprocess.run(cmd, stdout=fh, stderr=subprocess.STDOUT).returncode
+    first = log.read_text().splitlines()[:1]
+    want = f"cgroup memory.max={size_bytes(SIM_MEMORY)} memory.swap.max=0"
+    if not first or not first[0].startswith(want):
+        sys.exit(f"{cir.name}: cgroup limits not applied (expected '{want}', "
+                 f"log starts {first!r}); see {log}")
+    if rc == 137:
+        sys.exit(f"{cir.name}: killed (rc=137), most likely by the "
+                 f"{SIM_MEMORY} cgroup memory limit; see {log}")
     if rc != 0:
-        sys.exit(f"ngspice failed for {variant} (rc={rc}); see {log}")
+        sys.exit(f"{cir.name}: ngspice failed (rc={rc}); see {log}")
+    return log
+
+
+def run_ngspice(variant: str) -> Path:
+    cir = RESULTS / f"{variant}.cir"
+    cir.write_text(netlist(variant))
+    ngspice_in_cgroup(cir)
     return RESULTS / f"{variant}.dat"
+
+
+def run_junction_check() -> str:
+    """Run junction_check.cir (same cgroup limits) and report its result."""
+    cir = RESULTS / "junction_check.cir"
+    cir.write_text((HERE / "junction_check.cir").read_text())
+    ngspice_in_cgroup(cir)
+    d = np.loadtxt(RESULTS / "junction_check.dat", skiprows=1)
+    at = {v: d[np.argmin(abs(d[:, 0] - v))] for v in (12, 40)}
+    return ("\n## Junction breakdown check (junction_check.cir)\n\n"
+            "| V | nfet_05v0 own drain junction | diode_nd2ps_06v0 |\n"
+            "|---:|---:|---:|\n"
+            + "".join(f"| {v} | {eng(abs(r[1]))}A | {eng(abs(r[2]))}A |\n"
+                      for v, r in at.items()))
 
 
 def load(dat: Path) -> dict[str, np.ndarray]:
@@ -265,7 +318,8 @@ def main() -> None:
     for v in VARIANTS:
         print(f"running {v} ...", flush=True)
         results[v] = load(run_ngspice(v))
-    table = summarise(results)
+    print("running junction_check ...", flush=True)
+    table = summarise(results) + run_junction_check()
     (RESULTS / "summary.md").write_text(table)
     print(table)
     plot(results)

@@ -52,3 +52,10 @@ Bulk = source with NO junction to the substrate at all. Not buildable; shows the
 | 50 | 4.99 mA | 4.99 mA | 0 A | 5.00 V (M1) | 50.0 V |
 | 75 | 9.05 mA | 9.05 mA | 0 A | 7.50 V (M1) | 75.0 V |
 | 100 | 18.5 mA | 18.5 mA | 0 A | 10.00 V (M1) | 100.0 V |
+
+## Junction breakdown check (junction_check.cir)
+
+| V | nfet_05v0 own drain junction | diode_nd2ps_06v0 |
+|---:|---:|---:|
+| 12 | 31.6 pA | 729 µA |
+| 40 | 2.06 nA | 251 mA |

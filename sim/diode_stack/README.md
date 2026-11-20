@@ -18,7 +18,23 @@ uv run sim/diode_stack/run.py
 This needs Docker and the `hpretl/iic-osic-tools` image, which holds
 ngspice-47 and the open gf180mcuD PDK. `run.py` writes one netlist per variant
 (`results/*.cir`), runs ngspice, and writes `results/summary.md` plus three
-plots.
+plots. It also runs `junction_check.cir`.
+
+### Memory limits
+
+Every ngspice run, including `junction_check.cir`, runs in its own container.
+The container's cgroup caps memory at 4 GiB with no swap on top, and allows at
+most 256 processes. If a simulation runs away, the kernel kills it inside that
+cgroup and leaves the rest of the machine alone. Change the caps with
+`SIM_MEMORY=16g` or `SIM_PIDS=…`.
+
+The first line of each `results/*.log` is the limit as the container itself
+reports it. `run.py` refuses a run whose limit doesn't match `SIM_MEMORY`, and
+reports exit code 137 as "killed by the memory limit".
+
+`uv run sim/diode_stack/test_cgroup.py` checks that the cap really works. It
+runs a simulation that needs about 0.5 GB of memory under a 256 MiB cap and
+passes only if the cgroup kills it.
 
 ## The three variants
 
