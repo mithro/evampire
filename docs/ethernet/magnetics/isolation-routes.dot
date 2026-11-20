@@ -1,0 +1,62 @@
+// The three routes to isolating an Ethernet port without a transformer.
+// Each row is one route; the red dashed box marks where the isolation
+// barrier sits.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph isolation_routes {
+    graph [layout=neato, splines=line, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fillcolor="#ffffff", fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=8, penwidth=1.3];
+
+    // Row titles.
+    node [shape=plain, style="", fixedsize=false, fontsize=10];
+    t1 [pos="2.2,3.55!", label=<<b>1. External high-voltage parts</b>>];
+    t2 [pos="2.2,2.15!", label=<<b>2. Second die on the cable side</b>>];
+    t3 [pos="2.2,0.75!", label=<<b>3. Barrier on the evampire die</b>>];
+
+    node [shape=box, style=filled, fixedsize=true, fontsize=9];
+
+    // Route 1.
+    rj1  [pos="0.35,3.05!", width=0.6, height=0.45, fillcolor="#f2f2f2",
+          label="RJ45"];
+    cap1 [pos="1.75,3.05!", width=1.3, height=0.45, fillcolor="#fff2cc",
+          color="#c00000", style="filled,dashed", penwidth=1.6,
+          label="high-voltage\ncapacitors (barrier)"];
+    ev1  [pos="3.55,3.05!", width=1.3, height=0.45, fillcolor="#dbe8f5",
+          label="evampire"];
+
+    // Route 2.
+    rj2  [pos="0.35,1.65!", width=0.6, height=0.45, fillcolor="#f2f2f2",
+          label="RJ45"];
+    die2 [pos="1.45,1.65!", width=1.0, height=0.45, fillcolor="#dbe8f5",
+          label="cable-side\ndie"];
+    bar2 [pos="2.45,1.65!", width=0.7, height=0.45, fillcolor="#ffffff",
+          color="#c00000", style="filled,dashed", penwidth=1.6,
+          label="isolator\n(barrier)"];
+    ev2  [pos="3.55,1.65!", width=1.3, height=0.45, fillcolor="#dbe8f5",
+          label="evampire"];
+
+    // Route 3.
+    rj3  [pos="0.35,0.25!", width=0.6, height=0.45, fillcolor="#f2f2f2",
+          label="RJ45"];
+    ev3  [pos="2.65,0.25!", width=3.1, height=0.55, fillcolor="#dbe8f5",
+          label=""];
+    bar3 [pos="1.75,0.25!", width=1.0, height=0.4, fillcolor="#ffffff",
+          color="#c00000", style="filled,dashed", penwidth=1.6,
+          label="on-die barrier"];
+    core3 [pos="3.35,0.25!", width=1.4, height=0.4, fillcolor="#ffffff",
+           label="evampire circuits"];
+
+    rj1 -- cap1 [label="cable"];
+    cap1 -- ev1 [label="data"];
+    rj2 -- die2 [label="cable"];
+    die2 -- bar2;
+    bar2 -- ev2 [label="data"];
+    rj3 -- bar3 [label="cable"];
+    bar3 -- core3;
+}

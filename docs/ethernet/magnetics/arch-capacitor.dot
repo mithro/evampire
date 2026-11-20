@@ -1,0 +1,88 @@
+// Candidate transformer-free front end, one pair shown: high-voltage
+// coupling capacitors carry the data, a centre-tapped inductor carries the
+// Power over Ethernet current, and active circuits on evampire do the rest.
+//
+// Fixed grid, positions in inches:
+//   x = 0.6  RJ45 socket
+//   x = 2.0  common-mode choke (optional) and cable-side parts
+//   x = 3.6  coupling capacitors
+//   x = 5.9  evampire
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph arch_capacitor {
+    graph [layout=neato, splines=line, outputorder=nodesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, shape=box, style="filled",
+           fillcolor="#ffffff", pin=true, fixedsize=true];
+    edge  [penwidth=1.2];
+
+    // evampire outline, drawn first so it sits behind its blocks.
+    chip [pos="5.95,2.1!", width=2.5, height=3.9, label="evampire",
+          labelloc=t, fontsize=11, fontcolor="#1f4e79", color="#1f4e79",
+          style="rounded,bold", fillcolor="none"];
+
+    rj45 [pos="0.6,3.0!", width=0.95, height=0.75, fillcolor="#f2f2f2",
+          label="RJ45\npins 1, 2\n(one pair)"];
+
+    cmc [pos="2.0,3.0!", width=1.15, height=0.55, fillcolor="#e2efda",
+         label="common-mode\nchoke (optional)"];
+
+    ind [pos="2.0,1.85!", width=1.15, height=0.6, fillcolor="#fbe5d6",
+         label="centre-tapped\ninductor across\nthe pair"];
+
+    poe [pos="2.0,0.45!", width=1.35, height=0.75, fillcolor="#fbe5d6",
+         label="Power over Ethernet\nbridge or switch\nand controller"];
+
+    term [pos="0.6,1.55!", width=1.0, height=0.8,
+          label="common-mode\ntermination\nto chassis"];
+
+    ccap [pos="3.6,3.0!", width=1.0, height=0.65, fillcolor="#fff2cc",
+          label="high-voltage\ncoupling\ncapacitors"];
+
+    clamp [pos="3.6,1.75!", width=1.0, height=0.65,
+           label="surge and\nESD clamps\n(external or\non chip)"];
+
+    // On-chip blocks.
+    node [fillcolor="#dbe8f5"];
+    drv  [pos="6.05,3.35!", width=1.9, height=0.45,
+          label="line driver with synthesised\n100 Ω termination"];
+    rx   [pos="6.05,2.7!", width=1.9, height=0.45,
+          label="receiver: wide common-mode\nrange, high rejection"];
+    cm   [pos="6.05,2.05!", width=1.9, height=0.45,
+          label="common-mode sense\nand feedback, bias"];
+    prot [pos="6.05,1.4!", width=1.9, height=0.45,
+          label="pin protection\n(ESD, clamps)"];
+    dsp  [pos="6.05,0.6!", width=1.9, height=0.55, fillcolor="#f2f2f2",
+          label="converters and\nsignal processing"];
+
+    pins [pos="4.85,2.3!", width=0.16, height=2.85, fillcolor="#1f4e79",
+          label=""];
+    pinl [pos="4.85,3.86!", shape=plain, fixedsize=false, fillcolor="none",
+          style="", label="pins", fontsize=8];
+
+    // Connection points on the right-hand and left-hand edges of the pins.
+    node [shape=point, width=0.01, height=0.01, style=invis, fixedsize=true];
+    pin_in   [pos="4.77,3.0!"];
+    pin_drv  [pos="4.93,3.35!"];
+    pin_rx   [pos="4.93,2.7!"];
+    pin_cm   [pos="4.93,2.05!"];
+    pin_prot [pos="4.93,1.4!"];
+
+    // Data path: solid blue, labelled "data".
+    edge [fontname="Helvetica", fontsize=8];
+    rj45 -- cmc [penwidth=2.2, color="#2e75b6", label="data"];
+    cmc -- ccap [penwidth=2.2, color="#2e75b6", label="data"];
+    ccap -- pin_in [penwidth=2.2, color="#2e75b6", label="data"];
+    pin_drv -- drv; pin_rx -- rx; pin_cm -- cm; pin_prot -- prot;
+
+    // Power path: dotted red, labelled "power".
+    cmc -- ind [penwidth=2.2, color="#c00000", style=dotted,
+                label="power"];
+    ind -- poe [penwidth=2.2, color="#c00000", style=dotted,
+                label="power"];
+
+    // Common-mode termination and protection: dashed grey.
+    rj45 -- term [style=dashed, color="#595959"];
+    ccap -- clamp [style=dashed, color="#595959", label="chip side"];
+}
