@@ -5,32 +5,31 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph negotiation {
-    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=2.2,
-           ranksep=0.32, newrank=true, splines=false];
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=1.1,
+           ranksep=0.3, newrank=true, splines=false];
     node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
            fontsize=10];
-    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    src [shape=box, style="rounded,filled", fillcolor="#fbe5d6", label="Source", width=1.4];
-    snk [shape=box, style="rounded,filled", fillcolor="#e2f0d9", label="Sink", width=1.4];
+    src [shape=box, style="rounded,filled", fillcolor="#fbe5d6", label="Source", width=1.0];
+    snk [shape=box, style="rounded,filled", fillcolor="#e2f0d9", label="Sink", width=1.0];
     note_h [shape=plaintext, label="Time limit", fontsize=10, fontname="Helvetica-Bold"];
 
-    // Lifeline points.
-    s1; s2; s3; s4; s5; s6; s7; s8; s9; s10; s11; s12;
-    k1; k2; k3; k4; k5; k6; k7; k8; k9; k10; k11; k12;
+    s1; s2; s3; s4; s5; s6; s7; s8; s9; s10; s11;
+    k1; k2; k3; k4; k5; k6; k7; k8; k9; k10; k11;
 
     node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
-    n1  [label="Source sees Rd for tCCDebounce\n(100-200 ms), then turns VBUS on\nwithin tVBUSON (max 275 ms)"];
-    n2  [label="Sink powers up from 5 V, sees Rp on one\nCC pin for tCCDebounce: attached"];
-    n3  [label="Within tFirstSourceCap (max 250 ms)\nof VBUS reaching 5 V; repeated every\n100-200 ms until acknowledged"];
-    n4  [label="Within tTransmit (max 195 us)\nafter the end of the message"];
-    n5  [label="Within tReceiverResponse\n(max 15 ms)"];
-    n6  [label="Within tTransmit (max 195 us)"];
-    n7  [label="Within tReceiverResponse (max 15 ms);\nsink gives up after tSenderResponse\n(27-50 ms)"];
-    n8  [label="Within tTransmit (max 195 us);\nsink then draws at most 500 mA"];
-    n9  [label="Source waits tSrcTransition (min 25 ms),\nraises VBUS at up to 30 mV/us, sends\nPS_RDY within tSrcTransReq (max 325 ms);\nsink gives up after tPSTransition (450-550 ms)"];
-    n10 [label="Within tTransmit (max 195 us)"];
-    n11 [label="Contract in place: sink may\ndraw the requested current"];
+    n1  [label="Source debounces Rd\n(100-200 ms), VBUS on\nwithin 275 ms"];
+    n2  [label="Sink debounces Rp\n(100-200 ms)"];
+    n3  [label="Within 250 ms of 5 V;\nrepeated every 100-200 ms"];
+    n4  [label="Within 195 µs"];
+    n5  [label="Within 15 ms"];
+    n6  [label="Within 195 µs"];
+    n7  [label="Within 15 ms"];
+    n8  [label="Within 195 µs; sink\nnow draws at most 500 mA"];
+    n9  [label="After at least 25 ms;\nPS_RDY within 325 ms"];
+    n10 [label="Within 195 µs"];
+    n11 [label="Contract in place"];
 
     { rank=same; src; snk; note_h; }
     { rank=same; s1; k1; n1; }
@@ -44,25 +43,22 @@ digraph negotiation {
     { rank=same; s9; k9; n9; }
     { rank=same; s10; k10; n10; }
     { rank=same; s11; k11; n11; }
-    { rank=same; s12; k12; }
 
-    // Lifelines.
     edge [arrowhead=none, style=dashed, color="#999999", weight=100];
-    src -> s1 -> s2 -> s3 -> s4 -> s5 -> s6 -> s7 -> s8 -> s9 -> s10 -> s11 -> s12;
-    snk -> k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> k9 -> k10 -> k11 -> k12;
+    src -> s1 -> s2 -> s3 -> s4 -> s5 -> s6 -> s7 -> s8 -> s9 -> s10 -> s11;
+    snk -> k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> k9 -> k10 -> k11;
     note_h -> n1 -> n2 -> n3 -> n4 -> n5 -> n6 -> n7 -> n8 -> n9 -> n10 -> n11 [style=invis];
 
-    // Messages.
     edge [arrowhead=normal, style=solid, color="#000000", weight=0];
-    k1 -> s1  [label="Rd on both CC pins (no supply needed)", style=dotted];
+    k1 -> s1  [label="Rd on CC", style=dotted];
     s2 -> k2  [label="VBUS = 5 V", penwidth=2, color="#c55a11"];
-    s3 -> k3  [label="Source_Capabilities (5 V 3 A, 9 V 3 A, ...)"];
+    s3 -> k3  [label="Source_Capabilities"];
     k4 -> s4  [label="GoodCRC"];
-    k5 -> s5  [label="Request (object 2: 9 V, 2 A)"];
+    k5 -> s5  [label="Request (9 V, 2 A)"];
     s6 -> k6  [label="GoodCRC"];
     s7 -> k7  [label="Accept"];
     k8 -> s8  [label="GoodCRC"];
-    s9 -> k9  [label="PS_RDY (VBUS now 9 V)", penwidth=2, color="#c55a11"];
+    s9 -> k9  [label="PS_RDY (VBUS 9 V)", penwidth=2, color="#c55a11"];
     k10 -> s10 [label="GoodCRC"];
     s11 -> k11 [style=invis];
 }

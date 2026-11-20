@@ -101,6 +101,24 @@ print("== Ethernet frame arrivals during that time (ASSUMPTION: 1 Mbit/s of fram
 frame_bits = 1522 * 8
 print(f"  1522-byte frame at 1 Mbit/s every {frame_bits/1e6*1e3:.1f} ms")
 
+print("== ESD events versus a VBUS short ==")
+# Renesas TB505: HBM 100 pF / 1.5 kOhm, IEC 61000-4-2 150 pF / 330 Ohm.
+for name, c, r, v in (("HBM 2 kV (gf180mcu I/O target)", 100e-12, 1.5e3, 2e3),
+                      ("IEC 61000-4-2 8 kV contact", 150e-12, 330.0, 8e3)):
+    q = c * v
+    e = 0.5 * c * v * v
+    print(f"  {name}: Q = {q*1e9:.0f} nC, E = {e*1e3:.2f} mJ, tau = {r*c*1e9:.1f} ns, "
+          f"V/R = {v/r:.2f} A")
+# ASSUMPTION: short lasts 1 s, source keeps supplying 3 A, clamp holds 6 V.
+i_s, t_s, v_cl = 3.0, 1.0, 6.0
+print(f"  VBUS short: Q = {i_s*t_s:.0f} C, E in clamp = {v_cl*i_s*t_s:.0f} J, "
+      f"P = {v_cl*i_s:.0f} W; charge ratio to HBM = {i_s*t_s/200e-9:.1e}")
+
+print("== High-resistance poly divider (PDK 3 kOhm/sq option) ==")
+for r in (1e6, 2e6):
+    print(f"  {r/1e6:g} MOhm / 3 kOhm per square = {r/3e3:.0f} squares; "
+          f"current at 21 V = {21/r*1e6:.1f} uA, at 50.9 V = {50.9/r*1e6:.1f} uA")
+
 print("== Standard cell register overhead (gf180mcu 7-track, TT 5 V 25 C) ==")
 clkq, setup = 0.6763, 0.2290
 print(f"  clk-to-Q {clkq} ns + setup {setup} ns = {clkq+setup:.3f} ns")
