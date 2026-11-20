@@ -2,10 +2,24 @@ Power bridging
 ==============
 
 A board built around evampire moves power between its Ethernet ports and its
-USB Type-C ports. It can be powered from an Ethernet cable (Power over
-Ethernet, :doc:`poe`) and supply power to a USB device, or be powered from a
-USB Type-C charger (USB Power Delivery, :doc:`usb-pd`) and supply power to an
-Ethernet device.
+:term:`USB Type-C` ports. It can be powered from an Ethernet cable
+(:wikipedia:`Power over Ethernet <Power_over_Ethernet>`) and supply power to
+a USB device, or be powered from a USB Type-C charger
+(:wikipedia:`USB Power Delivery <USB_Power_Delivery>`) and supply power to
+an Ethernet device. This page describes the roles, the operating modes, the
+power budget and the board configurations.
+
+The pages in this section explain each part of the power path:
+
+:doc:`poe/index`
+   The circuits that take part in Power over Ethernet detection and
+   classification.
+:doc:`usb-pd/index`
+   The circuits that let the processor carry out the USB Power Delivery
+   negotiation in software on the configuration channel.
+:doc:`converters`
+   How the switching voltage converters in the power path work, and what
+   evampire needs to control them.
 
 Both standards require the two ends of a cable to agree before full power is
 applied. The end that supplies power first checks that a compatible device
@@ -14,12 +28,14 @@ part in this exchange on every port, in whichever role that port has.
 
 .. _power-roles:
 
-Roles
------
+Each standard names the two ends of a powered cable
+---------------------------------------------------
 
-Each standard has its own names for the two ends of a cable.
+Each standard has its own names for the two ends of a cable, listed in
+:numref:`tab-power-roles`.
 
 .. list-table:: Names for the two ends of a powered cable
+   :name: tab-power-roles
    :header-rows: 1
    :widths: 30 35 35
 
@@ -27,26 +43,26 @@ Each standard has its own names for the two ends of a cable.
      - End that supplies power
      - End that receives power
    * - Power over Ethernet
-     - Power sourcing equipment
-     - Powered device
+     - :term:`Power sourcing equipment`
+     - :term:`Powered device`
    * - USB Power Delivery
-     - Source
-     - Sink
+     - :term:`Source`
+     - :term:`Sink`
 
 A USB Type-C port that can act as either a source or a sink is called a
-*dual-role* port. When two dual-role ports are connected, the roles are
-decided when the cable is plugged in, and the two ends can later exchange
-messages to swap roles without unplugging the cable (see :doc:`usb-pd`).
+:term:`dual-role port`. When two dual-role ports are connected, the roles are
+decided when the cable is plugged in. The two ends can later exchange
+messages to swap roles without unplugging the cable (see :doc:`usb-pd/index`).
 
 A Power over Ethernet port has a fixed role while it is connected. Supplying
 and receiving power need different circuits on the board, so a port that can
 take either role has both sets of circuits and selects one before a cable is
-connected (see :doc:`poe`).
+connected (see :doc:`poe/index`).
 
 .. _power-modes:
 
-Operating modes
----------------
+The board works in three modes
+------------------------------
 
 Ethernet in, USB out
    An Ethernet port receives power as a powered device. The USB Type-C port
@@ -59,81 +75,235 @@ USB in, Ethernet out
 Ethernet in, Ethernet out
    One Ethernet port receives power and the other supplies it.
 
-In every mode the processor keeps a power budget. The power it offers on
-the output ports never exceeds the power granted on the input port, minus the
-power the board itself uses and the losses in the voltage converters. When
-the granted input power changes, for example after a USB role swap, the
-processor lowers the power offered on the outputs first.
+.. _power-budget:
+
+In every mode the processor keeps a :term:`power budget`. The power it
+offers on the output ports never exceeds the power granted on the input
+port, minus the power the board itself uses and the losses in the voltage
+converters. When the granted input power changes, for example after a USB
+role swap, the processor lowers the power offered on the outputs first.
+
+.. _power-translation:
+
+The software translates power between the standards
+---------------------------------------------------
+
+The two standards describe power differently. Power over Ethernet grants
+power in fixed steps called :term:`classes <class>`, each with a maximum
+power at the powered device. USB Power Delivery describes power as a list of
+offers, each a supply voltage with a maximum current. When power comes in
+through one standard and goes out through the other, the software on
+evampire translates between them.
+
+The software first works out the power left for the outputs:
+
+.. math::
+
+   P_\text{out} = P_\text{in} \times \eta - P_\text{board}
+
+where :math:`P_\text{in}` is the power granted on the input port,
+:math:`\eta` is the efficiency of the voltage converters (see
+:doc:`converters`), and :math:`P_\text{board}` is the power the board itself
+uses. All three are in watts, except :math:`\eta`, which is a fraction.
+
+It then builds the offer for each output port:
+
+Ethernet in, USB out
+   The USB Type-C port offers the set of voltage and current combinations
+   whose power does not exceed :math:`P_\text{out}` and which the USB Power
+   Delivery rules allow for a source of that power. :doc:`usb-pd/index` explains
+   these rules and gives worked examples for each Power over Ethernet class.
+
+USB in, Ethernet out
+   The Ethernet port that supplies power advertises the highest Power over
+   Ethernet type and class whose power at the power sourcing equipment does
+   not exceed :math:`P_\text{out}`. :doc:`poe/index` explains how the class is
+   advertised and gives worked examples for each USB Power Delivery offer.
+
+Ethernet in, Ethernet out
+   The supplying Ethernet port advertises the highest class that fits, in
+   the same way.
+
+When the input changes, for example when the USB charger offers a different
+power or a role swap moves the input to another port, the software first
+reduces the offers on the outputs to fit the new budget. It then accepts the
+new input.
+
+.. _power-sharing:
+
+The software shares the budget between output ports
+---------------------------------------------------
+
+On a board with more than one port that can supply power (see
+:numref:`tab-power-board-configs`), several ports can supply power at the
+same time. These are both USB Type-C ports, a USB Type-C port and an
+Ethernet port, or both Ethernet ports when the board is powered from USB.
+The software then shares :math:`P_\text{out}` between those ports, so that
+the sum of the power offered on all of them never exceeds it:
+
+.. math::
+
+   \sum_i P_{\text{offer},i} \le P_\text{out}
+
+where :math:`P_{\text{offer},i}` is the maximum power offered on output
+port :math:`i`, in watts.
+
+Each port starts with a share of the budget. A USB Power Delivery source can
+change its offer while a device is connected, by sending a new list of
+offers. Power sourcing equipment can change the power it allocates to a
+powered device through :term:`LLDP`, but only powered devices of class 4 and
+higher must support this (:clause:`145.5`, :clause:`79`). For a powered device
+of class 1 to 3, the only way to reduce its power is to remove the power and
+classify the device again.
+
+The software uses these changes to move power between ports. When a device
+on one port is unplugged or uses less than its share, the software raises
+the offer on another port. When a new device is plugged in, the software
+first lowers the offers on the other ports to make room. :doc:`usb-pd/index` and
+:doc:`poe/index` describe how the budget is divided, and how a port's offer is
+reduced safely while a device is using it.
 
 .. _power-board-configs:
 
-Board configurations
---------------------
+The board comes in two configurations
+-------------------------------------
 
-.. list-table:: Port roles in each board configuration
+:numref:`tab-power-board-configs` describes the two board configurations,
+the first version and the full design.
+
+.. list-table:: The two board configurations
+   :name: tab-power-board-configs
    :header-rows: 1
-   :widths: 25 25 25 25
+   :widths: 40 30 30
 
-   * - Configuration
-     - Ethernet port A
-     - Ethernet port B
-     - USB Type-C ports
-   * - First version
+   * - Feature
+     - First version
+     - Full design
+   * - Ethernet transceivers
+     - External chips, connected over RGMII
+     - Integrated on evampire
+   * - Connection to the cable
+     - Coupling transformers
+     - No coupling transformers
+   * - Ethernet port A power role
      - Receives power
+     - Either role
+   * - Ethernet port B power role
      - Supplies power
-     - One, dual-role
-   * - Full design
      - Either role
-     - Either role
-     - Two, each dual-role
+   * - USB Type-C ports
+     - 1
+     - 2
+   * - USB Type-C port power role
+     - Dual-role
+     - Dual-role
+   * - Converter gate drivers and power transistors
+     - External parts
+     - Open question
+
+The open question in the table, and the question of how the full design
+makes the isolation without coupling transformers, are listed in
+:ref:`requirements-open-questions`.
 
 .. _power-flow:
 
-Power flow
-----------
+All power passes through an internal power bus
+----------------------------------------------
 
-.. graphviz:: index/power-flow.dot
-   :caption: Power flow on the first-version board. Bold arrows carry power.
-             Dashed arrows carry control and status.
-   :align: center
-
+:numref:`fig-power-flow` shows how power flows on the first-version board.
 All power passes through an internal power bus on the board.
 
-* The **powered device front end** on port A corrects the polarity of the
-  cable voltage, presents the signature that tells the far end a powered
-  device is connected, and limits the current while the input capacitors
-  charge. The input voltage converter brings the 37 V to 57 V from the
-  cable down to the bus voltage (:clause:`33`, :clause:`145`; see
-  :doc:`poe`).
-* The **USB power path** connects the USB Type-C port to the bus. As a sink
-  it is a switch that connects the negotiated USB supply voltage to the bus.
-  As a source it is an adjustable voltage converter that produces the
-  negotiated USB supply voltage (5 V to 20 V, or up to 48 V in the extended
-  range; see :doc:`usb-pd`) from the bus.
-* The **high-voltage converter** raises the bus voltage to the 44 V to 57 V
-  needed on an Ethernet cable (:clause:`145`), and the **power sourcing
-  equipment switch** checks for a valid powered device on port B, measures
-  its class (the power level the device asks for), and then connects the
-  voltage with a current limit (see :doc:`poe`).
+.. graphviz:: index/power-flow.dot
+   :name: fig-power-flow
+   :caption: Power flow on the first-version board, where bold arrows carry
+             power and dashed arrows carry control and status.
+   :alt: Power flow diagram. Power from Ethernet port A passes through the
+         powered device front end and the input voltage converter to the
+         internal power bus. The USB Type-C port connects to the bus in both
+         directions through the USB power path. The bus feeds the board
+         supplies and the high-voltage converter, which feeds the power
+         sourcing equipment switch and Ethernet port B. evampire controls
+         and monitors each of these blocks.
+   :align: center
 
-evampire carries out the negotiation in every case: it reads the power
-granted on port A, drives and senses the USB configuration channel wires
-(the two wires of a USB Type-C connector that carry the power negotiation),
+The blocks in :numref:`fig-power-flow` do the jobs below. The converter
+types named here are those of the first-version board. Whether the converter
+functions are separate converters is an open question
+(:ref:`requirements-open-questions`).
+
+Powered device front end
+   Sits on port A. It corrects the polarity of the cable voltage and
+   presents the signature that tells the far end a powered device is
+   connected. It limits the current while the input capacitors charge.
+Input voltage converter
+   Brings the 37 V to 57 V from the cable down to the bus voltage
+   (:clause:`33`, :clause:`145`; see :doc:`poe/index`).
+USB power path
+   Connects the USB Type-C port to the bus. As a sink it is a switch that
+   connects the negotiated USB supply voltage to the bus. As a source it is
+   an adjustable voltage converter, a
+   :wikipedia:`buck-boost converter <Buck%E2%80%93boost_converter>`, that
+   produces the negotiated USB supply voltage from the bus. That voltage is
+   5 V to 20 V, or up to 48 V in the extended power range
+   (:pd:`PD Sections 3.2.4 and 3.2.5.3 <3.2.4>`, see :doc:`usb-pd/index`).
+High-voltage converter
+   A :wikipedia:`boost converter <Boost_converter>` that raises the bus
+   voltage to the 44 V to 57 V needed on an Ethernet cable (:clause:`145`).
+   A boost converter needs a bus below 44 V. It does not apply when the bus
+   sits at a 48 V USB extended power range voltage.
+Power sourcing equipment switch
+   Checks for a valid powered device on port B and measures its
+   :term:`class`, the power level the device asks for. It then connects the
+   voltage with a current limit (see :doc:`poe/index`).
+
+evampire carries out the negotiation in every case. It reads the power
+granted on port A, drives and senses the USB :term:`configuration channel`,
 sets the USB output voltage, and enables and monitors the power sourcing
 equipment switch.
 
-Many of these circuits handle voltages (up to 57 V on an Ethernet cable and
-up to 48 V on USB) far above the continuous ratings of the standard
-transistors in the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
-process. The standard parts of the process do
-not set the limit of what can be built on the chip: custom structures, such
-as transistors stacked in isolated wells, drain-extended transistors, and
-high-voltage capacitors, can extend what is possible. Which functions are
-built on evampire and which use external parts is a design choice made per
-function, and the following pages analyse it for each standard.
+The software on evampire's processor makes every power decision: it runs
+the negotiation on every port and switches power on and off. evampire
+measures the voltage and current of every power port and of the power bus.
+It enforces the current and power limit that the software sets for each
+port, and switches a port off by itself when a fault is too fast for the
+software to react.
+
+evampire also controls the voltage converters: the input converter, the USB
+converter and the high-voltage converter. Which converter parts are external
+in each board configuration is given in :numref:`tab-power-board-configs`.
+:doc:`converters` explains how these converters work and how more of each
+can move onto the chip.
+
+Many of these circuits handle voltages of up to 57 V on an Ethernet cable
+and up to 48 V on USB. The standard transistors of the
+`gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_ process have nominal
+supplies of 3.3 V, 5 V or 6 V, with at most 10 % overshoot.\ [#gf180-supply]_
+Its LDMOS transistors are characterised with a 10 V drain and a 6 V
+gate.\ [#gf180-ldmos]_
+
+Custom structures, such as transistors stacked in isolated wells,
+drain-extended transistors and high-voltage capacitors, extend the voltages
+that circuits on the chip can handle (see :ref:`the process requirements <req-process>`). Which
+functions are built on evampire and which use external parts is chosen per
+function. The pages on :doc:`poe/index`, :doc:`usb-pd/index` and :doc:`converters`
+analyse the choice for each standard.
+
+.. [#gf180-supply] `gf180mcu design manual, section 14.1, "Power supply
+   voltage limits"
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_14_1.html#power-supply-voltage-limits>`__,
+   and the 3.3 V, 5 V and 6 V device sections of the
+   `gf180mcu electrical specifications
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs.html>`__.
+
+.. [#gf180-ldmos] `gf180mcu electrical specifications, section 8, "High
+   Voltage LDMOS Transistor (10.0V)"
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs.html>`__,
+   whose saturation current is measured at a 10 V drain and a 6 V gate.
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
 
-   poe
-   usb-pd
+   poe/index
+   usb-pd/index
+   converters

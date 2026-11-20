@@ -1,5 +1,8 @@
 // evampire block diagram.
 // Bold arrows: Ethernet frame data. Dashed arrows: control.
+// Fill colours: white with a dashed outline, parts outside the chip; blue,
+// RGMII interfaces; grey, the forwarding path; green, the processor's frame
+// path; orange, the processor and its control interfaces.
 //
 // The blocks are placed on a fixed grid (positions in inches) so that the
 // diagram reads top to bottom and fits the width of a documentation page:
@@ -63,8 +66,8 @@ digraph evampire {
           fillcolor="#fbe5d6", width=1.5];
     mdio [pos="7.85,6.4!", label="Transceiver\nconfiguration",
           fillcolor="#fbe5d6", width=1.5];
-    pwr  [pos="7.85,3.6!", label="Power\nnegotiation", fillcolor="#fbe5d6",
-          width=1.5];
+    pwr  [pos="7.85,3.6!", label="Power negotiation,\nmonitoring and\nlimiting",
+          fillcolor="#fbe5d6", width=1.65, height=0.8];
 
     // Cable side.
     port_a  -> rgmii_a [dir=both, penwidth=2.5];
@@ -81,16 +84,16 @@ digraph evampire {
     mux_a   -> rgmii_a [penwidth=2.5];
 
     // Frames copied to the processor.
-    fifo_ab -> filt;
-    fifo_ba -> filt;
-    filt    -> rxbuf;
-    rxbuf   -> cpu;
+    fifo_ab -> filt [penwidth=2.5];
+    fifo_ba -> filt [penwidth=2.5];
+    filt    -> rxbuf [penwidth=2.5];
+    rxbuf   -> cpu [penwidth=2.5];
 
     // Frames sent by the processor.
-    cpu   -> txbuf;
-    txbuf -> txgen;
-    txgen -> mux_a;
-    txgen -> mux_b;
+    cpu   -> txbuf [penwidth=2.5];
+    txbuf -> txgen [penwidth=2.5];
+    txgen -> mux_a [penwidth=2.5];
+    txgen -> mux_b [penwidth=2.5];
 
     // Control.
     cpu -> mdio  [style=dashed];

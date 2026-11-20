@@ -32,19 +32,13 @@ body[data-theme="dark"] img[src$=".svg"] {
   }
 }
 
-/* On narrow screens, keep diagrams at a readable size and let them scroll
- * sideways inside their figure instead of shrinking the text. */
-div.graphviz,
-figure {
-  overflow-x: auto;
-}
-
-@media (max-width: 46em) {
-  object.graphviz,
-  img[src*="wavedrom-"] {
-    max-width: none;
-    width: auto;
-  }
+/* Diagrams always fit the width of the page column, so no part of a diagram
+ * is hidden off to the side on a narrow screen. */
+object.graphviz,
+img[src*="wavedrom-"],
+img[src$=".svg"] {
+  max-width: 100%;
+  height: auto;
 }
 
 /* A citation cited many times shows a long "(1,2,3,...)" list of links back
