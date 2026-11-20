@@ -92,7 +92,7 @@ Full speed is the speed that fits the requirement:
   low-speed option and what other projects do with it.
 * High speed uses a different signalling scheme with current-mode drivers,
   a 45 Ω termination and a 400 mV swing ([USBSER-USB2]_ section 7.1.1.3,
-  Table 7‑3), at a bit time of 2.083 ns, far beyond processor software.
+  Table 7‑7, Table 7‑8), at a bit time of 2.083 ns, far beyond processor software.
   Every high-speed device starts as a full-speed device and changes speed
   only after a handshake during reset ([USBSER-USB2]_ section 7.1.7.5), so
   a full-speed device works on every USB 2.0 host.
