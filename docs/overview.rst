@@ -59,8 +59,10 @@ Ethernet transceivers
      speed negotiation. The forwarding logic connects to an integrated
      transceiver through the same one-byte-per-clock interface it uses with
      an RGMII interface. See :doc:`ethernet/phy-electrical`.
-   * Which Ethernet speeds the integrated transceiver supports is not yet
-     fixed.
+   * Gigabit Ethernet (1000BASE-T, 1000 Mbit/s over four pairs) is a hard
+     requirement for every port, in both the first version and the full
+     design. The integrated transceiver must therefore implement 1000BASE-T.
+     Whether it also supports 100 Mbit/s and 10 Mbit/s is not yet fixed.
 
 Connection to the cable
    * In the first version, each Ethernet port connects to its RJ45 socket
