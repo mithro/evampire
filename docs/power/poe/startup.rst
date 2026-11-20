@@ -19,10 +19,10 @@ the processor runs, the software reads the assigned class and carries out
 any further negotiation over LLDP (:doc:`lldp`).
 
 The sequencer's jobs are those of the blocks in
-:numref:`fig-poe-pd-controller`: show the detection signature, draw the
-class signature current in each class event, show the mark-event load,
-count the events, keep the isolation switch off until the turn-on voltage,
-then charge the input capacitor at a limited current. The power it has for
+:numref:`fig-poe-pd-controller`. It shows the detection signature, draws the
+class signature current in each class event, shows the mark-event load,
+counts the events, keeps the isolation switch off until the turn-on voltage,
+then charges the input capacitor at a limited current. The power it has for
 this at each step is set by the standard, and is given below as ranges.
 Whether it is enough depends on the design of the sequencer, which is an
 open question.

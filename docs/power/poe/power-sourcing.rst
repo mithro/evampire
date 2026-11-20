@@ -52,7 +52,7 @@ removes the offset:
      - Measured signature resistance
      - kΩ
 
-This is the equation of :clause:`145.2.6.2`. It assumes the powered device
+The equation is that of :clause:`145.2.6.2`. It assumes the powered device
 is linear between the two points. A capacitive or non-linear load breaks
 it, which is why designs wait for the voltage to settle and some take more
 than two points.

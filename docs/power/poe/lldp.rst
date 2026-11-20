@@ -103,7 +103,7 @@ The rules of :clause:`145.5.2` and :clause:`145.5.5` are:
 * Values above 71.3 W are used only after both ends are in sync
   (:clause:`145.5.4`).
 
-These deadlines are seconds long, so the software meets them without
+Deadlines of seconds let the software meet them without
 special hardware.
 
 LLDP frames on evampire go only to the processor

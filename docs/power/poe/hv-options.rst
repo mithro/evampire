@@ -304,7 +304,7 @@ the 95 V clamp limit of a port suppressor [POE-TPS23881]_.
      - 16
      - 27
 
-This covers only the drain-to-source sharing. The well-to-substrate voltage
+The count covers only the drain-to-source sharing. The well-to-substrate voltage
 of the top devices is the open question of :doc:`hv-limits`.
 
 Open questions

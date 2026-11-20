@@ -140,7 +140,7 @@ Type 1 power sourcing equipment issues one class event. Type 2 issues up to
 two, Type 3 up to four and Type 4 up to five (:clause:`145.2.8.1`). A
 powered device that asks for class 5 to 8 shows class signature 4 in the
 first two events, so that older power sourcing equipment sees a class 4
-device, and a different signature from the third event on
+device. It shows a different signature from the third event on
 (:clause:`Table 145-26 <145>`). :doc:`powered-device` and
 :doc:`power-sourcing` give the details.
 
