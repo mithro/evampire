@@ -73,6 +73,9 @@ linkcheck_ignore = [
     r"https://www\.microchip\.com/.*",
     # JEDEC answers 403 to the GitHub Actions runners.
     r"https://www\.jedec\.org/.*",
+    # AIP Publishing answers 403 to automated clients; its DOIs redirect there.
+    r"https://doi\.org/10\.1063/.*",
+    r"https://pubs\.aip\.org/.*",
 ]
 
 myst_enable_extensions = [
