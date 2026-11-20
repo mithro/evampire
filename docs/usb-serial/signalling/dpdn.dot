@@ -1,0 +1,58 @@
+// The two D+ and two D- contacts of a USB Type-C receptacle, joined near
+// the connector and taken to evampire through series resistors.
+//
+// Fixed grid (positions in inches):
+//   x=0.9   receptacle contacts
+//   x=2.4   junctions
+//   x=3.7   series resistors
+//   x=4.3   pull-up resistor and switch
+//   x=5.75  evampire pins
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph dpdn {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.2, height=0.42,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10];
+
+    conn [label="Type-C receptacle", labelloc=t, fontsize=12,
+          pos="0.9,2.05!", width=1.7, height=3.1, style="rounded,dashed",
+          fillcolor="none", color="#555555"];
+    chip [label="evampire", labelloc=t, fontsize=12, fontcolor="#1f4e79",
+          pos="5.75,2.05!", width=1.1, height=3.1, style="rounded,bold",
+          color="#1f4e79", fillcolor="none"];
+
+    a6 [pos="0.9,3.0!", label="A6  Dp1", fillcolor="#dbe8f5"];
+    b6 [pos="0.9,2.4!", label="B6  Dp2", fillcolor="#dbe8f5"];
+    a7 [pos="0.9,1.7!", label="A7  Dn1", fillcolor="#dbe8f5"];
+    b7 [pos="0.9,1.1!", label="B7  Dn2", fillcolor="#dbe8f5"];
+
+    jp [pos="2.4,2.7!", shape=point, width=0.08, label=""];
+    jn [pos="2.4,1.4!", shape=point, width=0.08, label=""];
+
+    rsp [pos="3.6,2.7!", label="series\nresistor", width=0.95, height=0.5,
+         fillcolor="#ffffff"];
+    rsn [pos="3.6,1.4!", label="series\nresistor", width=0.95, height=0.5,
+         fillcolor="#ffffff"];
+
+    pdp [pos="5.75,2.7!", label="D+ pin", width=0.9, fillcolor="#fbe5d6"];
+    pdn [pos="5.75,1.4!", label="D− pin", width=0.9, fillcolor="#fbe5d6"];
+
+    pu  [pos="4.3,3.45!", label="1.5 kΩ pull-up,\nswitch, 3.3 V", width=1.25,
+         height=0.5, fillcolor="#e2f0d9"];
+    jpu [pos="4.3,2.7!", shape=point, width=0.08, label=""];
+
+    a6 -- jp;
+    b6 -- jp;
+    a7 -- jn;
+    b7 -- jn;
+    jp -- rsp [label="D+", penwidth=2];
+    jn -- rsn [label="D−", penwidth=2, style=dashed];
+    rsp -- jpu [penwidth=2];
+    jpu -- pdp [penwidth=2];
+    rsn -- pdn [penwidth=2, style=dashed];
+    jpu -- pu;
+}
