@@ -2,22 +2,34 @@ Ethernet
 ========
 
 These pages follow the path of the data from the chip's pins to the Ethernet
-cable.
+cable. Which parts are on evampire and which are separate depends on the
+board configuration (see :numref:`tab-power-board-configs`).
 
-In the first version, evampire talks to an external Ethernet transceiver over
-a digital interface (RGMII, :doc:`rgmii`). The transceiver turns that digital
-data into the analog signals on the cable (:doc:`phy-electrical`), and
-coupling transformers (often called the "magnetics") connect the transceiver
-to the RJ45 socket (:doc:`magnetics`).
+An :term:`Ethernet transceiver`
+(:wikipedia:`Ethernet physical layer <Ethernet_physical_layer>`) turns
+digital data into the analogue signals on the cable. An external
+transceiver talks to evampire over a digital interface,
+:wikipedia:`RGMII <Media-independent_interface>`. Coupling
+:wikipedia:`transformers <Transformer>`, often called the
+:term:`magnetics`, connect the transceiver to the
+:wikipedia:`RJ45 <8P8C>` socket. The pages on the transceiver and on the
+magnetics explain how these parts work and what evampire needs to do the
+same jobs itself.
 
-The full design integrates the transceiver on evampire and connects the
-cable without coupling transformers. The pages on the transceiver and on the
-magnetics therefore explain both how these parts work and what evampire needs
-to do the same jobs itself.
+:doc:`rgmii/index`
+   The digital interface between evampire and an external Ethernet
+   transceiver: signals, clocking, timing and electrical levels.
+:doc:`phy-electrical/index`
+   How an Ethernet transceiver turns digital data into the analogue signals
+   on the cable, and back again.
+:doc:`magnetics/index`
+   How the transceiver connects to the RJ45 socket through coupling
+   transformers, and the jobs those transformers do.
 
 .. toctree::
    :maxdepth: 2
+   :hidden:
 
-   rgmii
-   phy-electrical
-   magnetics
+   rgmii/index
+   phy-electrical/index
+   magnetics/index
