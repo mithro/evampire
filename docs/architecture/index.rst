@@ -128,7 +128,7 @@ Power negotiation interface
    a fault is too fast for software. A small built-in start-up sequencer
    answers Power over Ethernet detection and classification while the
    processor is not yet running, so that a board powered only from Ethernet
-   can start. See :doc:`../power/index`.
+   can request power. See :doc:`../power/index`.
 
 .. _arch-clock:
 

@@ -221,17 +221,20 @@ Power control, monitoring and limiting
    * A board powered only from one port must be able to start from nothing.
      Before a Power over Ethernet power source has detected the board and
      switched its power on, the cable carries only small test voltages and
-     currents, too little to run the processor. evampire therefore has a
-     small built-in sequencer, working without the processor, that answers
-     the detection and classification steps and requests a power level
-     large enough to start the processor. Once powered, the software
-     carries out any further negotiation, for example asking for more power.
-     How much of this the sequencer must do depends on how much power the
-     board needs to start compared with how much the cable can give at
-     each step; :doc:`power/poe` works this out. A board powered from USB
-     Type-C starts in the same way from the basic 5 V that a USB charger
-     supplies before any USB Power Delivery negotiation (see
-     :doc:`power/usb-pd`).
+     currents, for limited times. evampire has a small built-in sequencer,
+     working without the processor, that answers the detection and
+     classification steps and requests a power level. Once the processor is
+     running, the software carries out any further negotiation, for
+     example asking for more power.
+   * The power evampire and the rest of the board need, both to start and
+     in normal operation, is not yet known. The documentation therefore
+     gives the power available at each step, without assuming that it is
+     enough: during Power over Ethernet detection and classification, at
+     each class once power is on (:doc:`power/poe`), and from a USB Type-C
+     charger at each basic current level before any USB Power Delivery
+     negotiation (:doc:`power/usb-pd`). How much the start-up sequencer must
+     do follows from comparing these figures with the power consumption
+     once it is known.
    * evampire has built-in power limiting: each port has a current and power
      limit that the software sets. Built-in hardware enforces these limits
      and switches a port off when a fault happens faster than software can
