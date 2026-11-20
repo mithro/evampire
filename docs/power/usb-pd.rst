@@ -28,13 +28,14 @@ the gf180mcu process.
 Two specifications are quoted throughout. Both are free to download from
 usb.org:
 
-* **Type-C** means the *USB Type-C Cable and Connector Specification*,
-  Release 2.5, March 2026 [USBPD-TYPEC]_.
-* **PD** means the *USB Power Delivery Specification*, Revision 3.3,
-  Version 1.0, 2026-10-16 [USBPD-PD]_.
+* **Type-C** means the :ref:`USB Type-C Cable and Connector Specification
+  <usb-type-c-specification>`, Release 2.5, March 2026 [USBPD-TYPEC]_.
+* **PD** means the :ref:`USB Power Delivery Specification
+  <usb-pd-specification>`, Revision 3.3, Version 1.0, 2026-10-16
+  [USBPD-PD]_.
 
-Section and table numbers given in brackets, such as (PD Table 5.10), refer to
-these documents.
+Section and table numbers given in brackets, such as (:pd:`Table 5.10`),
+refer to these documents and link to their entries on the standards page.
 
 Terms
 -----
@@ -114,7 +115,7 @@ The connector and the CC wire
 -----------------------------
 
 A USB Type-C receptacle has 24 contacts. A port that only moves power uses
-four kinds of them (Type-C Table 3-4 and Section 4.2):
+four kinds of them (:typec:`Table 3-4` and :typec:`Section 4.2 <x>`):
 
 .. list-table:: Type-C receptacle contacts used by a power-only port
    :header-rows: 1
@@ -142,10 +143,10 @@ not use USB data can leave them unconnected.
 **Why there are two CC pins.** The plug can be inserted either way up. The
 cable has only one CC wire, which in each plug is connected to contact A5.
 Contact B5 of each plug is called VCONN and is not carried through to the
-other end of the cable (Type-C Section 2.5; Table 3-10). Each receptacle
+other end of the cable (:typec:`Section 2.5`; :typec:`Table 3-10 <x>`). Each receptacle
 therefore has a CC contact in both positions, CC1 and CC2, and only one of
 them meets the CC wire. Which one tells each side which way round the plug
-was inserted (Type-C Section 2.3.2). A power-only port does not need the
+was inserted (:typec:`Section 2.3.2`). A power-only port does not need the
 orientation itself, but it must know which CC pin carries the CC wire,
 because that is where messages arrive, and the source must know which pin is
 left over, because that is where it supplies VCONN.
@@ -178,7 +179,7 @@ The source pulls each of its CC pins up with Rp, and the sink pulls each of
 its CC pins down with Rd. When a cable joins them, the CC wire forms a
 voltage divider (or, with a current-source Rp, a current flowing into Rd).
 
-.. list-table:: Source pull-up (Rp) choices (Type-C Table 4-27)
+.. list-table:: Source pull-up (Rp) choices (:typec:`Table 4-27`)
    :header-rows: 1
    :widths: 25 25 25 25
 
@@ -200,13 +201,13 @@ voltage divider (or, with a current-source Rp, a current flowing into Rd).
      - 4.7 kΩ ± 5 %
 
 "Default USB power" means 500 mA for a USB 2.0 port and 900 mA for a
-single-lane USB 3.2 port (Type-C Table 4-20).
+single-lane USB 3.2 port (:typec:`Table 4-20`).
 
 The sink's Rd is 5.1 kΩ to ground. It may be accurate to ± 10 %, which lets
 the sink tell the three current levels apart, or ± 20 %, which only lets it
-detect that a source is present (Type-C Table 4-28). An unpowered sink may
+detect that a source is present (:typec:`Table 4-28`). An unpowered sink may
 instead present a 1.1 V ± 20 % clamp, which stops USB Power Delivery
-communication until it switches to a real Rd (Type-C Table 4-28, note 1).
+communication until it switches to a real Rd (:typec:`Table 4-28`, note 1).
 
 **The CC voltage for each Rp level.** Both ends decide what is attached by
 measuring the CC voltage, so the circuit designer needs to know what voltage
@@ -223,13 +224,13 @@ where:
 
 * :math:`V_\text{CC}` is the voltage on the connected CC pin, in volts;
 * :math:`V_\text{pull}` is the voltage the resistor Rp is connected to:
-  5 V or 3.3 V (Type-C Table 4-27);
-* :math:`R_p` is the source's pull-up resistor (Type-C Table 4-27);
-* :math:`I_p` is the source's pull-up current (Type-C Table 4-27);
-* :math:`R_d` is the sink's pull-down, 5.1 kΩ nominal (Type-C Table 4-28).
+  5 V or 3.3 V (:typec:`Table 4-27`);
+* :math:`R_p` is the source's pull-up resistor (:typec:`Table 4-27`);
+* :math:`I_p` is the source's pull-up current (:typec:`Table 4-27`);
+* :math:`R_d` is the sink's pull-down, 5.1 kΩ nominal (:typec:`Table 4-28`).
 
 The model assumes nominal values, no current in the cable and a negligible
-cable resistance (the same assumption Type-C Section 4.11.3.1 makes). As an
+cable resistance (the same assumption :typec:`Section 4.11.3.1` makes). As an
 example of the steps, for 22 kΩ to 5 V:
 :math:`R_p + R_d = 22 + 5.1 = 27.1\ \text{k}\Omega`, and
 :math:`5\ \text{V} \times 5.1 / 27.1 = 0.941\ \text{V}`. The same steps for
@@ -260,11 +261,11 @@ The three methods give nearly the same voltage for each level, which is what
 lets a sink read the level without knowing how the source made it. The three
 levels are about 0.4 V, 0.9 V and 1.7 V.
 
-**What the sink measures.** Type-C Section 4.11.3.1 gives the method for
+**What the sink measures.** :typec:`Section 4.11.3.1` gives the method for
 including all tolerances and up to 250 mV of ground offset caused by current
-in the cable. For an Rd of ± 10 % the result is (Type-C Table 4-36):
+in the cable. For an Rd of ± 10 % the result is (:typec:`Table 4-36`):
 
-.. list-table:: CC voltage measured by a sink (Rd ± 10 %, Type-C Table 4-36)
+.. list-table:: CC voltage measured by a sink (Rd ± 10 %, :typec:`Table 4-36`)
    :header-rows: 1
    :widths: 50 25 25
 
@@ -294,9 +295,9 @@ in the cable. For an Rd of ± 10 % the result is (Type-C Table 4-36):
 (a sink), an Ra (a cable plug with an e-marker) and nothing (an open pin)
 apart. Because a source knows its own Rp, it has one set of thresholds per Rp
 level. For a current-source Rp (the type that suits an integrated circuit,
-see `Switchable Rp`_) the thresholds are (Type-C Table 4-37):
+see `Switchable Rp`_) the thresholds are (:typec:`Table 4-37`):
 
-.. list-table:: CC voltage thresholds for a source with a current-source Rp (Type-C Table 4-37)
+.. list-table:: CC voltage thresholds for a source with a current-source Rp (:typec:`Table 4-37`)
    :header-rows: 1
    :widths: 25 25 25 25
 
@@ -317,7 +318,7 @@ see `Switchable Rp`_) the thresholds are (Type-C Table 4-37):
      - 0.88 V to 2.181 V
      - 2.432 V
 
-The "open" thresholds allow 250 mV of ground offset (Type-C Table 4-37,
+The "open" thresholds allow 250 mV of ground offset (:typec:`Table 4-37`,
 note 1). A commercial example is the TI TPS65987D, which as a source detects
 an Ra below 0.15-0.25 V, 0.35-0.45 V or 0.75-0.85 V and an open pin above
 1.5-1.65 V, 1.5-1.65 V or 2.45-2.615 V for the three Rp levels
@@ -328,10 +329,11 @@ four thresholds as a sink and three per Rp level as a source.
 Attach for a dual-role port
 ---------------------------
 
-The Type-C specification describes attach as a state machine for each kind of
-port (Type-C Section 4.5.2.2). A source sees each CC pin as *SRC.Open*,
+The :ref:`Type-C specification <usb-type-c-specification>` describes attach
+as a state machine for each kind of
+port (:typec:`Section 4.5.2.2`). A source sees each CC pin as *SRC.Open*,
 *SRC.Rd* or *SRC.Ra*; a sink sees each CC pin as *SNK.Rp* or *SNK.Open*
-(Type-C Tables 4-16 and 4-17).
+(:typec:`Type-C Tables 4-16 <x>` and :typec:`4-17 <x>`).
 
 Toggling between Rp and Rd
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -339,9 +341,9 @@ Toggling between Rp and Rd
 When nothing is attached, a dual-role port alternates between presenting Rd
 on both CC pins (state Unattached.SNK) and presenting Rp on both CC pins
 (Unattached.SRC), so that it can be found by a source, by a sink, or by
-another dual-role port (Type-C Section 4.5.1.3.3).
+another dual-role port (:typec:`Section 4.5.1.3.3`).
 
-.. list-table:: Toggling timing (Type-C Table 4-33)
+.. list-table:: Toggling timing (:typec:`Table 4-33`)
    :header-rows: 1
    :widths: 25 20 55
 
@@ -360,7 +362,7 @@ another dual-role port (Type-C Section 4.5.1.3.3).
 
 The clock that sets these times should *not* come from a precise source such
 as a crystal, so that two dual-role ports do not stay locked in step and fail
-to find each other (Type-C Section 4.11.2, text before Table 4-33). In
+to find each other (:typec:`Section 4.11.2`, text before Table 4-33). In
 software this means adding a random variation to the period and duty cycle.
 
 .. wavedrom::
@@ -382,7 +384,7 @@ software this means adding a random variation to the period and duty cycle.
 How long a connection takes to be noticed depends on who toggles: at most
 *tNoToggleConnect* (5 ms) when neither side toggles, *tOnePortToggleConnect*
 (80 ms) when one side toggles, and *tTwoPortToggleConnect* (510 ms) when both
-do (Type-C Table 4-34).
+do (:typec:`Table 4-34`).
 
 The attach sequence
 ~~~~~~~~~~~~~~~~~~~
@@ -391,7 +393,7 @@ The attach sequence
 
 .. graphviz:: usb-pd/drp-states.dot
    :caption: Simplified attach state machine for a dual-role port that
-             prefers the source role (Type-C Section 4.5.2.2, Figure 4-16).
+             prefers the source role (:typec:`Section 4.5.2.2`, :typec:`Figure 4-16 <x>`).
              Accessory and debug states, and detach transitions back to
              the unattached states, are left out. "Stable" means unchanged
              for tCCDebounce (100 ms to 200 ms).
@@ -399,35 +401,35 @@ The attach sequence
 
 **Attaching to a source** (for example a charger). While presenting Rd, the
 port sees Rp on one CC pin and enters AttachWait.SNK. When that pin has shown
-Rp for *tCCDebounce* (100 ms to 200 ms, Type-C Table 4-34) and VBUS is
+Rp for *tCCDebounce* (100 ms to 200 ms, :typec:`Table 4-34`) and VBUS is
 present, the port enters Attached.SNK. The source meanwhile has debounced
-the Rd it sees and turned VBUS on within *tVBUSON*, at most 275 ms (Type-C
-Table 4-32; Sections 4.5.2.2.4 and 4.5.2.2.5).
+the Rd it sees and turned VBUS on within *tVBUSON*, at most 275 ms
+(:typec:`Table 4-32`; :typec:`Sections 4.5.2.2.4 <x>` and :typec:`4.5.2.2.5 <x>`).
 
 **Attaching to a sink** (for example a phone). While presenting Rp, the port
 sees Rd on one CC pin and enters AttachWait.SRC. It makes sure VBUS is at
-*vSafe0V* (at most 0.8 V, PD Table 4.9), loading VBUS if needed to discharge
+*vSafe0V* (at most 0.8 V, :pd:`Table 4.9`), loading VBUS if needed to discharge
 it within *tVsafe0V* (650 ms), waits until exactly one CC pin has shown Rd for
-tCCDebounce, enters Attached.SRC and turns VBUS on within tVBUSON (Type-C
-Sections 4.5.2.2.8 and 4.5.2.2.9; Table 4-32).
+tCCDebounce, enters Attached.SRC and turns VBUS on within tVBUSON
+(:typec:`Type-C Sections 4.5.2.2.8 <x>` and :typec:`4.5.2.2.9 <x>`; :typec:`Table 4-32 <x>`).
 
 **Attaching to another dual-role port.** Both sides toggle; whichever happens
 to present Rp when the other presents Rd becomes the source. The outcome is
-random unless one side uses a preference mechanism (Type-C Section
-4.5.2.2.7.2, note).
+random unless one side uses a preference mechanism
+(:typec:`Section 4.5.2.2.7.2`, note).
 
 **Detach.** A source detects that the sink has gone when the monitored CC pin
-reads SRC.Open, within *tSRCDisconnect* (20 ms, Type-C Table 4-34), and must
-then remove VBUS within *tVBUSOFF* (650 ms, Type-C Table 4-32). A sink
+reads SRC.Open, within *tSRCDisconnect* (20 ms, :typec:`Table 4-34`), and must
+then remove VBUS within *tVBUSOFF* (650 ms, :typec:`Table 4-32`). A sink
 detects detach when VBUS falls below *vSinkDisconnect* (3.67 V at 5 V) within
-*tSinkDisconnect* (40 ms, Type-C Table 4-3).
+*tSinkDisconnect* (40 ms, :typec:`Table 4-3`).
 
 Try.SRC and Try.SNK
 ~~~~~~~~~~~~~~~~~~~
 
 A dual-role port can bias the outcome with one of two optional mechanisms;
-only one may be enabled at a time (Type-C Sections 4.5.1.4.1, 4.5.2.2.10 to
-4.5.2.2.13):
+only one may be enabled at a time (:typec:`Type-C Sections 4.5.1.4.1 <x>`, :typec:`4.5.2.2.10 <x>` to
+:typec:`4.5.2.2.13 <x>`):
 
 * **Try.SRC** (prefers to be source). When the port finds itself heading for
   Attached.SNK, it presents Rp instead (state Try.SRC) for up to *tDRPTry*
@@ -438,8 +440,8 @@ only one may be enabled at a time (Type-C Sections 4.5.1.4.1, 4.5.2.2.10 to
   Attached.SRC it presents Rd for tDRPTry and waits for Rp.
 
 These mechanisms work only once, at attach. After that, both sides can use
-USB Power Delivery messages to swap roles (see `Role changes`_). Type-C
-Table 4-12 recommends Try.SRC for a port that prefers to be a source and
+USB Power Delivery messages to swap roles (see `Role changes`_). 
+:typec:`Table 4-12` recommends Try.SRC for a port that prefers to be a source and
 Try.SNK for one that prefers to be a sink.
 
 Choosing the initial role
@@ -464,8 +466,8 @@ Unpowered board ("dead battery")
 
 A board that has no power from Ethernet and is plugged into a USB charger is
 completely unpowered at that moment. The charger turns VBUS on only after it
-sees Rd. The port must therefore present Rd without any supply (Type-C
-Section 4.5.2.2.3: "A port with a dead battery shall enter this state while
+sees Rd. The port must therefore present Rd without any supply
+(:typec:`Section 4.5.2.2.3`: "A port with a dead battery shall enter this state while
 unpowered"; Section 4.8.5). Once the board has powered up from VBUS, the
 processor takes over the CC pins, keeping Rd present, and continues as a
 sink in Attached.SNK.
@@ -476,8 +478,8 @@ ErrorRecovery
 Every port that supports USB Power Delivery must support the *ErrorRecovery*
 state, in which it removes all terminations and presents at least *zOPEN*
 (126 kΩ) on both CC pins for *tErrorRecovery* (at least 25 ms, or 240 ms if it
-was supplying VCONN), forcing the other side to see a detach (Type-C Sections
-4.5.2.2.2, Table 4-30, Table 4-34). The Rp and Rd circuits must therefore
+was supplying VCONN), forcing the other side to see a detach
+(:typec:`Type-C Sections 4.5.2.2.2 <x>`, :typec:`Table 4-30 <x>`, :typec:`Table 4-34 <x>`). The Rp and Rd circuits must therefore
 both be switchable off.
 
 Layer 2: USB Power Delivery power levels
@@ -490,43 +492,43 @@ power levels are listed here.
 **Standard Power Range (SPR).** Fixed voltages of 5 V, 9 V, 15 V and 20 V.
 Which ones a source must offer depends on its power rating: up to 15 W only
 5 V; above 15 W also 9 V; above 27 W also 15 V; above 45 W also 20 V
-(PD Section 3.2.4, Table 3.1). Currents are up to 3 A, and up to 5 A at 20 V
-(100 W) with a 5 A cable (PD Table 3.1, note 1; Section 8.6.1.2.2). Fixed
-supplies have a tolerance of ± 5 % (PD Table 4.7, *vSrcNew*).
+(:pd:`Section 3.2.4`, :pd:`Table 3.1 <x>`). Currents are up to 3 A, and up to 5 A at 20 V
+(100 W) with a 5 A cable (:pd:`Table 3.1`, note 1; Section 8.6.1.2.2). Fixed
+supplies have a tolerance of ± 5 % (:pd:`Table 4.7`, *vSrcNew*).
 
 **Extended Power Range (EPR).** Sources rated above 100 W and up to 240 W can
-also offer 28 V, 36 V and 48 V at up to 5 A (PD Section 3.2.5.3, Table 3.6).
+also offer 28 V, 36 V and 48 V at up to 5 A (:pd:`Section 3.2.5.3`, :pd:`Table 3.6 <x>`).
 The sink must first ask to enter "EPR mode" with a separate message exchange,
-the source must check that the cable is EPR-capable (PD Section 8.6.1.2.3),
+the source must check that the cable is EPR-capable (:pd:`Section 8.6.1.2.3`),
 and in EPR mode the sink sends a keep-alive message whenever there has been
 no other traffic for *tSinkEPRKeepAlive* (250 ms to 500 ms); a source that
 sees no traffic for *tSourceEPRKeepAlive* (750 ms to 1000 ms) sends Hard
-Reset (PD Sections 7.31.18.2 and 7.31.18.3, Table 7.10). Cable electronics
-powered from VBUS must tolerate 50.9 V (48 V + 5 % + 500 mV) (Type-C Section
-4.6.2). Power role swaps are not allowed in EPR mode (PD Section 7.10).
+Reset (:pd:`PD Sections 7.31.18.2 <x>` and :pd:`7.31.18.3 <x>`, :pd:`Table 7.10 <x>`). Cable electronics
+powered from VBUS must tolerate 50.9 V (48 V + 5 % + 500 mV)
+(:typec:`Section 4.6.2`). Power role swaps are not allowed in EPR mode (:pd:`Section 7.10`).
 
 **Programmable Power Supply (PPS).** A supply whose voltage the sink adjusts
-in 20 mV steps (*vPpsStep*, PD Table 4.7) within 5 V to 11 V, 5 V to 16 V or
-5 V to 21 V (PD Table 4.2), with a current limit the sink sets in 50 mA
-steps (*iPpsCLStep*, PD Table 4.7). It is aimed at charging batteries
+in 20 mV steps (*vPpsStep*, :pd:`Table 4.7`) within 5 V to 11 V, 5 V to 16 V or
+5 V to 21 V (:pd:`Table 4.2`), with a current limit the sink sets in 50 mA
+steps (*iPpsCLStep*, :pd:`Table 4.7`). It is aimed at charging batteries
 directly. The sink repeats its request at least every *tPPSRequest*, 10 s
-(PD Section 7.31.16.1). A source that offers PPS must also offer the related
-*adjustable voltage supply* (AVS) mode (PD Section 3.2.5.2), which covers
-9 V to 20 V in SPR and 15 V to 48 V in EPR in 100 mV steps (PD Tables 4.3,
-4.4 and 4.7).
+(:pd:`Section 7.31.16.1`). A source that offers PPS must also offer the related
+*adjustable voltage supply* (AVS) mode (:pd:`Section 3.2.5.2`), which covers
+9 V to 20 V in SPR and 15 V to 48 V in EPR in 100 mV steps (:pd:`PD Tables 4.3 <x>`,
+:pd:`4.4 <x>` and :pd:`4.7 <x>`).
 
 Signalling on the CC wire
 -------------------------
 
 Every USB Power Delivery message is sent on the same CC wire that carries the
 Rp/Rd voltage. Communication is half-duplex: only one side transmits at a
-time (PD Section 5.1). Source and sink use exactly the same signalling.
+time (:pd:`Section 5.1`). Source and sink use exactly the same signalling.
 
 Biphase mark coding
 ~~~~~~~~~~~~~~~~~~~
 
 Bits are sent using *biphase mark coding* (BMC), a form of Manchester coding
-(PD Section 5.3.3). The rules are:
+(:pd:`Section 5.3.3`). The rules are:
 
 * the line changes level at the start of every bit;
 * for a ``1``, the line also changes level in the middle of the bit;
@@ -558,9 +560,9 @@ Bit rate
 ~~~~~~~~
 
 The bit rate *fBitRate* is 300 kbit/s nominal, within 270 kbit/s to
-330 kbit/s (PD Table 5.9). Within one message the rate may differ by no more
+330 kbit/s (:pd:`Table 5.9`). Within one message the rate may differ by no more
 than *pBitRate* = 0.25 % from the rate measured over the last 32 bits of the
-preamble (PD Section 5.3.4.8, Table 5.10), so a receiver can measure the bit
+preamble (:pd:`Section 5.3.4.8`, :pd:`Table 5.10 <x>`), so a receiver can measure the bit
 time on the preamble and use it for the rest of the message.
 
 The bit time (UI) sets every software timing on this page, so it is worth
@@ -571,7 +573,7 @@ calculating at the extremes:
    T_\text{UI} = \frac{1}{f_\text{bit}}
 
 where :math:`T_\text{UI}` is the unit interval in seconds and
-:math:`f_\text{bit}` is the bit rate in bit/s (PD Table 5.9).
+:math:`f_\text{bit}` is the bit rate in bit/s (:pd:`Table 5.9`).
 
 .. list-table:: Unit interval at the bit-rate limits
    :header-rows: 1
@@ -599,9 +601,9 @@ Transmitter levels, output impedance and edge rate
 
 The transmitter is a tri-state driver: it drives the CC wire between 0 V and
 *vSwing* while sending and lets go of the wire (high impedance) at all other
-times (PD Section 5.3.4, Table 5.10):
+times (:pd:`Section 5.3.4`, :pd:`Table 5.10 <x>`):
 
-.. list-table:: BMC transmitter requirements (PD Table 5.10)
+.. list-table:: BMC transmitter requirements (:pd:`Table 5.10`)
    :header-rows: 1
    :widths: 25 45 30
 
@@ -631,8 +633,8 @@ times (PD Section 5.3.4, Table 5.10):
      - at least 25 µs
 
 The waveform must also fit a *transmit mask* when driving a model of the
-worst cable and receiver (PD Section 5.3.4.1, Figures 5.12 and 5.13, Tables
-5.6 and 5.7). The mask has an outer limit of -75 mV to 1.2 V and an inner
+worst cable and receiver (:pd:`Section 5.3.4.1`, :pd:`Figures 5.12 <x>` and :pd:`5.13 <x>`,
+:pd:`Tables 5.6 <x>` and :pd:`5.7 <x>`). The mask has an outer limit of -75 mV to 1.2 V and an inner
 "eye" that the waveform must stay out of. Its coordinates give the edge
 precision:
 
@@ -646,7 +648,7 @@ precision:
 
 **Why the edges are slowed down.** The 300 ns minimum rise and fall time
 limits coupling from the CC wire into neighbouring wires in the cable, in
-particular the USB 2.0 data pair (PD Section 5.3.4, item 1). The slope may be
+particular the USB 2.0 data pair (:pd:`Section 5.3.4`, item 1). The slope may be
 set by the driver design or by an RC filter at its output.
 
 The inner mask sets the opposite limit: edges must not be so slow that they
@@ -664,10 +666,10 @@ time is:
         = 136.5\ \text{ns}
 
 where :math:`\tau` is the RC time constant and :math:`t_{10\text{-}90}` is
-the 10 %-90 % edge time, 300 ns (PD Table 5.10).
+the 10 %-90 % edge time, 300 ns (:pd:`Table 5.10`).
 
 Next, the time for a rising edge to reach the inner-mask limit of 1.04 V
-(PD Table 5.7, *Y8Tx*) from 0 V, with a final level of 1.125 V:
+(:pd:`Table 5.7`, *Y8Tx*) from 0 V, with a final level of 1.125 V:
 
 .. math::
 
@@ -677,8 +679,8 @@ Next, the time for a rising edge to reach the inner-mask limit of 1.04 V
                   = 136.5\ \text{ns} \times 2.583
                   = 353\ \text{ns}
 
-where :math:`V_\text{swing}` = 1.125 V (nominal *vSwing*, PD Table 5.10) and
-:math:`V_\text{Y8}` = 1.04 V (PD Table 5.7). The mask requires this level by
+where :math:`V_\text{swing}` = 1.125 V (nominal *vSwing*, :pd:`Table 5.10`) and
+:math:`V_\text{Y8}` = 1.04 V (:pd:`Table 5.7`). The mask requires this level by
 0.25 UI, which at the fastest bit rate is
 :math:`0.25 \times 3.030\ \mu\text{s} = 758\ \text{ns}`. Turning this around,
 the slowest RC edge that still passes is
@@ -689,11 +691,11 @@ with a 10 %-90 % edge time between 300 ns and about 640 ns meets both limits
 
 The output impedance limit (*zDriver*) bounds how much noise picked up along
 the cable reaches the receiver, since a low-impedance driver holds the line
-firmly at its level (PD Section 5.3.4.7). Any extra capacitance used for edge
-shaping must be disconnected within *tInterFrameGap* after the message (PD
-Section 5.3.4.6). The transmitter must also survive its output being shorted
+firmly at its level (:pd:`Section 5.3.4.7`). Any extra capacitance used for edge
+shaping must be disconnected within *tInterFrameGap* after the message
+(:pd:`Section 5.3.4.6`). The transmitter must also survive its output being shorted
 to ground for 120 µs, which happens when the other side signals a fast role
-swap (PD Section 5.3.4.10).
+swap (:pd:`Section 5.3.4.10`).
 
 The DC level the signal starts and ends on
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -706,14 +708,14 @@ Rd). While it transmits the wire swings between 0 V and vSwing, and when it
 lets go the wire returns to the Rp/Rd level ([USBPD-TPS25750]_, Section
 9.3.1.4). Therefore:
 
-* the transmitter starts by driving low (PD Section 5.3.4, item 2);
-* the receiver must tolerate losing the first edge (PD Section 5.3.4,
+* the transmitter starts by driving low (:pd:`Section 5.3.4`, item 2);
+* the receiver must tolerate losing the first edge (:pd:`Section 5.3.4`,
   item 3);
 * the last bit is followed by one more edge. If that edge goes low, the
   transmitter holds the line low for at least *tHoldLowBMC* (1 µs) and then
   lets go; if it goes high, it holds high for 1 UI, then low for at least
   1 µs, then lets go. Either way it must have let go within *tEndDriveBMC*
-  (23 µs) of the end of the last bit (PD Section 5.3.4, items 4 to 6; Figures
+  (23 µs) of the end of the last bit (:pd:`Section 5.3.4`, items 4 to 6; Figures
   5.8 to 5.11).
 
 .. wavedrom::
@@ -765,16 +767,17 @@ lets go the wire returns to the Rp/Rd level ([USBPD-TPS25750]_, Section
    "config": {"hscale": 1}}
 
 Up to 250 mV can be lost in the cable's ground wire at full current
-(*vIRDropGNDC*, PD Table 5.11). This moves the received signal down at the
+(*vIRDropGNDC*, :pd:`Table 5.11`). This moves the received signal down at the
 sink and up at the source; the receive masks below allow for it.
 
 Receiver thresholds, filtering and noise
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The PD specification does not fix the receiver's switching thresholds.
+The :ref:`PD specification <usb-pd-specification>` does not fix the
+receiver's switching thresholds.
 Instead it gives *receive masks*: regions the received signal will stay out
-of, after noise and ground offset (PD Section 5.3.4.2, Figures 5.14 to 5.19,
-Table 5.8). The centre of the receive eye is 0.4375 V for a sink, 0.5625 V
+of, after noise and ground offset (:pd:`Section 5.3.4.2`, :pd:`Figures 5.14 <x>` to :pd:`5.19 <x>`,
+:pd:`Table 5.8 <x>`). The centre of the receive eye is 0.4375 V for a sink, 0.5625 V
 when no current flows and 0.6875 V for a source, and the eye extends
 ± 0.205 V around that centre for a sink or source (± 0.33 V with no
 current). The outer limits are -0.3325 V and 1.5325 V. Horizontally the eye
@@ -783,7 +786,7 @@ that of a ``0`` from 0.07 UI to 0.93 UI, so a receiver must accept edges
 displaced by about 0.07 UI from their ideal times. A dual-role port therefore
 needs receiver thresholds that change with its power role.
 
-.. list-table:: BMC receiver requirements (PD Table 5.11)
+.. list-table:: BMC receiver requirements (:pd:`Table 5.11`)
    :header-rows: 1
    :widths: 25 45 30
 
@@ -828,14 +831,14 @@ with a copy of itself delayed by 300 ns to 500 ns (sampled every 50 ns), the
 other subtracts the outputs of two low-pass filters with 200 ns and 300 ns
 time constants.
 
-The line is *idle* after *tTransitionWindow* without 3 transitions (PD
-Section 5.2.2.1). A transmitter must check that the line is idle immediately
-before it starts (PD Section 5.2.2).
+The line is *idle* after *tTransitionWindow* without 3 transitions
+(:pd:`Section 5.2.2.1`). A transmitter must check that the line is idle immediately
+before it starts (:pd:`Section 5.2.2`).
 
 Packet structure
 ~~~~~~~~~~~~~~~~
 
-A packet on the wire has five parts (PD Section 5.3.1.1, Figure 5.1):
+A packet on the wire has five parts (:pd:`Section 5.3.1.1`, :pd:`Figure 5.1 <x>`):
 
 .. list-table:: Parts of a packet
    :header-rows: 1
@@ -848,7 +851,7 @@ A packet on the wire has five parts (PD Section 5.3.1.1, Figure 5.1):
      - 64 bits
      - Alternating ``0`` and ``1``, starting with ``0`` and ending with
        ``1``. Not 4b5b coded. Lets the receiver settle and measure the bit
-       rate (PD Section 5.3.1.1.1).
+       rate (:pd:`Section 5.3.1.1.1`).
    * - SOP
      - 20 bits
      - Four 5-bit special symbols that mark the start and say who the
@@ -867,12 +870,12 @@ A packet on the wire has five parts (PD Section 5.3.1.1, Figure 5.1):
 **4b5b coding.** Except for the preamble, the data is sent in 5-bit
 *symbols*. Each 4-bit nibble is replaced by a 5-bit code from a fixed table,
 and a few further 5-bit codes are reserved as special symbols (*K-codes*)
-that never appear in data (PD Section 5.3.1.1.2, Table 5.2). Because the
+that never appear in data (:pd:`Section 5.3.1.1.2`, :pd:`Table 5.2 <x>`). Because the
 special symbols cannot occur in data, a receiver can find the start and end
 of a message without counting bits. Within each symbol, bit b0 is sent
 first.
 
-.. list-table:: 4b5b codes (PD Table 5.2), written b4 b3 b2 b1 b0
+.. list-table:: 4b5b codes (:pd:`Table 5.2`), written b4 b3 b2 b1 b0
    :header-rows: 1
    :widths: 12 18 12 18 12 18 22
 
@@ -927,13 +930,13 @@ first.
      - EOP: 01101
 
 All other 5-bit values are invalid; a receiver that sees one discards the
-packet (PD Section 5.3.2.3).
+packet (:pd:`Section 5.3.2.3`).
 
 **Start of packet (SOP).** The four K-codes after the preamble form an
-*ordered set* that says who the message is for (PD Section 5.3.1.1.3, Table
-5.3; resets in Table 5.4):
+*ordered set* that says who the message is for (:pd:`Section 5.3.1.1.3`,
+:pd:`Table 5.3 <x>`; resets in Table 5.4):
 
-.. list-table:: Ordered sets (PD Tables 5.3 and 5.4)
+.. list-table:: Ordered sets (:pd:`PD Tables 5.3 <x>` and :pd:`5.4 <x>`)
    :header-rows: 1
    :widths: 25 15 15 15 15 15
 
@@ -975,7 +978,7 @@ packet (PD Section 5.3.2.3).
      - Resets the cable plugs
 
 A receiver must accept an ordered set with all four K-codes correct, and may
-accept one with three of the four correct (PD Section 5.3.2.2, Table 5.5).
+accept one with three of the four correct (:pd:`Section 5.3.2.2`, :pd:`Table 5.5 <x>`).
 The source (more precisely, the port supplying VCONN) talks to the cable with
 SOP' messages; the other port must ignore those and must not acknowledge
 them.
@@ -983,26 +986,26 @@ them.
 **CRC.** The checksum is CRC-32 with polynomial 04C1 1DB7h, initial value
 FFFF FFFFh, calculated bit 0 first over the header and data, and complemented
 before sending; a receiver that runs the CRC over data and checksum together
-gets the fixed remainder C704 DD7Bh (PD Section 5.3.1.1.4). It is the same
-CRC as the Ethernet frame checksum: the worked example in PD Figure 5.1, a
+gets the fixed remainder C704 DD7Bh (:pd:`Section 5.3.1.1.4`). It is the same
+CRC as the Ethernet frame checksum: the worked example in :pd:`Figure 5.1`, a
 GoodCRC message with bytes 41h 02h, has the checksum 46B5 0D97h, which is
 what a standard Ethernet/zlib CRC-32 routine returns for those two bytes
 (checked with ``calc.py`` in ``docs/power/usb-pd/``).
 
-**End of packet (EOP).** A single EOP K-code, not covered by the CRC (PD
-Section 5.3.1.1.5).
+**End of packet (EOP).** A single EOP K-code, not covered by the CRC
+(:pd:`Section 5.3.1.1.5`).
 
 Message format
 ~~~~~~~~~~~~~~
 
-Each message starts with a 16-bit header (PD Section 6.2.1, Table 6.2).
+Each message starts with a 16-bit header (:pd:`Section 6.2.1`, :pd:`Table 6.2 <x>`).
 *Control* messages (for example GoodCRC, Accept, PS_RDY, PR_Swap) consist of
 the header alone. *Data* messages (for example Source_Capabilities, Request)
-add one to seven 32-bit data objects (PD Section 6.1.1). *Extended* messages
+add one to seven 32-bit data objects (:pd:`Section 6.1.1`). *Extended* messages
 carry up to 260 bytes and are needed only for optional features.
 
 .. wavedrom::
-   :caption: The 16-bit message header (PD Table 6.2). Bit 0 is on the
+   :caption: The 16-bit message header (:pd:`Table 6.2`). Bit 0 is on the
              right. PR is the power role and DR the data role of the sender.
    :name: fig-usbpd-header
    :alt: Bit-field diagram of the message header: bits 4 to 0 message type,
@@ -1025,20 +1028,20 @@ carry up to 260 bytes and are needed only for optional features.
   Accept (00011), Reject (00100), PS_RDY (00110), Get_Source_Cap (00111),
   Get_Sink_Cap (01000), DR_Swap (01001), PR_Swap (01010), VCONN_Swap
   (01011), Wait (01100), Soft_Reset (01101), Not_Supported (10000) and
-  FR_Swap (10011) (PD Table 6.4). Data messages include Source_Capabilities
+  FR_Swap (10011) (:pd:`Table 6.4`). Data messages include Source_Capabilities
   (00001), Request (00010), Sink_Capabilities (00100), Alert (00110) and
-  Vendor_Defined (01111), which carries the cable query (PD Table 6.5).
+  Vendor_Defined (01111), which carries the cable query (:pd:`Table 6.5`).
 * **MessageID** (bits 11 to 9): a 3-bit counter kept by the sender. A
   GoodCRC carries the MessageID of the message it acknowledges, and a
-  receiver uses it to recognise a repeated message (PD Sections 6.1.2 and
-  6.3.1).
+  receiver uses it to recognise a repeated message (:pd:`PD Sections 6.1.2 <x>` and
+  :pd:`6.3.1 <x>`).
 * **Number of data objects** (bits 14 to 12): zero for control messages.
 * **Power role** (PR, bit 8: 1 = source) and **data role** (DR, bit 5:
   1 = DFP) of the sender, and the **specification revision** (bits 7 to 6),
-  agreed from the first Source_Capabilities and Request (PD Section 6.1.3.1).
+  agreed from the first Source_Capabilities and Request (:pd:`Section 6.1.3.1`).
 
 .. wavedrom::
-   :caption: Fixed supply PDO (PD Tables 6.8 and 6.10), drawn as two rows
+   :caption: Fixed supply PDO (:pd:`PD Tables 6.8 <x>` and :pd:`6.10 <x>`), drawn as two rows
              of 16 bits. Bits 31 to 30 are 00 for a fixed supply.
    :name: fig-usbpd-pdo
    :alt: Bit-field diagram of the fixed supply PDO: bits 9 to 0 maximum
@@ -1056,7 +1059,7 @@ carry up to 260 bytes and are needed only for optional features.
    "config": {"hspace": 700, "bits": 32, "lanes": 2}}
 
 .. wavedrom::
-   :caption: Fixed supply RDO (PD Table 6.19), drawn as two rows of 16
+   :caption: Fixed supply RDO (:pd:`Table 6.19`), drawn as two rows of 16
              bits.
    :name: fig-usbpd-rdo
    :alt: Bit-field diagram of the fixed supply RDO: bits 9 to 0 and bits 19
@@ -1075,9 +1078,9 @@ carry up to 260 bytes and are needed only for optional features.
 The first PDO is always 5 V, and its upper bits carry flags about the port,
 including *Dual-Role Power* (bit 29), *Unconstrained Power* (bit 27) and,
 in a sink's list, the current it needs during a fast role swap (bits 24 to
-23) (PD Tables 6.8 and 6.9). In the RDO, bits 31 to 28 select a PDO by
+23) (:pd:`PD Tables 6.8 <x>` and :pd:`6.9 <x>`). In the RDO, bits 31 to 28 select a PDO by
 position (1 = the first), bits 19 to 10 give the current the sink will draw,
-and bits 9 to 0 repeat the same value (PD Table 6.19). For example, an offer
+and bits 9 to 0 repeat the same value (:pd:`Table 6.19`). For example, an offer
 of 9 V at 3 A has voltage field 9 V / 50 mV = 180 and current field
 3 A / 10 mA = 300, giving the PDO ``0002 D12Ch``; a request for 2 A from the
 second PDO is the RDO ``2003 20C8h``.
@@ -1096,7 +1099,7 @@ where :math:`n` is the number of 32-bit data objects (0 to 7),
 :math:`N_\text{pre}` = 64 preamble bits, :math:`N_\text{SOP}` = 4 symbols ×
 5 bits = 20, :math:`N_\text{hdr}` = 4 nibbles × 5 bits = 20, each data object
 is 8 nibbles × 5 bits = 40, :math:`N_\text{CRC}` = 8 nibbles × 5 bits = 40
-and :math:`N_\text{EOP}` = 5 (PD Section 5.3.1.1). The duration is
+and :math:`N_\text{EOP}` = 5 (:pd:`Section 5.3.1.1`). The duration is
 :math:`N_\text{bits} \times T_\text{UI}`:
 
 .. list-table:: Packet duration
@@ -1143,55 +1146,55 @@ Negotiation and time limits
    * - tTransmit
      - at most 195 µs
      - From the end of a received message's EOP to the start of the
-       GoodCRC preamble (PD Section 7.31.1, Table 7.10).
+       GoodCRC preamble (:pd:`Section 7.31.1`, :pd:`Table 7.10 <x>`).
    * - tInterFrameGap
      - at least 25 µs
-     - Minimum gap before any transmission (PD Table 5.10).
+     - Minimum gap before any transmission (:pd:`Table 5.10`).
    * - tReceive
      - 0.9 ms to 1.1 ms
-     - How long a sender waits for GoodCRC (PD Section 7.31.1).
+     - How long a sender waits for GoodCRC (:pd:`Section 7.31.1`).
    * - tRetry, nRetryCount
      - at most 195 µs; 2
      - A message without GoodCRC is repeated within tRetry, at most twice
-       (PD Section 7.31.1, Table 7.12).
+       (:pd:`Section 7.31.1`, :pd:`Table 7.12 <x>`).
    * - tReceiverResponse
      - at most 15 ms
      - From the GoodCRC of a message that needs an answer to the start of
-       the answer (PD Section 7.31.2).
+       the answer (:pd:`Section 7.31.2`).
    * - tSenderResponse
      - 27 ms to 50 ms
-     - How long the asking side waits for the answer (PD Table 7.10).
+     - How long the asking side waits for the answer (:pd:`Table 7.10`).
    * - tFirstSourceCap
      - at most 250 ms
-     - Source: from VBUS reaching 5 V to the first Source_Capabilities (PD
-       Section 7.31.3.3).
+     - Source: from VBUS reaching 5 V to the first Source_Capabilities
+       (:pd:`Section 7.31.3.3`).
    * - tTypeCSendSourceCap
      - 100 ms to 200 ms
      - Source: interval for repeating Source_Capabilities until it is
-       acknowledged, for nCapsCount (50) attempts (PD Section 7.31.3.1).
+       acknowledged, for nCapsCount (50) attempts (:pd:`Section 7.31.3.1`).
    * - tTypeCSinkWaitCap
      - 310 ms to 620 ms
-     - Sink: may send Hard Reset if no Source_Capabilities arrives (PD
-       Section 7.31.3.2).
+     - Sink: may send Hard Reset if no Source_Capabilities arrives
+       (:pd:`Section 7.31.3.2`).
    * - tSrcTransition
      - at least 25 ms
-     - Source: wait after Accept before changing the voltage (PD Table 4.7).
+     - Source: wait after Accept before changing the voltage (:pd:`Table 4.7`).
    * - tSrcTransReq
      - at most 325 ms (SPR)
-     - Source: from the GoodCRC of Accept to the start of PS_RDY (PD Table
-       4.7).
+     - Source: from the GoodCRC of Accept to the start of PS_RDY
+       (:pd:`Table 4.7`).
    * - tPSTransition
      - 450 ms to 550 ms (SPR)
-     - Sink: how long it waits for PS_RDY before Hard Reset (PD Sections
-       7.31.5.1 and 9.2.4.8).
+     - Sink: how long it waits for PS_RDY before Hard Reset
+       (:pd:`PD Sections 7.31.5.1 <x>` and :pd:`9.2.4.8 <x>`).
    * - tSinkTx
      - 16 ms to 20 ms
      - Source: wait after changing Rp to "sink may not transmit" before
-       starting its own exchange (PD Section 7.31.13.1).
+       starting its own exchange (:pd:`Section 7.31.13.1`).
    * - tSnkStdby
      - at most 15 ms
      - Sink: time to cut its current to iSnkStdby (500 mA) before a voltage
-       change (PD Table 4.8).
+       change (:pd:`Table 4.8`).
 
 **Acknowledgement.** Every correctly received message addressed to the port
 must be answered with GoodCRC so that its first preamble bit starts between
@@ -1219,9 +1222,9 @@ the message is discarded silently.
 
 **Retries.** A sender that has not received GoodCRC within tReceive sends the
 same message again within tRetry, up to twice, so each message is sent at
-most three times (PD Section 7.31.1). After that it sends Soft_Reset (PD
-Section 7.31.8.1), and a failing Soft_Reset leads to Hard Reset (PD Section
-7.1.1). A missed GoodCRC is therefore recovered automatically as long as it
+most three times (:pd:`Section 7.31.1`). After that it sends Soft_Reset
+(:pd:`Section 7.31.8.1`), and a failing Soft_Reset leads to Hard Reset
+(:pd:`Section 7.1.1`). A missed GoodCRC is therefore recovered automatically as long as it
 does not happen three times in a row.
 
 The source side
@@ -1234,14 +1237,14 @@ The level a source advertises with Rp is a promise about current at 5 V:
 
 * **Before a contract**, the source must be able to supply the advertised
   current, and its first Source_Capabilities must offer at least that much at
-  5 V (Type-C Section 4.5.2.2.9.1; PD Section 3.2.1, item 5). A board with
+  5 V (:typec:`Section 4.5.2.2.9.1`; :pd:`Section 3.2.1`, item 5). A board with
   little spare power advertises "default"; one that can spare 7.5 W or 15 W
   at 5 V advertises 1.5 A or 3.0 A.
 * **During a contract**, the Rp value no longer means current. The source
   uses it to control who may start a message exchange: the 3.0 A value
   ("SinkTxOK") lets the sink start one, the 1.5 A value ("SinkTxNG") reserves
   the line for the source, which then waits *tSinkTx* (16 ms to 20 ms) before
-  starting (PD Sections 5.2.2, 7.2 and 7.31.13.1; Table 5.1).
+  starting (:pd:`PD Sections 5.2.2 <x>`, :pd:`7.2 <x>` and :pd:`7.31.13.1 <x>`; :pd:`Table 5.1 <x>`).
 
 A source therefore changes its Rp level during normal operation, and its Rp
 circuit must provide at least the 1.5 A and 3.0 A levels whatever power it
@@ -1257,28 +1260,28 @@ Source sequence
 
 After attach (Attached.SRC) the source:
 
-#. turns VBUS on to *vSafe5V* (4.75 V to 5.5 V, PD Table 4.9) within tVBUSON
+#. turns VBUS on to *vSafe5V* (4.75 V to 5.5 V, :pd:`Table 4.9`) within tVBUSON
    (275 ms), supplies VCONN if needed (see `Cables and VCONN`_), and must not
-   start messages until VBUS has reached vSafe5V (Type-C Section
-   4.5.2.2.9.1);
+   start messages until VBUS has reached vSafe5V
+   (:typec:`Section 4.5.2.2.9.1`);
 #. optionally queries the cable (required before offering more than 3 A or
    EPR voltages);
 #. sends Source_Capabilities within tFirstSourceCap (250 ms) and repeats it
-   every 100 ms to 200 ms until it gets a GoodCRC (PD Section 7.31.3);
+   every 100 ms to 200 ms until it gets a GoodCRC (:pd:`Section 7.31.3`);
 #. evaluates the Request (see below) and answers Accept or Reject within
    tReceiverResponse (15 ms);
 #. after Accept, waits at least tSrcTransition (25 ms), changes the voltage
-   at no more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, PD Table 4.7), and
+   at no more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, :pd:`Table 4.7`), and
    sends PS_RDY within tSrcTransReq (325 ms in SPR) of the GoodCRC for Accept
-   (PD Section 4.5.1.1; Table 4.7). The new voltage must be within ± 5 % of
-   the offered value, plus 0.5 V while settling (*vSrcNew*, *vSrcValid*, PD
-   Table 4.7).
+   (:pd:`Section 4.5.1.1`; :pd:`Table 4.7 <x>`). The new voltage must be within ± 5 % of
+   the offered value, plus 0.5 V while settling (*vSrcNew*, *vSrcValid*, 
+   :pd:`Table 4.7`).
 
 The slew limit exists to limit the current that charges the sink's input
-capacitors: PD Table 4.7 states it is based on a 3 A connector rating and at
+capacitors: :pd:`Table 4.7` states it is based on a 3 A connector rating and at
 most 100 µF of sink capacitance. The source's own output capacitance must be
-at least 10 µF (*cSrcBulk*, PD Table 4.7), while a dual-role port that is not
-supplying VBUS may present at most 10 µF on VBUS (Type-C Table 4-2), so the
+at least 10 µF (*cSrcBulk*, :pd:`Table 4.7`), while a dual-role port that is not
+supplying VBUS may present at most 10 µF on VBUS (:typec:`Table 4-2`), so the
 larger bulk capacitance has to sit behind the source switch.
 
 Building the offer from the power budget
@@ -1295,7 +1298,7 @@ board uses, less what the converter loses:
 where:
 
 * :math:`P_\text{offer}` is the power offered on the USB port, in watts (the
-  *Port Present PDP* in PD terms, PD Section 3.2);
+  *Port Present PDP* in PD terms, :pd:`Section 3.2`);
 * :math:`P_\text{in}` is the power granted on the input port, for example by
   Power over Ethernet (see :doc:`poe`);
 * :math:`P_\text{board}` is the power the board itself uses;
@@ -1310,25 +1313,25 @@ where:
    P_\text{offer} &= (25\ \text{W} - 5\ \text{W}) \times 0.90 \\
                   &= 20\ \text{W} \times 0.90 = 18\ \text{W}
 
-For a source rated between 15 W and 27 W, PD Table 3.1 requires a 5 V offer
+For a source rated between 15 W and 27 W, :pd:`Table 3.1` requires a 5 V offer
 of 3 A and a 9 V offer of :math:`P_\text{offer} / 9\ \text{V}`; here
 :math:`18\ \text{W} / 9\ \text{V} = 2.00\ \text{A}`. Currents are rounded to
-10 mA (PD Section 3.2.1, item 1). So the Source_Capabilities message lists
+10 mA (:pd:`Section 3.2.1`, item 1). So the Source_Capabilities message lists
 "5 V 3 A" and "9 V 2 A". Other rules shape the list: the first PDO is always
 5 V; a higher-voltage PDO may not offer more power than the next higher
-required one; currents above 3 A need a 5 A cable (PD Section 3.2.1; Section
-8.6.1.2.2). A port with nothing to offer sends a single "5 V 0 A" PDO (PD
-Section 7.9.1.5).
+required one; currents above 3 A need a 5 A cable (:pd:`Section 3.2.1`;
+:pd:`Section 8.6.1.2.2 <x>`). A port with nothing to offer sends a single "5 V 0 A" PDO
+(:pd:`Section 7.9.1.5`).
 
 **Evaluating the request.** The source checks that the requested object
 exists and that the requested current does not exceed the offered maximum,
-then answers Accept, Reject or Wait (PD Section 6.4.2; Table 6.19).
+then answers Accept, Reject or Wait (:pd:`Section 6.4.2`; :pd:`Table 6.19 <x>`).
 
 **Changing the offer.** When the input power changes, the processor sends new
 Source_Capabilities and the sink must request again. When lowering the offer,
 the source should first send an Alert message, up to *tReducePowerAlert*
-(2.0 s to 2.4 s) before the reduced capabilities (PD Section 6.4.5.5; Table
-4.7). If the input drops faster than that, the source's own over-current
+(2.0 s to 2.4 s) before the reduced capabilities (:pd:`Section 6.4.5.5`;
+:pd:`Table 4.7 <x>`). If the input drops faster than that, the source's own over-current
 protection or a Hard Reset is the remaining option, so the power budget
 should keep a margin.
 
@@ -1338,8 +1341,8 @@ Current limit and over-current response
 A source must have over-current protection that does not trip within the
 contract, should send Hard Reset (and later an Alert) when it trips, and,
 when it shuts down a port above 5 V, must bring VBUS down to vSafe5V within
-*tSafe5V* (275 ms) and to vSafe0V within *tSafe0V* (650 ms) (PD Section
-4.1.5.1; Table 4.9). The current limit is in the external source converter.
+*tSafe5V* (275 ms) and to vSafe0V within *tSafe0V* (650 ms)
+(:pd:`Section 4.1.5.1`; :pd:`Table 4.9 <x>`). The current limit is in the external source converter.
 For example, TPS65987D has a firmware-selectable over-current clamp with 20
 settings from 1.267 A to 6.33 A (typical) and a fast-acting limit of about
 10 A ([USBPD-TPS65987D]_, Section 6.7).
@@ -1348,9 +1351,9 @@ Discharging VBUS
 ~~~~~~~~~~~~~~~~
 
 A source must bring VBUS to vSafe0V within tSafe0V (650 ms) after detach,
-and to below vSafe5V (max) within tSafe5V (275 ms) (PD Section 4.1.5.5). It
-must also discharge VBUS before attaching (AttachWait.SRC, Type-C Section
-4.5.2.2.8.1) and during a role swap. A switched load from VBUS to ground,
+and to below vSafe5V (max) within tSafe5V (275 ms) (:pd:`Section 4.1.5.5`). It
+must also discharge VBUS before attaching (AttachWait.SRC, 
+:typec:`Section 4.5.2.2.8.1`) and during a role swap. A switched load from VBUS to ground,
 controlled by the processor, does this.
 
 The sink side
@@ -1359,11 +1362,11 @@ The sink side
 A sink presents Rd, waits for VBUS and Source_Capabilities, chooses a PDO,
 sends Request within tReceiverResponse (15 ms), and after Accept cuts its
 current to *iSnkStdby* (500 mA) within *tSnkStdby* (15 ms) until PS_RDY
-arrives (PD Section 4.5.1.1; Table 4.8). A sink that uses the 1.5 A or 3.0 A
+arrives (:pd:`Section 4.5.1.1`; :pd:`Table 4.8 <x>`). A sink that uses the 1.5 A or 3.0 A
 Rp level before a contract must follow changes of Rp within *tSinkAdj*
-(60 ms, Type-C Table 4-32). During a contract it must check the Rp level
-before starting an exchange of its own (PD Section 7.2). A sink should
-tolerate up to 24 V on VBUS without damage (*vSprMax*, PD Table 4.8).
+(60 ms, :typec:`Table 4-32`). During a contract it must check the Rp level
+before starting an exchange of its own (:pd:`Section 7.2`). A sink should
+tolerate up to 24 V on VBUS without damage (*vSprMax*, :pd:`Table 4.8`).
 
 A slow sink does not miss the negotiation: the source repeats
 Source_Capabilities 50 times. The sink may send Hard Reset after
@@ -1376,30 +1379,30 @@ Cables and VCONN
 
 **Why the source checks the cable.** Every USB Type-C cable carries at least
 3 A at 20 V. Cables rated for 5 A, and all EPR cables, are electronically
-marked (Type-C Sections 3.4.1.1, 3.4.2.1 and 3.11.2). A source that can offer
+marked (:typec:`Type-C Sections 3.4.1.1 <x>`, :typec:`3.4.2.1 <x>` and :typec:`3.11.2 <x>`). A source that can offer
 more than 3 A must query the cable and limit its offer to what the cable
-supports; an EPR source must check that the cable supports EPR (PD Sections
-8.6.1.2.2 and 8.6.1.2.3). A port that can be a source offering more than 3 A
-must therefore support the *Discover Identity* query (PD Section 7.5,
+supports; an EPR source must check that the cable supports EPR
+(:pd:`PD Sections 8.6.1.2.2 <x>` and :pd:`8.6.1.2.3 <x>`). A port that can be a source offering more than 3 A
+must therefore support the *Discover Identity* query (:pd:`Section 7.5`,
 applicability table).
 
 **How the query works.** The query is a Vendor_Defined message, *Discover
 Identity*, sent with the SOP' ordered set to the near cable plug. The e-marker
 answers with its identity and a *cable VDO*, a 32-bit word whose fields
 include the maximum VBUS voltage (20 V or 50 V) and the VBUS current
-capability (3 A or 5 A) (PD Table 6.45). If there is no GoodCRC, the source
+capability (3 A or 5 A) (:pd:`Table 6.45`). If there is no GoodCRC, the source
 repeats the query every *tDiscoverIdentity* (40 ms to 50 ms) and gives up
-after *nDiscoverIdentityCount* (20) attempts (PD Section 7.31.12.4; Tables
-7.10 and 7.12). Before a contract any source may talk to the cable; after one,
-only the port supplying VCONN may (Type-C Section 4.9).
+after *nDiscoverIdentityCount* (20) attempts (:pd:`Section 7.31.12.4`;
+:pd:`Tables 7.10 <x>` and :pd:`7.12 <x>`). Before a contract any source may talk to the cable; after one,
+only the port supplying VCONN may (:typec:`Section 4.9`).
 
 **VCONN power.** The e-marker is powered by VCONN, which the source supplies
 on the CC pin not connected to the CC wire (the pin showing Ra, or
 unconditionally on the unused pin) within *tVCONNON* (2 ms) of VBUS reaching
-5 V (Type-C Section 4.5.2.2.9.1; Table 4-32). How much VCONN power is
-required depends on what the port does (Type-C Table 4-4):
+5 V (:typec:`Section 4.5.2.2.9.1`; :typec:`Table 4-32 <x>`). How much VCONN power is
+required depends on what the port does (:typec:`Table 4-4`):
 
-.. list-table:: VCONN requirements relevant to evampire (Type-C Tables 4-4 to 4-6)
+.. list-table:: VCONN requirements relevant to evampire (:typec:`Type-C Tables 4-4 <x>` to :typec:`4-6 <x>`)
    :header-rows: 1
    :widths: 40 60
 
@@ -1417,7 +1420,7 @@ required depends on what the port does (Type-C Table 4-4):
        10 µF of inrush capacitance.
    * - Discharge after detach
      - Resistance *Rdch* of 30 Ω to 6120 Ω on the VCONN pin until it is
-       below 0.8 V (Type-C Section 4.5.2.2.6; Table 4-5).
+       below 0.8 V (:typec:`Section 4.5.2.2.6`; :typec:`Table 4-5 <x>`).
 
 *How much current the VCONN switch must pass.* The switch has to charge the
 cable's capacitance to the minimum valid VCONN voltage within tVCONNON.
@@ -1432,10 +1435,10 @@ way), the current needed is:
                     = 15\ \text{mA}
 
 where :math:`C_\text{cable}` = 10 µF is the largest inrush capacitance a cable
-may present (Type-C Table 4-6), :math:`V_\text{min}` = 3.0 V is the minimum
-valid VCONN (Type-C Table 4-5) and :math:`t_\text{on}` = 2 ms is tVCONNON
-(Type-C Table 4-32). The source must also be able to supply 100 mW
-continuously (Type-C Table 4-4), which is
+may present (:typec:`Table 4-6`), :math:`V_\text{min}` = 3.0 V is the minimum
+valid VCONN (:typec:`Table 4-5`) and :math:`t_\text{on}` = 2 ms is tVCONNON
+(:typec:`Table 4-32`). The source must also be able to supply 100 mW
+continuously (:typec:`Table 4-4`), which is
 :math:`0.1\ \text{W} / 5\ \text{V} = 20\ \text{mA}` at 5 V, or
 :math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest valid
 VCONN. A VCONN switch with a current limit of a few tens of milliamps
@@ -1447,12 +1450,12 @@ limits of hundreds of milliamps (TPS65987D *ILIMPPCC* 0.6-0.9 A,
 [USBPD-CCG5C]_, SID.DC.20VCONN.9).
 
 **VCONN swap.** The two ports can exchange the VCONN duty with a VCONN_Swap
-message exchange, done make-before-break (Type-C Section 4.5.2.2.9.1; PD
-Section 7.13). A port that cannot supply VCONN answers Reject or
-Not_Supported; the port currently supplying VCONN may not reject (PD Section
-7.13). A dual-role port that keeps its VCONN switch after a power role swap
+message exchange, done make-before-break (:typec:`Section 4.5.2.2.9.1`; 
+:pd:`Section 7.13`). A port that cannot supply VCONN answers Reject or
+Not_Supported; the port currently supplying VCONN may not reject
+(:pd:`Section 7.13`). A dual-role port that keeps its VCONN switch after a power role swap
 is still the VCONN supplier, because a power role swap does not move VCONN
-(PD Section 7.10; Type-C Table 4-13).
+(:pd:`Section 7.10`; :typec:`Table 4-13`).
 
 Role changes
 ------------
@@ -1461,18 +1464,18 @@ Power role swap
 ~~~~~~~~~~~~~~~
 
 Either port can ask to swap power roles with a PR_Swap message; the other
-answers Accept, Reject or Wait (PD Section 7.10). Data roles and the VCONN
-duty do not change (Type-C Table 4-13). PR_Swap is not allowed in EPR mode.
+answers Accept, Reject or Wait (:pd:`Section 7.10`). Data roles and the VCONN
+duty do not change (:typec:`Table 4-13`). PR_Swap is not allowed in EPR mode.
 
 .. _fig-usbpd-prswap:
 
 .. graphviz:: usb-pd/pr-swap.dot
-   :caption: Power role swap (PD Section 4.3.3, Figure 4.14; Section 7.10).
+   :caption: Power role swap (:pd:`Section 4.3.3`, :pd:`Figure 4.14 <x>`; :pd:`Section 7.10 <x>`).
              The initial sink asks in this example; the sequence after Accept
              is the same when the initial source asks.
    :align: center
 
-.. list-table:: Power role swap timing (PD Tables 4.7, 4.8, 7.10)
+.. list-table:: Power role swap timing (:pd:`PD Tables 4.7 <x>`, :pd:`4.8 <x>`, :pd:`7.10 <x>`)
    :header-rows: 1
    :widths: 25 20 55
 
@@ -1509,12 +1512,12 @@ duty do not change (Type-C Table 4-13). PR_Swap is not allowed in EPR mode.
      - New source: wait before its first Source_Capabilities.
 
 The VBUS slew-rate limit does not apply when VBUS is switched off or on as
-part of a swap (PD Section 4.1.4). During the swap VBUS falls below 5 V but
-the initial sink must not treat this as a detach (PD Section 7.10).
+part of a swap (:pd:`Section 4.1.4`). During the swap VBUS falls below 5 V but
+the initial sink must not treat this as a detach (:pd:`Section 7.10`).
 
 **When the swap fails.** If the expected PS_RDY does not arrive in time
-(tPSSourceOff or tPSSourceOn), the port goes to Type-C ErrorRecovery (PD
-Sections 7.31.5.2 and 7.31.5.3): it removes its terminations, both ports see
+(tPSSourceOff or tPSSourceOn), the port goes to Type-C ErrorRecovery
+(:pd:`PD Sections 7.31.5.2 <x>` and :pd:`7.31.5.3 <x>`): it removes its terminations, both ports see
 a detach, and attach starts again. If the board was running from VBUS at that
 moment it loses power.
 
@@ -1526,8 +1529,8 @@ Data role swap
 ~~~~~~~~~~~~~~
 
 A DR_Swap message exchange swaps the data roles (DFP and UFP) and nothing
-else: VBUS, Rp/Rd and VCONN stay as they are (PD Section 7.12.1; Type-C Table
-4-13). A board without USB data can answer Reject or Not_Supported. Data role
+else: VBUS, Rp/Rd and VCONN stay as they are (:pd:`Section 7.12.1`; 
+:typec:`Table 4-13`). A board without USB data can answer Reject or Not_Supported. Data role
 matters to evampire mainly because it decides which port may send certain
 messages and because the data-role bit must be correct in every header.
 
@@ -1538,15 +1541,15 @@ A *fast role swap* (FRS) is a power role swap that happens without first
 exchanging messages, to keep power flowing when the source suddenly loses
 its own supply. It is designed for charge-through accessories, such as a hub
 that powers a laptop from a wall supply and must let the laptop take over
-when the wall supply is removed (PD Section 10.1).
+when the wall supply is removed (:pd:`Section 10.1`).
 
 *Signalling.* The initial source, on losing its supply, pulls the CC wire
 below *vFRSwapCableTx* (490 mV to 550 mV) through at most *rFRSwapTx* (5 Ω)
 for *tFRSwapTx* (60 µs to 120 µs). The initial sink recognises a low lasting
 *tFRSwapRx* (30 µs to 50 µs), stops drawing current, and must be supplying
 VBUS at vSafe5V within *tSrcFRSwap* (150 µs) of VBUS falling to vSafe5V; the
-FR_Swap, Accept and PS_RDY messages follow (PD Sections 10.4 and 10.4.1;
-Table 10.2). A BMC low never lasts longer than 1 UI (3.7 µs), so a low of
+FR_Swap, Accept and PS_RDY messages follow (:pd:`PD Sections 10.4 <x>` and :pd:`10.4.1 <x>`;
+:pd:`Table 10.2 <x>`). A BMC low never lasts longer than 1 UI (3.7 µs), so a low of
 30 µs cannot be part of a message. During a contract the idle level is set by
 the 1.5 A or 3.0 A Rp (about 0.9 V or 1.7 V), above the FRS threshold, so the
 signal is unambiguous.
@@ -1556,7 +1559,7 @@ sources power to a laptop from Power over Ethernet and loses the Ethernet
 supply. With FRS the laptop could take over and keep the board running. FRS
 only works if the laptop supports it and was initialised for it after
 reading the board's sink capabilities, and the board must then run on at most
-15 W at 5 V (PD Section 10.1). Without FRS, the board loses power with its
+15 W at 5 V (:pd:`Section 10.1`). Without FRS, the board loses power with its
 Ethernet supply, which is acceptable if the board does not need to stay up.
 This is an open decision.
 
@@ -1575,18 +1578,18 @@ Hard Reset in each role
 
 A Hard Reset returns both power supplies to their default state; it does not
 change Rp and Rd, so the power roles after a swap are kept, and it changes
-data roles back to DFP for the Rp side and UFP for the Rd side (PD Section
-7.1.3).
+data roles back to DFP for the Rp side and UFP for the Rd side
+(:pd:`Section 7.1.3`).
 
 * **As source:** the port drives VBUS to vSafe0V, starting *tPSHardReset*
   (25 ms to 35 ms) after the Hard Reset, waits *tSrcRecover* (0.66 s to
-  1.0 s in SPR), then restores 5 V and VCONN (PD Section 4.4; Tables 4.7 and
-  7.10). If the board is powered from Ethernet it stays up; only the USB
+  1.0 s in SPR), then restores 5 V and VCONN (:pd:`Section 4.4`; :pd:`Tables 4.7 <x>` and
+  :pd:`7.10 <x>`). If the board is powered from Ethernet it stays up; only the USB
   output is interrupted.
 * **As sink:** VBUS goes to 0 V and back to 5 V. A sink powered only from
   VBUS loses power: a Hard Reset is a full power cycle of the board. It
-  should draw no more than *iSafe0mA* (1 mA) while VBUS is at vSafe0V (PD
-  Table 4.8).
+  should draw no more than *iSafe0mA* (1 mA) while VBUS is at vSafe0V
+  (:pd:`Table 4.8`).
 
 Two ports
 ---------
@@ -1601,7 +1604,7 @@ changes:
 * **Budget.** The offers on both outputs together must fit the budget. When
   a second device attaches, the processor may have to lower the first port's
   offer, with the Alert and new Source_Capabilities described above. PD
-  calls this a *Managed Capability Port* (PD Section 3.2.3).
+  calls this a *Managed Capability Port* (:pd:`Section 3.2.3`).
 * **Analog circuits.** Each port needs its own CC front end: both ports must
   present terminations and detect attach at the same time, and messages on
   the two ports arrive independently. Only slow measurements (attach levels,
@@ -1692,7 +1695,7 @@ goes.
 
 *How often it must sample.* The decoder tells a ``0`` (an interval of 1 UI)
 from half of a ``1`` (0.5 UI) by comparing each interval with 0.75 UI. Each
-edge can be up to 0.07 UI from its ideal time (receive mask, PD Table 5.8),
+edge can be up to 0.07 UI from its ideal time (receive mask, :pd:`Table 5.8`),
 so an interval can be off by up to :math:`2 \times 0.07 = 0.14` UI. That
 leaves a margin of :math:`0.25 - 0.14 = 0.11` UI, which at the fastest rate is
 :math:`0.11 \times 3.030\ \mu\text{s} = 333\ \text{ns}`. The sampling period
@@ -1752,7 +1755,7 @@ The instruction rate and clock needed are then:
 
 where :math:`R_\text{instr}` is the instruction rate,
 :math:`N_\text{instr/bit}` = 63.2 (estimate above), :math:`f_\text{bit,max}`
-= 330 kbit/s (PD Table 5.9) and CPI is cycles per instruction. With CPI 1.3,
+= 330 kbit/s (:pd:`Table 5.9`) and CPI is cycles per instruction. With CPI 1.3,
 :math:`f_\text{clk} = 20.9 \times 1.3 = 27` MHz; with CPI 4,
 :math:`20.9 \times 4 = 83` MHz.
 
@@ -1849,8 +1852,8 @@ GoodCRC. The worst case is a seven-object message at the slowest bit rate:
                   = 2336\ \mu\text{s}
 
 where :math:`t_\text{msg}` = 429 bits × 3.704 µs (packet duration table),
-:math:`t_\text{gap}` = 195 µs is the longest allowed gap (tTransmit, PD
-Section 7.31.1) and :math:`t_\text{GoodCRC}` = 149 bits × 3.704 µs.
+:math:`t_\text{gap}` = 195 µs is the longest allowed gap (tTransmit, 
+:pd:`Section 7.31.1`) and :math:`t_\text{GoodCRC}` = 149 bits × 3.704 µs.
 
 During those 2.3 ms the processor cannot service the Ethernet frame buffers or
 the transceiver configuration interface. The forwarding path between the
@@ -1966,7 +1969,7 @@ Rp current sources
 ~~~~~~~~~~~~~~~~~~
 
 *Requirement.* Per CC pin, a pull-up of 80 µA, 180 µA or 330 µA (or the
-equivalent resistors), switchable off (Type-C Table 4-27).
+equivalent resistors), switchable off (:typec:`Table 4-27`).
 
 *Commercial practice.* Current sources: TPS65987D 73.6-86.4 / 165.6-194.4 /
 303.6-356.4 µA ([USBPD-TPS65987D]_, Section 6.8); FUSB302B 64-96 / 166-194 /
@@ -1982,15 +1985,15 @@ Switchable Rd and dead-battery Rd
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Requirement.* 5.1 kΩ to ground on both CC pins, ± 10 % to read the Rp
-level, switchable off to at least 126 kΩ (Type-C Tables 4-28 and 4-30), and
+level, switchable off to at least 126 kΩ (:typec:`Type-C Tables 4-28 <x>` and :typec:`4-30 <x>`), and
 present without any supply.
 
-*Commercial practice.* Type-C Section 4.8.5 gives the standard dead-battery
+*Commercial practice.* :typec:`Section 4.8.5` gives the standard dead-battery
 circuit: an Rd of ± 20 % in series with a transistor whose gate is weakly
 pulled up to the CC pin itself, with a threshold below the maximum clamp
 voltage (1.32 V); the source's pull-up turns it on. Once the chip is powered
 it switches this path off and uses the trimmed Rd, keeping the CC voltage in
-the band that indicates a connection (Type-C Section 4.11.1). Examples:
+the band that indicates a connection (:typec:`Section 4.11.1`). Examples:
 TPS65987D *RD_CC* 4.59-5.61 kΩ powered and *RD_DB* 4.08-6.12 kΩ unpowered
 ([USBPD-TPS65987D]_, Section 6.8); CCG5C removes its dead-battery Rd after its
 processor boots ([USBPD-CCG5C]_, block diagram notes); STUSB4500
@@ -2041,7 +2044,7 @@ CC comparators
 
 *Requirement.* Per CC pin, thresholds for attach and Rp level as a sink (about
 0.28, 0.68 and 1.27 V), for Ra, Rd and open as a source (three per Rp level,
-Type-C Table 4-37), for BMC receive with role-dependent thresholds and
+:typec:`Table 4-37`), for BMC receive with role-dependent thresholds and
 hysteresis (about 0.25/0.53 V as sink, 0.60/0.88 V as source) and, if FRS is
 supported, about 0.52 V.
 
@@ -2061,7 +2064,7 @@ BMC driver
 
 *Requirement.* Drive 0 V and 1.05-1.2 V with 33-75 Ω output impedance, edges
 of 300 ns to about 640 ns (10 %-90 %, see the calculation above), high
-impedance otherwise, survive a 120 µs short to ground (PD Section 5.3.4.10).
+impedance otherwise, survive a 120 µs short to ground (:pd:`Section 5.3.4.10`).
 
 *Commercial practice.* TPS65987D: 1.05-1.2 V, 33-75 Ω, rise and fall at least
 300 ns ([USBPD-TPS65987D]_, Section 6.9); STUSB1602 drives the line from bits
@@ -2121,7 +2124,7 @@ Bidirectional VBUS power path and converter control
 *Requirement.* As a sink, a switch from VBUS to the board's power bus; as a
 source, a converter from the bus to the negotiated voltage (5 V to 20 V, or
 up to 48 V in EPR) with a current limit; neither may feed power backwards,
-and VBUS capacitance when not sourcing is at most 10 µF (Type-C Table 4-2).
+and VBUS capacitance when not sourcing is at most 10 µF (:typec:`Table 4-2`).
 Currents are up to 3 A or 5 A.
 
 *Commercial practice.* TPS65987D has two 5 A internal power paths with
@@ -2153,7 +2156,7 @@ plug, debris or moisture can short 20 V VBUS onto CC ([USBPD-TPD8S300A]_,
 Section 3). Infineon notes that such a short rings and can reach about twice
 the VBUS voltage, 44 V for 21.5 V, if nothing clamps it ([USBPD-CYPD3177]_,
 Section 1.1.3). Type-C allows a port to clamp its CC pins at 2.9 V or above
-(Type-C Table 4-40), but a port that supplies VCONN needs up to 5.5 V on the
+(:typec:`Table 4-40`), but a port that supplies VCONN needs up to 5.5 V on the
 VCONN pin, so any clamp must sit above 5.5 V.
 
 **Why ESD protection does not cover this.** Every I/O pad already has
@@ -2182,7 +2185,7 @@ current peak is 30 A, with a rise time below 1 ns ([USBPD-TB505]_). An ESD
 clamp only has to carry this bounded charge for about 100 ns.
 
 A VBUS short is a power supply. A source must not trip its over-current
-protection for any current allowed by the contract (PD Section 4.1.5.1), so
+protection for any current allowed by the contract (:pd:`Section 4.1.5.1`), so
 it can keep delivering 3 A or more until the cable is pulled. *Assumption
 for an order of magnitude:* the short lasts 1 s, the source delivers 3 A, and
 an on-chip clamp holds the pin at 6 V. Then:
@@ -2251,7 +2254,7 @@ in a 2.5 V, 0.25 µm CMOS process that operates at three times the nominal
 supply [USBPD-SERNEELS]_, and Ballan and Declercq describe high-voltage
 devices built in standard CMOS without extra process steps
 [USBPD-BALLAN]_. The switch must block 21.55 V for SPR (the highest
-voltage a 20 V cable may see, PD Table 6.45) and 50.9 V for EPR, plus the
+voltage a 20 V cable may see, :pd:`Table 6.45`) and 50.9 V for EPR, plus the
 ringing unless a clamp behind it limits that, open within about 100 ns, pass
 the BMC signal, Rp/Rd currents and VCONN with low resistance, and keep the
 dead-battery Rd visible without power. The limit that decides feasibility is

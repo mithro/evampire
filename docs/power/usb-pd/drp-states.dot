@@ -1,5 +1,5 @@
 // Simplified USB Type-C connection state machine for a dual-role port
-// with the Try.SRC preference (Type-C Section 4.5.2.2, Figure 4-16).
+// with the Try.SRC preference (USB Type-C specification, section 4.5.2.2 and figure 4-16).
 // Accessory and debug states are left out.
 //
 // SPDX-License-Identifier: Apache-2.0

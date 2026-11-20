@@ -1,4 +1,4 @@
-// Power role swap message sequence (PD Section 4.3.3 and Section 7.10).
+// Power role swap message sequence (USB PD specification, sections 4.3.3 and 7.10).
 // Time runs from top to bottom. Not to scale.
 //
 // SPDX-License-Identifier: Apache-2.0
