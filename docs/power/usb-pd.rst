@@ -26,11 +26,11 @@ who supplies power, then how they agree on a voltage, then the signal on the
 wire in enough detail to receive and send it in software, the source side,
 cables, role changes, two ports, the cost of doing all of this in software,
 the analog blocks, and the on-chip and external options for each of them on
-the gf180mcu process (https://gf180mcu-pdk.readthedocs.io/; see
+the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`__ process (see
 `Limits of the gf180mcu process`_).
 
 Two specifications are quoted throughout. Both are free to download from the
-USB Implementers Forum (USB-IF) document library (https://www.usb.org/):
+`USB Implementers Forum <https://www.usb.org/>`__ (USB-IF) document library:
 
 * **Type-C** means the :ref:`USB Type-C Cable and Connector Specification
   <usb-type-c-specification>`, Release 2.5, March 2026 [USBPD-TYPEC]_.
@@ -138,8 +138,8 @@ SBU (sideband use)
    example in alternate modes. Not used by evampire.
 
 USB-IF
-   The USB Implementers Forum, which publishes the USB specifications
-   (https://www.usb.org/).
+   The `USB Implementers Forum <https://www.usb.org/>`__, which publishes the
+   USB specifications.
 
 ESD (electrostatic discharge)
    A short high-voltage pulse from a charged person or object touching a
@@ -931,7 +931,7 @@ TI's TPS65987D, a dual-role controller, switches thresholds with the role:
 roles the thresholds sit either side of the eye centre for that role, and the
 hysteresis of about 275 mV is larger than the 165 mV of active noise.
 
-The USB Implementers Forum (USB-IF, https://www.usb.org/) also publishes an
+The USB Implementers Forum (USB-IF) also publishes an
 informative white paper, *Alternate BMC Receiver Design Examples* (Revision
 1.1, 2026-01-01) [USBPD-BMCRX]_, with two receivers that detect edges rather
 than levels and so ignore the DC offset: one compares the signal with a copy of itself delayed by 300 ns to 500 ns (sampled every 50 ns), the
@@ -2463,8 +2463,8 @@ Limits of the gf180mcu process
 Three different kinds of limit matter, and they should not be confused.
 
 **(a) Ratings of the standard devices.** These are conservative continuous
-operating limits for the devices in the PDK
-(https://gf180mcu-pdk.readthedocs.io/). The process is described as
+operating limits for the devices in the `PDK
+<https://gf180mcu-pdk.readthedocs.io/>`__. The process is described as
 "0.18 µm 3.3V/(5V)6V dual-gate MCU technology" ([USBPD-GF180-DRM]_, Section
 1.0), with low-voltage devices at 3.3 V and high-voltage devices at 5 V or
 6 V (Section 2.7), and the device list also contains LDMOS transistors rated
