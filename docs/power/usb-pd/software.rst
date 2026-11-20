@@ -349,3 +349,349 @@ and receives low-speed USB, 1.5 Mbit/s, in software on AVR microcontrollers
 clocked at 12 MHz to 20 MHz ([USBSER-VUSB]_, home page). That is 8 to
 13 clock cycles per bit.
 
+.. _usbpd-goodcrc-deadline:
+
+The GoodCRC reply must start 25 µs to 195 µs after the message
+--------------------------------------------------------------
+
+After the last bit of a received message, the receiver starts its GoodCRC
+reply no sooner than tInterFrameGap, 25 µs (:pd:`Table 5.10`), and no later
+than tTransmit, 195 µs (:pd:`Section 7.31.1`, :pd:`Table 7.10`). The limit is
+the same as source and as sink (:ref:`usbpd-goodcrc`).
+
+The work after the message is small if the CRC is updated during reception.
+Checking it is then one comparison with the fixed remainder
+(:ref:`usbpd-crc`), and the GoodCRC packet for each of the eight MessageID
+values can be prepared in advance. That is an estimated 30 instructions, an
+average of :math:`30 / 195\ \mu\text{s} = 0.15 \times 10^{6}` instructions/s.
+The need is latency rather than rate: the processor must be free to start
+the reply within 195 µs.
+
+If hardware stores the edge times of a whole message and software decodes
+them only after its end, all the decoding falls inside the deadline:
+
+.. math::
+
+   R_\text{decode} = \frac{n_\text{bits} \times
+     (2 \times N_\text{ts} + N_\text{bit})}{t_\text{Transmit}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{decode}`
+     - Instruction rate needed to decode a stored message in time
+     - instructions/s
+   * - :math:`n_\text{bits}`
+     - Bits in the message, 429 for seven data objects
+       (:ref:`usbpd-durations`)
+     - bits
+   * - :math:`N_\text{ts}`
+     - Instructions to read and classify one stored edge time, 12 (estimate)
+     - instructions
+   * - :math:`t_\text{Transmit}`
+     - Latest start of the GoodCRC, 195 µs (:pd:`Table 7.10`)
+     - s
+
+The relation assumes two edges per bit, the worst case. For 429 bits:
+
+.. math::
+
+   R_\text{decode}
+     &= \frac{429 \times (2 \times 12 + 7.2)}{195\ \mu\text{s}} \\
+     &= 69 \times 10^{6}\ \text{instructions/s}
+
+Decoding while the message arrives spreads the same work over the message.
+For reference, the Chromium OS EC firmware waits on the
+:wikipedia:`direct memory access <Direct_memory_access>` transfer that stores
+the edge times, and decodes each interval as soon as it arrives
+([USBPD-CROS-EC]_, ``wait_bits()`` and ``pd_dequeue_bits()``).
+
+A received message keeps a polling processor busy for up to 2.3 ms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+With polled receive and a bit-banged reply, the processor is busy from the
+first edge of a message to the end of its GoodCRC:
+
+.. math::
+
+   t_\text{busy} = t_\text{msg} + t_\text{Transmit} + t_\text{GoodCRC}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`t_\text{busy}`
+     - Time interrupts are off for one received message
+     - s
+   * - :math:`t_\text{msg}`
+     - Duration of the received message
+     - s
+   * - :math:`t_\text{GoodCRC}`
+     - Duration of the GoodCRC reply
+     - s
+
+The worst case is a message of seven data objects at the slowest bit rate,
+270 kbit/s: 429 bits take 1589 µs, and the 149-bit GoodCRC takes 552 µs
+(:ref:`usbpd-durations`):
+
+.. math::
+
+   t_\text{busy} = 1589\ \mu\text{s} + 195\ \mu\text{s} + 552\ \mu\text{s}
+                 = 2336\ \mu\text{s}
+
+During that time the processor does not service the Ethernet frame buffers or
+the transceiver configuration interface (:ref:`arch-microcontroller`,
+:ref:`arch-config-interface`). Forwarding between the Ethernet ports is in
+hardware and continues. The processor's network traffic is below 1 Mbit/s
+(:ref:`req-processor`), so on average
+:math:`1\ \text{Mbit/s} \times 2.336\ \text{ms} = 2336\ \text{bit}`, or
+292 bytes, arrive during one busy time. A burst can arrive faster.
+
+A frame that arrives when all receive buffer slots are full is lost.
+:wikipedia:`TCP <Transmission_Control_Protocol>` resends lost data.
+:wikipedia:`UDP <User_Datagram_Protocol>`,
+:wikipedia:`ARP <Address_Resolution_Protocol>` and :term:`LLDP` do not: a
+lost ARP request goes unanswered until the asking host tries again, and a
+lost LLDP frame is replaced only by the neighbour's next one
+(:std:`802.1AB`).
+
+USB data on the USB serial port competes for the same processor time
+(:doc:`/usb-serial/software-cost`). In its baseline it also keeps interrupts
+off from the start of each packet to the end of the reply. Either protocol
+can keep interrupts off for a whole message only if the other has no shorter
+deadline.
+
+.. _usbpd-software-two-ports:
+
+Two ports can share one loop, use helpers, or rely on retries
+-------------------------------------------------------------
+
+With two ports, messages can arrive on both at once, because each port's
+partner decides when it transmits. A source sets with its Rp value whether
+its sink may start an exchange (:pd:`Section 5.2.2`), but it still has to
+answer every message within the deadlines above. Sharing power between the
+ports is described in :ref:`usbpd-two-ports`.
+
+A single polling loop can read both comparators in one input word. In
+:math:`R_\text{poll}` the poll term stays the same and the edge and bit terms
+double, which with the values above gives
+:math:`R_\text{poll,2} = 24.0 \times 10^{6}` instructions/s, or 72.6 per bit
+(estimate). Here :math:`R_\text{poll,2}` is the polling rate for two ports.
+
+A merged loop can also transmit on one port while it receives on the other.
+Each iteration reads the comparators and checks the counter against the next
+transmit edge time. The iteration, with the 10 instructions of work for a
+received edge, has to fit in the 100 ns transmit window. At 4 instructions
+per iteration (estimate), that needs
+:math:`(4 + 10) / 100\ \text{ns} = 140 \times 10^{6}` instructions/s.
+Spreading the edge work over several iterations lowers this towards
+:math:`4 / 100\ \text{ns} = 40 \times 10^{6}` instructions/s.
+
+The third option is to serve one port at a time and let the other port's
+partner retry. A sender that receives no GoodCRC within tReceive, 0.9 ms to
+1.1 ms, sends the message again, up to nRetryCount = 2 times
+(:pd:`Table 7.10`, :pd:`Table 7.12`, :pd:`Section 7.31.1`). Each collision
+then costs about 1 ms. Cable plugs do not retry, so a lost message from a
+cable is not sent again (:pd:`Section 7.31.1`).
+
+.. _usbpd-helpers:
+
+Each hardware helper removes one need
+-------------------------------------
+
+The helpers below are generic microcontroller timer and serial features.
+None is specific to USB.
+
+Input capture timestamps each received edge
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:term:`Input capture` copies a free-running counter on each edge of an
+input, giving the edge a timestamp in hardware ([USBPD-ATMEGA328P]_,
+section 15.6; [USBPD-MSP430]_, section 12.2.4). The accuracy is one counter
+period, whatever the processor is doing. With the timestamps in a
+:term:`FIFO`, software reads them later, at
+:math:`f_\text{edge} \times N_\text{ts} + f_\text{bit} \times N_\text{bit}
+= 10.3 \times 10^{6}` instructions/s, or 31.2 per bit (estimate).
+Interrupts can stay on as long as the FIFO does not overflow:
+
+.. math::
+
+   t_\text{lat,max} = D \times \frac{T_\text{UI,min}}{2}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`t_\text{lat,max}`
+     - Longest time software may leave the FIFO unread
+     - s
+   * - :math:`D`
+     - FIFO depth
+     - entries
+
+The relation takes the shortest interval between edges, half of the
+shortest UI. For :math:`D` = 16:
+
+.. math::
+
+   t_\text{lat,max} = 16 \times 1.515\ \mu\text{s} = 24.2\ \mu\text{s}
+
+Depths of 8 and 32 give 12.1 µs and 48.5 µs. A direct memory access channel
+can move the timestamps to memory instead, which removes the depth limit.
+For reference, the Chromium OS EC firmware for STM32 microcontrollers uses
+timer input capture with direct memory access for receive
+([USBPD-CROS-EC]_, ``pd_hw_init_rx()`` and ``pd_rx_start()``).
+
+Output compare places each transmitted edge
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:term:`Output compare` changes an output when a counter reaches the value
+in a compare register ([USBPD-ATMEGA328P]_, section 15.7; [USBPD-MSP430]_,
+section 12.2.4). Each edge lands on a counter period, whatever the processor
+is doing. Software loads the next edge time within half a UI, 1.67 µs at
+300 kbit/s, or several ahead with a FIFO of compare values. At an estimated
+6 instructions per edge plus the bit work, that is 19.2 instructions per bit,
+or :math:`5.8 \times 10^{6}` instructions/s.
+
+A shift register sends a prepared message
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A :wikipedia:`shift register <Shift_register>` clocked at twice the bit rate
+sends one BMC half bit per clock from memory. Software encodes the whole
+message beforehand, about 3100 instructions for 429 bits at 7.2 per bit
+(estimate). The edges are then as accurate as the shift clock. For
+reference, the Chromium OS EC firmware transmits from a
+:wikipedia:`serial peripheral interface <Serial_Peripheral_Interface>`
+unit fed by direct memory access and clocked by a timer output at twice the
+bit rate ([USBPD-CROS-EC]_, ``pd_hw_init()``, ``pd_write_sym()`` and
+``pd_start_tx()``).
+
+The CRC-32 and the protocol stay in software
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The CRC-32 is updated one 4-bit nibble at a time from a 16-entry
+:wikipedia:`table <Lookup_table>` of 64 bytes, which the 16 instructions per
+symbol above include. The carry-less multiply instructions of the RISC-V Zbc
+extension (:std:`RISC-V ISA <riscv-unpriv>`, see
+:wikipedia:`carry-less product <Carry-less_product>`) are an option for it.
+
+USB-specific helpers go further. For reference, the onsemi FUSB302B decodes
+BMC and 4B5B, checks the CRC, holds messages in a FIFO, and sends the GoodCRC
+reply by itself ([USBPD-FUSB302B]_, figure 12 and "PD Automatic Receive
+GoodCRC"). An automatic GoodCRC removes the 195 µs deadline from software.
+
+How the methods compare
+^^^^^^^^^^^^^^^^^^^^^^^
+
+:numref:`tab-usbpd-methods` gives each method's cost with the estimates
+above: instructions per bit and per second, the time other interrupts are
+masked for one message, and what sets the timing error of an edge. Receive
+rows are at 330 kbit/s and transmit rows at 300 kbit/s.
+
+.. list-table:: Instructions each receive and transmit method needs
+   (estimates)
+   :name: tab-usbpd-methods
+   :header-rows: 1
+   :widths: 28 16 16 18 22
+
+   * - Method
+     - Per bit
+     - 10\ :sup:`6` per s
+     - Masked (µs)
+     - Timing error
+   * - Receive, polling
+     - 45.4
+     - 15.0
+     - 2336
+     - Poll period
+   * - Receive, interrupt per edge
+     - 87.2
+     - 28.8
+     - 2336
+     - Latency
+   * - Receive, input capture
+     - 31.2
+     - 10.3
+     - none
+     - Counter
+   * - Two ports, polling
+     - 72.6
+     - 24.0
+     - 2336
+     - Poll period
+   * - Two ports, merged loop
+     - 424
+     - 140
+     - 2336
+     - Loop time
+   * - Transmit, counter wait loop
+     - 100
+     - 30
+     - 1430
+     - Loop time
+   * - Transmit, cycle-exact code
+     - 15.2
+     - 4.6
+     - 1430
+     - Clock jitter
+   * - Transmit, output compare
+     - 19.2
+     - 5.8
+     - none
+     - Counter
+   * - Transmit, shift register
+     - 7.2
+     - 2.2
+     - none
+     - Shift clock
+
+For polling and wait loops, the rate is what the core must reach while the
+loop runs, and the core does nothing else then. The interrupt per edge row
+keeps only the edge interrupt on, and uses an overhead of 30 instructions.
+
+Which helper each need calls for
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each need is met in software when the core reaches the rate or latency
+given here, and calls for a helper when it does not:
+
+Receive timing
+   Software polling, if a poll iteration takes at most 333 ns less any pause
+   and the core can keep interrupts off for 2.3 ms per message. Otherwise
+   input capture, with a FIFO depth set by the interrupt latency.
+Transmit timing
+   Cycle-exact code on a core with fixed instruction timing, or a wait loop
+   whose iteration takes at most 100 ns. Otherwise output compare, or a
+   shift register.
+GoodCRC deadline
+   Software, if the processor can always start the reply within 195 µs of
+   the message's end. Otherwise an automatic GoodCRC.
+Two ports
+   A merged loop, if the core reaches its rate. Otherwise one input capture
+   and one output compare per port, or retries.
+
+Open questions
+--------------
+
+* Which helpers to build: input capture, output compare, a shift register,
+  direct memory access or an automatic GoodCRC, per port. This follows from
+  the processor core and its clock (:ref:`req-processor`).
+* The edge-placement target of ± 50 ns, to be confirmed by measuring a
+  transmitter against the mask (:ref:`usbpd-transmitter`).
+* The instruction counts and the interrupt overhead, by writing the receive,
+  transmit and reply code and running it on the chosen core or a model of
+  it.
+* Whether two ports are served at once, or one at a time with retries.
+* How processor time is shared between USB Power Delivery, USB data and
+  Ethernet frames, and how many receive buffer slots the Ethernet side
+  needs.
