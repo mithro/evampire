@@ -39,8 +39,8 @@ digraph power_flow {
     rj45_b [pos="3.7,1.6!", label="Ethernet port B\n(supplies power)",
             fillcolor="#ffffff", style="rounded,filled,dashed"];
 
-    evampire [pos="6.1,4.8!", width=1.9, height=0.9,
-              label="evampire\n(processor, power\nnegotiation interface)",
+    evampire [pos="6.1,4.8!", width=1.9, height=1.0,
+              label="evampire\n(processor, power\nnegotiation, converter\ncontrol)",
               fillcolor="#fbe5d6"];
 
     rj45_a -> pd     [penwidth=2.5];
@@ -54,6 +54,8 @@ digraph power_flow {
     pse    -> rj45_b [penwidth=2.5];
 
     evampire -> pd    [style=dashed, dir=back];
+    evampire -> dcin  [style=dashed];
+    evampire -> hv    [style=dashed];
     evampire -> usbpp [style=dashed, dir=both];
     evampire -> pse   [style=dashed, dir=both];
 }
