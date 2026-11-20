@@ -241,3 +241,255 @@ edge-corrected timing, without interruption from the start of each packet
 to the end of the reply, and transmits from a clock that is a multiple of
 12 MHz.
 When a bulk IN endpoint is being polled, this applies most of the time.
+
+Hardware helpers, in order of what they remove
+----------------------------------------------
+
+Each helper below takes one part of the baseline into hardware.
+:numref:`fig-usbser-blocks` shows them together and
+:numref:`tab-usbser-split` summarises what remains for software after each
+step.
+
+.. _fig-usbser-blocks:
+
+.. graphviz:: software-cost/blocks.dot
+   :caption: Hardware helpers between the analogue front end and the
+             processor, each of which removes one part of the software work.
+   :alt: Block diagram: the analogue front end connects to a receive
+         deserialiser and a transmit serialiser; the deserialiser feeds a
+         CRC checker and a token decoder; a handshake block chooses ACK,
+         NAK or STALL from endpoint buffer flags; packet buffers connect to
+         the processor; a frame timer receives start-of-frame events and
+         trims the clock.
+   :align: center
+
+1. Receive deserialiser
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The deserialiser samples D+ and D−, recovers the bit timing from the edges,
+detects SYNC and end of packet, undoes NRZI, removes stuffed bits, flags
+stuffing errors, and delivers whole bytes into a small first-in, first-out
+buffer (:wikipedia:`FIFO <FIFO_(computing_and_electronics)>`).
+
+* *Removes:* all per-bit work, the sample timing and the sample rate.
+* *Leaves:* per-byte work, an estimated 12 instructions per byte with the
+  CRC16 in software, so
+  :math:`R = 12 \times 12 \times 10^{6} / 8 = 18 \times 10^{6}`
+  instructions per second while receiving.
+* *Latency budget:* a byte arrives every 8 bit times, 666.7 ns. A FIFO of
+  :math:`D` bytes lets the software fall :math:`D \times 666.7` ns behind.
+
+Two ways of recovering the bit timing are in use. Oversampling at four times
+the bit rate, 48 MHz, with a small state machine that follows the edges, is
+what the specification suggests and what the TinyFPGA bootloader,
+ValentyUSB and the ulixxe ``usb_cdc`` core do ([USBSER-TINYFPGA]_,
+``usb_fs_rx.v``; [USBSER-VALENTYUSB]_, ``rx/clock.py``;
+[USBSER-ULIXXE]_). The alternative is one sample per bit at a phase set
+from the SYNC and corrected at each edge, from a clock that is a multiple
+of 12 MHz; it needs fewer fast flip-flops but a finer phase adjustment.
+
+The sampling logic runs at 48 MHz or more in the oversampling case. On
+gf180mcu, a D flip-flop of the 7-track standard cell library has a
+clock-to-output delay of 0.676 ns and a setup time of 0.229 ns, at the
+typical corner, 5 V and 25 °C ([USBSER-GF180-SC]_, cell
+``gf180mcu_fd_sc_mcu7t5v0__dffq_1``). Together they take a small part of the
+20.8 ns period of 48 MHz. Custom fast cells, for example
+:wikipedia:`current-mode logic <Current-mode_logic>`, are an option for a
+higher oversampling rate.
+
+2. Transmit serialiser
+~~~~~~~~~~~~~~~~~~~~~~
+
+The serialiser takes bytes from a FIFO, sends SYNC, inserts stuffed bits,
+applies NRZI, drives J, K and SE0, and ends with the end of packet. It runs
+from a clock that is a multiple of 12 MHz.
+
+* *Removes:* all per-bit transmit work and the edge placement need.
+* *Leaves:* an estimated 2 instructions per byte to fill the FIFO,
+  :math:`3 \times 10^{6}` instructions per second while transmitting.
+* *Latency budget:* the FIFO must not run empty during a packet:
+  :math:`D \times 666.7` ns ahead for a FIFO of :math:`D` bytes, or the
+  whole packet loaded before it starts.
+
+3. CRC5 and CRC16 in hardware
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A CRC16 register on the receive and transmit byte streams, and a CRC5 check
+on received tokens, is a few dozen flip-flops and exclusive-or gates.
+
+* *Removes:* 7 of the 12 receive instructions per byte, leaving
+  :math:`5 \times 12 \times 10^{6} / 8 = 7.5 \times 10^{6}` instructions per
+  second; the CRC check moves out of the reply deadline.
+* *Leaves:* the reply deadline itself.
+
+4. Automatic handshakes
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Per endpoint, the software sets flags such as "buffer ready to receive",
+"data ready to send" and "halted". A token decoder matches the address and
+endpoint, and a small state machine replies by itself
+([USBSER-USB2]_ section 8.4.6):
+
+* to OUT data with a good CRC and a ready buffer: ACK, and the buffer is
+  marked full; with no ready buffer: NAK; when halted: STALL;
+* to IN with data ready: the data packet, then wait for the host's ACK;
+  with no data: NAK;
+* to SETUP: always ACK, into a buffer reserved for the 8-byte request;
+* the DATA0/DATA1 sequence bit per endpoint.
+
+* *Removes:* the reply deadline and all per-packet work. Software is
+  involved only when a buffer has been filled or emptied, and a late answer
+  costs only a NAK and a retry by the host.
+* *Leaves:* filling and emptying packet buffers at the rate of the data, and
+  the requests of :doc:`transactions` on endpoint 0, with deadlines of
+  50 ms and more.
+
+This is the split of the eptri interface of ValentyUSB, which answers NAK
+until the processor arms an endpoint's buffer and adds the CRC16 to IN
+packets itself ([USBSER-VALENTYUSB]_, ``cpu/eptri.py``).
+
+5. Frame timer
+~~~~~~~~~~~~~~
+
+A counter that latches the local clock count at each start-of-frame token
+lets software, or a small control loop, trim an oscillator against the
+host (:doc:`timing`). It is needed only if the USB clock is not derived
+from a crystal.
+
+Packet buffers
+~~~~~~~~~~~~~~
+
+From step 4 on, packets are held in buffers that the processor reads and
+writes. A serial port with 64-byte packets needs one 64-byte buffer per direction
+of each bulk endpoint, or two, so that the hardware fills one while the
+software works on the other. It also needs an 8-byte buffer for SETUP, and
+buffers of the chosen sizes for endpoint 0 and the interrupt endpoint.
+
+Summary of the steps
+--------------------
+
+.. list-table:: What software has to do after each hardware step
+   (instruction counts are estimates)
+   :name: tab-usbser-split
+   :header-rows: 1
+   :widths: 30 22 22 26
+
+   * - Hardware added
+     - Receive rate (instructions/s)
+     - Transmit rate (instructions/s)
+     - Deadline for software
+   * - None
+     - 123 × 10\ :sup:`6`
+     - 99 × 10\ :sup:`6`
+     - Every sample, ± 23.2 ns; reply within 541.7 ns
+   * - Receive deserialiser
+     - 18 × 10\ :sup:`6`
+     - 99 × 10\ :sup:`6`
+     - Each byte, :math:`D \times 666.7` ns; reply within 541.7 ns
+   * - and transmit serialiser
+     - 18 × 10\ :sup:`6`
+     - 3 × 10\ :sup:`6`
+     - Each byte; reply within 541.7 ns
+   * - and CRC in hardware
+     - 7.5 × 10\ :sup:`6`
+     - 3 × 10\ :sup:`6`
+     - Each byte; reply within 541.7 ns
+   * - and automatic handshakes
+     - At the data rate
+     - At the data rate
+     - None at packet level; 50 ms for requests
+
+Working plan for the split
+--------------------------
+
+The plan is to build steps 1 to 4 in hardware: the receive deserialiser,
+the transmit serialiser, the CRC, and automatic handshakes with packet
+buffers. Software does everything else: enumeration, the descriptors, the
+CDC-ACM requests, moving the serial data, and the policy of when to connect
+and disconnect. With this split, USB places no packet-level deadline on the
+processor, so it can serve USB, USB Power Delivery and Ethernet duties in
+any order (see :doc:`usb-pd-roles`).
+
+Smaller splits remain options and depend on the processor. Without step 4,
+the processor has to meet the reply deadline,
+:math:`f_\text{clk}/\text{CPI} \ge N_\text{reply}/t_\text{reply}`, and be
+free at the end of every packet for the device. Without steps 1 and 2, it
+needs the rates of the baseline. Another option is a small programmable
+state machine in place of fixed logic for steps 1 and 2, as the RP2040's
+programmable I/O does in Pico-PIO-USB ([USBSER-PICO-PIO-USB]_).
+
+Reference implementations
+-------------------------
+
+:numref:`tab-usbser-refs` lists implementations of USB devices that split
+the work in different ways. They show what has been done elsewhere with
+other hardware; the figures for evampire come from the analysis above.
+
+.. list-table:: USB device implementations and their hardware
+   :name: tab-usbser-refs
+   :header-rows: 1
+   :widths: 18 10 24 26 22
+
+   * - Project
+     - Speed
+     - Hardware and clock
+     - Done in hardware
+     - Source
+   * - V-USB
+     - Low
+     - AVR microcontroller, 12 MHz to 20 MHz
+     - Nothing; one edge-triggered interrupt. CRC not checked except at
+       18 MHz
+     - [USBSER-VUSB]_, ``usbdrv.h``, ``Readme.txt``
+   * - rv003usb
+     - Low
+     - CH32V003 RISC-V microcontroller, 48 MHz
+     - Nothing; a pin-change interrupt. CRC computed while receiving
+     - [USBSER-RV003USB]_, ``README.md``
+   * - Pico-PIO-USB
+     - Full
+     - RP2040 programmable I/O, system clock a multiple of 12 MHz
+     - Receive edge detection, NRZI decode, end of packet; transmit line
+       driving. Stuffing on transmit, CRC and handshakes in software
+     - [USBSER-PICO-PIO-USB]_, ``src/usb_rx.pio``, ``src/pio_usb.c``
+   * - ValentyUSB with eptri
+     - Full
+     - iCE40UP5K FPGA (Fomu), 48 MHz and 12 MHz
+     - 4× oversampling, NRZI, stuffing, CRC, handshakes, endpoint FIFOs
+     - [USBSER-VALENTYUSB]_, ``cpu/eptri.py``; [USBSER-FOBOOT]_
+   * - TinyFPGA bootloader
+     - Full
+     - FPGA, 48 MHz
+     - Whole CDC-ACM serial port in logic
+     - [USBSER-TINYFPGA]_, ``usb_serial_ctrl_ep.v``
+   * - ulixxe ``usb_cdc``
+     - Full
+     - FPGA logic, 48 MHz
+     - Whole CDC-ACM serial port in logic, 1158 iCE40 logic cells
+     - [USBSER-ULIXXE]_, ``README.md``
+   * - Tiny Tapeout GF 0.2, project 130
+     - Full
+     - gf180mcu chip, ordinary digital I/O, 48 MHz
+     - CDC-ACM to UART bridge in logic, based on the TinyFPGA design
+     - [USBSER-TTGF130]_
+
+The pure-software projects run at low speed, where a bit lasts 666.7 ns;
+the low-speed limits they work around are discussed in :doc:`alternatives`.
+The Tiny Tapeout GF 0.2 project shows a full-speed CDC-ACM device made in
+gf180mcu and driven from the standard digital I/O; its project page records
+that it enumerated and passed data ([USBSER-TTGF130]_).
+
+Open questions
+--------------
+
+* The processor core, its clock :math:`f_\text{clk}` and its CPI, which set
+  whether a smaller split than steps 1 to 4 is enough.
+* The measured instruction counts, by writing the receive, transmit and
+  reply code and running it on the chosen core or an FPGA model of it.
+* Fixed logic or a small programmable state machine for the serialiser and
+  deserialiser.
+* Oversampling or edge-corrected single sampling, and the sampling clock.
+* Custom fast cells, such as current-mode logic, for a higher sampling rate.
+* The FIFO depths and the number and size of the packet buffers.
+* Whether the frame timer is needed, which depends on the clock source
+  chosen in :doc:`timing`.
