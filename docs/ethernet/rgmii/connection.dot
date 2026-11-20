@@ -1,0 +1,57 @@
+// Signals between one evampire port and one Ethernet transceiver.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph rgmii_connection {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.2,
+           ranksep=2.2];
+    node  [shape=plaintext, fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    chip [label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5"
+             bgcolor="#dbe8f5" color="#1f4e79">
+        <tr><td colspan="2"><b>evampire</b><br/>(one RGMII port)</td></tr>
+        <tr><td port="txc"  align="right">TXC</td></tr>
+        <tr><td port="txctl" align="right">TX_CTL</td></tr>
+        <tr><td port="txd"  align="right">TXD[3:0]</td></tr>
+        <tr><td port="rxc"  align="right">RXC</td></tr>
+        <tr><td port="rxctl" align="right">RX_CTL</td></tr>
+        <tr><td port="rxd"  align="right">RXD[3:0]</td></tr>
+        <tr><td port="mdc"  align="right">MDC</td></tr>
+        <tr><td port="mdio" align="right">MDIO</td></tr>
+        <tr><td port="clk"  align="right">125 MHz clock in</td></tr>
+      </table>>];
+
+    phy [label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5"
+             bgcolor="#ffffff" color="#555555">
+        <tr><td colspan="2"><b>Ethernet transceiver</b><br/>("PHY")</td></tr>
+        <tr><td port="txc"  align="left">TXC</td></tr>
+        <tr><td port="txctl" align="left">TX_CTL</td></tr>
+        <tr><td port="txd"  align="left">TXD[3:0]</td></tr>
+        <tr><td port="rxc"  align="left">RXC</td></tr>
+        <tr><td port="rxctl" align="left">RX_CTL</td></tr>
+        <tr><td port="rxd"  align="left">RXD[3:0]</td></tr>
+        <tr><td port="mdc"  align="left">MDC</td></tr>
+        <tr><td port="mdio" align="left">MDIO</td></tr>
+        <tr><td port="clk"  align="left">125 MHz clock out</td></tr>
+      </table>>];
+
+    cable [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           label="Magnetics,\nRJ45 socket\nand cable"];
+
+    chip:txc:e   -> phy:txc:w   [label="transmit clock", penwidth=2];
+    chip:txctl:e -> phy:txctl:w [label="transmit control", penwidth=2];
+    chip:txd:e   -> phy:txd:w   [label="transmit data (4 bits)", penwidth=2];
+    phy:rxc:w    -> chip:rxc:e  [label="receive clock", penwidth=2];
+    phy:rxctl:w  -> chip:rxctl:e [label="receive control", penwidth=2];
+    phy:rxd:w    -> chip:rxd:e  [label="receive data (4 bits)", penwidth=2];
+    chip:mdc:e   -> phy:mdc:w   [label="management clock", style=dashed];
+    chip:mdio:e  -> phy:mdio:w  [label="management data", style=dashed,
+                                 dir=both];
+    phy:clk:w    -> chip:clk:e  [label="reference clock (optional source)",
+                                 style=dotted];
+
+    phy -> cable [dir=both, label="analog\nsignals"];
+}

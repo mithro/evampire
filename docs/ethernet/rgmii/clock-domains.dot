@@ -1,0 +1,45 @@
+// Clock domains around the two RGMII ports.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph clock_domains {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.35,
+           ranksep=0.6, newrank=true];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    subgraph cluster_rxa {
+        label="RXC of port A\n(recovered from cable A)"; style="rounded";
+        color="#5b9bd5";
+        rxa [label="Receive capture A,\nbuffer A to B\n(write side)", fillcolor="#dbe8f5"];
+    }
+    subgraph cluster_rxb {
+        label="RXC of port B\n(recovered from cable B)"; style="rounded";
+        color="#5b9bd5";
+        rxb [label="Receive capture B,\nbuffer B to A\n(write side)", fillcolor="#dbe8f5"];
+    }
+    subgraph cluster_core {
+        label="evampire 125 MHz clock"; style="rounded"; color="#70ad47";
+        fab  [label="Rate-matching\nbuffer A to B\n(read side)", fillcolor="#e2efda"];
+        fba  [label="Rate-matching\nbuffer B to A\n(read side)", fillcolor="#e2efda"];
+        txa  [label="Transmit A\n(TXC A)", fillcolor="#e2efda"];
+        txb  [label="Transmit B\n(TXC B)", fillcolor="#e2efda"];
+        filt [label="Address filter,\nframe buffers", fillcolor="#e2efda"];
+    }
+    subgraph cluster_cpu {
+        label="Processor clock"; style="rounded"; color="#ed7d31";
+        cpu  [label="Processor,\nMDC/MDIO controller", fillcolor="#fbe5d6"];
+    }
+
+    rxa -> fab [label="crossing 1", penwidth=2];
+    rxb -> fba [label="crossing 2", penwidth=2];
+    fab -> txb [penwidth=2];
+    fba -> txa [penwidth=2];
+    fab -> filt;
+    fba -> filt;
+    filt -> cpu [label="crossing 3\n(if the processor clock\nis not the 125 MHz clock)",
+                 dir=both];
+    rxa -> cpu [label="link status\n(single-bit sync)", style=dashed];
+    rxb -> cpu [style=dashed];
+}
