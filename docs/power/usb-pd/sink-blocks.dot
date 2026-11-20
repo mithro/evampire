@@ -1,0 +1,78 @@
+// Circuits needed for a USB Power Delivery sink whose protocol runs in
+// software on the evampire RISC-V core.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph sink_blocks {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.22,
+           ranksep=0.55, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.6];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    subgraph cluster_board {
+        label="On the board"; style="rounded,dashed"; color="#888888";
+        conn    [label="USB Type-C\nreceptacle", fillcolor="#ffffff"];
+        prot    [label="CC protection\n(high-voltage series\nswitch, ESD clamp)", fillcolor="#ffffff"];
+        div     [label="VBUS divider", fillcolor="#ffffff"];
+        pswitch [label="Power path\nswitch", fillcolor="#ffffff"];
+        reg     [label="Board\nregulators", fillcolor="#ffffff"];
+    }
+
+    subgraph cluster_chip {
+        label="evampire"; style="rounded,bold"; color="#1f4e79"; fontsize=13;
+
+        subgraph cluster_analog {
+            label="Analog"; style="rounded"; color="#ed7d31";
+            rd     [label="Rd 5.1 k with switch\nand dead-battery Rd\n(one per CC pin)", fillcolor="#fbe5d6"];
+            lvl    [label="CC level comparators\nor ADC (attach,\nRp level)", fillcolor="#fbe5d6"];
+            rx     [label="BMC receiver:\nlow-pass filter and\ncomparator with\nhysteresis", fillcolor="#fbe5d6"];
+            tx     [label="BMC transmitter:\n1.125 V tri-state\ndriver, 33-75 ohm,\nslew limited", fillcolor="#fbe5d6"];
+            vsense [label="VBUS comparator\nor ADC input", fillcolor="#fbe5d6"];
+            gate   [label="Switch control\noutput", fillcolor="#fbe5d6"];
+        }
+
+        subgraph cluster_digital {
+            label="Digital helpers"; style="rounded"; color="#5b9bd5";
+            regs [label="Control and\nstatus registers", fillcolor="#dbe8f5"];
+            cap  [label="Edge-time capture\nand FIFO", fillcolor="#dbe8f5"];
+            ser  [label="Timer-driven\nBMC serializer", fillcolor="#dbe8f5"];
+            crc  [label="CRC-32\n(optional)", fillcolor="#dbe8f5"];
+        }
+
+        cpu [label="RISC-V core\n(protocol and policy\nin software)", fillcolor="#e2f0d9"];
+    }
+
+    { rank=same; conn; }
+    { rank=same; prot; div; pswitch; }
+    { rank=same; rd; lvl; rx; tx; vsense; gate; reg; }
+    { rank=same; regs; cap; ser; crc; }
+
+    // Keep the analog column in order.
+    rd -> lvl -> rx -> tx -> vsense -> gate [style=invis];
+    regs -> cap -> ser -> crc [style=invis];
+
+    conn -> prot [label="CC1, CC2", dir=both];
+    conn -> div [label="VBUS"];
+    conn -> pswitch [label="VBUS", penwidth=2];
+    pswitch -> reg [penwidth=2];
+
+    prot -> rd [dir=both];
+    prot -> lvl;
+    prot -> rx;
+    prot -> tx [dir=back];
+    div -> vsense;
+    pswitch -> gate [dir=back, style=dashed];
+
+    lvl -> regs [style=dashed];
+    rd -> regs [style=dashed, dir=back];
+    vsense -> regs [style=dashed];
+    gate -> regs [style=dashed, dir=back];
+    rx -> cap;
+    tx -> ser [dir=back];
+
+    regs -> cpu [dir=both];
+    cap -> cpu;
+    ser -> cpu [dir=back];
+    crc -> cpu [dir=both];
+}

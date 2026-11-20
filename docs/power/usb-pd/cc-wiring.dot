@@ -1,0 +1,57 @@
+// How the CC wire connects a source to a sink through a USB Type-C cable.
+// The far plug is shown turned over, so source CC1 meets sink CC2.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph cc_wiring {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.35,
+           ranksep=0.45, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowhead=none];
+
+    subgraph cluster_src {
+        label="Source (for example a charger)"; style="rounded,dashed"; color="#888888";
+        rp1    [label="Rp\n(pull-up)", fillcolor="#fbe5d6"];
+        rp2    [label="Rp\n(pull-up)", fillcolor="#fbe5d6"];
+        s_cc1  [label="CC1 (A5)", shape=box, style="filled", fillcolor="#ffffff"];
+        s_cc2  [label="CC2 (B5)", shape=box, style="filled", fillcolor="#ffffff"];
+        s_vbus [label="VBUS switch\n(off until a sink\nis detected)", fillcolor="#fbe5d6"];
+    }
+
+    subgraph cluster_cable {
+        label="Cable"; style="rounded"; color="#5b9bd5";
+        p1_cc    [label="Plug 1\nCC contact", style="filled", fillcolor="#dbe8f5"];
+        p1_vconn [label="Plug 1\nVCONN contact", style="filled", fillcolor="#dbe8f5"];
+        p2_cc    [label="Plug 2\nCC contact", style="filled", fillcolor="#dbe8f5"];
+        p2_vconn [label="Plug 2\nVCONN contact", style="filled", fillcolor="#dbe8f5"];
+    }
+
+    subgraph cluster_snk {
+        label="Sink (the evampire board)"; style="rounded,dashed"; color="#888888";
+        k_cc1  [label="CC1 (A5)", shape=box, style="filled", fillcolor="#ffffff"];
+        k_cc2  [label="CC2 (B5)", shape=box, style="filled", fillcolor="#ffffff"];
+        rd1    [label="Rd 5.1 k\n(pull-down)", fillcolor="#e2f0d9"];
+        rd2    [label="Rd 5.1 k\n(pull-down)", fillcolor="#e2f0d9"];
+        k_vbus [label="VBUS input", fillcolor="#e2f0d9"];
+    }
+
+    { rank=same; rp1; rp2; s_vbus; }
+    { rank=same; s_cc1; s_cc2; }
+    { rank=same; p1_cc; p1_vconn; }
+    { rank=same; p2_cc; p2_vconn; }
+    { rank=same; k_cc1; k_cc2; }
+    { rank=same; rd1; rd2; k_vbus; }
+
+    rp1 -> s_cc1;
+    rp2 -> s_cc2;
+    s_cc1 -> p1_cc;
+    s_cc2 -> p1_vconn [style=dashed];
+    p1_cc -> p2_cc [penwidth=2, label="the single\nCC wire"];
+    p1_vconn -> p2_vconn [style=invis];
+    p2_cc -> k_cc2;
+    p2_vconn -> k_cc1 [style=dashed];
+    k_cc1 -> rd1;
+    k_cc2 -> rd2;
+    s_vbus -> k_vbus [penwidth=2, label="VBUS and GND wires", constraint=false];
+}
