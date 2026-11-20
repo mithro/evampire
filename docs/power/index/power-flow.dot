@@ -1,0 +1,49 @@
+// Power flow on a board built around evampire (first version).
+// Bold arrows: power. Dashed arrows: control and status.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph power_flow {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.35,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    rj45_a [label="Ethernet port A\n(receives power)", fillcolor="#ffffff"];
+    pd     [label="Powered device\nfront end\n(polarity bridge, signature,\ninrush-limited switch)"];
+    dcin   [label="Input voltage\nconverter"];
+
+    usbc   [label="USB Type-C port\n(dual-role)", fillcolor="#ffffff"];
+    usbpp  [label="USB power path\n(input switch when sink,\nadjustable converter\nwhen source)"];
+
+    bus    [label="Internal\npower bus", shape=box, style="filled,bold",
+            fillcolor="#dbe8f5"];
+
+    loads  [label="Board supplies\n(evampire, Ethernet\ntransceivers)"];
+    hv     [label="High-voltage converter\n(44 V to 57 V)"];
+    pse    [label="Power sourcing\nequipment switch\n(detection, class,\ncurrent limit)"];
+    rj45_b [label="Ethernet port B\n(supplies power)", fillcolor="#ffffff"];
+
+    evampire [label="evampire\n(processor and power\nnegotiation interface)",
+              fillcolor="#fbe5d6"];
+
+    { rank=same; rj45_a; usbc; }
+    { rank=same; pd; usbpp; }
+    { rank=same; bus; evampire; }
+    { rank=same; hv; loads; }
+
+    rj45_a -> pd    [penwidth=2];
+    pd     -> dcin  [penwidth=2];
+    dcin   -> bus   [penwidth=2];
+    usbc   -> usbpp [penwidth=2, dir=both];
+    usbpp  -> bus   [penwidth=2, dir=both];
+    bus    -> loads [penwidth=2];
+    bus    -> hv    [penwidth=2];
+    hv     -> pse   [penwidth=2];
+    pse    -> rj45_b [penwidth=2];
+
+    evampire -> pd    [style=dashed, dir=back, label="granted\npower"];
+    evampire -> usbpp [style=dashed, dir=both, label="CC wires,\nvoltage set"];
+    evampire -> pse   [style=dashed, dir=both, label="enable,\nclass"];
+}
