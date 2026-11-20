@@ -1,0 +1,50 @@
+// Synchronous buck (step-down) converter power stage.
+//
+// Fixed grid (positions in inches): the top row (y=2.0) carries the input
+// and the output, the bottom row (y=0.2) is ground. Components are boxes,
+// wires are lines between them, and dots are junctions.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph buck {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.0, height=0.5,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    vin   [pos="0.5,1.1!", shape=circle, width=0.75, label="Input\nVin",
+           fillcolor="#ffffff"];
+    s1    [pos="1.9,2.0!", width=1.15, label="S1 high-side\nswitch",
+           fillcolor="#fbe5d6"];
+    s2    [pos="3.2,1.1!", width=1.4, label="S2 low-side\nswitch (or diode)",
+           fillcolor="#fbe5d6"];
+    l     [pos="4.5,2.0!", width=0.9, label="L\ninductor", fillcolor="#dbe8f5"];
+    c     [pos="5.8,1.1!", width=0.9, label="C output\ncapacitor",
+           fillcolor="#dbe8f5"];
+    load  [pos="6.9,1.1!", width=0.8, label="Load", fillcolor="#ffffff"];
+
+    // Text labels.
+    sw_l  [pos="3.2,2.22!", shape=plaintext, style="", label="switch node",
+           width=1.0, height=0.2];
+    out_l [pos="6.35,2.22!", shape=plaintext, style="", label="Vout",
+           width=0.5, height=0.2];
+
+    // Junctions and corners.
+    node  [shape=point, width=0.06, height=0.06, label="", style=filled,
+           fillcolor=black];
+    in_t  [pos="0.5,2.0!"];
+    sw    [pos="3.2,2.0!", width=0.09, height=0.09];
+    out   [pos="5.8,2.0!", width=0.09, height=0.09];
+    out_t [pos="6.9,2.0!"];
+    g0    [pos="0.5,0.2!"];
+    g1    [pos="3.2,0.2!", width=0.09, height=0.09];
+    g2    [pos="5.8,0.2!", width=0.09, height=0.09];
+    g3    [pos="6.9,0.2!"];
+
+    vin -- in_t;  in_t -- s1;  s1 -- sw;  sw -- l;  l -- out;
+    out -- out_t;  out_t -- load;  out -- c;  sw -- s2;
+    vin -- g0;  s2 -- g1;  c -- g2;  load -- g3;
+    g0 -- g1 -- g2 -- g3;
+}

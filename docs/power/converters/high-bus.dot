@@ -1,0 +1,47 @@
+// Arrangement with a power bus near the Power over Ethernet voltage: the
+// Ethernet input and output connect to the bus through switches, and one
+// bidirectional converter links the bus to the USB Type-C port.
+//
+// Fixed grid (positions in inches): column 1 (x=1.25) Ethernet ports,
+// column 2 (x=3.8) bus and optional regulator, column 3 (x=6.35) USB and
+// board supplies. Edge labels are separate text nodes beside the edges.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph high_bus {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=2.2, height=0.65,
+           fixedsize=true];
+    edge  [arrowsize=0.8, penwidth=2.5];
+
+    port_a [pos="1.25,3.3!", label="Ethernet port A\npowered device front end",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
+    bus    [pos="3.8,1.9!", width=1.9, label="Power bus\nabout 37 V to 57 V",
+            fillcolor="#dbe8f5", style="rounded,filled,bold"];
+    hv     [pos="3.8,0.5!", width=1.9, label="Regulator for\nEthernet out\n(optional)",
+            height=0.75];
+    port_b [pos="1.25,0.5!", label="Ethernet port B\npower sourcing\nequipment switch",
+            height=0.75, fillcolor="#ffffff", style="rounded,filled,dashed"];
+    conv   [pos="6.35,1.9!", width=1.7, height=0.75,
+            label="Bidirectional\nbuck or buck-boost", fillcolor="#fbe5d6"];
+    usb    [pos="6.35,3.3!", width=1.7, label="USB Type-C port\n5 V to 48 V",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
+    supp   [pos="6.35,0.5!", width=1.7, label="Board supplies\n(evampire, others)"];
+
+    // Edge labels.
+    node   [shape=plaintext, style="", fontsize=10, width=0.9, height=0.35];
+    l_pa   [pos="2.95,2.75!", label="pass-through"];
+    l_pb   [pos="1.95,1.45!", label="pass-through"];
+    l_reg  [pos="2.55,0.3!", label="regulated"];
+    l_bi   [pos="5.1,2.25!", label="either\ndirection"];
+
+    port_a -> bus;
+    bus    -> port_b;
+    bus    -> hv;
+    hv     -> port_b;
+    bus    -> conv   [dir=both];
+    conv   -> usb    [dir=both];
+    bus    -> supp;
+}
