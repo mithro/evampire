@@ -12,7 +12,7 @@ SPDX-License-Identifier: Apache-2.0
 
 import sys
 
-W, H = 600, 450
+W, H = 600, 490
 X0, X1 = 56, 430          # plot area, left and right
 Y0, Y1 = 40, 400          # plot area, top and bottom
 VMAX = 60.0
@@ -87,7 +87,7 @@ def main(out_path):
                  'text-anchor="middle" transform="rotate(-90 24 '
                  f'{(Y0 + Y1) / 2})">Voltage at powered device input (V)'
                  '</text>')
-    parts.append(text((X0 + X1) / 2, H - 14,
+    parts.append(text((X0 + X1) / 2, H - 10,
                       "time (not to scale)", size=12))
 
     # Waveform.
