@@ -323,7 +323,9 @@ see `Switchable Rp`_) the thresholds are (Type-C Table 4-37):
 The "open" thresholds allow 250 mV of ground offset (Type-C Table 4-37,
 note 1). A commercial example is the TI TPS65987D, which as a source detects
 an Ra below 0.15-0.25 V, 0.35-0.45 V or 0.75-0.85 V and an open pin above
-1.5-1.65 V, 1.5-1.65 V or 2.45-2.615 V for the three Rp levels ([USBPD-TPS65987D]_, Section 6.8). A dual-role port therefore needs, per CC pin, about
+1.5-1.65 V, 1.5-1.65 V or 2.45-2.615 V for the three Rp levels
+([USBPD-TPS65987D]_, Section 6.8). A dual-role port therefore needs, per CC
+pin, about
 four thresholds as a sink and three per Rp level as a source.
 
 Attach for a dual-role port
@@ -823,8 +825,8 @@ roles the thresholds sit either side of the eye centre for that role, and the
 hysteresis of about 275 mV is larger than the 165 mV of active noise.
 
 The USB-IF also publishes an informative white paper, *Alternate BMC Receiver
-Design Examples* (Revision 1.1, 2026-01-01) [USBPD-BMCRX]_, with two receivers that detect
-edges rather than levels and so ignore the DC offset: one compares the signal
+Design Examples* (Revision 1.1, 2026-01-01) [USBPD-BMCRX]_, with two
+receivers that detect edges rather than levels and so ignore the DC offset: one compares the signal
 with a copy of itself delayed by 300 ns to 500 ns (sampled every 50 ns), the
 other subtracts the outputs of two low-pass filters with 200 ns and 300 ns
 time constants.
@@ -1341,8 +1343,9 @@ contract, should send Hard Reset (and later an Alert) when it trips, and,
 when it shuts down a port above 5 V, must bring VBUS down to vSafe5V within
 *tSafe5V* (275 ms) and to vSafe0V within *tSafe0V* (650 ms) (PD Section
 4.1.5.1; Table 4.9). The current limit is in the external source converter.
-For example, TPS65987D has a firmware-selectable over-current clamp from
-1.267 A to 6.33 A in 21 steps and a fast-acting limit of 10 A ([USBPD-TPS65987D]_, Section 6.7).
+For example, TPS65987D has a firmware-selectable over-current clamp with 20
+settings from 1.267 A to 6.33 A (typical) and a fast-acting limit of about
+10 A ([USBPD-TPS65987D]_, Section 6.7).
 
 Discharging VBUS
 ~~~~~~~~~~~~~~~~
@@ -1434,14 +1437,17 @@ way), the current needed is:
 where :math:`C_\text{cable}` = 10 µF is the largest inrush capacitance a cable
 may present (Type-C Table 4-6), :math:`V_\text{min}` = 3.0 V is the minimum
 valid VCONN (Type-C Table 4-5) and :math:`t_\text{on}` = 2 ms is tVCONNON
-(Type-C Table 4-32). The steady load is at most 100 mW, which at 5 V is
-:math:`0.1\ \text{W} / 5\ \text{V} = 20\ \text{mA}`. A VCONN switch with a
-current limit of a few tens of milliamps therefore meets the requirement for
-a port without USB data; commercial controllers, which also serve USB data
-cables needing 1 W to 1.5 W, have limits of hundreds of milliamps
-(TPS65987D *ILIMPPCC* 0.6-0.9 A, Section 6.7; STUSB1602 programmable 100 mA
-to 600 mA, datasheet features; CYPD5126-class CCG5C over-current detection
-from 550 mA, datasheet SID.DC.20VCONN.9).
+(Type-C Table 4-32). The source must also be able to supply 100 mW
+continuously (Type-C Table 4-4), which is
+:math:`0.1\ \text{W} / 5\ \text{V} = 20\ \text{mA}` at 5 V, or
+:math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest valid
+VCONN. A VCONN switch with a current limit of a few tens of milliamps
+therefore meets the requirement for a port without USB data; commercial
+controllers, which also serve USB data cables needing 1 W to 1.5 W, have
+limits of hundreds of milliamps (TPS65987D *ILIMPPCC* 0.6-0.9 A,
+[USBPD-TPS65987D]_, Section 6.7; STUSB1602 programmable 100 mA to 600 mA,
+[USBPD-STUSB1602]_, features; CCG5C over-current detection from 550 mA,
+[USBPD-CCG5C]_, SID.DC.20VCONN.9).
 
 **VCONN swap.** The two ports can exchange the VCONN duty with a VCONN_Swap
 message exchange, done make-before-break (Type-C Section 4.5.2.2.9.1; PD
@@ -1563,8 +1569,9 @@ each CC pin and enough stored energy to keep the board alive for the swap
 receives: a comparator at about 0.52 V on the CC pin, a timer to measure the
 30 µs low, and a source converter that can deliver 5 V within 150 µs, which
 means it must already be running. TPS65987D, for example, specifies a VBUS
-turn-on time of 150 µs for this case (*tON_FRS*, Section 6.7) and an FRS
-detection threshold of 490-550 mV (*VTH_FRS*, Section 6.8).
+turn-on time of 150 µs for this case (*tON_FRS*, [USBPD-TPS65987D]_,
+Section 6.7) and an FRS detection threshold of 490-550 mV (*VTH_FRS*,
+Section 6.8).
 
 Hard Reset in each role
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1668,8 +1675,9 @@ are used:
 For the clock, evampire already has a 125 MHz reference, so 31.25 MHz
 (÷ 4) and 62.5 MHz (÷ 2) are natural choices. The gf180mcu 7-track standard
 cell library, at its typical corner (5 V, 25 °C), gives a D flip-flop
-clock-to-output delay of 0.676 ns and a setup time of 0.229 ns ([USBPD-GF180-SC]_, cell gf180mcu_fd_sc_mcu7t5v0__dffq_1; databook
-conditions page). At 50 MHz that leaves
+clock-to-output delay of 0.676 ns (with the minimum load) and a setup time
+of 0.229 ns ([USBPD-GF180-SC]_, cell gf180mcu_fd_sc_mcu7t5v0__dffq_1 and
+databook conditions page). At 50 MHz that leaves
 :math:`20\ \text{ns} - (0.676 + 0.229)\ \text{ns} = 19.1\ \text{ns}` per
 clock for logic and wiring. How many gate levels fit in that depends on the
 core and the layout and is not derived here; as an order of magnitude, the
