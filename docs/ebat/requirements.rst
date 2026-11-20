@@ -58,8 +58,10 @@ ports. These differences follow from having no data path:
   classification alone, up to class 8 (:doc:`../power/poe/power-sourcing`).
   Support for LLDP is optional for power sourcing equipment
   (:clause:`145.5`).
-* The allocation on port B changes only by removing the power and
-  classifying the powered device again (:doc:`../power/poe/sharing`).
+* On a board without data pass-through, the allocation on port B changes
+  only by removing the power and classifying the powered device again
+  (:doc:`../power/poe/sharing`). With data pass-through, LLDP frames pass
+  between the far ends (:ref:`ebat-pass-through-lldp`).
 
 .. _req-ebat-power-control:
 

@@ -66,9 +66,13 @@ The power limits do not change. The front end still shows a detection
 signature within the resistance, capacitance and inductance limits of
 :numref:`tbl-magnetics-poe-numbers`. Joining the two wires of a pair puts
 a short circuit across that pair for any data that a switch at the far end
-sends. Whether the wires are joined directly, or through a part on each
+sends.
+
+Whether the wires are joined directly, or through a part on each
 wire that keeps the pair's impedance high at data frequencies, is an open
-question.
+question. A third choice is to keep standard magnetics, or an RJ45 socket
+with magnetics built in, and use only their centre taps. That costs the
+magnetics but presents each pair to the far end as on any Ethernet port.
 
 The cable still needs isolation
 -------------------------------
@@ -110,14 +114,17 @@ Each cable carries its own direct voltage. The data path must therefore
 pass the data and block direct current between the two cables. Two sets of
 magnetics joined on their circuit sides do this, as in
 :numref:`fig-ebat-pass-through`. Coupling capacitors are the alternative
-that :doc:`../ethernet/magnetics/coupling-capacitors` analyses.
+that :doc:`../ethernet/magnetics/coupling-capacitors` analyses. The power
+path between the two front ends is the one of :numref:`fig-power-flow`.
 
 A USB-powered injector has the same data path, with an unpowered RJ45
 socket for the switch in place of port A. IEEE 802.3 calls such equipment
-a :term:`midspan` power sourcing equipment. It defines which Ethernet speeds a
-midspan must pass (:clause:`145.2.3`), and sets limits on the insertion
-loss, crosstalk and return loss that the midspan adds to the data path
-(:clause:`145.4.9`).
+a :term:`midspan` power sourcing equipment. It defines which Ethernet
+speeds a midspan must pass (:clause:`145.2.3`), and sets limits on the
+insertion loss, crosstalk and return loss that the midspan adds to the
+data path (:clause:`145.4.9`). The pass-through board of
+:numref:`fig-ebat-pass-through` sits in the middle of the link in the same
+way, so the same limits are the reference for its data path.
 
 .. _ebat-pass-through-lldp:
 
@@ -144,12 +151,15 @@ ebat:
 
 In the first case, port B's built-in current and power limit
 (:ref:`req-ebat-power-control`) switches the port off when the downstream
-device draws too much. The frames do not pass through ebat, so ebat cannot
+device draws too much. Port B then detects and classifies the device
+again, the device can agree the same value over LLDP again, and the cycle
+can repeat. The frames do not pass through ebat, so ebat cannot
 prevent the second case.
 
 In a USB-powered injector, the data side connects to a switch instead of
-power sourcing equipment. If that switch takes part in the power exchange
-over LLDP, the first case applies in the same way.
+power sourcing equipment. If that switch answers the power exchange over
+LLDP, the first case applies in the same way. Power negotiation
+carried in other kinds of frame passes through in the same way as LLDP.
 
 Open questions
 --------------

@@ -23,7 +23,7 @@ digraph ebat {
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=12, width=1.75, height=0.75,
            fixedsize=true];
-    edge  [arrowsize=0.8];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.8];
 
     // Outline of the chip, drawn first so it sits behind the blocks.
     chip [label="ebat", labelloc=b, fontsize=15, fontcolor="#1f4e79",
@@ -65,10 +65,10 @@ digraph ebat {
           fillcolor="#e2f0d9"];
 
     // Signals between the chip and the board.
-    port_a -> seq  [dir=both, penwidth=2.5];
-    usbc   -> cc   [dir=both, penwidth=2.5];
-    usbc   -> usbd [dir=both, penwidth=2.5];
-    port_b -> pse  [dir=both, penwidth=2.5];
+    port_a -> seq  [dir=both, penwidth=2.5, label="signature,   \nclass   "];
+    usbc   -> cc   [dir=both, penwidth=2.5, label="CC   "];
+    usbc   -> usbd [dir=both, penwidth=2.5, label="D+, D−    "];
+    port_b -> pse  [dir=both, penwidth=2.5, label="detection,   \nclass   "];
 
     // Control.
     seq  -> cpu  [style=dashed, dir=both];
@@ -77,6 +77,6 @@ digraph ebat {
     pse  -> cpu  [style=dashed, dir=both];
     cpu  -> mon  [style=dashed, dir=both];
     cpu  -> ctrl [style=dashed];
-    conv -> mon  [style=dashed];
-    ctrl -> conv [style=dashed];
+    conv -> mon  [style=dashed, label="measurements    "];
+    ctrl -> conv [style=dashed, label="    switching"];
 }

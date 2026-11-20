@@ -90,12 +90,12 @@ The 125 MHz reference clock drives only these blocks
 an open question for ebat as it is for evampire.
 
 The USB serial port needs a bit clock within ± 0.25 % of 12 MHz. Of the
-three clock sources that the USB serial pages list, ebat loses the first,
-a clock derived from the 125 MHz Ethernet reference. The two that remain
-are a local oscillator trimmed against the 1 ms start-of-frame tokens from
+three clock sources that the USB serial pages list, ebat does not have
+the first, a clock derived from the 125 MHz Ethernet reference. The two
+that remain are a local oscillator trimmed against the 1 ms start-of-frame tokens from
 the host, and a dedicated crystal (:doc:`../usb-serial/timing`).
 
-The processor no longer handles frames. Its work is the power negotiation
+The processor handles no frames. Its work is the power negotiation
 on each port, the power budget and the USB serial port. The USB Power
 Delivery messages keep the processor busy with interrupts off for the
 length of each message (:doc:`../power/usb-pd/software`), and the serial

@@ -41,21 +41,29 @@ some powered devices and optional for others, as
      - 4 or 5 on either pair set
      - Required
 
-The older rules of :clause:`33` say the same for Type 2 powered devices,
-which request class 4 and implement both two-event classification and
-LLDP (:clause:`33.3.5`). LLDP frames are Ethernet frames, so a powered
+:clause:`33`, which defines Types 1 and 2, says the same for Type 2
+powered devices. These request class 4 and implement both two-event
+classification and LLDP (:clause:`33.3.5`). LLDP frames are Ethernet frames, so a powered
 device with no data path cannot take part. ebat therefore requests class 1,
 2 or 3 on each pair set.
 
-Two other routes give a powered device more than class 3, and ebat takes
-neither of them:
+Three other routes give a powered device more than class 3, and ebat
+takes none of them:
 
 Request class 4 or higher without LLDP
    This does not meet :clause:`145.3.6`, which uses "shall".
-Keep a low-speed Ethernet link for LLDP only
-   This is evampire's route, with its processor handling the LLDP frames
-   (:ref:`req-forwarding`). ebat leaves out all Ethernet data circuits by
-   definition (:ref:`req-ebat-no-data`).
+Add an Ethernet link that carries only LLDP
+   A transceiver on port A, at any speed, with the processor sending and
+   receiving the LLDP frames. It needs an external transceiver chip and its
+   interface pins, or an integrated transceiver of unknown area, and its
+   data path must cross the isolation barrier
+   (:doc:`../power/poe/isolation`). ebat leaves it out to have no data
+   circuits at all (:ref:`req-ebat-no-data`).
+Use evampire
+   evampire forwards gigabit traffic between its ports and handles LLDP in
+   its processor (:ref:`req-forwarding`). Whether an ebat board uses an
+   evampire die, with its data pins unused, is an open question
+   (:ref:`ebat-requirements-open-questions`).
 
 A single signature gives 13 W
 -----------------------------
@@ -86,10 +94,19 @@ Requesting class 3 on both pair sets keeps LLDP optional
 * 13 W from power sourcing equipment that powers one pair set, which
   includes every Type 1 and Type 2 device.
 
-The cost is a second set of powered-device blocks on port A. Each pair set
-needs its own polarity bridge, signature, class signature and isolation
-switch (:doc:`../power/poe/pd-controller`), and the start-up sequencer
-answers detection and classification on both. Whether port A presents a
+The cost is a second set of powered-device blocks on port A. A
+single-signature front end already has a polarity bridge on each pair set
+(:doc:`../power/poe/basics`). A dual-signature front end also needs its own
+signature, class signature and isolation switch on each pair set
+(:doc:`../power/poe/pd-controller`), and the start-up sequencer answers
+detection and classification on both.
+
+While a pair set is below its
+turn-off voltage, no more than 10 µA may flow between the negative
+conductors of the two pair sets (:clause:`145.4.1`). A dual-signature
+powered device is Type 3 (:clause:`Table 145-19 <145>`), and only power
+sourcing equipment of Type 3 or 4 powers both pair sets
+(:numref:`tab-poe-types`). Whether port A presents a
 single or a dual signature is an open question.
 
 The power left in each mode
@@ -127,7 +144,9 @@ the board's power and the converter efficiencies are all unknown, so the
 examples use the illustrative values of the evampire pages they link to.
 These are :math:`\eta` = 0.900 and :math:`P_\text{board}` = 3.10 W from
 Ethernet to USB, and :math:`\eta` = 0.846 from Ethernet to Ethernet.
-:numref:`tab-ebat-modes` gives the results for 13 W and 26 W on port A. The
+:numref:`tab-ebat-modes` gives the results for 13 W and 26 W on port A,
+for a board with one USB Type-C port. With two, the power is shared between
+them first (:ref:`usbpd-sharing`). The
 script :download:`calc.py` recomputes every value on this page.
 
 .. list-table:: The output for each input on port A, with illustrative
@@ -161,7 +180,9 @@ Ethernet in, USB out
 
    The USB port reports 20 W, rounded down to 1 W, as its Port Present PDP.
    With Power over Ethernet as its only input, its Port Maximum PDP, the
-   most it will ever provide, is also 20 W. A source above 15 W must offer
+   most it will ever provide, is also 20 W. A board whose Port Maximum
+   PDP is higher, for example a dual-signature board powered on one pair
+   set, may also offer 9 V at 8 W. A source above 15 W must offer
    9 V, and may not offer 15 V unless its Port Maximum PDP is above 27 W
    (:numref:`tab-usbpd-pdp-voltages`).
 
@@ -188,6 +209,10 @@ USB in, Ethernet out
 Port B changes its allocation only by classifying again
 -------------------------------------------------------
 
+This section applies to boards that do not pass Ethernet data through.
+On a board that does, LLDP frames pass between the far ends and can change
+the allocation (:ref:`ebat-pass-through-lldp`).
+
 As :term:`power sourcing equipment`, port B assigns a class by Physical
 Layer classification, up to class 8 with 4-pair power
 (:doc:`../power/poe/power-sourcing`). LLDP is optional for power sourcing
@@ -208,6 +233,7 @@ can use it to allocate less than the full class power
 Open questions
 --------------
 
-* Whether port A presents a single signature or a dual signature.
+* Whether port A presents a single signature or a dual signature, and so
+  whether it is a Type 1 or Type 3 powered device.
 * Which class, 1, 2 or 3, the start-up sequencer requests on each pair set.
 * Whether port B uses autoclass when the powered device supports it.

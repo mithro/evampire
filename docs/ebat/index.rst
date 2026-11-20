@@ -73,13 +73,13 @@ The pages
    Every requirement on ebat, as the evampire requirement it keeps or the
    way it differs, and the questions still open.
 :doc:`architecture`
-   The blocks inside ebat and the pins it no longer needs.
+   The blocks inside ebat and the evampire pins it does not need.
 :doc:`power-without-lldp`
    Why a powered device without a data path can request at most class 3,
    and the power that leaves for each operating mode.
 :doc:`boards`
    The kinds of board ebat suits, how the cable connects without a data
-   path, and boards that pass Ethernet data through past ebat.
+   path, and boards that pass Ethernet data on wiring that bypasses ebat.
 
 .. toctree::
    :maxdepth: 1
