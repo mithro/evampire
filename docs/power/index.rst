@@ -114,6 +114,35 @@ power or a role swap moves the input to another port, the software first
 reduces the offers on the outputs to fit the new budget, and then accepts
 the new input.
 
+.. _power-sharing:
+
+Sharing the budget between output ports
+---------------------------------------
+
+In the full design more than one port can supply power at the same time:
+both USB Type-C ports, or a USB Type-C port and an Ethernet port, or both
+Ethernet ports when the board is powered from USB. The software then shares
+:math:`P_\text{out}` between those ports, so that the sum of the power
+offered on all of them never exceeds it:
+
+.. math::
+
+   \sum_i P_{\text{offer},i} \le P_\text{out}
+
+where :math:`P_{\text{offer},i}` is the maximum power offered on output
+port :math:`i`, in watts.
+
+Each port starts with a share of the budget. Each standard lets the
+software change an offer while a device is connected: a USB Power Delivery
+source can send a new list of offers, and a Power over Ethernet port can
+change the power it allocates through the link layer discovery protocol.
+The software uses this to move power between ports: when a device on one
+port is unplugged or uses less than its share, the software raises the
+offer on another port, and when a new device is plugged in, it first lowers
+the offers on the other ports to make room. How the budget is divided, and
+how a port's offer is reduced safely while a device is using it, is
+described on :doc:`usb-pd` and :doc:`poe`.
+
 .. _power-board-configs:
 
 Board configurations

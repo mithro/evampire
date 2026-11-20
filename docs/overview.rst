@@ -190,6 +190,11 @@ Power bridging
      When the input power changes, the offers on the outputs are updated to
      match, reduced before the input power falls. See
      :ref:`power-translation`.
+   * When more than one port supplies power at the same time, for example
+     both USB Type-C ports of the full design, the software shares the
+     output budget between them. It divides the power between the ports,
+     and moves power from one port to the other when a device needs less,
+     asks for more, or is unplugged. See :ref:`power-sharing`.
    * The first version of the board has one Ethernet port that receives
      power (port A), one Ethernet port that supplies power (port B), and one
      USB Type-C port. The full design allows either Ethernet port to take
