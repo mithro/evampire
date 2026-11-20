@@ -23,7 +23,7 @@ and from them runs across to the right.
          rate-matching buffers also feed the address filter and checksum
          check, which feeds the receive frame buffer and then the RISC-V
          processor. The processor feeds the transmit frame buffer and the
-         start pattern and checksum generator, which feeds both output
+         preamble and checksum generator, which feeds both output
          selectors. The processor also controls the transceiver
          configuration interface and the power negotiation, monitoring and
          limiting block, which connects to the power circuits outside the
@@ -131,10 +131,10 @@ Receive and transmit frame buffers
    (1522 bytes). With two slots in a direction, the hardware can fill or
    empty one slot while the processor works on the other.
 
-Start pattern and checksum generator
-   Every Ethernet frame on the wire starts with a fixed 8-byte
-   :term:`start pattern` that lets the receiver lock on to the frame, and
-   ends with a 4-byte checksum (:clause:`3`; see also the frame structure on
+Preamble and checksum generator
+   Every Ethernet frame on the wire starts with a 7-byte :term:`preamble`
+   and a 1-byte :term:`start frame delimiter`, which let the receiver lock
+   on to the frame, and ends with a 4-byte checksum (:clause:`3`; see also the frame structure on
    :doc:`../ethernet/rgmii/index`). This block adds both to frames from the
    processor, so that the processor only writes the addresses, type field
    and payload.
@@ -208,7 +208,7 @@ Each data path passes through a fixed sequence of blocks
      - RGMII interface A or B, rate-matching buffer, address filter, receive
        frame buffer, processor
    * - Processor to port A or B
-     - Processor, transmit frame buffer, start pattern and checksum
+     - Processor, transmit frame buffer, preamble and checksum
        generator, output selector A or B or both, RGMII interface A or B or
        both
 

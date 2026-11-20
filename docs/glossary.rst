@@ -165,11 +165,6 @@ gives a short description and a link to the full explanation.
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
 
-   Start pattern
-      The fixed 8 bytes at the start of every Ethernet frame on the wire: a
-      7-byte preamble and a 1-byte start frame delimiter. They let the
-      receiver lock on to the frame (:clause:`3`).
-
    USB Power Delivery
    USB PD
       The protocol that negotiates voltage and current between the two ends
