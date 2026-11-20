@@ -1,0 +1,38 @@
+// Receive input stage for one RGMII data bit.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph rx_ddr {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=14, nodesep=0.45,
+           ranksep=0.7, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
+
+    pin  [label="RXD[n]\npin", shape=plaintext, style=""];
+    pad  [label="Input\npad", fillcolor="#e2e2e2"];
+    ffr  [label="Flip-flop R\n(rising edge)", fillcolor="#dbe8f5"];
+    fff  [label="Flip-flop F\n(falling edge)", fillcolor="#dbe8f5"];
+    byte [label="Byte register\n(next rising edge)", fillcolor="#e2efda"];
+    fifo [label="Rate-matching\nbuffer", fillcolor="#f2f2f2"];
+    cpin [label="RXC\npin", shape=plaintext, style=""];
+    cpad [label="Input\npad", fillcolor="#e2e2e2"];
+    ctree [label="Local clock\nbuffer", fillcolor="#fbe5d6"];
+
+    pin -> pad;
+    pad -> ffr [label="data"];
+    pad -> fff [label="data"];
+    ffr -> byte [label="bit n"];
+    fff -> byte [label="bit n+4"];
+    byte -> fifo [label="byte"];
+
+    cpin -> cpad -> ctree;
+    ctree -> ffr  [style=dashed, label="RXC"];
+    ctree -> fff  [style=dashed, xlabel="inverted RXC "];
+    ctree -> byte [style=dashed, label="RXC"];
+
+    { rank=same; pin; cpin; }
+    { rank=same; pad; cpad; }
+    { rank=same; ffr; fff; ctree; }
+    ffr -> fff -> ctree [style=invis];
+}
