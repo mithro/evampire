@@ -10,8 +10,11 @@ build:
   apt_packages:
     - graphviz
   jobs:
-    # Fail the build if a rendered page contains an error box that Sphinx
-    # does not report as a warning.
+    # Fail the build if a page mentions a standard's clause without linking
+    # to it, or if a rendered page contains an error box that Sphinx does
+    # not report as a warning.
+    pre_build:
+      - python docs/check_source.py docs
     post_build:
       - python docs/check_html.py $READTHEDOCS_OUTPUT/html
 

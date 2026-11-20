@@ -4,6 +4,10 @@
 
 import os
 
+from docutils import nodes
+from sphinx import addnodes
+from sphinx.util.nodes import split_explicit_title
+
 project = "evampire"
 author = "The evampire Authors"
 copyright = "2026, The evampire Authors"
@@ -65,3 +69,31 @@ html_theme_options = {
     "source_branch": _source_branch,
     "source_directory": "docs/",
 }
+
+
+# :clause:`40.8.3.1` renders as "Clause 40.8.3.1" and links to the entry for
+# Clause 40 of IEEE 802.3 on the standards page. An explicit title can be
+# given, as in :clause:`Clauses 24 <24>`. A clause with no entry on the
+# standards page is a build error (the reference cannot be resolved).
+def _clause_role(name, rawtext, text, lineno, inliner, options=None,
+                 content=None):
+    has_title, title, target = split_explicit_title(text)
+    number = target.strip()
+    if not has_title:
+        title = f"Clause {number}"
+    env = inliner.document.settings.env
+    node = addnodes.pending_xref(
+        rawtext,
+        refdomain="std",
+        reftype="ref",
+        reftarget=f"ieee8023-clause-{number.split('.')[0]}",
+        refexplicit=True,
+        refwarn=True,
+        refdoc=env.docname,
+    )
+    node += nodes.inline(title, title)
+    return [node], []
+
+
+def setup(app):
+    app.add_role("clause", _clause_role)
