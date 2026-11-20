@@ -9,25 +9,23 @@ digraph tx_ddr {
            fontname="Helvetica", fontsize=13];
     edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
-    byte [label="Byte register\n(loads on the\nrising edge)", fillcolor="#e2efda"];
-    ffa  [label="Flip-flop A\nloads bit n of the\nlow nibble on the\nfalling edge",
-          fillcolor="#dbe8f5"];
-    ffb  [label="Flip-flop B\nloads bit n of the\nhigh nibble on the\nrising edge",
-          fillcolor="#dbe8f5"];
-    mux  [label="2-input\nselector", fillcolor="#fbe5d6"];
+    byte [label="Byte register\n(rising edge)", fillcolor="#e2efda"];
+    ffa  [label="Flip-flop A\n(falling edge)", fillcolor="#dbe8f5"];
+    ffb  [label="Flip-flop B\n(rising edge)", fillcolor="#dbe8f5"];
+    mux  [label="Multiplexer", fillcolor="#fbe5d6"];
     pad  [label="Output\npad", fillcolor="#e2e2e2"];
     pin  [label="TXD[n]\npin", shape=plaintext, style=""];
     clk  [label="125 MHz\ntransmit\nclock", shape=plaintext, style=""];
 
     byte -> ffa [label="bit n"];
     byte -> ffb [label="bit n+4"];
-    ffa -> mux [label="used while\nclock is high"];
-    ffb -> mux [label="used while\nclock is low"];
+    ffa -> mux [label="when clock high"];
+    ffb -> mux [label="when clock low"];
     mux -> pad -> pin;
 
-    clk -> byte [style=dashed];
-    clk -> ffa  [style=dashed, xlabel="inverted "];
-    clk -> ffb  [style=dashed];
+    clk -> byte [style=dashed, label="clock"];
+    clk -> ffa  [style=dashed, xlabel="inverted clock"];
+    clk -> ffb  [style=dashed, label="clock"];
     clk -> mux  [style=dashed, label="select"];
 
     { rank=same; ffa; ffb; }

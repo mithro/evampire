@@ -3,19 +3,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph speed_policy {
-    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.5,
-           ranksep=0.45];
+    graph [rankdir=TB, fontname="Helvetica", fontsize=14, nodesep=0.5,
+           ranksep=0.5];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
-    down  [label="One or both links down\n\nForwarding off.\nA transceiver whose link is down\nadvertises every full-duplex speed\nthat evampire supports."];
-    same  [label="Both links up,\nsame speed and full duplex\n\nForwarding on.", fillcolor="#e2efda"];
-    diff  [label="Both links up,\ndifferent speeds\n\nForwarding off.\nThe faster port is restricted to\nthe speed of the slower port\nand renegotiates.", fillcolor="#fbe5d6"];
+    down  [label="One or both links down\nforwarding off"];
+    diff  [label="Different speeds\nforwarding off", fillcolor="#fbe5d6"];
+    same  [label="Same speed, full duplex\nforwarding on", fillcolor="#e2efda"];
 
-    down -> same [label="  second link comes up\n  at the same speed"];
-    down -> diff [label="  second link comes up\n  at a different speed"];
-    diff -> same [label="  renegotiation\n  completes"];
+    down -> same [label="  second link up,\n  same speed"];
+    down -> diff [label="  second link up,\n  different speed"];
+    diff -> same [label="  faster port\n  renegotiates"];
     same -> down [label="  a link goes down"];
     diff -> down [label="  a link goes down"];
 }

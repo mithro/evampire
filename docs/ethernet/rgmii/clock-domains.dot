@@ -10,19 +10,17 @@ digraph clock_domains {
     edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
     subgraph cluster_rxa {
-        label="RXC of port A\n(recovered from cable A)"; style="rounded";
-        color="#5b9bd5";
-        rxa [label="Receive capture A,\nbuffer A to B\n(write side)", fillcolor="#dbe8f5"];
+        label="RXC of port A"; style="rounded"; color="#5b9bd5";
+        rxa [label="Capture A,\nrate-matching buffer\nA to B (write side)", fillcolor="#dbe8f5"];
     }
     subgraph cluster_rxb {
-        label="RXC of port B\n(recovered from cable B)"; style="rounded";
-        color="#5b9bd5";
-        rxb [label="Receive capture B,\nbuffer B to A\n(write side)", fillcolor="#dbe8f5"];
+        label="RXC of port B"; style="rounded"; color="#5b9bd5";
+        rxb [label="Capture B,\nrate-matching buffer\nB to A (write side)", fillcolor="#dbe8f5"];
     }
     subgraph cluster_core {
         label="evampire 125 MHz clock"; style="rounded"; color="#70ad47";
-        fab  [label="Rate-matching\nbuffer A to B\n(read side)", fillcolor="#e2efda"];
-        fba  [label="Rate-matching\nbuffer B to A\n(read side)", fillcolor="#e2efda"];
+        fab  [label="Rate-matching buffer\nA to B (read side)", fillcolor="#e2efda"];
+        fba  [label="Rate-matching buffer\nB to A (read side)", fillcolor="#e2efda"];
         txa  [label="Transmit A\n(TXC A)", fillcolor="#e2efda"];
         txb  [label="Transmit B\n(TXC B)", fillcolor="#e2efda"];
         filt [label="Address filter,\nframe buffers", fillcolor="#e2efda"];
@@ -32,14 +30,13 @@ digraph clock_domains {
         cpu  [label="Processor,\nMDC/MDIO controller", fillcolor="#fbe5d6"];
     }
 
-    rxa -> fab [label="crossing 1", penwidth=2];
-    rxb -> fba [label="crossing 2", penwidth=2];
-    fab -> txb [penwidth=2];
-    fba -> txa [penwidth=2];
-    fab -> filt;
-    fba -> filt;
-    filt -> cpu [label="crossing 3\n(if the processor clock\nis not the 125 MHz clock)",
-                 dir=both];
-    rxa -> cpu [label="in-band link-up bit only\n(two-flip-flop synchroniser)", style=dashed];
-    rxb -> cpu [style=dashed];
+    rxa -> fab [label="crossing 1: data", penwidth=2];
+    rxb -> fba [label="crossing 2: data", penwidth=2];
+    fab -> txb [label="data", penwidth=2];
+    fba -> txa [label="data", penwidth=2];
+    fab -> filt [label="data"];
+    fba -> filt [label="data"];
+    filt -> cpu [label="crossing 3: frames", dir=both];
+    rxa -> cpu [label="link-up bit A", style=dashed];
+    rxb -> cpu [label="link-up bit B", style=dashed];
 }
