@@ -22,7 +22,8 @@ The page first explains how two USB Type-C ports find each other and decide
 who supplies power, then how they agree on a voltage, then the signal on the
 wire in enough detail to receive and send it in software, the source side,
 cables, role changes, two ports, the cost of doing all of this in software,
-the analog blocks, and which of them can be built on the gf180mcu process.
+the analog blocks, and the on-chip and external options for each of them on
+the gf180mcu process.
 
 Two specifications are quoted throughout. Both are free to download from
 usb.org:
