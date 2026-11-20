@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph dual_role {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.3,
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.3,
            ranksep=0.5, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=10];

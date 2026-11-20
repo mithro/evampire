@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph pd_controller {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.25,
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.25,
            ranksep=0.5, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=10];

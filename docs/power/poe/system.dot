@@ -2,56 +2,71 @@
 // power as a powered device, port B supplies power as power sourcing
 // equipment. Bold arrows: power. Thin arrows: data. Dashed arrows: control.
 //
+// The blocks are placed on a fixed grid (positions in inches) so that the
+// diagram fits the width of a documentation page:
+//
+//   column 1 (x=1.1)  port A, power flowing down from the cable
+//   column 2 (x=3.6)  internal power bus and evampire
+//   column 3 (x=6.1)  port B, power flowing up to the cable
+//
 // SPDX-License-Identifier: Apache-2.0
 
 digraph poe_system {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.3,
-           ranksep=0.4, newrank=true];
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontname="Helvetica", fontsize=12, width=1.8, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=11, arrowsize=0.8];
 
-    up   [label="Power sourcing\nequipment\n(switch or injector)\n44–57 V", fillcolor="#fbe5d6"];
-    down [label="Powered device\n(camera, access\npoint, ...)", fillcolor="#fbe5d6"];
+    // Outlines, drawn first so they sit behind the blocks.
+    board [label="Board built around evampire", labelloc=b, fontsize=13,
+           fontcolor="#555555", pos="3.6,5.15!", width=7.2, height=5.9,
+           style="rounded,dashed", color="#888888", fillcolor="none"];
+    port_a [label="Port A: powered device", labelloc=b, fontsize=12,
+            fontcolor="#c55a11", pos="1.1,5.35!", width=2.1, height=4.9,
+            style="rounded", color="#c55a11", fillcolor="none"];
+    port_b [label="Port B: power sourcing\nequipment", labelloc=b,
+            fontsize=12, fontcolor="#c55a11", pos="6.1,5.35!", width=2.1,
+            height=4.9, style="rounded", color="#c55a11", fillcolor="none"];
 
-    subgraph cluster_board {
-        label="Board built around evampire"; labelloc="b";
-        style="rounded,dashed"; color="#888888";
+    // Equipment at the far ends of the two cables.
+    up   [pos="1.1,8.9!", label="Power sourcing\nequipment\n(switch, injector)",
+          height=0.75, fillcolor="#fbe5d6"];
+    down [pos="6.1,8.9!", label="Powered device\n(camera, access\npoint, ...)",
+          height=0.75, fillcolor="#fbe5d6"];
 
-        subgraph cluster_a {
-            label="Port A: powered device"; style="rounded"; color="#c55a11";
-            maga [label="RJ45 and\nmagnetics A", fillcolor="#ffffff"];
-            brg  [label="Two polarity\nbridges", fillcolor="#fff2cc"];
-            pdc  [label="Powered-device\ncontroller", fillcolor="#fff2cc"];
-            conv [label="Input\nconverter", fillcolor="#fff2cc"];
-        }
+    // Port A column.
+    maga [pos="1.1,7.0!", label="RJ45 and\nmagnetics A", fillcolor="#ffffff"];
+    brg  [pos="1.1,6.0!", label="Two polarity\nbridges", fillcolor="#fff2cc"];
+    pdc  [pos="1.1,5.0!", label="Powered-device\ncontroller", fillcolor="#fff2cc"];
+    conv [pos="1.1,4.0!", label="Input converter", fillcolor="#fff2cc"];
 
-        bus  [label="Internal\npower bus", style="filled,bold", fillcolor="#dbe8f5"];
-        evp  [label="evampire", style="rounded,filled,bold", fillcolor="#dbe8f5"];
+    // Centre column.
+    evp  [pos="3.6,6.0!", label="evampire", style="rounded,filled,bold",
+          fillcolor="#dbe8f5"];
+    bus  [pos="3.6,2.8!", label="Internal power bus", style="filled,bold",
+          fillcolor="#dbe8f5"];
 
-        subgraph cluster_b {
-            label="Port B: power sourcing equipment"; style="rounded";
-            color="#c55a11";
-            boost [label="Boost converter\nto 44–57 V", fillcolor="#fff2cc"];
-            psec  [label="PSE controller,\nswitches and\ncurrent sense", fillcolor="#fff2cc"];
-            magb  [label="RJ45 and\nmagnetics B", fillcolor="#ffffff"];
-        }
-    }
+    // Port B column.
+    boost [pos="6.1,4.0!", label="Boost converter\nto 44–57 V", fillcolor="#fff2cc"];
+    psec  [pos="6.1,5.0!", label="Power sourcing\nequipment controller\nand switches", height=0.75, fillcolor="#fff2cc"];
+    magb  [pos="6.1,7.0!", label="RJ45 and\nmagnetics B", fillcolor="#ffffff"];
 
-    { rank=same; bus; evp; }
+    // Power path.
+    up    -> maga  [penwidth=2.5, label="cable"];
+    maga  -> brg   [penwidth=2.5];
+    brg   -> pdc   [penwidth=2.5];
+    pdc   -> conv  [penwidth=2.5];
+    conv  -> bus   [penwidth=2.5];
+    bus   -> boost [penwidth=2.5];
+    boost -> psec  [penwidth=2.5];
+    psec  -> magb  [penwidth=2.5];
+    magb  -> down  [penwidth=2.5, label="cable"];
 
-    up   -> maga  [penwidth=2.5, label="cable"];
-    maga -> brg   [penwidth=2.5, label="centre\ntaps"];
-    brg  -> pdc   [penwidth=2.5];
-    pdc  -> conv  [penwidth=2.5, label="37–57 V"];
-    conv -> bus   [penwidth=2.5];
-    bus  -> boost [penwidth=2.5];
-    boost -> psec [penwidth=2.5];
-    psec -> magb  [penwidth=2.5, label="centre\ntaps"];
-    magb -> down  [penwidth=2.5, label="cable"];
-
-    pdc  -> evp   [style=dashed, label="power good,\nallocated power"];
-    evp  -> psec  [style=dashed, dir=both, label="I2C or\nenable/status"];
-    maga -> evp   [dir=both, label="data (via\ntransceiver A)", constraint=false];
-    evp  -> magb  [dir=both, label="data (via\ntransceiver B)", constraint=false];
+    // Control and data.
+    pdc  -> evp  [style=dashed];
+    evp  -> psec [style=dashed, dir=both];
+    maga -> evp  [dir=both, label="data"];
+    evp  -> magb [dir=both, label="data"];
 }
