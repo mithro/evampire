@@ -4,22 +4,25 @@ Overview and requirements
 What the chip does
 ------------------
 
-evampire is a three-port gigabit Ethernet hub on a single chip.
+evampire is a three-port :wikipedia:`gigabit <Gigabit_Ethernet>`
+:wikipedia:`Ethernet hub <Ethernet_hub>` on a single chip.
 
 * **Two external ports** (called *port A* and *port B*) each connect to an
   Ethernet cable through an Ethernet transceiver. The transceiver is the part
   that drives and receives the electrical signals on the cable (see
   :doc:`ethernet/phy-electrical`). Ethernet documentation usually calls it a
-  *PHY*, short for "physical layer device". In the first version the
+  *PHY*, short for "physical layer device" (see
+  :wikipedia:`Ethernet physical layer <Ethernet_physical_layer>`). In the first version the
   transceiver is a separate chip; in the full design it is part of evampire.
-  Each port ends in an RJ45 Ethernet socket (see :doc:`ethernet/magnetics`).
+  Each port ends in an :wikipedia:`RJ45 <8P8C>` Ethernet socket (see :doc:`ethernet/magnetics`).
 * **One internal port** connects to a small `RISC-V <https://riscv.org/>`_
   microcontroller inside the chip.
 
 Data arriving on port A is sent out of port B, and data arriving on port B is
 sent out of port A. The chip does not wait for a whole frame to arrive before
 it starts sending it on. Each byte is passed to the other side a few clock
-cycles after it arrives. This is called *cut-through* forwarding. It needs
+cycles after it arrives. This is called *cut-through* forwarding (see
+:wikipedia:`Cut-through switching <Cut-through_switching>`). It needs
 only a few bytes of storage on each path, no matter how long the frame is.
 
 The internal processor sees a filtered copy of the traffic and can add its own
@@ -35,13 +38,15 @@ Terms used in this documentation
 --------------------------------
 
 Frame
-   One Ethernet message. A frame starts with the 6-byte destination address
+   One Ethernet message (see :wikipedia:`Ethernet frame <Ethernet_frame>`).
+   A frame starts with the 6-byte destination address
    and the 6-byte source address, carries between 46 and 1500 bytes of
-   payload in a normal frame, and ends with a 4-byte checksum
-   (:clause:`3`).
+   payload in a normal frame, and ends with a 4-byte checksum, the
+   :wikipedia:`frame check sequence <Frame_check_sequence>` (:clause:`3`).
 
 MAC address
-   The 48-bit address that identifies a device on an Ethernet network. Every
+   The 48-bit address that identifies a device on an Ethernet network (see
+   :wikipedia:`MAC address <MAC_address>`). Every
    frame carries a destination MAC address and a source MAC address
    (:clause:`3`).
 
@@ -49,7 +54,8 @@ RGMII
    *Reduced Gigabit Media Independent Interface*. A digital interface
    between a chip and an Ethernet transceiver: 4 data bits and one control
    signal in each direction, transferred on both edges of a 125 MHz clock at
-   gigabit speed. See :doc:`ethernet/rgmii`.
+   gigabit speed. See :doc:`ethernet/rgmii` and
+   :wikipedia:`Media-independent interface <Media-independent_interface>`.
 
 .. _requirements:
 
@@ -90,7 +96,8 @@ Forwarding between the external ports
      only to the internal processor, or dropped.
    * The listed exceptions are:
 
-     - Link layer discovery protocol (LLDP) frames, sent to the destination
+     - :wikipedia:`Link layer discovery protocol <Link_Layer_Discovery_Protocol>`
+       (LLDP) frames, sent to the destination
        address 01-80-C2-00-00-0E. They carry the Power over Ethernet power
        negotiation between the two ends of one cable (:clause:`79`, see
        :doc:`power/poe`). Forwarding them would let a device on one port
@@ -127,14 +134,17 @@ Memory
      1522 bytes in each direction. That is 1500 bytes of payload plus the
      two addresses, the 2-byte type field, the 4-byte checksum and an
      optional 4-byte tag used to separate virtual networks sharing the same
-     cable (:clause:`3`). With two frames, the processor can work on
+     cable (:wikipedia:`IEEE 802.1Q <IEEE_802.1Q>`, :clause:`3`). With two
+     frames, the processor can work on
      one frame while the hardware fills or empties the other.
-   * Frames longer than the processor's buffer (for example "jumbo" frames of
+   * Frames longer than the processor's buffer (for example
+     :wikipedia:`jumbo frames <Jumbo_frame>` of
      up to about 9000 bytes) are still forwarded between ports A and B, but
      are not delivered to the processor.
 
 Processor
-   * A small 32-bit RISC-V core with on-chip program and data memory.
+   * A small 32-bit :wikipedia:`RISC-V` core with on-chip program and data
+     memory.
    * The processor's network traffic is expected to be well below
      1 Mbit/s. The processor does not need to keep up with gigabit traffic.
    * The processor also controls the configuration interface of each
@@ -142,8 +152,10 @@ Processor
 
 Power bridging
    * A board built around evampire can take its power from an Ethernet
-     cable (Power over Ethernet, see :doc:`power/poe`) or from a USB Type-C
-     connector (USB Power Delivery, see :doc:`power/usb-pd`), and can pass
+     cable (:wikipedia:`Power over Ethernet <Power_over_Ethernet>`, see
+     :doc:`power/poe`) or from a :wikipedia:`USB Type-C <USB-C>` connector
+     (:wikipedia:`USB Power Delivery <USB_Power_Delivery>`, see
+     :doc:`power/usb-pd`), and can pass
      that power on through the other kind of port. See :doc:`power/index`;
      the names of the two ends of a powered cable used below are explained
      in :ref:`power-roles`.

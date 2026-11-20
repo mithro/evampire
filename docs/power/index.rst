@@ -2,9 +2,10 @@ Power bridging
 ==============
 
 A board built around evampire moves power between its Ethernet ports and its
-USB Type-C ports. It can be powered from an Ethernet cable (Power over
-Ethernet, :doc:`poe`) and supply power to a USB device, or be powered from a
-USB Type-C charger (USB Power Delivery, :doc:`usb-pd`) and supply power to an
+:wikipedia:`USB Type-C <USB-C>` ports. It can be powered from an Ethernet
+cable (:wikipedia:`Power over Ethernet <Power_over_Ethernet>`, :doc:`poe`) and supply power to a USB device, or be powered from a
+USB Type-C charger (:wikipedia:`USB Power Delivery <USB_Power_Delivery>`,
+:doc:`usb-pd`) and supply power to an
 Ethernet device.
 
 Both standards require the two ends of a cable to agree before full power is
@@ -109,10 +110,12 @@ All power passes through an internal power bus on the board.
   :doc:`poe`).
 * The **USB power path** connects the USB Type-C port to the bus. As a sink
   it is a switch that connects the negotiated USB supply voltage to the bus.
-  As a source it is an adjustable voltage converter that produces the
+  As a source it is an adjustable voltage converter (a
+  :wikipedia:`buck-boost converter <Buck%E2%80%93boost_converter>`) that produces the
   negotiated USB supply voltage (5 V to 20 V, or up to 48 V in the extended
   range; see :doc:`usb-pd`) from the bus.
-* The **high-voltage converter** raises the bus voltage to the 44 V to 57 V
+* The **high-voltage converter** (a
+  :wikipedia:`boost converter <Boost_converter>`) raises the bus voltage to the 44 V to 57 V
   needed on an Ethernet cable (:clause:`145`), and the **power sourcing
   equipment switch** checks for a valid powered device on port B, measures
   its class (the power level the device asks for), and then connects the

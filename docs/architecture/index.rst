@@ -22,7 +22,8 @@ Blocks
 
 RGMII interfaces A and B
    Each interface connects to one external Ethernet transceiver. It receives
-   4 data bits and a control signal on both edges of the clock that the
+   4 data bits and a control signal on both edges of the clock
+   (:wikipedia:`double data rate <Double_data_rate>`) that the
    transceiver sends with the data, and converts them into one byte per
    clock cycle plus "frame in progress" and "error" flags. In the other
    direction it converts bytes back into 4-bit, both-edge signals and sends
@@ -42,11 +43,12 @@ Rate-matching buffers
    cable, which is set by the crystal at the far end of the cable.
    Transmitted data leaves on evampire's own 125 MHz clock. These two clocks
    have the same nominal frequency but are not identical. Gigabit Ethernet
-   allows each end to be up to 100 parts per million away from 125 MHz
+   allows each end to be up to 100
+   :wikipedia:`parts per million <Parts-per_notation>` away from 125 MHz
    (:clause:`40`, see :doc:`../ethernet/phy-electrical`), so the two
    can differ by up to 200 parts per million. A small buffer of a few bytes
    in each direction crosses the data from the receive clock to the transmit
-   clock and absorbs this difference over the length of one frame. The gap
+   clock (a :wikipedia:`clock domain crossing <Clock_domain_crossing>`) and absorbs this difference over the length of one frame. The gap
    between frames gives the buffer time to return to its centre point before
    the next frame starts.
 
@@ -79,7 +81,8 @@ Destination address filter and checksum check
    the other external port.
 
 Receive and transmit frame buffers
-   SRAM that holds whole frames for the processor, each slot large enough for
+   :wikipedia:`SRAM <Static_random-access_memory>` that holds whole frames
+   for the processor, each slot large enough for
    the longest normal frame (1522 bytes). With two slots in a direction, the
    hardware can fill (or empty) one slot while the processor works on the
    other.

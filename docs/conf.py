@@ -25,7 +25,16 @@ extensions = [
     "sphinx_design",
     # "Copy" button on code blocks.
     "sphinx_copybutton",
+    # Short roles for external links, e.g. :wikipedia:`Ethernet frame
+    # <Ethernet_frame>`.
+    "sphinx.ext.extlinks",
 ]
+
+# :wikipedia:`Page_title` links to that English Wikipedia article; an
+# explicit title gives the link text, e.g. :wikipedia:`frames <Ethernet_frame>`.
+extlinks = {
+    "wikipedia": ("https://en.wikipedia.org/wiki/%s", "%s"),
+}
 
 source_suffix = {
     ".rst": "restructuredtext",
