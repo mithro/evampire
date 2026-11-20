@@ -395,6 +395,368 @@ The ENOB values in brackets follow from the formula above; for example
 The estimates below use 71 mW to 120 mW and 0.53 mm² to 1.02 mm² per ADC;
 the low end comes from 1.8 V designs and is optimistic for gf180mcu.
 
+Signal processing
+~~~~~~~~~~~~~~~~~
+
+:doc:`../phy-electrical` derives the arithmetic rate: about 880 filter taps,
+:math:`1.1 \times 10^{11}` multiply-and-add operations per second, for the
+802.3ab design point; a published Broadcom analysis gives "over 150 Giga
+operations per second" [PHY-HATAMIAN98]_. Two properties reduce the cost:
+
+* The echo and near-end crosstalk cancellers multiply a coefficient by a
+  transmitted symbol, which is one of -2, -1, 0, +1, +2 (or one of 17
+  shaped levels). Multiplying by these needs only a shift, a negation or
+  zero, not a general multiplier.
+* Only the feed-forward equalizer multiplies full ADC samples.
+
+All the filters can be pipelined (registers inserted between stages, with
+the matching delay accounted for) and split into parallel paths, so their
+speed is a matter of area, not of feasibility. The one part that cannot
+simply be pipelined is the loop discussed next.
+
+The 8 ns decision loop
+~~~~~~~~~~~~~~~~~~~~~~
+
+**The problem.** The decision-feedback equalizer subtracts the tails of
+symbols the receiver has just decided, and the trellis decoder's decisions
+depend on that subtraction. The decision for one symbol period must
+therefore be complete before the next one starts: a loop that must close in
+8 ns [PHY-TUT98]_. A 14-tap *parallel decision-feedback decoder* (one
+decision-feedback equalizer per decoder state, 8 in all) synthesised in
+3.3 V 0.16 µm standard cells reached only about 500 Mbit/s, half the needed
+rate, and used 158,000 gates [PHY-AZADET-PAT]_.
+
+.. list-table:: Published approaches to the decision loop
+   :header-rows: 1
+   :widths: 30 30 40
+
+   * - Approach
+     - Published result
+     - Cost
+   * - 14-tap parallel decision-feedback decoder, direct
+     - About 500 Mbit/s in 3.3 V 0.16 µm cells; 158,000 gates
+       [PHY-AZADET-PAT]_
+     - Too slow without further measures
+   * - Same decoder, pipelined
+     - 125 MHz in 3.3 V 0.16 µm cells; processing speed improved by a
+       factor of two [PHY-HARATSCH01B]_; a later pipelined version reduces
+       the hardware overhead by 60 % [PHY-GU07]_
+     - Extra pipeline hardware
+   * - Decision-feedback prefilter and 1-tap decoder with look-ahead
+     - 1 Gbit/s at 125 MHz in 3.3 V 0.25 µm cells; gate count and
+       throughput both improved by a factor of two compared with the 14-tap
+       decoder; 1.3 dB performance loss [PHY-HARATSCH01]_
+     - 1.3 dB of noise margin
+   * - 4-tap reduced-state (M-algorithm) decoder
+     - Better performance than the 14-tap decoder at 39 % of its area, in
+       0.18 µm (synthesis and post-layout simulation) [PHY-ZHU07]_
+     - Not demonstrated in silicon
+
+*Look-ahead* rewrites the loop so that the next decision is computed from
+precomputed candidates for each possible previous decision, leaving only a
+selection inside the loop [PHY-PARHI91]_. Applied to the gigabit decoder it
+removed the speed problem in 3.3 V standard cells in a 0.25 µm process
+[PHY-HARATSCH01]_. The gf180mcu standard cells use longer transistors
+(0.5 µm and 0.6 µm, see below), so whether the same structure closes in
+8 ns there must be checked by synthesis and timing analysis. Taking half of
+the 158,000 gates gives about 79,000 gates for the decoder (estimate).
+
+**Logic per cycle in gf180mcu.** The time left for logic in one clock
+period :math:`T` is
+
+.. math::
+
+   t_\text{logic} = T - t_\text{clk-Q} - t_\text{setup}
+
+where :math:`t_\text{clk-Q}` and :math:`t_\text{setup}` are the flip-flop's
+clock-to-output delay and setup time. Dividing by the delay of one
+full-adder carry stage :math:`t_\text{carry}` gives how many such stages
+fit. For example, at the typical 3.3 V corner and :math:`T = 8` ns:
+
+.. math::
+
+   t_\text{logic} = 8 - 1.203 - 0.378 = 6.42\ \text{ns}
+
+.. math::
+
+   \frac{6.42\ \text{ns}}{1.015\ \text{ns}} = 6.3\ \text{carry stages}
+
+.. list-table:: Full-adder carry stages per clock period, gf180mcu 7-track
+   cells (``dffq_1`` and ``addf_1``, input slew 0.287 ns, load 0.0122 pF,
+   worst of rise and fall [PHY-GF180SC]_; estimate)
+   :header-rows: 1
+   :widths: 30 20 16 17 17
+
+   * - Corner
+     - :math:`t_\text{clk-Q}` + :math:`t_\text{setup}`
+     - :math:`t_\text{carry}`
+     - Stages at 8 ns (125 MHz)
+     - Stages at 16 ns (62.5 MHz)
+   * - Typical, 3.3 V, 25 °C
+     - 1.203 + 0.378 ns
+     - 1.015 ns
+     - 6.3
+     - 14.2
+   * - Slow, 3.0 V, 125 °C
+     - 2.380 + 0.848 ns
+     - 2.057 ns
+     - 2.3
+     - 6.2
+   * - Typical, 1.8 V, 25 °C
+     - 2.996 + 1.191 ns
+     - 2.698 ns
+     - 1.4
+     - 4.4
+   * - Slow, 1.62 V, 125 °C
+     - 7.303 + 3.281 ns
+     - 6.804 ns
+     - none
+     - 0.8
+
+**Cells and supply voltage.** The standard cells of gf180mcu are built
+from the 5 V transistors (gate lengths 0.6 µm and 0.5 µm) even when run from
+3.3 V or 1.8 V [PHY-GF180SC]_. Three options:
+
+* **5 V-transistor cells at 3.3 V** (characterised). At the slow corner
+  only about two carry stages fit in 8 ns, so the decision loop needs the
+  look-ahead structure above, and every other path must be pipelined
+  finely.
+* **5 V-transistor cells at 1.8 V** (characterised). Switching energy falls
+  to about a quarter (calculated below), but a 125 MHz clock does not work:
+  even at 62.5 MHz with every path split into two parallel halves, less
+  than one carry stage fits at the slow corner. Running the DSP at reduced
+  voltage therefore needs both deeper parallelism and a supply between the
+  characterised corners, which would need its own characterisation.
+* **Custom cells built from the 3.3 V transistors** (0.28 µm gate length,
+  not in the standard library). These are faster and smaller per gate than
+  the 5 V-transistor cells, but would need to be designed, characterised
+  and verified; no measured delay data was found.
+
+**Switching energy.** The energy to charge a node of capacitance :math:`C`
+to voltage :math:`V` is :math:`E = C V^2`. Taking the switched capacitance
+of one gate as three times the input capacitance of a 2-input NAND gate
+(the gate's own output and wiring plus two inputs it drives; an assumption)
+gives:
+
+.. math::
+
+   E_{3.3} = 3 \times 4.70\ \text{fF} \times (3.3\ \text{V})^2
+   = 14.1\ \text{fF} \times 10.89\ \text{V}^2 = 154\ \text{fJ}
+
+.. math::
+
+   E_{1.8} = 3 \times 4.275\ \text{fF} \times (1.8\ \text{V})^2
+   = 12.8\ \text{fF} \times 3.24\ \text{V}^2 = 41.6\ \text{fJ}
+
+where 4.70 fF and 4.275 fF are the input capacitances of ``nand2_1`` at the
+3.3 V and 1.8 V typical corners [PHY-GF180SC]_. The ratio is
+:math:`41.6 / 154 = 0.27`.
+
+**DSP power (estimate).** The power of :math:`N_\text{gates}` gates, of which
+a fraction :math:`\alpha` switches in each cycle of a clock :math:`f`, is
+
+.. math::
+
+   P_\text{DSP} = N_\text{gates} \times \alpha \times f \times E
+
+where:
+
+* :math:`N_\text{gates}` = 250,000 to 400,000 gate equivalents. The upper
+  value is the 802.3ab layout study [PHY-TUT98]_; the lower value assumes
+  the 330,000-gate design point with its decoder reduced from about 158,000
+  to 79,000 gates by look-ahead, :math:`330{,}000 - 79{,}000 = 251{,}000`;
+* :math:`\alpha` = 0.1 to 0.2, an assumed activity for datapath logic;
+* :math:`f = 125 \times 10^{6}` per second;
+* :math:`E` = 154 fJ at 3.3 V.
+
+Low end: :math:`250{,}000 \times 0.1 \times 125 \times 10^{6} \times 154\
+\text{fJ} = 0.48` W. High end: :math:`400{,}000 \times 0.2 \times 125
+\times 10^{6} \times 154\ \text{fJ} = 1.54` W. At 1.8 V, with an assumed
+30 % more gates for the extra parallel paths, the range is 0.17 W to
+0.54 W. These figures leave out the clock network and leakage and rest on
+the assumed activity; they are rough estimates.
+
+For comparison, scaling the 802.3ab tutorial's 3.1 W at 2.5 V
+[PHY-TUT98]_ to 3.3 V with the square of the supply gives
+:math:`3.1 \times (3.3/2.5)^2 = 5.4` W. The same authors' estimate for an
+earlier, related design gives the same 3.1 W in 0.25 µm as including the
+analog front end [PHY-QAM97]_, so the scaled figure is treated as an upper
+bound rather than a prediction.
+
+**DSP area (estimate).** Taking one gate as one 2-input NAND gate,
+
+.. math::
+
+   A_\text{DSP} = \frac{N_\text{gates} \times A_\text{NAND2}}{u}
+
+where :math:`A_\text{NAND2}` = 10.976 µm² (7-track) or 14.112 µm²
+(9-track) [PHY-GF180SC]_ and :math:`u` = 0.7 is the assumed fraction of
+the area filled by cells. For 250,000 gates in the 7-track library:
+
+.. math::
+
+   \frac{250{,}000 \times 10.976\ \mu\text{m}^2}{0.7} = 3.9\ \text{mm}^2
+
+and for 400,000 gates in the 9-track library, 8.1 mm².
+
+Clock recovery and master/slave timing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The slave recovers the master's clock and transmits with it; the master
+transmits with its own crystal clock and recovers the slave's phase for its
+receiver. The required unfiltered jitter limit of 1.4 ns peak-to-peak is
+
+.. math::
+
+   \frac{1.4\ \text{ns}}{8\ \text{ns}} = 0.175
+
+of a symbol period, with tighter limits of 0.3 ns (master) and 0.4 ns
+(slave) after high-pass filtering [PHY-UNH40]_.
+
+The usual approach is a phase-locked loop (PLL) at 125 MHz and a phase
+interpolator that moves the sampling phase in small steps. Broadcom's 1997
+jitter analysis takes 64 phases per symbol as an example, giving steps of
+:math:`8\ \text{ns}/64 = 125` ps, and states that a 125 ps step causes
+tolerable degradation in PAM-5 [PHY-OSCAR97]_. A published 180 nm PLL and
+256-phase interpolator has finer steps, :math:`8\ \text{ns}/256 = 31.25` ps,
+4.9 ps rms jitter, 4.0 mW and 0.065 mm²; its digital clock recovery uses 204
+standard cells [PHY-BUHR21]_.
+
+To compare an rms jitter :math:`\sigma` with a peak-to-peak limit, assume a
+Gaussian distribution. The peak-to-peak value exceeded with probability
+:math:`10^{-12}` is
+
+.. math::
+
+   J_\text{pp} = 2\,Q\,\sigma
+
+where :math:`Q = 7.03` is the number of standard deviations at which the
+Gaussian tail probability is :math:`10^{-12}`. With :math:`\sigma = 4.9` ps:
+
+.. math::
+
+   J_\text{pp} = 2 \times 7.03 \times 4.9\ \text{ps} = 69\ \text{ps}
+
+(estimate), about 20 times below 1.4 ns. No published measured 1000BASE-T
+master/slave clock-recovery circuit was found; the timing-recovery loop
+itself is digital and can be developed on samples captured from the ADCs.
+
+Link pulses and autonegotiation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Autonegotiation (explained in :doc:`../phy-electrical`) is required for
+1000BASE-T, so a gigabit-only transceiver still needs:
+
+* a **link pulse transmitter**: single pulses about 100 ns wide, in bursts
+  of 17 to 33 pulses with clock pulses 125 µs ± 14 µs apart, bursts
+  repeated every 16 ms ± 8 ms (required, [PHY-UNH28]_). Each pulse is a
+  10BASE-T link pulse, so the line driver must be able to produce one;
+* a **link pulse receiver**: a comparator with a threshold, and timers that
+  check pulse spacing;
+* three **state machines** defined in IEEE 802.3 :clause:`28`: the transmit
+  state diagram (Figure 28-16), the receive state diagram (Figure 28-17) and
+  the arbitration state diagram (Figure 28-18) [PHY-UNH28]_;
+* the 1000BASE-T **next page** exchange carrying the 1000BASE-T abilities,
+  the port type and the 11-bit random seed, and the master/slave resolution
+  rules [PHY-UNH28M]_;
+* **timers** with the required ranges below.
+
+.. list-table:: Autonegotiation timers (required, [PHY-UNH28]_ [PHY-UNH14]_)
+   :header-rows: 1
+   :widths: 40 30 30
+
+   * - Timer
+     - Range
+     - What it times
+   * - Burst spacing
+     - 16 ms ± 8 ms
+     - Interval between fast link pulse bursts
+   * - Pulse spacing within a burst
+     - 62.5 µs ± 7 µs
+     - Clock pulse to data pulse
+   * - Link fail inhibit
+     - 750 ms to 1000 ms
+     - Time allowed for the chosen speed to report a working link
+   * - Break link
+     - 1200 ms to 1500 ms
+     - Silence before negotiation restarts
+   * - Autonegotiation wait
+     - 500 ms to 1000 ms
+     - Wait before accepting a speed found by parallel detection
+   * - Link loss (10BASE-T)
+     - 50 ms to 150 ms
+     - Time without link pulses before the link is declared down
+
+A counter that measures time :math:`T` with a clock of frequency
+:math:`f_\text{clk}` needs
+
+.. math::
+
+   N_\text{bits} = \left\lceil \log_2 (T \times f_\text{clk}) \right\rceil
+
+bits, where :math:`\lceil\,\rceil` means rounding up. For the longest timer,
+:math:`T = 1.5` s, with the 25 MHz reference clock:
+
+.. math::
+
+   T \times f_\text{clk} = 1.5 \times 25 \times 10^{6} = 37.5 \times 10^{6}
+
+.. math::
+
+   \log_2(37.5 \times 10^{6}) = 25.2
+
+so the longest timer needs a 26-bit counter (estimate). Autonegotiation is
+simple digital logic; its only analog parts are the link pulse driver and
+comparator. Whether the link pulses need full 10BASE-T amplitude is an open
+question (see `Open design questions`_), because it decides how much of the
+higher-swing 10BASE-T driver a gigabit-only transceiver still needs.
+
+Management registers and reference clock
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+IEEE 802.3 :clause:`22` defines a set of 16-bit registers that every
+transceiver provides, so that the same software can control any of them
+[PHY-8023]_. With an integrated transceiver the processor reads and writes
+them directly as on-chip registers; keeping the standard layout lets the
+same software drive both the external transceiver of the first version and
+the integrated one.
+
+.. list-table:: Standard transceiver registers (IEEE 802.3 :clause:`22`; the
+   same addresses are used by the TI DP83867 [PHY-DP83867]_)
+   :header-rows: 1
+   :widths: 15 85
+
+   * - Address
+     - Contents
+   * - 0
+     - Control: reset, loopback, speed selection, enable and restart
+       autonegotiation, power down
+   * - 1
+     - Status: link up, autonegotiation complete, abilities
+   * - 2, 3
+     - Identifier of the manufacturer and model
+   * - 4
+     - Autonegotiation advertisement (this end's abilities)
+   * - 5
+     - Link partner abilities (received)
+   * - 6
+     - Autonegotiation expansion (next page support, faults)
+   * - 7, 8
+     - Next page to transmit, and next page received
+   * - 9, 10
+     - 1000BASE-T control and status (master/slave configuration and result,
+       1000BASE-T abilities, test modes)
+   * - 15
+     - Extended status (1000 Mbit/s abilities)
+
+Register 9 also selects the four transmitter test modes that 1000BASE-T
+conformance testing needs [PHY-UNH40]_; the integrated transceiver must
+provide them to be tested.
+
+The symbol clock must be within ±100 parts per million of 125 MHz
+(required, [PHY-UNH40]_). Commercial transceivers use a 25 MHz crystal of
+±50 parts per million [PHY-DP83867]_ and a PLL to 125 MHz.
+
 References
 ----------
 
