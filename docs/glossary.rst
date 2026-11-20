@@ -393,3 +393,8 @@ gives a short description and a link to the full explanation.
       A timer feature that changes an output when a free-running counter
       reaches the value in a compare register, placing an edge at a set time
       in hardware (see :ref:`usbpd-helpers`).
+
+   K-code
+      In USB Power Delivery, one of six 5-bit symbols that never stand for
+      data. K-codes mark the start of a packet, a reset and the end of a
+      packet (:pd:`Table 5.2`, see :ref:`usbpd-4b5b`).
