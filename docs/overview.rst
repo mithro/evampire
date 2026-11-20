@@ -23,6 +23,11 @@ only a few bytes of storage on each path, no matter how long the frame is.
 The internal processor sees a filtered copy of the traffic and can add its own
 frames into the stream.
 
+The processor also manages power. A board built around evampire can be
+powered from an Ethernet cable and supply power over USB Type-C, or be
+powered from USB Type-C and supply power over an Ethernet cable. The
+processor negotiates the role and power level on each port.
+
 Terms used in this documentation
 --------------------------------
 
@@ -89,6 +94,32 @@ Processor
      1 Mbit/s. The processor does not need to keep up with gigabit traffic.
    * The processor also controls the configuration interface of each
      external transceiver.
+
+Power bridging
+   * A board built around evampire can take its power from an Ethernet
+     cable (Power over Ethernet) or from a USB Type-C connector (USB Power
+     Delivery), and can pass that power on through the other kind of port.
+     See :doc:`power/index`.
+   * **Ethernet in, USB out:** evampire receives power from an Ethernet
+     port as a *powered device* and supplies power on a USB Type-C port as
+     a USB Power Delivery *source*.
+   * **USB in, Ethernet out:** evampire receives power from a USB Type-C
+     port as a USB Power Delivery *sink* and supplies power on an Ethernet
+     port as Power over Ethernet *power sourcing equipment*.
+   * Power received on one Ethernet port can also be supplied on the other
+     Ethernet port.
+   * Each USB Type-C port is *dual-role*: it can attach as either a source
+     or a sink, and can swap roles while connected, without unplugging.
+   * The power levels are negotiated on every port. The processor keeps a
+     power budget: the power offered on the output ports never exceeds the
+     power granted on the input port, minus the board's own consumption and
+     conversion losses.
+   * The first version of the board has one Ethernet port that receives
+     power (port A), one Ethernet port that supplies power (port B), and one
+     USB Type-C port. The full design allows either Ethernet port to take
+     either role and has two USB Type-C ports.
+   * All Power over Ethernet types and all USB Power Delivery voltage ranges
+     are documented. The maximum power the board supports is not yet fixed.
 
 Process
    * The chip targets the gf180mcu process through wafer.space.
