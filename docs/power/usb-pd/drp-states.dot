@@ -20,15 +20,16 @@ digraph drp_states {
     asnk [label="Attached.SNK\n(Rd, VBUS in)", fillcolor="#c5e0b4", penwidth=2];
     asrc [label="Attached.SRC\n(Rp, VBUS out)", fillcolor="#f8cbad", penwidth=2];
     err  [label="ErrorRecovery\n(CC open)", fillcolor="#f2f2f2"];
+    any  [label="any state", shape=plaintext, style="", fontsize=9];
 
-    { rank=same; usrc; usnk; err; }
-    { rank=same; awsrc; awsnk; }
+    { rank=same; usrc; usnk; any; }
+    { rank=same; awsrc; awsnk; err; }
     { rank=same; trysrc; twsnk; }
     { rank=same; asrc; asnk; }
 
     // Left to right order within each row: source states on the left.
-    usrc -> usnk -> err [style=invis];
-    awsrc -> awsnk [style=invis];
+    usrc -> usnk [style=invis];
+    awsrc -> awsnk -> err [style=invis];
     trysrc -> twsnk [style=invis];
     asrc -> asnk [style=invis];
     awsrc -> trysrc [style=invis, weight=5];
@@ -36,10 +37,11 @@ digraph drp_states {
 
     usnk -> usrc [label="toggle"];
     usrc -> usnk [label="toggle"];
-    usnk -> err [style=dotted, dir=back];
+    usnk -> err [style=dotted, dir=back, label="after\ntErrorRecovery"];
+    err -> any [style=dotted, dir=back, label="when\ndirected"];
     usnk -> awsnk [label="Rp seen"];
     usrc -> awsrc [label="Rd seen"];
-    awsnk -> asnk [label="Rp stable,\nVBUS on"];
+    awsnk -> asnk [label="Rp stable, VBUS on\n(no source\npreference)"];
     awsnk -> trysrc [label="same, prefers\nsource"];
     awsrc -> asrc [label="Rd stable,\nVBUS at 0 V"];
     trysrc -> asrc [label="Rd seen"];

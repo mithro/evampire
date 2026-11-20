@@ -32,8 +32,8 @@ digraph cc_wiring {
         label="Sink (Rd)"; labeljust="l"; style="rounded,dashed"; color="#888888";
         k_cc2  [label="CC2 (B5)", style="filled", fillcolor="#ffffff"];
         k_cc1  [label="CC1 (A5)", style="filled", fillcolor="#ffffff"];
-        rd2    [label="Rd 5.1 k", fillcolor="#e2f0d9"];
-        rd1    [label="Rd 5.1 k", fillcolor="#e2f0d9"];
+        rd2    [label="Rd 5.1 kΩ", fillcolor="#e2f0d9"];
+        rd1    [label="Rd 5.1 kΩ", fillcolor="#e2f0d9"];
         k_vbus [label="VBUS input", fillcolor="#e2f0d9"];
     }
 
