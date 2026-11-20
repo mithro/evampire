@@ -35,10 +35,6 @@ usb.org:
 Section and table numbers given in brackets, such as (PD Table 5.10), refer to
 these documents.
 
-.. contents:: On this page
-   :local:
-   :depth: 2
-
 Terms
 -----
 
