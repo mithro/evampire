@@ -5,7 +5,7 @@ This page explains, from an electrical point of view, how an Ethernet
 transceiver turns the digital RGMII signals into the analog signals carried
 on an Ethernet cable, and back again. The page
 :doc:`phy-electrical/integration` then sets out what evampire needs in order
-to contain the whole transceiver itself.
+to contain the whole transceiver itself, with 1000BASE-T as the main design.
 
 The transceiver sits between the chip that handles frames and the cable. On
 one side it exchanges bytes with that chip; on the other side it drives and
@@ -27,7 +27,9 @@ The requirements for evampire are:
   one-byte-per-clock interface it uses with RGMII. The full design also
   connects to the cable without coupling transformers (see
   :doc:`magnetics`).
-* Which Ethernet speeds the integrated transceiver supports is not yet
+* Every port must work at 1000 Mbit/s (1000BASE-T), in the first version
+  and in the full design, so the integrated transceiver implements
+  1000BASE-T. Whether it also supports 100 Mbit/s and 10 Mbit/s is not yet
   fixed.
 
 .. toctree::
@@ -42,9 +44,9 @@ A typical gigabit transceiver supports three speeds, each defined by its own
 part of the IEEE 802.3 Ethernet standard:
 
 * **1000BASE-T**: 1000 Mbit/s over all four twisted pairs of the cable
-  (IEEE 802.3 Clause 40 [PHY-8023]_).
-* **100BASE-TX**: 100 Mbit/s over two of the pairs (Clauses 24 and 25).
-* **10BASE-T**: 10 Mbit/s over two of the pairs (Clause 14).
+  (IEEE 802.3 :clause:`40` [PHY-8023]_).
+* **100BASE-TX**: 100 Mbit/s over two of the pairs (:clause:`Clauses 24 <24>` and :clause:`25`).
+* **10BASE-T**: 10 Mbit/s over two of the pairs (:clause:`14`).
 
 In the names, the number is the data rate in Mbit/s, "BASE" means the
 signal is sent directly as voltage levels rather than modulated onto a
@@ -52,7 +54,7 @@ carrier, and "T" means twisted-pair cable.
 
 When a cable is plugged in, the transceivers at the two ends first exchange
 a short description of what each can do, and pick the fastest speed they
-both support. This is called *autonegotiation* (Clause 28). After that,
+both support. This is called *autonegotiation* (:clause:`28`). After that,
 the transceiver's work is to:
 
 * take bytes from the frame-handling logic, add enough structure that the far end can find
@@ -330,7 +332,7 @@ Autonegotiation
 Management registers
    A set of 16-bit registers, read and written over a two-wire serial
    interface (a clock, MDC, and a bidirectional data line, MDIO). The first
-   few registers are defined by the IEEE 802.3 standard (Clause 22) and are
+   few registers are defined by the IEEE 802.3 standard (:clause:`22`) and are
    the same in every transceiver: control, status, identification and the
    autonegotiation advertisement and result. Further registers are specific
    to each part.
@@ -355,7 +357,7 @@ where:
 * :math:`R` is the data rate in one direction, in bit/s;
 * :math:`N_\text{pairs} = 4`, the number of pairs in the cable;
 * :math:`f_\text{sym} = 125 \times 10^{6}` symbols per second, the symbol
-  rate on each pair (IEEE 802.3 Clause 40);
+  rate on each pair (IEEE 802.3 :clause:`40`);
 * :math:`b_\text{sym} = 2`, the data bits carried by one symbol.
 
 Substituting:
@@ -863,7 +865,7 @@ Before data can flow, the two transceivers must agree on speed, on whether
 both directions may transmit at once (*full duplex*, the normal case today)
 or only one at a time (*half duplex*, a mode kept for old shared-cable
 networks), and, for 1000BASE-T, on which end is master. They do this with
-autonegotiation (IEEE 802.3 Clause 28 [PHY-8023]_), using pulses of the same shape as
+autonegotiation (IEEE 802.3 :clause:`28` [PHY-8023]_), using pulses of the same shape as
 the 10BASE-T link pulses described above.
 
 Fast link pulse bursts
@@ -999,26 +1001,27 @@ depending on package and supply arrangement.
 Building the transceiver on evampire
 ------------------------------------
 
-The page :doc:`phy-electrical/integration` takes each of the three speeds
-in turn and lists what evampire must contain to replace the external
-transceiver: the analog front-end performance, the signal processing and
-its arithmetic rate, clock recovery, coding, autonegotiation and the
-management registers. It then assesses how far each speed can be built in
-the gf180mcu process.
+The page :doc:`phy-electrical/integration` specifies the integrated
+1000BASE-T transceiver block by block: the analog front-end performance,
+the signal processing and its arithmetic rate, clock recovery, coding,
+autonegotiation and the management registers. It compares approaches to
+each design problem, estimates the area and power on the gf180mcu process,
+and lists what 100BASE-TX and 10BASE-T would add.
 
 References
 ----------
 
-.. [PHY-8023] IEEE Std 802.3, *IEEE Standard for Ethernet*. Clause 14
-   (10BASE-T), Clause 22 (media independent interface and management
-   registers), Clauses 24 and 25 (100BASE-TX), Clause 28 (autonegotiation on
-   twisted pair), Clause 40 (1000BASE-T). Available at no cost through the
+.. [PHY-8023] IEEE Std 802.3, *IEEE Standard for Ethernet*. :clause:`14`
+   (10BASE-T), :clause:`22` (media independent interface and management
+   registers), :clause:`Clauses 24 <24>` and :clause:`25` (100BASE-TX),
+   :clause:`28` (autonegotiation on twisted pair), :clause:`40`
+   (1000BASE-T). See also :doc:`../standards`. Available at no cost through the
    IEEE GET program:
    https://ieeexplore.ieee.org/browse/standards/get-program/page/series?id=68
 
 .. [PHY-X3263] ANSI X3.263-1995, *Fibre Distributed Data Interface (FDDI) -
    Token Ring Twisted Pair Physical Layer Medium Dependent (TP-PMD)*. The
-   100BASE-TX electrical signalling, referenced by IEEE 802.3 Clause 25.
+   100BASE-TX electrical signalling, referenced by IEEE 802.3 :clause:`25`.
 
 .. [PHY-TUT98] C. Mick, C. DiMinico, S. Raghavan, S. Rao, M. Hatamian,
    *802.3ab (1000BASE-T) Tutorial*, IEEE 802.3 plenary, March 1998.
@@ -1041,19 +1044,19 @@ References
    resistive hybrid, five adaptive filters per receiver.
 
 .. [PHY-UNH40] University of New Hampshire InterOperability Laboratory,
-   *Clause 40 1000BASE-T PMA Test Suite*, v2.5.
+   *1000BASE-T PMA Test Suite* for :clause:`40`, v2.5.
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/CL40_PMA/PMA_Test_Suite_v2.5.pdf.
    Transmitter peak voltage, droop, distortion, jitter, common-mode output,
    return loss and clock frequency limits.
 
 .. [PHY-UNH25] University of New Hampshire InterOperability Laboratory,
-   *Clause 25 100BASE-TX PMD Test Suite*, v3.4.
+   *100BASE-TX PMD Test Suite* for :clause:`25`, v3.4.
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/CL25_PMD/PMD_Test_Suite_v3.4.pdf.
    Output voltage, symmetry, rise and fall time, overshoot, jitter and
    clock frequency limits.
 
 .. [PHY-UNH14] University of New Hampshire InterOperability Laboratory,
-   *Clause 14 10BASE-T MAU Test Suite*, v5.2.
+   *10BASE-T MAU Test Suite* for :clause:`14`, v5.2.
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/CL14_MAU/MAU_Test_Suite_v5.2.pdf.
    Output voltage, harmonic content, impedance, receiver input range, link
    pulse timing and link loss time.
@@ -1064,14 +1067,15 @@ References
    Manchester bit convention and link pulse shape.
 
 .. [PHY-UNH28] University of New Hampshire InterOperability Laboratory,
-   *Clause 28 Auto-Negotiation State Machine Base Page Exchange Test Suite*,
+   *Auto-Negotiation State Machine Base Page Exchange Test Suite* for
+   :clause:`28`,
    v6.4.
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/State_Machine_Suite/IEEE802.3_CL28_BPE_TestPlan_rev6.4.pdf.
    Fast link pulse timing, base page fields, autonegotiation timers and
    state diagrams.
 
 .. [PHY-UNH28M] University of New Hampshire InterOperability Laboratory,
-   *Clause 28 Management System Test Suite*, v3.0.
+   *Management System Test Suite* for :clause:`28`, v3.0.
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/Management_System_Suite/Management_System_Test_Suite_v3.0.pdf.
    1000BASE-T next pages, the 11-bit seed and master/slave resolution.
 
