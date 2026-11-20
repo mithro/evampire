@@ -18,6 +18,8 @@ Block diagram
 Blocks
 ------
 
+.. _arch-rgmii:
+
 RGMII interfaces A and B
    Each interface connects to one external Ethernet transceiver. It receives
    4 data bits and a control signal on both edges of the clock that the
@@ -33,6 +35,8 @@ RGMII interfaces A and B
    cable without coupling transformers. See :doc:`../ethernet/phy-electrical`
    and :doc:`../ethernet/magnetics`.
 
+.. _arch-rate-matching:
+
 Rate-matching buffers
    Received data arrives on the clock that the transceiver recovers from the
    cable, which is set by the crystal at the far end of the cable.
@@ -46,6 +50,8 @@ Rate-matching buffers
    between frames gives the buffer time to return to its centre point before
    the next frame starts.
 
+.. _arch-output-selectors:
+
 Output selectors A and B
    Each output selector chooses whether the transmitter of its port sends
    forwarded data from the other port or a frame from the processor. A
@@ -56,6 +62,8 @@ Output selectors A and B
    sent on the same port is dropped. The processor sends little traffic, so
    this is rare. Ethernet does not guarantee delivery, and higher-level
    protocols resend lost data.
+
+.. _arch-address-filter:
 
 Destination address filter and checksum check
    Watches the frames received on both external ports, taking them from the
@@ -83,6 +91,8 @@ Start pattern and checksum generator
    This block adds both to frames from the processor, so that the processor
    only writes the addresses, type field and payload.
 
+.. _arch-microcontroller:
+
 Microcontroller
    A small 32-bit `RISC-V <https://riscv.org/>`_ core with its own program
    and data memory. It
@@ -90,12 +100,16 @@ Microcontroller
    buffer, sets the address filter, and handles any higher-level network
    protocol in software. Its network traffic is well below 1 Mbit/s.
 
+.. _arch-config-interface:
+
 Transceiver configuration interface
    A two-wire serial interface (a clock and a bidirectional data line) that
    every Ethernet transceiver provides for reading its status, such as
    whether a cable is connected and at what speed, and for changing its
    settings. The interface and its standard registers are defined in
    :clause:`22`; :doc:`../ethernet/rgmii` describes how evampire uses it.
+
+.. _arch-power-negotiation:
 
 Power negotiation interface
    The analog and digital circuits the processor uses to negotiate power on
@@ -105,6 +119,8 @@ Power negotiation interface
    role of a USB Type-C port. It also controls the external power switches
    and voltage converters that move power between the ports. See
    :doc:`../power/index`.
+
+.. _arch-clock:
 
 Clock and reset
    A 125 MHz reference clock drives the transmit side of both RGMII

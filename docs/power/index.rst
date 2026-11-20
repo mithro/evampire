@@ -43,6 +43,8 @@ and receiving power need different circuits on the board, so a port that can
 take either role has both sets of circuits and selects one before a cable is
 connected (see :doc:`poe`).
 
+.. _power-modes:
+
 Operating modes
 ---------------
 
@@ -57,11 +59,15 @@ USB in, Ethernet out
 Ethernet in, Ethernet out
    One Ethernet port receives power and the other supplies it.
 
+.. _power-budget:
+
 In every mode the processor keeps a power budget. The power it offers on
 the output ports never exceeds the power granted on the input port, minus the
 power the board itself uses and the losses in the voltage converters. When
 the granted input power changes, for example after a USB role swap, the
 processor lowers the power offered on the outputs first.
+
+.. _power-board-configs:
 
 Board configurations
 --------------------
@@ -82,6 +88,8 @@ Board configurations
      - Either role
      - Either role
      - Two, each dual-role
+
+.. _power-flow:
 
 Power flow
 ----------

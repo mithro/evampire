@@ -51,6 +51,8 @@ RGMII
    signal in each direction, transferred on both edges of a 125 MHz clock at
    gigabit speed. See :doc:`ethernet/rgmii`.
 
+.. _requirements:
+
 Requirements
 ------------
 
@@ -83,10 +85,23 @@ Connection to the cable
 
 Forwarding between the external ports
    * Every frame received on port A is transmitted on port B, and every frame
-     received on port B is transmitted on port A.
+     received on port B is transmitted on port A, except frames that must not
+     be forwarded for a specific, listed reason. Such frames are delivered
+     only to the internal processor, or dropped.
+   * The listed exceptions are:
+
+     - Link layer discovery protocol (LLDP) frames, sent to the destination
+       address 01-80-C2-00-00-0E. They carry the Power over Ethernet power
+       negotiation between the two ends of one cable (:clause:`79`, see
+       :doc:`power/poe`). Forwarding them would let a device on one port
+       negotiate power with the device on the other port. They are delivered
+       only to the internal processor, which handles the power negotiation
+       for its own port.
+
+     Any further exception is added to this list together with its reason.
    * Forwarding is cut-through. The delay through the chip is a small fixed
      number of clock cycles, not a whole frame.
-   * Frames are forwarded unchanged.
+   * Forwarded frames are passed on unchanged.
    * Because no whole frame is stored on the forwarding path, the length of a
      forwarded frame is not limited by the chip's memory.
 
