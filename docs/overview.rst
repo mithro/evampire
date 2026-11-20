@@ -216,6 +216,20 @@ Power control, monitoring and limiting
    * evampire has built-in power monitoring: it measures the voltage and
      current of every power port and of the board's power bus, so that the
      software can read the power flowing through each of them at any time.
+   * A board powered only from one port must be able to start from nothing.
+     Before a Power over Ethernet power source has detected the board and
+     switched its power on, the cable carries only small test voltages and
+     currents, too little to run the processor. evampire therefore has a
+     small built-in sequencer, working without the processor, that answers
+     the detection and classification steps and requests a power level
+     large enough to start the processor. Once powered, the software
+     carries out any further negotiation, for example asking for more power.
+     How much of this the sequencer must do depends on how much power the
+     board needs to start compared with how much the cable can give at
+     each step; :doc:`power/poe` works this out. A board powered from USB
+     Type-C starts in the same way from the basic 5 V that a USB charger
+     supplies before any USB Power Delivery negotiation (see
+     :doc:`power/usb-pd`).
    * evampire has built-in power limiting: each port has a current and power
      limit that the software sets. Built-in hardware enforces these limits
      and switches a port off when a fault happens faster than software can
