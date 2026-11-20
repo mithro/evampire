@@ -104,6 +104,17 @@ gives a short description and a link to the full explanation.
       does no harm (see :wikipedia:`Galvanic isolation
       <Galvanic_isolation>` and :doc:`ethernet/magnetics/functions`).
 
+   GMII
+   Gigabit media independent interface
+      The interface between a media access controller and a gigabit Ethernet
+      transceiver: 8 data bits in each direction on the rising edge of a
+      125 MHz clock (:clause:`35`, see :doc:`ethernet/rgmii/signals`).
+
+   In-band status
+      The link status, speed and duplex that an Ethernet transceiver can put
+      on the RGMII receive data signals between frames (see
+      :doc:`ethernet/rgmii/data`).
+
    LLDP
    Link Layer Discovery Protocol
       The protocol that two directly connected Ethernet devices use to tell
@@ -148,6 +159,13 @@ gives a short description and a link to the full explanation.
       (:clause:`4`). In evampire the forwarding logic and the processor
       share this role.
 
+   MII
+   Media independent interface
+      The interface between a media access controller and a 10 Mbit/s or
+      100 Mbit/s Ethernet transceiver: 4 data bits in each direction on the
+      rising edge of a 2.5 MHz or 25 MHz clock (:clause:`22`, see
+      :doc:`ethernet/rgmii/signals`).
+
    Power budget
       The power that the processor may offer on the output ports: the power
       granted on the input port, minus the board's own consumption and the
@@ -169,6 +187,11 @@ gives a short description and a link to the full explanation.
       The end of an Ethernet cable that receives Power over Ethernet power.
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
+
+   Preamble
+      The 7 bytes of alternating ones and zeros at the start of every
+      Ethernet frame on the wire, which let the receiver lock on to the
+      signal (:clause:`3.2.1`, see :doc:`ethernet/rgmii/frames`).
 
    Return loss
       How much weaker the signal reflected from a port is than the signal
@@ -197,10 +220,10 @@ gives a short description and a link to the full explanation.
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
 
-   Start pattern
-      The fixed 8 bytes at the start of every Ethernet frame on the wire: a
-      7-byte preamble and a 1-byte start frame delimiter. They let the
-      receiver lock on to the frame (:clause:`3`).
+   Start frame delimiter
+   SFD
+      The byte 0xD5 that follows the preamble and marks the start of an
+      Ethernet frame (:clause:`3.2.2`, see :doc:`ethernet/rgmii/frames`).
 
    Twisted pair
       Two wires twisted around each other and carrying equal and opposite
