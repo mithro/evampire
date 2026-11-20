@@ -18,10 +18,10 @@ Every port runs gigabit Ethernet through an Ethernet transceiver
   is an external chip or is integrated on evampire, depending on the board
   configuration (:numref:`tab-power-board-configs`).
 * An external transceiver connects to evampire over an :term:`RGMII`
-  interface. See :doc:`ethernet/rgmii`.
+  interface. See :doc:`ethernet/rgmii/index`.
 * An integrated transceiver includes the line driver and receiver, and the
   analogue-to-digital and digital-to-analogue converters. See
-  :doc:`ethernet/phy-electrical`.
+  :doc:`ethernet/phy-electrical/index`.
 * An integrated transceiver also includes the signal processing that removes
   :wikipedia:`echo <Echo_suppression_and_cancellation>`,
   :wikipedia:`crosstalk <Crosstalk>` and cable loss, together with
@@ -46,8 +46,8 @@ Each port connects to its RJ45 socket with or without transformers
 * Without coupling transformers, the board still does the transformers'
   jobs: electrical isolation, rejecting the voltage that is common to both
   wires of a pair, and giving a path for Power over Ethernet current (see
-  :doc:`power/poe`). How the isolation is made is an open question
-  (:ref:`requirements-open-questions`). See :doc:`ethernet/magnetics`.
+  :doc:`power/poe/index`). How the isolation is made is an open question
+  (:ref:`requirements-open-questions`). See :doc:`ethernet/magnetics/index`.
 
 .. _req-forwarding:
 
@@ -60,7 +60,7 @@ Ports A and B forward every frame to each other, except LLDP frames
 * :term:`LLDP` frames (:std:`IEEE 802.1AB <802.1AB>`), sent to the
   destination address ``01-80-C2-00-00-0E``, are not forwarded. They carry
   the Power over Ethernet power negotiation between the two ends of one
-  cable (:clause:`79`, see :doc:`power/poe`). Forwarding them would let a
+  cable (:clause:`79`, see :doc:`power/poe/index`). Forwarding them would let a
   device on one port negotiate power with the device on the other port.
   They are delivered only to the internal processor, which handles the power
   negotiation for its own port.
@@ -68,7 +68,7 @@ Ports A and B forward every frame to each other, except LLDP frames
   through the chip is a small fixed number of clock cycles, not a whole
   frame.
 * Cut-through forwarding needs both ports to run at the same link speed.
-  :doc:`ethernet/rgmii` explains why.
+  :doc:`ethernet/rgmii/index` explains why.
 * Forwarded frames are passed on unchanged.
 * No whole frame is stored on the forwarding path. The longest frame that
   can be forwarded is set by the slack in the rate-matching buffer, as
@@ -163,7 +163,7 @@ A small RISC-V processor handles low-rate traffic and control
   particular core, clock or core supply voltage.
 * The processor controls the configuration interface of each external
   transceiver, the :term:`MDIO` interface (:clause:`22`, see
-  :doc:`ethernet/rgmii`).
+  :doc:`ethernet/rgmii/index`).
 
 .. _req-power-bridging:
 
@@ -171,9 +171,9 @@ Power moves between Ethernet and USB Type-C in either direction
 ---------------------------------------------------------------
 
 A board built around evampire takes its power from an Ethernet cable
-(:term:`Power over Ethernet`, see :doc:`power/poe`) or from a
+(:term:`Power over Ethernet`, see :doc:`power/poe/index`) or from a
 :term:`USB Type-C` connector (:term:`USB Power Delivery`, see
-:doc:`power/usb-pd`). It passes that power on through the other kind of
+:doc:`power/usb-pd/index`). It passes that power on through the other kind of
 port. The section on :ref:`power roles <power-roles>` explains the names of
 the two ends of a powered cable, and :numref:`tab-power-board-configs` gives the role of each port in
 each board configuration.
@@ -212,7 +212,7 @@ The requirements on power bridging are:
   :ref:`sharing the budget <power-sharing>`.
 * USB Power Delivery is implemented mostly in software on the RISC-V
   processor. The dedicated hardware is the analogue circuits that connect to
-  the :term:`configuration channel` wires (see :doc:`power/usb-pd`), and only
+  the :term:`configuration channel` wires (see :doc:`power/usb-pd/index`), and only
   those digital helpers whose timing cannot be met in software.
 
 The software builds the offer on each output port from the power on the
@@ -330,8 +330,8 @@ Open questions
 * The maximum power that the board supports.
 * How much power evampire and the rest of the board need, both to start and
   in normal operation, and so how much the start-up sequencer must do.
-  :doc:`power/poe` gives the power available during Power over Ethernet
-  detection and classification and at each class. :doc:`power/usb-pd` gives
+  :doc:`power/poe/index` gives the power available during Power over Ethernet
+  detection and classification and at each class. :doc:`power/usb-pd/index` gives
   the power available from a USB Type-C charger at each basic current level
   before any USB Power Delivery negotiation.
 * Whether the three converter functions are three separate converters, one

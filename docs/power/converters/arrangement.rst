@@ -12,8 +12,8 @@ The three conversions
 
 The board's maximum power is not fixed (:ref:`requirements`), so the
 tables cover every Power over Ethernet type and every USB Power Delivery
-range. All values come from the standards as summarised on :doc:`../poe`
-and :doc:`../usb-pd`, and the currents are the power divided by the lowest
+range. All values come from the standards as summarised on :doc:`../poe/index`
+and :doc:`../usb-pd/index`, and the currents are the power divided by the lowest
 voltage at which that power is allowed.
 
 Input converter: Power over Ethernet in
@@ -53,7 +53,7 @@ Input converter: Power over Ethernet in
      - 1.731
 
 Power and voltages: :clause:`33` and :clause:`145`, as tabulated on
-:doc:`../poe`. The current is the power divided by the lowest voltage.
+:doc:`../poe/index`. The current is the power divided by the lowest voltage.
 
 High-voltage converter: Power over Ethernet out
    Produces the power sourcing equipment voltage from the bus. The
@@ -92,7 +92,7 @@ High-voltage converter: Power over Ethernet out
      - 1.731
 
 Voltages: [CONV-EA-BT]_ (Table 15); power: :clause:`145` as tabulated on
-:doc:`../poe`.
+:doc:`../poe/index`.
 
 USB converter: USB Power Delivery out, and in
    As a source it produces the negotiated VBUS voltage (VBUS is the USB
@@ -136,7 +136,7 @@ supply moves in 20 mV steps and the adjustable supplies in 100 mV steps;
 5 A needs a cable rated for it, and the standard range offers it only at 20 V.
 
 Source: :pd:`Table 3.1`, :pd:`Table 4.2`, :pd:`Table 4.7` and
-:pd:`Section 3.2.5.3`, as described on :doc:`../usb-pd`. A fixed supply may
+:pd:`Section 3.2.5.3`, as described on :doc:`../usb-pd/index`. A fixed supply may
 be 5 % above its nominal voltage and VBUS may rise another 0.5 V during
 changes, giving 21.5 V and 50.9 V.
 
@@ -555,4 +555,4 @@ Open questions
 * Fixed-frequency PWM or variable-frequency control at light load, and the
   effect of each on the Ethernet signals, measured on a board.
 * Whether the powered device input converter is isolated
-  (:doc:`buck-boost`, :doc:`../poe`).
+  (:doc:`buck-boost`, :doc:`../poe/index`).

@@ -88,7 +88,7 @@ during the on time [CONV-SLVA372]_ (Equation 2):
 
 As a worked example, take a high-voltage converter that raises a 20 V USB
 Power Delivery input to 54 V for a Type 2 power sourcing equipment port,
-which supplies at most 30 W (:clause:`33`, see :doc:`../poe`). The 54 V
+which supplies at most 30 W (:clause:`33`, see :doc:`../poe/index`). The 54 V
 output, 250 kHz and 100 µH are illustrative values. Then
 
 .. math::
@@ -112,7 +112,7 @@ Large step-up ratios need long on times
 ---------------------------------------
 
 The USB Power Delivery source on the other end of the cable decides which
-input voltages are available (:doc:`../usb-pd`).
+input voltages are available (:doc:`../usb-pd/index`).
 :numref:`tab-conv-boost-duty` shows the duty cycle needed to reach 54 V from
 each fixed USB Power Delivery voltage.
 

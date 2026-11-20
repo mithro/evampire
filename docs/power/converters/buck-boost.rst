@@ -231,7 +231,7 @@ spike caused by the transformer's leakage inductance. For an illustrative
 
 Many powered devices use a flyback converter because the Power over
 Ethernet standard asks for the cable to be isolated from the rest of the
-equipment. :doc:`../poe` describes the isolation requirement and when a
+equipment. :doc:`../poe/index` describes the isolation requirement and when a
 non-isolated converter is allowed. For reference, the TPS23753A combines a
 powered device interface with a controller "optimized for isolated
 converters" and gives a flyback converter as its typical application
@@ -243,7 +243,7 @@ Isolated and non-isolated input converters both remain options for
 evampire. Three routes to the isolation are explored: external parts (a
 transformer and an isolated feedback path), a second die on the cable side
 (a custom gf180mcu die or a commercial part), and a barrier on the evampire
-die itself. :doc:`../poe` discusses the requirement behind them, including
+die itself. :doc:`../poe/index` discusses the requirement behind them, including
 its effect on the power sourcing equipment port, whose output also goes onto
 an Ethernet cable.
 

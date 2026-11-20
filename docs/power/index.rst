@@ -11,10 +11,10 @@ power budget and the board configurations.
 
 The pages in this section explain each part of the power path:
 
-:doc:`poe`
+:doc:`poe/index`
    The circuits that take part in Power over Ethernet detection and
    classification.
-:doc:`usb-pd`
+:doc:`usb-pd/index`
    The circuits that let the processor carry out the USB Power Delivery
    negotiation in software on the configuration channel.
 :doc:`converters/index`
@@ -52,12 +52,12 @@ Each standard has its own names for the two ends of a cable, listed in
 A USB Type-C port that can act as either a source or a sink is called a
 :term:`dual-role port`. When two dual-role ports are connected, the roles are
 decided when the cable is plugged in. The two ends can later exchange
-messages to swap roles without unplugging the cable (see :doc:`usb-pd`).
+messages to swap roles without unplugging the cable (see :doc:`usb-pd/index`).
 
 A Power over Ethernet port has a fixed role while it is connected. Supplying
 and receiving power need different circuits on the board, so a port that can
 take either role has both sets of circuits and selects one before a cable is
-connected (see :doc:`poe`).
+connected (see :doc:`poe/index`).
 
 .. _power-modes:
 
@@ -111,13 +111,13 @@ It then builds the offer for each output port:
 Ethernet in, USB out
    The USB Type-C port offers the set of voltage and current combinations
    whose power does not exceed :math:`P_\text{out}` and which the USB Power
-   Delivery rules allow for a source of that power. :doc:`usb-pd` explains
+   Delivery rules allow for a source of that power. :doc:`usb-pd/index` explains
    these rules and gives worked examples for each Power over Ethernet class.
 
 USB in, Ethernet out
    The Ethernet port that supplies power advertises the highest Power over
    Ethernet type and class whose power at the power sourcing equipment does
-   not exceed :math:`P_\text{out}`. :doc:`poe` explains how the class is
+   not exceed :math:`P_\text{out}`. :doc:`poe/index` explains how the class is
    advertised and gives worked examples for each USB Power Delivery offer.
 
 Ethernet in, Ethernet out
@@ -159,8 +159,8 @@ classify the device again.
 The software uses these changes to move power between ports. When a device
 on one port is unplugged or uses less than its share, the software raises
 the offer on another port. When a new device is plugged in, the software
-first lowers the offers on the other ports to make room. :doc:`usb-pd` and
-:doc:`poe` describe how the budget is divided, and how a port's offer is
+first lowers the offers on the other ports to make room. :doc:`usb-pd/index` and
+:doc:`poe/index` describe how the budget is divided, and how a port's offer is
 reduced safely while a device is using it.
 
 .. _power-board-configs:
@@ -237,7 +237,7 @@ Powered device front end
    connected. It limits the current while the input capacitors charge.
 Input voltage converter
    Brings the 37 V to 57 V from the cable down to the bus voltage
-   (:clause:`33`, :clause:`145`; see :doc:`poe`).
+   (:clause:`33`, :clause:`145`; see :doc:`poe/index`).
 USB power path
    Connects the USB Type-C port to the bus. As a sink it is a switch that
    connects the negotiated USB supply voltage to the bus. As a source it is
@@ -245,7 +245,7 @@ USB power path
    :wikipedia:`buck-boost converter <Buck%E2%80%93boost_converter>`, that
    produces the negotiated USB supply voltage from the bus. That voltage is
    5 V to 20 V, or up to 48 V in the extended power range
-   (:pd:`PD Sections 3.2.4 and 3.2.5.3 <3.2.4>`, see :doc:`usb-pd`).
+   (:pd:`PD Sections 3.2.4 and 3.2.5.3 <3.2.4>`, see :doc:`usb-pd/index`).
 High-voltage converter
    A :wikipedia:`boost converter <Boost_converter>` that raises the bus
    voltage to the 44 V to 57 V needed on an Ethernet cable (:clause:`145`).
@@ -254,7 +254,7 @@ High-voltage converter
 Power sourcing equipment switch
    Checks for a valid powered device on port B and measures its
    :term:`class`, the power level the device asks for. It then connects the
-   voltage with a current limit (see :doc:`poe`).
+   voltage with a current limit (see :doc:`poe/index`).
 
 evampire carries out the negotiation in every case. It reads the power
 granted on port A, drives and senses the USB :term:`configuration channel`,
@@ -285,7 +285,7 @@ Custom structures, such as transistors stacked in isolated wells,
 drain-extended transistors and high-voltage capacitors, extend the voltages
 that circuits on the chip can handle (see :ref:`the process requirements <req-process>`). Which
 functions are built on evampire and which use external parts is chosen per
-function. The pages on :doc:`poe`, :doc:`usb-pd` and :doc:`converters/index`
+function. The pages on :doc:`poe/index`, :doc:`usb-pd/index` and :doc:`converters/index`
 analyse the choice for each standard.
 
 .. [#gf180-supply] `gf180mcu design manual, section 14.1, "Power supply
@@ -304,6 +304,6 @@ analyse the choice for each standard.
    :maxdepth: 2
    :hidden:
 
-   poe
-   usb-pd
+   poe/index
+   usb-pd/index
    converters/index

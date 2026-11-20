@@ -178,7 +178,7 @@ for example, has a soft-start period of 400 µs to 800 µs
 [CONV-TPS23753A]_ (Section 7.5), and the LM5177 sets it with a capacitor
 [CONV-LM5177]_ (Section 8.2.2.9). Soft start also limits the current
 drawn from the input during start-up, which matters on a Power over
-Ethernet input with its inrush limit (:doc:`../poe`).
+Ethernet input with its inrush limit (:doc:`../poe/index`).
 
 .. _conv-protection:
 

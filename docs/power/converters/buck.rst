@@ -136,7 +136,7 @@ As a worked example, take an input converter that brings a 48 V Power over
 Ethernet input down to a 12 V bus. The 12 V bus is an illustration; the bus
 voltage is an open choice (:doc:`arrangement`). Then
 :math:`D = 12 / 48 = 0.25`: S1 is on for a quarter of each period. Over
-the whole powered device input range of 37 V to 57 V (:doc:`../poe`), the
+the whole powered device input range of 37 V to 57 V (:doc:`../poe/index`), the
 duty cycle runs from :math:`12 / 37 = 0.32` down to :math:`12 / 57 = 0.21`.
 The controller changes the duty cycle to hold the output at 12 V as the
 input changes.
@@ -156,7 +156,7 @@ and falls by the same amount while S2 is on. The symbols are in
 
 The worked example uses a 250 kHz switching frequency, a 47 µH inductor and a
 25.5 W load, which is the most a Type 2 powered device may draw
-(:clause:`33`, see :doc:`../poe`). These are illustrative values. The load
+(:clause:`33`, see :doc:`../poe/index`). These are illustrative values. The load
 current is :math:`I_\text{out} = 25.5 / 12 = 2.125` A and
 
 .. math::

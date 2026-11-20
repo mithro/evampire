@@ -49,13 +49,13 @@ RGMII interfaces A and B
    clock cycle plus "frame in progress" and "error" flags. In the other
    direction it converts bytes back into 4-bit, both-edge signals and sends
    them with a transmit clock generated inside evampire. See
-   :doc:`../ethernet/rgmii`.
+   :doc:`../ethernet/rgmii/index`.
 
    With an integrated Ethernet transceiver (see
    :numref:`tab-power-board-configs`), the transceiver takes the place of
    each RGMII interface and its external transceiver. It presents the same
    one-byte-per-clock interface to the :term:`forwarding logic`. See
-   :doc:`../ethernet/phy-electrical` and :doc:`../ethernet/magnetics`.
+   :doc:`../ethernet/phy-electrical/index` and :doc:`../ethernet/magnetics/index`.
 
 .. _arch-rate-matching:
 
@@ -66,7 +66,7 @@ Rate-matching buffers
    have the same nominal frequency but are not identical. Gigabit Ethernet
    allows each end to be up to 100
    :wikipedia:`parts per million <Parts-per_notation>` away from 125 MHz
-   (:clause:`40`, see :doc:`../ethernet/phy-electrical`), so the two
+   (:clause:`40`, see :doc:`../ethernet/phy-electrical/index`), so the two
    can differ by up to 200 parts per million.
 
    A small :wikipedia:`first-in, first-out (FIFO) buffer
@@ -135,7 +135,7 @@ Start pattern and checksum generator
    Every Ethernet frame on the wire starts with a fixed 8-byte
    :term:`start pattern` that lets the receiver lock on to the frame, and
    ends with a 4-byte checksum (:clause:`3`; see also the frame structure on
-   :doc:`../ethernet/rgmii`). This block adds both to frames from the
+   :doc:`../ethernet/rgmii/index`). This block adds both to frames from the
    processor, so that the processor only writes the addresses, type field
    and payload.
 
@@ -155,7 +155,7 @@ Transceiver configuration interface
    and a bidirectional data line. Every Ethernet transceiver provides it for
    reading its status, such as whether a cable is connected and at what
    speed, and for changing its settings. The interface and its standard
-   registers are defined in :clause:`22`. :doc:`../ethernet/rgmii` describes
+   registers are defined in :clause:`22`. :doc:`../ethernet/rgmii/index` describes
    how evampire uses it.
 
 .. _arch-power-negotiation:
@@ -185,7 +185,7 @@ Clock and reset
    A 125 MHz reference clock drives the transmit side of both RGMII
    interfaces, the forwarding logic and the address filter. Where this clock
    comes from, a separate oscillator or a clock output of an external
-   transceiver, is discussed on :doc:`../ethernet/rgmii`. The processor's
+   transceiver, is discussed on :doc:`../ethernet/rgmii/index`. The processor's
    clock is an open question (see :ref:`requirements-open-questions`).
 
 Each data path passes through a fixed sequence of blocks

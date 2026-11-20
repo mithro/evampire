@@ -97,7 +97,7 @@ and in a buck converter the output moves in steps of
 :math:`\Delta V_\text{out} = V_\text{in} \, \Delta D` (symbols in
 :numref:`tab-conv-sym-pwm`). The finest voltage step a USB Power Delivery
 source must make is the 20 mV step of the programmable supply (*vPpsStep*,
-:pd:`Table 4.7`; see :doc:`../usb-pd`). At the highest input of 57 V that
+:pd:`Table 4.7`; see :doc:`../usb-pd/index`). At the highest input of 57 V that
 needs :math:`\Delta D = 0.020 / 57 = 3.51 \times 10^{-4}`, which is
 11.5 bits, and therefore
 
@@ -223,7 +223,7 @@ switching frequency.
    * - Power monitoring and budget
      - 1 or less
      - ms
-     - Power negotiation times on :doc:`../poe` and :doc:`../usb-pd`
+     - Power negotiation times on :doc:`../poe/index` and :doc:`../usb-pd/index`
 
 "Ten updates per crossover period" is a common starting point for sampled
 control, not a fixed rule. The work per update depends on the control
@@ -396,7 +396,7 @@ example allows 0.82 µs.
 The USB Power Delivery specification gives no response time for the source's
 over-current protection; it requires that the protection does not trip
 within the negotiated contract (:pd:`Section 4.1.5.1`, see
-:doc:`../usb-pd`). The converter's own cycle-by-cycle limit protects the
+:doc:`../usb-pd/index`). The converter's own cycle-by-cycle limit protects the
 converter, and software carries out the shutdown sequence. A boost
 converter needs a series switch to stop a short on its output
 (:doc:`boost`).
@@ -419,7 +419,7 @@ Power over Ethernet start
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The steps before power is applied (detection, classification and the
-inrush period) are described on :doc:`../poe`; a built-in sequencer
+inrush period) are described on :doc:`../poe/index`; a built-in sequencer
 answers them. After them the powered device has the power of its class.
 :numref:`tab-conv-class-power` lists the power at the powered device per
 class.
@@ -457,7 +457,7 @@ class.
      - 71.3
      - 4
 
-Source: :clause:`145` as tabulated on :doc:`../poe`.
+Source: :clause:`145` as tabulated on :doc:`../poe/index`.
 
 The power left for the board while it starts is
 
@@ -551,7 +551,7 @@ USB start
 
 A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any USB Power
 Delivery negotiation, at the current its pull-up resistor advertises
-(:typec:`Table 4-27`, see :doc:`../usb-pd`).
+(:typec:`Table 4-27`, see :doc:`../usb-pd/index`).
 :numref:`tab-conv-usb-start-power` gives the power at the lowest voltage.
 
 .. list-table:: Power available from a USB source before negotiation, at 4.75 V

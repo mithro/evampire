@@ -55,8 +55,8 @@ supply current is neglected, so the result is the best case.
 
 :numref:`tab-conv-linear` works this out for the "Ethernet in, USB out"
 mode (:ref:`power-modes`). The input is the powered device input range,
-37 V to 57 V (:doc:`../poe`), and the outputs are the 5 V and 20 V fixed
-USB Power Delivery voltages at 3 A (:doc:`../usb-pd`). For example, at
+37 V to 57 V (:doc:`../poe/index`), and the outputs are the 5 V and 20 V fixed
+USB Power Delivery voltages at 3 A (:doc:`../usb-pd/index`). For example, at
 57 V in and 20 V out, :math:`P_\text{loss} = (57 - 20) \times 3 = 111` W and
 :math:`\eta_\text{lin} = 20 / 57 = 35.1` %.
 
@@ -97,7 +97,7 @@ USB Power Delivery voltages at 3 A (:doc:`../usb-pd`). For example, at
      - 35.1
 
 Every input power in :numref:`tab-conv-linear` is above 71.3 W, the most a
-Type 4 powered device may draw (:clause:`145`, see :doc:`../poe`). A linear
+Type 4 powered device may draw (:clause:`145`, see :doc:`../poe/index`). A linear
 regulator therefore cannot deliver 3 A on these USB outputs from any
 Power over Ethernet type. In the other direction, "USB in, Ethernet out",
 the output (44 V to 57 V) is above most USB input voltages, which a linear
