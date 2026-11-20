@@ -52,7 +52,7 @@ A serial channel over the configuration channel
 -----------------------------------------------
 
 USB Power Delivery carries messages on the CC wire, which evampire's
-software already drives and samples (:doc:`/power/usb-pd`). Its
+software already drives and samples (:doc:`/power/usb-pd/index`). Its
 *vendor-defined messages* can carry a vendor's own data: up to six 32-bit
 data objects, 24 bytes, after a header that names the vendor
 (:pd:`Section 6.4.12`). Data would therefore move without the D+ and D−
