@@ -19,14 +19,14 @@ digraph negotiation {
     k1; k2; k3; k4; k5; k6; k7; k8; k9; k10; k11;
 
     node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
-    n1  [label="Source debounces Rd\n(100-200 ms), VBUS on\nwithin 275 ms"];
-    n2  [label="Sink debounces Rp\n(100-200 ms)"];
-    n3  [label="Within 250 ms of 5 V;\nrepeated every 100-200 ms"];
+    n1  [label="Source debounces Rd\n(100 to 200 ms), VBUS on\nwithin 275 ms"];
+    n2  [label="Sink debounces Rp\n(100 to 200 ms)"];
+    n3  [label="Within 250 ms of 5 V;\nrepeated every\n100 to 200 ms"];
     n4  [label="Within 195 µs"];
     n5  [label="Within 15 ms"];
     n6  [label="Within 195 µs"];
     n7  [label="Within 15 ms"];
-    n8  [label="Within 195 µs; sink\nnow draws at most 500 mA"];
+    n8  [label="Within 195 µs; sink then\ncuts its current to 500 mA"];
     n9  [label="After at least 25 ms;\nPS_RDY within 325 ms"];
     n10 [label="Within 195 µs"];
     n11 [label="Contract in place"];

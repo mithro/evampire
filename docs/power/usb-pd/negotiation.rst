@@ -1,113 +1,192 @@
-Negotiation and time limits
-===========================
+.. _usbpd-negotiation:
 
-The message exchange that sets up a power contract, and its time limits.
+Negotiating a power contract
+============================
 
-Negotiation and time limits
----------------------------
+The message exchange that sets up a power :term:`contract` between a
+:term:`source` and a :term:`sink`, the acknowledgement of each message, and
+the time limits on both ends.
 
-:numref:`fig-usbpd-negotiation` shows a complete negotiation, and
-:numref:`tab-usbpd-timing` lists the time limits that apply to both roles.
+A contract takes four messages, each acknowledged
+-------------------------------------------------
 
-.. _fig-usbpd-negotiation:
+:numref:`fig-usbpd-negotiation` shows a complete negotiation. After attach,
+the source turns :term:`VBUS` on at 5 V and the two ends exchange four
+messages:
+
+#. Source_Capabilities: the source lists what it can supply, as
+   :term:`power data objects <PDO>` (:ref:`usbpd-pdo`).
+#. Request: the sink picks one item and states the current it will draw
+   (:ref:`usbpd-rdo`).
+#. Accept: the source agrees. It can also answer Reject, or Wait if it can
+   meet the request later (:pd:`Section 7.9.2`).
+#. PS_RDY: the source has changed VBUS to the new voltage, and the contract
+   is in place.
+
+The receiver of each message answers it with a :term:`GoodCRC` message
+(:ref:`usbpd-goodcrc`). Either end can be a board built around evampire.
 
 .. graphviz:: negotiation.dot
-   :caption: A source and a sink negotiating a fixed 9 V supply. Each
-             message that has a correct CRC is answered with GoodCRC. Either
-             end can be a board built around evampire.
+   :name: fig-usbpd-negotiation
+   :caption: A source and a sink negotiating a fixed 9 V supply, with the
+             time limit on each step.
+   :alt: Message sequence chart with a source on the left and a sink on the
+         right, time running downwards. The sink presents Rd; the source
+         turns VBUS on at 5 V; then Source_Capabilities, GoodCRC, Request
+         for 9 V at 2 A, GoodCRC, Accept, GoodCRC, PS_RDY with VBUS at 9 V,
+         and GoodCRC. Each GoodCRC is sent within 195 µs; each answer within
+         15 ms; PS_RDY at least 25 ms and at most 325 ms after Accept.
    :align: center
 
-.. list-table:: Timing values for both roles (:pd:`Table 7.10` unless
-   another source is given)
-   :name: tab-usbpd-timing
-   :header-rows: 1
-   :widths: 24 20 56
+The voltages and currents a source can offer are on
+:doc:`power-levels`, and what each end does around these messages is on
+:doc:`source-sink`.
 
-   * - Name
-     - Value
-     - Meaning
-   * - tTransmit
-     - at most 195 µs
-     - From the end of a received message's EOP to the start of the
-       GoodCRC preamble (:pd:`Section 7.31.1`, :pd:`Table 7.10 <x>`).
-   * - tInterFrameGap
-     - at least 25 µs
-     - Minimum gap before any transmission (:pd:`Table 5.10`).
-   * - tReceive
-     - 0.9 ms to 1.1 ms
-     - How long a sender waits for GoodCRC (:pd:`Section 7.31.1`).
-   * - tRetry, nRetryCount
-     - at most 195 µs; 2
-     - A message without GoodCRC is repeated within tRetry, at most twice
-       (:pd:`Section 7.31.1`, :pd:`Table 7.12 <x>`).
-   * - tReceiverResponse
-     - at most 15 ms
-     - From the GoodCRC of a message that needs an answer to the start of
-       the answer (:pd:`Section 7.31.2`).
-   * - tSenderResponse
-     - 27 ms to 50 ms
-     - How long the asking side waits for the answer (:pd:`Table 7.10`).
-   * - tFirstSourceCap
-     - at most 250 ms
-     - Source: from VBUS reaching 5 V to the first Source_Capabilities
-       (:pd:`Section 7.31.3.3`).
-   * - tTypeCSendSourceCap
-     - 100 ms to 200 ms
-     - Source: interval for repeating Source_Capabilities until it is
-       acknowledged, for *nCapsCount* (50) attempts (:pd:`Section 7.31.3.1`;
-       :pd:`Table 7.12 <x>`).
-   * - tTypeCSinkWaitCap
-     - 310 ms to 620 ms
-     - Sink: may send Hard Reset if no Source_Capabilities arrives
-       (:pd:`Section 7.31.3.2`).
-   * - tSrcTransition
-     - at least 25 ms
-     - Source: wait after Accept before changing the voltage
-       (:pd:`Table 4.7`).
-   * - tSrcTransReq
-     - at most 325 ms (SPR)
-     - Source: from the GoodCRC of Accept to the start of PS_RDY
-       (:pd:`Table 4.7`).
-   * - tPSTransition
-     - 450 ms to 550 ms (SPR)
-     - Sink: how long it waits for PS_RDY before Hard Reset
-       (:pd:`PD Sections 7.31.5.1 <x>` and :pd:`9.2.4.8 <x>`).
-   * - tSinkTx
-     - 16 ms to 20 ms
-     - Source: wait after changing Rp to "sink may not transmit" before
-       starting its own exchange (:pd:`Section 7.31.13.1`).
-   * - tSnkStdby
-     - at most 15 ms
-     - Sink: time to cut its current to iSnkStdby (500 mA) before a voltage
-       change (:pd:`Table 4.8`).
+.. _usbpd-goodcrc:
 
-**Acknowledgement.** Every correctly received message addressed to the port
-must be answered with GoodCRC so that its first preamble bit starts between
-25 µs and 195 µs after the last bit of the received EOP
-(:numref:`fig-usbpd-goodcrc`; *tInterFrameGap*, :pd:`Section 5.3.4.9`;
-*tTransmit*, :pd:`Section 7.31.1 <x>`). If the CRC is wrong, the message is
-discarded silently.
+Every message is acknowledged within 195 µs
+-------------------------------------------
+
+Every correctly received message addressed to the port is answered with
+GoodCRC. The first preamble bit of the GoodCRC must start at least 25 µs
+and at most 195 µs after the last bit of the received message
+(:numref:`fig-usbpd-goodcrc`). The 25 µs is the minimum gap before any
+transmission (*tInterFrameGap*, :pd:`Section 5.3.4.9`, :pd:`Table 5.10`).
+The 195 µs is *tTransmit* (:pd:`Section 7.31.1`, :pd:`Table 7.10`). A
+message with a wrong checksum is discarded without an answer. The GoodCRC
+carries the MessageID of the message it acknowledges
+(:pd:`Section 6.1.2`).
 
 .. wavedrom::
-   :caption: Acknowledgement timing (not to scale). The GoodCRC preamble
-             starts at least 25 µs (tInterFrameGap) and at most 195 µs
-             (tTransmit) after the end of the received message.
+   :caption: Acknowledgement timing, not to scale.
    :name: fig-usbpd-goodcrc
    :alt: Timing diagram: a message from the sender, a gap, then a GoodCRC
-         from the receiver; one row marks the minimum gap and another the
-         latest start of the GoodCRC.
+         from the receiver. One row marks the minimum gap of 25 µs and
+         another the latest start of the GoodCRC, 195 µs after the end of
+         the message.
 
    {"signal": [
      {"name": "sender", "wave": "z=....z.......", "data": ["message"]},
      {"name": "receiver", "wave": "z.....z..=...z", "data": ["GoodCRC"]},
-     {"name": "minimum gap", "wave": "x.....=..x....", "data": ["25 µs"]},
-     {"name": "deadline", "wave": "x.....=.....x.", "data": ["195 µs"]}
+     {"name": "minimum gap", "wave": "x.....=..x....", "data": ["25 µs"]},
+     {"name": "deadline", "wave": "x.....=.....x.", "data": ["195 µs"]}
    ],
    "config": {"hscale": 1}}
 
-**Retries.** A sender that has not received GoodCRC within tReceive sends the
-same message again within tRetry, up to twice, so each message is sent at
-most three times (:pd:`Section 7.31.1`). After that it sends Soft_Reset
-(:pd:`Section 7.31.8.1`), and a failing Soft_Reset leads to Hard Reset
-(:pd:`Section 7.1.1`). A missed GoodCRC is therefore recovered
-automatically as long as it does not happen three times in a row.
+The 195 µs deadline is the tightest time limit in USB Power Delivery. The
+other pages link here for it. What it means for software on the processor is
+on :ref:`usbpd-goodcrc-deadline`.
+
+A lost acknowledgement is retried twice, then the protocol is reset
+-------------------------------------------------------------------
+
+The sender waits *tReceive* (0.9 ms to 1.1 ms) for the GoodCRC. If none
+arrives, it sends the same message again, with the same MessageID, starting
+within *tRetry* (195 µs) of the timeout (:pd:`Section 7.31.1`). It retries
+at most *nRetryCount* times, which is 2 (:pd:`Section 7.32.2`,
+:pd:`Table 7.12`). A message is therefore sent at most three times. A
+receiver that sees the same MessageID again acknowledges it and discards the
+copy (:pd:`Section 7.32.1.2`).
+
+When all three attempts fail, the sender sends Soft_Reset
+(:pd:`Section 7.32.2`). Soft_Reset is a control message that resets the
+message counters and protocol state of both ends without changing VBUS;
+the two ends then negotiate the contract again (:pd:`Section 7.1.1`). If
+Soft_Reset also fails, the port sends a :term:`Hard Reset`, which does
+change VBUS (:pd:`Section 7.1.1`; :ref:`usbpd-hard-reset`). One missed
+GoodCRC therefore costs only a repeated message.
+
+.. _usbpd-timing:
+
+Time limits for both roles
+--------------------------
+
+:numref:`tab-usbpd-timing-ack` lists the limits on acknowledging a message,
+:numref:`tab-usbpd-timing-msg` the limits on answering one, and
+:numref:`tab-usbpd-timing-contract` the limits on setting up and changing a
+contract. Each row gives the specification's name for the limit and what it
+measures. Values are from :pd:`Table 7.10` unless another source is given;
+"none" means the specification sets no limit.
+
+.. list-table:: Time limits on acknowledging a message
+   :name: tab-usbpd-timing-ack
+   :header-rows: 1
+   :widths: 64 18 18
+
+   * - Limit
+     - Min (µs)
+     - Max (µs)
+   * - *tInterFrameGap*: gap before any transmission (:pd:`Table 5.10`)
+     - 25
+     - none
+   * - *tTransmit*: end of a message to the start of its GoodCRC
+     - none
+     - 195
+   * - *tRetry*: timeout to the start of the repeated message
+     - none
+     - 195
+
+.. list-table:: Time limits on answering a message
+   :name: tab-usbpd-timing-msg
+   :header-rows: 1
+   :widths: 64 18 18
+
+   * - Limit
+     - Min (ms)
+     - Max (ms)
+   * - *tReceive*: sender's wait for GoodCRC
+     - 0.9
+     - 1.1
+   * - *tReceiverResponse*: GoodCRC of a message that needs an answer to
+       the start of the answer
+     - none
+     - 15
+   * - *tSenderResponse*: asking side's wait for the answer
+     - 27
+     - 50
+
+.. list-table:: Time limits on setting up and changing a contract
+   :name: tab-usbpd-timing-contract
+   :header-rows: 1
+   :widths: 64 18 18
+
+   * - Limit
+     - Min (ms)
+     - Max (ms)
+   * - *tFirstSourceCap*: source, VBUS at 5 V to the first
+       Source_Capabilities
+     - none
+     - 250
+   * - *tTypeCSendSourceCap*: source, interval between repeats of
+       Source_Capabilities
+     - 100
+     - 200
+   * - *tTypeCSinkWaitCap*: sink, wait for Source_Capabilities before it
+       may send Hard Reset
+     - 310
+     - 620
+   * - *tSrcTransition*: source, wait after Accept before changing VBUS
+       (:pd:`Table 4.7`)
+     - 25
+     - none
+   * - *tSrcTransReq*: source in SPR, GoodCRC of Accept to the start of
+       PS_RDY (:pd:`Table 4.7`)
+     - none
+     - 325
+   * - *tSnkStdby*: sink, recommended time to cut its current to 500 mA
+       after Accept (:pd:`Table 4.8`)
+     - none
+     - 15
+   * - *tPSTransition*: sink in SPR, wait for PS_RDY before it sends Hard
+       Reset
+     - 450
+     - 550
+   * - *tSinkTx*: source, wait after reserving the line with Rp before it
+       starts a message exchange (:ref:`usbpd-switchable-rp`)
+     - 16
+     - 20
+
+The source repeats an unacknowledged Source_Capabilities up to
+*nCapsCount*, 50 times (:pd:`Section 7.32.4`, :pd:`Table 7.12`). The
+extended power range has longer limits for tSrcTransReq (760 ms,
+:pd:`Table 4.7`) and tPSTransition (830 ms to 1020 ms, :pd:`Table 7.10`).
