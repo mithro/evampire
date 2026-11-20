@@ -3,13 +3,16 @@ Power bridging
 
 A board built around evampire moves power between its Ethernet ports and its
 USB Type-C ports. It can be powered from an Ethernet cable (Power over
-Ethernet) and supply power to a USB device, or be powered from a USB Type-C
-charger (USB Power Delivery) and supply power to an Ethernet device.
+Ethernet, :doc:`poe`) and supply power to a USB device, or be powered from a
+USB Type-C charger (USB Power Delivery, :doc:`usb-pd`) and supply power to an
+Ethernet device.
 
 Both standards require the two ends of a cable to agree before full power is
 applied. The end that supplies power first checks that a compatible device
 is connected, then the two ends agree how much power may flow. evampire takes
 part in this exchange on every port, in whichever role that port has.
+
+.. _power-roles:
 
 Roles
 -----
@@ -33,12 +36,14 @@ Each standard has its own names for the two ends of a cable.
 A USB Type-C port that can act as either a source or a sink is called a
 *dual-role* port. When two dual-role ports are connected, the roles are
 decided when the cable is plugged in, and the two ends can later exchange
-messages to swap roles without unplugging the cable.
+messages to swap roles without unplugging the cable (see :doc:`usb-pd`).
 
 A Power over Ethernet port has a fixed role while it is connected. Supplying
 and receiving power need different circuits on the board, so a port that can
 take either role has both sets of circuits and selects one before a cable is
-connected.
+connected (see :doc:`poe`).
+
+.. _power-modes:
 
 Operating modes
 ---------------
@@ -54,11 +59,15 @@ USB in, Ethernet out
 Ethernet in, Ethernet out
    One Ethernet port receives power and the other supplies it.
 
+.. _power-budget:
+
 In every mode the processor keeps a power budget. The power it offers on
 the output ports never exceeds the power granted on the input port, minus the
 power the board itself uses and the losses in the voltage converters. When
 the granted input power changes, for example after a USB role swap, the
 processor lowers the power offered on the outputs first.
+
+.. _power-board-configs:
 
 Board configurations
 --------------------
@@ -80,6 +89,8 @@ Board configurations
      - Either role
      - Two, each dual-role
 
+.. _power-flow:
+
 Power flow
 ----------
 
@@ -94,25 +105,29 @@ All power passes through an internal power bus on the board.
   cable voltage, presents the signature that tells the far end a powered
   device is connected, and limits the current while the input capacitors
   charge. The input voltage converter brings the 37 V to 57 V from the
-  cable down to the bus voltage.
+  cable down to the bus voltage (:clause:`33`, :clause:`145`; see
+  :doc:`poe`).
 * The **USB power path** connects the USB Type-C port to the bus. As a sink
   it is a switch that connects the negotiated USB supply voltage to the bus.
   As a source it is an adjustable voltage converter that produces the
   negotiated USB supply voltage (5 V to 20 V, or up to 48 V in the extended
-  range) from the bus.
+  range; see :doc:`usb-pd`) from the bus.
 * The **high-voltage converter** raises the bus voltage to the 44 V to 57 V
-  needed on an Ethernet cable, and the **power sourcing equipment switch**
-  checks for a valid powered device on port B, measures its class, and then
-  connects the voltage with a current limit.
+  needed on an Ethernet cable (:clause:`145`), and the **power sourcing
+  equipment switch** checks for a valid powered device on port B, measures
+  its class (the power level the device asks for), and then connects the
+  voltage with a current limit (see :doc:`poe`).
 
 evampire carries out the negotiation in every case: it reads the power
-granted on port A, drives and senses the USB configuration channel wires,
+granted on port A, drives and senses the USB configuration channel wires
+(the two wires of a USB Type-C connector that carry the power negotiation),
 sets the USB output voltage, and enables and monitors the power sourcing
 equipment switch.
 
 Many of these circuits handle voltages (up to 57 V on an Ethernet cable and
 up to 48 V on USB) far above the continuous ratings of the standard
-transistors in the gf180mcu process. The standard parts of the process do
+transistors in the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
+process. The standard parts of the process do
 not set the limit of what can be built on the chip: custom structures, such
 as transistors stacked in isolated wells, drain-extended transistors, and
 high-voltage capacitors, can extend what is possible. Which functions are
