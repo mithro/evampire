@@ -11,8 +11,8 @@ digraph dual_role {
     graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.3,
            ranksep=0.5, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
     cable [label="RJ45 and cable-side\npower path", fillcolor="#ffffff"];
 

@@ -53,10 +53,6 @@ Powered-device controllers
    page and data sheet DS00003575D, listed as not recommended for new
    designs.
 
-.. [POE-SMAJ] Littelfuse, `SMAJ series transient voltage suppressor diodes
-   <https://www.littelfuse.com/products/overvoltage-protection/tvs-diodes/surface-mount/smaj>`__,
-   product series page.
-
 Power sourcing equipment controllers
 ------------------------------------
 
@@ -156,7 +152,7 @@ Papers on high voltage in low-voltage CMOS
 
 .. [POE-Pashmineh2016] S. Pashmineh and D. Killat, `A high-voltage driver
    based on stacked low-voltage transistors with minimized on-resistance for
-   a buck converter in 65 nm CMOS
+   a buck converter in 65 nm CMOS
    <https://doi.org/10.1109/CCECE.2016.7726692>`__, IEEE Canadian Conference
    on Electrical and Computer Engineering (CCECE), 2016.
 

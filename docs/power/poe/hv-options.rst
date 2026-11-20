@@ -101,7 +101,7 @@ External divider
       &= 3.0\ \text{V} \\
       I_\text{div} &= \frac{V_\text{in}}{R_1 + R_2} \\
       &= \frac{57\ \text{V}}{1.056\ \text{M}\Omega} \\
-      &= 54\ \mu\text{A}
+      &= 54\ \text{µA}
 
    .. list-table::
       :header-rows: 1
@@ -201,7 +201,7 @@ silicon as thick as the heat spreads during the pulse:
 .. math::
 
    L &= \sqrt{\alpha \times \tau_\text{surge}} \\
-   &= \sqrt{88\ \text{mm}^2/\text{s} \times 462\ \mu\text{s}} \\
+   &= \sqrt{88\ \text{mm}^2/\text{s} \times 462\ \text{µs}} \\
    &= 0.20\ \text{mm} \\
    A &= \frac{E_\text{surge}}{\rho \times c \times L \times \Delta T} \\
    \rho \times c &= 2330\ \text{kg/m}^3 \times 705\ \text{J/(kg K)} \\

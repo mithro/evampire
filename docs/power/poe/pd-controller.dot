@@ -11,8 +11,8 @@ digraph pd_controller {
     graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.2,
            ranksep=0.35, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
     vin   [label="Bridge outputs\nVDD and VSS, 0–57 V", fillcolor="#ffffff"];
     rdet  [label="Signature\nresistor 24.9 kΩ", fillcolor="#ffffff"];
@@ -38,10 +38,14 @@ digraph pd_controller {
     { rank=same; ref; cmp; otsd; }
     { rank=same; detsw; markr; clsreg; }
     { rank=same; hs; pg; }
-    { rank=same; rdet; rcls; cbulk; evp; }
+    { rank=same; rdet; rcls; }
+    { rank=same; cbulk; evp; }
+    markr -> pg [style=invis];
+    detsw -> hs [style=invis];
+    rdet -> cbulk [style=invis];
 
     vin  -> cmp    [label="sense"];
-    vin  -> hs     [penwidth=2.5, label="VSS"];
+    vin  -> hs     [penwidth=2.5, label="  VSS"];
     ref  -> cmp    [label="thresholds"];
     otsd -> fsm    [label="hot"];
     cmp  -> fsm    [label="step"];
@@ -52,6 +56,6 @@ digraph pd_controller {
     fsm  -> pg     [label="count"];
     detsw -> rdet  [dir=both, label="25 kΩ"];
     clsreg -> rcls [dir=both, label="current"];
-    hs   -> cbulk  [penwidth=2.5, label="RTN"];
+    hs   -> cbulk  [penwidth=2.5, label="  RTN"];
     pg   -> evp    [style=dashed, label="status"];
 }

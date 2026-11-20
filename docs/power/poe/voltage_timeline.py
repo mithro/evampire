@@ -45,7 +45,7 @@ def ty(v):
     return Y1 - (Y1 - Y0) * v / VMAX
 
 
-def text(x, y, s, size=12, anchor="middle", weight="normal", fill="#222"):
+def text(x, y, s, size=14, anchor="middle", weight="normal", fill="#222"):
     lines = s.split("\n")
     out = []
     for i, line in enumerate(lines):
@@ -71,7 +71,7 @@ def main(out_path):
     for lo, hi, fill, label in BANDS:
         parts.append(f'<rect x="{X0}" y="{ty(hi):.1f}" width="{X1 - X0}" '
                      f'height="{ty(lo) - ty(hi):.1f}" fill="{fill}"/>')
-        parts.append(text(X1 + 8, (ty(lo) + ty(hi)) / 2, label, size=12,
+        parts.append(text(X1 + 8, (ty(lo) + ty(hi)) / 2, label, size=14,
                           anchor="start", fill="#444"))
 
     # Axes and voltage ticks.
@@ -82,13 +82,13 @@ def main(out_path):
     for v in range(0, 61, 10):
         parts.append(f'<line x1="{X0 - 5}" y1="{ty(v):.1f}" x2="{X0}" '
                      f'y2="{ty(v):.1f}" stroke="#222"/>')
-        parts.append(text(X0 - 9, ty(v), f"{v}", size=11, anchor="end"))
-    parts.append(f'<text x="24" y="{(Y0 + Y1) / 2}" font-size="12" '
+        parts.append(text(X0 - 9, ty(v), f"{v}", size=13, anchor="end"))
+    parts.append(f'<text x="24" y="{(Y0 + Y1) / 2}" font-size="14" '
                  'text-anchor="middle" transform="rotate(-90 24 '
                  f'{(Y0 + Y1) / 2})">Voltage at powered device input (V)'
                  '</text>')
     parts.append(text((X0 + X1) / 2, H - 10,
-                      "time (not to scale)", size=12))
+                      "time (not to scale)", size=14))
 
     # Waveform.
     pts = []
@@ -117,13 +117,13 @@ def main(out_path):
         if not label:
             continue
         dy = 16 if label == "mark" else -20
-        parts.append(text((xa + xb) / 2, ty(v) + dy, label, size=11))
+        parts.append(text((xa + xb) / 2, ty(v) + dy, label, size=13))
     for i, (label, xa, xb) in enumerate(power_spans):
         if i:
             parts.append(f'<line x1="{xa:.1f}" y1="{ty(V_ON) - 4:.1f}" '
                          f'x2="{xa:.1f}" y2="{ty(V_ON) + 4:.1f}" '
                          'stroke="#1f4e79" stroke-width="1.5"/>')
-        parts.append(text((xa + xb) / 2, ty(V_ON) + 24, label, size=11))
+        parts.append(text((xa + xb) / 2, ty(V_ON) + 24, label, size=13))
 
     # Phase brackets under the time axis.
     det = (seg_spans[1][1], seg_spans[2][2], "detection")
@@ -135,7 +135,7 @@ def main(out_path):
         parts.append(f'<path d="M{xa + 2:.1f},{yb - 6} L{xa + 2:.1f},{yb} '
                      f'L{xb - 2:.1f},{yb} L{xb - 2:.1f},{yb - 6}" '
                      'fill="none" stroke="#555" stroke-width="1.2"/>')
-        parts.append(text((xa + xb) / 2, yb + 22, label, size=12,
+        parts.append(text((xa + xb) / 2, yb + 22, label, size=14,
                           weight="bold"))
 
     parts.append("</svg>")

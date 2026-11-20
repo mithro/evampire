@@ -58,7 +58,8 @@ of what to build on the chip:
 :doc:`isolation`
    The isolation the standard requires and the three routes to provide it.
 :doc:`hv-options`
-   On chip or external, function by function.
+   For each high-voltage function, the external and on-chip options and
+   what decides between them.
 :doc:`references`
    The data sheets, papers and other sources cited on these pages.
 

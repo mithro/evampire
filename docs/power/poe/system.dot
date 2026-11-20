@@ -26,7 +26,7 @@ digraph poe_system {
 
     // Outlines, drawn first so they sit behind the blocks.
     board [label="Board built around evampire", labelloc=b, fontsize=13,
-           fontcolor="#555555", pos="3.6,5.15!", width=7.2, height=5.9,
+           fontcolor="#555555", pos="3.6,5.35!", width=7.2, height=6.4,
            style="rounded,dashed", color="#888888", fillcolor="none"];
     port_a [label="Port A: powered device", labelloc=b, fontsize=12,
             fontcolor="#c55a11", pos="1.1,5.35!", width=2.1, height=4.9,
@@ -36,9 +36,9 @@ digraph poe_system {
             height=4.9, style="rounded", color="#c55a11", fillcolor="none"];
 
     // Equipment at the far ends of the two cables.
-    up   [pos="1.1,8.9!", label="Power sourcing\nequipment\n(switch or injector)",
+    up   [pos="1.1,9.25!", label="Power sourcing\nequipment\n(switch or injector)",
           height=0.75, fillcolor="#fbe5d6"];
-    down [pos="6.1,8.9!", label="Powered device\n(for example a\ncamera)",
+    down [pos="6.1,9.25!", label="Powered device\n(for example a\ncamera)",
           height=0.75, fillcolor="#fbe5d6"];
 
     // Port A column.
@@ -48,15 +48,15 @@ digraph poe_system {
     conv [pos="1.1,4.0!", label="Input converter", fillcolor="#fff2cc"];
 
     // Centre column.
-    evp  [pos="3.6,5.4!", label="evampire", style="rounded,filled,bold",
+    evp  [pos="3.6,5.0!", label="evampire", width=1.3, style="rounded,filled,bold",
           fillcolor="#dbe8f5"];
     bus  [pos="3.6,2.8!", label="Internal power bus", style="filled,bold",
           fillcolor="#dbe8f5"];
 
     // Ethernet transceivers (external chips in the first version).
-    phya [pos="2.95,7.4!", label="Ethernet\ntransceiver A", width=1.1,
+    phya [pos="2.95,7.85!", label="Ethernet\ntransceiver A", width=1.1,
           height=0.6, fontsize=11, fillcolor="#ffffff"];
-    phyb [pos="4.25,7.4!", label="Ethernet\ntransceiver B", width=1.1,
+    phyb [pos="4.25,7.85!", label="Ethernet\ntransceiver B", width=1.1,
           height=0.6, fontsize=11, fillcolor="#ffffff"];
 
     // Port B column.

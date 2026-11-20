@@ -195,7 +195,7 @@ limits of :numref:`tab-poe-ripple` (:clause:`Table 145-16 <145>`, item 4).
 
    * - From
      - To
-     - Limit (V peak to peak)
+     - Limit (Vpp)
    * - 0 Hz
      - 500 Hz
      - 0.5

@@ -222,8 +222,7 @@ holds 2.5 V across the class resistor (as the TPS2378 does
 
    P_\text{class} &= V_\text{class,max} \times I_\text{class,max} \\
    &= 20.5\ \text{V} \times 44\ \text{mA} = 0.90\ \text{W} \\
-   P_\text{reg} &= (V_\text{class,max} - V_\text{CLS}) \\
-   &\quad \times I_\text{class,max} \\
+   P_\text{reg} &= (V_\text{class,max} - V_\text{CLS}) \times I_\text{class,max} \\
    &= 18\ \text{V} \times 44\ \text{mA} = 0.79\ \text{W}
 
 .. list-table::
@@ -323,7 +322,7 @@ Charging the capacitor at a constant current takes:
 .. math::
 
    t_\text{charge} &= \frac{C_\text{bulk} \times V_\text{max}}{I_\text{inrush}} \\
-   &= \frac{100\ \mu\text{F} \times 57\ \text{V}}{140\ \text{mA}} \\
+   &= \frac{100\ \text{µF} \times 57\ \text{V}}{140\ \text{mA}} \\
    &= 41\ \text{ms}
 
 .. list-table::

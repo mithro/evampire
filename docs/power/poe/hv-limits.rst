@@ -99,7 +99,7 @@ high voltage, needs gf180mcu simulation, a test structure or foundry data
 
 Metal carries the current, within electromigration limits of 2.09 mA per µm
 of width for Metal 1 to the second-top layer and 16.52 mA per µm for the
-30 kÅ top metal at 85 °C, and 0.58 mA per contact or via
+30 kÅ top metal at 85 °C, and 0.58 mA per contact or via
 [POE-GF180-DRM-EM]_.
 
 For ESD, the PDK gives transmission-line pulse data for a 5 V or 6 V
@@ -128,16 +128,16 @@ from other processes, not evidence for gf180mcu.
      - 0.18 µm bulk
      - 5 V drain with core gate oxide
    * - Three stacked transistors [POE-Pashmineh2016]_
-     - 65 nm bulk
+     - 65 nm bulk
      - Driver at 5.5 V from 2.5 V devices
    * - Stack with capacitive sharing [POE-Mentze2006]_
      - 0.35 µm SOI
      - Twice the rating, scalable
    * - 20 stacked transistors [POE-Syroiezhin2023]_
-     - 65 nm SOI
+     - 65 nm SOI
      - 20 V off-state
    * - Charge pump with double-diode isolation [POE-Ismail2017]_
-     - 65 nm bulk
+     - 65 nm bulk
      - 36 V output
    * - Charge pump of polysilicon diodes [POE-Ker2007]_
      - 0.25 µm bulk
@@ -209,7 +209,7 @@ discharged through 1500 Ω, with a rise time of 2 ns to 10 ns
 The 2 kV is on the tester's capacitor, not on the pin: a clamp conducts a
 few volts above the supply and carries 1.33 A for a few hundred
 nanoseconds. At 7 mA per µm before failure, a 6 V grounded-gate NMOS about
-:math:`1.33\ \text{A} / (7\ \text{mA/µm}) = 190\ \mu\text{m}` wide carries
+:math:`1.33\ \text{A} / (7\ \text{mA/µm}) = 190\ \text{µm}` wide carries
 it, an estimate; real designs follow
 the PDK's ESD guidelines [POE-GF180-ESD]_.
 
@@ -227,10 +227,10 @@ effective output resistance of 40 Ω. The test levels of
    I_\text{surge} &= \frac{V_\text{surge} - V_\text{clamp}}{R_\text{gen}}
      = \frac{1410\ \text{V}}{40\ \Omega} = 35\ \text{A} \\
    \tau_\text{surge} &= \frac{t_\text{half}}{\ln 2}
-     = \frac{320\ \mu\text{s}}{0.693} = 462\ \mu\text{s} \\
+     = \frac{320\ \text{µs}}{0.693} = 462\ \text{µs} \\
    E_\text{surge} &\approx V_\text{clamp} \times I_\text{surge}
      \times \tau_\text{surge} \\
-   &= 90\ \text{V} \times 35\ \text{A} \times 462\ \mu\text{s}
+   &= 90\ \text{V} \times 35\ \text{A} \times 462\ \text{µs}
      = 1.5\ \text{J}
 
 .. list-table::
@@ -291,7 +291,7 @@ needs wide metal (:numref:`tab-poe-metal`).
    * - Metal 1
      - 287
      - 828
-   * - 30 kÅ top metal
+   * - 30 kÅ top metal
      - 36
      - 105
 

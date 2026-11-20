@@ -64,11 +64,11 @@ equipment must accept (:clause:`Table 145-8 <145>`):
 
 .. math::
 
-   V_1 &= 2\ \text{V} + 160\ \mu\text{A} \times 25\ \text{k}\Omega
+   V_1 &= 2\ \text{V} + 160\ \text{µA} \times 25\ \text{k}\Omega
      = 6.0\ \text{V} \\
-   V_2 &= 2\ \text{V} + 270\ \mu\text{A} \times 25\ \text{k}\Omega
+   V_2 &= 2\ \text{V} + 270\ \text{µA} \times 25\ \text{k}\Omega
      = 8.75\ \text{V} \\
-   R_\text{meas} &= \frac{8.75\ \text{V} - 6.0\ \text{V}}{110\ \mu\text{A}}
+   R_\text{meas} &= \frac{8.75\ \text{V} - 6.0\ \text{V}}{110\ \text{µA}}
      = 25\ \text{k}\Omega
 
 The offset cancels. At the edges the points stay in the 2.8 V to 10 V

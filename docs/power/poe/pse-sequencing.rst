@@ -194,7 +194,7 @@ A switched-capacitor supply for low classes
    only when the output is close to that ratio times the input, so this
    suits a bus held at a fixed fraction of 54 V, for example 18 V for a
    ratio of 3. For reference, Ismail and others reach 36 V from a charge
-   pump in 65 nm bulk CMOS [POE-Ismail2017]_. Whether the bus voltage and
+   pump in 65 nm bulk CMOS [POE-Ismail2017]_. Whether the bus voltage and
    the capacitor voltage ratings allow it is an open question
    (:ref:`conv-alternatives`).
 

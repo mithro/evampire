@@ -126,7 +126,8 @@ For example, a 20 V, 3 A contract gives:
    P_\text{board,max} &= 56.4\ \text{W} - 45\ \text{W} = 11.4\ \text{W}
 
 Class 5 fits while the board uses no more than 11.4 W. Above that, class 4
-fits up to 56.4 W − 30 W = 26.4 W of board power. With a 5 V, 3 A contract,
+fits up to :math:`56.4\ \text{W} - 30\ \text{W} = 26.4\ \text{W}` of
+board power. With a 5 V, 3 A contract,
 class 3 leaves only 0.1 W for the board, so in practice class 2 applies
 (up to 7.4 W). The USB contract itself is negotiated as described on
 :doc:`../usb-pd/index`.
@@ -169,8 +170,8 @@ and 94 % efficient, so :math:`\eta = 0.90 \times 0.94 = 0.85`.
 Port B always offers a lower class than port A. Each class needs more
 power at the power sourcing equipment than it gives at the powered device
 (:numref:`tab-poe-classes`), and the converters take a share on top. For class 8 in, class 6 out leaves only
-0.6 W for the board, so class 5 applies in practice, up to 60.6 W − 45 W =
-15.6 W of board power.
+0.6 W for the board, so class 5 applies in practice, up to
+:math:`60.6\ \text{W} - 45\ \text{W} = 15.6\ \text{W}` of board power.
 
 Two measures recover some of the margin. If the powered device on port B
 uses autoclass, the software can measure its real draw and allocate that
