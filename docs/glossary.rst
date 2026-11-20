@@ -12,6 +12,13 @@ gives a short description and a link to the full explanation.
       (:clause:`40`). Every evampire port supports it (see
       :ref:`the transceiver requirements <req-transceivers>`).
 
+   Autonegotiation
+      The exchange of link pulse bursts by which the two transceivers on a
+      twisted-pair Ethernet cable agree on speed, duplex mode and, for
+      1000BASE-T, which end is master (:clause:`28`, see
+      :doc:`ethernet/phy-electrical/autonegotiation` and
+      :wikipedia:`Autonegotiation`).
+
    Class
       In Power over Ethernet, the power level that a powered device asks for
       during classification. Each class has a maximum power at the powered
@@ -24,6 +31,15 @@ gives a short description and a link to the full explanation.
       offers, and carry the USB Power Delivery messages (see
       :doc:`power/usb-pd/index`).
 
+   Crosstalk
+   NEXT
+   FEXT
+      Signal coupled from one pair of a cable into another. Near-end
+      crosstalk (NEXT) comes from a transmitter at the same end as the
+      receiver it disturbs; far-end crosstalk (FEXT) from one at the other
+      end (:clause:`40.7.3`, see :doc:`ethernet/phy-electrical/job` and
+      :wikipedia:`Crosstalk`).
+
    Cut-through forwarding
       Forwarding in which each byte of a frame is sent on a few clock cycles
       after it arrives, instead of after the whole frame has arrived. It
@@ -34,6 +50,13 @@ gives a short description and a link to the full explanation.
    Dual-role port
       A USB Type-C port that can attach as either a source or a sink, and
       can swap roles while connected (see :ref:`the power roles <power-roles>`).
+
+   Equaliser
+      A filter whose response is the inverse of the cable's, so that the
+      received symbols no longer overlap. Gigabit receivers adapt it to each
+      cable (see :doc:`ethernet/phy-electrical/1000base-t-receiver` and
+      :wikipedia:`Equalization (communications)
+      <Equalization_(communications)>`).
 
    Ethernet transceiver
    PHY
@@ -60,6 +83,18 @@ gives a short description and a link to the full explanation.
       The 4-byte checksum at the end of every Ethernet frame, which lets the
       receiver detect a damaged frame (:clause:`3`, see
       :wikipedia:`Frame check sequence <Frame_check_sequence>`).
+
+   Hybrid
+      The analogue circuit that lets one pair carry both directions at once,
+      by subtracting a replica of the transceiver's own transmitted signal
+      from the voltage on the pair (see
+      :doc:`ethernet/phy-electrical/1000base-t-echo`).
+
+   Insertion loss
+      How much smaller a signal becomes, in decibels, by passing through a
+      cable or component. In a cable it grows with frequency and length
+      (:clause:`40.7.2.1`, see :doc:`ethernet/phy-electrical/job` and
+      :wikipedia:`Insertion loss`).
 
    LLDP
    Link Layer Discovery Protocol
@@ -94,6 +129,13 @@ gives a short description and a link to the full explanation.
       (:clause:`4`). In evampire the forwarding logic and the processor
       share this role.
 
+   PAM-5
+      Five-level pulse amplitude modulation: each symbol is one of the
+      levels −2, −1, 0, +1 and +2. 1000BASE-T uses it on all four pairs
+      (:clause:`40.1.3`, see :doc:`ethernet/phy-electrical/1000base-t-coding`
+      and :wikipedia:`Pulse-amplitude modulation
+      <Pulse-amplitude_modulation>`).
+
    Power budget
       The power that the processor may offer on the output ports: the power
       granted on the input port, minus the board's own consumption and the
@@ -115,6 +157,12 @@ gives a short description and a link to the full explanation.
       The end of an Ethernet cable that receives Power over Ethernet power.
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
+
+   Return loss
+      How much weaker, in decibels, a reflection is than the signal that
+      caused it. A port matched to the cable has a high return loss
+      (:clause:`40.8.3.1`, see :doc:`ethernet/phy-electrical/job` and
+      :wikipedia:`Return loss`).
 
    RGMII
       Reduced Gigabit Media Independent Interface. A digital interface
@@ -164,6 +212,25 @@ gives a short description and a link to the full explanation.
    Source
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
+
+   Symbol
+      One voltage level held on a pair for one fixed time slot. Depending on
+      how many levels are allowed, it carries less than one bit, one bit or
+      several bits (see :doc:`ethernet/phy-electrical/job` and
+      :wikipedia:`Symbol rate`).
+
+   Symbol rate
+      The number of symbols sent per second on one pair, in baud (Bd).
+      100BASE-TX and 1000BASE-T both run at 125 MBd (see
+      :doc:`ethernet/phy-electrical/job` and :wikipedia:`Symbol rate`).
+
+   Trellis code
+      An error-correcting code in which a small state machine in the
+      transmitter allows only some sequences of symbols, so that the
+      receiver can pick the closest legal sequence. 1000BASE-T uses one
+      with eight states (:clause:`40.3.1.3.4`, see
+      :doc:`ethernet/phy-electrical/1000base-t-coding` and
+      :wikipedia:`Trellis modulation <Trellis_modulation>`).
 
    USB Power Delivery
    USB PD
