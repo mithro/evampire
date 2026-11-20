@@ -129,7 +129,8 @@ The processor sends frames in the gaps between forwarded frames
 
 * The processor writes a frame into a transmit buffer and requests that it
   be sent out of port A, port B or both.
-* The chip adds the frame's :term:`start pattern` and checksum.
+* The chip adds the frame's :term:`preamble`, :term:`start frame delimiter`
+  and checksum.
 * Processor frames are sent only in the gaps between forwarded frames.
 
 .. _req-memory:

@@ -54,7 +54,7 @@ digraph evampire {
     // Internal port.
     filt  [pos="4.4,5.4!", label="Address filter,\nchecksum check",
            fillcolor="#e2f0d9"];
-    txgen [pos="4.4,4.6!", label="Start pattern,\nchecksum generator",
+    txgen [pos="4.4,4.6!", label="Preamble and\nchecksum generator",
            fillcolor="#e2f0d9", width=1.75];
     rxbuf [pos="6.25,5.4!", label="Receive frame\nbuffer (SRAM)",
            fillcolor="#e2f0d9"];
