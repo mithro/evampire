@@ -16,7 +16,7 @@ low-speed device on an AVR at 12 MHz to 20 MHz with no USB hardware
 ([USBSER-VUSB]_, ``Readme.txt``), and rv003usb runs one on a 48 MHz
 CH32V003 RISC-V microcontroller ([USBSER-RV003USB]_).
 
-The USB 2.0 specification restricts low-speed devices:
+The :std:`USB 2.0 specification <usb2>` restricts low-speed devices:
 
 * no bulk endpoints, which CDC-ACM uses for its data
   ([USBSER-USB2]_ section 5.8.3);

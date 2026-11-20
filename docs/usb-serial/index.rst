@@ -17,32 +17,32 @@ the same processor runs it.
    :maxdepth: 1
    :hidden:
 
-   usb-serial/what-it-is
-   usb-serial/signalling
-   usb-serial/transactions
-   usb-serial/timing
-   usb-serial/software-cost
-   usb-serial/analogue
-   usb-serial/usb-pd-roles
-   usb-serial/alternatives
-   usb-serial/references
+   what-it-is
+   signalling
+   transactions
+   timing
+   software-cost
+   analogue
+   usb-pd-roles
+   alternatives
+   references
 
 What each page covers:
 
-* :doc:`usb-serial/what-it-is`: what a computer sees, the communications device class
+* :doc:`what-it-is`: what a computer sees, the communications device class
   and why no custom driver is needed.
-* :doc:`usb-serial/signalling`: host and device, the D+ and D− wires, speeds, line
+* :doc:`signalling`: host and device, the D+ and D− wires, speeds, line
   states, coding, and the parts of a packet.
-* :doc:`usb-serial/transactions`: how packets combine into transfers, frames, how a
+* :doc:`transactions`: how packets combine into transfers, frames, how a
   device is recognised, and the descriptors a serial port needs.
-* :doc:`usb-serial/timing`: the bit time, the reply deadline, the end of a packet and
-  clock accuracy, each from the USB 2.0 specification.
-* :doc:`usb-serial/software-cost`: how much processor time each part of USB takes in
+* :doc:`timing`: the bit time, the reply deadline, the end of a packet and
+  clock accuracy, each from the :std:`USB 2.0 specification <usb2>`.
+* :doc:`software-cost`: how much processor time each part of USB takes in
   software, and the hardware helpers that reduce it.
-* :doc:`usb-serial/analogue`: the driver, receivers, pull-up resistor and protection,
+* :doc:`analogue`: the driver, receivers, pull-up resistor and protection,
   and how they can be built in gf180mcu.
-* :doc:`usb-serial/usb-pd-roles`: power roles and data roles, the data role swap, two
+* :doc:`usb-pd-roles`: power roles and data roles, the data role swap, two
   ports, and sharing the processor with USB Power Delivery and Ethernet.
-* :doc:`usb-serial/alternatives`: other ways to give the processor a serial port, and
+* :doc:`alternatives`: other ways to give the processor a serial port, and
   why they are or are not used elsewhere.
-* :doc:`usb-serial/references`: the specifications, datasheets and projects cited.
+* :doc:`references`: the specifications, datasheets and projects cited.

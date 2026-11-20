@@ -4,7 +4,7 @@ Full-speed signalling and packets
 This page describes the electrical signal and the packet format of a USB 2.0
 full-speed connection, from the wires up to the checksum, in the detail
 needed to receive and send it in software or in small hardware blocks. All
-section and table numbers refer to the USB 2.0 specification
+section and table numbers refer to the :std:`USB 2.0 specification <usb2>`
 [USBSER-USB2]_.
 
 Host and device

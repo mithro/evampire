@@ -2,7 +2,7 @@ The analogue front end on gf180mcu
 ==================================
 
 This page lists the electrical requirements of a full-speed device's D+ and
-D− connection from the USB 2.0 specification [USBSER-USB2]_, and compares
+D− connection from the :std:`USB 2.0 specification <usb2>` [USBSER-USB2]_, and compares
 them with the standard I/O cells of the gf180mcu process. Where no standard
 cell meets a requirement, it describes the custom options.
 
