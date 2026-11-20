@@ -39,8 +39,8 @@ class at the power sourcing equipment (:numref:`tab-poe-classes`), or the
 allocated value set over LLDP plus the cable loss (:doc:`lldp`).
 
 For example, with :math:`P_\text{out} = 80\ \text{W}`, a class 5 Ethernet
-output takes 45 W and leaves 35 W for the USB Type-C ports together. The USB
-offers that fit in 35 W are described on :doc:`../usb-pd/index`.
+output takes 45 W and leaves 35 W for the USB Type-C ports together. The USB
+offers that fit in 35 W are described on :doc:`../usb-pd/index`.
 
 Power over Ethernet allocations change in steps
 -----------------------------------------------
@@ -50,7 +50,7 @@ connected, by sending a new list of offers. A power sourcing equipment port
 changes its allocation in one of two ways:
 
 Over LLDP
-   In steps of 0.1 W, with a powered device that supports the exchange.
+   In steps of 0.1 W, with a powered device that supports the exchange.
    Every powered device that requests class 4 or higher does
    (:clause:`145.3.6`).
 By classifying again
@@ -70,7 +70,7 @@ When a device on one port is unplugged or uses less than its share, the
 software raises the offer on another port. When a new device is plugged in,
 it first lowers the offers on the other ports to make room. On a power
 sourcing equipment port, lowering over LLDP is complete only when the
-powered device has answered with the new value, which may take up to 10 s
+powered device has answered with the new value, which may take up to 10 s
 (:clause:`145.5.2`). Until then the software keeps the old allocation in
 the budget. Its built-in current and power limit on the port is lowered at
 the same time (:doc:`monitoring`).

@@ -12,7 +12,7 @@ Classification sets the first allocation
 
 Classification (:doc:`sequence`) gives a powered device its first power
 allocation, in fixed steps, before the link is up. After the link is up,
-the two ends can change the allocation in steps of 0.1 W by exchanging
+the two ends can change the allocation in steps of 0.1 W by exchanging
 Ethernet frames. The standard calls this Data Link Layer classification
 (:clause:`145.5`). When both are used, the Data Link Layer value takes
 precedence (:clause:`145.2.8`).
@@ -24,7 +24,7 @@ The frames belong to the Link Layer Discovery Protocol, :term:`LLDP`
 (:std:`IEEE 802.1AB <802.1AB>`). Each is a small frame sent only to the
 device at the other end of the cable, to the destination address
 ``01-80-C2-00-00-0E`` with :wikipedia:`EtherType <EtherType>` ``0x88CC``
-[POE-LLDP]_. IEEE 802.3 defines a *Power via MDI* field carried in them
+[POE-802-1AB]_. IEEE 802.3 defines a *Power via MDI* field carried in them
 (:clause:`79.3.2`). The MDI, the medium dependent interface, is the
 connection to the cable, here the RJ45 socket.
 
@@ -35,7 +35,7 @@ The field's main entries are:
 * copies of the other end's last values, so each end can see that the
   other has received its value.
 
-Values are in units of 0.1 W, so 255 means 25.5 W
+Values are in units of 0.1 W, so 255 means 25.5 W
 (:clause:`Table 145-12 <145>`).
 
 Classes 4 and higher must support it
@@ -56,8 +56,8 @@ as in :numref:`tab-poe-dll-class`.
    :header-rows: 1
    :widths: 35 35 30
 
-   * - From (0.1 W)
-     - To (0.1 W)
+   * - From (0.1 W)
+     - To (0.1 W)
      - Assigned class
    * - 1
      - 39
@@ -84,7 +84,7 @@ as in :numref:`tab-poe-dll-class`.
      - 999
      - 8
 
-On 2-pair power the allocation is at most 255, 25.5 W
+On 2-pair power the allocation is at most 255, 25.5 W
 (:clause:`Table 145-41 <145>`).
 
 The two ends take turns
@@ -92,15 +92,15 @@ The two ends take turns
 
 The rules of :clause:`145.5.2` and :clause:`145.5.5` are:
 
-* The power sourcing equipment sends its first frame within 10 s of
+* The power sourcing equipment sends its first frame within 10 s of
   enabling the exchange.
-* Each end answers a changed value from the other within 10 s.
+* Each end answers a changed value from the other within 10 s.
 * An end is *in sync* when the copy the other end sends back matches its
   own value. A powered device does not change its request or its power
   draw while it is out of sync.
 * The power sourcing equipment may lower the allocation at any time, and
   raise it only while in sync.
-* Values above 71.3 W are used only after both ends are in sync
+* Values above 71.3 W are used only after both ends are in sync
   (:clause:`145.5.4`).
 
 These deadlines are seconds long, so the software meets them without
@@ -144,7 +144,7 @@ the same value. It also sets the current and power limits of the port to
 match (:doc:`monitoring`).
 
 When the power on port A falls, the software lowers the allocation on port
-B first (:ref:`power-budget`).
+B first (:ref:`power budget <power-budget>`).
 
 Open questions
 --------------

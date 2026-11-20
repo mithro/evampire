@@ -20,12 +20,12 @@ must itself be isolated from the other accessible conductors.
 The isolation must withstand one of three tests (Annex J of
 :std:`IEEE 802.3 <802.3>`, as modified by :clause:`145.4.1`):
 
-* 1500 V rms at 50 Hz to 60 Hz for 60 s;
-* 2250 V DC for 60 s;
-* ten 1500 V impulses of 10/700 µs shape, 60 s apart.
+* 1500 V rms at 50 Hz to 60 Hz for 60 s;
+* 2250 V DC for 60 s;
+* ten 1500 V impulses of 10/700 µs shape, 60 s apart.
 
 There must be no breakdown, and the insulation resistance afterwards must
-be at least 2 MΩ at 500 V DC. Unlike a surge, this stress must be blocked;
+be at least 2 MΩ at 500 V DC. Unlike a surge, this stress must be blocked;
 a clamp across the barrier would fail the test (:doc:`hv-limits`).
 
 The environment decides whether ports may share a ground
@@ -92,10 +92,10 @@ A barrier on the evampire die
    circuits must also be isolated from the substrate, to the full test
    voltage. The magnetics pages analyse the dielectrics for the data path
    (:doc:`../../ethernet/magnetics/index`). The strongest dielectric in
-   :numref:`tab-poe-gf180-ratings`, the 1 fF/µm² MIM capacitor, is rated
-   for 20 V and breaks down at 20 V minimum, so a series stack would need
+   :numref:`tab-poe-gf180-ratings`, the 1 fF/µm² MIM capacitor, is rated
+   for 20 V and breaks down at 20 V minimum, so a series stack would need
    more than :math:`1500\ \text{V} \times \sqrt{2} / 20\ \text{V} = 106`
-   such capacitors for the peak of the 1500 V rms test, before any margin. Whether thicker inter-metal
+   such capacitors for the peak of the 1500 V rms test, before any margin. Whether thicker inter-metal
    dielectrics reach the test voltage needs test structures.
 
 Which route is used is an open question for each function

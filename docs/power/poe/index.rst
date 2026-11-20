@@ -5,7 +5,7 @@ These pages explain how an Ethernet cable carries power, the signals the two
 ends exchange before the power is switched on, and what evampire needs at
 each end of the cable.
 
-:term:`Power over Ethernet` puts a DC voltage of up to 57 V on the pairs of
+:term:`Power over Ethernet` puts a DC voltage of up to 57 V on the pairs of
 an Ethernet cable, alongside the data. The end that supplies the power
 checks that a compatible device is connected, and learns how much power it
 wants, before switching the voltage on. A board built around evampire can

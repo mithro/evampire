@@ -46,8 +46,8 @@ powered device, so the port's own power sourcing equipment would measure
 the wrong resistance during detection.
 
 The power sourcing equipment circuit can also load the port while it is
-off. For reference, with a TPS23881-style power sourcing equipment, 80 kΩ to
-190 kΩ connects each channel's drain pin to its supply whenever the channel
+off. For reference, with a TPS23881-style power sourcing equipment, 80 kΩ to
+190 kΩ connects each channel's drain pin to its supply whenever the channel
 is neither detecting nor powered [POE-TPS23881]_ (Electrical
 Characteristics). That resistance would appear in parallel with the port's
 own signature:
@@ -77,7 +77,7 @@ own signature:
      - Resistance the upstream power sourcing equipment measures
      - kΩ
 
-With 190 kΩ the result is 22.0 kΩ. Both are below the 23.7 kΩ minimum of
+With 190 kΩ the result is 22.0 kΩ. Both are below the 23.7 kΩ minimum of
 :clause:`Table 145-21 <145>`, so the port would fail detection as a powered
 device. The calculation assumes the idle load is across the same two
 conductors as the signature. evampire's own power sourcing circuit could be
@@ -116,10 +116,10 @@ Never apply power without a valid detection
    channels are off and disconnected.
 
 Two power sourcing equipment ports connected together
-   Each sees the other's detection source instead of a 25 kΩ signature,
+   Each sees the other's detection source instead of a 25 kΩ signature,
    so neither detects a valid powered device and neither applies power.
    Each detection circuit must survive being driven by the other: power
-   sourcing equipment must withstand 5 mA fed back into it over its
+   sourcing equipment must withstand 5 mA fed back into it over its
    detection voltage range (:clause:`145.2.6.1`). It also presents an
    invalid signature when probed by another power sourcing equipment.
 

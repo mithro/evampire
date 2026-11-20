@@ -34,23 +34,23 @@ decision.
      - Range
      - Accuracy
    * - Detection resistance
-     - 15 kΩ to 33 kΩ
-     - ± 10 %
+     - 15 kΩ to 33 kΩ
+     - ± 10 %
    * - Class current
-     - 0 mA to 51 mA
-     - ± 1.5 mA
+     - 0 mA to 51 mA
+     - ± 1.5 mA
    * - Maintain power signature current
-     - 4 mA to 9 mA
-     - ± 2.5 mA
+     - 4 mA to 9 mA
+     - ± 2.5 mA
 
 The power policing below needs the port current up to the class limit, for
-class 8 about 1 A per pair set (:clause:`Table 145-16 <145>`, item 11). The
+class 8 about 1 A per pair set (:clause:`Table 145-16 <145>`, item 11). The
 resolution needed for the power budget is open
 (:ref:`conv-fault-times` gives the bits for a given step).
 
 On a powered-device port the software checks that the board stays within
 its assigned class. The standard measures the powered device's average
-power over a sliding 1 s window (:clause:`145.3.8.2`).
+power over a sliding 1 s window (:clause:`145.3.8.2`).
 
 The limits act on four time scales
 ----------------------------------
@@ -68,50 +68,50 @@ equipment port is powered, from the fastest to the slowest
      - Time scale
      - Enforced by
    * - Upper current template
-     - 10 µs to 4 s
+     - 10 µs to 4 s
      - Hardware
    * - Current limit held
-     - At least 6 ms or 10 ms
+     - At least 6 ms or 10 ms
      - Hardware
    * - Current limit ended
-     - By 75 ms
+     - By 75 ms
      - Hardware, set by software
    * - Overload removed
-     - After 50 ms to 75 ms
+     - After 50 ms to 75 ms
      - Software, with a hardware backstop
    * - Type 4 power cap
-     - 4 s window
+     - 4 s window
      - Software, with a hardware backstop
 
 Upper current template
    The current of each pair set must stay below a template that allows up
-   to 50 A for the first 10 µs, then falls with time, then stays at 1.75 A
-   until the end of the overload time, 75 ms at most. After that it is
-   0.85 A for Type 3, and 1.3 A up to 4 s for Type 4
+   to 50 A for the first 10 µs, then falls with time, then stays at 1.75 A
+   until the end of the overload time, 75 ms at most. After that it is
+   0.85 A for Type 3, and 1.3 A up to 4 s for Type 4
    (:clause:`145.2.10.9`, :clause:`Equation 145-17 <145>` and
    :clause:`Equation 145-18 <145>`).
 
 Current limit held
    In a short circuit, power sourcing equipment holds the current at its
-   limit, at least 0.4 A to 1.005 A per pair set depending on the class,
-   for at least 10 ms (Type 3) or 6 ms (Type 4)
+   limit, at least 0.4 A to 1.005 A per pair set depending on the class,
+   for at least 10 ms (Type 3) or 6 ms (Type 4)
    (:clause:`Table 145-16 <145>`, items 11 and 12). This lets a powered
    device ride through a supply step.
 
 Current limit ended
-   Power is removed before a current-limit event has lasted 75 ms
+   Power is removed before a current-limit event has lasted 75 ms
    (:clause:`145.2.10.9`).
 
 Overload removed
-   If the current stays above the overload level for longer than 50 ms to
-   75 ms, counted in a sliding window of at least 1 s, the power sourcing
+   If the current stays above the overload level for longer than 50 ms to
+   75 ms, counted in a sliding window of at least 1 s, the power sourcing
    equipment may remove power (:clause:`145.2.10.8`).
 
 Type 4 power cap
-   Type 4 power sourcing equipment sources no more than 99.9 W, averaged
-   over a sliding window of up to 4 s (:clause:`145.2.10.13`).
+   Type 4 power sourcing equipment sources no more than 99.9 W, averaged
+   over a sliding window of up to 4 s (:clause:`145.2.10.13`).
 
-Between 10 µs and 8.2 ms the template follows a fixed energy limit:
+Between 10 µs and 8.2 ms the template follows a fixed energy limit:
 
 .. math::
 
@@ -134,8 +134,8 @@ Between 10 µs and 8.2 ms the template follows a fixed energy limit:
      - Highest allowed current of a pair set
      - A
 
-At 10 µs this gives 50 A, at 1 ms 5 A, and at 8.2 ms 1.75 A, where the
-template joins the flat 1.75 A section.
+At 10 µs this gives 50 A, at 1 ms 5 A, and at 8.2 ms 1.75 A, where the
+template joins the flat 1.75 A section.
 
 The switch's safe operating area sets the fastest response
 ----------------------------------------------------------
@@ -172,19 +172,19 @@ almost the whole supply voltage across it:
      - Power and energy in the switch
      - W, J
 
-A switch rated for 57 W for 75 ms needs no faster software. The response
+A switch rated for 57 W for 75 ms needs no faster software. The response
 time of the comparator then follows from how fast the current rises in a
 short, which the cable and port inductance set, and from the switch's peak
 current rating. For reference, the TPS23881 turns its switch off within
-0.9 µs of a short-circuit threshold of about 1.0 A to 1.2 A
+0.9 µs of a short-circuit threshold of about 1.0 A to 1.2 A
 [POE-TPS23881]_ (Electrical Characteristics). Faults in the converters have
 their own response times (:ref:`conv-fault-times`).
 
 The supply must stay steady and quiet
 -------------------------------------
 
-The port voltage must stay above 45.3 V (Type 3) or 48.4 V (Type 4) through
-transients of 30 µs to 250 µs, and inside the output range for longer
+The port voltage must stay above 45.3 V (Type 3) or 48.4 V (Type 4) through
+transients of 30 µs to 250 µs, and inside the output range for longer
 ones (:clause:`145.2.10.3`). Its ripple and noise must stay below the
 limits of :numref:`tab-poe-ripple` (:clause:`Table 145-16 <145>`, item 4).
 
@@ -196,17 +196,17 @@ limits of :numref:`tab-poe-ripple` (:clause:`Table 145-16 <145>`, item 4).
    * - From
      - To
      - Limit (V peak to peak)
-   * - 0 Hz
-     - 500 Hz
+   * - 0 Hz
+     - 500 Hz
      - 0.5
-   * - 500 Hz
-     - 150 kHz
+   * - 500 Hz
+     - 150 kHz
      - 0.2
-   * - 150 kHz
-     - 500 kHz
+   * - 150 kHz
+     - 500 kHz
      - 0.15
-   * - 500 kHz
-     - 1 MHz
+   * - 500 kHz
+     - 1 MHz
      - 0.1
 
 Open questions

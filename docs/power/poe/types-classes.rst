@@ -116,12 +116,12 @@ The powers at the powered device come from :clause:`Table 145-29 <145>`
 :clause:`Table 145-11 <145>`, also summarised in [POE-EA-BT]_ (Tables 6, 7
 and 14). Class 0 is from :clause:`Table 33-7 <33>` and
 :clause:`Table 33-18 <33>`. Under the :clause:`33` rules, power sourcing
-equipment supplies 7.00 W for class 2 and 15.4 W for class 3, because it
+equipment supplies 7.00 W for class 2 and 15.4 W for class 3, because it
 allows for a longer cable (:clause:`Table 33-7 <33>`).
 
 A powered device may draw more than its class power, up to the peak power,
-for no longer than 50 ms at a time and for no more than 5 % of a 1 s window
-(:clause:`145.3.8.4`, with the 50 ms from :clause:`Table 145-16 <145>`).
+for no longer than 50 ms at a time and for no more than 5 % of a 1 s window
+(:clause:`145.3.8.4`, with the 50 ms from :clause:`Table 145-16 <145>`).
 
 .. _poe-cable-loss:
 
@@ -166,9 +166,9 @@ power sourcing equipment delivers its full power at its lowest voltage:
      - Power left at the powered device
      - W
 
-The highest loop resistance is 20 Ω for Type 1 and 12.5 Ω for one pair set
+The highest loop resistance is 20 Ω for Type 1 and 12.5 Ω for one pair set
 of Types 2 to 4 (:clause:`Table 33-1 <33>`, :clause:`Table 145-1 <145>`).
-With both pair sets sharing the current it is half that, 6.25 Ω
+With both pair sets sharing the current it is half that, 6.25 Ω
 (:clause:`145.1.3`). The model holds when the two pair sets of a 4-pair
 link carry equal currents; the standard limits the current of each pair set
 separately to cover unequal currents (:clause:`145.2.10.6.1`).
@@ -216,8 +216,8 @@ the class powers already include the worst-case cable.
      - 18.7
      - 71.3
 
-The voltages are those of :numref:`tab-poe-pse-voltage`: 44 V, 50 V, 50 V
-and 52 V. A shorter or thicker cable loses less.
+The voltages are those of :numref:`tab-poe-pse-voltage`: 44 V, 50 V, 50 V
+and 52 V. A shorter or thicker cable loses less.
 
 .. _poe-lowest-voltage:
 
@@ -257,7 +257,7 @@ higher root is the operating point:
      - As in the cable loss model above
      - V, Ω, A
 
-For class 8, with 52 V and 6.25 Ω:
+For class 8, with 52 V and 6.25 Ω:
 
 .. math::
 
@@ -268,10 +268,10 @@ For class 8, with 52 V and 6.25 Ω:
 :numref:`tab-poe-lowest-voltage` gives the lowest voltage that the standard
 requires each class of powered device to accept
 (:clause:`Table 145-29 <145>`, item 1), next to the model. The standard's
-values are the model's results rounded down to 0.1 V. For classes 4 to 8
+values are the model's results rounded down to 0.1 V. For classes 4 to 8
 the model uses the lowest voltage and the loop resistance of the lowest type
 that can assign the class. For classes 1 to 3 the values match the model
-with 44 V and 12.5 Ω.
+with 44 V and 12.5 Ω.
 
 .. list-table:: Lowest voltage at the powered device
    :name: tab-poe-lowest-voltage
@@ -324,13 +324,13 @@ with 44 V and 12.5 Ω.
      - 41.18
      - 41.1
 
-Under the :clause:`33` rules, a Type 1 powered device must work from 37 V
-and a Type 2 powered device from 42.5 V (:clause:`Table 33-18 <33>`). The
-model gives 36.97 V for Type 1 (44 V, 20 Ω, 13 W) and 42.50 V for Type 2.
-All powered devices must accept up to 57 V.
+Under the :clause:`33` rules, a Type 1 powered device must work from 37 V
+and a Type 2 powered device from 42.5 V (:clause:`Table 33-18 <33>`). The
+model gives 36.97 V for Type 1 (44 V, 20 Ω, 13 W) and 42.50 V for Type 2.
+All powered devices must accept up to 57 V.
 
 The lowest voltage sets the input range of the powered device's input
-converter, from about 37 V to 57 V
+converter, from about 37 V to 57 V
 (:doc:`../converters/index`).
 
 Open questions

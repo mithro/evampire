@@ -143,8 +143,8 @@ works it out.
      - 57
      - :clause:`Table 145-16 <145>`
 
-Before the power is on, the cable carries only test voltages, below 30 V
-during detection (:clause:`Table 145-7 <145>`) and below 20.5 V during
+Before the power is on, the cable carries only test voltages, below 30 V
+during detection (:clause:`Table 145-7 <145>`) and below 20.5 V during
 classification (:clause:`Table 145-14 <145>`). :doc:`sequence` describes
 these steps.
 

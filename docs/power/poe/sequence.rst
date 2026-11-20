@@ -22,13 +22,13 @@ device.
 
 .. figure:: voltage-timeline.svg
    :alt: Voltage at the powered device input against time. Two detection
-         steps at about 4 V and 8 V, a class event at about 17.5 V, a mark
-         event at about 8.5 V, a second class event and a second mark
-         event, then a rise to about 54 V with an inrush period of 50 to
-         75 ms, a period held to 80 ms, and full power. Shaded bands mark
-         the detection and mark range of 2.7 to 10.1 V, the class range of
-         14.5 to 20.5 V, the turn-on range of 30 to 42 V and the operating
-         range of 42.5 to 57 V.
+         steps at about 4 V and 8 V, a class event at about 17.5 V, a mark
+         event at about 8.5 V, a second class event and a second mark
+         event, then a rise to about 54 V with an inrush period of 50 to
+         75 ms, a period held to 80 ms, and full power. Shaded bands mark
+         the detection and mark range of 2.7 to 10.1 V, the class range of
+         14.5 to 20.5 V, the turn-on range of 30 to 42 V and the operating
+         range of 42.5 to 57 V.
    :align: center
    :width: 100%
 
@@ -40,7 +40,7 @@ The steps are:
 
 Detection
    The power sourcing equipment applies small test voltages and measures
-   the current, to check for a 25 kΩ resistance called the
+   the current, to check for a 25 kΩ resistance called the
    :term:`detection signature`. A device that does not show it never
    receives power.
 Classification
@@ -127,8 +127,8 @@ and 4 (:clause:`Table 145-14 <145>`, :clause:`Table 145-16 <145>`).
      - none
      - 400
 
-Type 2 power sourcing equipment makes its first class event 6 ms to 30 ms
-long, and Type 1 makes its single class event 6 ms to 75 ms long
+Type 2 power sourcing equipment makes its first class event 6 ms to 30 ms
+long, and Type 1 makes its single class event 6 ms to 75 ms long
 (:clause:`Table 33-10 <33>`). The long first class event of Types 3 and 4
 lets a powered device tell which type it is connected to
 (:clause:`145.3.7`).
@@ -215,7 +215,7 @@ power good are parts of the powered device described on
    }
 
 During a mark event the signature resistor stays connected, and the mark
-load in parallel with it brings the resistance below 12 kΩ, which is not a
+load in parallel with it brings the resistance below 12 kΩ, which is not a
 valid detection signature (:clause:`145.3.6.1.1`).
 
 The maintain power signature keeps the power on
@@ -224,16 +224,16 @@ The maintain power signature keeps the power on
 Once powered, the powered device must keep drawing at least a minimum
 current, steadily or in pulses (:clause:`Table 145-32 <145>`):
 
-* at least 10 mA for classes 1 to 4, or 16 mA for classes 5 to 8;
-* each pulse at least 75 ms long, or 7 ms when it saw a long first class
+* at least 10 mA for classes 1 to 4, or 16 mA for classes 5 to 8;
+* each pulse at least 75 ms long, or 7 ms when it saw a long first class
   event;
-* gaps between pulses of at most 250 ms, or 310 ms after a long first class
+* gaps between pulses of at most 250 ms, or 310 ms after a long first class
   event.
 
 Type 3 and Type 4 power sourcing equipment removes the power when the
-current has been below the threshold for 320 ms to 400 ms
+current has been below the threshold for 320 ms to 400 ms
 (:clause:`Table 145-16 <145>`, item 21). It turns the port off within
-500 ms, to below 2.8 V (items 16 and 17). A new cable then starts the
+500 ms, to below 2.8 V (items 16 and 17). A new cable then starts the
 sequence again with detection.
 
 Open questions

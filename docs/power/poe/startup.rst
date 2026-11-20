@@ -99,30 +99,30 @@ The currents for each row are:
 Detection, as an offset current
    A constant current adds an offset to the measured line but does not
    change its slope. Power sourcing equipment must tolerate an offset
-   current of up to 12 µA (:clause:`Table 145-8 <145>`, item 4). Its
+   current of up to 12 µA (:clause:`Table 145-8 <145>`, item 4). Its
    behaviour with a larger offset is undefined (:clause:`145.2.6.4`). The
-   range is 12 µA at 2.7 V and at 10.1 V.
+   range is 12 µA at 2.7 V and at 10.1 V.
 
 Detection, through the signature
-   The signature current itself, if the circuit that shows the 25 kΩ
-   resistance uses its current: 2.7 V across 26.3 kΩ up to 10.1 V across
-   23.7 kΩ (:clause:`Table 145-21 <145>`).
+   The signature current itself, if the circuit that shows the 25 kΩ
+   resistance uses its current: 2.7 V across 26.3 kΩ up to 10.1 V across
+   23.7 kΩ (:clause:`Table 145-21 <145>`).
 
 Class event
    The class signature current is the whole current the powered device
    draws (:clause:`145.2.8.1`), so the sequencer's own current is part of
-   it. The range runs from 14.5 V at the lowest current of the signature to
-   20.5 V at the highest (:numref:`tab-poe-class-sig`).
+   it. The range runs from 14.5 V at the lowest current of the signature to
+   20.5 V at the highest (:numref:`tab-poe-class-sig`).
 
 Mark event
-   0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
+   0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
 
 The steps last a limited time
 -----------------------------
 
 The energy available in a step is its power multiplied by its duration
 (:numref:`tab-poe-step-times`). For example, the first class event of
-Type 3 or Type 4 power sourcing equipment lasts 88 ms to 105 ms, so with
+Type 3 or Type 4 power sourcing equipment lasts 88 ms to 105 ms, so with
 class signature 4:
 
 .. math::
@@ -130,12 +130,12 @@ class signature 4:
    E_\text{low} &= 522\ \text{mW} \times 88\ \text{ms} = 46\ \text{mJ} \\
    E_\text{high} &= 902\ \text{mW} \times 105\ \text{ms} = 95\ \text{mJ}
 
-With class signature 0 the same event gives 1.3 mJ to 8.6 mJ. A later class
-event, 6 ms to 20 ms, gives 3.1 mJ to 18 mJ with signature 4. A mark event,
-6 ms to 12 ms, gives 0.010 mJ to 0.48 mJ.
+With class signature 0 the same event gives 1.3 mJ to 8.6 mJ. A later class
+event, 6 ms to 20 ms, gives 3.1 mJ to 18 mJ with signature 4. A mark event,
+6 ms to 12 ms, gives 0.010 mJ to 0.48 mJ.
 
 Energy cannot be carried across the steps in a large capacitor, because
-the input capacitance during detection is limited to 0.12 µF
+the input capacitance during detection is limited to 0.12 µF
 (:clause:`Table 145-21 <145>`). Whether a capacitor behind a diode or a
 switch can hold the sequencer's supply between steps, without appearing in
 the detection signature, is part of the sequencer design.
@@ -144,15 +144,15 @@ After power-on the class power is available
 -------------------------------------------
 
 Once the voltage passes the turn-on voltage, the powered device may draw up
-to 0.4 A (0.8 A for classes 7 and 8) until 80 ms after turn-on, mostly to
-charge its input capacitor (:doc:`powered-device`). At 30 V to 57 V,
-0.4 A is 12 W to 23 W. From then on it may draw the power of its assigned
-class, from 3.84 W for class 1 to 71.3 W for class 8
+to 0.4 A (0.8 A for classes 7 and 8) until 80 ms after turn-on, mostly to
+charge its input capacitor (:doc:`powered-device`). At 30 V to 57 V,
+0.4 A is 12 W to 23 W. From then on it may draw the power of its assigned
+class, from 3.84 W for class 1 to 71.3 W for class 8
 (:numref:`tab-poe-classes`).
 
 The assigned class depends on the power sourcing equipment as well as on
 the class requested (:numref:`tab-poe-events`). A board that requests
-class 6 from Type 2 power sourcing equipment gets class 4, 25.5 W. The
+class 6 from Type 2 power sourcing equipment gets class 4, 25.5 W. The
 software reads the assigned class from the sequencer when it starts, and
 keeps the board within it (:doc:`monitoring`). The power left for the board
 after its converters is worked out on :doc:`../converters/index`.

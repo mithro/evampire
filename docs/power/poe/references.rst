@@ -14,7 +14,7 @@ Summaries
    <https://ethernetalliance.org/wp-content/uploads/2019/12/WP_EA_Overview8023bt_V2p1_FINAL.pdf>`__,
    Ethernet Alliance white paper, 2019-12.
 
-.. [POE-LLDP] IEEE, `IEEE 802.1AB, Station and Media Access Control
+.. [POE-802-1AB] IEEE, `IEEE 802.1AB, Station and Media Access Control
    Connectivity Discovery <https://standards.ieee.org/ieee/802.1AB/6047/>`__,
    standard page (see also :std:`802.1AB`).
 
