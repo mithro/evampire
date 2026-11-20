@@ -49,9 +49,30 @@ RGMII
 Requirements
 ------------
 
+Ethernet transceivers
+   * In the first version, each external port presents an RGMII interface to
+     an external Ethernet transceiver.
+   * The full design integrates the Ethernet transceiver functions on
+     evampire: the line driver and receiver, the analog-to-digital and
+     digital-to-analog converters, the signal processing that removes echo,
+     crosstalk and cable loss, clock recovery, line coding and automatic
+     speed negotiation. The forwarding logic connects to an integrated
+     transceiver through the same one-byte-per-clock interface it uses with
+     an RGMII interface. See :doc:`ethernet/phy-electrical`.
+   * Which Ethernet speeds the integrated transceiver supports is not yet
+     fixed.
+
+Connection to the cable
+   * In the first version, each Ethernet port connects to its RJ45 socket
+     through standard coupling transformers (the "magnetics").
+   * The full design connects the cable to the board without coupling
+     transformers. The jobs the transformers normally do, such as electrical
+     isolation, rejecting voltage that is common to both wires of a pair,
+     and giving a path for Power over Ethernet current, are done instead by
+     active analog circuits on evampire together with a small number of
+     external passive components. See :doc:`ethernet/magnetics`.
+
 Forwarding between the external ports
-   * Each external port presents an RGMII interface to an external Ethernet
-     transceiver.
    * Every frame received on port A is transmitted on port B, and every frame
      received on port B is transmitted on port A.
    * Forwarding is cut-through. The delay through the chip is a small fixed
