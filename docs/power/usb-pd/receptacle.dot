@@ -1,0 +1,30 @@
+// The 24 contacts of a USB Type-C receptacle, after the USB Type-C
+// specification, Figure 2-1 (front view) and Table 3-4. The front view is
+// drawn turned on its side so that it stays readable on a narrow screen:
+// row A is the left column, read from the top, and row B the right column.
+// Each B contact sits beside the A contact it faces in the receptacle.
+// Contacts evampire uses are in bold.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph receptacle {
+    graph [fontname="Helvetica", margin=0, pad=0.05];
+    node  [shape=plaintext, fontname="Helvetica", fontsize=11];
+
+    r [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="3">
+  <TR><TD BORDER="0"><I>Row A</I></TD><TD BORDER="0"></TD><TD BORDER="0"></TD><TD BORDER="0"><I>Row B</I></TD></TR>
+  <TR><TD BORDER="0">A1</TD><TD><B>GND</B></TD><TD><B>GND</B></TD><TD BORDER="0">B12</TD></TR>
+  <TR><TD BORDER="0">A2</TD><TD>TX1+</TD><TD>RX1+</TD><TD BORDER="0">B11</TD></TR>
+  <TR><TD BORDER="0">A3</TD><TD>TX1−</TD><TD>RX1−</TD><TD BORDER="0">B10</TD></TR>
+  <TR><TD BORDER="0">A4</TD><TD><B>VBUS</B></TD><TD><B>VBUS</B></TD><TD BORDER="0">B9</TD></TR>
+  <TR><TD BORDER="0">A5</TD><TD><B>CC1</B></TD><TD>SBU2</TD><TD BORDER="0">B8</TD></TR>
+  <TR><TD BORDER="0">A6</TD><TD><B>D+</B></TD><TD><B>D−</B></TD><TD BORDER="0">B7</TD></TR>
+  <TR><TD BORDER="0">A7</TD><TD><B>D−</B></TD><TD><B>D+</B></TD><TD BORDER="0">B6</TD></TR>
+  <TR><TD BORDER="0">A8</TD><TD>SBU1</TD><TD><B>CC2</B></TD><TD BORDER="0">B5</TD></TR>
+  <TR><TD BORDER="0">A9</TD><TD><B>VBUS</B></TD><TD><B>VBUS</B></TD><TD BORDER="0">B4</TD></TR>
+  <TR><TD BORDER="0">A10</TD><TD>RX2−</TD><TD>TX2−</TD><TD BORDER="0">B3</TD></TR>
+  <TR><TD BORDER="0">A11</TD><TD>RX2+</TD><TD>TX2+</TD><TD BORDER="0">B2</TD></TR>
+  <TR><TD BORDER="0">A12</TD><TD><B>GND</B></TD><TD><B>GND</B></TD><TD BORDER="0">B1</TD></TR>
+</TABLE>>];
+}

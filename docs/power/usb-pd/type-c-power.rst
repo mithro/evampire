@@ -1,113 +1,151 @@
+.. _usbpd-type-c-power:
+
 Source, sink and the configuration channel
 ==========================================
 
-What a USB Type-C power connection is: the source, the sink and the configuration channel wires.
+What a USB Type-C power connection is made of: the two ends, the contacts
+and wires they use, and the two ways in which they agree on power.
 
-This page describes how the `RISC-V <https://riscv.org/>`__
-:ref:`processor <arch-microcontroller>` carries out the USB Power Delivery
-negotiation in software, by directly driving and sampling the configuration
-channel; which analog circuits it needs for that; and what the gf180mcu
-process allows on the chip.
+A powered :wikipedia:`USB-C` cable joins a :term:`source`, the end that
+supplies power, to a :term:`sink`, the end that receives it. A
+:term:`dual-role port` can act as either. Every USB Type-C port on a board
+built around evampire is a dual-role port, because the board moves power
+between Ethernet and USB Type-C in both directions (:ref:`power-roles`,
+:ref:`req-power-bridging`).
 
-A board built around evampire bridges power between Ethernet and USB Type-C
-in both directions (see :doc:`index`). Every USB Type-C port on the board is
-therefore *dual-role*: it can supply power (act as a *source*) or receive
-power (act as a *sink*), it settles on one of the two when a cable is plugged
-in, and it can swap roles with the other end while the cable stays connected.
-The first version of the board has one USB Type-C port; the
-:ref:`full design <power-board-configs>` has two, each dual-role.
+.. _usbpd-connector:
 
-USB Power Delivery is implemented mostly in software on the RISC-V processor.
-The dedicated hardware is kept to the minimum: the analog circuits that
-connect to the configuration channel wires, and only those digital helpers
-whose timing cannot be met in software (power bridging
-:ref:`requirements`).
+The receptacle has 24 contacts, and power uses four kinds
+----------------------------------------------------------
 
-The page first explains how two USB Type-C ports find each other and decide
-who supplies power, then how they agree on a voltage, then the signal on the
-wire in enough detail to receive and send it in software, the source side,
-cables, role changes, two ports, the cost of doing all of this in software,
-the analog blocks, and the on-chip and external options for each of them on
-the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`__ process (see
-`Limits of the gf180mcu process`_).
+A USB Type-C receptacle has two rows of 12 contacts, row A and row B, one
+above the other (:numref:`fig-usbpd-receptacle`; :typec:`Section 3.2.3`,
+:typec:`Table 3-4`). Each row is the other turned through 180°, so a plug
+fits either way up and still meets a contact of the same kind. The power
+contacts, :term:`VBUS` and ground (GND), each appear four times and are
+joined together on the board.
 
-Two specifications are quoted throughout. Both are free to download from the
-`USB Implementers Forum <https://www.usb.org/>`__ (USB-IF) document library:
+.. graphviz:: receptacle.dot
+   :name: fig-usbpd-receptacle
+   :caption: The 24 contacts of a USB Type-C receptacle, front view turned on
+             its side, with the contacts evampire uses in bold
+             (:typec:`Figure 2-1`).
+   :alt: Two columns of 12 contacts, row A on the left and row B on the
+         right, each B contact beside the A contact it faces. From the top:
+         A1 GND and B12 GND; A2 TX1+ and B11 RX1+; A3 TX1− and B10 RX1−;
+         A4 VBUS and B9 VBUS; A5 CC1 and B8 SBU2; A6 D+ and B7 D−; A7 D− and
+         B6 D+; A8 SBU1 and B5 CC2; A9 VBUS and B4 VBUS; A10 RX2− and B3 TX2−;
+         A11 RX2+ and B2 TX2+; A12 GND and B1 GND. GND, VBUS, CC1, CC2, D+ and
+         D− are in bold.
+   :align: center
 
-* **Type-C** means the :ref:`USB Type-C Cable and Connector Specification
-  <usb-type-c-specification>`, Release 2.5, March 2026 [USBPD-TYPEC]_.
-* **PD** means the :ref:`USB Power Delivery Specification
-  <usb-pd-specification>`, Revision 3.3, Version 1.0, 2026-10-16
-  [USBPD-PD]_.
+:numref:`tab-usbpd-contacts` lists what each group of contacts carries and
+whether evampire uses it.
 
-Section and table numbers given in brackets, such as (:pd:`Table 5.10`),
-refer to these documents and link to their entries on the
-:doc:`standards page <../standards>`.
-
-The connector and the CC wire
------------------------------
-
-A USB Type-C receptacle has 24 contacts. A port that only moves power uses
-four kinds of them (:numref:`tab-usbpd-contacts`; :typec:`Table 3-4` and
-:typec:`Section 4.2 <x>`):
-
-.. list-table:: Type-C receptacle contacts used by a power-only port
+.. list-table:: USB Type-C receptacle contacts and their use on evampire
    :name: tab-usbpd-contacts
    :header-rows: 1
-   :widths: 15 25 60
+   :widths: 20 30 50
 
    * - Signal
      - Contacts
-     - Use
+     - Use on evampire
    * - VBUS
      - A4, A9, B4, B9
-     - Power. Not driven by a source until it has detected a sink.
+     - Power, at 5 V or a negotiated voltage.
    * - GND
      - A1, A12, B1, B12
      - Power return.
-   * - CC1
-     - A5
-     - Configuration channel, first position.
-   * - CC2
-     - B5
-     - Configuration channel, second position.
+   * - CC1, CC2
+     - A5, B5
+     - Configuration channel.
+   * - D+, D−
+     - A6, A7, B6, B7
+     - USB 2.0 data for the USB serial port.
+   * - TX and RX pairs
+     - A2, A3, A10, A11, B2, B3, B10, B11
+     - none
+   * - SBU1, SBU2
+     - A8, B8
+     - none
 
-The remaining contacts carry USB data and sideband signals. A board that does
-not use USB data can leave them unconnected.
+The TX and RX pairs carry USB 3.2 and USB4 data, and the :term:`SBU`
+contacts carry other signals, for example in alternate modes
+(:typec:`Section 4.2`, :typec:`Section 4.3`). The D+ and D− contacts carry
+the USB serial port of :ref:`req-usb-serial` (see :doc:`/usb-serial/index`).
 
-**Why there are two CC pins.** The plug can be inserted either way up. The
-cable has only one CC wire, which in each plug is connected to contact A5.
-Contact B5 of each plug is called VCONN and is not carried through to the
-other end of the cable (:typec:`Section 2.5`; :typec:`Table 3-10 <x>`). Each
-receptacle therefore has a CC contact in both positions, CC1 and CC2, and
-only one of them meets the CC wire (:numref:`fig-usbpd-cc-wiring`). Which one
-tells each side which way round the plug was inserted
-(:typec:`Section 2.3.2`). A power-only port does not need the orientation
-itself, but it must know which CC pin carries the CC wire, because that is
-where messages arrive, and the source must know which pin is left over,
-because that is where it supplies VCONN.
+The cable has one CC wire, which tells each end which way up the plug is
+--------------------------------------------------------------------------
 
-.. _fig-usbpd-cc-wiring:
+The :term:`configuration channel` (CC) is the wire on which the two ends
+find each other, agree on power and exchange messages
+(:typec:`Section 2.3`). The receptacle has two CC contacts, CC1 (A5) and CC2
+(B5), but a standard cable carries only one CC wire
+(:numref:`fig-usbpd-cc-wiring`; :typec:`Table 3-10`).
+
+In each plug the CC wire lands on contact A5. Contact B5 of the plug is
+called :term:`VCONN`. It powers any chip inside the plug and does not reach
+the far end of the cable (:typec:`Section 2.5`, :typec:`Section 4.9`).
+Depending on which way up the plug is inserted, the CC wire meets either the
+receptacle's CC1 or its CC2 pin.
 
 .. graphviz:: cc-wiring.dot
-   :caption: The single CC wire through a USB Type-C cable. In this example
-             the plug at the sink end is turned over, so the source's CC1
-             meets the sink's CC2. Each port's other CC pin meets the plug's
-             VCONN contact, which is not connected to the far end.
+   :name: fig-usbpd-cc-wiring
+   :caption: The single CC wire through a USB Type-C cable, with the plug at
+             the sink end turned over so that the source's CC1 meets the
+             sink's CC2.
+   :alt: The source pulls CC1 and CC2 up with Rp and the sink pulls its CC1
+         and CC2 down with Rd. The source's CC1 connects through plug 1's CC
+         contact, the single CC wire and plug 2's CC contact to the sink's
+         CC2. The source's CC2 and the sink's CC1 each meet only a VCONN
+         contact that ends in the plug. VBUS and GND wires join the source's
+         VBUS switch to the sink's VBUS input.
    :align: center
 
-Two layers of power negotiation
--------------------------------
+Which CC pin meets the CC wire tells each end the plug's orientation
+(:typec:`Section 2.3.2`). evampire uses no TX or RX pairs, so it does not
+need the orientation to route data. It does need to know which pin carries
+the CC wire, because the messages arrive there. As a source, it also needs
+to know which pin is left over, because it supplies VCONN on that pin when
+the cable needs it (:ref:`usbpd-vconn`).
 
-1. **Resistor advertisement ("USB Type-C Current")**, described in
-   `Layer 1: the resistor advertisement`_. The source's Rp value says how
-   much current the sink may draw at 5 V: the default USB amount, 1.5 A or
-   3.0 A. The sink measures the voltage on its CC pin. No messages are
-   exchanged.
-2. **USB Power Delivery messages**, described in
-   `Layer 2: USB Power Delivery power levels`_ and the sections after it.
-   Source and sink exchange messages on the CC wire. The source lists the
-   voltages and currents it can supply and the sink asks for one. This is the
-   only way to get more than 5 V or more than 3 A: the resistor
-   advertisement stops at 3.0 A at 5 V, while USB Power Delivery goes up to
-   48 V and 5 A (:typec:`Table 4-19`).
+.. _usbpd-two-mechanisms:
+
+Two mechanisms set the power: a resistor level and USB Power Delivery messages
+------------------------------------------------------------------------------
+
+The source and the sink agree on power in one of two ways, summarised in
+:numref:`tab-usbpd-mechanisms` (:typec:`Table 2-1`).
+
+.. list-table:: The two ways a USB Type-C source and sink agree on power
+   :name: tab-usbpd-mechanisms
+   :header-rows: 1
+   :widths: 50 25 25
+
+   * - Mechanism
+     - Voltage (V)
+     - Current (A)
+   * - Resistor advertisement
+     - 5
+     - up to 3.0
+   * - USB Power Delivery messages
+     - 5 to 48
+     - up to 5
+
+The resistor advertisement (:doc:`resistor-advertisement`), which the
+specification calls :term:`USB Type-C Current`, works without messages. The source connects a
+:wikipedia:`pull-up <Pull-up_resistor>`, :term:`Rp`, to each CC pin and the
+sink connects a pull-down, :term:`Rd`. The value of Rp tells the sink how
+much current it may draw at 5 V: the default USB current, 1.5 A or 3.0 A.
+The sink reads it by measuring the voltage on its CC pin.
+
+:term:`USB Power Delivery` uses messages on the same CC wire. The source
+lists the voltages and currents it can supply and the sink asks for one of
+them (:doc:`power-levels`, :ref:`usbpd-negotiation`). It is the only way to get more than 5 V or
+more than 3.0 A. It also lets the two ends swap roles while the cable stays
+connected (:ref:`usbpd-role-changes`).
+
+A third method, USB Battery Charging 1.2, signals a charger on the D+ and D−
+wires. A USB Type-C source that supports it and can supply 1.5 A also
+advertises 1.5 A with Rp (:typec:`Section 4.6.2.2`), so a sink that reads Rp
+does not need to detect it.

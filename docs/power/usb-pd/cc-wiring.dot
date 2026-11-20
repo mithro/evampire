@@ -23,9 +23,9 @@ digraph cc_wiring {
     subgraph cluster_cable {
         label="Cable"; style="rounded"; color="#5b9bd5";
         p1_cc    [label="Plug 1\nCC contact", style="filled", fillcolor="#dbe8f5"];
-        p1_vconn [label="Plug 1\nVCONN contact", style="filled", fillcolor="#dbe8f5"];
+        p1_vconn [label="Plug 1\nVCONN contact\n(ends in the plug)", style="filled", fillcolor="#dbe8f5"];
         p2_cc    [label="Plug 2\nCC contact", style="filled", fillcolor="#dbe8f5"];
-        p2_vconn [label="Plug 2\nVCONN contact", style="filled", fillcolor="#dbe8f5"];
+        p2_vconn [label="Plug 2\nVCONN contact\n(ends in the plug)", style="filled", fillcolor="#dbe8f5"];
     }
 
     subgraph cluster_snk {
@@ -47,11 +47,11 @@ digraph cc_wiring {
     rp1 -> s_cc1;
     rp2 -> s_cc2;
     s_cc1 -> p1_cc;
-    s_cc2 -> p1_vconn [style=dashed];
+    s_cc2 -> p1_vconn [style=dashed, label=" unused\n CC pin"];
     p1_cc -> p2_cc [penwidth=2, label=" the single\n CC wire"];
     p1_vconn -> p2_vconn [style=invis];
     p2_cc -> k_cc2;
-    p2_vconn -> k_cc1 [style=dashed];
+    p2_vconn -> k_cc1 [style=dashed, label=" unused\n CC pin"];
     k_cc2 -> rd2;
     k_cc1 -> rd1;
     s_vbus -> k_vbus [penwidth=2, label=" VBUS and\n GND wires"];

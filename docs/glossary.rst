@@ -377,3 +377,9 @@ gives a short description and a link to the full explanation.
       A 32-bit data word in a USB Power Delivery Vendor_Defined message. A
       cable's answer to Discover Identity is made of VDOs (see
       :doc:`power/usb-pd/cables`).
+
+   USB Type-C Current
+      The current a USB Type-C source advertises to a sink at 5 V through
+      the value of its pull-up, Rp, without any messages: the default USB
+      current, 1.5 A or 3.0 A (see
+      :doc:`power/usb-pd/resistor-advertisement`).
