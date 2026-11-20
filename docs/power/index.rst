@@ -43,6 +43,8 @@ and receiving power need different circuits on the board, so a port that can
 take either role has both sets of circuits and selects one before a cable is
 connected (see :doc:`poe`).
 
+.. _power-modes:
+
 Operating modes
 ---------------
 
@@ -63,6 +65,8 @@ power the board itself uses and the losses in the voltage converters. When
 the granted input power changes, for example after a USB role swap, the
 processor lowers the power offered on the outputs first.
 
+.. _power-board-configs:
+
 Board configurations
 --------------------
 
@@ -82,6 +86,8 @@ Board configurations
      - Either role
      - Either role
      - Two, each dual-role
+
+.. _power-flow:
 
 Power flow
 ----------

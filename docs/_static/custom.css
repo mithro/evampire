@@ -46,3 +46,10 @@ figure {
     width: auto;
   }
 }
+
+/* A citation cited many times shows a long "(1,2,3,...)" list of links back
+ * to each use. Let it wrap instead of widening the page. */
+span.backrefs,
+div.citation {
+  overflow-wrap: anywhere;
+}
