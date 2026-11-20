@@ -23,6 +23,11 @@ only a few bytes of storage on each path, no matter how long the frame is.
 The internal processor sees a filtered copy of the traffic and can add its own
 frames into the stream.
 
+The processor also manages power. A board built around evampire can be
+powered from an Ethernet cable and supply power over USB Type-C, or be
+powered from USB Type-C and supply power over an Ethernet cable. The
+processor negotiates the role and power level on each port.
+
 Terms used in this documentation
 --------------------------------
 
@@ -44,9 +49,30 @@ RGMII
 Requirements
 ------------
 
+Ethernet transceivers
+   * In the first version, each external port presents an RGMII interface to
+     an external Ethernet transceiver.
+   * The full design integrates the Ethernet transceiver functions on
+     evampire: the line driver and receiver, the analog-to-digital and
+     digital-to-analog converters, the signal processing that removes echo,
+     crosstalk and cable loss, clock recovery, line coding and automatic
+     speed negotiation. The forwarding logic connects to an integrated
+     transceiver through the same one-byte-per-clock interface it uses with
+     an RGMII interface. See :doc:`ethernet/phy-electrical`.
+   * Which Ethernet speeds the integrated transceiver supports is not yet
+     fixed.
+
+Connection to the cable
+   * In the first version, each Ethernet port connects to its RJ45 socket
+     through standard coupling transformers (the "magnetics").
+   * The full design connects the cable to the board without coupling
+     transformers. The jobs the transformers normally do, such as electrical
+     isolation, rejecting voltage that is common to both wires of a pair,
+     and giving a path for Power over Ethernet current, are done instead by
+     active analog circuits on evampire together with a small number of
+     external passive components. See :doc:`ethernet/magnetics`.
+
 Forwarding between the external ports
-   * Each external port presents an RGMII interface to an external Ethernet
-     transceiver.
    * Every frame received on port A is transmitted on port B, and every frame
      received on port B is transmitted on port A.
    * Forwarding is cut-through. The delay through the chip is a small fixed
@@ -89,6 +115,32 @@ Processor
      1 Mbit/s. The processor does not need to keep up with gigabit traffic.
    * The processor also controls the configuration interface of each
      external transceiver.
+
+Power bridging
+   * A board built around evampire can take its power from an Ethernet
+     cable (Power over Ethernet) or from a USB Type-C connector (USB Power
+     Delivery), and can pass that power on through the other kind of port.
+     See :doc:`power/index`.
+   * **Ethernet in, USB out:** evampire receives power from an Ethernet
+     port as a *powered device* and supplies power on a USB Type-C port as
+     a USB Power Delivery *source*.
+   * **USB in, Ethernet out:** evampire receives power from a USB Type-C
+     port as a USB Power Delivery *sink* and supplies power on an Ethernet
+     port as Power over Ethernet *power sourcing equipment*.
+   * Power received on one Ethernet port can also be supplied on the other
+     Ethernet port.
+   * Each USB Type-C port is *dual-role*: it can attach as either a source
+     or a sink, and can swap roles while connected, without unplugging.
+   * The power levels are negotiated on every port. The processor keeps a
+     power budget: the power offered on the output ports never exceeds the
+     power granted on the input port, minus the board's own consumption and
+     conversion losses.
+   * The first version of the board has one Ethernet port that receives
+     power (port A), one Ethernet port that supplies power (port B), and one
+     USB Type-C port. The full design allows either Ethernet port to take
+     either role and has two USB Type-C ports.
+   * All Power over Ethernet types and all USB Power Delivery voltage ranges
+     are documented. The maximum power the board supports is not yet fixed.
 
 Process
    * The chip targets the gf180mcu process through wafer.space.
