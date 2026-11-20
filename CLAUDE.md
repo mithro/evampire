@@ -90,14 +90,13 @@ A `:std:` target with no entry on the standards page is a build error. Add
 the entry, with its `.. _std-<slug>:` label, first. Titles in `.. [KEY]`
 citation blocks are exempt from `check_source.py`.
 
-The IEEE 802.3-2022 PDF and its text extract are kept outside the repository
-(`~/local/standards/`). Never commit or publish them, or quote from them at
-length.
+IEEE 802.3-2022 and the USB specifications are copyrighted. Never commit or
+publish copies of them, or quote from them at length.
 
 ## Writing rules
 
-The maintainers' rules are in `~/local/docs-writing/README.md`. The key ones,
-plus decisions made for this project:
+The maintainers' documentation writing rules, plus decisions made for this
+project:
 
 - **Readers:** ASIC engineers who are new to Ethernet and USB-PD. Neutral
   tone and British spelling ("analogue", "-ise"). Describe the current
@@ -129,8 +128,8 @@ plus decisions made for this project:
 ## Repository conventions
 
 - **Always work in an isolated worktree on its own branch.** Never edit,
-  commit or switch branches in the primary checkout
-  (`/home/tim/github/mithro/evampire`).
+  commit or switch branches in the primary checkout (the directory the
+  repository was cloned into).
 - **Keep the primary checkout pristine:** on `main`, with no local changes or
   untracked files, and in sync with `origin/main` on GitHub. The only
   command to run there is `git pull --ff-only`, to bring it up to date after
