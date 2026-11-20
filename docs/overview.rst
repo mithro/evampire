@@ -139,6 +139,10 @@ Power bridging
      power (port A), one Ethernet port that supplies power (port B), and one
      USB Type-C port. The full design allows either Ethernet port to take
      either role and has two USB Type-C ports.
+   * USB Power Delivery is implemented mostly in software on the RISC-V
+     processor. The dedicated hardware is kept to the minimum needed: the
+     analog circuits that connect to the configuration channel wires, and
+     only those digital helpers whose timing cannot be met in software.
    * All Power over Ethernet types and all USB Power Delivery voltage ranges
      are documented. The maximum power the board supports is not yet fixed.
 
