@@ -1,5 +1,7 @@
-// Power role swap message sequence (USB PD specification, sections 4.3.3 and 7.10).
-// Time runs from top to bottom. Not to scale.
+// Power role swap message sequence (USB PD R3.3, Section 4.3.3, Figure 4.14,
+// Section 7.10; time limits from Tables 4.7, 4.8 and 7.10).
+// The initial sink asks in this example. Time runs from top to bottom.
+// Not to scale.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -14,20 +16,25 @@ digraph pr_swap {
        label="Initial source\n(becomes sink)", width=1.1];
     b [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
        label="Initial sink\n(becomes source)", width=1.1];
-    nh [shape=plaintext, label="Time limit", fontsize=10, fontname="Helvetica-Bold"];
+    nh [shape=plaintext, label="Time limit", fontsize=10,
+        fontname="Helvetica-Bold"];
 
-    a1; a2; a3; a4; a5; a6; a7; a8; a9; a10;
-    b1; b2; b3; b4; b5; b6; b7; b8; b9; b10;
+    a1; a2; a3; a4; a5; a6; a7; a8; a9; a10; a11; a12;
+    b1; b2; b3; b4; b5; b6; b7; b8; b9; b10; b11; b12;
 
     node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
     n1  [label="Either side may ask"];
-    n2  [label="Within 15 ms"];
-    n3  [label="Sink cuts its current\nto 2.5 mA within 15 ms"];
-    n4  [label="After at least 25 ms;\nat 0.8 V within 650 ms;\nRp changed to Rd"];
-    n5  [label="Starts within 690 ms\n(other side waits\n750-920 ms)"];
-    n7  [label="Rd changed to Rp,\nVBUS on to 5 V"];
-    n8  [label="Starts within 280 ms\n(other side waits\n390-480 ms)"];
-    n10 [label="After at least 20 ms"];
+    n2  [label="Within 195 µs"];
+    n3  [label="Within 15 ms"];
+    n4  [label="Within 195 µs"];
+    n5  [label="Sink cuts its current\nto 2.5 mA within 15 ms"];
+    n6  [label="After at least 25 ms;\nat 0.8 V within 650 ms;\nRp changed to Rd"];
+    n7  [label="Starts within 690 ms\n(other side waits\n750-920 ms)"];
+    n8  [label="Within 195 µs"];
+    n9  [label="Rd changed to Rp;\nVBUS at 5 V"];
+    n10 [label="Starts within 280 ms\n(other side waits\n390-480 ms)"];
+    n11 [label="Within 195 µs"];
+    n12 [label="At least 20 ms later"];
 
     { rank=same; a; b; nh; }
     { rank=same; a1; b1; n1; }
@@ -35,26 +42,31 @@ digraph pr_swap {
     { rank=same; a3; b3; n3; }
     { rank=same; a4; b4; n4; }
     { rank=same; a5; b5; n5; }
-    { rank=same; a6; b6; }
+    { rank=same; a6; b6; n6; }
     { rank=same; a7; b7; n7; }
     { rank=same; a8; b8; n8; }
-    { rank=same; a9; b9; }
+    { rank=same; a9; b9; n9; }
     { rank=same; a10; b10; n10; }
+    { rank=same; a11; b11; n11; }
+    { rank=same; a12; b12; n12; }
 
     edge [arrowhead=none, style=dashed, color="#999999", weight=100];
-    a -> a1 -> a2 -> a3 -> a4 -> a5 -> a6 -> a7 -> a8 -> a9 -> a10;
-    b -> b1 -> b2 -> b3 -> b4 -> b5 -> b6 -> b7 -> b8 -> b9 -> b10;
-    nh -> n1 -> n2 -> n3 -> n4 -> n5 -> n7 -> n8 -> n10 [style=invis];
+    a -> a1 -> a2 -> a3 -> a4 -> a5 -> a6 -> a7 -> a8 -> a9 -> a10 -> a11 -> a12;
+    b -> b1 -> b2 -> b3 -> b4 -> b5 -> b6 -> b7 -> b8 -> b9 -> b10 -> b11 -> b12;
+    nh -> n1 -> n2 -> n3 -> n4 -> n5 -> n6 -> n7 -> n8 -> n9 -> n10 -> n11 -> n12
+        [style=invis];
 
     edge [arrowhead=normal, style=solid, color="#000000", weight=0];
-    b1 -> a1 [label="PR_Swap"];
-    a2 -> b2 [label="Accept"];
-    b3 -> a3 [label="GoodCRC"];
-    a4 -> b4 [label="VBUS to 0 V", penwidth=2, color="#c55a11"];
-    a5 -> b5 [label="PS_RDY"];
-    b6 -> a6 [label="GoodCRC"];
-    b7 -> a7 [label="VBUS to 5 V", penwidth=2, color="#c55a11"];
-    b8 -> a8 [label="PS_RDY"];
-    a9 -> b9 [label="GoodCRC"];
-    b10 -> a10 [label="Source_Capabilities"];
+    b1 -> a1   [label="PR_Swap"];
+    a2 -> b2   [label="GoodCRC"];
+    a3 -> b3   [label="Accept"];
+    b4 -> a4   [label="GoodCRC"];
+    b5 -> a5   [style=invis];
+    a6 -> b6   [label="VBUS to 0 V", penwidth=2, color="#c55a11"];
+    a7 -> b7   [label="PS_RDY"];
+    b8 -> a8   [label="GoodCRC"];
+    b9 -> a9   [label="VBUS to 5 V", penwidth=2, color="#c55a11"];
+    b10 -> a10 [label="PS_RDY"];
+    a11 -> b11 [label="GoodCRC"];
+    b12 -> a12 [label="Source_Capabilities"];
 }
