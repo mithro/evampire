@@ -1,0 +1,69 @@
+// The analogue front end of one USB port, between the digital logic and
+// the pins. Arrows show the direction of each signal.
+//
+// Fixed grid (positions in inches):
+//   x=0.9  digital side
+//   x=3.3  analogue blocks, one per row
+//   x=5.7  pins
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph frontend {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.9, height=0.5,
+           fixedsize=true];
+    edge  [arrowsize=0.7];
+
+    dig  [pos="0.75,2.4!", label="Digital logic\n(serialiser,\ndeserialiser,\nprocessor\nregisters)",
+          width=1.15, height=4.3, fillcolor="#dbe8f5"];
+
+    pu   [pos="3.3,4.2!", label="1.5 kΩ pull-up\nand switch", fillcolor="#e2f0d9"];
+    drv  [pos="3.3,3.3!", label="Full-speed driver\n(two outputs, tri-state)",
+          fillcolor="#fbe5d6"];
+    dif  [pos="3.3,2.4!", label="Differential receiver", fillcolor="#fbe5d6"];
+    se   [pos="3.3,1.5!", label="Single-ended receivers\nand SE0 filter",
+          fillcolor="#fbe5d6"];
+    vb   [pos="3.3,0.6!", label="VBUS comparator", fillcolor="#e2f0d9"];
+
+    pins [pos="5.7,2.85!", label="D+ and D−\npins", width=0.95, height=3.2,
+          fillcolor="#ffffff"];
+    vbp  [pos="5.7,0.6!", label="VBUS\nsense pin", width=0.95, fillcolor="#ffffff"];
+
+    // Points on the edge of the pin box, so that each row's line is level.
+    node [shape=point, width=0.01, style=invis, label=""];
+    q1 [pos="5.22,4.2!"];
+    q2 [pos="5.22,3.3!"];
+    q3 [pos="5.22,2.4!"];
+    q4 [pos="5.22,1.5!"];
+    r1 [pos="1.33,4.2!"];
+    r2 [pos="1.33,3.3!"];
+    r3 [pos="1.33,2.4!"];
+    r4 [pos="1.33,1.5!"];
+    r5 [pos="1.33,0.6!"];
+
+    node [shape=plaintext, style="", fontsize=9, fixedsize=false, width=0.1,
+          height=0.1];
+    t1 [pos="1.84,4.33!", label="pull-up enable"];
+    t2 [pos="1.84,3.43!", label="drive, enable"];
+    t3 [pos="1.84,2.53!", label="J or K"];
+    t4 [pos="1.84,1.63!", label="D+, D−, SE0"];
+    t5 [pos="1.84,0.73!", label="VBUS present"];
+    t6 [pos="4.75,4.33!", label="D+"];
+    t7 [pos="4.75,3.43!", label="D+, D−"];
+    t8 [pos="4.75,2.53!", label="D+, D−"];
+    t9 [pos="4.75,1.63!", label="D+, D−"];
+    t10 [pos="4.75,0.73!", label="divided VBUS"];
+
+    r1 -> pu;
+    r2 -> drv;
+    dif -> r3;
+    se  -> r4;
+    vb  -> r5;
+    pu  -> q1;
+    drv -> q2;
+    q3 -> dif;
+    q4 -> se;
+    vbp -> vb;
+}
