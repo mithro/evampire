@@ -267,7 +267,7 @@ evampire includes the functions of three voltage converters
 
 * evampire includes the functions of the three
   :wikipedia:`switching voltage converters <Switched-mode_power_supply>` in
-  the power path. See :doc:`power/converters`. The three functions are:
+  the power path. See :doc:`power/converters/index`. The three functions are:
 
   - bringing the Power over Ethernet input down to the board's power bus;
   - producing the USB Type-C output voltage when a USB port is a source;
