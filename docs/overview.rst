@@ -186,6 +186,24 @@ Power bridging
    * All Power over Ethernet types and all USB Power Delivery voltage ranges
      are documented. The maximum power the board supports is not yet fixed.
 
+Voltage converters
+   * evampire includes the functions of the three
+     :wikipedia:`switching voltage converters <Switched-mode_power_supply>`
+     in the power path: the converter that brings the Power over Ethernet
+     input down to the board's power bus, the converter that produces the
+     USB Type-C output voltage when a USB port is a source, and the
+     converter that produces the 44 V to 57 V needed to supply Power over
+     Ethernet. See :doc:`power/converters`.
+   * The input and output voltage ranges of USB Power Delivery and Power
+     over Ethernet overlap. Whether the three functions are three separate
+     converters, one converter whose connections change with the operating
+     mode, or another arrangement is not yet fixed.
+   * The converter functions are brought onto evampire step by step. In the
+     first version, evampire controls the converters while the power
+     transistors and their gate drivers are external parts. Moving the gate
+     drivers, and then the power transistors, onto evampire is explored in
+     later versions.
+
 Process
    * The chip targets the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
      process through `wafer.space <https://wafer.space/>`_.

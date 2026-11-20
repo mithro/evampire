@@ -127,6 +127,12 @@ granted on port A, drives and senses the USB configuration channel wires
 sets the USB output voltage, and enables and monitors the power sourcing
 equipment switch.
 
+evampire also controls the three voltage converters: the input converter,
+the USB converter and the high-voltage converter. In the first version the
+power transistors and their gate drivers are external parts and evampire
+provides the control; :doc:`converters` explains how these converters work
+and how more of each can move onto the chip.
+
 Many of these circuits handle voltages (up to 57 V on an Ethernet cable and
 up to 48 V on USB) far above the continuous ratings of the standard
 transistors in the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
@@ -142,3 +148,4 @@ function, and the following pages analyse it for each standard.
 
    poe
    usb-pd
+   converters
