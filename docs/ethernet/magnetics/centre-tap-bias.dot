@@ -1,0 +1,79 @@
+// Circuit-side centre tap for the two kinds of transceiver line driver.
+// One pair is shown; each of the four pairs is wired the same way.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph centre_tap_bias {
+    graph [layout=neato, splines=line, fontname="Helvetica", fontsize=11,
+           outputorder=edgesfirst];
+    node  [fontname="Helvetica", fontsize=10, shape=plain, pin=true];
+    edge  [penwidth=1.3];
+
+    // ---- Current-mode driver (left). ----
+    t1 [pos="1.5,3.55!", label=<<b>Current-mode driver</b>>];
+
+    rail1 [pos="1.5,3.05!", shape=box, style=filled, fillcolor="#fbe5d6",
+           width=2.9, height=0.25, fixedsize=true, fontsize=9,
+           label="supply (for example 3.3 V)"];
+
+    drv1 [pos="0,1.4!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#dbe8f5">
+        <tr><td colspan="2"><b>Transceiver</b></td></tr>
+        <tr><td rowspan="2">switched<br/>current<br/>sinks</td><td port="p" align="right">+</td></tr>
+        <tr><td port="n" align="right">−</td></tr>
+      </table>>];
+
+    x1 [pos="2.75,1.45!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#fff2cc">
+        <tr><td></td><td port="ct"><font point-size="9">CT</font></td></tr>
+        <tr><td port="p">●</td><td rowspan="2">transformer<br/>circuit-side<br/>winding</td></tr>
+        <tr><td port="n">●</td></tr>
+      </table>>];
+
+    node [shape=box, fixedsize=true, width=0.5, height=0.22, fontsize=9];
+    r1p [pos="1.05,2.3!", label="50 Ω"];
+    r1n [pos="1.6,2.3!", label="50 Ω"];
+
+    node [shape=point, width=0.06, style=filled, fillcolor="#000000", fixedsize=false];
+    j1p [pos="1.05,1.52!"];
+    j1n [pos="1.6,1.24!"];
+    jct1 [pos="2.92,2.3!"];
+
+    c1 [pos="3.75,2.3!", shape=box, style="", fontsize=9, label="0.1 µF to\nsignal ground"];
+
+    drv1:p -- j1p -- x1:p;
+    drv1:n -- j1n -- x1:n;
+    j1p -- r1p -- rail1 [color="#7f7f7f"];
+    j1n -- r1n -- rail1 [color="#7f7f7f"];
+    x1:ct -- jct1 [color="#c00000", penwidth=1.6];
+    jct1 -- rail1 [color="#c00000", penwidth=1.6];
+    jct1 -- c1 [color="#c00000", penwidth=1.6];
+
+    // ---- Voltage-mode driver (right). ----
+    node [shape=plain, style="", width=0, height=0];
+    t2 [pos="6.6,3.55!", label=<<b>Voltage-mode driver</b>>];
+
+    drv2 [pos="5.4,1.4!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#dbe8f5">
+        <tr><td colspan="2"><b>Transceiver</b></td></tr>
+        <tr><td rowspan="2">push-pull<br/>drivers with<br/>built-in<br/>termination</td><td port="p" align="right">+</td></tr>
+        <tr><td port="n" align="right">−</td></tr>
+      </table>>];
+
+    x2 [pos="7.65,1.45!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#fff2cc">
+        <tr><td></td><td port="ct"><font point-size="9">CT</font></td></tr>
+        <tr><td port="p">●</td><td rowspan="2">transformer<br/>circuit-side<br/>winding</td></tr>
+        <tr><td port="n">●</td></tr>
+      </table>>];
+
+    jct2 [pos="7.82,2.3!", shape=point, width=0.06, height=0.06, style=filled,
+          fillcolor="#000000"];
+    c2 [pos="8.75,2.3!", shape=box, style="", fontsize=9,
+        label="0.1 µF to\nsignal ground\n(no supply)"];
+
+    drv2:p -- x2:p;
+    drv2:n -- x2:n;
+    x2:ct -- jct2 [color="#c00000", penwidth=1.6];
+    jct2 -- c2 [color="#c00000", penwidth=1.6];
+}

@@ -1,0 +1,55 @@
+// Taking Power over Ethernet from the cable-side centre taps.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph poe_centre_taps {
+    graph [layout=neato, splines=line, fontname="Helvetica", fontsize=11,
+           outputorder=edgesfirst];
+    node  [fontname="Helvetica", fontsize=10, shape=box, style="filled",
+           fillcolor="#ffffff", pin=true];
+    edge  [fontname="Helvetica", fontsize=9, penwidth=1.3];
+
+    phy [pos="0,2.2!", label="Transceiver\n(data only)", fillcolor="#dbe8f5"];
+
+    mag [pos="2.9,2.2!", shape=plain, label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#fff2cc">
+        <tr><td rowspan="4" port="data">data,<br/>4 pairs</td>
+            <td colspan="4"><b>Magnetics</b> (PoE-rated)</td>
+            <td port="a">A</td></tr>
+        <tr><td colspan="4" rowspan="3"><font point-size="9">transformers and chokes;<br/>circuit side on the left,<br/>cable side on the right</font></td>
+            <td port="b">B</td></tr>
+        <tr><td port="c">C</td></tr>
+        <tr><td port="d">D</td></tr>
+        <tr><td></td>
+            <td port="cta"><font point-size="9">CT A</font></td>
+            <td port="ctb"><font point-size="9">CT B</font></td>
+            <td port="ctc"><font point-size="9">CT C</font></td>
+            <td port="ctd"><font point-size="9">CT D</font></td>
+            <td port="bs"></td></tr>
+      </table>>];
+
+    rj45 [pos="5.9,2.2!", shape=plain, label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#f2f2f2">
+        <tr><td><b>RJ45</b></td></tr>
+        <tr><td port="a">pins 1, 2</td></tr>
+        <tr><td port="b">pins 3, 6</td></tr>
+        <tr><td port="c">pins 4, 5</td></tr>
+        <tr><td port="d">pins 7, 8</td></tr>
+      </table>>];
+
+    br1 [pos="2.0,0.45!", label="Bridge rectifier 1\n(pairs A and B)", fillcolor="#fbe5d6"];
+    br2 [pos="3.8,0.45!", label="Bridge rectifier 2\n(pairs C and D)", fillcolor="#fbe5d6"];
+    pd  [pos="2.9,-0.75!", label="Powered-device interface and power converter\n(see the Power over Ethernet page)",
+         fillcolor="#fbe5d6"];
+    bs  [pos="5.9,0.45!", label="75 Ω common-mode\ntermination, each through\na 10 nF DC-blocking\ncapacitor"];
+
+    phy -- mag:data;
+    rj45:a -- mag:a; rj45:b -- mag:b; rj45:c -- mag:c; rj45:d -- mag:d;
+
+    edge [color="#c00000"];
+    mag:cta -- br1; mag:ctb -- br1;
+    mag:ctc -- br2; mag:ctd -- br2;
+    br1 -- pd; br2 -- pd;
+
+    mag:bs -- bs [style=dashed, color="#595959"];
+}
