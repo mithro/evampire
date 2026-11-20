@@ -1,0 +1,56 @@
+// Hard Reset sequence (USB PD R3.3, Sections 4.4, 4.4.1 and 7.1.3,
+// Figures 4.15 and 4.16; time limits from Tables 4.7, 4.8, 4.9 and 7.10,
+// and USB Type-C R2.5 Table 4-32). Time runs from top to bottom.
+// Not to scale.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph hard_reset {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=1.1,
+           ranksep=0.3, newrank=true, splines=false];
+    node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    src [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+         label="Source\n(Rp)", width=1.0];
+    snk [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+         label="Sink\n(Rd)", width=1.0];
+    nh [shape=plaintext, label="Time limit", fontsize=10,
+        fontname="Helvetica-Bold"];
+
+    s1; s2; s3; s4; s5; s6; s7;
+    k1; k2; k3; k4; k5; k6; k7;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    n1 [label="Sent by either side;\nno GoodCRC"];
+    n2 [label="Sink prepares\nwithin 15 ms"];
+    n3 [label="Starts 25-35 ms after\nthe Hard Reset; at 0.8 V\nwithin 650 ms"];
+    n4 [label="Sink draws at most 1 mA;\nsource waits 0.66-1.0 s"];
+    n5 [label="0 V to 5 V\nwithin 275 ms"];
+    n6 [label="Within 2 ms\nof 5 V"];
+    n7 [label="Within 250 ms\nof 5 V"];
+
+    { rank=same; src; snk; nh; }
+    { rank=same; s1; k1; n1; }
+    { rank=same; s2; k2; n2; }
+    { rank=same; s3; k3; n3; }
+    { rank=same; s4; k4; n4; }
+    { rank=same; s5; k5; n5; }
+    { rank=same; s6; k6; n6; }
+    { rank=same; s7; k7; n7; }
+
+    edge [arrowhead=none, style=dashed, color="#999999", weight=100];
+    src -> s1 -> s2 -> s3 -> s4 -> s5 -> s6 -> s7;
+    snk -> k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7;
+    nh -> n1 -> n2 -> n3 -> n4 -> n5 -> n6 -> n7 [style=invis];
+
+    edge [arrowhead=normal, style=solid, color="#000000", weight=0];
+    k1 -> s1 [label="Hard Reset"];
+    s2 -> k2 [style=invis];
+    s3 -> k3 [label="VBUS and VCONN off", penwidth=2, color="#c55a11"];
+    s4 -> k4 [style=invis];
+    s5 -> k5 [label="VBUS to 5 V", penwidth=2, color="#c55a11"];
+    s6 -> k6 [label="VCONN on (Rp side)", style=dotted];
+    s7 -> k7 [label="Source_Capabilities"];
+}

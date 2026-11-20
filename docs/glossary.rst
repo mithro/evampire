@@ -362,3 +362,261 @@ gives a short description and a link to the full explanation.
       belonging to one of several virtual networks sharing the same cable
       (:std:`IEEE 802.1Q <802.1Q>`, see
       :wikipedia:`VLAN tagging <IEEE_802.1Q>`).
+
+   Analogue-to-digital converter
+   ADC
+      A circuit that measures a voltage and gives it as a number (see
+      :wikipedia:`Analog-to-digital_converter`).
+
+   Bandgap reference
+      A circuit whose output voltage stays steady as supply and temperature
+      change, built from bipolar transistors (see
+      :wikipedia:`Bandgap_voltage_reference`).
+
+   Biphase mark coding
+   BMC
+      The line code that carries USB Power Delivery messages on the
+      configuration channel. The level changes at the start of every bit, and
+      again in the middle of a 1 (see
+      :wikipedia:`Differential_Manchester_encoding` and
+      :doc:`power/usb-pd/cc-signalling`).
+
+   Comparator
+      A circuit that compares a voltage with a threshold and gives a logic 1
+      or 0 (see :wikipedia:`Comparator`).
+
+   Contract
+   Explicit contract
+      In USB Power Delivery, the agreement between source and sink on the
+      voltage and current. Before any message, the sink may draw the current
+      the source's Rp advertises; after an explicit contract it may draw the
+      current it requested (see :doc:`power/usb-pd/negotiation`).
+
+   Data role
+   DFP
+   UFP
+      In USB, the downstream facing port (DFP, the host side for data) or the
+      upstream facing port (UFP, the device side). A port that attaches as a
+      source starts as DFP, and one that attaches as a sink starts as UFP
+      (see :doc:`power/usb-pd/role-changes`).
+
+   Digital-to-analogue converter
+   DAC
+      A circuit that turns a number into a voltage or current (see
+      :wikipedia:`Digital-to-analog_converter`).
+
+   Discover Identity
+      The USB Power Delivery message with which a port asks a cable plug, or
+      the other port, for its identity and ratings (see
+      :doc:`power/usb-pd/cables`).
+
+   E-marker
+      The chip inside an electronically marked USB Type-C cable plug. It
+      reports the cable's current and voltage rating when asked with
+      Discover Identity (see :doc:`power/usb-pd/cables`).
+
+   Electrostatic discharge
+   ESD
+      A short high-voltage pulse from a charged person or object touching a
+      pin (see :wikipedia:`Electrostatic_discharge` and
+      :doc:`power/usb-pd/cc-protection`).
+
+   Extended power range
+   EPR
+      The USB Power Delivery power levels above 100 W, with fixed supplies of
+      28 V, 36 V and 48 V at up to 5 A (see
+      :doc:`power/usb-pd/power-levels`).
+
+   Fast role swap
+   FRS
+      A USB Power Delivery mechanism with which a sink takes over as source
+      within a few hundred microseconds when the source's own power fails
+      (see :doc:`power/usb-pd/role-changes`).
+
+   FIFO
+      A first-in, first-out buffer (see
+      :wikipedia:`FIFO <FIFO_(computing_and_electronics)>`).
+
+   gf180mcu
+      The open 180 nm CMOS process from GlobalFoundries on which evampire is
+      built, with transistors for 3.3 V, 5 V, 6 V and 10 V (see
+      :ref:`the process requirement <req-process>` and
+      :doc:`power/usb-pd/on-chip-or-external`).
+
+   GoodCRC
+      The short USB Power Delivery message with which a port acknowledges
+      every message it receives with a correct checksum (see
+      :doc:`power/usb-pd/negotiation`).
+
+   Hard Reset
+      A USB Power Delivery signal, not a message, that makes both ports
+      return their supplies to the default state and start the negotiation
+      again (see :doc:`power/usb-pd/role-changes`).
+
+   Human body model
+   HBM
+      The standard test pulse for rating a chip pin's protection against
+      electrostatic discharge: a 100 pF capacitor discharged through
+      1.5 kΩ (:std:`JS-001`, see :wikipedia:`Human-body_model`).
+
+   LDMOS
+      A laterally diffused MOS transistor: a transistor with an extended,
+      lightly doped drain that holds off a higher drain voltage than a
+      standard transistor (see :wikipedia:`LDMOS`).
+
+   MIM capacitor
+      A metal-insulator-metal capacitor, built between two metal layers of a
+      chip.
+
+   MOSFET
+   NMOS
+   PMOS
+      The metal-oxide-semiconductor field-effect transistor, in its
+      N-channel (NMOS) and P-channel (PMOS) forms (see
+      :wikipedia:`MOSFET`).
+
+   PDO
+   Power data object
+      A 32-bit word in which a USB Power Delivery source describes one
+      supply it offers, for example 9 V at up to 3 A (see
+      :doc:`power/usb-pd/power-levels`).
+
+   Process design kit
+   PDK
+      The device models, layout rules and cell libraries published for a
+      chip manufacturing process (see :wikipedia:`Process_design_kit`).
+
+   Programmable power supply
+   PPS
+      A USB Power Delivery supply whose voltage the sink sets in 20 mV steps
+      within a range the source offers (see
+      :doc:`power/usb-pd/power-levels`).
+
+   Rd
+      The 5.1 kΩ pull-down that a USB Type-C sink connects to its CC pins
+      (see :doc:`power/usb-pd/resistor-advertisement`).
+
+   RDO
+   Request data object
+      A 32-bit word in which a USB Power Delivery sink asks for one of the
+      offered supplies (see :doc:`power/usb-pd/power-levels`).
+
+   Rp
+      The pull-up, a resistor or a current source, that a USB Type-C source
+      connects to its CC pins. Its value tells the sink how much current it
+      may draw (see :doc:`power/usb-pd/resistor-advertisement`).
+
+   Ra
+      The 800 Ω to 1.2 kΩ pull-down inside a powered USB Type-C cable plug,
+      on the pin that receives VCONN (see :doc:`power/usb-pd/cables`).
+
+   SBU
+   Sideband use
+      Two contacts of the USB Type-C connector reserved for other signals,
+      for example in alternate modes. evampire does not use them.
+
+   SOP
+   Start of packet
+      The 20-bit pattern at the start of each USB Power Delivery message. It
+      marks the start and says who the message is for: the other port (SOP)
+      or a cable plug (SOP′ or SOP″) (see :doc:`power/usb-pd/packets`).
+
+   Standard power range
+   SPR
+      The USB Power Delivery power levels up to 100 W, with fixed supplies
+      of 5 V, 9 V, 15 V and 20 V at up to 5 A (see
+      :doc:`power/usb-pd/power-levels`).
+
+   Transient voltage suppressor
+   TVS
+      A diode that clamps a voltage surge by conducting above its breakdown
+      voltage (see :wikipedia:`Transient-voltage-suppression_diode`).
+
+   Unit interval
+   UI
+      The duration of one bit on the configuration channel, about 3.3 µs
+      (see :doc:`power/usb-pd/cc-signalling`).
+
+   USB Implementers Forum
+   USB-IF
+      The organisation that publishes the USB specifications (see
+      `usb.org <https://www.usb.org/>`__).
+
+   VCONN
+      The supply that a USB Type-C port puts on its unused CC pin to power the
+      chip inside a cable plug, 3.0 V to 5.5 V (see
+      :doc:`power/usb-pd/cables`).
+
+   VDO
+   Vendor data object
+      A 32-bit data word in a USB Power Delivery Vendor_Defined message. A
+      cable's answer to Discover Identity is made of VDOs (see
+      :doc:`power/usb-pd/cables`).
+
+   USB Type-C Current
+      The current a USB Type-C source advertises to a sink at 5 V through
+      the value of its pull-up, Rp, without any messages: the default USB
+      current, 1.5 A or 3.0 A (see
+      :doc:`power/usb-pd/resistor-advertisement`).
+
+   Input capture
+      A timer feature that copies a free-running counter into a register on
+      each edge of an input, giving the edge a timestamp in hardware (see
+      :ref:`usbpd-helpers`).
+
+   Output compare
+      A timer feature that changes an output when a free-running counter
+      reaches the value in a compare register, placing an edge at a set time
+      in hardware (see :ref:`usbpd-helpers`).
+
+   K-code
+      In USB Power Delivery, one of six 5-bit symbols that never stand for
+      data. K-codes mark the start of a packet, a reset and the end of a
+      packet (:pd:`Table 5.2`, see :ref:`usbpd-4b5b`).
+
+   Managed Capability Port
+      A USB Power Delivery source port whose present power, the Port Present
+      PDP, may be lower than its maximum and may change during operation, for
+      example because it shares one supply with other ports
+      (:pd:`Section 3.2.3`, see :doc:`power/usb-pd/two-ports`).
+
+   Adjustable voltage supply
+   AVS
+      In USB Power Delivery, a supply whose voltage the sink sets in 100 mV
+      steps, from 9 V to 20 V in the standard power range and from 15 V to
+      48 V in the extended power range (:pd:`Table 4.3`, :pd:`Table 4.4`;
+      see :ref:`usbpd-power-levels`).
+
+   PDP
+   PD Power
+      In USB Power Delivery, the output power of a source or the input power
+      of a sink. A source reports its Port Maximum PDP, the most it will
+      ever provide, and its Port Present PDP, what it can provide at present
+      (:pd:`Table 6.29`; see :ref:`usbpd-building-offer`).
+
+   BVCEO
+      The collector-to-emitter breakdown voltage of a bipolar transistor with
+      its base left open (see :wikipedia:`breakdown voltage
+      <Breakdown_voltage>` and :ref:`usbpd-process-limits`).
+
+   BVDSS
+      The drain-to-source breakdown voltage of a transistor that is switched
+      off (see :wikipedia:`breakdown voltage <Breakdown_voltage>` and
+      :ref:`usbpd-process-limits`).
+
+   Deep N-well
+      An N-type layer buried below a P-well, which isolates the transistors
+      in that P-well from the P substrate. Its junction to the substrate
+      limits how far above the substrate an isolated circuit can sit (see
+      :ref:`usbpd-process-limits`).
+
+   Field oxide
+      The thick insulator between transistors on a chip, on which
+      polysilicon resistors and metal tracks run (see
+      :wikipedia:`LOCOS <LOCOS>` and :ref:`usbpd-process-limits`).
+
+   Native transistor
+      A transistor made without the threshold-adjusting implant, so that its
+      threshold voltage is close to 0 V. The gf180mcu PDK has a 6 V native
+      NMOS (see :wikipedia:`threshold voltage <Threshold_voltage>` and
+      :ref:`usbpd-rd-circuit`).

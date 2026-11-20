@@ -1,0 +1,53 @@
+// Discover Identity exchange between a source and the cable plug (SOP')
+// (USB PD R3.3, Sections 6.4.12.3, 7.31.11.1 and 8.6.1.2.1, Tables 7.10 and
+// 7.12; USB Type-C R2.5 Tables 4-24 and 4-32). Time runs from top to bottom.
+// Not to scale.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph discover_identity {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=1.1,
+           ranksep=0.3, newrank=true, splines=false];
+    node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    src [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+         label="Source\n(VCONN Source)", width=1.1];
+    cbl [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+         label="Cable plug\n(e-marker, SOP′)", width=1.1];
+    nh [shape=plaintext, label="Time limit", fontsize=10,
+        fontname="Helvetica-Bold"];
+
+    s1; s2; s3; s4; s5; s6;
+    c1; c2; c3; c4; c5; c6;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    n1 [label="Within 2 ms of\nVBUS reaching 5 V"];
+    n2 [label="E-marker ready\nwithin 50 ms"];
+    n3 [label="Repeated if no GoodCRC,\nat most 20 times"];
+    n4 [label="Within 195 µs"];
+    n5 [label="Within 15 ms\n(source waits 24-50 ms)"];
+    n6 [label="Within 195 µs"];
+
+    { rank=same; src; cbl; nh; }
+    { rank=same; s1; c1; n1; }
+    { rank=same; s2; c2; n2; }
+    { rank=same; s3; c3; n3; }
+    { rank=same; s4; c4; n4; }
+    { rank=same; s5; c5; n5; }
+    { rank=same; s6; c6; n6; }
+
+    edge [arrowhead=none, style=dashed, color="#999999", weight=100];
+    src -> s1 -> s2 -> s3 -> s4 -> s5 -> s6;
+    cbl -> c1 -> c2 -> c3 -> c4 -> c5 -> c6;
+    nh -> n1 -> n2 -> n3 -> n4 -> n5 -> n6 [style=invis];
+
+    edge [arrowhead=normal, style=solid, color="#000000", weight=0];
+    s1 -> c1 [label="VCONN on", penwidth=2, color="#c55a11"];
+    s2 -> c2 [style=invis];
+    s3 -> c3 [label="Discover Identity"];
+    c4 -> s4 [label="GoodCRC"];
+    c5 -> s5 [label="Discover Identity ACK\n(Cable VDO)"];
+    s6 -> c6 [label="GoodCRC"];
+}

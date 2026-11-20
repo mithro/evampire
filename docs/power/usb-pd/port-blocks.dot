@@ -1,0 +1,90 @@
+// The analogue and digital blocks of one dual-role USB Type-C port, from the
+// connector pins to the processor. Orange and green mean source and sink on
+// the other USB PD diagrams, so this one uses grey, white and blue only.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph port_blocks {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=10, nodesep=0.2,
+           ranksep=0.45, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=9, width=1.2];
+    edge  [fontname="Helvetica", fontsize=8, arrowsize=0.6];
+
+    subgraph cluster_conn {
+        label="Connector"; style="rounded"; color="#888888";
+        cc1  [label="CC1", shape=box, style="filled", fillcolor="#ffffff",
+              width=0.6];
+        cc2  [label="CC2", shape=box, style="filled", fillcolor="#ffffff",
+              width=0.6];
+        vbus [label="VBUS", shape=box, style="filled", fillcolor="#ffffff",
+              width=0.6];
+    }
+
+    prot [label="CC protection", fillcolor="#ffffff"];
+
+    subgraph cluster_cc {
+        label="On each CC pin"; style="rounded"; color="#888888";
+        rp  [label="Rp current\nsources"];
+        rd  [label="Rd and\ndead-battery Rd"];
+        vsw [label="VCONN switch"];
+        cmp [label="Comparators"];
+        drv [label="BMC driver"];
+    }
+
+    subgraph cluster_vbus {
+        label="On VBUS"; style="rounded"; color="#888888";
+        div    [label="VBUS divider\nand discharge"];
+        snksw  [label="Sink switch"];
+        srcconv [label="Source\nconverter"];
+        vadc   [label="ADC or\ncomparator"];
+    }
+
+    subgraph cluster_dig {
+        label="Digital"; style="rounded"; color="#5b9bd5";
+        gpio [label="Input and\noutput bits", fillcolor="#dbe8f5"];
+        tmr  [label="Timer: input\ncapture, output\ncompare (optional)",
+              fillcolor="#dbe8f5", style="rounded,filled,dashed"];
+        cpu  [label="Processor", fillcolor="#dbe8f5"];
+    }
+
+    bus [label="Board power\nbus", fillcolor="#ffffff"];
+
+    { rank=same; cc1; cc2; vbus; }
+    { rank=same; rp; rd; vsw; cmp; drv; div; snksw; srcconv; }
+    { rank=same; gpio; tmr; }
+
+    // Keep the pins in connector order and the blocks in reading order.
+    cc1 -> cc2 -> vbus [style=invis];
+    rp -> rd -> vsw -> cmp -> drv -> div -> snksw -> srcconv [style=invis];
+
+    cc1 -> prot [dir=both, label="CC"];
+    cc2 -> prot [dir=both, label="CC"];
+
+    prot -> rp  [dir=both, label="CC"];
+    prot -> rd  [dir=both, label="CC"];
+    prot -> vsw [dir=both, label="CC"];
+    prot -> cmp [label="CC"];
+    prot -> drv [dir=back, label="CC"];
+
+    vbus -> div     [label="VBUS"];
+    vbus -> snksw   [label="VBUS"];
+    vbus -> srcconv [dir=back, label="VBUS"];
+    snksw -> bus    [label="power"];
+    srcconv -> bus  [dir=back, label="power"];
+
+    rp  -> gpio [dir=back, label="enable,\nlevel"];
+    rd  -> gpio [dir=back, label="enable"];
+    vsw -> gpio [dir=back, label="enable"];
+    cmp -> gpio [label="output"];
+    drv -> gpio [dir=back, label="data,\nenable"];
+    cmp -> tmr  [style=dashed, label="edges"];
+    drv -> tmr  [dir=back, style=dashed, label="edge\ntimes"];
+    div -> vadc [label="divided\nVBUS"];
+    vadc -> gpio [label="result"];
+    snksw -> gpio [dir=back, label="control"];
+    srcconv -> gpio [dir=back, label="control"];
+
+    gpio -> cpu [dir=both, label="bits"];
+    tmr  -> cpu [dir=both, style=dashed, label="times"];
+}
