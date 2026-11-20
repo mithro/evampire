@@ -288,7 +288,7 @@ Each USB Type-C port carries a USB serial port
   of the communications device class (:std:`USB CDC <usb-cdc>`).
 * The USB data protocol is implemented mostly in software on the
   processor. Built-in hardware assists only where the timing of USB cannot
-  be met in software. :doc:`usb-serial` analyses how the work is split
+  be met in software. :doc:`usb-serial/index` analyses how the work is split
   between hardware and software.
 
 .. _req-process:

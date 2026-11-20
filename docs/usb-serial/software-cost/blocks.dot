@@ -1,0 +1,57 @@
+// Hardware helpers between the USB analogue front end and the processor.
+// Solid arrows: packet data. Dashed arrows: control and status.
+//
+// Fixed grid (positions in inches):
+//   x=0.6  analogue front end
+//   x=2.15 serialiser and deserialiser
+//   x=3.7  CRC check, token decoder, automatic handshakes
+//   x=5.25 frame timer, packet buffers
+//   x=6.8  processor
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph blocks {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.05, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    fe   [pos="0.6,2.4!", label="Analogue\nfront end\n(driver,\nreceivers,\npull-up)",
+          width=0.95, height=2.6, fillcolor="#fbe5d6"];
+    des  [pos="2.15,3.4!", label="Receive\ndeserialiser", fillcolor="#dbe8f5"];
+    ser  [pos="2.15,1.35!", label="Transmit\nserialiser,\nCRC16", height=0.7, fillcolor="#dbe8f5"];
+    tok  [pos="3.7,3.4!", label="CRC check,\ntoken decoder", fillcolor="#e2f0d9"];
+    hs   [pos="3.7,2.4!", label="Automatic\nhandshakes", fillcolor="#e2f0d9"];
+    ft   [pos="5.25,3.75!", label="Frame timer", height=0.45, fillcolor="#e2f0d9"];
+    buf  [pos="5.25,2.4!", label="Packet\nbuffers", fillcolor="#e2f0d9"];
+    cpu  [pos="6.8,2.4!", label="RISC-V\nprocessor", fillcolor="#fbe5d6"];
+
+    // Edge labels as free text at fixed positions, clear of the lines.
+    node [shape=plaintext, style="", fontsize=9, fixedsize=false, width=0.1,
+          height=0.1];
+    l1  [pos="1.6,2.68!", label="received\nline state"];
+    l2  [pos="1.45,2.12!", label="drive\nD+, D−"];
+    l3  [pos="2.92,3.55!", label="bytes"];
+    l4  [pos="3.3,2.9!", label="token,\nCRC result"];
+    l5  [pos="4.75,3.1!", label="OUT data"];
+    l6  [pos="4.42,3.83!", label="SOF"];
+    l7  [pos="2.75,2.05!", label="handshake"];
+    l8  [pos="3.9,1.6!", label="IN data"];
+    l9  [pos="4.47,2.56!", label="flags"];
+    l10 [pos="6.4,3.3!", label="frame\ncount"];
+    l11 [pos="6.02,2.58!", label="data"];
+
+    fe  -> des;
+    ser -> fe;
+    des -> tok;
+    tok -> hs;
+    tok -> buf;
+    tok -> ft;
+    hs  -> ser;
+    buf -> ser;
+    hs  -> buf [dir=both, style=dashed];
+    buf -> cpu [dir=both];
+    ft  -> cpu [style=dashed];
+}
