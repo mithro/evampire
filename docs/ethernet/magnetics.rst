@@ -370,7 +370,7 @@ between the port impedance and the cable impedance:
 .. math::
 
    \Gamma = \frac{Z - Z_0}{Z + Z_0}
-   \qquad
+
    \text{RL} = -20 \log_{10} \lvert \Gamma \rvert
 
 where:
@@ -394,7 +394,7 @@ for a purely resistive :math:`Z` with :math:`Z_0 = 100\ \Omega`:
 .. math::
 
    Z_\text{max} = Z_0 \frac{1 + 0.158}{1 - 0.158} = 137.7\ \Omega
-   \qquad
+
    Z_\text{min} = Z_0 \frac{1 - 0.158}{1 + 0.158} = 72.6\ \Omega
 
 So the port only needs to be within roughly 73 Ω to 138 Ω of a 100 Ω cable,
@@ -411,8 +411,9 @@ At :math:`f = 100\ \text{MHz}`:
 
 .. math::
 
-   \text{RL}_\text{min} = 10 - 20 \times \log_{10} 1.25
-   = 10 - 20 \times 0.0969 = 8.1\ \text{dB}
+   \text{RL}_\text{min} &= 10 - 20 \times \log_{10} 1.25 \\
+   &= 10 - 20 \times 0.0969 \\
+   &= 8.1\ \text{dB}
 
 The *insertion loss* is the signal lost passing through the magnetics.
 Gigabit magnetics specify at most 1 dB from 1 MHz to 100 MHz
@@ -446,9 +447,9 @@ filter, and droop is an exponential decay with time constant :math:`\tau`:
 .. math::
 
    R_\text{p} = \frac{R_\text{s} R_\text{L}}{R_\text{s} + R_\text{L}}
-   \qquad
+
    \tau = \frac{L}{R_\text{p}}
-   \qquad
+
    f_\text{c} = \frac{1}{2\pi\tau} = \frac{R_\text{p}}{2\pi L}
 
 where:
@@ -471,9 +472,9 @@ matter only at high frequencies.
 
 .. math::
 
-   f_\text{c} = \frac{50\ \Omega}{2\pi \times 350\ \mu\text{H}}
-   = \frac{50}{2.199 \times 10^{-3}}\ \text{Hz}
-   = 22.7\ \text{kHz}
+   f_\text{c} &= \frac{50\ \Omega}{2\pi \times 350\ \mu\text{H}} \\
+   &= \frac{50}{2.199 \times 10^{-3}}\ \text{Hz} \\
+   &= 22.7\ \text{kHz}
 
 Signals below about 23 kHz are attenuated. Ethernet signals have little
 energy that low, but long runs of the same symbol do.
@@ -486,9 +487,9 @@ fraction is :math:`e^{-t/\tau}`, so:
 .. math::
 
    e^{-t/\tau} \ge k
-   \quad\Rightarrow\quad
+
    \tau \ge \frac{t}{\ln(1/k)}
-   \quad\Rightarrow\quad
+
    L \ge \tau R_\text{p}
 
 where:
@@ -501,9 +502,9 @@ Substituting:
 .. math::
 
    \ln(1/0.731) = 0.313
-   \qquad
+
    \tau \ge \frac{500\ \text{ns}}{0.313} = 1.60\ \mu\text{s}
-   \qquad
+
    L \ge 1.60\ \mu\text{s} \times 50\ \Omega = 80\ \mu\text{H}
 
 The same result appears in an IEEE 802.3 maintenance proposal [MAG-TRACY]_
@@ -513,7 +514,7 @@ and in work for IEEE 802.3bu, power over a single pair [MAG-8023BU]_
 .. math::
 
    \tau = \frac{350\ \mu\text{H}}{50\ \Omega} = 7.0\ \mu\text{s}
-   \qquad
+
    e^{-0.5/7.0} = 0.931
 
 93 % remains, a large margin over 73.1 %.
@@ -572,13 +573,13 @@ at 30 MHz:
 .. math::
 
    2\pi \times 50 \times 10^{-9} = 3.14 \times 10^{-7}\ \text{S}
-   \quad\Rightarrow\quad
+
    \lvert Z_C \rvert = 3.2\ \text{M}\Omega
 
 .. math::
 
    2\pi \times 3 \times 10^{7} \times 10^{-9} = 0.189\ \text{S}
-   \quad\Rightarrow\quad
+
    \lvert Z_C \rvert = 5.3\ \Omega
 
 The termination works at signal frequencies, but at mains frequencies the
@@ -807,20 +808,20 @@ system-level test:
 
 .. math::
 
-   E_\text{HBM} = 0.5 \times 100\ \text{pF} \times (2000\ \text{V})^2
-   = 0.2\ \text{mJ}
+   E_\text{HBM} &= 0.5 \times 100\ \text{pF} \times (2000\ \text{V})^2 \\
+   &= 0.2\ \text{mJ}
 
 .. math::
 
-   E_\text{IEC} = 0.5 \times 150\ \text{pF} \times (8000\ \text{V})^2
-   = 4.8\ \text{mJ}
+   E_\text{IEC} &= 0.5 \times 150\ \text{pF} \times (8000\ \text{V})^2 \\
+   &= 4.8\ \text{mJ}
 
 The peak currents are the test voltage divided by the source resistance:
 
 .. math::
 
    I_\text{HBM} = \frac{2000\ \text{V}}{1500\ \Omega} = 1.33\ \text{A}
-   \qquad
+
    I_\text{surge} = \frac{1000\ \text{V}}{42\ \Omega} = 23.8\ \text{A}
 
 These events differ in kind, and that decides what can protect against
@@ -951,18 +952,18 @@ where:
 
 .. math::
 
-   c_\text{A} = \frac{\varepsilon_0 \varepsilon_\text{r}}{d}
+   c_\text{A} &= \frac{\varepsilon_0 \varepsilon_\text{r}}{d}
    = \frac{8.854 \times 10^{-12} \times 3.9}{5 \times 10^{-6}}\
-     \text{F/m}^2
-   = 6.9 \times 10^{-6}\ \text{F/m}^2
-   = 0.0069\ \text{fF/µm}^2
+   \text{F/m}^2 \\
+   &= 6.9 \times 10^{-6}\ \text{F/m}^2 \\
+   &= 0.0069\ \text{fF/µm}^2
 
 With the MIM capacitor and with the thick oxide stack:
 
 .. math::
 
-   A_\text{MIM} = \frac{16\ \text{nF}}{2.0\ \text{fF/µm}^2}
-   = 8 \times 10^6\ \mu\text{m}^2 = 8\ \text{mm}^2
+   A_\text{MIM} &= \frac{16\ \text{nF}}{2.0\ \text{fF/µm}^2} \\
+   &= 8 \times 10^6\ \mu\text{m}^2 = 8\ \text{mm}^2
 
 .. math::
 
@@ -1051,9 +1052,9 @@ the reflection formula in :ref:`F4 <magnetics-f4>`:
 .. math::
 
    \Gamma = \frac{(100\ \Omega - jX) - 100\ \Omega}
-                 {(100\ \Omega - jX) + 100\ \Omega}
+   {(100\ \Omega - jX) + 100\ \Omega}
    = \frac{-jX}{200\ \Omega - jX}
-   \qquad
+
    \lvert\Gamma\rvert = \frac{X}{\sqrt{(200\ \Omega)^2 + X^2}}
 
 Setting :math:`\lvert\Gamma\rvert = 0.158` (16 dB, from
@@ -1061,8 +1062,8 @@ Setting :math:`\lvert\Gamma\rvert = 0.158` (16 dB, from
 
 .. math::
 
-   X_\text{max} = \frac{200\ \Omega \times 0.158}{\sqrt{1 - 0.158^2}}
-   = \frac{31.7}{0.987}\ \Omega = 32.1\ \Omega
+   X_\text{max} &= \frac{200\ \Omega \times 0.158}{\sqrt{1 - 0.158^2}} \\
+   &= \frac{31.7}{0.987}\ \Omega = 32.1\ \Omega
 
 At :math:`f = 1\ \text{MHz}`:
 
@@ -1070,7 +1071,7 @@ At :math:`f = 1\ \text{MHz}`:
 
    C_\text{pair} \ge \frac{1}{2\pi \times 10^6 \times 32.1}\ \text{F}
    = 4.96\ \text{nF}
-   \qquad
+
    C_\text{w} \ge 9.9\ \text{nF}
 
 This uses the whole 16 dB budget for the capacitors alone, so in practice
@@ -1082,7 +1083,7 @@ and load resistances in series, so its time constant is
 .. math::
 
    \tau = (R_\text{s} + R_\text{L}) \, C_\text{pair}
-   \qquad
+
    C_\text{w} = \frac{2\tau}{R_\text{s} + R_\text{L}}
 
 where :math:`R_\text{s} + R_\text{L} = 200\ \Omega`. For the 1000BASE-T
@@ -1093,7 +1094,7 @@ standard magnetics, :math:`\tau_\text{mag} = 7.0\ \mu\text{s}`
 .. math::
 
    C_\text{w} \ge \frac{2 \times 1.6\ \mu\text{s}}{200\ \Omega} = 16\ \text{nF}
-   \qquad
+
    C_\text{w} = \frac{2 \times 7.0\ \mu\text{s}}{200\ \Omega} = 70\ \text{nF}
 
 At exactly 16 nF the port meets the droop limit with no margin (73.2 % left
@@ -1128,7 +1129,7 @@ resistive within 3° from 2 MHz:
 .. math::
 
    X \le 100\ \Omega \times \tan 3^\circ = 5.24\ \Omega
-   \qquad
+
    C_\text{pair} \ge \frac{1}{2\pi \times 2 \times 10^6 \times 5.24}\ \text{F}
    = 15.2\ \text{nF}
 
@@ -1191,7 +1192,7 @@ For :math:`C_\text{w} = 16\ \text{nF}`, :math:`\tau = 1.6\ \mu\text{s}`:
 .. math::
 
    f_\text{c} = \frac{1}{2\pi \times 1.6\ \mu\text{s}} = 99.5\ \text{kHz}
-   \qquad
+
    P_\text{below} = 2 \times 99.5\ \text{kHz} \times 8\ \text{ns} = 0.0016
 
 or 0.16 % of the power. As a check, integrating
@@ -1207,7 +1208,7 @@ with time constant :math:`\tau \gg T`, the removed part has variance
 .. math::
 
    \sigma_\text{w}^2 = \sigma^2 \sum_{k=0}^{\infty} h_k^2
-   \qquad
+
    h_k = \frac{T}{\tau} e^{-kT/\tau}
 
 The sum is a geometric series, and for :math:`T \ll \tau` its denominator is
@@ -1217,7 +1218,7 @@ close to :math:`2T/\tau`:
 
    \sum_{k=0}^{\infty} h_k^2 = \frac{(T/\tau)^2}{1 - e^{-2T/\tau}}
    \approx \frac{(T/\tau)^2}{2T/\tau} = \frac{T}{2\tau}
-   \qquad\Rightarrow\qquad
+
    \frac{\sigma_\text{w}}{\sigma} \approx \sqrt{\frac{T}{2\tau}}
 
 where :math:`\sigma_\text{w}` is the root-mean-square (rms) baseline wander
@@ -1227,7 +1228,7 @@ and :math:`\sigma` the rms signal. With equally likely PAM-5 levels
 .. math::
 
    \sigma^2 = \frac{4 + 1 + 0 + 1 + 4}{5} = 2
-   \qquad
+
    \sigma = 1.41\ \text{level steps}
 
 and a symbol is decided wrongly when noise reaches half a step, 0.5. Real
@@ -1282,9 +1283,9 @@ For example, for 16 nF:
 .. math::
 
    \sqrt{\frac{8\ \text{ns}}{2 \times 1.6\ \mu\text{s}}} = 0.050
-   \qquad
-   0.050 \times 1.41 = 0.071\ \text{level steps}
-   = 14\ \%\ \text{of half a step}
+
+   0.050 \times 1.41 &= 0.071\ \text{level steps} \\
+   &= 14\ \%\ \text{of half a step}
 
 With 70 nF per wire the capacitors behave like standard magnetics, so a
 receiver designed for transformers sees nothing new. With 16 nF the wander
@@ -1324,8 +1325,8 @@ level to keep the converted differential noise below 30 mV peak to peak
 
 .. math::
 
-   \text{CMRR} \ge 20 \log_{10} \frac{V_\text{cm}}{V_\text{dm}}
-   = 20 \log_{10} \frac{2.83\ \text{V}}{0.030\ \text{V}} = 39.5\ \text{dB}
+   \text{CMRR} &\ge 20 \log_{10} \frac{V_\text{cm}}{V_\text{dm}} \\
+   &= 20 \log_{10} \frac{2.83\ \text{V}}{0.030\ \text{V}} = 39.5\ \text{dB}
 
 where :math:`V_\text{cm} = 2 \sqrt{2} \times 1.0\ \text{V} = 2.83\ \text{V}`
 is the peak-to-peak common-mode voltage and
@@ -1345,7 +1346,7 @@ capacitance :math:`C_\text{d}` across a 100 Ω port gives
 .. math::
 
    \lvert\Gamma\rvert = \frac{\omega R C_\text{d}}
-                             {\sqrt{4 + (\omega R C_\text{d})^2}}
+   {\sqrt{4 + (\omega R C_\text{d})^2}}
 
 with :math:`\omega = 2\pi f` and :math:`R = 100\ \Omega`. Solving for the
 largest :math:`C_\text{d}` that keeps the return loss limit:
@@ -1388,7 +1389,7 @@ per path is enough, and 20 nF per wire takes two in parallel:
 .. math::
 
    C_\text{w} = 2 \times 10\ \text{nF} = 20\ \text{nF}
-   \qquad
+
    N = 8\ \text{wires} \times 2 = 16\ \text{capacitors per port}
 
 A stricter rule, requiring the *rated* voltage to be above the test voltage,
@@ -1462,7 +1463,7 @@ conduct at 50 Hz. The current is
 .. math::
 
    I = 2\pi f C_\text{total} V
-   \qquad
+
    C_\text{total} = 8 C_\text{w}
 
 where :math:`f = 50\ \text{Hz}`, :math:`V = 1500\ \text{V}`, and
@@ -1522,7 +1523,7 @@ common-mode signals, and form a divider with that resistance:
 
    \frac{V_\text{chip}}{V_\text{cable}} =
    \frac{R_\text{cm}}{\sqrt{R_\text{cm}^2 + X_\text{cm}^2}}
-   \qquad
+
    X_\text{cm} = \frac{1}{2\pi f \cdot 2 C_\text{w}}
 
 where:
@@ -1542,7 +1543,7 @@ Substituting:
 .. math::
 
    X_\text{cm} = \frac{1}{2\pi \times 50 \times 66\ \text{nF}} = 48.2\ \text{kΩ}
-   \qquad
+
    \frac{V_\text{chip}}{V_\text{cable}} = \frac{1}{\sqrt{1 + 48.2^2}} = 0.021
 
 About 2 % of a mains-frequency ground difference reaches the chip. At signal
