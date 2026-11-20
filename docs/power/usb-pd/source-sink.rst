@@ -1,158 +1,234 @@
+.. _usbpd-source-sink:
+
 What the source and the sink each do
 ====================================
 
-The steps each end follows to set up and keep a power contract.
+The steps a :term:`source` and a :term:`sink` each follow to set up and keep
+a power :term:`contract`, and how evampire's software builds its offer from
+the :ref:`power budget <power-budget>`.
+
+The message exchange itself, and its time limits, are on
+:doc:`negotiation`.
 
 The source side
 ---------------
 
-Switchable Rp
-~~~~~~~~~~~~~
+.. _usbpd-switchable-rp:
 
-The level a source advertises with Rp is a promise about current at 5 V:
+The source's Rp also controls who may transmit
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* **Before a contract**, the source must be able to supply the advertised
-  current, and its first Source_Capabilities must offer at least that much at
-  5 V (:typec:`Section 4.5.2.2.9.1`; :pd:`Section 3.2.1`, item 5). A board with
-  little spare power advertises "default"; one that can spare 7.5 W or 15 W
-  at 5 V advertises 1.5 A or 3.0 A.
-* **During a contract**, the Rp value no longer means current. The source
-  uses it to control who may start a message exchange: the 3.0 A value
-  ("SinkTxOK") lets the sink start one, the 1.5 A value ("SinkTxNG") reserves
-  the line for the source, which then waits *tSinkTx* (16 ms to 20 ms) before
-  starting (:pd:`PD Sections 5.2.2 <x>`, :pd:`7.2 <x>` and
-  :pd:`7.31.13.1 <x>`; :pd:`Table 5.1 <x>`).
+A source presents a pull-up, :term:`Rp`, on the :term:`CC` wire. Its value
+has two meanings (:ref:`usbpd-resistor-advertisement`):
 
-A source therefore changes its Rp level during normal operation, and its Rp
-circuit must provide at least the 1.5 A and 3.0 A levels whatever power it
-offers. A current source suits an integrated circuit: the three currents
-(80, 180 and 330 µA) can come from one reference and switchable current
-mirrors, and the open-circuit voltage must rise above the 2.432 V "open"
-threshold for the 3.0 A level. TI specifies its TPS65987D current sources as
-73.6-86.4 µA, 165.6-194.4 µA and 303.6-356.4 µA, with the 3.0 A level valid
-up to a CC voltage of 2.6 V ([USBPD-TPS65987D]_, Section 6.8).
+Before a contract
+   Rp states the current the sink may draw at 5 V: default USB power,
+   1.5 A or 3.0 A. The source must supply that current, and its first
+   Source_Capabilities must offer at least that much at 5 V
+   (:typec:`Section 4.5.2.2.9.1`; :pd:`Section 3.2.1`, item 5).
+During a contract
+   Rp no longer sets a current. It controls which end may start a message
+   exchange. The 3.0 A value, *SinkTxOK*, lets the sink start one. The 1.5 A
+   value, *SinkTxNG*, reserves the line for the source
+   (:pd:`Section 5.2.2`, :pd:`Table 5.1`; :pd:`Section 7.2`).
 
-Source sequence
-~~~~~~~~~~~~~~~
+After changing Rp from SinkTxOK to SinkTxNG, the source waits *tSinkTx*
+(16 ms to 20 ms) before it starts an exchange, so that a message the sink
+has already started can finish (:pd:`Section 7.31.13.1`,
+:pd:`Table 7.10`). A source therefore switches Rp during normal operation,
+and its Rp circuit must provide the 1.5 A and 3.0 A levels whatever power
+it offers.
 
-After attach (Attached.SRC) the source:
+Rp can be a resistor to a supply or a
+:wikipedia:`current source <Current_source>`: 80 µA, 180 µA or 330 µA from
+any supply between 1.7 V and 5.5 V (:typec:`Table 4-27`). A current source
+suits a chip. The three currents come from one reference through switched
+:wikipedia:`current mirrors <Current_mirror>`, and the supply can be any
+the chip has in that range. The resistor options need a 5 V or 3.3 V supply
+and, for the 1.5 A and 3.0 A levels, resistors within ± 5 %
+(:typec:`Table 4-27`). The circuit is on :ref:`usbpd-rp-sources`.
 
-#. turns VBUS on to *vSafe5V* (4.75 V to 5.5 V, :pd:`Table 4.9`) within
-   tVBUSON (275 ms), supplies VCONN if needed (see `Cables and VCONN`_), and must not
-   start messages until VBUS has reached vSafe5V
+.. _usbpd-source-sequence:
+
+The source sequence from attach to contract
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After attach (the Attached.SRC state, :ref:`usbpd-attach-sequence`), the
+source:
+
+#. turns :term:`VBUS` on to *vSafe5V*, 4.75 V to 5.5 V (:pd:`Table 4.9`),
+   within *tVBUSON*, 275 ms (:typec:`Table 4-32`), and supplies
+   :term:`VCONN` if the cable needs it (:ref:`usbpd-vconn`);
+#. starts no message until VBUS has reached vSafe5V
    (:typec:`Section 4.5.2.2.9.1`);
-#. optionally queries the cable (required before offering more than 3 A or
-   EPR voltages; see `Cables and VCONN`_);
-#. sends Source_Capabilities within tFirstSourceCap (250 ms) and repeats it
-   every 100 ms to 200 ms until it gets a GoodCRC (:pd:`Section 7.31.3`);
-#. evaluates the Request (see below) and answers Accept or Reject within
-   tReceiverResponse (15 ms);
-#. after Accept, waits at least tSrcTransition (25 ms), changes the voltage
-   at no more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*,
-   :pd:`Table 4.7`), and sends PS_RDY within tSrcTransReq (325 ms in SPR) of
-   the GoodCRC for Accept (:pd:`Section 4.5.1.1`; :pd:`Table 4.7 <x>`). The
-   new voltage must be within ± 5 % of the offered value, plus 0.5 V while
-   settling (*vSrcNew*, *vSrcValid*, :pd:`Table 4.7`).
+#. checks the cable with :term:`Discover Identity` if it will offer more
+   than 3 A or EPR voltages (:ref:`usbpd-discover-identity`);
+#. sends Source_Capabilities, and repeats it until it is acknowledged
+   (:pd:`Section 7.31.3`);
+#. checks the Request and answers Accept, Reject or Wait
+   (:pd:`Section 7.9.2`);
+#. after Accept, waits, changes VBUS and sends PS_RDY
+   (:pd:`Section 4.5.1.1`).
 
-The slew limit exists to limit the current that charges the sink's input
-capacitors: :pd:`Table 4.7` states it is based on a 3 A connector rating
-and at most 100 µF of sink capacitance. The source's own output capacitance
-must be at least 10 µF (*cSrcBulk*, :pd:`Table 4.7`), while a dual-role port
-that is not supplying VBUS may present at most 10 µF on VBUS
-(:typec:`Table 4-2`), so the larger bulk capacitance has to sit behind the
-source switch (see `Bidirectional VBUS power path and converter control`_).
+The time limit on each step is in :numref:`tab-usbpd-timing-contract`
+(:ref:`usbpd-timing`). The source checks that the Request names an offered
+PDO and asks for no more than its maximum current; otherwise it answers
+Reject (:pd:`Section 7.9.2`). It answers Wait only when a contract already
+exists and it can meet the request later (:pd:`Section 7.9.2.2`).
 
-Building the offer from the power budget
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The new voltage must be within ± 5 % of the offered value, plus 0.5 V while
+it settles (*vSrcNew*, *vSrcValid*, :pd:`Table 4.7`). It must change at no
+more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, :pd:`Table 4.7`). This
+:wikipedia:`slew rate <Slew_rate>` limit keeps the current that charges the
+sink's input capacitors within a 3 A connector rating, for up to 100 µF of
+sink capacitance (:pd:`Table 4.7`).
 
-The processor decides what to offer from the
-:ref:`power budget <power-budget>`. The power it can offer on the USB port is
-what the input grants, less what the board uses, less what the converter
-loses:
+The source needs at least 10 µF of output capacitance, or 120 µF when the
+port is powered from a supply shared with other ports (*cSrcBulk*,
+*cSrcBulkShared*, :pd:`Table 4.7`). A dual-role port that is not supplying
+VBUS may present at most 10 µF on VBUS (:typec:`Table 4-2`). Any larger
+capacitance therefore sits behind the source switch
+(:ref:`usbpd-power-path`).
 
-.. math::
+.. _usbpd-building-offer:
 
-   P_\text{offer} = (P_\text{in} - P_\text{board}) \cdot \eta
+The offer follows from the power budget
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-where:
-
-* :math:`P_\text{offer}` is the power offered on the USB port, in watts (the
-  *Port Present PDP* in PD terms, :pd:`Section 3.2`);
-* :math:`P_\text{in}` is the power granted on the input port, for example by
-  Power over Ethernet (see :doc:`poe`);
-* :math:`P_\text{board}` is the power the board itself uses;
-* :math:`\eta` is the efficiency of the USB source converter.
-
-*Example with assumed numbers* (none of them is a design value): with
-:math:`P_\text{in}` = 25 W, :math:`P_\text{board}` = 5 W and
-:math:`\eta` = 0.90,
+The software on the processor decides what to offer from the
+:ref:`power budget <power-budget>`. The power it offers on one USB port
+cannot exceed the power left for all output ports
+(:ref:`power-translation`):
 
 .. math::
 
-   P_\text{offer} &= (25\ \text{W} - 5\ \text{W}) \times 0.90 \\
-                  &= 20\ \text{W} \times 0.90 = 18\ \text{W}
+   P_\text{offer} \le P_\text{out}
 
-For a source rated between 15 W and 27 W, :pd:`Table 3.1` requires a 5 V
-offer of 3 A and a 9 V offer of :math:`P_\text{offer} / 9\ \text{V}`; here
-:math:`18\ \text{W} / 9\ \text{V} = 2.00\ \text{A}`. Currents are rounded
-to 10 mA (:pd:`Section 3.2.1`, item 1). So the Source_Capabilities message
-lists "5 V 3 A" and "9 V 2 A". Other rules shape the list: the first PDO is
-always 5 V (:pd:`Section 6.4.1.1`); no fixed PDO may offer more power (its
-voltage times its maximum current) than a fixed PDO of higher voltage in the
-same list (:pd:`Section 3.2.1`, item 2); and currents above 3 A need a 5 A
-cable (:pd:`Section 8.6.1.2.2`). A port with nothing to offer sends a single
-"5 V 0 A" PDO (:pd:`Section 7.9.1.5`).
+   P_\text{out} = P_\text{in} \times \eta - P_\text{board}
 
-**Evaluating the request.** The source checks that the requested object
-exists and that the requested current does not exceed the offered maximum,
-then answers Accept, Reject or Wait (:pd:`Section 6.4.2`; :pd:`Table 6.19 <x>`).
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
 
-**Changing the offer.** When the input power changes, the processor sends new
-Source_Capabilities and the sink must request again. When lowering the offer,
-the source should first send an Alert message, up to *tReducePowerAlert*
-(2.0 s to 2.4 s) before the reduced capabilities (:pd:`Section 6.4.5.5`;
-:pd:`Table 4.7 <x>`). If the input drops faster than that, the source's own
-over-current protection (`Current limit and over-current response`_) or a
-Hard Reset (`Hard Reset in each role`_) is the remaining option, so the
-:ref:`power budget <power-budget>` should keep a margin.
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`P_\text{offer}`
+     - Power offered on this USB port, the Port Present PDP
+     - W
+   * - :math:`P_\text{out}`
+     - Power left for all output ports
+     - W
+   * - :math:`P_\text{in}`
+     - Power granted on the input port, for example the Power over
+       Ethernet class power
+     - W
+   * - :math:`\eta`
+     - Efficiency of the converters from the input to the USB port
+     - fraction
+   * - :math:`P_\text{board}`
+     - Power the board itself uses
+     - W
 
-Current limit and over-current response
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*Port Present PDP* is the specification's name for the power a source can
+supply at present, in 1 W steps (:pd:`Table 6.29`). With one output port,
+:math:`P_\text{offer} = P_\text{out}`; with more, the software shares
+:math:`P_\text{out}` between them (:ref:`power-sharing`,
+:ref:`usbpd-sharing`).
 
-A source must have over-current protection that does not trip within the
-contract, should send Hard Reset (and later an Alert) when it trips, and,
-when it shuts down a port above 5 V, must bring VBUS down to vSafe5V within
-*tSafe5V* (275 ms) and to vSafe0V within *tSafe0V* (650 ms)
-(:pd:`Section 4.1.5.1`; :pd:`Table 4.9 <x>`). The current limit is part of
-the source power path (see
-`Bidirectional VBUS power path and converter control`_). For example, TPS65987D has a firmware-selectable over-current clamp with 20
-settings from 1.267 A to 6.33 A (typical) and a fast-acting limit of about
-10 A ([USBPD-TPS65987D]_, Section 6.7).
+The equation neglects the loss in the USB cable, because the offered
+voltage is measured at the source's connector (*vSrcNew*,
+:pd:`Table 4.7`). It treats :math:`\eta` as a constant, although a
+converter's efficiency changes with its load; the converter pages give the
+ranges (:ref:`conv-efficiency`).
 
-Discharging VBUS
-~~~~~~~~~~~~~~~~
+For example, a class 4 Power over Ethernet grant of 25.5 W, with
+:math:`\eta` = 0.900 and :math:`P_\text{board}` = 3.10 W, both assumed for
+illustration, gives:
 
-A source must bring VBUS to vSafe0V within tSafe0V (650 ms) after detach,
-and to below vSafe5V (max) within tSafe5V (275 ms) (:pd:`Section 4.1.5.5`).
-It must also discharge VBUS before attaching (AttachWait.SRC,
-:typec:`Section 4.5.2.2.8.1`) and during a role swap. A switched load from
-VBUS to ground, controlled by the processor, does this (see
-`VBUS sensing and discharge`_).
+.. math::
 
-The sink side
--------------
+   P_\text{out} = 25.5\ \text{W} \times 0.900 - 3.10\ \text{W} = 19.9\ \text{W}
 
-A sink presents Rd, waits for VBUS and Source_Capabilities, chooses a PDO,
-sends Request within tReceiverResponse (15 ms), and after Accept cuts its
-current to *iSnkStdby* (500 mA) within *tSnkStdby* (15 ms) until PS_RDY
-arrives (:pd:`Section 4.5.1.1`; :pd:`Table 4.8 <x>`). A sink that uses the
-1.5 A or 3.0 A Rp level before a contract must follow changes of Rp within *tSinkAdj*
-(60 ms, :typec:`Table 4-32`). During a contract it must check the Rp level
-before starting an exchange of its own (:pd:`Section 7.2`). A sink should
-tolerate up to 24 V on VBUS without damage (*vSprMax*, :pd:`Table 4.8`).
+The source reports this as 19 W, rounded down to 1 W (:pd:`Table 6.29`).
+Which voltages and currents a source of a given Port Present PDP must offer
+is set by the specification's power rules; :doc:`power-translation` gives
+the rules and worked examples for each Power over Ethernet class.
 
-A slow sink does not miss the negotiation: the source repeats
-Source_Capabilities 50 times. The sink may send Hard Reset after
-tTypeCSinkWaitCap to restart the source, but a board powered only from VBUS
-should avoid this, because the source answers a Hard Reset by switching VBUS
-off (see `Hard Reset in each role`_).
+Lowering the offer: an Alert first, then new capabilities
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When the input power changes, the source sends new Source_Capabilities, and
+the sink must request again. Before lowering its offer, the specification
+recommends that the source sends an Alert, a data message that warns the
+sink of an event. It sends it up to *tReducePowerAlert*, 2.0 s to 2.4 s,
+before the reduced capabilities (:pd:`Section 6.4.5.5`, :pd:`Table 4.7`).
+
+The input can fall faster than that, for example when the Power over
+Ethernet input is removed. The source then relies on its over-current
+protection (:ref:`usbpd-current-limit`) or a :term:`Hard Reset`
+(:ref:`usbpd-hard-reset`). Keep a margin in the
+:ref:`power budget <power-budget>` for this case.
+
+.. _usbpd-current-limit:
+
+Over-current protection must not trip within the contract
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A source must have over-current protection that does not trip while the
+sink draws a current that the contract allows (:pd:`Section 4.1.5.1`). The
+specification recommends that a source whose protection trips sends Hard
+Reset, followed by an Alert. A port that shuts down from above 5 V must
+bring VBUS down to vSafe5V within *tSafe5V*, 275 ms, and to vSafe0V within
+*tSafe0V*, 650 ms (:pd:`Section 4.1.5.1`, :pd:`Table 4.9`).
+
+On evampire the software sets the current limit of each port and the
+hardware enforces it (:ref:`req-power-control`, :ref:`usbpd-limiting`). The
+limit sits in the source power path (:ref:`usbpd-power-path`).
+
+.. _usbpd-discharge:
+
+The source discharges VBUS after detach
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After detach, a source must bring VBUS below vSafe5V (maximum) within
+tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
+(:pd:`Section 4.1.5.5`, :pd:`Table 4.9`). It also discharges VBUS before
+attaching (the AttachWait.SRC state, :typec:`Section 4.5.2.2.8.1`) and
+during a power role swap. A switched load from VBUS to ground, controlled by
+the processor, does this (:ref:`usbpd-vbus-sensing`).
+
+.. _usbpd-sink-sequence:
+
+The sink sequence from attach to contract
+-----------------------------------------
+
+A sink:
+
+#. presents :term:`Rd` and waits for VBUS (:ref:`usbpd-attach-sequence`);
+#. if it uses the 1.5 A or 3.0 A Rp level before a contract, follows every
+   change of Rp within *tSinkAdj*, 60 ms (:typec:`Section 4.6.2.1`,
+   :typec:`Table 4-32`);
+#. waits for Source_Capabilities and chooses one PDO;
+#. sends Request within *tReceiverResponse*, 15 ms (:pd:`Section 7.31.2`);
+#. after Accept for a higher voltage, cuts its current to *iSnkStdby*,
+   500 mA, before the source may start the change 25 ms later, and keeps it
+   there until PS_RDY arrives; the specification recommends doing so within
+   *tSnkStdby*, 15 ms (:pd:`Section 4.5.1.1`, :pd:`Table 4.8`);
+#. during the contract, checks that Rp is at SinkTxOK before it starts a
+   message exchange of its own (:pd:`Section 7.2`).
+
+A slow sink does not miss the negotiation. The source repeats
+Source_Capabilities up to 50 times, then less often
+(:pd:`Section 7.32.4`). A sink that sees no Source_Capabilities within
+*tTypeCSinkWaitCap* may send Hard Reset to restart the source
+(:pd:`Section 7.32.4`). Do not send this Hard Reset from a board powered
+only from VBUS: the source answers a Hard Reset by switching VBUS off
+(:ref:`usbpd-hard-reset`).
+
+Open questions
+--------------
+
+* How fast the board must react when the Power over Ethernet input is
+  reduced or lost, and so how large a margin the power budget keeps for a
+  USB source that cannot lower its offer in time.
