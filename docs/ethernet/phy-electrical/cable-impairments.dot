@@ -1,0 +1,38 @@
+// What arrives at the receiver of pair A in 1000BASE-T. Only two of the
+// four pairs are drawn; pairs C and D add the same kinds of coupling.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph impairments {
+    graph [rankdir=RL, fontname="Helvetica", fontsize=12, nodesep=0.6,
+           ranksep=1.6, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.5];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    subgraph cluster_local {
+        label="Local transceiver"; style="rounded"; color="#1f4e79"; labelloc=b;
+        la [label="Pair A\ntransmitter + receiver", fillcolor="#dbe8f5"];
+        lb [label="Pair B\ntransmitter + receiver"];
+    }
+
+    subgraph cluster_far {
+        label="Far-end transceiver (up to 100 m away)"; style="rounded";
+        color="#888888"; labelloc=b;
+        fa [label="Pair A\ntransmitter + receiver"];
+        fb [label="Pair B\ntransmitter + receiver"];
+    }
+
+    { rank=same; la; lb; }
+    { rank=same; fa; fb; }
+
+    fa -> la [penwidth=2.5, color="#2e7d32", fontcolor="#2e7d32",
+              label="wanted signal\n(attenuated by the cable)"];
+    la:w -> la:w [style=dashed, color="#c62828", fontcolor="#c62828",
+              label="echo of its own\ntransmission"];
+    lb -> la [style=dashed, color="#ef6c00", fontcolor="#ef6c00",
+              xlabel="near-end\ncrosstalk"];
+    fb -> la [style=dotted, color="#6a1b9a", fontcolor="#6a1b9a",
+              label="far-end crosstalk"];
+    fb -> lb [style=invis];
+}

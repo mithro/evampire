@@ -1,0 +1,82 @@
+// Inside a gigabit Ethernet transceiver: one of the four identical
+// pair channels in detail, plus the blocks shared by all four.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph transceiver {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.35,
+           ranksep=0.45, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    rgmii [label="RGMII\n(to evampire)", fillcolor="#dbe8f5"];
+
+    subgraph cluster_digital {
+        label="Digital signal processing (125 MHz)"; style="rounded"; labelloc=t;
+        color="#5b9bd5";
+
+        enc   [label="Scrambler and\ntrellis encoder"];
+        shape [label="Transmit\nshaping filter"];
+
+        dec   [label="Trellis decoder\nand descrambler"];
+        eq    [label="Adaptive\nequalizer"];
+        sum   [label="−", shape=circle, width=0.35, fixedsize=true,
+               fontsize=16];
+
+        echo  [label="Echo\ncanceller"];
+        next  [label="3 near-end\ncrosstalk\ncancellers"];
+        other [label="Transmit symbols\nof the other\nthree pairs",
+               style="rounded,dashed,filled", fillcolor="#ffffff"];
+    }
+
+    subgraph cluster_analog {
+        label="Analog front end"; style="rounded"; color="#ed7d31"; labelloc=t;
+        dac    [label="DAC and\nline driver", fillcolor="#fbe5d6"];
+        hybrid [label="Hybrid", fillcolor="#fbe5d6"];
+        adc    [label="Variable-gain\namplifier, filter\nand ADC",
+                fillcolor="#fbe5d6"];
+    }
+
+    mag   [label="Magnetics\nand RJ45", fillcolor="#ffffff"];
+
+    subgraph cluster_shared {
+        label="Shared by all four pairs"; style="rounded"; color="#70ad47"; labelloc=b;
+        xtal [label="25 MHz\ncrystal", fillcolor="#e2efda"];
+        pll  [label="Clock synthesis\nand clock recovery", fillcolor="#e2efda"];
+        an   [label="Autonegotiation\n(link pulses)", fillcolor="#e2efda"];
+        mgmt [label="Management\nregisters\n(MDC/MDIO)", fillcolor="#e2efda"];
+    }
+
+    { rank=same; adc -> dac [style=invis]; }
+    { rank=same; other -> dec -> enc [style=invis]; }
+    { rank=same; eq -> next -> echo -> shape [style=invis]; }
+
+    // Transmit path.
+    rgmii -> enc    [penwidth=2];
+    enc   -> shape  [penwidth=2];
+    shape -> dac    [penwidth=2];
+    dac   -> hybrid [penwidth=2];
+    hybrid -> mag   [dir=both, penwidth=2];
+
+    // Receive path (drawn right to left).
+    adc   -> hybrid [dir=back, penwidth=2];
+    sum   -> adc    [dir=back, penwidth=2];
+    eq    -> sum    [dir=back, penwidth=2];
+    dec   -> eq     [dir=back, penwidth=2];
+    rgmii -> dec    [dir=back, penwidth=2];
+
+    // Cancellers take the known transmitted symbols.
+    enc   -> echo   [style=dashed];
+    echo  -> sum;
+    other -> next   [style=dashed];
+    next  -> sum;
+
+    // Clocks and control.
+    xtal  -> pll;
+    pll   -> dac    [style=dotted];
+    pll   -> adc    [style=dotted];
+    eq    -> pll    [style=dotted];
+    an    -> hybrid [style=dotted];
+    mgmt  -> an     [style=dotted];
+}
