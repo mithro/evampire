@@ -6,7 +6,7 @@
 // diagram fits the width of a documentation page:
 //
 //   column 1 (x=1.1)  port A, power flowing down from the cable
-//   column 2 (x=3.6)  internal power bus and evampire
+//   column 2 (x=3.6)  Ethernet transceivers, evampire, internal power bus
 //   column 3 (x=6.1)  port B, power flowing up to the cable
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -48,6 +48,12 @@ digraph poe_system {
     bus  [pos="3.6,2.8!", label="Internal power bus", style="filled,bold",
           fillcolor="#dbe8f5"];
 
+    // Ethernet transceivers (external chips in the first version).
+    phya [pos="3.0,7.6!", label="Ethernet\ntransceiver A", width=1.15,
+          height=0.6, fontsize=11, fillcolor="#ffffff"];
+    phyb [pos="4.2,7.6!", label="Ethernet\ntransceiver B", width=1.15,
+          height=0.6, fontsize=11, fillcolor="#ffffff"];
+
     // Port B column.
     boost [pos="6.1,4.0!", label="Boost converter\nto 44–57 V", fillcolor="#fff2cc"];
     psec  [pos="6.1,5.0!", label="Power sourcing\nequipment controller\nand switches", height=0.75, fillcolor="#fff2cc"];
@@ -67,6 +73,8 @@ digraph poe_system {
     // Control and data.
     pdc  -> evp  [style=dashed];
     evp  -> psec [style=dashed, dir=both];
-    maga -> evp  [dir=both, label="data"];
-    evp  -> magb [dir=both, label="data"];
+    maga -> phya [dir=both];
+    phya -> evp  [dir=both];
+    evp  -> phyb [dir=both];
+    phyb -> magb [dir=both];
 }
