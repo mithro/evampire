@@ -56,9 +56,9 @@ graph arch_capacitor {
     dsp  [pos="6.05,0.6!", width=1.9, height=0.55, fillcolor="#f2f2f2",
           label="converters, signal processing\n(see How an Ethernet\ntransceiver works)"];
 
-    pins [pos="4.85,2.35!", width=0.16, height=3.1, fillcolor="#1f4e79",
+    pins [pos="4.85,2.3!", width=0.16, height=2.85, fillcolor="#1f4e79",
           label=""];
-    pinl [pos="4.85,3.98!", shape=plain, fixedsize=false, fillcolor="none",
+    pinl [pos="4.85,3.86!", shape=plain, fixedsize=false, fillcolor="none",
           style="", label="pins", fontsize=8];
 
     // Connection points on the right-hand and left-hand edges of the pins.

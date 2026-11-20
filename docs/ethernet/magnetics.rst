@@ -10,6 +10,12 @@ The requirements for evampire are (see :doc:`../overview`):
 * **First version:** each Ethernet port uses an external transceiver chip
   with an RGMII interface (see :doc:`rgmii`), and standard magnetics between
   that transceiver and the RJ45 socket.
+* **Every port, in both versions:** gigabit Ethernet (1000BASE-T). All four
+  pairs carry signals in both directions at once, at 125 million symbols per
+  second on each pair, each symbol one of five voltage levels (*PAM-5*,
+  five-level pulse amplitude modulation). Whether 10 Mbit/s and 100 Mbit/s are
+  also supported is not yet decided, so their requirements appear on this
+  page only as secondary values.
 * **Full design:** the transceiver is integrated on evampire, and the cable
   connects to the board *without coupling transformers*. Every job the
   transformers normally do is done instead by active analog circuits on
@@ -202,7 +208,7 @@ transformer per pair is "the most commonly used method" of meeting them
      - Passing low frequencies (limiting droop and baseline wander)
      - transformer inductance
      - 1000BASE-T: more than 73.1 % of the voltage left 500 ns after a step
-       (:clause:`40.6.1.2.2`) [MAG-UNH40]_. 100BASE-TX, if supported: at
+       (:clause:`40.6.1.2.2`) [MAG-UNH40]_. Only if 100BASE-TX is supported: at
        least 350 µH with 0 mA to 8 mA DC bias (ANSI X3.263, section 9.1.7)
        [MAG-LAW]_.
    * - F6
@@ -457,7 +463,8 @@ and in IEEE 802.3bu work on power over a single pair [MAG-GARDNER14]_. With
 350 µH, :math:`\tau = 350\ \mu\text{H} / 50\ \Omega = 7.0\ \mu\text{s}` and
 :math:`e^{-0.5/7.0} = 0.931`: 93 % remains, a large margin over 73.1 %.
 
-**Why 350 µH.** The 350 µH figure comes from 100BASE-TX: ANSI X3.263
+**Why 350 µH.** Gigabit magnetics are specified at 350 µH because the same
+parts also serve 100BASE-TX. The figure comes from ANSI X3.263
 section 9.1.7 requires at least 350 µH at the transmitter "with any DC
 bias current between 0 mA and +8 mA", to limit baseline wander, and notes
 that DC bias can change the inductance by about 2:1 [MAG-LAW]_. Data sheets
@@ -467,9 +474,10 @@ transmitters in equipment that supplies or takes more than 13 W of Power
 over Ethernet [MAG-TRACY]_.
 
 For a design without a transformer, these two numbers become the targets
-for whatever replaces the transformer: a time constant of at least 1.6 µs
-for 1000BASE-T, and about 7 µs to match the low-frequency behaviour that
-100BASE-TX receivers expect.
+for whatever replaces the transformer: a time constant of at least 1.6 µs,
+the 1000BASE-T requirement, and about 7 µs to match the low-frequency
+behaviour of standard magnetics, which every 1000BASE-T link partner was
+designed and tested with.
 
 F6: common-mode termination of the cable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -666,10 +674,10 @@ Whatever replaces the transformer must survive the voltages in
    * - 1000BASE-T signal
      - 0.67 V to 0.82 V peak differential in the test pattern
      - continuous [MAG-UNH40]_
-   * - 100BASE-TX signal
+   * - 100BASE-TX signal (only if supported)
      - 0.95 V to 1.05 V peak differential
      - continuous [MAG-UNH25]_
-   * - 10BASE-T signal
+   * - 10BASE-T signal (only if supported)
      - 2.2 V to 2.8 V peak differential
      - continuous [MAG-INTERP1196]_
    * - Power over Ethernet
@@ -870,8 +878,23 @@ transformers, and they show which techniques are proven:
   capacitors for the data) [MAG-US8132027]_ [MAG-US7851938]_
   [MAG-US9189036]_, but no product data sheet was found.
 
-No vendor document was found that covers capacitor-coupled 1000BASE-T over a
-full-length cable.
+* **Capacitor-coupled 1000BASE-T.** Analog Devices documents its ADIN1300
+  gigabit transceiver connected through one 33 nF capacitor per wire, says it
+  can operate "at all speeds" in this arrangement, and reports "no packet
+  loss, no CRCs errors" with signal quality "comparable to transformer
+  arrangement over a range of cable lengths (2 m to 100 m)" [MAG-ADIWIKI]_.
+  The same page recommends capacitor coupling for cables "less than
+  1 meter", warns that longer cables "might introduce some common-mode
+  noise", and recommends a common-mode choke for them. It does not state
+  which speed was used for the 2 m to 100 m test. Microchip's transformerless
+  note covers gigabit transceivers on one board or a backplane, not cable
+  [MAG-ENT114]_.
+
+That one sentence is the only published report found of capacitor-coupled
+1000BASE-T over a full-length cable. Every other vendor statement limits
+capacitor coupling to a backplane, one board, or about 1 m of cable. This is
+the central risk of the full design, analysed in
+`The central risk: capacitor-coupled 1000BASE-T over 100 m`_.
 
 The rest of this section takes each function in turn. For each, it lists
 options using external passive parts and options built on the chip, with
@@ -881,8 +904,8 @@ Coupling capacitor size
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Replacing the transformer with a capacitor in each wire makes the data path a
-series capacitor instead of a parallel inductor. Three requirements set the
-smallest capacitor. In all three the model is: the transceiver as a 100 Ω
+series capacitor instead of a parallel inductor. Two 1000BASE-T requirements
+set the smallest capacitor. In both the model is: the transceiver as a 100 Ω
 source, the cable as a 100 Ω load, and one capacitor :math:`C_\text{w}` in
 each of the two wires. The two capacitors are in series around the loop, so
 the pair sees
@@ -891,42 +914,27 @@ the pair sees
 
    C_\text{pair} = \frac{C_\text{w}}{2}
 
-**1. Phase angle (100BASE-TX).** The port must look resistive within 3° from
-2 MHz [MAG-SNLA088]_. A series capacitor adds a reactance
-:math:`X = 1 / (2\pi f C_\text{pair})` in series with the 100 Ω, and the
-phase angle is :math:`\arctan(X / 100\ \Omega)`. So:
-
-.. math::
-
-   X_\text{max} = 100\ \Omega \times \tan 3^\circ
-   \qquad
-   C_\text{pair} \ge \frac{1}{2\pi f X_\text{max}}
-
-where :math:`f = 2\ \text{MHz}`. Substituting:
-:math:`\tan 3^\circ = 0.0524`, so :math:`X_\text{max} = 5.24\ \Omega`;
-:math:`C_\text{pair} \ge 1 / (2\pi \times 2 \times 10^6 \times 5.24) =
-15.2\ \text{nF}`; and :math:`C_\text{w} \ge 30.4\ \text{nF}`. TI calculates
-30.42 nF and recommends the next standard value, 33 nF [MAG-SNLA088]_.
-
-**2. Return loss (1000BASE-T).** The port must have at least 16 dB return
-loss from 1 MHz. With the capacitor in series with a perfectly matched
-100 Ω port, the reflection is
-:math:`\lvert\Gamma\rvert = X / \sqrt{(2 \times 100\ \Omega)^2 + X^2}`. Setting
-:math:`\lvert\Gamma\rvert = 0.158` (16 dB, from F4) and solving:
+**1. Return loss.** A 1000BASE-T port must have at least 16 dB return loss
+from 1 MHz (F4). A series capacitor adds a reactance
+:math:`X = 1 / (2\pi f C_\text{pair})` in series with the port. With an
+otherwise perfect 100 Ω port the reflection is
+:math:`\lvert\Gamma\rvert = X / \sqrt{(2 \times 100\ \Omega)^2 + X^2}`.
+Setting :math:`\lvert\Gamma\rvert = 0.158` (16 dB, from F4) and solving for
+:math:`X`:
 
 .. math::
 
    X_\text{max} = \frac{200\ \Omega \times 0.158}{\sqrt{1 - 0.158^2}}
-   = 32.1\ \Omega
+   = \frac{31.7}{0.987}\ \Omega = 32.1\ \Omega
 
-At :math:`f = 1\ \text{MHz}`: :math:`C_\text{pair} \ge 1 / (2\pi \times 10^6
-\times 32.1) = 4.96\ \text{nF}`, so :math:`C_\text{w} \ge 9.9\ \text{nF}`.
-This uses the whole 16 dB budget for the capacitors alone, so in practice
-they must be larger.
+At :math:`f = 1\ \text{MHz}`:
+:math:`C_\text{pair} \ge 1 / (2\pi \times 10^6 \times 32.1) =
+4.96\ \text{nF}`, so :math:`C_\text{w} \ge 9.9\ \text{nF}`. This uses the
+whole 16 dB budget for the capacitors alone, so in practice they must be
+larger.
 
-**3. Droop (1000BASE-T) and baseline wander.** The series capacitor forms a
-high-pass filter with the source and load resistances in series, so its time
-constant is
+**2. Droop.** The series capacitor forms a high-pass filter with the source
+and load resistances in series, so its time constant is
 
 .. math::
 
@@ -934,15 +942,16 @@ constant is
    \qquad
    C_\text{w} = \frac{2\tau}{R_\text{s} + R_\text{L}}
 
-where :math:`R_\text{s} + R_\text{L} = 200\ \Omega`. For the 1000BASE-T droop
-limit, :math:`\tau \ge 1.6\ \mu\text{s}` (from F5):
-:math:`C_\text{w} \ge 2 \times 1.6\ \mu\text{s} / 200\ \Omega = 16\ \text{nF}`.
-To match a 350 µH transformer (:math:`\tau = 7.0\ \mu\text{s}`):
-:math:`C_\text{w} = 2 \times 7.0\ \mu\text{s} / 200\ \Omega = 70\ \text{nF}`.
+where :math:`R_\text{s} + R_\text{L} = 200\ \Omega`. For the 1000BASE-T
+droop limit, :math:`\tau \ge 1.6\ \mu\text{s}` (from F5):
+:math:`C_\text{w} \ge 2 \times 1.6\ \mu\text{s} / 200\ \Omega =
+16\ \text{nF}`. At exactly 16 nF the port meets the droop limit with no
+margin (73.2 % left after 500 ns against 73.1 % required). To match standard
+magnetics (:math:`\tau = 7.0\ \mu\text{s}`):
+:math:`C_\text{w} = 2 \times 7.0\ \mu\text{s} / 200\ \Omega =
+70\ \text{nF}`.
 
-.. list-table:: Smallest coupling capacitor per wire (model above; the
-                transceiver's own baseline-wander correction can relax the
-                last row)
+.. list-table:: Smallest coupling capacitor per wire (model above)
    :header-rows: 1
    :widths: 50 25 25
 
@@ -952,20 +961,267 @@ To match a 350 µH transformer (:math:`\tau = 7.0\ \mu\text{s}`):
    * - 1000BASE-T return loss at 1 MHz (no margin)
      - 9.9 nF
      - [MAG-UNH40]_
-   * - 1000BASE-T droop, 500 ns
+   * - 1000BASE-T droop, 500 ns (no margin)
      - 16 nF
      - [MAG-UNH40]_
-   * - 100BASE-TX phase angle at 2 MHz
+   * - Same low-frequency corner as standard magnetics (350 µH)
+     - 70 nF
+     - [MAG-KSZ9031]_
+   * - Only if 100BASE-TX is supported: phase angle under 3° at 2 MHz
      - 30.4 nF (33 nF used)
      - [MAG-SNLA088]_
-   * - Same low-frequency corner as a 350 µH transformer
-     - 70 nF
-     - [MAG-LAW]_
 
-For example, 100 nF per wire gives
-:math:`\tau = 200\ \Omega \times 50\ \text{nF} = 10\ \mu\text{s}`, a corner
-frequency of :math:`1 / (2\pi \times 10\ \mu\text{s}) = 16\ \text{kHz}`, and
-95 % of the voltage left after 500 ns.
+The last row comes from the 100BASE-TX requirement that the port look
+resistive within 3° from 2 MHz: :math:`X \le 100\ \Omega \times \tan 3^\circ =
+5.24\ \Omega`, so :math:`C_\text{pair} \ge 1 / (2\pi \times 2 \times 10^6
+\times 5.24) = 15.2\ \text{nF}` and :math:`C_\text{w} \ge 30.4\ \text{nF}`.
+TI calculates 30.42 nF and uses 33 nF [MAG-SNLA088]_, as does Analog Devices
+for its gigabit transceiver [MAG-ADIWIKI]_.
+
+The next section shows what each value means for the received signal. A
+value between 33 nF and 100 nF per wire is a reasonable
+*estimate* of the working range: above the droop limit with margin, at or
+near the behaviour of standard magnetics, and small enough to find in
+high-voltage parts.
+
+The central risk: capacitor-coupled 1000BASE-T over 100 m
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Capacitor coupling is proven for short links and backplanes, and reported in
+one vendor test for cables up to 100 m [MAG-ADIWIKI]_. This section works
+through what could stop it working over a full 100 m link, and how to find
+out.
+
+**Low frequencies and the PAM-5 spectrum.** 1000BASE-T scrambles its data so
+that the transmitted symbols are uncorrelated, on each pair and between
+pairs, and shapes them with the filter :math:`\tfrac{3}{4} + \tfrac{1}{4}z^{-1}`
+(the output is three quarters of the present symbol plus one quarter of the
+previous one) to reduce energy above 30 MHz [MAG-AB-TUTORIAL]_. That filter
+has a gain of 1 at zero frequency, and there is no line code that removes
+the DC content, so the signal has energy right down to DC. Any high-pass
+filter in the path, transformer or capacitor, removes some of it. The
+receiver's signal processing corrects the resulting *baseline wander*
+digitally; this was a design point of 1000BASE-T [MAG-AB-TUTORIAL]_.
+
+*Fraction of the signal power below the corner frequency (estimate).*
+Model the symbol stream as uncorrelated symbols at rate :math:`1/T` with
+square pulses. Its power spectrum is then proportional to
+:math:`T\,\text{sinc}^2(fT)`, which is flat at low frequencies, and
+whose integral from 0 to infinity is :math:`\tfrac{1}{2}` (in the same
+units). Below a corner frequency :math:`f_\text{c}` far under :math:`1/T`,
+the spectrum is close to its value at 0, so:
+
+.. math::
+
+   P_\text{below} \approx \frac{f_\text{c} T}{1/2} = 2 f_\text{c} T
+
+where:
+
+* :math:`P_\text{below}` is the fraction of the signal power below
+  :math:`f_\text{c}` (no unit);
+* :math:`T` is the symbol period, 8 ns (125 million symbols per second
+  [MAG-AB-TUTORIAL]_);
+* :math:`f_\text{c} = 1 / (2\pi\tau)` is the high-pass corner, with
+  :math:`\tau` from the droop formula above.
+
+For :math:`C_\text{w} = 16\ \text{nF}`: :math:`\tau = 1.6\ \mu\text{s}`,
+:math:`f_\text{c} = 1 / (2\pi \times 1.6\ \mu\text{s}) = 99.5\ \text{kHz}`,
+and :math:`P_\text{below} = 2 \times 99.5\ \text{kHz} \times 8\ \text{ns}
+= 0.0016`, or 0.16 % of the power. (Integrating the full
+:math:`\text{sinc}^2` numerically gives the same 0.159 %.)
+
+*Size of the baseline wander (estimate).* The part of the signal that the
+high-pass filter removes is the signal passed through the matching low-pass
+filter. For uncorrelated symbols of variance :math:`\sigma^2` and a filter
+with time constant :math:`\tau \gg T`, the removed part has variance
+
+.. math::
+
+   \sigma_\text{w}^2 = \sigma^2 \sum_{k=0}^{\infty} h_k^2
+   \qquad
+   h_k = \frac{T}{\tau} e^{-kT/\tau}
+
+The sum is a geometric series:
+:math:`\sum h_k^2 = (T/\tau)^2 / (1 - e^{-2T/\tau})`, and for
+:math:`T \ll \tau`, :math:`1 - e^{-2T/\tau} \approx 2T/\tau`, so
+
+.. math::
+
+   \frac{\sigma_\text{w}}{\sigma} \approx \sqrt{\frac{T}{2\tau}}
+
+where :math:`\sigma_\text{w}` is the root-mean-square (rms) baseline wander
+and :math:`\sigma` the rms signal. With equally likely PAM-5 levels
+:math:`\{-2, -1, 0, 1, 2\}`,
+:math:`\sigma^2 = (4 + 1 + 0 + 1 + 4) / 5 = 2`, so :math:`\sigma = 1.41` level
+steps, and a symbol is decided wrongly when noise reaches half a step, 0.5.
+Real 1000BASE-T symbols are not equally likely; this is an assumption.
+
+.. list-table:: Low-frequency effect of the coupling capacitor, per end of
+                the link (estimates from the formulas above)
+   :header-rows: 1
+   :widths: 16 14 14 14 14 14 14
+
+   * - :math:`C_\text{w}`
+     - :math:`\tau`
+     - :math:`f_\text{c}`
+     - left after 500 ns
+     - power below :math:`f_\text{c}`
+     - rms wander, share of half a step
+     - tail length in symbols, :math:`\tau / T`
+   * - 16 nF
+     - 1.6 µs
+     - 99.5 kHz
+     - 73.2 %
+     - 0.16 %
+     - 14 %
+     - 200
+   * - 33 nF
+     - 3.3 µs
+     - 48.2 kHz
+     - 85.9 %
+     - 0.077 %
+     - 9.8 %
+     - 412
+   * - 70 nF (as 350 µH magnetics)
+     - 7.0 µs
+     - 22.7 kHz
+     - 93.1 %
+     - 0.036 %
+     - 6.8 %
+     - 875
+   * - 100 nF
+     - 10 µs
+     - 15.9 kHz
+     - 95.1 %
+     - 0.025 %
+     - 5.7 %
+     - 1250
+
+For example, for 16 nF: :math:`\sqrt{8\ \text{ns} / (2 \times 1.6\ \mu\text{s})}
+= 0.050`, times :math:`\sigma = 1.41` gives 0.071 level steps, which is 14 %
+of half a step. With 70 nF per wire the capacitors behave like standard
+magnetics, so a receiver designed for transformers sees nothing new. With
+16 nF the wander is about twice as large (the ratio is
+:math:`\sqrt{7.0 / 1.6} = 2.1`), which the receiver's correction must absorb.
+An IEEE 802.3 participant wrote that the 1000BASE-T scrambler makes it
+"essentially impossible to get baseline wander content sufficient to cause a
+measureable bit error rate" [MAG-DOVE]_, but that was said of links with
+transformers.
+
+**Echo.** Each end transmits and receives on the same pair at the same time.
+A *hybrid* subtracts most of the transmitted signal from the received one,
+and adaptive *echo cancellers* remove the rest [MAG-AB-TUTORIAL]_. Without a
+transformer the hybrid works the same way, because it is a circuit in the
+transceiver. What changes is the echo's low-frequency tail: the coupling
+capacitors' high-pass filter gives the echo a slowly decaying tail of
+:math:`\tau / T` symbols (the last column of the table). Echo cancellers in
+published 1000BASE-T designs span about 50 to 120 symbols
+[MAG-AB-TUTORIAL]_, much shorter, so the tail must be removed by the
+baseline-wander correction instead, as it already is for transformer tails
+[MAG-US6775529]_. The echo is up to 10 dB stronger than the far-end signal,
+so its baseline wander matters more [MAG-US7738567]_. With the capacitors at
+the near end and a transformer at the far end, the echo passes through one
+high-pass filter and the far-end signal through two; the correction must
+handle both (an inference).
+
+**Common-mode noise.** :clause:`40.6.1.3.3` tests a 1000BASE-T receiver with
+a common-mode signal of 1.0 V rms, swept from 1 MHz to 250 MHz, coupled
+onto all four pairs of a 100 m cable by a clamp near the receiver; the
+receiver must keep receiving correctly [MAG-CIBULA]_. A transformer and
+choke reject this before the transceiver. Without them, the coupling
+capacitors pass it almost completely at these frequencies (33 nF is 4.8 Ω at
+1 MHz), so the receiver itself, plus any external choke, must reject it. To
+keep the converted differential noise below 30 mV peak to peak (the value
+the IEEE 802.3ab task force used when it set the 1.0 V rms level
+[MAG-AB-MINUTES]_), the rejection must be at least
+
+.. math::
+
+   \text{CMRR} \ge 20 \log_{10} \frac{V_\text{cm}}{V_\text{dm}}
+   = 20 \log_{10} \frac{2.83\ \text{V}}{0.030\ \text{V}} = 39.5\ \text{dB}
+
+where :math:`V_\text{cm} = 2 \sqrt{2} \times 1.0\ \text{V} = 2.83\ \text{V}`
+is the peak-to-peak common-mode voltage and :math:`V_\text{dm} = 30\ \text{mV}`
+the allowed differential noise. This is an *estimate* (it assumes the clamp
+puts the full 1.0 V rms on the pair at the receiver), across all four pairs,
+from 1 MHz to 250 MHz. It is consistent with the 30 dB to 43 dB that
+magnetics provide (F2). Analog Devices recommends an external choke for
+capacitor-coupled cables longer than about 1 m for this reason
+[MAG-ADIWIKI]_.
+
+**Return loss with protection and termination parasitics.** Everything on
+the chip side of the capacitors adds capacitance across the line: the chip
+pads, on-chip protection, external protection diodes and board traces. A
+capacitance :math:`C_\text{d}` across a 100 Ω port gives
+:math:`\lvert\Gamma\rvert = \omega R C_\text{d} / \sqrt{4 + (\omega R
+C_\text{d})^2}`, with :math:`\omega = 2\pi f` and :math:`R = 100\ \Omega`.
+Solving for the largest :math:`C_\text{d}` that keeps the return loss limit:
+
+.. math::
+
+   \omega R C_\text{d} \le \frac{2 \lvert\Gamma\rvert_\text{max}}
+   {\sqrt{1 - \lvert\Gamma\rvert_\text{max}^2}}
+
+At 40 MHz, where the limit is still 16 dB (:math:`\lvert\Gamma\rvert = 0.158`):
+:math:`\omega R C_\text{d} \le 0.321`, so
+:math:`C_\text{d} \le 0.321 / (2\pi \times 40\ \text{MHz} \times 100\ \Omega)
+= 12.8\ \text{pF}` across the pair, or about 25 pF from each wire to ground
+(two in series). At 100 MHz (8.1 dB, :math:`\lvert\Gamma\rvert = 0.395`) the
+budget is 13.7 pF. This is the whole budget, shared with the transceiver's
+own termination error; it limits how large the protection devices on the
+chip side may be.
+
+**Surges and electrostatic discharge.** Without a transformer, fast
+common-mode events pass straight through the coupling capacitors. Analog
+Devices simulated fast transient bursts (IEC 61000-4-4, 1 kV and 4 kV) on a
+2 m cable with 33 nF coupling capacitors: without a protection diode,
+100 V to 400 V appeared at the transceiver pins; with one, less than 10 V
+[MAG-ADIWIKI]_. External protection diodes on the chip side of the
+capacitors are therefore needed, and their capacitance counts against the
+budget above.
+
+**Isolation with available parts.** The largest parts found that suit the
+2250 V DC test are 10 nF ceramic capacitors rated 2000 V DC, tested at
+2400 V DC [MAG-KEMET1812]_. The 2250 V test is above their rating, so
+(an *assumption* about acceptable derating) two in series per path would be
+used: 5 nF at a 4000 V DC rating. Reaching 20 nF per wire then takes four
+such pairs in parallel:
+
+.. math::
+
+   C_\text{w} = 4 \times \frac{10\ \text{nF}}{2} = 20\ \text{nF}
+   \qquad
+   N = 8 \text{ wires} \times 4 \times 2 = 64 \text{ capacitors per port}
+
+That meets the 16 nF droop limit with little margin, and 64 parts of
+4.5 mm × 3.2 mm per port is not "a small number of external passive
+components". Larger high-voltage parts, or a decision that the full IEEE 802.3
+isolation is not required, change this result (open questions 1 and 2).
+
+**Experiments that would settle it.**
+
+1. *Board-level prototype with an external gigabit transceiver.* Connect a
+   gigabit transceiver with a voltage-mode driver and on-chip termination
+   (such as the KSZ9031RNX [MAG-KSZ9031]_ or ADIN1300 [MAG-ADIWIKI]_) through
+   coupling capacitors to an RJ45 socket, with footprints for 16 nF to
+   100 nF per wire, optional common-mode chokes, protection diodes and a
+   standard-magnetics variant on the same board. Run 1000BASE-T against
+   several commercial switches over 0 m, 1 m, 10 m and 100 m of Category 5e
+   cable, at temperature extremes, and record frame errors, the
+   transceiver's signal-quality readout and link drops. This directly tests
+   the central risk with an existing gigabit receiver.
+2. *Compliance tests on that board.* The :clause:`40` transmitter tests
+   (output voltage, droop, waveform templates), MDI return loss
+   (:clause:`40.8.3.1`), and the common-mode noise test
+   (:clause:`40.6.1.3.3`), as implemented in the UNH-IOL test suite
+   [MAG-UNH40]_; the 2250 V DC isolation test; IEC 61000-4-2 discharge and
+   IEC 61000-4-5 surge; radiated emissions; and Power over Ethernet
+   detection and classification against standard power sourcing equipment.
+3. *Test structures on a gf180mcu run.* The line driver with its
+   termination, the receiver input with common-mode feedback, and the pin
+   protection, each connected through coupling capacitors to the cable, to
+   measure common-mode range and rejection, return loss and clamp
+   behaviour before the full transceiver exists.
 
 F1 without a transformer: isolation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1115,11 +1371,13 @@ Power over Ethernet inductors are fitted across the pair, they also shunt
 low frequencies, exactly as a transformer's magnetising inductance does, so
 the same 80 µH minimum (1000BASE-T) applies to their inductance across the
 pair [MAG-GARDNER14]_. The receiver's baseline-wander correction (see
-:doc:`phy-electrical`) can tolerate a faster droop; how much is a design
-choice for the integrated transceiver. Whether IEEE 802.3 accepts a
-100BASE-TX transmitter without a 350 µH inductance is not settled: the
-requirement is written in terms of inductance, with a droop alternative only
-for Power over Ethernet equipment above 13 W [MAG-TRACY]_.
+:doc:`phy-electrical`) must absorb whatever the capacitors and inductors
+remove; `The central risk: capacitor-coupled 1000BASE-T over 100 m`_
+estimates how much. Only if 100BASE-TX is supported: whether IEEE 802.3
+accepts a 100BASE-TX transmitter without a 350 µH inductance is not settled,
+because the requirement is written in terms of inductance, with a droop
+alternative only for Power over Ethernet equipment above 13 W
+[MAG-TRACY]_.
 
 F6 and F7 without a transformer: common-mode termination and filtering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1262,16 +1520,16 @@ Front end 1: high-voltage capacitors and passive power separation
    :align: center
 
 External parts per port (four pairs): eight high-voltage coupling capacitors
-(at least 16 nF each for 1000BASE-T, 33 nF to also meet 100BASE-TX, rated
-for the DC isolation test), four centre-tapped inductors (if the port
+(at least 16 nF each for 1000BASE-T, preferably 33 nF to 100 nF, rated for
+the DC isolation test), four centre-tapped inductors (if the port
 carries Power over Ethernet on all pairs), protection diodes, the
 common-mode termination, and optionally four common-mode chokes.
 
 Every part of this front end has been used in shipping products in some
 form: capacitor coupling in automotive and backplane Ethernet, inductors in
 power over a single pair, centre-tapped windings in Power over Ethernet
-magnetics. The combination at 1000 Mbit/s over 100 m of cable is not
-documented.
+magnetics. The combination at 1000 Mbit/s over 100 m of cable is reported
+only in one vendor test, without a choke [MAG-ADIWIKI]_.
 
 Front end 2: more on the chip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1305,22 +1563,34 @@ Key circuit specifications
      - Specification
      - Basis
    * - Line driver
-     - Up to 2.8 V peak differential (10BASE-T), about 1 V
-       (100BASE-TX, 1000BASE-T); 100 Ω output impedance within the return
-       loss budget
-     - [MAG-INTERP1196]_ [MAG-UNH25]_ [MAG-UNH40]_; F4
+     - 1000BASE-T: 0.67 V to 0.82 V peak differential in the test pattern,
+       PAM-5 at 125 million symbols per second on each of four pairs;
+       100 Ω output impedance within the return loss budget. Only if
+       10BASE-T is supported: up to 2.8 V peak.
+     - [MAG-UNH40]_ [MAG-INTERP1196]_; F4
    * - Voltage at each chip pin
-     - ±1.4 V around the common-mode level for 10BASE-T (half of 2.8 V),
-       plus the received signal, which overlaps the transmitted one at
-       1000 Mbit/s
-     - estimate; fits within 5 V or 6 V devices
+     - transmitted and received signals overlap on every pair at once, so
+       each pin carries about ±0.4 V of transmit plus the received signal
+       around the common-mode level (half of the differential peak); ±1.4 V
+       only if 10BASE-T is supported
+     - estimate; fits within 3.3 V or 5 V devices
+   * - Total capacitance across each pair, chip side
+     - at most about 12.8 pF, including pads, protection and traces
+     - estimate; `The central risk: capacitor-coupled 1000BASE-T over 100 m`_
+   * - Baseline-wander correction
+     - tracks a high-pass time constant from 1.6 µs upwards, at both ends
+       of the link, for the far-end signal and the echo
+     - estimate; [MAG-US6775529]_ [MAG-US7738567]_
    * - Receiver common-mode rejection
-     - 30 dB to 43 dB, 1 MHz to 100 MHz, with any external choke
-     - estimate, matching magnetics [MAG-PULSE]_ [MAG-BEL]_
+     - at least about 40 dB from 1 MHz to 250 MHz on all four pairs,
+       together with any external choke
+     - estimate from :clause:`40.6.1.3.3`; magnetics give 30 dB to 43 dB
+       [MAG-PULSE]_ [MAG-BEL]_
    * - Common-mode feedback
      - holds the pair's common-mode voltage within the receiver's range for
-       fast common-mode steps passed by the capacitors; bandwidth to at
-       least 100 MHz if it replaces the choke
+       fast common-mode steps passed by the capacitors; effective up to
+       250 MHz (the :clause:`40.6.1.3.3` test range) if it replaces the
+       choke
      - estimate
    * - Pin protection
      - survives the charge passed by :math:`C_\text{w}` during common-mode
@@ -1353,14 +1623,20 @@ Which IEEE 802.3 requirements a transformer-free port can meet
    * - Isolation, impulse test
      - Depends on the capacitors and clamps
      - The capacitors must hold 2400 V (1500 V with Power over Ethernet).
-   * - Return loss
+   * - Return loss (1000BASE-T)
      - Yes
-     - Capacitors of at least about 16 nF per wire, plus margin for the
-       chip's termination.
+     - Coupling capacitors of at least about 16 nF per wire, and at most
+       about 12.8 pF across each pair on the chip side.
    * - Droop (1000BASE-T)
      - Yes
      - Capacitors and any inductors as calculated above.
-   * - 350 µH inductance (100BASE-TX)
+   * - Common-mode noise rejection (1000BASE-T)
+     - Unproven
+     - About 40 dB needed in the receiver and any choke; must be measured.
+   * - Operation over a 100 m link (1000BASE-T)
+     - Unproven
+     - Reported in one vendor test only; see the central risk above.
+   * - 350 µH inductance (only if 100BASE-TX is supported)
      - Not as written
      - Equivalent behaviour is possible; the requirement is written for an
        inductance.
@@ -1508,29 +1784,29 @@ circuits on the cable-side centre taps.
 Open design questions
 ---------------------
 
-1. **Isolation.** Is the full design required to pass the IEEE 802.3
+1. **Gigabit over 100 m.** Does capacitor-coupled 1000BASE-T work reliably
+   over a full 100 m link with standard link partners, and with which
+   capacitor value and choke? See the experiments in
+   `The central risk: capacitor-coupled 1000BASE-T over 100 m`_.
+2. **Isolation.** Is the full design required to pass the IEEE 802.3
    isolation test, and is the DC test (2250 V) an acceptable way to do so?
    Are safety-rated capacitors required, and if so how is the 16 nF minimum
    met when certified surface-mount parts stop at 4.7 nF?
-2. **Coupling capacitors.** Which parts give 16 nF to 100 nF per wire at
+3. **Coupling capacitors.** Which parts give 16 nF to 100 nF per wire at
    more than 2250 V DC, and at what size and cost for eight per port?
-3. **Power path isolation.** Must the Power over Ethernet converter on each
+4. **Power path isolation.** Must the Power over Ethernet converter on each
    port be isolated, given that capacitor coupling puts the power circuits
    directly on the cable?
-4. **Power separation.** Centre-tapped inductors, separate inductors, or
+5. **Power separation.** Centre-tapped inductors, separate inductors, or
    active inductors? Can a centre-tapped inductor meet both the 80 µH data
    requirement and the 100 µH powered-device limit at 938 mA per pair?
-5. **Common-mode noise.** Is an external common-mode choke needed to meet
+6. **Common-mode noise.** Is an external common-mode choke needed to meet
    radio-interference limits, or can on-chip common-mode feedback and
    termination replace it? What termination values suit four-pair cable
    without centre taps?
-6. **Protection.** What external protection is needed for system-level
+7. **Protection.** What external protection is needed for system-level
    discharge, surges and charged-cable events, and what charge must on-chip
    clamps absorb behind the coupling capacitors?
-7. **Speeds.** Which speeds does the integrated transceiver support (not yet
-   fixed, see :doc:`../overview`)? 100BASE-TX brings the 350 µH and 3°
-   phase requirements; 1000BASE-T brings full-length capacitor coupling,
-   which is not documented by any vendor.
 8. **Detection capacitance.** How much capacitance do the coupling
    capacitors add to the powered-device signature in the actual grounding
    arrangement?
@@ -1581,6 +1857,27 @@ References
 .. [MAG-UNH25] University of New Hampshire InterOperability Laboratory,
    *100BASE-TX PMD Test Suite*, version 3.5 (tests 25.1.1 and 25.1.7).
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/CL25_PMD/PMD_Test_Suite_v3.5.pdf
+.. [MAG-ADIWIKI] Analog Devices, *ADIN1300 and ADIN1200 with Capacitive
+   Coupling*, EngineerZone wiki, approved 2021-02-11.
+   https://wiki.analog.com/resources/eval/user-guides/adin1300-and-adin1200/cap-coupling
+.. [MAG-AB-TUTORIAL] IEEE 802.3ab task force, *1000BASE-T tutorial*, IEEE
+   802 plenary, 1998-03.
+   https://www.ieee802.org/3/tutorial/march98/mick_170398.pdf
+.. [MAG-AB-MINUTES] IEEE 802.3ab task force, minutes of the interim meeting,
+   Austin, 1998-09-03 to 1998-09-04.
+   https://www.ieee802.org/3/ab/public/sept98/minutes_0998.pdf
+.. [MAG-DOVE] D. Dove, message on the IEEE 802.3 Power over Ethernet Plus
+   study group reflector (baseline wander in 1000BASE-T), 2008-01.
+   https://grouper.ieee.org/groups/802/3/poep_study/email/msg00655.html
+.. [MAG-CIBULA] Cibula (Intel), receiver common-mode noise rejection, IEEE
+   802.3bq, 2014-07 (quotes :clause:`40.6.1.3.3`).
+   https://www.ieee802.org/3/bq/public/jul14/cibula_3bq_02a_0714.pdf
+.. [MAG-US6775529] US patent 6,775,529 (Marvell), 1000BASE-T transceiver
+   with baseline-wander correction for transformer tails.
+   https://patents.google.com/patent/US6775529
+.. [MAG-US7738567] US patent 7,738,567 (Texas Instruments), baseline-wander
+   correction for the far-end signal and the echo.
+   https://patents.google.com/patent/US7738567
 .. [MAG-UNHXO] M. Hersh, *Auto-Crossover White Paper*, University of New
    Hampshire InterOperability Laboratory, 2006.
    https://www.iol.unh.edu/sites/default/files/knowledgebase/ethernet/Auto-Crossover_White_Paper.pdf
