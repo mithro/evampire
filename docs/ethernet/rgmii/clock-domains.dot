@@ -3,11 +3,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph clock_domains {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.35,
+    graph [rankdir=LR, fontname="Helvetica", fontsize=14, nodesep=0.35,
            ranksep=0.6, newrank=true];
     node  [shape=box, style="rounded,filled", fontname="Helvetica",
-           fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
     subgraph cluster_rxa {
         label="RXC of port A\n(recovered from cable A)"; style="rounded";
@@ -40,6 +40,6 @@ digraph clock_domains {
     fba -> filt;
     filt -> cpu [label="crossing 3\n(if the processor clock\nis not the 125 MHz clock)",
                  dir=both];
-    rxa -> cpu [label="link status\n(single-bit sync)", style=dashed];
+    rxa -> cpu [label="in-band link-up bit only\n(two-flip-flop synchroniser)", style=dashed];
     rxb -> cpu [style=dashed];
 }

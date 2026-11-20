@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph rgmii_connection {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.2,
+    graph [rankdir=LR, fontname="Helvetica", fontsize=14, nodesep=0.2,
            ranksep=2.2];
-    node  [shape=plaintext, fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+    node  [shape=plaintext, fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
     chip [label=<
       <table border="1" cellborder="0" cellspacing="0" cellpadding="5"

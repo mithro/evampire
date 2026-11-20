@@ -3,19 +3,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph tx_ddr {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.5,
-           ranksep=0.7];
+    graph [rankdir=LR, fontname="Helvetica", fontsize=14, nodesep=0.45,
+           ranksep=0.6, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
 
-    byte [label="Byte register\n(loads on\nrising edge)", fillcolor="#e2efda"];
+    byte [label="Byte register\n(loads on the\nrising edge)", fillcolor="#e2efda"];
     ffa  [label="Flip-flop A\nloads bit n of the\nlow nibble on the\nfalling edge",
           fillcolor="#dbe8f5"];
     ffb  [label="Flip-flop B\nloads bit n of the\nhigh nibble on the\nrising edge",
           fillcolor="#dbe8f5"];
-    mux  [label="2-input\nselector", shape=box, fillcolor="#fbe5d6",
-          width=0.9, height=1.2];
+    mux  [label="2-input\nselector", fillcolor="#fbe5d6"];
     pad  [label="Output\npad", fillcolor="#e2e2e2"];
     pin  [label="TXD[n]\npin", shape=plaintext, style=""];
     clk  [label="125 MHz\ntransmit\nclock", shape=plaintext, style=""];
@@ -25,7 +24,11 @@ digraph tx_ddr {
     ffa -> mux [label="used while\nclock is high"];
     ffb -> mux [label="used while\nclock is low"];
     mux -> pad -> pin;
-    clk -> mux [label="select", style=dashed];
+
+    clk -> byte [style=dashed];
+    clk -> ffa  [style=dashed, xlabel="inverted "];
+    clk -> ffb  [style=dashed];
+    clk -> mux  [style=dashed, label="select"];
 
     { rank=same; ffa; ffb; }
 }
