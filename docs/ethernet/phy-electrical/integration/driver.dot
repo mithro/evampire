@@ -1,0 +1,23 @@
+// A matched voltage-mode line driver: the driver's internal voltage Vsrc
+// feeds the 100 ohm line through a 100 ohm source resistance, so the line
+// sees half of Vsrc.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph driver {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,1.8"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.65,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, penwidth=1.5];
+
+    src  [pos="0.8,0.8!", label="DAC and amplifier\nVsrc"];
+    rs   [pos="3.0,0.8!", width=1.7, label="Source resistance\n100 Ω (differential)"];
+    line [pos="5.9,0.8!", width=1.9, label="Pair and cable\n100 Ω", fillcolor="#ffffff"];
+    vl   [pos="4.45,1.35!", shape=plaintext, style="", width=1.0, height=0.3,
+          label="Vline = Vsrc / 2"];
+
+    src -- rs;
+    rs -- line;
+}
