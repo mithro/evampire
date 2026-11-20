@@ -16,6 +16,9 @@ jobs:
 
       - uses: astral-sh/setup-uv@v6
 
+      - name: Check that standard clauses are links
+        run: uv run --python 3.12 python docs/check_source.py docs
+
       - name: Build HTML (warnings are errors)
         run: >
           uv run --python 3.12 --with-requirements docs/requirements.txt
