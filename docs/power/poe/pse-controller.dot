@@ -1,0 +1,46 @@
+// One channel of power sourcing equipment with its sequence run by
+// evampire's software (low-side switch arrangement). Every edge carries a
+// text label; bold edges carry power, thin edges carry measurements and
+// control.
+//
+// Fill colours: power circuits #fff2cc, evampire #dbe8f5, external parts
+// and connectors #ffffff.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pse_channel {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.3,
+           ranksep=0.45, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
+
+    vpwr [label="High-voltage converter\n44–57 V", fillcolor="#fff2cc"];
+    port [label="Port: positive pairs\nto supply, negative\npairs to switch", fillcolor="#ffffff"];
+    det  [label="Detection and\nclass source", fillcolor="#fff2cc"];
+    vmeas [label="Voltage\nmeasurement", fillcolor="#fff2cc"];
+    fet  [label="Switch\n(power MOSFET)", fillcolor="#fff2cc"];
+    gate [label="Gate drive and\ncurrent-limit loop", fillcolor="#fff2cc"];
+    rsns [label="Sense resistor", fillcolor="#ffffff"];
+    imeas [label="Current\nmeasurement", fillcolor="#fff2cc"];
+    fast [label="Fast fault\ncomparator", fillcolor="#fff2cc"];
+    sw   [label="Software on\nevampire", fillcolor="#dbe8f5"];
+
+    { rank=same; port; det; vmeas; }
+    { rank=same; fet; gate; }
+    { rank=same; rsns; imeas; fast; }
+
+    vpwr -> port  [penwidth=2.5, label="power"];
+    port -> fet   [penwidth=2.5, label="power"];
+    fet  -> rsns  [penwidth=2.5, label="power"];
+    det  -> port  [label="test"];
+    port -> vmeas [label="volts"];
+    gate -> fet   [label="gate"];
+    rsns -> imeas [label="mV"];
+    rsns -> fast  [label="mV"];
+    fast -> gate  [label="off"];
+    vmeas -> sw   [label="reading"];
+    imeas -> sw   [label="reading"];
+    sw   -> det   [label="step"];
+    sw   -> gate  [label="limit"];
+}
