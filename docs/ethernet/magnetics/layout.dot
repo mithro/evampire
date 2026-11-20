@@ -25,6 +25,9 @@ graph layout_regions {
     chas_t [pos="5.98,2.1!", shape=plain, fontcolor="#404040",
             label="Chassis ground\nisland"];
 
+    pairs_t [pos="1.85,1.4!", shape=plain, fontsize=9,
+             label="4 pairs, 100 Ω differential,\nshort and length-matched"];
+
     // Parts.
     phy  [pos="0.43,1.0!", shape=box, style=filled, fillcolor="#ffffff",
           label="Transceiver"];
@@ -36,12 +39,12 @@ graph layout_regions {
           label="RJ45 socket\n(shield to\nchassis)"];
     bs   [pos="5.76,0.15!", shape=box, style=filled, fillcolor="#ffffff",
           fontsize=9, label="75 Ω and\n1000 pF, 2 kV"];
-    rc   [pos="3.65,-0.75!", shape=box, style=filled, fillcolor="#ffffff",
+    rc   [pos="3.65,-1.25!", shape=box, style=filled, fillcolor="#ffffff",
           fontsize=9, label="resistor (1 MΩ or more) and capacitor\nbetween signal ground and chassis ground"];
-    rcl  [pos="1.20,-0.75!", shape=point, width=0.01, height=0.01, style=invis];
-    rcr  [pos="5.98,-0.75!", shape=point, width=0.01, height=0.01, style=invis];
+    rcl  [pos="1.20,-0.70!", shape=point, width=0.01, height=0.01, style=invis];
+    rcr  [pos="5.98,-0.70!", shape=point, width=0.01, height=0.01, style=invis];
 
-    phy -- xfmr [label="4 pairs, 100 Ω differential,\nshort and length-matched",
+    phy -- xfmr [
                  penwidth=2.5, color="#2e75b6"];
     xfmr -- rj45 [penwidth=2.5, color="#c55a11"];
     rc -- rcl [style=dashed, color="#595959"];

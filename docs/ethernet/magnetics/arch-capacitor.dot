@@ -32,10 +32,13 @@ graph arch_capacitor {
          label="centre-tapped\ninductor across\nthe pair"];
 
     poe [pos="2.0,0.45!", width=1.35, height=0.75, fillcolor="#fbe5d6",
-         label="Power over Ethernet\nbridge or switch,\ncontroller\n(see Power pages)"];
+         label="Power over Ethernet\nbridge or switch\nand controller"];
 
-    term [pos="0.6,1.6!", width=0.95, height=0.85,
-          label="75 Ω and\n10 nF per pair,\n1000 pF 2 kV\nto chassis"];
+    term [pos="0.6,1.55!", width=1.0, height=0.95,
+          label="common-mode
+termination to
+chassis (values
+open)"];
 
     ccap [pos="3.6,3.0!", width=1.0, height=0.65, fillcolor="#fff2cc",
           label="high-voltage\ncoupling\ncapacitors"];
@@ -54,7 +57,7 @@ graph arch_capacitor {
     prot [pos="6.05,1.4!", width=1.9, height=0.45,
           label="pin protection\n(ESD, clamps)"];
     dsp  [pos="6.05,0.6!", width=1.9, height=0.55, fillcolor="#f2f2f2",
-          label="converters, signal processing\n(see How an Ethernet\ntransceiver works)"];
+          label="converters and\nsignal processing"];
 
     pins [pos="4.85,2.3!", width=0.16, height=2.85, fillcolor="#1f4e79",
           label=""];
