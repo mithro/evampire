@@ -259,3 +259,200 @@ On chip, shared
    circuits also need a reference, so one design can serve all of them.
 External
    A reference IC on the board.
+
+.. _usbpd-vbus-sensing:
+
+VBUS sensing and discharge face the full VBUS voltage
+-----------------------------------------------------
+
+The port measures VBUS to detect attach and detach, to check that VBUS is
+near 0 V before it switches VBUS on, and to check the voltage after each
+change. It discharges VBUS after detach, during a power role swap and during
+a Hard Reset (:ref:`usbpd-discharge`, :ref:`usbpd-monitoring`). VBUS
+reaches 21.5 V with fixed :term:`SPR` supplies, 22.15 V with PPS, and 50.9 V with :term:`EPR`
+(:ref:`usbpd-spr`, :ref:`usbpd-epr`). Commercial controllers take one of two
+approaches: a VBUS pin that holds the full voltage, as on the TPS65987D, or
+a pin that sees VBUS only through an external resistor, as on the TUSB320.
+
+On chip, divider
+   A :wikipedia:`voltage divider <Voltage_divider>` of high-resistance
+   :wikipedia:`polysilicon <Polycrystalline_silicon>`. A resistor's value is
+   its :wikipedia:`sheet resistance <Sheet_resistance>` times its length in
+   squares, its length divided by its width. The divider draws:
+
+   .. math::
+
+      I_\text{div} = \frac{V_\text{BUS}}{N_\square \times R_\square}
+
+   .. list-table::
+      :header-rows: 1
+      :widths: 20 60 20
+
+      * - Symbol
+        - Meaning
+        - Unit
+      * - :math:`I_\text{div}`
+        - Current drawn from VBUS by the divider
+        - A
+      * - :math:`V_\text{BUS}`
+        - VBUS voltage
+        - V
+      * - :math:`N_\square`
+        - Length of the divider in squares
+        - none
+      * - :math:`R_\square`
+        - Sheet resistance of the polysilicon
+        - Ω
+
+   With the 3 kΩ-per-square option, 2.25 kΩ to 3.75 kΩ per square
+   ([USBPD-GF180-ELEC]_, Section 6.1C), 333 squares make 1 MΩ nominal, and
+   at 21.5 V the divider draws
+   :math:`21.5\ \text{V} / (333 \times 3\ \text{k}\Omega) = 21.5\ \mu\text{A}`.
+   The resistor lies on :term:`field oxide`, and the top of the divider sits
+   at the full VBUS voltage above the substrate. The limits that apply are on
+   :ref:`usbpd-process-limits`. The VBUS pad also needs an ESD structure that
+   does not conduct below the VBUS voltage.
+On chip, discharge
+   A switched load from VBUS to ground. The switch must block the full VBUS
+   voltage when off. 21.5 V, or 22.15 V with PPS, is above the documented minimum breakdown of
+   every standard transistor, 13.2 V for the LDMOS
+   (:ref:`usbpd-process-limits`), so an on-chip switch is a custom
+   drain-extended or stacked device.
+External
+   A top resistor on the board, as with the TUSB320, so the chip sees only
+   the divided voltage, and a discharge transistor on the board.
+
+.. _usbpd-power-path:
+
+The power path is a converter function, controlled by evampire
+--------------------------------------------------------------
+
+As a sink, a switch connects VBUS to the board's power bus. As a source, a
+converter makes the negotiated voltage from the bus, with a current limit. In
+both roles, power must not flow backwards, and a dual-role port presents at
+most 10 µF on VBUS when it is not sourcing (:typec:`Table 4-2`).
+
+The converters are described on :doc:`../converters/index`, their gate drive
+on :ref:`conv-gate-drive`, their protection on :ref:`conv-protection`, and
+the custom devices for on-chip power switches on :ref:`conv-custom`. The
+current limit that software sets is on :ref:`usbpd-limiting`, and the power
+flow on the board on :ref:`power-flow`. For reference, the TPS65987D puts
+two 5 A switches on the controller die, and the CCG5C drives external
+P-channel MOSFETs on separate sink and source paths
+(:numref:`tab-usbpd-ref-values`).
+
+.. _usbpd-analogue-examples:
+
+Commercial controllers as reference examples
+--------------------------------------------
+
+:numref:`tab-usbpd-ref-parts` lists the commercial parts, and
+:numref:`tab-usbpd-ref-values` the values they reach for each block. They
+show how other designs meet each requirement; they are not requirements for
+evampire.
+
+.. list-table:: Commercial parts used as reference examples
+   :name: tab-usbpd-ref-parts
+   :header-rows: 1
+   :widths: 26 74
+
+   * - Part
+     - Kind
+   * - TI TPS65987D
+     - Dual-role controller with integrated power paths
+       [USBPD-TPS65987D]_
+   * - onsemi FUSB302B
+     - CC interface for an external processor, able to toggle as a
+       dual-role port [USBPD-FUSB302B]_
+   * - ST STUSB1602
+     - Controller with a BMC line driver for an external microcontroller
+       [USBPD-STUSB1602]_
+   * - Infineon CCG5C
+     - Dual-role controller with an Arm Cortex-M0 processor [USBPD-CCG5C]_
+   * - TI TUSB320
+     - CC logic without USB Power Delivery [USBPD-TUSB320]_
+   * - TI TPD8S300A
+     - Protector for the CC and SBU pins [USBPD-TPD8S300A]_
+
+.. list-table:: Values of commercial parts for each block
+   :name: tab-usbpd-ref-values
+   :header-rows: 1
+   :widths: 44 22 34
+
+   * - Parameter
+     - Value
+     - Source
+   * - Rp current, 3.0 A level (µA)
+     - 303.6 to 356.4
+     - [USBPD-TPS65987D]_, 6.8
+   * - Rp current, 3.0 A level (µA)
+     - 304 to 356
+     - [USBPD-FUSB302B]_, Table 10
+   * - Rd, powered (kΩ)
+     - 4.59 to 5.61
+     - [USBPD-TPS65987D]_, 6.8
+   * - Rd, unpowered (kΩ)
+     - 4.08 to 6.12
+     - [USBPD-TPS65987D]_, 6.8
+   * - Dead-battery transistor threshold (V)
+     - 0.5 to 1.2
+     - [USBPD-TPD8S300A]_, 7.6
+   * - VCONN switch resistance (mΩ)
+     - 222 to 325
+     - [USBPD-TPS65987D]_, 6.7
+   * - VCONN current limit (A)
+     - 0.6 to 0.9
+     - [USBPD-TPS65987D]_, 6.7
+   * - VCONN over-current detection, minimum (mA)
+     - 550
+     - [USBPD-CCG5C]_, Table 39
+   * - Fixed CC comparators
+     - 3
+     - [USBPD-FUSB302B]_, Type-C Detection
+   * - Threshold DAC step (mV)
+     - 42
+     - [USBPD-FUSB302B]_, Table 10
+   * - BMC transmit level (V)
+     - 1.05 to 1.2
+     - [USBPD-TPS65987D]_, 6.9
+   * - BMC output impedance (Ω)
+     - 33 to 75
+     - [USBPD-TPS65987D]_, 6.9
+   * - VBUS pin absolute maximum (V)
+     - 24
+     - [USBPD-TPS65987D]_, 6.1
+   * - External VBUS sense resistor (kΩ)
+     - 855 to 920
+     - [USBPD-TUSB320]_, 6.5
+   * - VBUS sense pin absolute maximum (V)
+     - 4
+     - [USBPD-TUSB320]_, 6.1
+   * - Current of each integrated power path (A)
+     - 5
+     - [USBPD-TPS65987D]_, Features
+   * - Tolerance of the external switch gate drivers (V)
+     - 24
+     - [USBPD-CCG5C]_, Features
+
+The Source column names each part's datasheet; a bare number there is a
+section of that datasheet.
+
+Open questions
+--------------
+
+* Which transistor carries the dead-battery Rd path. For the native NMOS,
+  a simulation with the PDK models gives the off-state leakage at the CC
+  voltages. For a standard 6 V NMOS, it gives the CC voltage over the range
+  of pull-up currents.
+* How much VCONN power a board supplies, which follows from whether its
+  ports carry SuperSpeed signals and offer more than 3 A
+  (:typec:`Table 4-4`).
+* Whether the attach and current-level checks use the message comparator,
+  a separate comparator or a shared ADC, which sets the number of
+  comparators per CC pin.
+* Whether the voltage reference is on chip, and whether one reference
+  serves the USB, Ethernet, Power over Ethernet and converter circuits.
+* Whether the VBUS divider and discharge switch are on chip or on the board.
+* Which parts of the power-path control are on chip: the
+  :wikipedia:`pulse-width modulation <Pulse-width_modulation>`, the
+  feedback, the reverse-current detection and the gate drive.
