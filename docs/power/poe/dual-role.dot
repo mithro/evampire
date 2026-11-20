@@ -21,19 +21,23 @@ digraph dual_role {
     conv  [label="Input converter", fillcolor="#fff2cc"];
     hv    [label="54 V supply\n(boost converter)", fillcolor="#fff2cc"];
     bus   [label="Internal\npower bus", style="filled,bold", fillcolor="#dbe8f5"];
-    evp   [label="evampire\n(selects the role\nbefore a cable\nis attached)", fillcolor="#dbe8f5"];
+    evp   [label="evampire\n(sets the switches\nbefore a cable\nis attached)", fillcolor="#dbe8f5"];
+
+    { rank=same; swpd; swpse; }
+    { rank=same; pd; pse; }
+    { rank=same; conv; hv; evp; }
 
     cable -> swpd  [penwidth=2.5, dir=both];
     cable -> swpse [penwidth=2.5, dir=both];
     swpd  -> pd    [penwidth=2.5];
     pd    -> conv  [penwidth=2.5];
     conv  -> bus   [penwidth=2.5];
-    bus   -> hv    [penwidth=2.5];
-    hv    -> pse   [penwidth=2.5];
-    pse   -> swpse [penwidth=2.5];
+    swpse -> pse   [penwidth=2.5, dir=back];
+    pse   -> hv    [penwidth=2.5, dir=back];
+    hv    -> bus   [penwidth=2.5, dir=back];
 
-    evp -> swpd  [style=dashed, label="on in powered-\ndevice role"];
-    evp -> swpse [style=dashed, label="on in power\nsourcing role"];
+    evp -> swpd  [style=dashed];
+    evp -> swpse [style=dashed];
     evp -> pse   [style=dashed];
     pd  -> evp   [style=dashed];
 }

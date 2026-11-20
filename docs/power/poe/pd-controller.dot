@@ -4,49 +4,50 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph pd_controller {
-    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.25,
-           ranksep=0.5, newrank=true];
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.2,
+           ranksep=0.35, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    vin  [label="Rectified input\nVDD to VSS\n0–57 V", fillcolor="#ffffff"];
-    rdet [label="Signature resistor\n24.9 kΩ (external)", fillcolor="#ffffff"];
-    rcls [label="Class resistor\n(external)", fillcolor="#ffffff"];
-    cbulk [label="Bulk capacitor\nand DC-DC converter", fillcolor="#ffffff"];
-    sys  [label="System\n(evampire)", fillcolor="#dbe8f5"];
+    vin   [label="Rectified input\n(VDD to VSS, 0–57 V)", fillcolor="#ffffff"];
+    rdet  [label="Signature resistor\n24.9 kΩ (external)", fillcolor="#ffffff"];
+    rcls  [label="Class resistor\n(external)", fillcolor="#ffffff"];
+    cbulk [label="Bulk capacitor and\nDC-DC converter", fillcolor="#ffffff"];
 
     subgraph cluster_ic {
-        label="Powered-device controller chip"; labelloc="b"; style="rounded,bold";
-        color="#1f4e79";
+        label="Powered-device controller chip"; labelloc="t"; labeljust="l";
+        style="rounded,bold"; color="#1f4e79";
 
-        ref   [label="Bandgap\nreference", fillcolor="#e2e2e2"];
-        cmp   [label="Window comparators\nwith hysteresis\n(detect / mark / class /\nturn-on / turn-off)"];
-        fsm   [label="State logic\n(counts class events,\nlatches result)"];
-        detsw [label="Signature\nswitch"];
-        markr [label="Mark-event\nload"];
-        clsreg [label="Class current\nregulator\n(~2.5 V across\nclass resistor)"];
-        hs    [label="Isolation switch\n(100 V MOSFET)\nwith current limit", fillcolor="#fbe5d6"];
-        otsd  [label="Thermal\nshutdown"];
-        pg    [label="Power-good and\nallocated-power\noutputs"];
+        ref    [label="Bandgap\nreference", fillcolor="#e2e2e2"];
+        cmp    [label="Window comparators\nwith hysteresis"];
+        otsd   [label="Thermal\nshutdown"];
+        fsm    [label="State logic (counts\nclass events)"];
+        detsw  [label="Signature\nswitch"];
+        markr  [label="Mark-event\nload"];
+        clsreg [label="Class current\nregulator"];
+        hs     [label="Isolation switch\n(100 V MOSFET,\ncurrent limit)", fillcolor="#fbe5d6"];
+        pg     [label="Power-good and\nallocated-power\noutputs (to evampire)"];
     }
 
-    { rank=same; detsw; markr; clsreg; hs; }
+    { rank=same; ref; cmp; otsd; }
+    { rank=same; detsw; markr; clsreg; }
+    { rank=same; hs; pg; }
+    { rank=same; rdet; rcls; cbulk; }
 
     vin  -> cmp;
+    vin  -> hs    [penwidth=2.5];
     ref  -> cmp;
-    ref  -> clsreg;
+    otsd -> fsm;
     cmp  -> fsm;
     fsm  -> detsw;
     fsm  -> markr;
     fsm  -> clsreg;
     fsm  -> hs;
     fsm  -> pg;
-    otsd -> fsm;
-    rdet -> detsw [dir=both];
+    ref  -> clsreg;
+    detsw -> rdet  [dir=both];
     clsreg -> rcls [dir=both];
-    vin  -> hs    [penwidth=2.5];
-    hs   -> cbulk [penwidth=2.5, label="RTN"];
-    pg   -> sys   [style=dashed];
-    pg   -> cbulk [style=dashed, label="enable"];
+    hs   -> cbulk  [penwidth=2.5, label="RTN"];
+    pg   -> cbulk  [style=dashed, label="enable"];
 }

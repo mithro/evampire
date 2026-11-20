@@ -6,48 +6,54 @@
 
 digraph pse_controller {
     graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.25,
-           ranksep=0.45, newrank=true];
+           ranksep=0.4, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    vpwr  [label="54 V supply\n(VPWR, 44–57 V)", fillcolor="#fbe5d6"];
-    port  [label="Port: positive\ncentre tap (to VPWR),\nnegative centre tap\n(to switch drain)", fillcolor="#ffffff"];
-    fet   [label="Power MOSFET\n100 V, external", fillcolor="#fbe5d6"];
-    rsns  [label="Sense resistor\n0.2 Ω, external", fillcolor="#ffffff"];
-    gnd   [label="Supply return\n(ground)", fillcolor="#ffffff"];
-    host  [label="Host processor\n(evampire)", fillcolor="#dbe8f5"];
+    // External power path.
+    vpwr [label="54 V supply\n(44–57 V)", fillcolor="#fbe5d6"];
+    port [label="Port centre taps\n(+ to supply,\n− to MOSFET drain)", fillcolor="#ffffff"];
+    fet  [label="Power MOSFET\n100 V (external)", fillcolor="#fbe5d6"];
+    rsns [label="Sense resistor\n0.2 Ω (external)", fillcolor="#ffffff"];
+    gnd  [label="Supply return\n(ground)", fillcolor="#ffffff"];
+    host [label="Host processor\n(evampire)", fillcolor="#dbe8f5"];
 
     subgraph cluster_ic {
-        label="Power sourcing equipment controller (one channel shown)";
-        labelloc="b"; style="rounded,bold"; color="#1f4e79";
+        label="Power sourcing equipment\ncontroller (one channel)";
+        labelloc="t"; labeljust="l"; style="rounded,bold"; color="#1f4e79";
 
-        det   [label="Detection current\nsources\n(160 µA, 270 µA)"];
-        vadc  [label="Voltage ADC\n(port voltage,\nsupply voltage)"];
-        iadc  [label="Current ADC\n(sense resistor)"];
-        gate  [label="Gate driver and\ncurrent-limit loop\n(inrush, class voltage,\nfoldback)"];
-        fast  [label="Fast short-circuit\ncomparator"];
-        logic [label="State machine and\ntimers (detect, class,\nmark, power on,\ndisconnect)"];
-        regs  [label="Registers and\nI2C interface"];
+        det   [label="Detection\ncurrent sources"];
+        vadc  [label="Voltage ADC"];
+        logic [label="State machine,\ntimers, registers"];
         temp  [label="Thermal\nshutdown"];
+        gate  [label="Gate driver and\ncurrent-limit loop"];
+        iadc  [label="Current ADC"];
+        fast  [label="Fast short-circuit\ncomparator"];
     }
 
+    { rank=same; vpwr; }
+    { rank=same; port; det; vadc; }
+    { rank=same; logic; temp; }
+    { rank=same; fet; gate; }
+    { rank=same; rsns; iadc; fast; }
+    { rank=same; gnd; host; }
+
     vpwr -> port [penwidth=2.5];
-    port -> fet  [penwidth=2.5, label="drain"];
-    fet  -> rsns [penwidth=2.5, label="source"];
+    port -> fet  [penwidth=2.5];
+    fet  -> rsns [penwidth=2.5];
     rsns -> gnd  [penwidth=2.5];
 
-    det  -> port;
-    port -> vadc;
-    rsns -> iadc;
-    rsns -> fast;
-    gate -> fet  [label="gate"];
-    fast -> gate;
-    vadc -> logic;
-    iadc -> logic;
-    temp -> logic;
-    logic -> det;
+    det   -> port;
+    port  -> vadc [constraint=false];
+    vadc  -> logic;
+    det   -> logic [dir=back];
+    temp  -> logic [constraint=false];
     logic -> gate;
-    logic -> regs;
-    regs -> host [style=dashed, dir=both, label="I2C,\ninterrupt"];
+    gate  -> fet  [constraint=false, label="gate"];
+    rsns  -> iadc [constraint=false];
+    rsns  -> fast [constraint=false];
+    iadc  -> logic;
+    fast  -> gate;
+    logic -> host [style=dashed, dir=both, label="I2C"];
 }

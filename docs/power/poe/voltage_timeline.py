@@ -12,8 +12,8 @@ SPDX-License-Identifier: Apache-2.0
 
 import sys
 
-W, H = 960, 470
-X0, X1 = 80, 800          # plot area, left and right
+W, H = 720, 470
+X0, X1 = 64, 590          # plot area, left and right
 Y0, Y1 = 40, 400          # plot area, top and bottom
 VMAX = 60.0
 
@@ -32,8 +32,8 @@ SEGMENTS = [
     ("mark", 1.0, 8.5),
 ]
 RAMP = 0.5                # rise from the last mark event to full voltage
-POWERED = [("inrush\n50–75 ms", 2.2), ("power delay\nto 80 ms", 2.0),
-           ("full power", 1.7)]
+POWERED = [("inrush\n50–75 ms", 2.4), ("delay to\n80 ms", 2.0),
+           ("full\npower", 1.6)]
 V_ON = 54.0
 
 BANDS = [
@@ -120,7 +120,8 @@ def main(out_path):
     for label, xa, xb, v in seg_spans:
         if not label:
             continue
-        parts.append(text((xa + xb) / 2, ty(v) - 20, label, size=11))
+        dy = 16 if label == "mark" else -20
+        parts.append(text((xa + xb) / 2, ty(v) + dy, label, size=11))
     for i, (label, xa, xb) in enumerate(power_spans):
         if i:
             parts.append(f'<line x1="{xa:.1f}" y1="{ty(V_ON) - 4:.1f}" '
@@ -131,7 +132,7 @@ def main(out_path):
     # Phase brackets under the time axis.
     det = (seg_spans[1][1], seg_spans[2][2], "detection")
     cls = (seg_spans[3][1], seg_spans[-1][2],
-           "classification: 4 class events, each followed by a mark event")
+           "classification: 4 class and 4 mark events")
     pwr = (seg_spans[-1][2], power_spans[-1][2], "power on")
     for xa, xb, label in (det, cls, pwr):
         yb = Y1 + 18
