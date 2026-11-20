@@ -1,4 +1,5 @@
-// Message sequence for a sink negotiating a fixed 9 V supply.
+// Message sequence for a source and sink negotiating a fixed 9 V supply.
+// Either end may be a board built around evampire.
 // Time runs from top to bottom. Not to scale.
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -11,7 +12,7 @@ digraph negotiation {
     edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
 
     src [shape=box, style="rounded,filled", fillcolor="#fbe5d6", label="Source", width=1.4];
-    snk [shape=box, style="rounded,filled", fillcolor="#e2f0d9", label="Sink (evampire)", width=1.4];
+    snk [shape=box, style="rounded,filled", fillcolor="#e2f0d9", label="Sink", width=1.4];
     note_h [shape=plaintext, label="Time limit", fontsize=10, fontname="Helvetica-Bold"];
 
     // Lifeline points.
@@ -27,7 +28,7 @@ digraph negotiation {
     n6  [label="Within tTransmit (max 195 us)"];
     n7  [label="Within tReceiverResponse (max 15 ms);\nsink gives up after tSenderResponse\n(27-50 ms)"];
     n8  [label="Within tTransmit (max 195 us);\nsink then draws at most 500 mA"];
-    n9  [label="VBUS rises to 9 V; PS_RDY within\ntPSTransition (450-550 ms) or the\nsink sends Hard Reset"];
+    n9  [label="Source waits tSrcTransition (min 25 ms),\nraises VBUS at up to 30 mV/us, sends\nPS_RDY within tSrcTransReq (max 325 ms);\nsink gives up after tPSTransition (450-550 ms)"];
     n10 [label="Within tTransmit (max 195 us)"];
     n11 [label="Contract in place: sink may\ndraw the requested current"];
 

@@ -1,0 +1,43 @@
+// Simplified USB Type-C connection state machine for a dual-role port
+// with the Try.SRC preference (Type-C Section 4.5.2.2, Figure 4-16).
+// Accessory and debug states are left out.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph drp_states {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.45,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10, width=1.6];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    usnk [label="Unattached.SNK\n(Rd on both CC pins)", fillcolor="#e2f0d9"];
+    usrc [label="Unattached.SRC\n(Rp on both CC pins)", fillcolor="#fbe5d6"];
+    awsnk [label="AttachWait.SNK\n(Rd; wait for VBUS)", fillcolor="#e2f0d9"];
+    awsrc [label="AttachWait.SRC\n(Rp; VBUS held at 0 V)", fillcolor="#fbe5d6"];
+    trysrc [label="Try.SRC\n(Rp, no VBUS)", fillcolor="#fbe5d6"];
+    twsnk [label="TryWait.SNK\n(Rd)", fillcolor="#e2f0d9"];
+    asnk [label="Attached.SNK\n(Rd; receives VBUS)", fillcolor="#c5e0b4", penwidth=2];
+    asrc [label="Attached.SRC\n(Rp; drives VBUS)", fillcolor="#f8cbad", penwidth=2];
+    err  [label="ErrorRecovery\n(CC open, at least 126 k)", fillcolor="#f2f2f2"];
+
+    { rank=same; usnk; usrc; }
+    { rank=same; awsnk; awsrc; }
+    { rank=same; trysrc; twsnk; }
+    { rank=same; asnk; asrc; }
+
+    usnk -> usrc [label="toggle after\n(1 - dcSRC.DRP) tDRP"];
+    usrc -> usnk [label="toggle after\ndcSRC.DRP tDRP"];
+    usnk -> awsnk [label="Rp seen on\na CC pin"];
+    usrc -> awsrc [label="Rd seen on\na CC pin"];
+    awsnk -> asnk [label="one CC pin Rp for\ntCCDebounce and VBUS"];
+    awsnk -> trysrc [label="same, but the port\nprefers to be source"];
+    awsrc -> asrc [label="one CC pin Rd for\ntCCDebounce, VBUS at 0 V"];
+    trysrc -> asrc [label="Rd for\ntTryCCDebounce"];
+    trysrc -> twsnk [label="no Rd after\ntDRPTry"];
+    twsnk -> asnk [label="VBUS after\ntCCDebounce"];
+    asnk -> asrc [label="PR_Swap", style=dashed, dir=both, constraint=false];
+    asnk -> usnk [label="VBUS lost", constraint=false];
+    asrc -> twsnk [label="sink removed", constraint=false];
+    err -> usnk [label="after\ntErrorRecovery", style=dotted];
+}

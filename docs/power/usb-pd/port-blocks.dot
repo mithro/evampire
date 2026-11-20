@@ -1,0 +1,76 @@
+// Circuits for one dual-role USB Type-C port controlled by software on the
+// evampire RISC-V core, with the minimum dedicated hardware.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph port_blocks {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.22,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.7];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    subgraph cluster_board {
+        label="On the board"; style="rounded,dashed"; color="#888888";
+        conn   [label="USB Type-C\nreceptacle", fillcolor="#ffffff"];
+        prot   [label="CC protection\n(series switch that\nopens above ~6 V,\nESD clamp)", fillcolor="#ffffff"];
+        vconn5 [label="5 V supply\nfor VCONN", fillcolor="#ffffff"];
+        div    [label="VBUS divider and\ndischarge load", fillcolor="#ffffff"];
+        snksw  [label="Sink switch with\nreverse-current\nblocking", fillcolor="#ffffff"];
+        srcconv[label="Source converter\n(5-20 V, current\nlimit)", fillcolor="#ffffff"];
+        bus    [label="Internal\npower bus", fillcolor="#dbe8f5"];
+    }
+
+    subgraph cluster_chip {
+        label="evampire"; style="rounded,bold"; color="#1f4e79"; fontsize=13;
+
+        subgraph cluster_analog {
+            label="Analog, per CC pin"; style="rounded"; color="#ed7d31";
+            rp    [label="Rp current sources\n80 / 180 / 330 uA", fillcolor="#fbe5d6"];
+            rd    [label="Rd 5.1 k switch and\ndead-battery Rd", fillcolor="#fbe5d6"];
+            vsw   [label="VCONN switch\nwith current limit", fillcolor="#fbe5d6"];
+            cmp   [label="Level comparators\n(attach, Rp level,\nBMC receive, FRS)", fillcolor="#fbe5d6"];
+            drv   [label="BMC driver:\n1.125 V, 33-75 ohm,\nslew limited", fillcolor="#fbe5d6"];
+        }
+
+        subgraph cluster_digital {
+            label="Generic digital"; style="rounded"; color="#5b9bd5";
+            gpio [label="Plain input and\noutput bits", fillcolor="#dbe8f5"];
+            tmr  [label="Timer with capture\nand compare\n(if needed)", fillcolor="#dbe8f5"];
+        }
+
+        cpu [label="RISC-V core:\nBMC, 4b5b, CRC,\nattach state machine,\nprotocol, budget", fillcolor="#e2f0d9"];
+    }
+
+    { rank=same; prot; div; snksw; srcconv; }
+    { rank=same; rp; rd; vsw; cmp; drv; }
+    { rank=same; gpio; tmr; }
+
+    rp -> rd -> vsw -> cmp -> drv [style=invis];
+    gpio -> tmr [style=invis];
+
+    conn -> prot [label="CC1, CC2", dir=both];
+    conn -> div [label="VBUS"];
+    conn -> snksw [label="VBUS", penwidth=2, dir=both];
+    snksw -> bus [penwidth=2];
+    bus -> srcconv [penwidth=2];
+    srcconv -> conn [penwidth=2, constraint=false];
+    vconn5 -> vsw [penwidth=2];
+
+    prot -> rp [dir=back];
+    prot -> rd [dir=both];
+    prot -> vsw [dir=back];
+    prot -> cmp;
+    prot -> drv [dir=back];
+
+    rp -> gpio [dir=back, style=dashed];
+    rd -> gpio [dir=back, style=dashed];
+    vsw -> gpio [dir=back, style=dashed];
+    cmp -> tmr;
+    cmp -> gpio;
+    drv -> tmr [dir=back];
+    drv -> gpio [dir=back];
+
+    gpio -> cpu [dir=both];
+    tmr -> cpu [dir=both];
+}

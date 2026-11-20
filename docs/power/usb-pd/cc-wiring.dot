@@ -1,5 +1,6 @@
 // How the CC wire connects a source to a sink through a USB Type-C cable.
 // The far plug is shown turned over, so source CC1 meets sink CC2.
+// Either end may be a board built around evampire.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -11,7 +12,7 @@ digraph cc_wiring {
     edge  [fontname="Helvetica", fontsize=9, arrowhead=none];
 
     subgraph cluster_src {
-        label="Source (for example a charger)"; style="rounded,dashed"; color="#888888";
+        label="Source (Rp)"; style="rounded,dashed"; color="#888888";
         rp1    [label="Rp\n(pull-up)", fillcolor="#fbe5d6"];
         rp2    [label="Rp\n(pull-up)", fillcolor="#fbe5d6"];
         s_cc1  [label="CC1 (A5)", shape=box, style="filled", fillcolor="#ffffff"];
@@ -28,7 +29,7 @@ digraph cc_wiring {
     }
 
     subgraph cluster_snk {
-        label="Sink (the evampire board)"; style="rounded,dashed"; color="#888888";
+        label="Sink (Rd)"; style="rounded,dashed"; color="#888888";
         k_cc1  [label="CC1 (A5)", shape=box, style="filled", fillcolor="#ffffff"];
         k_cc2  [label="CC2 (B5)", shape=box, style="filled", fillcolor="#ffffff"];
         rd1    [label="Rd 5.1 k\n(pull-down)", fillcolor="#e2f0d9"];
