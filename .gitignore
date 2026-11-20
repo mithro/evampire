@@ -11,3 +11,10 @@ tmp/
 
 # Git worktrees
 .worktrees/
+.claude/worktrees/
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# Playwright browser output
+.playwright-mcp/

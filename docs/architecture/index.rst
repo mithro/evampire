@@ -87,8 +87,12 @@ Transceiver configuration interface
    settings.
 
 Power negotiation interface
-   The analog and digital circuits the processor uses to request power from
-   a Power over Ethernet or USB Power Delivery source. See
+   The analog and digital circuits the processor uses to negotiate power on
+   each port: to request power as a Power over Ethernet powered device or
+   USB Power Delivery sink, to offer power as Power over Ethernet power
+   sourcing equipment or a USB Power Delivery source, and to swap the power
+   role of a USB Type-C port. It also controls the external power switches
+   and voltage converters that move power between the ports. See
    :doc:`../power/index`.
 
 Clock and reset
