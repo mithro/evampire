@@ -67,31 +67,26 @@ pins 3 and 6, which sit on either side of the pair on pins 4 and 5.
                 directions at once [MAG-KSZ9031]_.
    :name: tbl-magnetics-rj45
    :header-rows: 1
-   :widths: 12 18 25 25 20
+   :widths: 14 34 26 26
 
    * - Pins
-     - Pair (1000BASE-T)
-     - 1000BASE-T, MDI
-     - 10/100 Mbit/s, MDI
-     - 10/100 Mbit/s, MDI-X
+     - 1000BASE-T (MDI)
+     - 10/100 Mbit/s, MDI
+     - 10/100 Mbit/s, MDI-X
    * - 1, 2
-     - A (BI_DA)
-     - BI_DA+, BI_DA−
+     - pair A: BI_DA+, BI_DA−
      - transmit +, −
      - receive +, −
    * - 3, 6
-     - B (BI_DB)
-     - BI_DB+, BI_DB−
+     - pair B: BI_DB+, BI_DB−
      - receive +, −
      - transmit +, −
    * - 4, 5
-     - C (BI_DC)
-     - BI_DC+, BI_DC−
+     - pair C: BI_DC+, BI_DC−
      - not used
      - not used
    * - 7, 8
-     - D (BI_DD)
-     - BI_DD+, BI_DD−
+     - pair D: BI_DD+, BI_DD−
      - not used
      - not used
 
@@ -183,15 +178,13 @@ transformer per pair is "the most commonly used method" of meeting them
                 meets
    :name: tbl-magnetics-functions
    :header-rows: 1
-   :widths: 5 24 18 53
+   :widths: 8 34 58
 
    * - #
-     - Function
-     - Done by
+     - Function (done by)
      - Requirement (source)
    * - :ref:`F1 <magnetics-f1>`
-     - Galvanic isolation between the cable and the equipment
-     - transformer
+     - Galvanic isolation between the cable and the equipment (transformer)
      - Withstand 1500 V rms at 50–60 Hz for 60 s, *or* 2250 V DC for 60 s,
        *or* ten 2400 V impulses (1500 V with Power over Ethernet); at least
        2 MΩ at 500 V afterwards (:clause:`Clauses 14.3.1.1 <14.3.1.1>`,
@@ -200,60 +193,50 @@ transformer per pair is "the most commonly used method" of meeting them
        [MAG-WALKER]_.
    * - :ref:`F2 <magnetics-f2>`
      - Rejecting common-mode voltage, and letting each side sit at its own
-       voltage level
-     - transformer, choke
+       voltage level (transformer, choke)
      - No direct limit in IEEE 802.3. Typical magnetics reject 30 dB to
        43 dB [MAG-PULSE]_ [MAG-BEL]_.
    * - :ref:`F3 <magnetics-f3>`
-     - Blocking DC between the cable and the transceiver
-     - transformer
+     - Blocking DC between the cable and the transceiver (transformer)
      - Needed for F1 and for Power over Ethernet (up to 57 V on the cable)
        [MAG-EA8023BT]_.
    * - :ref:`F4 <magnetics-f4>`
-     - Matching the 100 Ω cable
-     - 1:1 transformer
+     - Matching the 100 Ω cable (1:1 transformer)
      - 1000BASE-T return loss ≥ 16 dB from 1 MHz to 40 MHz, against 85 Ω to
        115 Ω (:clause:`40.8.3.1`) [MAG-UNH40]_.
    * - :ref:`F5 <magnetics-f5>`
-     - Passing low frequencies (limiting droop and baseline wander)
-     - transformer inductance
+     - Passing low frequencies, limiting droop and baseline wander
+       (transformer inductance)
      - 1000BASE-T: more than 73.1 % of the voltage left 500 ns after a step
        (:clause:`40.6.1.2.2`) [MAG-UNH40]_. Only if 100BASE-TX is supported:
        at least 350 µH with 0 mA to 8 mA DC bias (section 9.1.7 of
        ANSI X3.263, the twisted-pair physical layer standard of FDDI, an
        older 100 Mbit/s network, which :clause:`25` adopts) [MAG-LAW]_.
    * - :ref:`F6 <magnetics-f6>`
-     - Terminating common-mode signals on the cable (lower emissions and
-       better immunity)
-     - 75 Ω resistors, 1000 pF capacitor
+     - Terminating common-mode signals on the cable, for lower emissions
+       and better immunity (75 Ω resistors, 1000 pF capacitor)
      - No IEEE limit. About 10 dB improvement reported [MAG-SMITH]_.
    * - :ref:`F7 <magnetics-f7>`
-     - Filtering common-mode noise to and from the cable
-     - choke
+     - Filtering common-mode noise to and from the cable (choke)
      - Radio-interference limits for the equipment, for example FCC Part 15
        [MAG-FCC15]_ [MAG-ENT106]_.
    * - :ref:`F8 <magnetics-f8>`
-     - Withstanding surges and electrostatic discharge
-     - transformer, plus protection diodes
+     - Withstanding surges and electrostatic discharge (transformer, plus protection diodes)
      - No IEEE limit beyond F1. Equipment standards set test levels
        (:numref:`tbl-magnetics-cable-events`).
    * - :ref:`F9 <magnetics-f9>`
-     - Supplying or biasing the transceiver's line driver
-     - circuit-side centre tap
+     - Supplying or biasing the transceiver's line driver (circuit-side centre tap)
      - Set by the transceiver design [MAG-SDAA089]_ [MAG-KSZ9031]_.
    * - :ref:`F10 <magnetics-f10>`
-     - Carrying Power over Ethernet current
-     - cable-side centre taps
+     - Carrying Power over Ethernet current (cable-side centre taps)
      - Up to 938 mA in one pair (Class 8) [MAG-EA8023BT]_.
    * - :ref:`F11 <magnetics-f11>`
      - Keeping the data circuits invisible to Power over Ethernet detection
-       and classification
-     - transformer
+       and classification (transformer)
      - Powered device signature 23.7 kΩ to 26.3 kΩ, 50 nF to 120 nF, and
        less than 100 µH in series [MAG-EA8023BT]_.
    * - :ref:`F12 <magnetics-f12>`
-     - Identical channels, so any pair can carry any direction
-     - four identical channels
+     - Identical channels, so any pair can carry any direction (four identical channels)
      - Automatic MDI/MDI-X (:clause:`40.4.4`) [MAG-KSZ9031]_.
 
 .. _magnetics-f1:
@@ -1236,47 +1219,49 @@ and a symbol is decided wrongly when noise reaches half a step, 0.5. Real
 :numref:`tbl-magnetics-lowfreq` applies these formulas to four capacitor
 values.
 
-.. list-table:: Low-frequency effect of the coupling capacitor, per end of
-                the link (estimates)
+.. list-table:: Low-frequency effect of the coupling capacitor
+                (estimates, per end of the link)
    :name: tbl-magnetics-lowfreq
    :header-rows: 1
-   :widths: 16 14 14 14 14 14 14
+   :widths: 32 17 17 17 17
 
-   * - :math:`C_\text{w}`
-     - :math:`\tau`
-     - :math:`f_\text{c}`
-     - left after 500 ns
-     - power below :math:`f_\text{c}`
-     - rms wander, share of half a step
-     - tail length in symbols, :math:`\tau / T`
-   * - 16 nF
-     - 1.6 µs
-     - 99.5 kHz
-     - 73.2 %
-     - 0.16 %
-     - 14 %
+   * - :math:`C_\text{w}` (nF)
+     - 16
+     - 33
+     - 70
+     - 100
+   * - :math:`\tau` (µs)
+     - 1.6
+     - 3.3
+     - 7.0
+     - 10
+   * - :math:`f_\text{c}` (kHz)
+     - 99.5
+     - 48.2
+     - 22.7
+     - 15.9
+   * - left after 500 ns (%)
+     - 73.2
+     - 85.9
+     - 93.1
+     - 95.1
+   * - power below :math:`f_\text{c}` (%)
+     - 0.16
+     - 0.077
+     - 0.036
+     - 0.025
+   * - rms wander, share of half a step (%)
+     - 14
+     - 9.8
+     - 6.8
+     - 5.7
+   * - tail length, :math:`\tau / T` symbols
      - 200
-   * - 33 nF
-     - 3.3 µs
-     - 48.2 kHz
-     - 85.9 %
-     - 0.077 %
-     - 9.8 %
      - 412
-   * - 70 nF (as 350 µH magnetics)
-     - 7.0 µs
-     - 22.7 kHz
-     - 93.1 %
-     - 0.036 %
-     - 6.8 %
      - 875
-   * - 100 nF
-     - 10 µs
-     - 15.9 kHz
-     - 95.1 %
-     - 0.025 %
-     - 5.7 %
      - 1250
+
+The 70 nF column behaves like standard 350 µH magnetics.
 
 For example, for 16 nF:
 
@@ -1302,7 +1287,7 @@ and adaptive *echo cancellers* remove the rest [MAG-AB-TUTORIAL]_ (see
 :doc:`phy-electrical`). Without a transformer the hybrid works the same way,
 because it is a circuit in the transceiver. What changes is the echo's
 low-frequency tail: the coupling capacitors' high-pass filter gives the echo
-a slowly decaying tail of :math:`\tau / T` symbols (the last column of
+a slowly decaying tail of :math:`\tau / T` symbols (the last row of
 :numref:`tbl-magnetics-lowfreq`). Echo cancellers in published 1000BASE-T
 designs span about 50 to 120 symbols [MAG-AB-TUTORIAL]_, much shorter, so
 the tail must be removed by the baseline-wander correction instead, as it
