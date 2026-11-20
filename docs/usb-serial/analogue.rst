@@ -197,8 +197,9 @@ and Dn2 next to CC2 and SBU2 (:typec:`Table 3-4`). A short between
 neighbouring contacts can therefore also bring the CC voltage, up to 5.5 V
 when it carries VCONN, onto a data line. A short from VBUS above 5.25 V,
 which USB Power Delivery allows, goes beyond the USB 2.0 requirement; the
-analysis of such shorts for the CC pins on :doc:`/power/usb-pd/index` applies to
-the data pins in the same way.
+analysis of such shorts for the CC pins in
+:ref:`CC pin protection <usbpd-cc-protection>` applies to the data pins in
+the same way.
 
 If the pad's output stage is supplied from 3.3 V, a short to 5.25 V
 forward-biases the diode from the pad to its supply. The current is then
@@ -241,8 +242,8 @@ Electrostatic discharge reaches the connector pins from people and cables.
 The gf180mcu I/O library targets 2000 V human body model, 200 V machine
 model and 500 V charged device model ([USBSER-GF180-IO]_, ESD protection
 page). These are ratings for handling a chip; a connector pin of a finished
-product also faces the stronger system-level discharge test, which the
-:doc:`/power/usb-pd/index` page compares for the CC pins.
+product also faces the stronger system-level discharge test, which
+:ref:`the CC pin protection page <usbpd-esd>` compares for the CC pins.
 
 What the gf180mcu standard I/O cells provide
 --------------------------------------------
@@ -374,7 +375,7 @@ Where the standard cells fall short, the process allows custom circuits:
 * *A custom differential receiver* on analogue pads, with single-ended
   comparators and the SE0 filter beside it.
 * *Custom transistors* drawn from the existing layers, as on
-  :doc:`/power/usb-pd/index`, where the voltages call for them.
+  :doc:`/power/usb-pd/on-chip-or-external`, where the voltages call for them.
 * *Parasitic bipolar transistors.* The process has a documented vertical PNP
   transistor ([USBSER-GF180-ELEC]_); bipolar devices can serve as ESD
   clamps or as the input pair of a fast comparator.

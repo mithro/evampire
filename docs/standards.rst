@@ -201,6 +201,13 @@ USB Type-C Cable and Connector Specification ("Type-C")
    `Document library page <https://www.usb.org/document-library/usb-type-cr-cable-and-connector-specification-release-25>`__
    (download ``USB Type-C 2.5 Release 202603``).
 
+.. _std-usb3-2:
+
+USB 3.2 Specification
+   USB 3.2 Revision 1.1, June 2022. The USB 3.2 data connection, including
+   the default VBUS current a USB 3.2 port offers.
+   `Document library page <https://www.usb.org/document-library/usb-32-revision-11-june-2022>`__.
+
 .. _std-usb2:
 
 USB 2.0 Specification
@@ -357,6 +364,13 @@ RISC-V
 The RISC-V specifications are published by RISC-V International and are
 free to download from its
 `specification library <https://docs.riscv.org/reference/isa/>`__.
+
+.. _std-riscv-bitmanip:
+
+RISC-V bit-manipulation extensions (Zba, Zbb, Zbc, Zbs)
+   The bit-manipulation extensions to the RISC-V instruction set, including
+   carry-less multiplication (Zbc), which speeds up CRC calculation.
+   `riscv-bitmanip repository <https://github.com/riscv/riscv-bitmanip>`__.
 
 .. _std-riscv-unpriv:
 

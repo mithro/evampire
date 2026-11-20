@@ -38,8 +38,8 @@ and deadlines. A core with clock :math:`f_\text{clk}` and an average of
 
 The instruction counts below are estimates for hand-written assembly in
 RV32I, the 32-bit base RISC-V instruction set, not measurements. The
-:doc:`/power/usb-pd/index` page uses the same method for the configuration
-channel.
+:doc:`/power/usb-pd/software` page uses the same method for the
+configuration channel.
 
 Baseline: only input and output bits
 ------------------------------------

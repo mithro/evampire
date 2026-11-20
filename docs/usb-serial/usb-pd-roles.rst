@@ -51,7 +51,8 @@ The data role swap
 A data role swap is a USB Power Delivery message exchange, DR_Swap, that
 exchanges DFP and UFP and nothing else: VBUS, the CC resistors and VCONN
 stay as they are (:pd:`Section 6.3.9`; :typec:`Table 4-13`).
-:doc:`/power/usb-pd/index` describes the message sequence.
+:ref:`Data roles and DR_Swap <usbpd-data-roles>` describes the message
+sequence.
 
 The USB Type-C specification names a port that supplies power but cannot be
 a USB host a *sourcing device*. Such a port must support USB Power Delivery
@@ -124,7 +125,7 @@ Ethernet frame buffers (:ref:`requirements`). Their time needs differ:
 
 * *USB Power Delivery* in software keeps the processor busy for the length
   of each configuration channel message, with interrupts off; the
-  :doc:`/power/usb-pd/index` page works this out.
+  :doc:`/power/usb-pd/software` page works this out.
 * *Ethernet* frames for the processor wait in the receive buffer, which
   holds one or two frames (:ref:`arch-microcontroller`).
 * *USB*, with automatic handshakes in hardware, has no deadline shorter than
