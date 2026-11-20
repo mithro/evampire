@@ -25,7 +25,7 @@ graph poe_centre_taps {
             <td port="ctb"><font point-size="9">CT B</font></td>
             <td port="ctc"><font point-size="9">CT C</font></td>
             <td port="ctd"><font point-size="9">CT D</font></td>
-            <td port="bs"></td></tr>
+            <td></td></tr>
       </table>>];
 
     rj45 [pos="5.9,2.2!", shape=plain, label=<
@@ -46,10 +46,13 @@ graph poe_centre_taps {
     phy -- mag:data;
     rj45:a -- mag:a; rj45:b -- mag:b; rj45:c -- mag:c; rj45:d -- mag:d;
 
-    edge [color="#c00000"];
-    mag:cta -- br1; mag:ctb -- br1;
-    mag:ctc -- br2; mag:ctd -- br2;
+    // Power: dotted red, labelled.
+    edge [color="#c00000", style=dotted, penwidth=1.8];
+    mag:cta -- br1 [label="power"]; mag:ctb -- br1;
+    mag:ctc -- br2; mag:ctd -- br2 [label="power"];
     br1 -- pd; br2 -- pd;
 
-    mag:bs -- bs [style=dashed, color="#595959"];
+    // The termination connects to each of the four centre taps.
+    mag:ctd -- bs [style=dashed, color="#595959", penwidth=1.3,
+                   label="from each CT"];
 }

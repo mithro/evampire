@@ -34,11 +34,8 @@ graph arch_capacitor {
     poe [pos="2.0,0.45!", width=1.35, height=0.75, fillcolor="#fbe5d6",
          label="Power over Ethernet\nbridge or switch\nand controller"];
 
-    term [pos="0.6,1.55!", width=1.0, height=0.95,
-          label="common-mode
-termination to
-chassis (values
-open)"];
+    term [pos="0.6,1.55!", width=1.0, height=0.8,
+          label="common-mode\ntermination\nto chassis"];
 
     ccap [pos="3.6,3.0!", width=1.0, height=0.65, fillcolor="#fff2cc",
           label="high-voltage\ncoupling\ncapacitors"];
@@ -72,17 +69,20 @@ open)"];
     pin_cm   [pos="4.93,2.05!"];
     pin_prot [pos="4.93,1.4!"];
 
-    // Data path.
-    rj45 -- cmc [penwidth=2.2, color="#2e75b6"];
-    cmc -- ccap [penwidth=2.2, color="#2e75b6"];
-    ccap -- pin_in [penwidth=2.2, color="#2e75b6"];
+    // Data path: solid blue, labelled "data".
+    edge [fontname="Helvetica", fontsize=8];
+    rj45 -- cmc [penwidth=2.2, color="#2e75b6", label="data"];
+    cmc -- ccap [penwidth=2.2, color="#2e75b6", label="data"];
+    ccap -- pin_in [penwidth=2.2, color="#2e75b6", label="data"];
     pin_drv -- drv; pin_rx -- rx; pin_cm -- cm; pin_prot -- prot;
 
-    // Power path.
-    cmc -- ind [penwidth=2.2, color="#c00000"];
-    ind -- poe [penwidth=2.2, color="#c00000"];
+    // Power path: dotted red, labelled "power".
+    cmc -- ind [penwidth=2.2, color="#c00000", style=dotted,
+                label="power"];
+    ind -- poe [penwidth=2.2, color="#c00000", style=dotted,
+                label="power"];
 
-    // Common-mode termination and protection.
+    // Common-mode termination and protection: dashed grey.
     rj45 -- term [style=dashed, color="#595959"];
-    ccap -- clamp [style=dashed, color="#595959"];
+    ccap -- clamp [style=dashed, color="#595959", label="chip side"];
 }

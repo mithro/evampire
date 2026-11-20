@@ -44,9 +44,10 @@ graph layout_regions {
     rcl  [pos="1.20,-0.70!", shape=point, width=0.01, height=0.01, style=invis];
     rcr  [pos="5.98,-0.70!", shape=point, width=0.01, height=0.01, style=invis];
 
-    phy -- xfmr [
-                 penwidth=2.5, color="#2e75b6"];
-    xfmr -- rj45 [penwidth=2.5, color="#c55a11"];
-    rc -- rcl [style=dashed, color="#595959"];
-    rc -- rcr [style=dashed, color="#595959"];
+    phy -- xfmr [penwidth=2.5, color="#2e75b6"];
+    xfmr -- rj45 [penwidth=2.5, color="#c55a11", label="pairs"];
+    cct -- xfmr [color="#595959", label="centre taps"];
+    bs -- rj45 [color="#595959"];
+    rc -- rcl [style=dashed, color="#595959", label="signal ground"];
+    rc -- rcr [style=dashed, color="#595959", label="chassis ground"];
 }
