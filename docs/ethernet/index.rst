@@ -5,9 +5,10 @@ These pages follow the path of the data from the chip's pins to the Ethernet
 cable.
 
 In the first version, evampire talks to an external Ethernet transceiver over
-a digital interface (RGMII). The transceiver turns that digital data into the
-analog signals on the cable, and coupling transformers (often called the
-"magnetics") connect the transceiver to the RJ45 socket.
+a digital interface (RGMII, :doc:`rgmii`). The transceiver turns that digital
+data into the analog signals on the cable (:doc:`phy-electrical`), and
+coupling transformers (often called the "magnetics") connect the transceiver
+to the RJ45 socket (:doc:`magnetics`).
 
 The full design integrates the transceiver on evampire and connects the
 cable without coupling transformers. The pages on the transceiver and on the
