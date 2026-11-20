@@ -1,0 +1,243 @@
+Software cost and hardware assistance
+=====================================
+
+This page works out what the processor has to do to run a full-speed USB
+device in software: how many instructions per bit, how many samples per
+second and how short a reply deadline. It then adds hardware helpers one at
+a time and states what each one removes from those needs. The
+:ref:`requirement <requirements>` is that the USB protocol runs mostly in
+software, with built-in hardware where the timing needs it.
+
+The processor core, its clock and its cycles per instruction are open
+(see `Open questions`_). The needs are therefore given as instruction rates
+and deadlines. A core with clock :math:`f_\text{clk}` and an average of
+:math:`\text{CPI}` clock cycles per instruction meets an instruction rate
+:math:`R` when:
+
+.. math::
+
+   \frac{f_\text{clk}}{\text{CPI}} \ge R
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`f_\text{clk}`
+     - Processor clock frequency
+     - Hz
+   * - :math:`\text{CPI}`
+     - Average clock cycles per instruction for the code concerned
+       (:wikipedia:`cycles per instruction <Cycles_per_instruction>`)
+     - cycles
+   * - :math:`R`
+     - Instruction rate the task needs
+     - instructions/s
+
+The instruction counts below are estimates for hand-written assembly in
+RV32I, the 32-bit base RISC-V instruction set, not measurements. The
+:doc:`/power/usb-pd` page uses the same method for the configuration
+channel.
+
+Baseline: only input and output bits
+------------------------------------
+
+The minimum hardware is the analogue front end of :doc:`analogue` connected
+to plain processor-visible bits: D+ and D− receiver outputs as inputs; and
+driver enable, D+ level, D− level and pull-up enable as outputs. Everything
+else is software.
+
+Receiving
+~~~~~~~~~
+
+For each bit the software has to take a sample at the right moment, undo
+NRZI, remove stuffed bits, watch for the end of packet, and build bytes; for
+each byte it stores the byte and updates the CRC16
+(:numref:`tab-usbser-rx-instr`).
+
+.. list-table:: Estimated instructions to receive one bit in software
+   :name: tab-usbser-rx-instr
+   :header-rows: 1
+   :widths: 46 18 18 18
+
+   * - Work
+     - Instructions each
+     - Times per bit
+     - Instructions per bit
+   * - Read the input word
+     - 1
+     - 1
+     - 1
+   * - NRZI decode: compare with the previous sample
+     - 2
+     - 1
+     - 2
+   * - Count ones, drop a stuffed bit
+     - 3
+     - 1
+     - 3
+   * - Shift the bit into the byte
+     - 1
+     - 1
+     - 1
+   * - Check for SE0
+     - 1
+     - 1
+     - 1
+   * - Loop branch
+     - 1
+     - 1
+     - 1
+   * - Store byte, advance pointer, count
+     - 3
+     - 1/8
+     - 0.375
+   * - CRC16 update from a 256-entry table
+     - 7
+     - 1/8
+     - 0.875
+   * - Total
+     -
+     -
+     - 10.25
+
+The instruction rate needed while a packet arrives is:
+
+.. math::
+
+   R_\text{rx} = N_\text{rx} \cdot f_\text{bit}
+              = 10.25 \times 12 \times 10^{6}\ \text{s}^{-1}
+              = 123 \times 10^{6}\ \text{instructions/s}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{rx}`
+     - Instruction rate needed to receive
+     - instructions/s
+   * - :math:`N_\text{rx}`
+     - Instructions per bit, 10.25 (estimate, :numref:`tab-usbser-rx-instr`)
+     - instructions
+   * - :math:`f_\text{bit}`
+     - Bit rate, 12 Mbit/s
+     - bit/s
+
+Three further needs come with it:
+
+* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle
+  of its bit (:doc:`timing`), and the sampling instant has to be corrected
+  from the edges, at least every 7 bit times. The loop therefore has to
+  have a fixed, known duration of exactly one bit time, or measure edge
+  times from a counter.
+* *Sample rate.* One sample per bit is 12 million samples per second, if the
+  sampling instant is kept centred. A receiver that finds the edges by
+  oversampling four times per bit needs 48 million samples per second
+  ([USBSER-USB2]_ section 7.1.15.1).
+* *No interruptions.* An interruption longer than the 23.2 ns margin during
+  a packet loses the packet. Interrupts stay off from the SYNC to the end of
+  the reply.
+
+Transmitting
+~~~~~~~~~~~~
+
+To send, the software takes each bit, inserts a stuffed bit after six ones,
+applies NRZI, and writes the output: an estimated 8 instructions per bit,
+plus 2 per byte to fetch the next byte. The CRC16 of an IN data packet can
+be computed in advance, before the IN token arrives, so it is not counted
+here. This gives:
+
+.. math::
+
+   R_\text{tx} = N_\text{tx} \cdot f_\text{bit}
+              = 8.25 \times 12 \times 10^{6}\ \text{s}^{-1}
+              = 99 \times 10^{6}\ \text{instructions/s}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{tx}`
+     - Instruction rate needed to transmit
+     - instructions/s
+   * - :math:`N_\text{tx}`
+     - Instructions per bit, 8.25 (estimate)
+     - instructions
+
+The edges must also meet the ± 3.5 ns source jitter limit. A loop of fixed
+length places them exactly only if :math:`f_\text{clk}` is a whole multiple
+of 12 MHz, or at least 286 MHz (:ref:`usbser-placing-edges`).
+
+The reply deadline
+~~~~~~~~~~~~~~~~~~
+
+After the end of each packet addressed to the device, the software has to
+start the reply within :math:`t_\text{reply}`, at most 541.7 ns
+(6.5 bit times) less the receiver and driver delays (:doc:`timing`). For an
+OUT or SETUP data packet it compares the CRC16 register with the expected
+remainder and picks ACK or NAK; for an IN token it checks the token and
+picks a prepared data packet or NAK. With handshake packets prepared in
+advance, this is an estimated :math:`N_\text{reply}` = 15 instructions,
+which need an instruction rate during that interval of:
+
+.. math::
+
+   R_\text{reply} = \frac{N_\text{reply}}{t_\text{reply}}
+                  \ge \frac{15}{541.7\ \text{ns}}
+                  = 27.7 \times 10^{6}\ \text{instructions/s}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`R_\text{reply}`
+     - Instruction rate needed to reply in time
+     - instructions/s
+   * - :math:`N_\text{reply}`
+     - Instructions from the end of packet to the start of the reply, 15
+       (estimate)
+     - instructions
+   * - :math:`t_\text{reply}`
+     - Time available, at most 541.7 ns (:doc:`timing`)
+     - ns
+
+The IN token can be checked without computing its CRC5. The device knows
+its own address and endpoints, so it can prepare the 16 bits that follow
+the PID (address, endpoint and CRC5) for each endpoint it serves, and
+compare the received bits with that list.
+
+Waiting for the next packet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The host may send a token at any moment, so software has to watch the line
+continuously while it is connected. While a terminal program has the port
+open, the host polls the bulk IN endpoint, and the device answers NAK each
+time it has nothing to send. How often a host does this depends on its
+controller.
+
+The upper bound comes from the packet lengths: a token, 2 bit
+times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
+polls fit in a 1 ms frame. At that rate the device spends essentially all
+its time receiving tokens and replying.
+
+Summary of the baseline
+~~~~~~~~~~~~~~~~~~~~~~~
+
+With only input and output bits, the processor needs about
+:math:`123 \times 10^{6}` instructions per second while receiving and about
+:math:`99 \times 10^{6}` while transmitting. It samples once per bit with
+edge-corrected timing, without interruption from the start of each packet
+to the end of the reply, and transmits from a clock that is a multiple of
+12 MHz.
+When a bulk IN endpoint is being polled, this applies most of the time.
