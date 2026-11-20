@@ -127,6 +127,13 @@ granted on port A, drives and senses the USB configuration channel wires
 sets the USB output voltage, and enables and monitors the power sourcing
 equipment switch.
 
+The software on evampire's processor makes every power decision: it runs
+the negotiation on every port and switches power on and off. evampire
+measures the voltage and current of every power port and of the power bus,
+and enforces the current and power limit that the software sets for each
+port, switching a port off by itself when a fault is too fast for the
+software to react.
+
 evampire also controls the three voltage converters: the input converter,
 the USB converter and the high-voltage converter. In the first version the
 power transistors and their gate drivers are external parts and evampire

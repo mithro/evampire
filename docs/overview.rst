@@ -186,6 +186,20 @@ Power bridging
    * All Power over Ethernet types and all USB Power Delivery voltage ranges
      are documented. The maximum power the board supports is not yet fixed.
 
+Power control, monitoring and limiting
+   * Software on the RISC-V processor makes every power decision: it carries
+     out the negotiation on every port (Power over Ethernet detection and
+     classification in both roles, and USB Power Delivery), keeps the power
+     budget, and switches power on and off on each port.
+   * evampire has built-in power monitoring: it measures the voltage and
+     current of every power port and of the board's power bus, so that the
+     software can read the power flowing through each of them at any time.
+   * evampire has built-in power limiting: each port has a current and power
+     limit that the software sets. Built-in hardware enforces these limits
+     and switches a port off when a fault happens faster than software can
+     react, for example a short circuit, and then reports it to the
+     software.
+
 Voltage converters
    * evampire includes the functions of the three
      :wikipedia:`switching voltage converters <Switched-mode_power_supply>`

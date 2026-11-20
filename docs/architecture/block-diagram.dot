@@ -63,8 +63,8 @@ digraph evampire {
           fillcolor="#fbe5d6", width=1.5];
     mdio [pos="7.85,6.4!", label="Transceiver\nconfiguration",
           fillcolor="#fbe5d6", width=1.5];
-    pwr  [pos="7.85,3.6!", label="Power\nnegotiation", fillcolor="#fbe5d6",
-          width=1.5];
+    pwr  [pos="7.85,3.6!", label="Power negotiation,\nmonitoring and\nlimiting",
+          fillcolor="#fbe5d6", width=1.65, height=0.8];
 
     // Cable side.
     port_a  -> rgmii_a [dir=both, penwidth=2.5];

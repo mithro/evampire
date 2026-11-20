@@ -119,9 +119,13 @@ Power negotiation interface
    each port: to request power as a Power over Ethernet powered device or
    USB Power Delivery sink, to offer power as Power over Ethernet power
    sourcing equipment or a USB Power Delivery source, and to swap the power
-   role of a USB Type-C port. It also controls the external power switches
-   and voltage converters that move power between the ports. See
-   :doc:`../power/index`.
+   role of a USB Type-C port. It also controls the power switches and
+   voltage converters that move power between the ports. Software on the
+   processor makes every decision: it runs the negotiations and switches
+   power on and off. The interface measures the voltage and current of every
+   power port and of the board's power bus, and enforces the current and
+   power limits that the software sets, switching a port off by itself when
+   a fault is too fast for software. See :doc:`../power/index`.
 
 .. _arch-clock:
 
