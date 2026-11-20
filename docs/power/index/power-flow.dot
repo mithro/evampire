@@ -1,49 +1,59 @@
 // Power flow on a board built around evampire (first version).
 // Bold arrows: power. Dashed arrows: control and status.
 //
+// The blocks are placed on a fixed grid (positions in inches) so that the
+// diagram reads top to bottom and fits the width of a documentation page:
+//
+//   column 1 (x=1.2)  Ethernet port A input path, board supplies
+//   column 2 (x=3.7)  USB Type-C path, Ethernet port B output path
+//   column 3 (x=6.1)  evampire
+//
 // SPDX-License-Identifier: Apache-2.0
 
 digraph power_flow {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.35,
-           ranksep=0.5, newrank=true];
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+           fontname="Helvetica", fontsize=12, width=2.0, height=0.6,
+           fixedsize=true];
+    edge  [arrowsize=0.8];
 
-    rj45_a [label="Ethernet port A\n(receives power)", fillcolor="#ffffff"];
-    pd     [label="Powered device\nfront end\n(polarity bridge, signature,\ninrush-limited switch)"];
-    dcin   [label="Input voltage\nconverter"];
+    rj45_a [pos="1.2,8.0!", label="Ethernet port A\n(receives power)",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
+    usbc   [pos="3.7,8.0!", label="USB Type-C port\n(dual-role)",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
 
-    usbc   [label="USB Type-C port\n(dual-role)", fillcolor="#ffffff"];
-    usbpp  [label="USB power path\n(input switch when sink,\nadjustable converter\nwhen source)"];
+    pd     [pos="1.2,6.9!", height=0.9,
+            label="Powered device\nfront end (polarity,\nsignature, inrush limit)"];
+    usbpp  [pos="3.7,6.9!", height=0.9,
+            label="USB power path\n(switch as sink,\nconverter as source)"];
 
-    bus    [label="Internal\npower bus", shape=box, style="filled,bold",
-            fillcolor="#dbe8f5"];
+    dcin   [pos="1.2,5.8!", label="Input voltage\nconverter"];
 
-    loads  [label="Board supplies\n(evampire, Ethernet\ntransceivers)"];
-    hv     [label="High-voltage converter\n(44 V to 57 V)"];
-    pse    [label="Power sourcing\nequipment switch\n(detection, class,\ncurrent limit)"];
-    rj45_b [label="Ethernet port B\n(supplies power)", fillcolor="#ffffff"];
+    bus    [pos="2.45,4.8!", width=2.4, label="Internal power bus",
+            style="rounded,filled,bold", fillcolor="#dbe8f5"];
 
-    evampire [label="evampire\n(processor and power\nnegotiation interface)",
+    loads  [pos="1.2,3.8!", width=2.15, label="Board supplies\n(evampire, transceivers)"];
+    hv     [pos="3.7,3.8!", label="High-voltage converter\n(44 V to 57 V)"];
+    pse    [pos="3.7,2.7!", height=0.9, width=2.15,
+            label="Power sourcing\nequipment switch\n(detect, class, limit)"];
+    rj45_b [pos="3.7,1.6!", label="Ethernet port B\n(supplies power)",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
+
+    evampire [pos="6.1,4.8!", width=1.9, height=0.9,
+              label="evampire\n(processor, power\nnegotiation interface)",
               fillcolor="#fbe5d6"];
 
-    { rank=same; rj45_a; usbc; }
-    { rank=same; pd; usbpp; }
-    { rank=same; bus; evampire; }
-    { rank=same; hv; loads; }
+    rj45_a -> pd     [penwidth=2.5];
+    pd     -> dcin   [penwidth=2.5];
+    dcin   -> bus    [penwidth=2.5];
+    usbc   -> usbpp  [penwidth=2.5, dir=both];
+    usbpp  -> bus    [penwidth=2.5, dir=both];
+    bus    -> loads  [penwidth=2.5];
+    bus    -> hv     [penwidth=2.5];
+    hv     -> pse    [penwidth=2.5];
+    pse    -> rj45_b [penwidth=2.5];
 
-    rj45_a -> pd    [penwidth=2];
-    pd     -> dcin  [penwidth=2];
-    dcin   -> bus   [penwidth=2];
-    usbc   -> usbpp [penwidth=2, dir=both];
-    usbpp  -> bus   [penwidth=2, dir=both];
-    bus    -> loads [penwidth=2];
-    bus    -> hv    [penwidth=2];
-    hv     -> pse   [penwidth=2];
-    pse    -> rj45_b [penwidth=2];
-
-    evampire -> pd    [style=dashed, dir=back, label="granted\npower"];
-    evampire -> usbpp [style=dashed, dir=both, label="CC wires,\nvoltage set"];
-    evampire -> pse   [style=dashed, dir=both, label="enable,\nclass"];
+    evampire -> pd    [style=dashed, dir=back];
+    evampire -> usbpp [style=dashed, dir=both];
+    evampire -> pse   [style=dashed, dir=both];
 }

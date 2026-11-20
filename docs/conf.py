@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+import os
+
 project = "evampire"
 author = "The evampire Authors"
 copyright = "2026, The evampire Authors"
@@ -48,8 +50,18 @@ myst_enable_extensions = [
 
 html_theme = "furo"
 html_title = "evampire"
+html_static_path = ["_static"]
+html_css_files = ["custom.css"]
+
+# Pull request previews on Read the Docs are built from a commit that is not
+# on main; point the "view source" links at that commit.
+if os.environ.get("READTHEDOCS_VERSION_TYPE") == "external":
+    _source_branch = os.environ.get("READTHEDOCS_GIT_COMMIT_HASH", "main")
+else:
+    _source_branch = "main"
+
 html_theme_options = {
     "source_repository": "https://github.com/mithro/evampire/",
-    "source_branch": "main",
+    "source_branch": _source_branch,
     "source_directory": "docs/",
 }

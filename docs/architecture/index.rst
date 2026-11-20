@@ -26,6 +26,12 @@ RGMII interfaces A and B
    them with a transmit clock generated inside evampire. See
    :doc:`../ethernet/rgmii`.
 
+   In the full design, an integrated Ethernet transceiver can take the place
+   of each RGMII interface and its external transceiver. It presents the
+   same one-byte-per-clock interface to the forwarding logic, and drives the
+   cable without coupling transformers. See :doc:`../ethernet/phy-electrical`
+   and :doc:`../ethernet/magnetics`.
+
 Rate-matching buffers
    Received data arrives on the clock that the transceiver recovers from the
    cable, which is set by the crystal at the far end of the cable.
