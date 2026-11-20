@@ -1,8 +1,8 @@
 """Draw the Power over Ethernet start-up voltage timeline as an SVG file.
 
-The figure shows the voltage at the powered device input while a Type 3
-power source detects it, runs four class events (granting class 6) and then
-turns the power on. The time axis is not to scale; durations are written on
+The figure shows the voltage at the powered device input while Type 2 power
+sourcing equipment detects it, runs two class events (assigning class 4)
+and then turns the power on. The time axis is not to scale; durations are written on
 the figure instead.
 
 Usage: python voltage_timeline.py OUTPUT.svg
@@ -12,8 +12,8 @@ SPDX-License-Identifier: Apache-2.0
 
 import sys
 
-W, H = 720, 470
-X0, X1 = 64, 590          # plot area, left and right
+W, H = 600, 450
+X0, X1 = 56, 430          # plot area, left and right
 Y0, Y1 = 40, 400          # plot area, top and bottom
 VMAX = 60.0
 
@@ -22,17 +22,13 @@ SEGMENTS = [
     ("", 1.0, 0.0),
     ("detect", 1.3, 4.0),
     ("detect", 1.3, 8.0),
-    ("class 1\n88–105 ms", 2.2, 17.5),
-    ("mark", 1.0, 8.5),
-    ("class 2", 1.3, 17.5),
-    ("mark", 1.0, 8.5),
-    ("class 3", 1.3, 17.5),
-    ("mark", 1.0, 8.5),
-    ("class 4", 1.3, 17.5),
-    ("mark", 1.0, 8.5),
+    ("class 1\n6–30 ms", 2.0, 17.5),
+    ("mark", 1.2, 8.5),
+    ("class 2", 1.5, 17.5),
+    ("mark", 1.2, 8.5),
 ]
 RAMP = 0.5                # rise from the last mark event to full voltage
-POWERED = [("inrush\n50–75 ms", 2.4), ("delay to\n80 ms", 2.0),
+POWERED = [("inrush\n50–75 ms", 2.4), ("held to\n80 ms", 2.0),
            ("full\npower", 1.6)]
 V_ON = 54.0
 
@@ -41,7 +37,7 @@ BANDS = [
     (2.7, 10.1, "#dbe8f5", "detection 2.7–10.1 V\nmark 6.9–10.1 V"),
     (14.5, 20.5, "#e2f0d9", "classification\n14.5–20.5 V"),
     (30.0, 42.0, "#fbe5d6", "turn on between\n30 and 42 V"),
-    (42.5, 57.0, "#ececec", "operating\nup to 57 V"),
+    (42.5, 57.0, "#ececec", "operating\n42.5–57 V"),
 ]
 
 
@@ -75,7 +71,7 @@ def main(out_path):
     for lo, hi, fill, label in BANDS:
         parts.append(f'<rect x="{X0}" y="{ty(hi):.1f}" width="{X1 - X0}" '
                      f'height="{ty(lo) - ty(hi):.1f}" fill="{fill}"/>')
-        parts.append(text(X1 + 8, (ty(lo) + ty(hi)) / 2, label, size=11,
+        parts.append(text(X1 + 8, (ty(lo) + ty(hi)) / 2, label, size=12,
                           anchor="start", fill="#444"))
 
     # Axes and voltage ticks.
@@ -132,14 +128,14 @@ def main(out_path):
     # Phase brackets under the time axis.
     det = (seg_spans[1][1], seg_spans[2][2], "detection")
     cls = (seg_spans[3][1], seg_spans[-1][2],
-           "classification: 4 class and 4 mark events")
+           "2 class and\n2 mark events")
     pwr = (seg_spans[-1][2], power_spans[-1][2], "power on")
     for xa, xb, label in (det, cls, pwr):
         yb = Y1 + 18
         parts.append(f'<path d="M{xa + 2:.1f},{yb - 6} L{xa + 2:.1f},{yb} '
                      f'L{xb - 2:.1f},{yb} L{xb - 2:.1f},{yb - 6}" '
                      'fill="none" stroke="#555" stroke-width="1.2"/>')
-        parts.append(text((xa + xb) / 2, yb + 16, label, size=12,
+        parts.append(text((xa + xb) / 2, yb + 22, label, size=12,
                           weight="bold"))
 
     parts.append("</svg>")

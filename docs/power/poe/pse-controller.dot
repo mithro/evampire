@@ -1,59 +1,46 @@
-// One channel of a power sourcing equipment controller (low-side switch
-// arrangement, as in the TI TPS2388x family). Bold arrows: power path.
-// Thin arrows: measurement and control. Dashed arrows: host interface.
+// One channel of power sourcing equipment with its sequence run by
+// evampire's software (low-side switch arrangement). Every edge carries a
+// text label; bold edges carry power, thin edges carry measurements and
+// control.
+//
+// Fill colours: power circuits #fff2cc, evampire #dbe8f5, external parts
+// and connectors #ffffff.
 //
 // SPDX-License-Identifier: Apache-2.0
 
-digraph pse_controller {
-    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.25,
-           ranksep=0.4, newrank=true];
+digraph pse_channel {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=12, nodesep=0.3,
+           ranksep=0.45, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    // External power path.
-    vpwr [label="54 V supply\n(44–57 V)", fillcolor="#fbe5d6"];
-    port [label="Port centre taps\n(+ to supply,\n− to MOSFET drain)", fillcolor="#ffffff"];
-    fet  [label="Power MOSFET\n100 V (external)", fillcolor="#fbe5d6"];
-    rsns [label="Sense resistor\n0.2 Ω (external)", fillcolor="#ffffff"];
-    gnd  [label="Supply return\n(ground)", fillcolor="#ffffff"];
-    host [label="Host processor\n(evampire)", fillcolor="#dbe8f5"];
+    vpwr [label="High-voltage converter\n44–57 V", fillcolor="#fff2cc"];
+    port [label="Port: positive pairs\nto supply, negative\npairs to switch", fillcolor="#ffffff"];
+    det  [label="Detection and\nclass source", fillcolor="#fff2cc"];
+    vmeas [label="Voltage\nmeasurement", fillcolor="#fff2cc"];
+    fet  [label="Switch\n(power MOSFET)", fillcolor="#fff2cc"];
+    gate [label="Gate drive and\ncurrent-limit loop", fillcolor="#fff2cc"];
+    rsns [label="Sense resistor", fillcolor="#ffffff"];
+    imeas [label="Current\nmeasurement", fillcolor="#fff2cc"];
+    fast [label="Fast fault\ncomparator", fillcolor="#fff2cc"];
+    sw   [label="Software on\nevampire", fillcolor="#dbe8f5"];
 
-    subgraph cluster_ic {
-        label="Power sourcing equipment\ncontroller (one channel)";
-        labelloc="t"; labeljust="l"; style="rounded,bold"; color="#1f4e79";
-
-        det   [label="Detection\ncurrent sources"];
-        vadc  [label="Voltage ADC"];
-        logic [label="State machine,\ntimers, registers"];
-        temp  [label="Thermal\nshutdown"];
-        gate  [label="Gate driver and\ncurrent-limit loop"];
-        iadc  [label="Current ADC"];
-        fast  [label="Fast short-circuit\ncomparator"];
-    }
-
-    { rank=same; vpwr; }
-    { rank=same; port; det; vadc; }
-    { rank=same; logic; temp; }
+    { rank=same; port; det; vmeas; }
     { rank=same; fet; gate; }
-    { rank=same; rsns; iadc; fast; }
-    { rank=same; gnd; host; }
+    { rank=same; rsns; imeas; fast; }
 
-    vpwr -> port [penwidth=2.5];
-    port -> fet  [penwidth=2.5];
-    fet  -> rsns [penwidth=2.5];
-    rsns -> gnd  [penwidth=2.5];
-
-    det   -> port;
-    port  -> vadc [constraint=false];
-    vadc  -> logic;
-    det   -> logic [dir=back];
-    temp  -> logic [constraint=false];
-    logic -> gate;
-    gate  -> fet  [constraint=false, label="gate"];
-    rsns  -> iadc [constraint=false];
-    rsns  -> fast [constraint=false];
-    iadc  -> logic;
-    fast  -> gate;
-    logic -> host [style=dashed, dir=both, label="I2C"];
+    vpwr -> port  [penwidth=2.5, label="power"];
+    port -> fet   [penwidth=2.5, label="power"];
+    fet  -> rsns  [penwidth=2.5, label="power"];
+    det  -> port  [label="test"];
+    port -> vmeas [label="volts"];
+    gate -> fet   [label="gate"];
+    rsns -> imeas [label="mV"];
+    rsns -> fast  [label="mV"];
+    fast -> gate  [label="off"];
+    vmeas -> sw   [label="reading"];
+    imeas -> sw   [label="reading"];
+    sw   -> det   [label="step"];
+    sw   -> gate  [label="limit"];
 }

@@ -1,5 +1,9 @@
-// Analog blocks inside a typical powered-device controller chip.
-// Bold arrows: power path. Thin arrows: control. Dashed: outputs.
+// Circuit blocks of a powered-device controller, as in commercial
+// controller chips. Every edge carries a text label; bold edges carry
+// power, thin edges carry control, dashed edges are outputs.
+//
+// Fill colours: power circuits #fff2cc, evampire #dbe8f5, external parts
+// #ffffff.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -10,44 +14,44 @@ digraph pd_controller {
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    vin   [label="Rectified input\n(VDD to VSS, 0–57 V)", fillcolor="#ffffff"];
-    rdet  [label="Signature resistor\n24.9 kΩ (external)", fillcolor="#ffffff"];
-    rcls  [label="Class resistor\n(external)", fillcolor="#ffffff"];
-    cbulk [label="Bulk capacitor and\nDC-DC converter", fillcolor="#ffffff"];
+    vin   [label="Bridge outputs\nVDD and VSS, 0–57 V", fillcolor="#ffffff"];
+    rdet  [label="Signature\nresistor 24.9 kΩ", fillcolor="#ffffff"];
+    rcls  [label="Class\nresistor", fillcolor="#ffffff"];
+    cbulk [label="Input capacitor and\ninput converter", fillcolor="#ffffff"];
+    evp   [label="evampire", fillcolor="#dbe8f5"];
 
     subgraph cluster_ic {
-        label="Powered-device controller chip"; labelloc="t"; labeljust="l";
+        label="Powered-device controller"; labelloc="t"; labeljust="l";
         style="rounded,bold"; color="#1f4e79";
 
-        ref    [label="Bandgap\nreference", fillcolor="#e2e2e2"];
-        cmp    [label="Window comparators\nwith hysteresis"];
-        otsd   [label="Thermal\nshutdown"];
-        fsm    [label="State logic (counts\nclass events)"];
-        detsw  [label="Signature\nswitch"];
-        markr  [label="Mark-event\nload"];
-        clsreg [label="Class current\nregulator"];
-        hs     [label="Isolation switch\n(100 V MOSFET,\ncurrent limit)", fillcolor="#fbe5d6"];
-        pg     [label="Power-good and\nallocated-power\noutputs (to evampire)"];
+        ref    [label="Reference", fillcolor="#fff2cc"];
+        cmp    [label="Window\ncomparators", fillcolor="#fff2cc"];
+        otsd   [label="Thermal\nshutdown", fillcolor="#fff2cc"];
+        fsm    [label="State logic", fillcolor="#fff2cc"];
+        detsw  [label="Signature\nswitch", fillcolor="#fff2cc"];
+        markr  [label="Mark-event\nload", fillcolor="#fff2cc"];
+        clsreg [label="Class current\nregulator", fillcolor="#fff2cc"];
+        hs     [label="Isolation switch\nwith current limit", fillcolor="#fff2cc"];
+        pg     [label="Power good and\nassigned class", fillcolor="#fff2cc"];
     }
 
     { rank=same; ref; cmp; otsd; }
     { rank=same; detsw; markr; clsreg; }
     { rank=same; hs; pg; }
-    { rank=same; rdet; rcls; cbulk; }
+    { rank=same; rdet; rcls; cbulk; evp; }
 
-    vin  -> cmp;
-    vin  -> hs    [penwidth=2.5];
-    ref  -> cmp;
-    otsd -> fsm;
-    cmp  -> fsm;
-    fsm  -> detsw;
-    fsm  -> markr;
-    fsm  -> clsreg;
-    fsm  -> hs;
-    fsm  -> pg;
-    ref  -> clsreg;
-    detsw -> rdet  [dir=both];
-    clsreg -> rcls [dir=both];
+    vin  -> cmp    [label="sense"];
+    vin  -> hs     [penwidth=2.5, label="VSS"];
+    ref  -> cmp    [label="thresholds"];
+    otsd -> fsm    [label="hot"];
+    cmp  -> fsm    [label="step"];
+    fsm  -> detsw  [label="on"];
+    fsm  -> markr  [label="on"];
+    fsm  -> clsreg [label="on"];
+    fsm  -> hs     [label="on"];
+    fsm  -> pg     [label="count"];
+    detsw -> rdet  [dir=both, label="25 kΩ"];
+    clsreg -> rcls [dir=both, label="current"];
     hs   -> cbulk  [penwidth=2.5, label="RTN"];
-    pg   -> cbulk  [style=dashed, label="enable"];
+    pg   -> evp    [style=dashed, label="status"];
 }
