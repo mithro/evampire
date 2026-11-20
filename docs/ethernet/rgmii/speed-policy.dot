@@ -1,0 +1,21 @@
+// How the processor keeps both ports at the same speed.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph speed_policy {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=14, nodesep=0.5,
+           ranksep=0.5];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=13];
+    edge  [fontname="Helvetica", fontsize=12, arrowsize=0.7];
+
+    down  [label="One or both links down\nforwarding off"];
+    diff  [label="Different speeds\nforwarding off", fillcolor="#fbe5d6"];
+    same  [label="Same speed, full duplex\nforwarding on", fillcolor="#e2efda"];
+
+    down -> same [label="  second link up,\n  same speed"];
+    down -> diff [label="  second link up,\n  different speed"];
+    diff -> same [label="  faster port\n  renegotiates"];
+    same -> down [label="  a link goes down"];
+    diff -> down [label="  a link goes down"];
+}

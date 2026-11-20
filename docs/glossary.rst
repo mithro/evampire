@@ -125,6 +125,34 @@ gives a short description and a link to the full explanation.
       :wikipedia:`Media-independent interface
       <Media-independent_interface>`).
 
+   GMII
+   Gigabit media independent interface
+      The interface between a media access controller and a gigabit Ethernet
+      transceiver: 8 data bits in each direction on the rising edge of a
+      125 MHz clock (:clause:`35`, see :doc:`ethernet/rgmii/signals`).
+
+   In-band status
+      The link status, speed and duplex that an Ethernet transceiver can put
+      on the RGMII receive data signals between frames (see
+      :doc:`ethernet/rgmii/data`).
+
+   MII
+   Media independent interface
+      The interface between a media access controller and a 10 Mbit/s or
+      100 Mbit/s Ethernet transceiver: 4 data bits in each direction on the
+      rising edge of a 2.5 MHz or 25 MHz clock (:clause:`22`, see
+      :doc:`ethernet/rgmii/signals`).
+
+   Preamble
+      The 7 bytes of alternating ones and zeros at the start of every
+      Ethernet frame on the wire, which let the receiver lock on to the
+      signal (:clause:`3.2.1`, see :doc:`ethernet/rgmii/frames`).
+
+   Start frame delimiter
+   SFD
+      The byte 0xD5 that follows the preamble and marks the start of an
+      Ethernet frame (:clause:`3.2.2`, see :doc:`ethernet/rgmii/frames`).
+
    RJ45
       The 8-position modular socket and plug used on Ethernet cables (see
       :wikipedia:`8P8C`).
@@ -136,11 +164,6 @@ gives a short description and a link to the full explanation.
    Source
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
-
-   Start pattern
-      The fixed 8 bytes at the start of every Ethernet frame on the wire: a
-      7-byte preamble and a 1-byte start frame delimiter. They let the
-      receiver lock on to the frame (:clause:`3`).
 
    USB Power Delivery
    USB PD
