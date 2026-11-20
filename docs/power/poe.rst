@@ -563,7 +563,8 @@ controller's own leakage:
 .. math::
 
    R_\text{nom} \times (1 - 0.05) = 25 \,\text{k}\Omega \times 0.95
-     = 23.75 \,\text{k}\Omega, \qquad
+     = 23.75 \,\text{k}\Omega
+
    R_\text{nom} \times (1 + 0.05) = 25 \,\text{k}\Omega \times 1.05
      = 26.25 \,\text{k}\Omega
 
@@ -2032,7 +2033,8 @@ ESD during handling
    .. math::
 
       I_\text{peak} = \frac{V_\text{HBM}}{R_\text{HBM}}
-        = \frac{2000 \,\text{V}}{1500 \,\Omega} = 1.33 \,\text{A}, \qquad
+        = \frac{2000 \,\text{V}}{1500 \,\Omega} = 1.33 \,\text{A}
+
       \tau = R_\text{HBM} \, C_\text{HBM}
         = 1500 \,\Omega \times 100 \,\text{pF} = 150 \,\text{ns}
 
