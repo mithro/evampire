@@ -66,13 +66,19 @@ print("== Software receive cost (ESTIMATES) ==")
 T_POLL = 250e-9  # chosen sampling period
 polls_per_bit = UI_MIN / T_POLL
 print(f"  polls per bit at 330k = {polls_per_bit:.1f} -> use 12")
-I_POLL, I_EDGE, I_BIT, I_SYM = 3, 10, 4, 16  # ESTIMATED instruction counts
-per_bit_poll = 12 * I_POLL + 2 * I_EDGE + I_BIT + I_SYM / 5
+# ESTIMATED instruction counts. The poll is "lw; beq back to lw" (RV32I has
+# compare-and-branch in one instruction), so 2 instructions per sample.
+I_POLL, I_EDGE, I_BIT, I_SYM = 2, 10, 4, 16
+per_port = 2 * I_EDGE + I_BIT + I_SYM / 5
+per_bit_poll = 12 * I_POLL + per_port
 per_bit_cap = 2 * (I_EDGE + 2) + I_BIT + I_SYM / 5
-for name, ipb in (("polling", per_bit_poll), ("capture FIFO", per_bit_cap)):
+per_bit_two = 12 * I_POLL + 2 * per_port
+for name, ipb in (("polling", per_bit_poll), ("capture FIFO", per_bit_cap),
+                  ("polling, two ports", per_bit_two)):
     mips = ipb * 330e3 / 1e6
     print(f"  {name}: {ipb:.1f} instr/bit -> {mips:.1f} M instr/s; "
           f"CPI 1.3 -> {mips*1.3:.0f} MHz; CPI 4 -> {mips*4:.0f} MHz")
+print(f"  share of a 50 MHz pipelined core: {per_bit_poll*330e3*1.3/50e6*100:.0f} %")
 # PicoRV32 cycles per poll iteration: lw 5 + taken branch 5 (README CPI table)
 print(f"  multi-cycle poll iteration 10 cycles at 4 MS/s -> {10*4:.0f} MHz for polling alone")
 print(f"  pipelined poll iteration 4 cycles at 4 MS/s -> {4*4:.0f} MHz for polling alone")
@@ -117,7 +123,14 @@ print(f"  VBUS short: Q = {i_s*t_s:.0f} C, E in clamp = {v_cl*i_s*t_s:.0f} J, "
 print("== High-resistance poly divider (PDK 3 kOhm/sq option) ==")
 for r in (1e6, 2e6):
     print(f"  {r/1e6:g} MOhm / 3 kOhm per square = {r/3e3:.0f} squares; "
-          f"current at 21 V = {21/r*1e6:.1f} uA, at 50.9 V = {50.9/r*1e6:.1f} uA")
+          f"current at 21.5 V = {21.5/r*1e6:.1f} uA, at 50.9 V = {50.9/r*1e6:.1f} uA")
+
+print("== SPR and EPR worst-case VBUS (PD Table 4.7: vSrcNew max, vSrcValid max) ==")
+for v in (20.0, 48.0):
+    print(f"  {v:g} V x 1.05 + 0.5 V = {v*1.05+0.5:.2f} V")
+
+print("== Dead-battery Rd voltage with the 3.0 A Rp current (Type-C Tables 4-27, 4-28) ==")
+print(f"  356 uA x 6.12 kOhm = {356e-6*6.12e3:.2f} V (Type-C Table 4-28 limit 2.18 V)")
 
 print("== Standard cell register overhead (gf180mcu 7-track, TT 5 V 25 C) ==")
 clkq, setup = 0.6763, 0.2290
