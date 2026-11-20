@@ -10,7 +10,7 @@ and external options, and reference examples from commercial controllers.
 :numref:`fig-usbpd-port-blocks` shows the blocks, from the connector pins to
 the processor. Each port has its own set; the number of ports in each board
 configuration is in :ref:`board configurations <tab-power-board-configs>`.
-The digital side, and the optional timer, are described on
+The processor's part, and the optional timer, are described on
 :ref:`usbpd-software`. The protection between the connector and these
 blocks has its own page, :ref:`usbpd-cc-protection`, and the voltage limits
 of the process that decide each on-chip option are on

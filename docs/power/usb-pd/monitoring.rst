@@ -43,7 +43,7 @@ steps from the finest limits it must check (:numref:`tab-usbpd-meas`).
      - Limit it comes from
    * - VBUS range, SPR
      - 24 V
-     - *vSprMax*, the voltage a sink should tolerate (:pd:`Table 4.8`)
+     - *vSprMax*, the voltage the specification recommends a sink tolerates (:pd:`Table 4.8`)
    * - VBUS range, EPR
      - 50.9 V
      - 48 V plus its tolerances (:pd:`Table 6.45`)
@@ -187,7 +187,7 @@ A source's over-voltage protection follows the same rule
 The 1.05 is the +5 % of vSrcNew and the 0.5 V is vSrcValid
 (:pd:`Table 4.7`). For a 20 V contract the threshold is above
 :math:`1.05 \times 20\ \text{V} + 0.5\ \text{V} = 21.5\ \text{V}`, and an SPR
-sink should tolerate up to 24 V (:pd:`Table 4.8`).
+sink, as the specification recommends, tolerates up to 24 V (:pd:`Table 4.8`).
 
 The time the protection has depends on how fast VBUS rises:
 
