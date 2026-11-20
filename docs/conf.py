@@ -71,29 +71,42 @@ html_theme_options = {
 }
 
 
-# :clause:`40.8.3.1` renders as "Clause 40.8.3.1" and links to the entry for
-# Clause 40 of IEEE 802.3 on the standards page. An explicit title can be
-# given, as in :clause:`Clauses 24 <24>`. A clause with no entry on the
-# standards page is a build error (the reference cannot be resolved).
-def _clause_role(name, rawtext, text, lineno, inliner, options=None,
-                 content=None):
-    has_title, title, target = split_explicit_title(text)
-    number = target.strip()
-    if not has_title:
-        title = f"Clause {number}"
-    env = inliner.document.settings.env
-    node = addnodes.pending_xref(
-        rawtext,
-        refdomain="std",
-        reftype="ref",
-        reftarget=f"ieee8023-clause-{number.split('.')[0]}",
-        refexplicit=True,
-        refwarn=True,
-        refdoc=env.docname,
-    )
-    node += nodes.inline(title, title)
-    return [node], []
+# Roles that link references to parts of a standard to that standard's
+# entry on the standards page (docs/standards.rst):
+#
+#   :clause:`40.8.3.1`    -> "Clause 40.8.3.1", links to IEEE 802.3 Clause 40
+#   :pd:`Table 5.10`      -> "PD Table 5.10", links to the USB PD spec
+#   :typec:`Section 4.2`  -> "Type-C Section 4.2", links to the USB Type-C spec
+#
+# An explicit title can be given, as in :clause:`Clauses 24 <24>` or
+# :typec:`Section 4.2 <Section 4.2>`. A reference whose target has no entry
+# on the standards page is a build error (the reference cannot be resolved).
+def _make_standard_role(prefix, label):
+    def role(name, rawtext, text, lineno, inliner, options=None,
+             content=None):
+        has_title, title, target = split_explicit_title(text)
+        target = target.strip()
+        if not has_title:
+            title = f"{prefix} {target}"
+        env = inliner.document.settings.env
+        node = addnodes.pending_xref(
+            rawtext,
+            refdomain="std",
+            reftype="ref",
+            reftarget=label(target),
+            refexplicit=True,
+            refwarn=True,
+            refdoc=env.docname,
+        )
+        node += nodes.inline(title, title)
+        return [node], []
+    return role
 
 
 def setup(app):
-    app.add_role("clause", _clause_role)
+    app.add_role("clause", _make_standard_role(
+        "Clause", lambda n: f"ieee8023-clause-{n.split('.')[0]}"))
+    app.add_role("pd", _make_standard_role(
+        "PD", lambda n: "usb-pd-specification"))
+    app.add_role("typec", _make_standard_role(
+        "Type-C", lambda n: "usb-type-c-specification"))
