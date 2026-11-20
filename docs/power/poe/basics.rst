@@ -49,10 +49,10 @@ wires of another pair. Two such pairs, one positive and one negative, form
 a :term:`pair set`, which carries the current out and back.
 
 Both wires of a pair sit at the same DC voltage, so the power is a
-:wikipedia:`common-mode <Common-mode_signal>` voltage on the pair. The data
+:term:`common-mode voltage` on the pair. The data
 is the difference between the two wires, so the DC voltage does not
 disturb it. On the first-version board the DC voltage is connected to the
-centre taps of the cable-side windings of the :term:`magnetics`, which pass
+:term:`centre taps <centre tap>` of the cable-side windings of the :term:`magnetics`, which pass
 the data and keep the DC away from the :term:`Ethernet transceiver`. The
 full design has no coupling transformers. :doc:`../../ethernet/magnetics/index`
 describes both arrangements.
