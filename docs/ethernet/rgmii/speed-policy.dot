@@ -9,7 +9,7 @@ digraph speed_policy {
            fontname="Helvetica", fontsize=10];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    down  [label="One or both links down\n\nForwarding off.\nA transceiver whose link is down\nadvertises every full-duplex speed."];
+    down  [label="One or both links down\n\nForwarding off.\nA transceiver whose link is down\nadvertises every full-duplex speed\nthat evampire supports."];
     same  [label="Both links up,\nsame speed and full duplex\n\nForwarding on.", fillcolor="#e2efda"];
     diff  [label="Both links up,\ndifferent speeds\n\nForwarding off.\nThe faster port is restricted to\nthe speed of the slower port\nand renegotiates.", fillcolor="#fbe5d6"];
 
