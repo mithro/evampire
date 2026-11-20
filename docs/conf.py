@@ -109,4 +109,5 @@ def setup(app):
     app.add_role("pd", _make_standard_role(
         "PD", lambda n: "usb-pd-specification"))
     app.add_role("typec", _make_standard_role(
-        "Type-C", lambda n: "usb-type-c-specification"))
+        # U+2011 NON-BREAKING HYPHEN: keep "Type-C" on one line.
+        "Type\u2011C", lambda n: "usb-type-c-specification"))
