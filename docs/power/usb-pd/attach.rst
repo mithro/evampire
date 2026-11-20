@@ -1,57 +1,60 @@
+.. _usbpd-attach:
+
 Two dual-role ports decide who supplies power
 =============================================
 
-How a dual-role port finds the other end and settles on a power role.
+How a :term:`dual-role port` finds the device at the other end of a USB
+Type-C cable, settles on the source or sink role, and starts again after an
+error.
 
-Attach for a dual-role port
----------------------------
+The :std:`USB Type-C specification <usb-type-c>` describes attach as a
+:wikipedia:`finite-state machine <Finite-state_machine>` for each kind of
+port (:typec:`Section 4.5.2.2`). This page follows the one for a dual-role
+port. The states depend on what each CC pin sees: SRC.Rd, SRC.Ra or SRC.Open
+while the port presents :term:`Rp`, and SNK.Rp or SNK.Open while it presents
+:term:`Rd` (:ref:`usbpd-cc-states`).
 
-The :ref:`Type-C specification <usb-type-c-specification>` describes attach
-as a state machine for each kind of port (:typec:`Section 4.5.2.2`). A source
-sees each CC pin as *SRC.Open*, *SRC.Rd* or *SRC.Ra*; a sink sees each CC pin
-as *SNK.Rp* or *SNK.Open* (:typec:`Type-C Tables 4-16 <x>` and
-:typec:`4-17 <x>`).
+.. _usbpd-toggling:
 
-Toggling between Rp and Rd
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+An unattached dual-role port toggles between Rp and Rd
+------------------------------------------------------
 
 When nothing is attached, a dual-role port alternates between presenting Rd
 on both CC pins (state Unattached.SNK) and presenting Rp on both CC pins
-(Unattached.SRC), so that it can be found by a source, by a sink, or by
-another dual-role port (:typec:`Section 4.5.1.3.3`; :numref:`fig-usbpd-toggle`
-and :numref:`tab-usbpd-toggle`).
+(state Unattached.SRC). A source finds it while it presents Rd, and a sink
+finds it while it presents Rp (:typec:`Section 4.5.1.3.3`;
+:numref:`fig-usbpd-toggle`). One Rp and Rd cycle takes tDRP, Rp is
+presented for the share dcSRC.DRP of it, and each change between Rp and Rd
+takes at most tDRPTransition (:numref:`tab-usbpd-toggle`).
 
-.. list-table:: Toggling timing (:typec:`Table 4-33`)
+.. list-table:: Toggling limits (:typec:`Table 4-33`)
    :name: tab-usbpd-toggle
    :header-rows: 1
-   :widths: 25 20 55
+   :widths: 40 20 20 20
 
    * - Name
-     - Value
-     - Meaning
+     - Min
+     - Max
+     - Unit
    * - tDRP
-     - 50 ms to 100 ms
-     - Period of one complete Rp and Rd cycle.
+     - 50
+     - 100
+     - ms
    * - dcSRC.DRP
-     - 30 % to 70 %
-     - Fraction of tDRP spent presenting Rp.
+     - 30
+     - 70
+     - %
    * - tDRPTransition
-     - at most 1 ms
-     - Time allowed to change between Rp and Rd.
-
-The clock that sets these times should *not* come from a precise source such
-as a crystal, so that two dual-role ports do not stay locked in step and fail
-to find each other (:typec:`Section 4.11.2`, text before
-:typec:`Table 4-33 <x>`). In software this means adding a random variation
-to the period and duty cycle.
+     - 0
+     - 1
+     - ms
 
 .. wavedrom::
-   :caption: Toggling while unattached, shown with a 50 % duty cycle. One
-             period tDRP is 50 ms to 100 ms; Rp is presented for
-             dcSRC.DRP × tDRP of it.
+   :caption: Toggling while unattached, drawn with a 50 % duty cycle.
    :name: fig-usbpd-toggle
-   :alt: Timing diagram: both CC pins alternate between Rp and Rd; one Rp
-         phase plus one Rd phase make one period tDRP.
+   :alt: Timing diagram: both CC pins alternate between Rp and Rd. Rp is
+         presented for dcSRC.DRP × tDRP, and one Rp phase plus one Rd phase
+         make one period tDRP.
 
    {"signal": [
      {"name": "CC1, CC2", "wave": "=...=...=...", "data": ["Rp", "Rd", "Rp"]},
@@ -60,113 +63,294 @@ to the period and duty cycle.
    ],
    "config": {"hscale": 1.2}}
 
-How long a connection takes to be noticed depends on who toggles: at most
-*tNoToggleConnect* (5 ms) when neither side toggles, *tOnePortToggleConnect*
-(80 ms) when one side toggles, and *tTwoPortToggleConnect* (510 ms) when both
-do (:typec:`Table 4-34`).
+The specification recommends that the timer for tDRP and the
+:wikipedia:`duty cycle <Duty_cycle>` dcSRC.DRP do not come from a precise
+source such as a :wikipedia:`crystal <Crystal_oscillator>`
+(:typec:`Section 4.11.2`). Two dual-role ports with the same precise period
+could stay in step, each presenting Rp while the other does, and never find
+each other. In software, a random variation of the period and duty cycle
+within the limits gives the same protection.
 
-The attach sequence
-~~~~~~~~~~~~~~~~~~~
+The time to notice a connection depends on how many of the two ends toggle
+(:numref:`tab-usbpd-connect-times`).
 
-:numref:`fig-usbpd-drp-states` summarises the states described below.
+.. list-table:: Longest time to detect a connection (:typec:`Table 4-34`)
+   :name: tab-usbpd-connect-times
+   :header-rows: 1
+   :widths: 40 30 30
 
-.. _fig-usbpd-drp-states:
+   * - Ends that toggle
+     - Name
+     - Maximum (ms)
+   * - Neither
+     - tNoToggleConnect
+     - 5
+   * - One
+     - tOnePortToggleConnect
+     - 80
+   * - Both
+     - tTwoPortToggleConnect
+     - 510
+
+.. _usbpd-attach-sequence:
+
+The attach sequence waits for a stable CC pin before power flows
+----------------------------------------------------------------
+
+:numref:`fig-usbpd-drp-states` shows the states a dual-role port passes
+through. It leaves out the accessory and debug states and the return to the
+unattached states on detach. The timing limits are in
+:numref:`tab-usbpd-attach-timing`.
 
 .. graphviz:: drp-states.dot
-   :caption: Simplified attach state machine for a dual-role port that
-             prefers the source role (:typec:`Section 4.5.2.2`,
-             :typec:`Figure 4-16 <x>`). Accessory and debug states, and
-             detach transitions back to the unattached states, are left out.
-             "Stable" means unchanged for tCCDebounce (100 ms to 200 ms).
+   :name: fig-usbpd-drp-states
+   :caption: Attach states of a dual-role port that prefers the source role
+             (:typec:`Section 4.5.2.2`, :typec:`Figure 4-16`).
+   :alt: State diagram. Unattached.SNK and Unattached.SRC toggle between
+         each other. Unattached.SNK goes to AttachWait.SNK when Rp is seen;
+         Unattached.SRC goes to AttachWait.SRC when Rd is seen.
+         AttachWait.SNK goes to Attached.SNK when Rp is stable and VBUS is on,
+         or to Try.SRC if the port prefers the source role. AttachWait.SRC
+         goes to Attached.SRC when Rd is stable and VBUS is at 0 V. Try.SRC
+         goes to Attached.SRC if Rd is seen, otherwise to TryWait.SNK, which
+         goes to Attached.SNK when VBUS is on. Attached.SNK and Attached.SRC
+         are linked by PR_Swap. Any state can be directed to ErrorRecovery,
+         which returns to Unattached.SRC after tErrorRecovery.
    :align: center
 
-**Attaching to a source** (for example a charger). While presenting Rd, the
-port sees Rp on one CC pin and enters AttachWait.SNK. When that pin has shown
-Rp for *tCCDebounce* (100 ms to 200 ms, :typec:`Table 4-34`) and VBUS is
-present, the port enters Attached.SNK, or Try.SRC if it prefers to be source
-(see `Try.SRC and Try.SNK`_). The source meanwhile has debounced the Rd it
-sees and turned VBUS on within *tVBUSON*, at most 275 ms
-(:typec:`Table 4-32`; :typec:`Sections 4.5.2.2.4 <x>` and
-:typec:`4.5.2.2.5 <x>`).
+.. list-table:: Attach and detach time limits
+   :name: tab-usbpd-attach-timing
+   :header-rows: 1
+   :widths: 30 15 15 40
 
-**Attaching to a sink** (for example a phone). While presenting Rp, the port
-sees Rd on one CC pin and enters AttachWait.SRC. It makes sure VBUS is at
-*vSafe0V* (at most 0.8 V, :pd:`Table 4.9`), loading VBUS if needed to
-discharge it within *tVsafe0V* (650 ms, :typec:`Table 4-32`), waits until
-exactly one CC pin has shown Rd for tCCDebounce, enters Attached.SRC and
-turns VBUS on within tVBUSON (:typec:`Type-C Sections 4.5.2.2.8 <x>` and
-:typec:`4.5.2.2.9 <x>`).
+   * - Name
+     - Min (ms)
+     - Max (ms)
+     - Meaning
+   * - tCCDebounce
+     - 100
+     - 200
+     - Time a CC state must be stable before attach (:typec:`Table 4-34`)
+   * - tVBUSON
+     - 0
+     - 275
+     - From Attached.SRC to VBUS at vSafe5V (:typec:`Table 4-32`)
+   * - tVsafe0V
+     - 0
+     - 650
+     - Time to discharge VBUS in AttachWait.SRC (:typec:`Table 4-32`)
+   * - tSRCDisconnect
+     - 0
+     - 20
+     - Time for a source to see the sink leave (:typec:`Table 4-34`)
+   * - tVBUSOFF
+     - 0
+     - 650
+     - From detach to VBUS at vSafe0V (:typec:`Table 4-32`)
+   * - tSinkDisconnect
+     - none
+     - 40
+     - Time for a sink to see VBUS fall (:typec:`Table 4-3`)
 
-**Attaching to another dual-role port.** Both sides toggle; whichever happens
-to present Rp when the other presents Rd becomes the source. The outcome is
-random unless one side uses a preference mechanism
-(:typec:`Section 4.5.2.2.7.2`, note).
+VBUS counts as off at vSafe0V, 0 V to 0.8 V (:pd:`Table 4.9`). A sink
+attached at 5 V counts VBUS as gone below vSinkDisconnect, at most 3.67 V
+(:typec:`Table 4-3`).
 
-**Detach.** A source detects that the sink has gone when the monitored CC pin
-reads SRC.Open, within *tSRCDisconnect* (20 ms, :typec:`Table 4-34`), and
-must then remove VBUS within *tVBUSOFF* (650 ms, :typec:`Table 4-32`). A sink
-detects detach when VBUS falls below *vSinkDisconnect* (3.67 V at 5 V,
-:typec:`Table 4-3`) within *tSinkDisconnect* (40 ms, same table).
+Attaching to a source
+^^^^^^^^^^^^^^^^^^^^^
 
-Try.SRC and Try.SNK
-~~~~~~~~~~~~~~~~~~~
+A source such as a charger finds the port while it presents Rd
+(:typec:`Section 4.5.2.2.4`, :typec:`Section 4.5.2.2.5`):
 
-A dual-role port can bias the outcome with one of two optional mechanisms;
-only one may be enabled at a time (:typec:`Type-C Sections 4.5.1.4.1 <x>`,
-:typec:`4.5.2.2.10 <x>` to :typec:`4.5.2.2.13 <x>`):
+#. The port sees SNK.Rp on one CC pin and enters AttachWait.SNK, keeping Rd
+   on both pins.
+#. The source sees Rd for tCCDebounce, enters Attached.SRC and turns VBUS
+   on within tVBUSON.
+#. The port waits until exactly one CC pin has shown SNK.Rp for
+   tCCDebounce and VBUS is present. It then enters Attached.SNK, or Try.SRC
+   if it prefers the source role (:ref:`usbpd-try`).
 
-* **Try.SRC** (prefers to be source). When the port finds itself heading for
-  Attached.SNK, it presents Rp instead (state Try.SRC) for up to *tDRPTry*
-  (75 ms to 150 ms, :typec:`Table 4-33`). If the other side shows Rd for
-  *tTryCCDebounce* (10 ms to 20 ms, :typec:`Table 4-34`), it becomes source;
-  otherwise it goes back to presenting Rd (TryWait.SNK) and attaches as sink.
-* **Try.SNK** (prefers to be sink). The mirror image: when heading for
-  Attached.SRC it presents Rd for tDRPTry and waits for Rp.
+The CC pin that shows SNK.Rp is the one that meets the CC wire.
 
-These mechanisms work only once, at attach. After that, both sides can use
-USB Power Delivery messages to swap roles (see `Role changes`_).
-:typec:`Table 4-12` recommends Try.SRC for a port that prefers to be a source
-and Try.SNK for one that prefers to be a sink.
+Attaching to a sink
+^^^^^^^^^^^^^^^^^^^
 
-Choosing the initial role
-~~~~~~~~~~~~~~~~~~~~~~~~~
+A sink such as a phone finds the port while it presents Rp
+(:typec:`Section 4.5.2.2.8`, :typec:`Section 4.5.2.2.9`):
 
-For evampire the preferred role follows from the
-:ref:`power budget <power-budget>` and the :ref:`operating mode
-<power-modes>`:
+#. The port sees SRC.Rd on one CC pin and enters AttachWait.SRC.
+#. It makes sure VBUS is at vSafe0V, loading VBUS to discharge it within
+   tVsafe0V if a voltage is left on it.
+#. It waits until exactly one CC pin has shown SRC.Rd for tCCDebounce, and
+   enters Attached.SRC.
+#. It turns VBUS on within tVBUSON.
 
-* If the board has input power from Ethernet and can spare power for USB, the
-  port prefers to be a source and uses Try.SRC.
-* If the board has no other input, it can only be a sink.
-* If the board has input power but no spare power, it prefers to be a sink
-  (Try.SNK), or attaches as a source offering no power and then asks for a
-  role swap.
+Attaching to another dual-role port
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Even with Try.SRC, a port attached to a charger (which can only be a source)
-ends up as a sink, and a port attached to a phone that only sinks ends up as
-a source, so the processor has to handle both outcomes.
+When both ends toggle, the end that happens to present Rp while the other
+presents Rd becomes the source. Without a preference mechanism, the outcome
+is random (:typec:`Section 4.5.2.2.7.2`; :typec:`Section 2.3.3`).
 
-Unpowered board ("dead battery")
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Detach
+^^^^^^
 
-A board that has no power from Ethernet and is plugged into a USB charger is
-completely unpowered at that moment. The charger turns VBUS on only after it
-sees Rd. The port must therefore present Rd without any supply
-(:typec:`Section 4.5.2.2.3`: "A port with a dead battery shall enter this
-state while unpowered"; :typec:`Section 4.8.5 <x>`). This is a
-:ref:`requirement <requirements>` for evampire, because in the "USB in,
-Ethernet out" mode the board takes all of its power from USB Type-C. Once the board has powered up
-from VBUS, the processor takes over the CC pins, keeping Rd present, and
-continues as a sink in Attached.SNK.
+A source detects that the sink has left when the CC pin it monitors reads
+SRC.Open, within tSRCDisconnect. It then removes VBUS within tVBUSOFF
+(:typec:`Section 4.5.2.2.9.2`). A dual-role port that prefers the source
+role goes from Attached.SRC to TryWait.SNK rather than Unattached.SNK, so
+that two ports that both prefer the source role do not swap back and forth
+without end. A sink detects detach when VBUS falls below vSinkDisconnect,
+within tSinkDisconnect (:typec:`Section 4.5.2.2.5.2`).
 
-ErrorRecovery
-~~~~~~~~~~~~~
+.. _usbpd-try:
 
-Every port that supports USB Power Delivery must support the *ErrorRecovery*
-state, in which it removes all terminations and presents at least *zOPEN*
-(126 kΩ) on both CC pins for *tErrorRecovery* (at least 25 ms, or 240 ms if
-it was supplying VCONN), forcing the other side to see a detach
-(:typec:`Type-C Section 4.5.2.2.2 <x>`, :typec:`Tables 4-30 <x>` and
-:typec:`4-34 <x>`). A port enters it from any state when its policy directs
-it to, for example after a failed power role swap, and afterwards returns to
-Unattached.SNK. The Rp and Rd circuits must therefore both be switchable off.
+Try.SRC and Try.SNK bias the outcome once, at attach
+----------------------------------------------------
+
+A dual-role port can bias the outcome with one of two optional mechanisms.
+Only one of them may be enabled at a time (:typec:`Section 4.5.1.4.1`,
+:typec:`Section 4.5.2.2.10`).
+
+Try.SRC, for a port that prefers to be the source
+   When the port is about to enter Attached.SNK, it presents Rp instead
+   (state Try.SRC). If the other end shows Rd for tTryCCDebounce, the port
+   becomes the source. If not, after tDRPTry it returns to presenting Rd
+   (state TryWait.SNK) and attaches as the sink
+   (:typec:`Section 4.5.2.2.10` and :typec:`4.5.2.2.11 <Section 4.5.2.2.11>`).
+Try.SNK, for a port that prefers to be the sink
+   When the port is about to enter Attached.SRC, it presents Rd instead
+   (state Try.SNK). After tDRPTry it looks for Rp. If the other end shows Rp
+   for tTryCCDebounce and VBUS appears, the port becomes the sink. If not,
+   it returns to presenting Rp (state TryWait.SRC) and attaches as the
+   source (:typec:`Section 4.5.2.2.12` and
+   :typec:`4.5.2.2.13 <Section 4.5.2.2.13>`).
+
+.. list-table:: Try.SRC and Try.SNK limits (:typec:`Table 4-33`, :typec:`Table 4-34`)
+   :name: tab-usbpd-try-timing
+   :header-rows: 1
+   :widths: 30 20 20 30
+
+   * - Name
+     - Min (ms)
+     - Max (ms)
+     - Meaning
+   * - tDRPTry
+     - 75
+     - 150
+     - Wait in Try.SRC or Try.SNK
+   * - tTryCCDebounce
+     - 10
+     - 20
+     - Time the partner's termination must be stable
+   * - tTryTimeout
+     - 550
+     - 1100
+     - Longest time in Try.SRC
+
+:numref:`tab-usbpd-try-timing` gives the limits. Both mechanisms act only
+during attach. After attach, two ports that support
+:term:`USB Power Delivery` can swap the power role with messages
+(:ref:`usbpd-power-role-swap`).
+
+.. _usbpd-initial-role:
+
+The power budget decides which role evampire prefers
+----------------------------------------------------
+
+evampire's preferred role on a port follows from the input power it has and
+its :ref:`power budget <power-budget>`, as set out for each
+:ref:`operating mode <power-modes>`:
+
+* With input power from Ethernet and power to spare for USB, the port
+  prefers the source role and uses Try.SRC.
+* With no other input, the board can only be a sink
+  (:ref:`usbpd-dead-battery`).
+* With input power but none to spare, the port prefers the sink role and
+  uses Try.SNK.
+
+The other end limits the choice. A charger, which can only be a source,
+leaves evampire as the sink even with Try.SRC. A phone that can only be a
+sink leaves it as the source even with Try.SNK. The software therefore
+handles both roles on every attach.
+
+The options for setting the role, and their costs, are:
+
+Try.SRC or Try.SNK, chosen from the budget at each attach
+   Gives the preferred role against another dual-role port that has no
+   preference. It adds up to tDRPTry to the attach.
+No Try mechanism, then a power role swap
+   The outcome against another dual-role port is random, and a power role
+   swap with USB Power Delivery messages corrects it afterwards. It needs no
+   Try state, but VBUS is off for a short time during the swap
+   (:ref:`usbpd-power-role-swap`).
+A fixed role on each port
+   A source-only or sink-only port is the simplest, but it does not meet the
+   dual-role requirement of :ref:`req-power-bridging`.
+
+The data role also enters the choice. The source starts as the host (DFP)
+and the sink as the device (UFP) (:typec:`Section 2.3.3`). The USB serial
+port works only as UFP, so as a source evampire swaps the data role
+afterwards (:ref:`usbpd-data-roles`; :doc:`/usb-serial/usb-pd-roles`).
+:typec:`Table 4-12` recommends Try.SNK for a port that prefers the source
+role but the UFP data role. That recommendation matters most against a port
+that cannot swap data roles (:typec:`Section 4.5.1.4.1`).
+
+.. _usbpd-dead-battery:
+
+A board without power must still present Rd
+-------------------------------------------
+
+A board with no power from Ethernet that is plugged into a USB charger has
+no supply at that moment. The charger turns VBUS on only after it sees Rd
+(:typec:`Section 2.3.1`). The port must therefore present Rd on both CC pins
+without any supply. The specification requires this: "A port with a dead
+battery shall enter this state while unpowered", the state being
+Unattached.SNK (:typec:`Section 4.5.2.2.3`; :typec:`Section 4.8.5`). For
+evampire it is a requirement in the "USB in, Ethernet out" mode, where the
+board takes all its power from USB Type-C (:ref:`req-power-bridging`).
+
+The unpowered Rd needs to pull the CC voltage only into the range of the
+1.1 V voltage clamp, at most 1.32 V (:typec:`Section 4.8.5`,
+:typec:`Table 4-28`). The specification's example is a 5.1 kΩ ± 20 %
+resistor in series with a transistor whose gate is weakly pulled to CC. It
+turns on from the source's own pull-up and can be switched off once the
+board is powered. :ref:`usbpd-rd-circuit` describes evampire's circuit.
+
+Once the board has power from VBUS, the processor takes over the CC pins,
+keeps Rd present and continues as a sink in Attached.SNK. :doc:`start-up`
+gives the power the charger makes available until then. Two unpowered
+boards connected to each other both present Rd, and neither supplies power,
+as for any two sink-only ports (:typec:`Table 4-9`).
+
+.. _usbpd-error-recovery:
+
+ErrorRecovery forces a detach and a fresh attach
+------------------------------------------------
+
+Every port that supports USB Power Delivery must support the ErrorRecovery
+state, and must enter it from any state when its software directs it to
+(:typec:`Section 4.5.2.2.2`). In ErrorRecovery the port:
+
+* stops driving VBUS and :term:`VCONN`;
+* presents at least zOPEN, 126 kΩ, to ground on both CC pins
+  (:typec:`Table 4-30`);
+* stays there for tErrorRecovery: at least 25 ms, or at least 240 ms if it
+  was supplying VCONN (:typec:`Table 4-34`).
+
+The other end sees a detach. Afterwards a dual-role port with Try.SRC
+returns to Unattached.SRC, and any other dual-role port to Unattached.SNK
+(:typec:`Section 4.5.2.2.2`). USB Power Delivery uses it when a power role
+swap stalls, with no PS_RDY message within tPSSourceOn
+(:pd:`Section 7.31.5.3`), and when a :term:`Hard Reset` does not clear an
+error (:pd:`Section 7.1.3`).
+
+ErrorRecovery is why both the Rp and the Rd circuits must be able to turn
+off completely, including the unpowered Rd once the board has power.
+
+Open questions
+--------------
+
+* The role preference policy: when each port uses Try.SRC, Try.SNK or
+  neither, and when it asks for a power role swap, given the power budget
+  and the data role the USB serial port needs.

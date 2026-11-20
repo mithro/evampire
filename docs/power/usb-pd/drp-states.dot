@@ -1,6 +1,8 @@
 // Simplified USB Type-C connection state machine for a dual-role port
 // with the Try.SRC preference (USB Type-C specification, section 4.5.2.2 and figure 4-16).
-// Accessory and debug states are left out.
+// Accessory and debug states, and detach transitions, are left out.
+// A dual-role port with Try.SRC leaves ErrorRecovery to Unattached.SRC
+// (section 4.5.2.2.2.2).
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -22,30 +24,30 @@ digraph drp_states {
     err  [label="ErrorRecovery\n(CC open)", fillcolor="#f2f2f2"];
     any  [label="any state", shape=plaintext, style="", fontsize=9];
 
-    { rank=same; usrc; usnk; any; }
-    { rank=same; awsrc; awsnk; err; }
+    { rank=same; usrc; usnk; }
+    { rank=same; awsrc; awsnk; }
     { rank=same; trysrc; twsnk; }
     { rank=same; asrc; asnk; }
 
     // Left to right order within each row: source states on the left.
-    usrc -> usnk [style=invis];
-    awsrc -> awsnk -> err [style=invis];
-    trysrc -> twsnk [style=invis];
+    awsrc -> awsnk [style=invis];
     asrc -> asnk [style=invis];
+    trysrc -> twsnk [style=invis];
     awsrc -> trysrc [style=invis, weight=5];
     awsnk -> twsnk [style=invis, weight=5];
+    twsnk -> asnk [style=invis, weight=5];
 
-    usnk -> usrc [label="toggle"];
+    any -> err [style=dotted, label=" when directed"];
+    err -> usrc [style=dotted, label="after\ntErrorRecovery"];
     usrc -> usnk [label="toggle"];
-    usnk -> err [style=dotted, dir=back, label="after\ntErrorRecovery"];
-    err -> any [style=dotted, dir=back, label="when\ndirected"];
+    usnk -> usrc [label="toggle", constraint=false];
     usnk -> awsnk [label="Rp seen"];
     usrc -> awsrc [label="Rd seen"];
-    awsnk -> asnk [label="Rp stable, VBUS on\n(no source\npreference)"];
+    awsnk:e -> asnk:e [label="Rp stable, VBUS on\n(no source\npreference)"];
     awsnk -> trysrc [label="same, prefers\nsource"];
-    awsrc -> asrc [label="Rd stable,\nVBUS at 0 V"];
+    awsrc:w -> asrc:w [label="Rd stable,\nVBUS at 0 V"];
     trysrc -> asrc [label="Rd seen"];
-    trysrc -> twsnk [label="no Rd"];
+    trysrc:e -> twsnk:w [label="no Rd"];
     twsnk -> asnk [label="VBUS on"];
     asnk -> asrc [label="PR_Swap", style=dashed, dir=both, constraint=false];
 }
