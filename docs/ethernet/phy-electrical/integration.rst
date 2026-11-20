@@ -654,8 +654,8 @@ Autonegotiation (explained in :doc:`../phy-electrical`) is required for
 * a **link pulse receiver**: a comparator with a threshold, and timers that
   check pulse spacing;
 * three **state machines** defined in IEEE 802.3 :clause:`28`: the transmit
-  state diagram (Figure 28-16), the receive state diagram (Figure 28-17) and
-  the arbitration state diagram (Figure 28-18) [PHY-UNH28]_;
+  state diagram (:clause:`Figure 28-16 <28>`), the receive state diagram (:clause:`Figure 28-17 <28>`) and
+  the arbitration state diagram (:clause:`Figure 28-18 <28>`) [PHY-UNH28]_;
 * the 1000BASE-T **next page** exchange carrying the 1000BASE-T abilities,
   the port type and the 11-bit random seed, and the master/slave resolution
   rules [PHY-UNH28M]_;
