@@ -105,14 +105,19 @@ All power passes through an internal power bus on the board.
   checks for a valid powered device on port B, measures its class, and then
   connects the voltage with a current limit.
 
-All of these circuits work at voltages well above what the gf180mcu process
-can withstand, so they are outside the chip. evampire controls them and
-carries out the negotiation: it reads the power granted on port A, drives
-and senses the USB configuration channel wires, sets the USB output voltage,
-and enables and monitors the power sourcing equipment switch.
+evampire carries out the negotiation in every case: it reads the power
+granted on port A, drives and senses the USB configuration channel wires,
+sets the USB output voltage, and enables and monitors the power sourcing
+equipment switch.
 
-The following pages explain each standard in detail, including the analog
-circuits needed in each role and which of them can be built on the chip.
+Many of these circuits handle voltages (up to 57 V on an Ethernet cable and
+up to 48 V on USB) far above the continuous ratings of the standard
+transistors in the gf180mcu process. The standard parts of the process do
+not set the limit of what can be built on the chip: custom structures, such
+as transistors stacked in isolated wells, drain-extended transistors, and
+high-voltage capacitors, can extend what is possible. Which functions are
+built on evampire and which use external parts is a design choice made per
+function, and the following pages analyse it for each standard.
 
 .. toctree::
    :maxdepth: 2
