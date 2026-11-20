@@ -114,6 +114,29 @@ Processors used as reference examples
    eeNews Europe, `"X-FAB Silicon Foundries tapes out open source RISC-V MCU"
    <https://www.eenewseurope.com/news/x-fab-silicon-foundries-tapes-out-open-source-risc-v-mcu>`__.
 
+Software implementations and timer peripherals
+----------------------------------------------
+
+.. [USBPD-CROS-EC] Chromium OS authors, `Chromium OS EC firmware,
+   chip/stm32/usb_pd_phy.c
+   <https://github.com/coreboot/chrome-ec/blob/ad41bf945927e186eaad768a9d51f45ada67b9b9/chip/stm32/usb_pd_phy.c>`__,
+   commit ad41bf9: USB Power Delivery physical layer for STM32
+   microcontrollers, with timer input capture and direct memory access for
+   receive (``pd_hw_init_rx()``, line 530; ``pd_rx_start()``, line 401;
+   ``wait_bits()``, line 92; ``pd_dequeue_bits()``, line 111) and a serial
+   peripheral interface unit fed by direct memory access, clocked by a timer
+   at twice the bit rate, for transmit (``pd_hw_init()``, line 619;
+   ``pd_write_sym()``, line 207; ``pd_start_tx()``, line 313).
+
+.. [USBPD-ATMEGA328P] Microchip (Atmel), `ATmega328P datasheet
+   <https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf>`__,
+   7810D-AVR-01/15: section 15.6 "Input Capture Unit" and section 15.7
+   "Output Compare Units" of the 16-bit Timer/Counter1.
+
+.. [USBPD-MSP430] Texas Instruments, `MSP430x2xx Family User's Guide
+   <https://www.ti.com/lit/ug/slau144k/slau144k.pdf>`__, SLAU144K, 2022-08:
+   section 12.2.4 "Capture/Compare Blocks" of Timer_A.
+
 gf180mcu process documentation
 ------------------------------
 

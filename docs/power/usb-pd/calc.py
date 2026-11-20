@@ -1,4 +1,4 @@
-"""Recompute every number used in the calculations on usb-pd.rst.
+"""Recompute every number used in the calculations on the USB PD pages.
 
 Run with:  uv run python docs/power/usb-pd/calc.py
 
@@ -62,50 +62,110 @@ c, v, t = 10e-6, 3.0, 2e-3
 print(f"  I = C*V/t = {c*1e6:g} uF x {v} V / {t*1e3:g} ms = {c*v/t*1e3:.0f} mA")
 print(f"  100 mW at 5 V = {0.1/5*1e3:.0f} mA; 100 mW at 3 V = {0.1/3*1e3:.1f} mA")
 
-print("== Software receive cost (ESTIMATES) ==")
-T_POLL = 250e-9  # chosen sampling period
-polls_per_bit = UI_MIN / T_POLL
-print(f"  polls per bit at 330k = {polls_per_bit:.1f} -> use 12")
-# ESTIMATED instruction counts. The poll is "lw; beq back to lw" (RV32I has
-# compare-and-branch in one instruction), so 2 instructions per sample.
-I_POLL, I_EDGE, I_BIT, I_SYM = 2, 10, 4, 16
-per_port = 2 * I_EDGE + I_BIT + I_SYM / 5
-per_bit_poll = 12 * I_POLL + per_port
-per_bit_cap = 2 * (I_EDGE + 2) + I_BIT + I_SYM / 5
-per_bit_two = 12 * I_POLL + 2 * per_port
-for name, ipb in (("polling", per_bit_poll), ("capture FIFO", per_bit_cap),
-                  ("polling, two ports", per_bit_two)):
-    mips = ipb * 330e3 / 1e6
-    print(f"  {name}: {ipb:.1f} instr/bit -> {mips:.1f} M instr/s; "
-          f"CPI 1.3 -> {mips*1.3:.0f} MHz; CPI 4 -> {mips*4:.0f} MHz")
-print(f"  share of a 50 MHz pipelined core: {per_bit_poll*330e3*1.3/50e6*100:.0f} %")
-# PicoRV32 cycles per poll iteration: lw 5 + taken branch 5 (README CPI table)
-print(f"  multi-cycle poll iteration 10 cycles at 4 MS/s -> {10*4:.0f} MHz for polling alone")
-print(f"  pipelined poll iteration 4 cycles at 4 MS/s -> {4*4:.0f} MHz for polling alone")
+# ---------------------------------------------------------------------------
+# software.rst: what USB PD needs from the processor.
+# No processor clock or CPI is assumed. Needs are instruction rates
+# (instructions per second), instructions per bit, times in ns or us.
+# Instruction counts are ESTIMATES for hand-written RV32I assembly.
+# Numbers labelled REFERENCE are for reference examples only.
+# ---------------------------------------------------------------------------
+F_BIT_RX = 330e3            # fastest bit rate a receiver must accept (PD Table 5.9)
+F_BIT_TX = 300e3            # transmit at the nominal rate (PD Table 5.9)
+T_UI_RX = 1 / F_BIT_RX
+T_UI_TX = 1 / F_BIT_TX
+F_EDGE_RX = 2 * F_BIT_RX    # worst case: every bit a 1, two edges per bit
+F_EDGE_TX = 2 * F_BIT_TX
+X_RX = 0.07                 # X1Rx, receive edge displacement (PD Table 5.8)
+X_TX = 0.015                # X1Tx, left edge of transmit mask (PD Table 5.6)
 
-print("== Interrupt per edge (ESTIMATE) ==")
-edges = 2 * 330e3
-for cyc in (40, 60):
-    print(f"  {cyc} cycles/edge x {edges/1e3:.0f}k edges/s = {cyc*edges/1e6:.1f} M cycles/s")
+# ESTIMATED instruction counts
+K_POLL = 2      # poll loop: load input word, compare-and-branch
+N_EDGE = 10     # per edge: read counter, subtract, compare with 0.75 UI, update
+N_BIT = 4 + 16 / 5   # per bit: shift and count (4) + 4b5b and CRC per symbol (16/5)
+N_IRQ = 30      # interrupt entry and exit, save and restore registers
+N_TS = 12       # per edge from input capture: read FIFO entry and classify
+N_OUT = 4       # per transmitted edge: next time, write output (bit-banged)
+N_OC = 6        # per transmitted edge with output compare
+K_WAIT = 3      # wait loop on the counter: read counter, compare, branch
+K_MERGED = 4    # merged loop: load input, branch, read counter, branch
+N_REPLY = 30    # end of message to start of GoodCRC, prepared packets
 
-print("== Transmit edge placement ==")
-for f in (31.25e6, 50e6, 62.5e6):
-    for cyc, name in ((4, "pipelined wait loop"), (12, "multi-cycle wait loop")):
-        print(f"  {f/1e6:g} MHz, {name} {cyc} cycles: jitter {cyc/f*1e9:.0f} ns pk-pk")
+print("== Software: receive sampling period ==")
+ts_max = (0.25 - 2 * X_RX) * T_UI_RX
+print(f"  T_UI,min = {T_UI_RX*1e6:.3f} us; margin {0.25-2*X_RX:.2f} UI; "
+      f"T_s,max = {ts_max*1e9:.0f} ns; f_s,min = {1/ts_max/1e6:.1f} MS/s")
+print(f"  bit work per bit N_bit = {N_BIT:.1f}")
 
-print("== Capture FIFO depth vs latency ==")
-for n in (8, 16, 32):
-    print(f"  {n} entries x {0.5*UI_MIN*1e6:.3f} us = {n*0.5*UI_MIN*1e6:.1f} us")
+print("== Software: polled receive ==")
+poll = K_POLL / ts_max
+edge = F_EDGE_RX * N_EDGE
+bitw = F_BIT_RX * N_BIT
+r_poll = poll + edge + bitw
+print(f"  k/T_s = {poll/1e6:.2f}; f_edge*N_edge = {edge/1e6:.2f}; "
+      f"f_bit*N_bit = {bitw/1e6:.2f}; R_poll = {r_poll/1e6:.1f} M instr/s; "
+      f"{r_poll/F_BIT_RX:.1f} instr/bit")
+print(f"  REFERENCE PicoRV32 poll iteration lw 5 + taken branch 5 = 10 cycles in "
+      f"{ts_max*1e9:.0f} ns -> clock >= {10/ts_max/1e6:.0f} MHz")
 
-print("== CPU blocked time per received message (worst case) ==")
+print("== Software: interrupt per edge ==")
+r_irq = F_EDGE_RX * (N_IRQ + N_EDGE) + bitw
+print(f"  N_irq {N_IRQ}: R_irq = {r_irq/1e6:.1f} M instr/s; {r_irq/F_BIT_RX:.1f} instr/bit")
+be = K_POLL / (ts_max * F_EDGE_RX)
+print(f"  break-even N_irq = k/(T_s f_edge) = {be:.1f} instructions")
+print(f"  REFERENCE in cycles, 10-cycle poll iteration: {10/(ts_max*F_EDGE_RX):.0f} cycles")
+
+print("== Software: input capture ==")
+r_cap = F_EDGE_RX * N_TS + bitw
+print(f"  R_cap = {r_cap/1e6:.1f} M instr/s; {r_cap/F_BIT_RX:.1f} instr/bit")
+for d in (8, 16, 32):
+    print(f"  FIFO {d} entries x {0.5*T_UI_RX*1e6:.3f} us = {d*0.5*T_UI_RX*1e6:.1f} us")
+print(f"  REFERENCE Chromium EC 2.4 MHz capture timer: {1/2.4e6*1e9:.0f} ns per count")
+
+print("== Software: transmit ==")
+tgt = X_TX * T_UI_TX
+print(f"  edge target {X_TX} UI at 300k = {tgt*1e9:.0f} ns (at 330k {X_TX*T_UI_RX*1e9:.0f} ns); "
+      f"window {2*tgt*1e9:.0f} ns")
+r_wait = K_WAIT / (2 * tgt)
+print(f"  wait loop {K_WAIT} instr in {2*tgt*1e9:.0f} ns -> {r_wait/1e6:.0f} M instr/s; "
+      f"{r_wait/F_BIT_TX:.0f} instr/bit")
+bb = 2 * N_OUT + N_BIT
+print(f"  cycle-exact: {bb:.1f} instr/bit -> {bb*F_BIT_TX/1e6:.2f} M instr/s")
+oc = 2 * N_OC + N_BIT
+print(f"  output compare: {oc:.1f} instr/bit -> {oc*F_BIT_TX/1e6:.2f} M instr/s; "
+      f"reload within {0.5*T_UI_TX*1e6:.3f} us")
+print(f"  shift register: {N_BIT:.1f} instr/bit -> {N_BIT*F_BIT_TX/1e6:.2f} M instr/s; "
+      f"{bits(7)*N_BIT:.0f} instr per 7-object message")
+print(f"  message of 7 objects at 300k: {bits(7)/F_BIT_TX*1e6:.0f} us")
+
+print("== Software: GoodCRC deadline ==")
+print(f"  N_reply {N_REPLY} in 195 us -> {N_REPLY/195e-6/1e6:.2f} M instr/s")
+n_msg = 2 * bits(7) * N_TS + bits(7) * N_BIT
+print(f"  decode after EOP: {n_msg:.0f} instr in 195 us -> {n_msg/195e-6/1e6:.0f} M instr/s")
+
+print("== Software: busy time per received message (worst case, 270 kbit/s) ==")
 t_msg = bits(7) / 270e3
-t_gap = 195e-6
+t_tr = 195e-6               # tTransmit (PD Table 7.10)
 t_gc = bits(0) / 270e3
-print(f"  {t_msg*1e6:.0f} + {t_gap*1e6:.0f} + {t_gc*1e6:.0f} = {(t_msg+t_gap+t_gc)*1e6:.0f} us")
+t_busy = t_msg + t_tr + t_gc
+print(f"  {t_msg*1e6:.0f} + {t_tr*1e6:.0f} + {t_gc*1e6:.0f} = {t_busy*1e6:.0f} us")
 
-print("== Ethernet frame arrivals during that time (ASSUMPTION: 1 Mbit/s of frames to the CPU) ==")
+print("== Software: two ports ==")
+r_two = poll + 2 * (edge + bitw)
+print(f"  polled, two ports: {r_two/1e6:.1f} M instr/s; {r_two/F_BIT_RX:.1f} instr/bit")
+r_m = (K_MERGED + N_EDGE) / (2 * tgt)
+print(f"  merged loop ({K_MERGED}+{N_EDGE}) in {2*tgt*1e9:.0f} ns -> {r_m/1e6:.0f} M instr/s; "
+      f"{r_m/F_BIT_RX:.0f} instr/bit")
+print(f"  merged loop, edge work spread out: {K_MERGED} in {2*tgt*1e9:.0f} ns -> "
+      f"{K_MERGED/(2*tgt)/1e6:.0f} M instr/s")
+
+print("== Software: Ethernet frames during the busy time (requirement: below 1 Mbit/s) ==")
 frame_bits = 1522 * 8
 print(f"  1522-byte frame at 1 Mbit/s every {frame_bits/1e6*1e3:.1f} ms")
+print(f"  1 Mbit/s x {t_busy*1e3:.3f} ms = {1e6*t_busy:.0f} bit = {1e6*t_busy/8:.0f} bytes")
+
+print("== Software: CRC-32 table and reference examples ==")
+print(f"  16-entry table of 32-bit words = {16*4} bytes")
+print(f"  REFERENCE V-USB low speed 1.5 Mbit/s: {12/1.5:.0f} to {20/1.5:.1f} clock cycles per bit")
 
 print("== ESD events versus a VBUS short ==")
 # Renesas TB505: HBM 100 pF / 1.5 kOhm, IEC 61000-4-2 150 pF / 330 Ohm.
@@ -131,9 +191,3 @@ for v in (20.0, 48.0):
 
 print("== Dead-battery Rd voltage with the 3.0 A Rp current (Type-C Tables 4-27, 4-28) ==")
 print(f"  356 uA x 6.12 kOhm = {356e-6*6.12e3:.2f} V (Type-C Table 4-28 limit 2.18 V)")
-
-print("== Standard cell register overhead (gf180mcu 7-track, TT 5 V 25 C) ==")
-clkq, setup = 0.6763, 0.2290
-print(f"  clk-to-Q {clkq} ns + setup {setup} ns = {clkq+setup:.3f} ns")
-for f in (31.25e6, 50e6, 62.5e6):
-    print(f"  {f/1e6:g} MHz period {1/f*1e9:.1f} ns -> {1/f*1e9-(clkq+setup):.1f} ns left for logic")

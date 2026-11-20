@@ -383,3 +383,13 @@ gives a short description and a link to the full explanation.
       the value of its pull-up, Rp, without any messages: the default USB
       current, 1.5 A or 3.0 A (see
       :doc:`power/usb-pd/resistor-advertisement`).
+
+   Input capture
+      A timer feature that copies a free-running counter into a register on
+      each edge of an input, giving the edge a timestamp in hardware (see
+      :ref:`usbpd-helpers`).
+
+   Output compare
+      A timer feature that changes an output when a free-running counter
+      reaches the value in a compare register, placing an edge at a set time
+      in hardware (see :ref:`usbpd-helpers`).
