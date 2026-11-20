@@ -248,3 +248,265 @@ before the next edge.
      - 1.04
      - 0.075
 
+.. _usbpd-edge-placement:
+
+Each edge crosses the mid level within about 0.015 UI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The inner mask of each bit reaches the mid level, 0.5625 V, at 0.015 UI and
+at 0.985 UI, and for a ``1`` also at 0.485 UI and 0.515 UI (*X1Tx*,
+*X7Tx*, *X8Tx* and *X14Tx*, :pd:`Table 5.6`). If the masks sit on an ideal
+bit grid, each edge must cross the mid level within a window derived from
+the mask coordinates:
+
+.. math::
+
+   \Delta t_\text{edge} = \pm X_\text{1Tx} \times T_\text{UI}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`\Delta t_\text{edge}`
+     - Allowed offset of a mid-level crossing from its ideal time
+     - ns
+   * - :math:`X_\text{1Tx}`
+     - Mask tip position, 0.015
+     - UI
+   * - :math:`T_\text{UI}`
+     - Unit interval (:numref:`tab-usbpd-ui`)
+     - ns
+
+At 300 kbit/s the window is
+:math:`\pm 0.015 \times 3333\ \text{ns} = \pm 50\ \text{ns}`, and at
+330 kbit/s it is ±45 ns. The specification states the mask, not this window. The ±50 ns
+figure is a target for transmitter design, to be confirmed by measuring a
+transmitter against the mask.
+
+Edges take at least 300 ns
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The 300 ns minimum rise and fall time limits
+:wikipedia:`crosstalk <Crosstalk>` from the CC wire into the other wires of
+the cable, such as the USB 2.0 data pair. The slope can be set by the
+driver design or by an RC filter at the driver output (:pd:`Section 5.3.4`,
+item 1). The mask sets the opposite limit: an edge must not be so slow that
+it enters the inner mask.
+
+*Assumption:* the edge has the shape of the step response of a first-order
+:wikipedia:`RC circuit <RC_circuit>` with :wikipedia:`time constant
+<Time_constant>` τ. This is a model, not a property of every driver: a
+driver with a controlled slope has a different shape. A rising edge then
+follows:
+
+.. math::
+
+   V(t) = V_\text{swing} \times \left(1 - e^{-t / \tau}\right)
+
+It passes 10 % of the swing at :math:`t = \tau \ln(10/9)` and 90 % at
+:math:`t = \tau \ln 10`, so its 10 %-90 % time is:
+
+.. math::
+
+   t_{10\text{-}90} = \tau \ln 10 - \tau \ln\frac{10}{9} = \tau \ln 9
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`V(t)`
+     - Output voltage, starting from 0 V at the start of the edge
+     - V
+   * - :math:`V_\text{swing}`
+     - Final high level, *vSwing*
+     - V
+   * - :math:`t`
+     - Time from the start of the edge
+     - ns
+   * - :math:`\tau`
+     - RC time constant
+     - ns
+   * - :math:`t_{10\text{-}90}`
+     - :wikipedia:`Rise time <Rise_time>`, 10 % to 90 %
+     - ns
+
+The fastest allowed edge, 300 ns, has
+:math:`\tau = 300\ \text{ns} / \ln 9 = 300\ \text{ns} / 2.197 = 137\ \text{ns}`.
+
+For the slowest edge, align the edge so that it crosses the mid level
+:math:`V_\text{mid}` = 0.5625 V on time. From that crossing, the time to
+reach a mask level :math:`V_\text{m}` must not exceed that corner's time
+:math:`X_\text{m}` (:numref:`tab-usbpd-tx-mask`):
+
+.. math::
+
+   t_\text{m} = \tau \ln\frac{V_\text{swing} - V_\text{mid}}
+                             {V_\text{swing} - V_\text{m}}
+              \le X_\text{m} \times T_\text{UI}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 22 58 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`t_\text{m}`
+     - Time from the mid-level crossing to the mask level
+     - ns
+   * - :math:`V_\text{mid}`
+     - Mid level of the mask, 0.5625 V (*Y5Tx*)
+     - V
+   * - :math:`V_\text{m}`
+     - Mask level at the corner (:numref:`tab-usbpd-tx-mask`)
+     - V
+   * - :math:`X_\text{m}`
+     - Time of the corner after the edge
+     - UI
+
+Worked example at the nominal swing of 1.125 V and the fastest bit rate,
+for the corner at 0.15 UI and 0.975 V, gives the largest allowed
+time constant :math:`\tau_\text{max}`:
+
+.. math::
+
+   \tau_\text{max} &= \frac{X_\text{m} \times T_\text{UI}}
+       {\ln\left(\dfrac{V_\text{swing} - V_\text{mid}}
+                       {V_\text{swing} - V_\text{m}}\right)} \\
+     &= \frac{0.15 \times 3030\ \text{ns}}
+       {\ln\left(\dfrac{1.125 - 0.5625}{1.125 - 0.975}\right)} \\
+     &= \frac{454.5\ \text{ns}}{1.322} = 344\ \text{ns}
+
+The matching 10 %-90 % time is
+:math:`344\ \text{ns} \times 2.197 = 756\ \text{ns}`.
+:numref:`tab-usbpd-edge-range` gives the corner that limits the edge at
+each swing. At the lowest swing, 1.05 V, the corner at 1.04 V lies only
+10 mV below the final level, and the slowest edge drops to about 430 ns.
+
+.. list-table:: Slowest RC edge that stays out of the transmit mask at
+   330 kbit/s (estimate)
+   :name: tab-usbpd-edge-range
+   :header-rows: 1
+   :widths: 20 20 20 20 20
+
+   * - vSwing (V)
+     - Corner time (UI)
+     - Corner level (V)
+     - τ max (ns)
+     - 10 %-90 % max (ns)
+   * - 1.05
+     - 0.25
+     - 1.04
+     - 195
+     - 428
+   * - 1.125
+     - 0.15
+     - 0.975
+     - 344
+     - 756
+   * - 1.2
+     - 0.15
+     - 0.975
+     - 437
+     - 959
+
+The model assumes that each edge starts from a settled level. The shortest
+level lasts half a UI, 1.515 µs, which is at least 3.4 time constants
+for every row, so less than 4 % of each step remains when the next starts. Under
+this model, a 10 %-90 % edge time of 300 ns to about 430 ns stays out of the
+mask at every allowed swing and bit rate. This is an estimate, to be
+confirmed by simulating the driver with the load model of
+:pd:`Section 5.3.4.3`.
+
+The output impedance holds the line against noise
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*zDriver* is the driver's :wikipedia:`output impedance <Output_impedance>`,
+its output resistance in parallel with any shunt capacitance. Its limits
+bound the noise from the cable that reaches the receiver
+(:pd:`Section 5.3.4.7`). Extra capacitance used to shape the edges must be
+disconnected within *tInterFrameGap* after the packet, leaving no more than
+*cReceiver* on the line (:pd:`Section 5.3.4.6`).
+
+A transmitter must also survive its output being shorted to ground for up
+to 120 µs (*tFRSwapTx*, :pd:`Table 10.1`; :pd:`Section 5.3.4.10`). This
+happens when the source pulls CC low to signal a
+:term:`fast role swap <Fast role swap>`, in which the sink takes over as
+source because the source is losing its own power (:ref:`usbpd-fast-role-swap`).
+
+.. _usbpd-dc-level:
+
+The signal starts and ends at the Rp/Rd level
+---------------------------------------------
+
+When neither end transmits, the CC wire sits at the level set by Rp and Rd,
+about 0.4 V, 0.9 V or 1.7 V for the three Rp values
+(:numref:`tab-usbpd-cc-nominal`). The transmitter does not add its signal to
+this level. Its output impedance of 33 Ω to 75 Ω overdrives the kilohm
+resistors, so while it sends, the wire swings between 0 V and *vSwing*. When
+it lets go, the wire returns to the level set by Rp and Rd
+(:pd:`Section 5.3.4`, :pd:`Figures 5.7 <Figure 5.7>` to
+:pd:`5.11 <Figure 5.11>`). The start and end of a packet follow from this:
+
+* the transmitter starts the preamble, the 64 alternating bits that open
+  every packet (:ref:`usbpd-packets`), by driving low
+  (:pd:`Section 5.3.4`, item 2);
+* the receiver must tolerate losing the first edge (:pd:`Section 5.3.4`,
+  item 3);
+* the last bit is followed by one more edge. If that edge goes low, the
+  transmitter holds the line low for at least *tHoldLowBMC* and then lets
+  go. If it goes high, the transmitter holds it high for 1 UI, then low for
+  at least *tHoldLowBMC*, then lets go (:pd:`Section 5.3.4`, items 4 to 6);
+* in both cases the transmitter lets go within *tEndDriveBMC*, 23 µs, of
+  the end of the last bit (:pd:`Table 5.10`).
+
+:numref:`fig-usbpd-preamble-start` shows the start of a packet and
+:numref:`fig-usbpd-message-end` shows the end, after the EOP symbol that
+closes every packet.
+
+.. wavedrom::
+   :caption: Start of a packet: the line idles at the Rp/Rd level, drawn at
+             mid level, and the transmitter starts the preamble by driving
+             low.
+   :name: fig-usbpd-preamble-start
+   :alt: Timing diagram: CC idle at mid level, then the first preamble bits
+         0 1 0 1 sent in BMC starting from a low level.
+
+   {"signal": [
+     {"name": "field", "wave": "x.=.......", "data": ["preamble"]},
+     {"name": "data bit", "wave": "x.=.=.=.=.", "data": ["0", "1", "0", "1"]},
+     {"name": "CC", "wave": "z.0.101.01"}
+   ],
+   "config": {"hscale": 1}}
+
+.. wavedrom::
+   :caption: End of a packet: a final edge after the last EOP bit, the line
+             held low for at least 1 µs, then released by 23 µs after the
+             last bit.
+   :name: fig-usbpd-message-end
+   :alt: Timing diagram: the EOP bits 1 0 1 1 0 in BMC, a final falling
+         edge, a short low period, then the line released to mid level.
+
+   {"signal": [
+     {"name": "field", "wave": "=.........x...", "data": ["EOP"]},
+     {"name": "data bit", "wave": "=.=.=.=.=.x...", "data": ["1", "0", "1", "1", "0"]},
+     {"name": "CC", "wave": "010.10101.0..z"},
+     {"name": "driver", "wave": "x.........=..x", "data": ["hold low"]}
+   ],
+   "config": {"hscale": 1}}
+
+The next packet starts no sooner than *tInterFrameGap*, 25 µs, after the end
+of the previous one (:pd:`Section 5.3.4.9`).
+
+Current in the cable shifts the received signal. Up to 250 mV can be lost
+in the cable's ground wire at full current (*vIRDropGNDC*,
+:pd:`Table 5.11`). The signal seen at the sink moves down and the signal
+seen at the source moves up ([USBPD-BMCRX]_, Section 2). The receive masks
+allow for this shift.
+
