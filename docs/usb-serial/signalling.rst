@@ -201,10 +201,12 @@ error and ignores the packet ([USBSER-USB2]_ section 7.1.9.1).
          and stays the same at each 1.
 
    {"signal": [
-     {"name": "data bits", "wave": "x=......x==",
-      "data": ["0", "1 1 1 1 1 1", "1", "0"]},
-     {"name": "sent bits", "wave": "x=......===",
-      "data": ["0", "1 1 1 1 1 1", "0 inserted", "1", "0"]},
+     {"name": "data bits", "wave": "x=======x==",
+      "data": ["0", "1", "1", "1", "1", "1", "1", "1", "0"]},
+     {"name": "sent bits", "wave": "x==========",
+      "data": ["0", "1", "1", "1", "1", "1", "1", "0", "1", "0"]},
+     {"name": "stuffing", "wave": "x.......=x.",
+      "data": ["inserted"]},
      {"name": "line (J high)", "wave": "10......1.0"}
    ],
    "config": {"hscale": 2}}

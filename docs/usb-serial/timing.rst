@@ -85,9 +85,9 @@ has this margin against the receive jitter:
 
 .. math::
 
-   t_\text{margin} = \frac{T_\text{bit}}{2} - T_\text{JR1}
-                   = 41.67\ \text{ns} - 18.5\ \text{ns}
-                   = 23.2\ \text{ns}
+   t_\text{margin} &= \frac{T_\text{bit}}{2} - T_\text{JR1} \\
+                   &= 41.67\ \text{ns} - 18.5\ \text{ns} \\
+                   &= 23.2\ \text{ns}
 
 .. list-table::
    :header-rows: 1
@@ -208,14 +208,14 @@ answering the host.
          ACK handshake.
 
    {"signal": [
-     {"name": "host", "wave": "3.....5.x.........",
+     {"name": "host", "wave": "3...5.x.....",
       "data": ["DATA packet", "EOP"]},
-     {"name": "gap", "wave": "x.......4.....x...",
+     {"name": "gap", "wave": "x.....4...x.",
       "data": ["2 to 6.5 bit times"]},
-     {"name": "device", "wave": "x.............3...",
+     {"name": "device", "wave": "x.........3.",
       "data": ["ACK"]}
    ],
-   "config": {"hscale": 1.5}}
+   "config": {"hscale": 2.5}}
 
 The limits are ([USBSER-USB2]_ section 7.1.18.1, section 7.1.19.1,
 Table 7‑14):
@@ -234,8 +234,8 @@ The reply deadline in the device is:
 
 .. math::
 
-   t_\text{reply} = 6.5 \cdot T_\text{bit} - t_\text{rx} - t_\text{tx}
-                  = 541.7\ \text{ns} - t_\text{rx} - t_\text{tx}
+   t_\text{reply} &= 6.5 \cdot T_\text{bit} - t_\text{rx} - t_\text{tx} \\
+                  &= 541.7\ \text{ns} - t_\text{rx} - t_\text{tx}
 
 .. list-table::
    :header-rows: 1
