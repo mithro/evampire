@@ -12,10 +12,36 @@ gives a short description and a link to the full explanation.
       (:clause:`40`). Every evampire port supports it (see
       :ref:`the transceiver requirements <req-transceivers>`).
 
+   Baseline wander
+      A slow drift of the average level of a received signal, caused when a
+      high-pass filter in the path, such as a transformer or coupling
+      capacitor, removes the low-frequency part of the data (see
+      :doc:`ethernet/magnetics/matching-and-droop`).
+
+   Bob Smith termination
+      A network of 75 Ω resistors from each pair's centre tap to a shared
+      capacitor to chassis ground, which absorbs common-mode currents on an
+      Ethernet cable (see :doc:`ethernet/magnetics/functions`).
+
+   Centre tap
+      A connection to the middle of a transformer or inductor winding (see
+      :doc:`ethernet/magnetics/standard-port`).
+
    Class
       In Power over Ethernet, the power level that a powered device asks for
       during classification. Each class has a maximum power at the powered
       device (:clause:`145`, see :doc:`power/poe/index`).
+
+   Common-mode choke
+      Two windings on one core, one in each wire of a pair, that block
+      current flowing the same way on both wires while passing the
+      differential signal (see :doc:`ethernet/magnetics/functions` and
+      :wikipedia:`Choke (electronics) <Choke_(electronics)>`).
+
+   Common-mode voltage
+      The average voltage of the two wires of a pair, measured against a
+      ground. It carries no data (see :doc:`ethernet/magnetics/functions`
+      and :wikipedia:`Common-mode signal <Common-mode_signal>`).
 
    Configuration channel
    CC
@@ -30,6 +56,17 @@ gives a short description and a link to the full explanation.
       needs only a few bytes of storage on each path (see
       :wikipedia:`Cut-through switching <Cut-through_switching>` and
       :ref:`the forwarding requirements <req-forwarding>`).
+
+   Differential-mode voltage
+      The voltage difference between the two wires of a pair, which carries
+      the data (see :doc:`ethernet/magnetics/cable` and
+      :wikipedia:`Differential signalling <Differential_signalling>`).
+
+   Droop
+      The decay of a transmitted voltage that is held constant, caused by a
+      high-pass filter in the path. IEEE 802.3 limits it for 1000BASE-T
+      transmitters (:clause:`40.6.1.2.2`, see
+      :doc:`ethernet/magnetics/matching-and-droop`).
 
    Dual-role port
       A USB Type-C port that can attach as either a source or a sink, and
@@ -61,6 +98,12 @@ gives a short description and a link to the full explanation.
       receiver detect a damaged frame (:clause:`3`, see
       :wikipedia:`Frame check sequence <Frame_check_sequence>`).
 
+   Galvanic isolation
+      The absence of any conducting path between two circuits, so that no
+      direct current flows between them and a large voltage between them
+      does no harm (see :wikipedia:`Galvanic isolation
+      <Galvanic_isolation>` and :doc:`ethernet/magnetics/functions`).
+
    LLDP
    Link Layer Discovery Protocol
       The protocol that two directly connected Ethernet devices use to tell
@@ -79,6 +122,17 @@ gives a short description and a link to the full explanation.
       The coupling transformers between an Ethernet transceiver and the RJ45
       socket. They isolate the board from the cable and give a path for
       Power over Ethernet current (see :doc:`ethernet/magnetics/index`).
+
+   MDI
+   Medium dependent interface
+      The connection between an Ethernet transceiver and the cable: the
+      contacts of the socket and the electrical requirements on them. Also
+      the name of the pin assignment in which a port transmits on contacts
+      1 and 2 (see :doc:`ethernet/magnetics/cable`).
+
+   MDI-X
+      The crossed pin assignment, in which a port transmits on the contacts
+      where an MDI port receives (see :doc:`ethernet/magnetics/cable`).
 
    MDIO
    Management data input/output
@@ -116,6 +170,12 @@ gives a short description and a link to the full explanation.
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
 
+   Return loss
+      How much weaker the signal reflected from a port is than the signal
+      arriving at it, in decibels. IEEE 802.3 sets a minimum for each
+      Ethernet port (see :wikipedia:`Return loss <Return_loss>` and
+      :doc:`ethernet/magnetics/matching-and-droop`).
+
    RGMII
       Reduced Gigabit Media Independent Interface. A digital interface
       between a chip and an Ethernet transceiver: 4 data bits and one
@@ -141,6 +201,12 @@ gives a short description and a link to the full explanation.
       The fixed 8 bytes at the start of every Ethernet frame on the wire: a
       7-byte preamble and a 1-byte start frame delimiter. They let the
       receiver lock on to the frame (:clause:`3`).
+
+   Twisted pair
+      Two wires twisted around each other and carrying equal and opposite
+      signals. An Ethernet cable holds four (see
+      :wikipedia:`Twisted pair <Twisted_pair>` and
+      :doc:`ethernet/magnetics/cable`).
 
    USB Power Delivery
    USB PD
