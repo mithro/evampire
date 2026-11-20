@@ -12,14 +12,13 @@ gives a short description and a link to the full explanation.
       (:clause:`40`). Every evampire port supports it (see
       :ref:`the transceiver requirements <req-transceivers>`).
 
-<<<<<<< HEAD
    Autonegotiation
       The exchange of link pulse bursts by which the two transceivers on a
       twisted-pair Ethernet cable agree on speed, duplex mode and, for
       1000BASE-T, which end is master (:clause:`28`, see
       :doc:`ethernet/phy-electrical/autonegotiation` and
       :wikipedia:`Autonegotiation`).
-=======
+
    Baseline wander
       A slow drift of the average level of a received signal, caused when a
       high-pass filter in the path, such as a transformer or coupling
@@ -34,7 +33,6 @@ gives a short description and a link to the full explanation.
    Centre tap
       A connection to the middle of a transformer or inductor winding (see
       :doc:`ethernet/magnetics/standard-port`).
->>>>>>> origin/main
 
    Class
       In Power over Ethernet, the power level that a powered device asks for
@@ -123,7 +121,6 @@ gives a short description and a link to the full explanation.
       receiver detect a damaged frame (:clause:`3`, see
       :wikipedia:`Frame check sequence <Frame_check_sequence>`).
 
-<<<<<<< HEAD
    Hybrid
       The analogue circuit that lets one pair carry both directions at once,
       by subtracting a replica of the transceiver's own transmitted signal
@@ -135,7 +132,7 @@ gives a short description and a link to the full explanation.
       cable or component. In a cable it grows with frequency and length
       (:clause:`40.7.2.1`, see :doc:`ethernet/phy-electrical/job` and
       :wikipedia:`Insertion loss`).
-=======
+
    Galvanic isolation
       The absence of any conducting path between two circuits, so that no
       direct current flows between them and a large voltage between them
@@ -152,7 +149,6 @@ gives a short description and a link to the full explanation.
       The link status, speed and duplex that an Ethernet transceiver can put
       on the RGMII receive data signals between frames (see
       :doc:`ethernet/rgmii/data`).
->>>>>>> origin/main
 
    LLDP
    Link Layer Discovery Protocol
@@ -198,21 +194,19 @@ gives a short description and a link to the full explanation.
       (:clause:`4`). In evampire the forwarding logic and the processor
       share this role.
 
-<<<<<<< HEAD
    PAM-5
       Five-level pulse amplitude modulation: each symbol is one of the
       levels −2, −1, 0, +1 and +2. 1000BASE-T uses it on all four pairs
       (:clause:`40.1.3`, see :doc:`ethernet/phy-electrical/1000base-t-coding`
       and :wikipedia:`Pulse-amplitude modulation
       <Pulse-amplitude_modulation>`).
-=======
+
    MII
    Media independent interface
       The interface between a media access controller and a 10 Mbit/s or
       100 Mbit/s Ethernet transceiver: 4 data bits in each direction on the
       rising edge of a 2.5 MHz or 25 MHz clock (:clause:`22`, see
       :doc:`ethernet/rgmii/signals`).
->>>>>>> origin/main
 
    Power budget
       The power that the processor may offer on the output ports: the power
@@ -236,24 +230,18 @@ gives a short description and a link to the full explanation.
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
 
-<<<<<<< HEAD
    Return loss
       How much weaker, in decibels, a reflection is than the signal that
-      caused it. A port matched to the cable has a high return loss
-      (:clause:`40.8.3.1`, see :doc:`ethernet/phy-electrical/job` and
-      :wikipedia:`Return loss`).
-=======
+      caused it. A port matched to the cable has a high return loss. IEEE
+      802.3 sets a minimum for each Ethernet port (:clause:`40.8.3.1`, see
+      :doc:`ethernet/phy-electrical/job`,
+      :doc:`ethernet/magnetics/matching-and-droop` and
+      :wikipedia:`Return loss <Return_loss>`).
+
    Preamble
       The 7 bytes of alternating ones and zeros at the start of every
       Ethernet frame on the wire, which let the receiver lock on to the
       signal (:clause:`3.2.1`, see :doc:`ethernet/rgmii/frames`).
-
-   Return loss
-      How much weaker the signal reflected from a port is than the signal
-      arriving at it, in decibels. IEEE 802.3 sets a minimum for each
-      Ethernet port (see :wikipedia:`Return loss <Return_loss>` and
-      :doc:`ethernet/magnetics/matching-and-droop`).
->>>>>>> origin/main
 
    RGMII
       Reduced Gigabit Media Independent Interface. A digital interface
@@ -276,7 +264,6 @@ gives a short description and a link to the full explanation.
       The end of a USB Type-C cable that supplies power (see
       :ref:`the power roles <power-roles>`).
 
-<<<<<<< HEAD
    Symbol
       One voltage level held on a pair for one fixed time slot. Depending on
       how many levels are allowed, it carries less than one bit, one bit or
@@ -295,7 +282,7 @@ gives a short description and a link to the full explanation.
       with eight states (:clause:`40.3.1.3.4`, see
       :doc:`ethernet/phy-electrical/1000base-t-coding` and
       :wikipedia:`Trellis modulation <Trellis_modulation>`).
-=======
+
    Start frame delimiter
    SFD
       The byte 0xD5 that follows the preamble and marks the start of an
@@ -306,7 +293,6 @@ gives a short description and a link to the full explanation.
       signals. An Ethernet cable holds four (see
       :wikipedia:`Twisted pair <Twisted_pair>` and
       :doc:`ethernet/magnetics/cable`).
->>>>>>> origin/main
 
    USB Power Delivery
    USB PD
