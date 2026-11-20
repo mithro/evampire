@@ -65,10 +65,12 @@ linkcheck_timeout = 30
 # Sites that refuse automated requests (they answer 403 or time out for
 # any client that is not a browser). Links to them are checked by hand.
 linkcheck_ignore = [
-    r"https://standards\.ieee\.org/.*",
     r"https://ieeexplore\.ieee\.org/.*",
-    r"https://www\.jedec\.org/.*",
-    r"https://webstore\.iec\.ch/.*",
+    r"https://tiaonline\.org/.*",
+    r"https://webstore\.ansi\.org/.*",
+    r"https://www\.analog\.com/.*",
+    r"https://www\.st\.com/.*",
+    r"https://www\.microchip\.com/.*",
 ]
 
 myst_enable_extensions = [
