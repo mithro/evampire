@@ -1,70 +1,75 @@
-// Inside a gigabit Ethernet transceiver: one of the four identical
-// pair channels in detail, plus the blocks shared by all four.
+// Inside a gigabit Ethernet transceiver: one of the four identical pair
+// channels in detail, plus the blocks shared by all four. Drawn top to
+// bottom so that it fits the page width. Transmit and receive run in
+// separate columns, with the cancellers between them.
 //
 // SPDX-License-Identifier: Apache-2.0
 
 digraph transceiver {
-    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.35,
-           ranksep=0.45, newrank=true];
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.15,
+           ranksep=0.28, newrank=true];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=10];
+           fontname="Helvetica", fontsize=10, margin="0.06,0.04"];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
 
-    rgmii [label="RGMII\n(to evampire)", fillcolor="#dbe8f5"];
+    rgmii [label="Byte interface (RGMII or on-chip)", fillcolor="#dbe8f5"];
 
     subgraph cluster_digital {
-        label="Digital signal processing (125 MHz)"; style="rounded"; labelloc=t;
-        color="#5b9bd5";
+        label="Digital signal processing, one pair"; labeljust=l;
+        labelloc=b; style="rounded"; color="#5b9bd5";
 
         enc   [label="Scrambler and\ntrellis encoder"];
-        shape [label="Transmit\nshaping filter"];
-
         dec   [label="Trellis decoder\nand descrambler"];
-        eq    [label="Adaptive\nequalizer"];
-        sum   [label="−", shape=circle, width=0.35, fixedsize=true,
-               fontsize=16];
-
+        shape [label="Transmit\nshaping filter"];
         echo  [label="Echo\ncanceller"];
         next  [label="3 near-end\ncrosstalk\ncancellers"];
-        other [label="Transmit symbols\nof the other\nthree pairs",
+        eq    [label="Adaptive\nequalizer"];
+        other [label="Symbols sent\non other pairs",
                style="rounded,dashed,filled", fillcolor="#ffffff"];
+        sum   [label="−", shape=circle, width=0.3, fixedsize=true,
+               fontsize=14];
     }
 
     subgraph cluster_analog {
-        label="Analog front end"; style="rounded"; color="#ed7d31"; labelloc=t;
+        label="Analog front end, one pair"; labeljust=l; labelloc=b;
+        style="rounded"; color="#ed7d31";
         dac    [label="DAC and\nline driver", fillcolor="#fbe5d6"];
+        adc    [label="Amplifier,\nfilter and ADC", fillcolor="#fbe5d6"];
         hybrid [label="Hybrid", fillcolor="#fbe5d6"];
-        adc    [label="Variable-gain\namplifier, filter\nand ADC",
-                fillcolor="#fbe5d6"];
     }
 
-    mag   [label="Magnetics\nand RJ45", fillcolor="#ffffff"];
+    mag [label="Cable interface (magnetics, RJ45)", fillcolor="#ffffff"];
 
     subgraph cluster_shared {
-        label="Shared by all four pairs"; style="rounded"; color="#70ad47"; labelloc=b;
+        label="Shared by all four pairs"; labeljust=l; labelloc=b;
+        style="rounded"; color="#70ad47";
         xtal [label="25 MHz\ncrystal", fillcolor="#e2efda"];
-        pll  [label="Clock synthesis\nand clock recovery", fillcolor="#e2efda"];
-        an   [label="Autonegotiation\n(link pulses)", fillcolor="#e2efda"];
-        mgmt [label="Management\nregisters\n(MDC/MDIO)", fillcolor="#e2efda"];
+        pll  [label="Clock synthesis\nand recovery", fillcolor="#e2efda"];
+        mgmt [label="Management\nregisters", fillcolor="#e2efda"];
+        an   [label="Autonegotiation", fillcolor="#e2efda"];
     }
 
-    { rank=same; adc -> dac [style=invis]; }
-    { rank=same; other -> dec -> enc [style=invis]; }
-    { rank=same; eq -> next -> echo -> shape [style=invis]; }
+    // Rows, with left-to-right order fixed by invisible edges.
+    { rank=same; enc -> dec [style=invis]; }
+    { rank=same; shape -> echo -> next -> eq [style=invis]; }
+    { rank=same; other -> sum [style=invis]; }
+    { rank=same; dac -> adc [style=invis]; }
+    { rank=same; xtal -> pll [style=invis]; }
+    { rank=same; mgmt -> an [style=invis]; }
 
-    // Transmit path.
+    // Transmit path, down the left.
     rgmii -> enc    [penwidth=2];
     enc   -> shape  [penwidth=2];
     shape -> dac    [penwidth=2];
     dac   -> hybrid [penwidth=2];
     hybrid -> mag   [dir=both, penwidth=2];
 
-    // Receive path (drawn right to left).
-    adc   -> hybrid [dir=back, penwidth=2];
-    sum   -> adc    [dir=back, penwidth=2];
-    eq    -> sum    [dir=back, penwidth=2];
-    dec   -> eq     [dir=back, penwidth=2];
-    rgmii -> dec    [dir=back, penwidth=2];
+    // Receive path, up the right.
+    hybrid -> adc   [penwidth=2];
+    adc   -> sum    [penwidth=2];
+    sum   -> eq     [penwidth=2];
+    eq    -> dec    [penwidth=2];
+    dec   -> rgmii  [penwidth=2];
 
     // Cancellers take the known transmitted symbols.
     enc   -> echo   [style=dashed];
@@ -72,11 +77,10 @@ digraph transceiver {
     other -> next   [style=dashed];
     next  -> sum;
 
-    // Clocks and control.
+    // Shared blocks, below the cable interface.
+    other -> mgmt   [style=invis, minlen=2];
+
     xtal  -> pll;
-    pll   -> dac    [style=dotted];
-    pll   -> adc    [style=dotted];
-    eq    -> pll    [style=dotted];
-    an    -> hybrid [style=dotted];
-    mgmt  -> an     [style=dotted];
+    xtal  -> mgmt   [style=invis];
+    mgmt  -> an     [style=dotted, dir=back, constraint=false];
 }
