@@ -477,30 +477,39 @@ Values from [EA-bt]_, [Sifos-PD]_, [UNH-PSE]_ and [TPS2372]_.
 .. _fig-poe-states:
 
 .. wavedrom::
-   :caption: What each end does during a two-event classification.
+   :caption: What each end does during a two-event classification. The top
+             three rows are the power sourcing equipment (port voltage,
+             what it measures, its current limit); the rows below the gap
+             are the powered device (signature resistor, class current,
+             mark-event load, class events counted, isolation switch,
+             power good).
+   :alt: Timing diagram. The power sourcing equipment port goes from 0 V
+         to detection, class event 1, a mark event, class event 2, a mark
+         event, inrush and full voltage, measuring resistance during
+         detection, class current during class events and current while
+         powered. The powered device connects its signature resistor during
+         detection and mark events, draws class current during class
+         events, counts two class events, turns on its isolation switch
+         with a current limit and then fully, and finally asserts power
+         good.
 
    { "signal": [
-       ["Power sourcing equipment",
-         { "name": "Port voltage", "wave": "23.4.54.56..7...",
+         { "name": "Port", "wave": "2.3.4.54.56.7.",
            "data": ["0 V", "detect", "class 1", "mark", "class 2", "mark",
                     "inrush", "44–57 V"] },
-         { "name": "Measures", "wave": "x3.4.x4.x.x5...",
-           "data": ["resistance", "class current", "class current",
-                    "current"] },
-         { "name": "Current limit", "wave": "0........3..4...",
-           "data": ["inrush", "operating"] }
-       ],
-       {},
-       ["Powered device",
-         { "name": "Signature resistor", "wave": "1..0.10.10......" },
-         { "name": "Class current", "wave": "0..1.01.0......." },
-         { "name": "Mark-event load", "wave": "0....10.10......" },
-         { "name": "Class events counted", "wave": "2....3..4.......",
+         { "name": "Measures", "wave": "x.3.4.x4.xx.5.",
+           "data": ["resistance", "current", "current", "current"] },
+         { "name": "Limit", "wave": "0.........3.4.",
+           "data": ["inrush", "operating"] },
+         {},
+         { "name": "Signature", "wave": "1...0.10.10..." },
+         { "name": "Class load", "wave": "0...1.01.0...." },
+         { "name": "Mark load", "wave": "0.....10.10..." },
+         { "name": "Count", "wave": "2.....3..4....",
            "data": ["0", "1", "2"] },
-         { "name": "Isolation switch", "wave": "0........3..1...",
-           "data": ["current limited"] },
-         { "name": "Power good", "wave": "0...........1..." }
-       ]
+         { "name": "Switch", "wave": "0.........3.1.",
+           "data": ["limited"] },
+         { "name": "Power good", "wave": "0...........1." }
      ]
    }
 
@@ -843,7 +852,10 @@ average power of the shortest allowed pulse pattern (Type 3/4 timing) is
 .. math::
 
    d = \frac{t_\text{on}}{t_\text{on} + t_\text{off}}
-     = \frac{7 \,\text{ms}}{7 \,\text{ms} + 310 \,\text{ms}} = 0.0221, \qquad
+     = \frac{7 \,\text{ms}}{7 \,\text{ms} + 310 \,\text{ms}} = 0.0221
+
+.. math::
+
    P_\text{MPS} = V \, I_\text{MPS} \, d
      = 54 \,\text{V} \times 10 \,\text{mA} \times 0.0221 = 11.9 \,\text{mW}
 
@@ -1483,7 +1495,8 @@ Input protection
      - Microchip
      - 802.3af/at/bt
      - —
-     - MOSFET bridge rectifier that replaces the diode bridges
+     - MOSFET bridge rectifier that replaces the diode bridges (listed as
+       not recommended for new designs)
 
 Sources: [TPS2378]_, [TPS2372]_, [TPS23753A]_, [LT4275]_, [LTC4269-1]_,
 [NCP1096]_, [PD70224]_.
@@ -1613,11 +1626,11 @@ Isolation of the host interface
      - 802.3at Types 1 and 2, plus a proprietary extension up to 90 W;
        1 port
      - Runs without a host processor; external MOSFET and sense resistor
-   * - PD69208
+   * - PD69208M
      - Microchip
-     - 802.3af/at/bt; 8 channels
-     - Internal switches; works with a separate Microchip controller or
-       a supported Ethernet switch processor
+     - 802.3at/bt Type 3; 8 ports
+     - Fully integrated power sourcing equipment manager with internal
+       switches
    * - Si3474
      - Skyworks (formerly Silicon Labs)
      - 802.3af/at/bt; 8 channels (8 two-pair or 4 four-pair ports)
@@ -1840,167 +1853,508 @@ the allocation on port B first: over LLDP if the powered device supports
 it, otherwise by turning the port off and classifying it again with fewer
 class events.
 
-What evampire can and cannot do
--------------------------------
+Building the high-voltage functions: on chip or external
+--------------------------------------------------------
 
-Device voltage ratings in gf180mcu
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Every function described above handles voltages far above the continuous
+ratings of the standard transistors in the gf180mcu process. That does not
+by itself decide where each function is built: the absence of a ready-made
+high-voltage device or cell means a custom design would be needed, not
+that the function is impossible on chip. This section separates three
+kinds of limit, describes the electrical stresses each function must
+survive, and then sets out the on-chip and external options for each
+function. Which option is used is an open design decision for every
+function.
 
-.. list-table:: Device voltage ratings from the gf180mcu PDK documentation
-   :header-rows: 1
-   :widths: 35 30 35
+Three kinds of limit
+~~~~~~~~~~~~~~~~~~~~
 
-   * - Device
-     - Rating
-     - Notes
-   * - 3.3 V MOSFETs (thin gate oxide)
-     - 3.3 V nominal, +10 %
-     - Gate-to-any-node DC limit 3.63 V
-   * - 5 V and 6 V MOSFETs (thick gate oxide)
-     - 5 V or 6 V nominal, +10 %
-     - Gate-to-any-node DC limit given as "6.5V/6V for 5V/6V process thick
-       gate"; 6 V NMOS drain breakdown 8.5 V minimum
-   * - 10 V LDNMOS and LDPMOS (optional)
-     - 10 V
-     - Drain breakdown 13.2 V minimum, 14.5 V typical
-   * - N-well to substrate junction
-     - —
-     - Breakdown 10 V minimum, 14 V typical
+Ratings of the standard devices and cells
+   The conservative continuous operating limits that the foundry
+   guarantees for long life.
 
-Sources: [PoE-GF180-DRM-2]_ (process options: LV 3.3 V, HV 5 V or 6 V),
-[PoE-GF180-DRM-14]_ (supply and gate-oxide limits), [PoE-GF180-EP-2]_,
-[PoE-GF180-EP-5]_ and [PoE-GF180-EP-8]_ (breakdown voltages and the 10 V
-LDMOS devices).
+   .. list-table:: Continuous ratings of standard gf180mcu devices
+      :header-rows: 1
+      :widths: 35 30 35
 
-No device in the PDK documentation is rated anywhere near the 57 V
-operating voltage of the cable, let alone the 100 V that commercial
-controllers and MOSFETs are built for to survive surges. Even the optional
-10 V LDMOS transistors break down at about 13–15 V. Everything connected
-to the cable-side voltages must therefore be outside evampire.
+      * - Device
+        - Rating
+        - Notes
+      * - 3.3 V MOSFETs (thin gate oxide)
+        - 3.3 V nominal, +10 %
+        - Gate-to-any-node DC limit 3.63 V
+      * - 5 V and 6 V MOSFETs (thick gate oxide)
+        - 5 V or 6 V nominal, +10 %
+        - Gate-to-any-node DC limit given as "6.5V/6V for 5V/6V process
+          thick gate"
+      * - 10 V LDNMOS and LDPMOS (optional)
+        - 10 V
+        - Drain extended; its well shares the substrate potential
+      * - MIM capacitor, 1 fF/µm² option (optional)
+        - 20 V maximum operating
+        - The 1.5 fF/µm² and 2 fF/µm² options are for 6 V use
 
-Powered-device role (port A)
-   External: the bridges and surge clamp, the signature resistor, the
-   classification current regulator, the window comparators and the
-   mark-event load (all see up to 57 V between their terminals), the
-   isolation switch, and the input converter. A commercial powered-device
-   controller provides all but the bridges and the converter in one small
-   package.
+   Sources: [PoE-GF180-DRM-2]_ (process options: 3.3 V and 5 V or 6 V),
+   [PoE-GF180-DRM-14]_ (supply and gate-oxide limits),
+   [PoE-GF180-EP-8]_ and [PoE-GF180-LDMOS]_ (10 V LDMOS),
+   [PoE-GF180-MIM]_ (MIM capacitors). Which optional layers (LDMOS, MIM
+   option, high-resistance poly) are offered on wafer.space runs has not
+   been checked.
 
-Power sourcing equipment role (port B)
-   External: the 54 V boost converter, the power MOSFETs (100 V), the
-   detection current sources (they work from the 54 V supply), the gate
-   drivers (10–12.5 V gate drive is above the 3.3 V devices' limits), the
-   port protection, and any disconnect switches for a dual-role port.
+Physical limits of the process layers
+   The voltages and currents at which a layer is destroyed or wears out.
+   These are higher than the ratings, but a design must stay below them
+   with margin and its own reliability analysis.
 
-   With a low-side switch, two of the measurements are at ground potential
-   and at low voltage: the voltage across the sense resistor (millivolts)
-   and, through a resistor divider, the port and supply voltages. In
-   principle evampire could therefore measure them with on-chip
-   comparators or an ADC and run the detection, classification and
-   disconnect sequences in software, driving external high-voltage
-   current sources and gate drivers. Short-circuit protection cannot be
-   left to software: commercial controllers turn the MOSFET off within
-   about 1 µs of the fault [TPS23881]_, so it needs a dedicated comparator
-   and gate pull-down next to the MOSFET.
+   .. list-table:: Breakdown and current limits documented for gf180mcu
+      :header-rows: 1
+      :widths: 42 28 30
 
-   The alternative is a commercial power sourcing equipment controller
-   connected to evampire over I2C. evampire's software then reads the
-   requested class, sets the power allocation (the number of class events
-   issued), enables ports and reads the measured current, voltage and
-   faults. Some controllers need firmware loaded over I2C at start-up
-   [TPS23881]_; others can run a port without any host [TPS23861]_
-   [LTC4279]_.
+      * - Layer or junction
+        - Documented limit
+        - Source
+      * - Gate oxide, 3.3 V transistors
+        - 7 V minimum (8.8–9 V typical)
+        - [PoE-GF180-EP-OX]_
+      * - Gate oxide, 6 V transistors
+        - 12 V minimum (16 V typical)
+        - [PoE-GF180-EP-OX]_
+      * - N+ to p-well junction (3.3 V / 6 V NMOS)
+        - 7 V / 8.5 V minimum (11 V typical)
+        - [PoE-GF180-EP-5]_
+      * - P+ to n-well junction (3.3 V / 6 V PMOS)
+        - 6.5 V / 8.5 V minimum (10.5 V typical)
+        - [PoE-GF180-EP-5]_
+      * - N-well to substrate junction
+        - 10 V minimum (14 V typical)
+        - [PoE-GF180-EP-5]_
+      * - 10 V LDMOS drain to source
+        - 13.2 V minimum (14.5 V typical)
+        - [PoE-GF180-EP-8]_
+      * - Vertical PNP, collector to emitter
+        - 10 V minimum (15 V typical)
+        - [PoE-GF180-EP-BJT]_
+      * - MIM dielectric, 1 fF/µm² option
+        - 20 V minimum (40 V typical) at 10 µA
+        - [PoE-GF180-MIM]_
+      * - MIM dielectric, 1.5 and 2 fF/µm² options
+        - 10 V minimum (24–30 V typical)
+        - [PoE-GF180-MIM]_
+      * - Deep n-well to substrate junction
+        - not documented
+        - the layer exists ([PoE-GF180-DRM-4]_); no breakdown figure found
+      * - Field oxide and inter-metal dielectric (poly or metal to
+          substrate, metal to metal)
+        - not documented
+        - —
+      * - Metal current density (electromigration, 85 °C)
+        - 2.09 mA/µm (Metal 1 to top-1); 16.52 mA/µm (30 kÅ top metal)
+        - [PoE-GF180-DRM-EM]_
+      * - Contact and via current (85 °C)
+        - 0.58 mA each
+        - [PoE-GF180-DRM-EM]_
 
-.. _fig-poe-split:
+   For ESD, the PDK gives transmission-line-pulse data for a 5 V/6 V
+   grounded-gate NMOS without ESD implant: it breaks down at about
+   10.7 V, snaps back to about 6.2 V and fails at about 7 mA per µm of
+   width [PoE-GF180-ESD]_.
 
-.. graphviz:: poe/split.dot
-   :caption: Split between external parts and evampire, with an external
-             powered-device controller on port A and an external power
-             sourcing equipment controller on port B.
-   :align: center
+What custom structures could reach
+   Published work shows that low-voltage CMOS can switch or generate
+   voltages several times its device rating:
 
-The low-voltage functions that can be on evampire:
+   .. list-table:: Published high-voltage results in low-voltage CMOS
+      :header-rows: 1
+      :widths: 30 22 48
 
-Status inputs and enable outputs
-   3.3 V digital inputs for the powered-device controller's power-good and
-   allocated-power outputs (open-drain, with pull-ups, through
-   optocouplers when the input converter is isolated [TPS2372]_), and
-   outputs to enable the converters and the power sourcing equipment
-   controller.
+      * - Technique
+        - Process
+        - Reported result
+      * - Drain-extended NMOS with shifted gate, no added masks
+        - 0.5 µm bulk CMOS
+        - Breakdown "of the order of 30 V" [DosSantos2003]_
+      * - Drain-extended NMOS and PMOS, no process change
+        - 1.5–1.8 V, 0.18 µm bulk CMOS
+        - 5 V drain operation with the core gate oxide [Mitros2000]_
+      * - Stacked low-voltage transistors (3 in series)
+        - 65 nm bulk CMOS, 2.5 V devices
+        - Driver working from 5.5 V [Pashmineh2016]_
+      * - Stacked MOSFETs with capacitive voltage sharing
+        - 0.35 µm SOI CMOS
+        - 2 times the process rating at 20 MHz; scalable to n times
+          [Mentze2006]_
+      * - 20 stacked transistors with a resistive bias network
+        - 65 nm SOI CMOS
+        - 20 V DC and RF in the off state [Syroiezhin2023]_
+      * - Charge pump with double-diode substrate isolation and field
+          oxide isolation
+        - 65 nm bulk CMOS
+        - 36 V output, 3 times the about 12 V reachable with a single
+          junction to substrate [Ismail2017]_
+      * - Charge pump of polysilicon diodes on field oxide
+        - 0.25 µm, 2.5 V bulk CMOS
+        - 28.08 V output, above the about 18.9 V n-well to substrate
+          breakdown of that process [Ker2007]_
+      * - Charge pump of triple-well NMOS transistors
+        - 0.18 µm bulk CMOS
+        - Regulated output from about 13 V to 16.95 V [Li2019]_
 
-I2C controller
-   Needed to talk to an external power sourcing equipment controller. The
-   two-wire interface evampire uses to configure the Ethernet transceivers
-   is a different interface (see :doc:`../architecture/index`).
+   Two points limit how directly these carry over. Results on SOI rely on
+   a buried oxide that isolates every transistor from the substrate; the
+   gf180mcu process is bulk silicon. And in bulk silicon the highest node
+   of a stack still sits at the full voltage relative to the substrate, so
+   some junction or dielectric must hold that voltage continuously. The
+   bulk results above did this by stacking two junctions between the
+   circuit and the substrate, or by building devices in polysilicon on top
+   of the field oxide, and reached 28–36 V [Ker2007]_ [Ismail2017]_. In
+   gf180mcu the documented junction to substrate, n-well to substrate,
+   breaks down at 10 V minimum, and the breakdown of the deep n-well and
+   of the field oxide under poly and metal is not documented. Whether a
+   gf180mcu structure can hold 57 V plus surge margin to the substrate is
+   therefore not known from the documentation; it would need test
+   structures or foundry data. No documented limit rules it out, and no
+   documented structure shows it. All the published bulk results above are
+   below 57 V.
 
-Supply monitors
-   Comparators or an ADC that measure the input voltage, the bus voltage
-   and the 54 V supply through external resistor dividers, sharing
-   evampire's ground. The divider must bring the highest operating
-   voltage below the 3.63 V gate limit of evampire's 3.3 V inputs, while
-   drawing little current. For an example divider:
+The stresses a function must survive
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Four different kinds of stress reach the cable-side circuits. They differ
+by orders of magnitude in duration and energy, which decides whether a
+clamp can absorb them or a structure must block them.
+
+ESD during handling
+   The human body model used for chip ESD ratings is a 100 pF capacitor
+   discharged through 1500 Ω, with a rise time of 2–10 ns and a peak
+   current of 0.67 A per kV [ESDA-HBM]_. For the common 2 kV rating (the
+   TPS23881 is rated ±2000 V [TPS23881]_):
 
    .. math::
 
-      V_\text{out} = V_\text{in} \, \frac{R_2}{R_1 + R_2}
-        = 57 \,\text{V} \times \frac{56 \,\text{k}\Omega}{1056 \,\text{k}\Omega}
-        = 57 \,\text{V} \times 0.0530 = 3.02 \,\text{V}
+      I_\text{peak} = \frac{V_\text{HBM}}{R_\text{HBM}}
+        = \frac{2000 \,\text{V}}{1500 \,\Omega} = 1.33 \,\text{A}, \qquad
+      \tau = R_\text{HBM} \, C_\text{HBM}
+        = 1500 \,\Omega \times 100 \,\text{pF} = 150 \,\text{ns}
 
    .. math::
 
-      I_\text{div} = \frac{V_\text{in}}{R_1 + R_2}
-        = \frac{57 \,\text{V}}{1.056 \,\text{M}\Omega} = 54 \,\mu\text{A}
+      Q = C_\text{HBM} \, V_\text{HBM} = 100 \,\text{pF} \times 2000 \,\text{V}
+        = 200 \,\text{nC}
 
-   where :math:`V_\text{in} = 57\,\text{V}` is the highest operating
-   voltage [EA-bt]_, :math:`R_1 = 1\,\text{M}\Omega` and :math:`R_2 =
-   56\,\text{k}\Omega` are example resistor values, :math:`V_\text{out}`
-   is the voltage at evampire's input, and :math:`I_\text{div}` the
-   current the divider draws. So the input stays below 3.63 V
-   [PoE-GF180-DRM-14]_ at 57 V and the divider costs about 3 mW. The
-   model ignores the input's leakage and resistor tolerance, and does not
-   cover surges, which go above 57 V; a clamp at the divider output is
-   needed for those. On the powered-device side the divider must sit after the
-   isolation switch so that it is not in parallel with the 25 kΩ
-   signature, and it can only share evampire's ground if the input
-   converter is not isolated.
+   .. math::
 
-Software
-   The power budget across all ports, the LLDP exchanges in both roles,
-   and limiting the board's own load until enough power has been granted.
+      E = \tfrac{1}{2} \, C_\text{HBM} \, V_\text{HBM}^2
+        = \tfrac{1}{2} \times 100 \,\text{pF} \times (2000 \,\text{V})^2
+        = 0.2 \,\text{mJ}
+
+   where :math:`V_\text{HBM}` is the charging voltage,
+   :math:`R_\text{HBM}` and :math:`C_\text{HBM}` the model's resistor and
+   capacitor [ESDA-HBM]_, :math:`I_\text{peak}` the peak current,
+   :math:`\tau` the decay time constant, :math:`Q` the charge and
+   :math:`E` the stored energy. The 2 kV is the voltage on the tester's
+   capacitor, not on the pin: an ESD clamp starts conducting at a few
+   volts above the supply (about 10.7 V for the 6 V grounded-gate NMOS
+   above) and carries 1.33 A peak for a few hundred nanoseconds. With
+   7 mA/µm before failure, a 6 V grounded-gate NMOS of about
+   1.33 A ÷ 7 mA/µm = 190 µm width would carry it (an estimate; real ESD
+   design follows the PDK guidelines [PoE-GF180-ESD]_). This is why
+   ordinary I/O cells survive kilovolt ratings.
+
+Surge from the cable
+   Lightning-induced surges on Ethernet ports are tested with a 10/700 µs
+   generator (10 µs rise, 700 µs to half value in open circuit) whose
+   effective output resistance is 40 Ω; it delivers 37.5 A peak into a
+   short circuit at 1500 V, and the IEC 61000-4-5 test levels for
+   symmetrical lines run from 500 V to 4000 V depending on the
+   installation [TI-SLUA736]_. The energy a clamp at the cable has to
+   absorb can be estimated, for a 1500 V surge into a clamp that holds
+   90 V (below the 95 V limit TI gives for a power sourcing equipment port
+   suppressor [TPS23881]_):
+
+   .. math::
+
+      I_\text{peak} = \frac{V_\text{surge} - V_\text{clamp}}{R_\text{gen}}
+        = \frac{1500 \,\text{V} - 90 \,\text{V}}{40 \,\Omega} = 35.3 \,\text{A}
+
+   .. math::
+
+      \tau = \frac{t_\text{half}}{\ln 2} = \frac{320 \,\mu\text{s}}{0.693}
+        = 462 \,\mu\text{s}, \qquad
+      Q \approx I_\text{peak} \, \tau = 35.3 \,\text{A} \times 462 \,\mu\text{s}
+        = 16.3 \,\text{mC}
+
+   .. math::
+
+      E \approx V_\text{clamp} \, Q = 90 \,\text{V} \times 16.3 \,\text{mC}
+        = 1.5 \,\text{J}
+
+   where :math:`V_\text{surge} = 1500\,\text{V}` and :math:`R_\text{gen} =
+   40\,\Omega` are the generator settings, :math:`t_\text{half} =
+   320\,\mu\text{s}` the time to half value of its short-circuit current
+   [TI-SLUA736]_, :math:`V_\text{clamp} = 90\,\text{V}` an assumed clamp
+   voltage, and :math:`\tau`, :math:`Q` and :math:`E` the decay time
+   constant, charge and energy in the clamp. The estimate treats the
+   current as a single exponential decay and ignores the 5 µs rise. It is
+   about 7000 times the HBM energy and lasts thousands of times longer,
+   so it is far outside the regime in which on-chip ESD structures are
+   characterised. Commercial designs absorb it in external
+   transient-voltage suppressors [TPS23881]_ [TI-SLUA736]_.
+
+Isolation test
+   Power over Ethernet ports must withstand one of: 1500 V rms at
+   50–60 Hz for 60 s, 2250 V DC for 60 s, or ten 1500 V impulses of
+   10/700 µs shape [TI-SLUA736]_. A task-force contribution to IEEE 802.3
+   summarises that Clauses 33 and 145 require this isolation for all
+   power sourcing equipment and powered devices [PoE-Iso]_ (the Analog
+   Devices article cited above describes exceptions for fully enclosed
+   devices [ADI-PoE]_; the text of the standard should decide). This
+   stress must be *blocked*, not clamped: a clamp across the isolation
+   barrier would fail the test. It acts between the cable conductors and
+   other accessible conductors (other connectors, metal parts), not
+   between the pins of the power circuit.
+
+Continuous operation
+   The cable voltage is 44–57 V for as long as the port is powered, and
+   the power path carries up to 0.6 A (class 4: 25.5 W at 42.5 V) or
+   1.73 A (class 8: 71.3 W at 41.2 V). A clamp cannot help here: every
+   structure across the cable voltage must block it indefinitely, with
+   reliability margin. Carrying the current on chip needs wide metal: at
+   85 °C, 0.6 A needs 0.6 A ÷ 2.09 mA/µm = 287 µm of Metal 1, or
+   0.6 A ÷ 16.52 mA/µm = 36 µm of 30 kÅ top metal, and about 1035
+   contacts at 0.58 mA each [PoE-GF180-DRM-EM]_; 1.73 A needs 105 µm of
+   that top metal.
+
+So a clamp, on chip or off, can deal with ESD; surges need a clamp sized
+for joules, which in practice means an external suppressor; the
+isolation test needs a barrier that blocks kilovolts; and the operating
+voltage needs structures that block 57 V continuously.
+
+Where the isolation barrier sits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The isolation requirement decides which circuits can share a ground with
+evampire. Its Ethernet data already crosses the transformers, which are the
+data isolation barrier. If evampire's ground is connected to other
+accessible conductors (for example a USB Type-C connector), then every
+circuit connected to the cable-side power must sit on the far side of an
+isolation barrier from evampire: an isolated converter for power, and
+optocouplers or isolators for signals. A cable-side function built on
+evampire would then have to be on the same die as circuits on the other
+side of the barrier, which would need an on-die barrier for 1500 V rms;
+no gf180mcu structure is documented anywhere near that (the strongest
+documented dielectric, the 1 fF/µm² MIM, is rated 20 V
+[PoE-GF180-MIM]_).
+
+The alternative is to place the barrier elsewhere: evampire's ground on
+the cable side, and the isolation moved to the USB Type-C port and any
+other accessible conductor. Then cable-side functions can share
+evampire's die, and the USB power path, the configuration channel wires
+and any metal parts need isolation instead. Where the barrier sits is an
+open design decision that comes before the per-function choices below.
+Commercial power sourcing equipment shares one 54 V supply among all its
+ports (as in the TPS23881 examples [TPS23881]_), so the two Ethernet ports
+of one board can share one cable-side domain; whether that is allowed
+between a port that receives power and a port that supplies it has not
+been checked against the standard.
+
+Options for each function
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For each high-voltage function, the conventional external option and the
+on-chip custom option are listed with their requirements and risks. The
+on-chip options assume evampire is on the cable side of the isolation
+barrier; with the barrier between evampire and the cable side, only the
+external options apply to the cable-side functions.
+
+Polarity correction
+   *External:* two diode bridges or a MOSFET bridge such as the PD70224
+   [PD70224]_, rated 100 V and 3–5 A [TPS2372]_.
+
+   *On chip:* an active bridge of stacked transistors. It must block 57 V
+   plus surge in reverse, carry the full port current (0.6–1.73 A, which
+   needs the metal widths above), and must stay off during detection and
+   classification [EA-bt]_. Risks: the blocking voltage to substrate is
+   not documented; the substrate itself has to be tied to the most
+   negative rectified node, which changes with polarity.
+
+Signature and classification
+   *External:* a powered-device controller chip (TPS2372, LT4275 and
+   others above).
+
+   *On chip:* the signature, mark load and class current only operate
+   below 22 V (the TPS2372 disables classification above that
+   [TPS2372]_), and the class current is at most 44 mA. But the circuits
+   stay connected while the input rises to 57 V, so they need an
+   isolating switch, or a structure that blocks 57 V, ahead of them. The
+   class regulator dissipates about 0.8 W during each event (calculated
+   above). The comparator thresholds can come from an on-chip divider
+   and reference. Risk: as for the bridge, the blocking voltage.
+
+Powered-device pass switch (isolation switch)
+   *External:* integrated in the controller, or an external 100 V MOSFET
+   driven by the controller (LT4275 [LT4275]_).
+
+   *On chip:* stacked or drain-extended transistors carrying 0.6–1.73 A
+   continuously and the inrush current while most of the 57 V is across
+   them (the TPS2378 limits inrush to 140 mA, about 8 W at 57 V for tens
+   of ms [TPS2378]_). Risks: blocking voltage, safe operating area of a
+   custom structure, and the die area for low on-resistance.
+   *Mixed:* an external MOSFET with its gate driven from evampire. The
+   gate needs about 10 V or more above the source (10–12.5 V from the
+   TPS23881 [TPS23881]_, 10–18 V from the LT4275 [LT4275]_), above the
+   6 V devices' rating, so it needs a stacked or bootstrapped driver or an
+   external driver.
+
+Voltage sensing
+   *External divider, on-chip measurement:* a resistor divider scaling
+   57 V to about 3 V (calculation below), measured by an on-chip
+   comparator or analog-to-digital converter.
+
+   *On-chip divider:* a high-resistance poly divider. With the
+   2000 Ω/sq option, 1 MΩ is 500 squares, and at 57 V it dissipates
+   57² ÷ 1 MΩ = 3.2 mW [PoE-GF180-EP-6]_. Risks: the top of the divider
+   sits at 57 V over the field oxide, whose breakdown is not documented;
+   the poly's voltage coefficient (−100 to −200 ppm/V, −150 ppm/V
+   typical, for the 2000 Ω/sq option [PoE-GF180-EP-6]_) adds error. A capacitive divider of stacked
+   MIM capacitors (at least three of the 20 V-rated type in series for
+   57 V, five for a 95 V surge) is an alternative for AC or sampled
+   measurement; its bottom-plate-to-substrate dielectric is not
+   documented.
+
+Power sourcing switch and current sensing
+   *External:* a power sourcing equipment controller with an external
+   100 V MOSFET and 0.2 Ω sense resistor per channel (TPS23881 and others
+   above).
+
+   *On chip, partly:* with the low-side arrangement the sense resistor,
+   the gate driver and the controller sit at ground potential, and the
+   sense voltages are millivolts (see the TPS23881 thresholds above), so
+   the current measurement, the fast short-circuit comparator and the
+   control logic could be on evampire at low voltage. The MOSFET drain
+   reaches the full port voltage and stays external unless a custom
+   structure blocks 57 V. The gate drive needs 10–12.5 V
+   [TPS23881]_, beyond the 6 V devices, so it needs a stacked driver or
+   an external driver. The short-circuit cut-off must act in about 1 µs
+   [TPS23881]_, in hardware rather than software.
+
+Detection and classification sourcing
+   *External:* inside the power sourcing equipment controller.
+
+   *On chip:* the detection currents (160 µA and 270 µA on the TPS23881
+   [TPS23881]_) must be delivered into a port node that sits close to the
+   54 V supply during detection, and classification needs the port held
+   at 15.5–20.5 V with its current limited to at most 100 mA [UNH-PSE]_. Both need a
+   high-voltage current source or a linear control of the power MOSFET
+   (the TPS23881 classifies through its external MOSFET [TPS23881]_),
+   with the measurement and sequencing in evampire. Risks: blocking
+   voltage of the current-source structures; the timing rules above.
+
+Converter control
+   *External:* converter controller chips (the TPS23753A and LTC4269-1
+   combine one with a powered-device controller [TPS23753A]_
+   [LTC4269-1]_; the PMP7979 boost uses the LM5122 [PMP7979]_).
+
+   *On chip:* the control loop, pulse-width modulation and protection
+   logic are low-voltage functions; the power switches, their 10 V-class
+   gate drives and any sensing at the switch node are high-voltage.
+   Charge pumps or bootstrapped drivers (as in [Ismail2017]_) could
+   generate the gate voltages. Risks: switching-node voltages of 57 V or
+   more on chip; the reliability of stacked drivers under fast edges.
+
+Surge and ESD protection
+   *External:* transient-voltage suppressors at each port and on the
+   54 V supply [TPS23881]_.
+
+   *On chip:* ESD clamps following the PDK guidelines for every pin
+   [PoE-GF180-ESD]_. The surge energy estimated above is not within the
+   characterised range of on-chip structures, so surge protection stays
+   external in every option.
+
+Low-voltage interface and software
+   On evampire in every option: status inputs and enable outputs, an I2C
+   controller for an external power sourcing equipment controller,
+   comparators or an analog-to-digital converter for divided voltages,
+   and the software for the power budget and the LLDP exchanges on both
+   ports.
+
+The external divider for voltage sensing must bring the highest operating
+voltage below the 3.63 V gate limit of evampire's 3.3 V inputs, while
+drawing little current. For an example divider:
+
+.. math::
+
+   V_\text{out} = V_\text{in} \, \frac{R_2}{R_1 + R_2}
+     = 57 \,\text{V} \times \frac{56 \,\text{k}\Omega}{1056 \,\text{k}\Omega}
+     = 57 \,\text{V} \times 0.0530 = 3.02 \,\text{V}
+
+.. math::
+
+   I_\text{div} = \frac{V_\text{in}}{R_1 + R_2}
+     = \frac{57 \,\text{V}}{1.056 \,\text{M}\Omega} = 54 \,\mu\text{A}
+
+where :math:`V_\text{in} = 57\,\text{V}` is the highest operating voltage
+[EA-bt]_, :math:`R_1 = 1\,\text{M}\Omega` and :math:`R_2 =
+56\,\text{k}\Omega` are example resistor values, :math:`V_\text{out}` is
+the voltage at evampire's input, and :math:`I_\text{div}` the current the
+divider draws. So the input stays below 3.63 V [PoE-GF180-DRM-14]_ at 57 V
+and the divider costs about 3 mW. The model ignores the input's leakage
+and resistor tolerance, and does not cover surges, which go above 57 V; a
+clamp at the divider output is needed for those. On the powered-device
+side the divider must sit after the isolation switch, so that it is not
+in parallel with the 25 kΩ signature during detection.
+
+A stack of transistors that shares a voltage equally needs enough devices
+that each stays within its rating. As a first estimate, ignoring the
+imbalance that any real stack has:
+
+.. math::
+
+   N \ge \frac{V_\text{block}}{V_\text{dev,max}}: \qquad
+   \frac{57 \,\text{V}}{6.6 \,\text{V}} = 8.6 \;\rightarrow\; 9, \qquad
+   \frac{95 \,\text{V}}{6.6 \,\text{V}} = 14.4 \;\rightarrow\; 15
+
+where :math:`V_\text{block}` is the voltage to block (57 V operating, or
+95 V as the highest clamping voltage TI allows for a port suppressor
+[TPS23881]_), :math:`V_\text{dev,max} = 6.6\,\text{V}` the 6 V device
+rating plus 10 % [PoE-GF180-DRM-14]_, and :math:`N` the number of devices.
+With 3.3 V devices (3.63 V each) the counts are 16 and 27. This covers
+only the drain-to-source sharing; the well-to-substrate voltage of the
+top devices is the open question described above.
 
 Open design decisions
 ~~~~~~~~~~~~~~~~~~~~~
 
 The following choices are not yet made:
 
+* **Where the isolation barrier sits:** between evampire and the
+  cable-side circuits, or between evampire and the USB Type-C port and
+  other accessible conductors. This comes first, because it decides
+  whether any cable-side function can share evampire's die.
+* **On chip or external, for each high-voltage function** listed above.
+  An on-chip choice needs data the PDK documentation does not give
+  (deep n-well and dielectric breakdown to the substrate) and test
+  structures to confirm it.
 * **Maximum power on each port.** All types and classes are documented
   above; the highest type and class the board supports on input and
-  output are not fixed. They decide the powered-device controller (Type 2,
-  3 or 4), the power sourcing equipment controller and whether port B
-  needs two channels (4-pair power, required above class 4), and the size
-  of the 54 V boost converter.
+  output are not fixed. They decide the controllers, whether port B needs
+  two channels (4-pair power, required above class 4), and the size of
+  the 54 V boost converter.
 * **Board power budget and converter efficiencies.** The pass-through
   examples above use assumed values.
-* **External power sourcing equipment controller or sequencing in
-  evampire software.** An external controller over I2C needs an I2C
-  controller in the power negotiation interface; sequencing in software
-  needs on-chip comparators or an ADC, external current sources and gate
-  drivers, and a hardware short-circuit cut-off.
-* **Isolated or non-isolated input converter.** This decides whether
-  evampire can read the powered-device controller's signals and the input
-  voltage directly or only through optocouplers, and is affected by the
-  other external connectors on the board.
-* **Whether the power negotiation interface includes comparators or an
-  ADC**, or only digital status inputs and I2C.
-* **Handling of LLDP frames on the forwarding path.** Whether evampire
+* **External power sourcing equipment controller over I2C, or sequencing
+  in evampire software** with on-chip measurement and external or custom
+  high-voltage parts.
+* **Which measurement circuits the power negotiation interface includes:**
+  comparators, an analog-to-digital converter, or only digital status
+  inputs and I2C.
+* **Handling of LLDP frames on the forwarding path:** whether evampire
   drops, or delivers only to the processor, frames addressed to
   01-80-C2-00-00-0E instead of forwarding them, so that the power
   exchanges on port A and port B stay separate.
-* **Dual-role ports (full design).** The type of disconnect switch for
+* **Dual-role ports (full design):** the type of disconnect switch for
   each path, and how the role is configured.
-* **Availability of optional PDK layers.** The 10 V LDMOS devices are an
-  optional part of the process. They are not needed for the split above,
-  and whether they are offered on wafer.space runs has not been checked.
+* **Availability of optional PDK layers** (10 V LDMOS, MIM option,
+  high-resistance poly) on wafer.space runs.
 
 References
 ----------
@@ -2055,8 +2409,8 @@ References
    https://www.ti.com/tool/PMP7979
 
 .. [LT4275] Analog Devices (Linear Technology), *LT4275 LTPoE++/PoE+/PoE PD
-   Controller*, data sheet 4275f.
-   https://www.analog.com/media/en/technical-documentation/data-sheets/lt4275.pdf
+   Controller*, data sheet 4275f, linked from the product page.
+   https://www.analog.com/en/products/lt4275.html
 
 .. [LTC4269-1] Analog Devices (Linear Technology), *LTC4269-1 IEEE 802.3at
    High Power PD and Synchronous No-Opto Flyback Controller*, product page.
@@ -2067,17 +2421,19 @@ References
    https://www.analog.com/en/products/ltc4291-1.html
 
 .. [LTC4279] Analog Devices (Linear Technology), *LTC4279 Single Port
-   PoE/PoE+/LTPoE++ PSE Controller*, product page.
-   https://www.analog.com/en/products/ltc4279.html
+   PoE/PoE+/LTPoE++ PSE Controller*, data sheet 4279fa.
+   https://www.analog.com/media/en/technical-documentation/data-sheets/4279fa.pdf
 
 .. [NCP1096] onsemi, *NCP1096 PoE-PD Interface Controller*, data sheet
-   NCP1096/D. https://www.onsemi.com/products/interfaces/power-over-ethernet-poe/ncp1096
+   NCP1096/D. https://www.onsemi.com/pdf/datasheet/ncp1096-d.pdf
 
 .. [PD70224] Microchip, *PD70224 IdealBridge Dual MOSFET-Bridge Rectifier*,
-   data sheet DS00003575D. https://www.microchip.com/en-us/product/PD70224
+   data sheet DS00003575D, product page (status: not recommended for new
+   designs). https://www.microchip.com/en-us/product/pd70224
 
-.. [PD69208] Microchip, *PD69208 8-Port PoE PSE Manager*, product page.
-   https://www.microchip.com/en-us/product/PD69208
+.. [PD69208] Microchip, *PD69208M: IEEE 802.3at/bt Type 3, 8 ports, fully
+   integrated PSE manager*, product page.
+   https://www.microchip.com/en-us/product/pd69208m
 
 .. [Si3474] Skyworks Solutions, *Si3474 Data Sheet: Up to four 802.3bt or
    eight 802.3at Ethernet Port PoE PSE Controllers*, revision 0.5,
@@ -2100,9 +2456,92 @@ References
    14.1 "Chip Operating Conditions".
    https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_14_1.html
 
-.. [PoE-GF180-EP-2] GlobalFoundries, gf180mcu electrical parameters,
-   section 2.0 "Medium Voltage Devices (6V)".
-   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_2.html
+.. [PoE-GF180-EP-OX] GlobalFoundries, gf180mcu electrical parameters,
+   section 5.4 "Oxide Breakdown Voltage".
+   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_4.html
+
+.. [PoE-GF180-EP-BJT] GlobalFoundries, gf180mcu electrical parameters,
+   section 5.8 "Vertical BJT Transistors".
+   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_8.html
+
+.. [PoE-GF180-EP-6] GlobalFoundries, gf180mcu electrical parameters,
+   section 6.1B "2000 ohm/sq High Poly Resistor".
+   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_6_2.html
+
+.. [PoE-GF180-MIM] GlobalFoundries, gf180mcu electrical parameters,
+   section 6.2 "MIM Capacitor".
+   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_6_4.html
+
+.. [PoE-GF180-DRM-4] GlobalFoundries, gf180mcu PDK design manual, section
+   4.1 "Drawn layer definition and abbreviation" (lists the deep n-well
+   layer). https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_04_1.html
+
+.. [PoE-GF180-DRM-EM] GlobalFoundries, gf180mcu PDK design manual, section
+   14.2 "Electro-migration".
+   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_14_2.html
+
+.. [PoE-GF180-LDMOS] GlobalFoundries, gf180mcu PDK design manual, section
+   10.12.1 "10V LDNMOS rules".
+   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_10_12_1.html
+
+.. [PoE-GF180-ESD] GlobalFoundries, gf180mcu PDK design manual, section
+   14.5.5 "ESD Performance from 5V/6V NMOS transistor" (and the ESD layout
+   guidelines in section 14.4).
+   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_14_5_5.html
+
+.. [DosSantos2003] P. M. dos Santos, H. Quaresma, A. P. Silva and
+   M. Lança, "Design of high-voltage devices in a fully implanted twin-well
+   CMOS process", European Solid-State Device Research Conference
+   (ESSDERC), 2003. https://doi.org/10.1109/ESSDERC.2003.1256884
+
+.. [Mitros2000] J. C. Mitros et al., "High-Voltage Drain Extended MOS
+   Transistors for 0.18 µm Logic CMOS Process", European Solid-State
+   Device Research Conference (ESSDERC), 2000.
+   https://doi.org/10.1109/ESSDERC.2000.194793
+
+.. [Pashmineh2016] S. Pashmineh and D. Killat, "A high-voltage driver
+   based on stacked low-voltage transistors with minimized on-resistance
+   for a buck converter in 65 nm CMOS", IEEE Canadian Conference on
+   Electrical and Computer Engineering (CCECE), 2016.
+   https://doi.org/10.1109/CCECE.2016.7726692
+
+.. [Mentze2006] E. J. Mentze, H. L. Hess, K. M. Buck and T. G. Windley,
+   "A Scalable High-Voltage Output Driver for Low-Voltage CMOS
+   Technologies", IEEE Transactions on VLSI Systems, 2006.
+   https://doi.org/10.1109/TVLSI.2006.887812
+
+.. [Syroiezhin2023] S. Syroiezhin, R. Weigel and V. Solomko,
+   "High-Voltage MOSFET-Based Stacked RF Switch With Extended Bandwidth
+   Down to DC", IEEE Solid-State Circuits Letters, 2023.
+   https://doi.org/10.1109/LSSC.2023.3268089
+
+.. [Ismail2017] Y. Ismail, H. Lee, S. Pamarti and C.-K. K. Yang, "A 36-V
+   49% Efficient Hybrid Charge Pump in Nanometer-Scale Bulk CMOS
+   Technology", IEEE Journal of Solid-State Circuits, vol. 52, no. 3,
+   2017. https://doi.org/10.1109/JSSC.2016.2636876
+
+.. [Ker2007] M.-D. Ker and S.-L. Chen, "Ultra-High-Voltage Charge Pump
+   Circuit in Low-Voltage Bulk CMOS Processes With Polysilicon Diodes",
+   IEEE Transactions on Circuits and Systems II, 2007.
+   https://doi.org/10.1109/TCSII.2006.882854
+
+.. [Li2019] X. Li et al., "A Regulated Temperature-Insensitive
+   High-Voltage Charge Pump in Standard CMOS Process for Micromachined
+   Gyroscopes", Sensors, vol. 19, 2019.
+   https://doi.org/10.3390/s19194149
+
+.. [ESDA-HBM] ESD Association, *Fundamentals of Electrostatic Discharge,
+   Part Five: Device Sensitivity and Testing*.
+   https://esda.org/assets/Documents/Fundamentals-of-ESD-Part-5-Device-Sensitivity-and-Testing.pdf
+
+.. [TI-SLUA736] D. V. Comiskey, *Lightning Surge Considerations for PoE
+   Powered Devices*, Texas Instruments application report SLUA736,
+   2015-03. https://www.ti.com/lit/pdf/slua736
+
+.. [PoE-Iso] J. Potterf, *Isolation Proposals*, contribution to the IEEE
+   P802.3da task force, revised 2025-03-13 (quotes the IEEE 802.3-2022
+   Annex J isolation tests).
+   https://www.ieee802.org/3/da/public/032025/SPMD_Potterf_Isolation_Proposals_Expanded_AllMarkup_v03.pdf
 
 .. [PoE-GF180-EP-5] GlobalFoundries, gf180mcu electrical parameters,
    section 5.5 "Junction Breakdown Voltage".
