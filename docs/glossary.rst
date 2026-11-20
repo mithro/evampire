@@ -418,3 +418,30 @@ gives a short description and a link to the full explanation.
       of a sink. A source reports its Port Maximum PDP, the most it will
       ever provide, and its Port Present PDP, what it can provide at present
       (:pd:`Table 6.29`; see :ref:`usbpd-building-offer`).
+
+   BVCEO
+      The collector-to-emitter breakdown voltage of a bipolar transistor with
+      its base left open (see :wikipedia:`breakdown voltage
+      <Breakdown_voltage>` and :ref:`usbpd-process-limits`).
+
+   BVDSS
+      The drain-to-source breakdown voltage of a transistor that is switched
+      off (see :wikipedia:`breakdown voltage <Breakdown_voltage>` and
+      :ref:`usbpd-process-limits`).
+
+   Deep N-well
+      An N-type layer buried below a P-well, which isolates the transistors
+      in that P-well from the P substrate. Its junction to the substrate
+      limits how far above the substrate an isolated circuit can sit (see
+      :ref:`usbpd-process-limits`).
+
+   Field oxide
+      The thick insulator between transistors on a chip, on which
+      polysilicon resistors and metal tracks run (see
+      :wikipedia:`LOCOS <LOCOS>` and :ref:`usbpd-process-limits`).
+
+   Native transistor
+      A transistor made without the threshold-adjusting implant, so that its
+      threshold voltage is close to 0 V. The gf180mcu PDK has a 6 V native
+      NMOS (see :wikipedia:`threshold voltage <Threshold_voltage>` and
+      :ref:`usbpd-rd-circuit`).

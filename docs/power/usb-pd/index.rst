@@ -15,9 +15,9 @@ ports in each board configuration is given in
 
 The pages quote two specifications, linked from the
 :doc:`standards page <../../standards>`: the
-:std:`USB Type-C Cable and Connector Specification <usb-type-c>` (cited as
-"Type‑C") and the :std:`USB Power Delivery Specification <usb-pd>` (cited as
-"PD"). The specifications name each limit by its kind: names starting with
+:std:`USB Type-C Cable and Connector Specification <usb-type-c>`
+[USBPD-TYPEC]_, cited as "Type‑C", and the
+:std:`USB Power Delivery Specification <usb-pd>` [USBPD-PD]_, cited as "PD". The specifications name each limit by its kind: names starting with
 *t* are times, *v* voltages, *i* currents, *z* or *r* impedances, *c*
 capacitances, *dc* duty cycles and *n* counts. The pages use the same names,
 so that each can be found in the specifications.

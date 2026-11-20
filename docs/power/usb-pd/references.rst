@@ -57,13 +57,6 @@ Datasheets of USB Type-C and USB Power Delivery parts
    (`archived product page
    <https://web.archive.org/web/20260214201820/https://www.st.com/en/interfaces-and-transceivers/stusb1602.html>`__).
 
-.. [USBPD-STUSB4500] STMicroelectronics, `STUSB4500 Standalone USB PD
-   Controller (Sink)
-   <https://cdn.sparkfun.com/assets/b/6/e/8/9/DS-15801-STUSB4500.pdf>`__,
-   DS12499 Rev 3, 2019-12, copy hosted by a distributor
-   (`archived product page
-   <https://web.archive.org/web/20261106213236/https://www.st.com/en/interfaces-and-transceivers/stusb4500.html>`__).
-
 .. [USBPD-CCG5C] Infineon (Cypress), `EZ-PD CCG5C USB Type-C Port Controller
    <https://www.infineon.com/assets/row/public/documents/24/49/infineon-ez-pd-ccg5c-usb-type-c-port-controller-datasheet-en.pdf>`__,
    002-23803 Rev. \*D, 2019-02-18 (`product page for the CYPD5125-40LQXI
@@ -88,31 +81,20 @@ Electrostatic discharge
    <https://www.renesas.com/us/en/document/oth/tb505-understanding-difference-between-hbm-and-iec-61000-4-2-esd-immunity>`__,
    Rev 0.00, 2016-07-29.
 
-High-voltage circuits in standard CMOS
---------------------------------------
-
-.. [USBPD-SERNEELS] B. Serneels, T. Piessens, M. Steyaert and W. Dehaene,
-   `"A high-voltage output driver in a 2.5-V 0.25-µm CMOS technology"
-   <https://doi.org/10.1109/JSSC.2005.843599>`__, *IEEE Journal of
-   Solid-State Circuits*, vol. 40, no. 3, pp. 576-583, 2005-03.
+High-voltage devices in standard CMOS
+-------------------------------------
 
 .. [USBPD-BALLAN] H. Ballan and M. Declercq, `High Voltage Devices and
    Circuits in Standard CMOS Technologies
    <https://link.springer.com/book/9780792382348>`__, Kluwer Academic
    Publishers, 1999.
 
-Processors used as reference examples
+Processor used as a reference example
 -------------------------------------
 
 .. [USBPD-PICORV32] YosysHQ, `PicoRV32: a size-optimised RISC-V CPU
    <https://github.com/YosysHQ/picorv32>`__, README, section "Cycles per
    Instruction Performance".
-
-.. [USBPD-RAVEN] efabless, `Raven: an ASIC implementation of the PicoSoC
-   PicoRV32 <https://github.com/efabless/raven-picorv32>`__, README, section
-   "Key Features" (100 MHz clock rate); the X-FAB XH018 process is named by
-   eeNews Europe, `"X-FAB Silicon Foundries tapes out open source RISC-V MCU"
-   <https://www.eenewseurope.com/news/x-fab-silicon-foundries-tapes-out-open-source-risc-v-mcu>`__.
 
 Software implementations and timer peripherals
 ----------------------------------------------
@@ -147,13 +129,12 @@ gf180mcu process documentation
    specification
    <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs.html>`__.
 
-.. [USBPD-GF180-SC] GlobalFoundries, `gf180mcu_fd_sc_mcu7t5v0 7-track
-   standard cell library
-   <https://gf180mcu-pdk.readthedocs.io/en/latest/digital/standard_cells/gf180mcu_fd_sc_mcu7t5v0/index.html>`__.
-
 .. [USBPD-GF180-IO] GlobalFoundries, `gf180mcu_fd_io 5 V I/O library, ESD
    protection
    <https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/IO/gf180mcu_fd_io/esd.html>`__.
 
 .. [USBPD-GF180-IP] GlobalFoundries, `GF180MCU PDK IPs and macros
    <https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/ips.html>`__.
+
+.. [USBPD-GF180-MODELS] GlobalFoundries PDK Authors, `sm141064.ngspice, gf180mcu SPICE models
+   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr/blob/9f992d5a9186d1f7820c58f039c484ad35b2edea/models/ngspice/sm141064.ngspice>`__, document YI-141-SM064 revision 9, in globalfoundries-pdk-libs-gf180mcu_fd_pr at commit 9f992d5 (2023-05-31): diode models nwp_6p0, dnwpw and dnwps (lines 38193 to 38220).
