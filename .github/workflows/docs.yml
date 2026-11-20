@@ -16,7 +16,7 @@ jobs:
 
       - uses: astral-sh/setup-uv@v6
 
-      - name: Check that standard clauses are links
+      - name: Check that references to standards are links
         run: uv run --python 3.12 python docs/check_source.py docs
 
       - name: Build HTML (warnings are errors)
@@ -24,10 +24,34 @@ jobs:
           uv run --python 3.12 --with-requirements docs/requirements.txt
           sphinx-build -W --keep-going -b html docs docs/_build/html
 
-      - name: Check rendered pages for error boxes
+      - name: Check rendered pages for error boxes, unreferenced numbers and alt text
         run: uv run --python 3.12 python docs/check_html.py docs/_build/html
 
       - uses: actions/upload-artifact@v4
         with:
           name: html
           path: docs/_build/html
+
+  # External sites fail briefly and some refuse automated requests, so a
+  # broken external link is reported here without failing the workflow.
+  linkcheck:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Graphviz
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Check external links
+        run: >
+          uv run --python 3.12 --with-requirements docs/requirements.txt
+          sphinx-build -b linkcheck docs docs/_build/linkcheck
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linkcheck
+          path: docs/_build/linkcheck/output.txt
