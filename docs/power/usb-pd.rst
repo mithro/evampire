@@ -25,12 +25,12 @@ cables, role changes, two ports, the cost of doing all of this in software,
 the analog blocks, and which of them can be built on the gf180mcu process.
 
 Two specifications are quoted throughout. Both are free to download from
-usb.org (see `References`_):
+usb.org:
 
 * **Type-C** means the *USB Type-C Cable and Connector Specification*,
-  Release 2.5, March 2026.
+  Release 2.5, March 2026 [USBPD-TYPEC]_.
 * **PD** means the *USB Power Delivery Specification*, Revision 3.3,
-  Version 1.0, 2026-10-16.
+  Version 1.0, 2026-10-16 [USBPD-PD]_.
 
 Section and table numbers given in brackets, such as (PD Table 5.10), refer to
 these documents.
@@ -323,8 +323,7 @@ see `Switchable Rp`_) the thresholds are (Type-C Table 4-37):
 The "open" thresholds allow 250 mV of ground offset (Type-C Table 4-37,
 note 1). A commercial example is the TI TPS65987D, which as a source detects
 an Ra below 0.15-0.25 V, 0.35-0.45 V or 0.75-0.85 V and an open pin above
-1.5-1.65 V, 1.5-1.65 V or 2.45-2.615 V for the three Rp levels (TPS65987D
-datasheet, Section 6.8). A dual-role port therefore needs, per CC pin, about
+1.5-1.65 V, 1.5-1.65 V or 2.45-2.615 V for the three Rp levels ([USBPD-TPS65987D]_, Section 6.8). A dual-role port therefore needs, per CC pin, about
 four thresholds as a sink and three per Rp level as a source.
 
 Attach for a dual-role port
@@ -366,15 +365,20 @@ to find each other (Type-C Section 4.11.2, text before Table 4-33). In
 software this means adding a random variation to the period and duty cycle.
 
 .. wavedrom::
+   :caption: Toggling while unattached, shown with a 50 % duty cycle. One
+             period tDRP is 50 ms to 100 ms; Rp is presented for
+             dcSRC.DRP × tDRP of it.
+   :name: fig-usbpd-toggle
+   :alt: Timing diagram: both CC pins alternate between Rp and Rd; one Rp
+         phase plus one Rd phase make one period tDRP.
 
    {"signal": [
-     {"name": "CC1 and CC2", "wave": "=...=...=...=...", "data": ["Rp", "Rd", "Rp", "Rd"]},
-     {"name": "", "wave": "", "node": "A.......B......."},
-     {"name": "", "wave": "", "node": "C...D..........."}
+     {"name": "CC1, CC2", "wave": "=...=...=...", "data": ["Rp", "Rd", "Rp"]},
+     {"name": "", "wave": "", "node": "A.......B..."},
+     {"name": "", "wave": "", "node": "C...D......."}
    ],
-   "edge": ["A<->B tDRP: 50 ms to 100 ms", "C<->D dcSRC.DRP x tDRP"],
-   "head": {"text": "Toggling while unattached (shown with a 50 % duty cycle)"},
-   "config": {"hscale": 2}}
+   "edge": ["A<->B tDRP", "C<->D Rp time"],
+   "config": {"hscale": 1.2}}
 
 How long a connection takes to be noticed depends on who toggles: at most
 *tNoToggleConnect* (5 ms) when neither side toggles, *tOnePortToggleConnect*
@@ -389,7 +393,9 @@ The attach sequence
 .. graphviz:: usb-pd/drp-states.dot
    :caption: Simplified attach state machine for a dual-role port that
              prefers the source role (Type-C Section 4.5.2.2, Figure 4-16).
-             Accessory and debug states are left out.
+             Accessory and debug states, and detach transitions back to
+             the unattached states, are left out. "Stable" means unchanged
+             for tCCDebounce (100 ms to 200 ms).
    :align: center
 
 **Attaching to a source** (for example a charger). While presenting Rd, the
@@ -532,14 +538,19 @@ receiver does not care which way round the signal is, and every bit has at
 least one transition, which lets the receiver follow the transmitter's clock.
 
 .. wavedrom::
+   :caption: Biphase mark coding: an edge at every bit boundary, and a
+             second edge in the middle of each ``1``.
+   :name: fig-usbpd-bmc
+   :alt: Timing diagram of the bits 0 1 1 0 1 0 0 and the BMC line level,
+         which changes at every bit boundary and also in the middle of each
+         1 bit.
 
    {"signal": [
-     {"name": "data bit", "wave": "=.=.=.=.=.=.=.=.=.",
-      "data": ["0", "1", "1", "0", "1", "0", "0", "1", "0"]},
-     {"name": "CC (BMC)", "wave": "0.10101.010.1.010."}
+     {"name": "data bit", "wave": "=.=.=.=.=.=.=.",
+      "data": ["0", "1", "1", "0", "1", "0", "0"]},
+     {"name": "CC (BMC)", "wave": "0.10101.010.1."}
    ],
-   "head": {"text": "Biphase mark coding: an edge at every bit boundary, and a second edge in the middle of each 1"},
-   "config": {"hscale": 2}}
+   "config": {"hscale": 1}}
 
 A receiver measures the time between successive edges. An interval of about
 one UI means a ``0``; two intervals of about half a UI in a row mean a ``1``.
@@ -661,11 +672,11 @@ Next, the time for a rising edge to reach the inner-mask limit of 1.04 V
 
 .. math::
 
-   t_\text{mask} = \tau \ln\frac{V_\text{swing}}{V_\text{swing} - V_\text{Y8}}
-                 = 136.5\ \text{ns} \times \ln\frac{1.125}{1.125 - 1.04}
-                 = 136.5\ \text{ns} \times \ln 13.24
-                 = 136.5\ \text{ns} \times 2.583
-                 = 353\ \text{ns}
+   t_\text{mask} &= \tau \ln\frac{V_\text{swing}}{V_\text{swing} - V_\text{Y8}} \\
+                 &= 136.5\ \text{ns} \times \ln\frac{1.125}{1.125 - 1.04} \\
+                 &= 136.5\ \text{ns} \times \ln 13.24
+                  = 136.5\ \text{ns} \times 2.583
+                  = 353\ \text{ns}
 
 where :math:`V_\text{swing}` = 1.125 V (nominal *vSwing*, PD Table 5.10) and
 :math:`V_\text{Y8}` = 1.04 V (PD Table 5.7). The mask requires this level by
@@ -693,7 +704,7 @@ about 0.4 V, 0.9 V or 1.7 V for the three Rp levels (table above). The
 transmitter does not add its signal on top of this level; it overdrives the
 wire with its low output impedance (33 Ω to 75 Ω against kilohms of Rp and
 Rd). While it transmits the wire swings between 0 V and vSwing, and when it
-lets go the wire returns to the Rp/Rd level (TPS25750 datasheet, Section
+lets go the wire returns to the Rp/Rd level ([USBPD-TPS25750]_, Section
 9.3.1.4). Therefore:
 
 * the transmitter starts by driving low (PD Section 5.3.4, item 2);
@@ -707,30 +718,51 @@ lets go the wire returns to the Rp/Rd level (TPS25750 datasheet, Section
   5.8 to 5.11).
 
 .. wavedrom::
+   :caption: Start of a message. The line idles at the Rp/Rd level (drawn
+             at mid-level), then the transmitter starts the preamble by
+             driving low.
+   :name: fig-usbpd-preamble-start
+   :alt: Timing diagram: CC idle at mid-level, then the first preamble bits
+         0 1 0 1 sent in BMC starting from a low level.
 
    {"signal": [
-     {"name": "field", "wave": "x.=.......|=.......=.........=.........",
-      "data": ["preamble (64 bits)", "preamble (end)", "Sync-1", "Sync-1"]},
-     {"name": "data bit", "wave": "x.=.=.=.=.|=.=.=.=.=.=.=.=.=.=.=.=.=.=.",
-      "data": ["0", "1", "0", "1", "0", "1", "0", "1", "0", "0", "0", "1", "1", "0", "0", "0", "1", "1"]},
-     {"name": "CC", "wave": "z.0.101.01|0.101.010.1.0.10101.0.1.0101"}
+     {"name": "field", "wave": "x.=.......", "data": ["preamble"]},
+     {"name": "data bit", "wave": "x.=.=.=.=.", "data": ["0", "1", "0", "1"]},
+     {"name": "CC", "wave": "z.0.101.01"}
    ],
-   "head": {"text": "Start of a message: idle at the Rp/Rd level (drawn mid-level), then the preamble from a low level, then the start-of-packet pattern"},
    "config": {"hscale": 1}}
 
 .. wavedrom::
+   :caption: End of the 64-bit preamble and the first Sync-1 symbol of the
+             start-of-packet pattern. Sync-1 is 11000 written b4 to b0, so
+             it is sent as 0 0 0 1 1.
+   :name: fig-usbpd-preamble-sop
+   :alt: Timing diagram: the last two preamble bits 0 1 followed by the
+         Sync-1 bits 0 0 0 1 1 in BMC.
 
    {"signal": [
-     {"name": "field", "wave": "=.........=.........x.......",
-      "data": ["last CRC symbol (end)", "EOP"]},
-     {"name": "data bit", "wave": "=.=.=.=.=.=.=.x.............",
-      "data": ["0", "1", "1", "0", "1", "1", "0"]},
-     {"name": "CC", "wave": "1.01010.10101.0...z.........",
-      "node": "..............A...B........."},
-     {"name": "", "wave": "", "node": "..............C............D"}
+     {"name": "field", "wave": "=...=.........", "data": ["preamble", "Sync-1"]},
+     {"name": "data bit", "wave": "=.=.=.=.=.=.=.", "data": ["0", "1", "0", "0", "0", "1", "1"]},
+     {"name": "CC", "wave": "1.010.1.0.1010"}
    ],
-   "edge": ["A<->B hold low ≥ 1 µs, release by 23 µs", "C<->D tInterFrameGap ≥ 25 µs before the next preamble"],
-   "head": {"text": "End of a message: a final edge after the last bit, a short low hold, then release to the Rp/Rd level"},
+   "config": {"hscale": 1}}
+
+.. wavedrom::
+   :caption: End of a message: a final edge after the last bit of the EOP
+             symbol, the line held low for at least 1 µs and released by
+             23 µs after the last bit, and at least 25 µs before the next
+             preamble.
+   :name: fig-usbpd-message-end
+   :alt: Timing diagram: the EOP bits 1 0 1 1 0 in BMC, a final falling
+         edge, a short low period, then the line released to mid-level.
+
+   {"signal": [
+     {"name": "field", "wave": "=.........x...", "data": ["EOP"]},
+     {"name": "data bit", "wave": "=.=.=.=.=.x...", "data": ["1", "0", "1", "1", "0"]},
+     {"name": "CC", "wave": "010.10101.0..z"},
+     {"name": "", "wave": "", "node": "..........A..B"}
+   ],
+   "edge": ["A<->B hold low"],
    "config": {"hscale": 1}}
 
 Up to 250 mV can be lost in the cable's ground wire at full current
@@ -786,12 +818,12 @@ needs receiver thresholds that change with its power role.
 A receiver is a low-pass filter followed by a comparator with hysteresis.
 TI's TPS65987D, a dual-role controller, switches thresholds with the role:
 504-546 mV rising and 240-260 mV falling as a sink, 840-910 mV rising and
-576-624 mV falling as a source (TPS65987D datasheet, Section 6.9). In both
+576-624 mV falling as a source ([USBPD-TPS65987D]_, Section 6.9). In both
 roles the thresholds sit either side of the eye centre for that role, and the
 hysteresis of about 275 mV is larger than the 165 mV of active noise.
 
 The USB-IF also publishes an informative white paper, *Alternate BMC Receiver
-Design Examples* (Revision 1.1, 2026-01-01), with two receivers that detect
+Design Examples* (Revision 1.1, 2026-01-01) [USBPD-BMCRX]_, with two receivers that detect
 edges rather than levels and so ignore the DC offset: one compares the signal
 with a copy of itself delayed by 300 ns to 500 ns (sampled every 50 ns), the
 other subtracts the outputs of two low-pass filters with 200 ns and 300 ns
@@ -971,6 +1003,13 @@ add one to seven 32-bit data objects (PD Section 6.1.1). *Extended* messages
 carry up to 260 bytes and are needed only for optional features.
 
 .. wavedrom::
+   :caption: The 16-bit message header (PD Table 6.2). Bit 0 is on the
+             right. PR is the power role and DR the data role of the sender.
+   :name: fig-usbpd-header
+   :alt: Bit-field diagram of the message header: bits 4 to 0 message type,
+         bit 5 data role, bits 7 to 6 revision, bit 8 power role, bits 11
+         to 9 MessageID, bits 14 to 12 number of data objects, bit 15
+         extended.
 
    {"reg": [
      {"name": "Message type", "bits": 5, "attr": "e.g. 00001 GoodCRC"},
@@ -981,7 +1020,7 @@ carry up to 260 bytes and are needed only for optional features.
      {"name": "Data objects", "bits": 3},
      {"name": "Ext", "bits": 1}
    ],
-   "config": {"hspace": 900, "bits": 16, "lanes": 1}}
+   "config": {"hspace": 700, "bits": 16, "lanes": 1}}
 
 * **Message type** (bits 4 to 0): control messages include GoodCRC (00001),
   Accept (00011), Reject (00100), PS_RDY (00110), Get_Source_Cap (00111),
@@ -999,31 +1038,40 @@ carry up to 260 bytes and are needed only for optional features.
   1 = DFP) of the sender, and the **specification revision** (bits 7 to 6),
   agreed from the first Source_Capabilities and Request (PD Section 6.1.3.1).
 
-Fixed supply PDO (bits 31 to 30 are ``00`` for a fixed supply):
-
 .. wavedrom::
+   :caption: Fixed supply PDO (PD Tables 6.8 and 6.10), drawn as two rows
+             of 16 bits. Bits 31 to 30 are 00 for a fixed supply.
+   :name: fig-usbpd-pdo
+   :alt: Bit-field diagram of the fixed supply PDO: bits 9 to 0 maximum
+         current in 10 mA units, bits 19 to 10 voltage in 50 mV units,
+         bits 21 to 20 peak current, bits 29 to 22 flags, bits 31 to 30
+         type 00.
 
    {"reg": [
-     {"name": "Max current (10 mA units)", "bits": 10},
-     {"name": "Voltage (50 mV units)", "bits": 10},
+     {"name": "Max current (10 mA)", "bits": 10},
+     {"name": "Voltage (50 mV)", "bits": 10},
      {"name": "Peak", "bits": 2},
-     {"name": "Flags (first PDO only)", "bits": 8},
+     {"name": "Flags", "bits": 8},
      {"name": "00", "bits": 2}
    ],
-   "config": {"hspace": 900, "bits": 32, "lanes": 1}}
-
-Fixed supply RDO:
+   "config": {"hspace": 700, "bits": 32, "lanes": 2}}
 
 .. wavedrom::
+   :caption: Fixed supply RDO (PD Table 6.19), drawn as two rows of 16
+             bits.
+   :name: fig-usbpd-rdo
+   :alt: Bit-field diagram of the fixed supply RDO: bits 9 to 0 and bits 19
+         to 10 operating current in 10 mA units, bits 21 to 20 reserved,
+         bits 27 to 22 flags, bits 31 to 28 object position.
 
    {"reg": [
-     {"name": "Operating current (copy)", "bits": 10},
-     {"name": "Operating current (10 mA units)", "bits": 10},
+     {"name": "Current (copy)", "bits": 10},
+     {"name": "Current (10 mA)", "bits": 10},
      {"name": "Resv", "bits": 2},
      {"name": "Flags", "bits": 6},
-     {"name": "Object position", "bits": 4}
+     {"name": "Position", "bits": 4}
    ],
-   "config": {"hspace": 900, "bits": 32, "lanes": 1}}
+   "config": {"hspace": 700, "bits": 32, "lanes": 2}}
 
 The first PDO is always 5 V, and its upper bits carry flags about the port,
 including *Dual-Role Power* (bit 29), *Unconstrained Power* (bit 27) and,
@@ -1041,9 +1089,9 @@ from the parts listed above, is:
 
 .. math::
 
-   N_\text{bits} = N_\text{pre} + N_\text{SOP} + N_\text{hdr} + 40\,n + N_\text{CRC} + N_\text{EOP}
-                 = 64 + 20 + 20 + 40\,n + 40 + 5
-                 = 149 + 40\,n
+   N_\text{bits} &= N_\text{pre} + N_\text{SOP} + N_\text{hdr} + 40\,n + N_\text{CRC} + N_\text{EOP} \\
+                 &= 64 + 20 + 20 + 40\,n + 40 + 5 \\
+                 &= 149 + 40\,n
 
 where :math:`n` is the number of 32-bit data objects (0 to 7),
 :math:`N_\text{pre}` = 64 preamble bits, :math:`N_\text{SOP}` = 4 symbols ×
@@ -1152,16 +1200,23 @@ must be answered with GoodCRC so that its first preamble bit starts between
 the message is discarded silently.
 
 .. wavedrom::
+   :caption: Acknowledgement timing (not to scale). The GoodCRC preamble
+             starts at least 25 µs (tInterFrameGap, the upper arrow) and at
+             most 195 µs (tTransmit, the lower arrow) after the end of the
+             received message.
+   :name: fig-usbpd-goodcrc
+   :alt: Timing diagram: a message from the sender, a gap, then a GoodCRC
+         from the receiver; one arrow marks the minimum gap and another the
+         latest start of the GoodCRC.
 
    {"signal": [
-     {"name": "sender", "wave": "z=.....z.........", "data": ["message (0.5 ms to 1.6 ms)"]},
-     {"name": "receiver", "wave": "z......z...=....z", "data": ["GoodCRC (0.5 ms)"]},
-     {"name": "", "wave": "", "node": ".......A...B....."},
-     {"name": "", "wave": "", "node": ".......C......D.."}
+     {"name": "sender", "wave": "z=....z.......", "data": ["message"]},
+     {"name": "receiver", "wave": "z.....z..=...z", "data": ["GoodCRC"]},
+     {"name": "", "wave": "", "node": "......A..B...."},
+     {"name": "", "wave": "", "node": "......C.....D."}
    ],
-   "edge": ["A<->B gap ≥ 25 µs", "C<->D GoodCRC starts within 195 µs"],
-   "head": {"text": "Acknowledgement timing (not to scale)"},
-   "config": {"hscale": 2}}
+   "edge": ["A<->B min 25 µs", "C<->D max 195 µs"],
+   "config": {"hscale": 1}}
 
 **Retries.** A sender that has not received GoodCRC within tReceive sends the
 same message again within tRetry, up to twice, so each message is sent at
@@ -1196,7 +1251,7 @@ offers. A current source suits an integrated circuit: the three currents
 mirrors, and the open-circuit voltage must rise above the 2.432 V "open"
 threshold for the 3.0 A level. TI specifies its TPS65987D current sources as
 73.6-86.4 µA, 165.6-194.4 µA and 303.6-356.4 µA, with the 3.0 A level valid
-up to a CC voltage of 2.6 V (TPS65987D datasheet, Section 6.8).
+up to a CC voltage of 2.6 V ([USBPD-TPS65987D]_, Section 6.8).
 
 Source sequence
 ~~~~~~~~~~~~~~~
@@ -1253,7 +1308,8 @@ where:
 
 .. math::
 
-   P_\text{offer} = (25\ \text{W} - 5\ \text{W}) \times 0.90 = 20\ \text{W} \times 0.90 = 18\ \text{W}
+   P_\text{offer} &= (25\ \text{W} - 5\ \text{W}) \times 0.90 \\
+                  &= 20\ \text{W} \times 0.90 = 18\ \text{W}
 
 For a source rated between 15 W and 27 W, PD Table 3.1 requires a 5 V offer
 of 3 A and a 9 V offer of :math:`P_\text{offer} / 9\ \text{V}`; here
@@ -1286,8 +1342,7 @@ when it shuts down a port above 5 V, must bring VBUS down to vSafe5V within
 *tSafe5V* (275 ms) and to vSafe0V within *tSafe0V* (650 ms) (PD Section
 4.1.5.1; Table 4.9). The current limit is in the external source converter.
 For example, TPS65987D has a firmware-selectable over-current clamp from
-1.267 A to 6.33 A in 21 steps and a fast-acting limit of 10 A (TPS65987D
-datasheet, Section 6.7).
+1.267 A to 6.33 A in 21 steps and a fast-acting limit of 10 A ([USBPD-TPS65987D]_, Section 6.7).
 
 Discharging VBUS
 ~~~~~~~~~~~~~~~~
@@ -1371,10 +1426,10 @@ way), the current needed is:
 
 .. math::
 
-   I_\text{inrush} = \frac{C_\text{cable} \cdot V_\text{min}}{t_\text{on}}
-                   = \frac{10\ \mu\text{F} \times 3.0\ \text{V}}{2\ \text{ms}}
-                   = \frac{30\ \mu\text{C}}{2\ \text{ms}}
-                   = 15\ \text{mA}
+   I_\text{inrush} &= \frac{C_\text{cable} \cdot V_\text{min}}{t_\text{on}}
+                    = \frac{10\ \mu\text{F} \times 3.0\ \text{V}}{2\ \text{ms}} \\
+                   &= \frac{30\ \mu\text{C}}{2\ \text{ms}}
+                    = 15\ \text{mA}
 
 where :math:`C_\text{cable}` = 10 µF is the largest inrush capacitance a cable
 may present (Type-C Table 4-6), :math:`V_\text{min}` = 3.0 V is the minimum
@@ -1605,7 +1660,7 @@ cycles it needs per instruction (*CPI*). Neither is fixed yet, so two cases
 are used:
 
 * a **multi-cycle core** such as PicoRV32, with an average CPI of about 4
-  (load 5 cycles, taken branch 5 to 6, simple ALU 3; PicoRV32 README, CPI
+  (load 5 cycles, taken branch 5 to 6, simple ALU 3; [USBPD-PICORV32]_, CPI
   table);
 * a **pipelined core**, assumed here to reach a CPI of about 1.3 on this kind
   of code (an assumption, not a measured value).
@@ -1613,14 +1668,13 @@ are used:
 For the clock, evampire already has a 125 MHz reference, so 31.25 MHz
 (÷ 4) and 62.5 MHz (÷ 2) are natural choices. The gf180mcu 7-track standard
 cell library, at its typical corner (5 V, 25 °C), gives a D flip-flop
-clock-to-output delay of 0.676 ns and a setup time of 0.229 ns (PDK
-documentation, cell gf180mcu_fd_sc_mcu7t5v0__dffq_1; databook conditions
-page). At 50 MHz that leaves
+clock-to-output delay of 0.676 ns and a setup time of 0.229 ns ([USBPD-GF180-SC]_, cell gf180mcu_fd_sc_mcu7t5v0__dffq_1; databook
+conditions page). At 50 MHz that leaves
 :math:`20\ \text{ns} - (0.676 + 0.229)\ \text{ns} = 19.1\ \text{ns}` per
 clock for logic and wiring. How many gate levels fit in that depends on the
 core and the layout and is not derived here; as an order of magnitude, the
 PicoRV32-based "Raven" chip, made in a different 180 nm process (X-FAB
-XH018), was reported to run at 100 MHz (eeNews Europe). This page uses
+XH018), was reported to run at 100 MHz [USBPD-RAVEN]_. This page uses
 **50 MHz as a working assumption** and shows how the results change with the
 clock.
 
@@ -1683,9 +1737,9 @@ The instruction rate and clock needed are then:
 
 .. math::
 
-   R_\text{instr} = N_\text{instr/bit} \cdot f_\text{bit,max}
-                  = 63.2 \times 330\,000\ \text{s}^{-1}
-                  = 20.9 \times 10^{6}\ \text{s}^{-1}
+   R_\text{instr} &= N_\text{instr/bit} \cdot f_\text{bit,max} \\
+                  &= 63.2 \times 330\,000\ \text{s}^{-1}
+                   = 20.9 \times 10^{6}\ \text{s}^{-1}
 
 .. math::
 
@@ -1699,7 +1753,7 @@ where :math:`R_\text{instr}` is the instruction rate,
 
 Polling also has a fixed cost per sample regardless of edges: a multi-cycle
 core needs about 10 cycles per poll iteration (load 5 + taken branch 5,
-PicoRV32 CPI table), so 4 million polls per second alone take 40 MHz; a
+[USBPD-PICORV32]_), so 4 million polls per second alone take 40 MHz; a
 pipelined core needing about 4 cycles per iteration takes 16 MHz.
 
 *What this means.* On a pipelined core at 50 MHz, polled receive fits, using
@@ -1785,9 +1839,9 @@ GoodCRC. The worst case is a seven-object message at the slowest bit rate:
 
 .. math::
 
-   t_\text{busy} = t_\text{msg} + t_\text{gap} + t_\text{GoodCRC}
-                 = 1589\ \mu\text{s} + 195\ \mu\text{s} + 552\ \mu\text{s}
-                 = 2336\ \mu\text{s}
+   t_\text{busy} &= t_\text{msg} + t_\text{gap} + t_\text{GoodCRC} \\
+                 &= 1589\ \mu\text{s} + 195\ \mu\text{s} + 552\ \mu\text{s}
+                  = 2336\ \mu\text{s}
 
 where :math:`t_\text{msg}` = 429 bits × 3.704 µs (packet duration table),
 :math:`t_\text{gap}` = 195 µs is the longest allowed gap (tTransmit, PD
@@ -1847,8 +1901,9 @@ From the numbers above:
    estimates above. The RISC-V carry-less multiply extension (Zbc) could
    speed it up but is not needed.
 4. **USB-specific helpers** (a BMC decoder, automatic GoodCRC as in the onsemi
-   FUSB302B, or a full PHY as in the STUSB1602, which decodes BMC and hands
-   the bits to a microcontroller over a serial interface) are not required
+   FUSB302B [USBPD-FUSB302B]_, or a BMC transceiver as in the STUSB1602
+   [USBPD-STUSB1602]_, which decodes BMC and hands the bits to a
+   microcontroller over a serial interface) are not required
    by the numbers above for one port. They would become necessary if both
    ports must receive and transmit at the same time without relying on
    retries, or if the processor's interrupt latency cannot be kept below the
@@ -1879,35 +1934,44 @@ Analog blocks
 
 .. graphviz:: usb-pd/port-blocks.dot
    :caption: Circuits for one dual-role USB Type-C port with the minimum
-             dedicated hardware. Solid arrows carry signals, bold arrows
-             carry power, dashed arrows carry control. The processor also
-             controls the board's power circuits (sink switch, source
-             converter, discharge load); those connections are not drawn.
+             dedicated hardware. Solid arrows carry signals and dashed
+             arrows carry control. The connector-side blocks may be on chip
+             or on the board (see the sections below). The VBUS power
+             connections, and the processor's control of the VBUS-side
+             blocks, are not drawn.
    :align: center
 
 Each block below lists the requirement, how commercial controllers implement
-it, and what it means on gf180mcu. Everything is per port; the full design
-has two of each. Examples are TI TPS65987D (dual-role controller with
-integrated power paths), TI TPS25750, onsemi FUSB302B (a PHY controlled by an
-external processor, which can toggle as a dual-role port), ST STUSB1602
-(source, sink or dual-role, with a BMC line driver for an external
-microcontroller), Infineon CCG5C (dual-role controller with an Arm Cortex-M0)
-and Infineon CYPD3177 (sink only).
+it, and the options for evampire. Everything is per port; the full design
+has two of each. The commercial examples are TI TPS65987D
+[USBPD-TPS65987D]_ (dual-role controller with integrated power paths), TI
+TPS25750 [USBPD-TPS25750]_, onsemi FUSB302B [USBPD-FUSB302B]_ (a PHY
+controlled by an external processor, which can toggle as a dual-role port),
+ST STUSB1602 [USBPD-STUSB1602]_ (source, sink or dual-role, with a BMC line
+driver for an external microcontroller), Infineon CCG5C [USBPD-CCG5C]_
+(dual-role controller with an Arm Cortex-M0) and Infineon CYPD3177
+[USBPD-CYPD3177]_ (sink only).
 
-Switchable Rp
-~~~~~~~~~~~~~
+Whether a block is built on evampire or with external parts is decided per
+block. Where the standard gf180mcu devices are not rated for the voltage,
+that means a custom structure is needed, not that the block cannot be on
+chip; `Limits of the gf180mcu process`_ sets out what is documented.
+
+Rp current sources
+~~~~~~~~~~~~~~~~~~
 
 *Requirement.* Per CC pin, a pull-up of 80 µA, 180 µA or 330 µA (or the
 equivalent resistors), switchable off (Type-C Table 4-27).
 
 *Commercial practice.* Current sources: TPS65987D 73.6-86.4 / 165.6-194.4 /
-303.6-356.4 µA (Section 6.8); FUSB302B 64-96 / 166-194 / 304-356 µA (Table
-10); CCG5C integrates current sources for all three levels (datasheet
-features).
+303.6-356.4 µA ([USBPD-TPS65987D]_, Section 6.8); FUSB302B 64-96 / 166-194 /
+304-356 µA ([USBPD-FUSB302B]_, Table 10); CCG5C integrates current sources for
+all three levels ([USBPD-CCG5C]_, features).
 
-*On gf180mcu.* Switchable current mirrors from a reference current, supplied
+*On evampire.* Switchable current mirrors from a reference current, supplied
 from 3.3 V or 5 V so that the open-circuit voltage exceeds the 2.432 V "open"
-threshold of the 3.0 A level. 5 V or 6 V devices at the pin.
+threshold of the 3.0 A level. The normal CC voltages (at most 5.5 V) are
+within the rating of the standard 5 V and 6 V devices.
 
 Switchable Rd and dead-battery Rd
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1923,16 +1987,25 @@ voltage (1.32 V); the source's pull-up turns it on. Once the chip is powered
 it switches this path off and uses the trimmed Rd, keeping the CC voltage in
 the band that indicates a connection (Type-C Section 4.11.1). Examples:
 TPS65987D *RD_CC* 4.59-5.61 kΩ powered and *RD_DB* 4.08-6.12 kΩ unpowered
-(Section 6.8); CCG5C "Dead Battery (DB) Rd termination removed after MCU
-boots up"; STUSB4500 and STUSB1602 use separate CC1DB/CC2DB pins wired to the
-CC pins; TI TPD8S300A (a protection chip) integrates dead-battery resistors in
-series with a FET whose threshold is 0.5-1.2 V (Section 7.6).
+([USBPD-TPS65987D]_, Section 6.8); CCG5C removes its dead-battery Rd after its
+processor boots ([USBPD-CCG5C]_, block diagram notes); STUSB4500
+[USBPD-STUSB4500]_ and STUSB1602 use separate CC1DB/CC2DB pins wired to the CC
+pins; the TPD8S300A protection chip [USBPD-TPD8S300A]_ integrates
+dead-battery resistors in series with a FET whose threshold is 0.5-1.2 V
+(Section 7.6).
 
-*On gf180mcu.* The PDK has a 6 V native NMOS (*nfet_06v0_nvt*) with a
-threshold of -0.32 V to 0.08 V (PDK electrical specification, section 4.0),
-well below 1.32 V, which can serve as the self-biased switch in series with a
-poly resistor. On a dual-role port the dead-battery path must be switched off
-when the port presents Rp, otherwise it loads the Rp current source.
+*On-chip option.* The PDK has a 6 V native NMOS (*nfet_06v0_nvt*) with a
+threshold of -0.32 V to 0.08 V ([USBPD-GF180-ELEC]_, section 4.0), well below
+1.32 V, which can serve as the self-biased switch in series with a poly
+resistor. On a dual-role port the path must be switched off when the port
+presents Rp, otherwise it loads the Rp current source. Risk: the native
+device's off-state leakage (up to 50 µA/µm at 6.6 V in its specification) and
+the behaviour of the pad's ESD structures with no supply must be simulated.
+
+*External option.* A protection chip with integrated dead-battery resistors
+(TPD8S300A). If the CC protection is external, the dead-battery Rd must be
+visible through it while the board is unpowered, which the external option
+provides directly.
 
 VCONN switch
 ~~~~~~~~~~~~
@@ -1943,14 +2016,20 @@ current limit, within 2 ms of VBUS; discharge the pin through 30 Ω to
 tens of milliamps are enough.
 
 *Commercial practice.* TPS65987D PP_CABLE switch 222-325 mΩ, current limit
-0.6-0.9 A (Section 6.7); STUSB1602 100-600 mA programmable with over-current,
-over-voltage and thermal protection; CCG5C over-current detection from
-550 mA.
+0.6-0.9 A ([USBPD-TPS65987D]_, Section 6.7); STUSB1602 100-600 mA
+programmable with over-current, over-voltage and thermal protection
+([USBPD-STUSB1602]_, features); CCG5C over-current detection from 550 mA
+([USBPD-CCG5C]_, SID.DC.20VCONN.9).
 
-*On gf180mcu.* A 5 V or 6 V PMOS switch per CC pin from a 5 V supply, with a
-current limit of a few tens of milliamps, can be on chip. The pin carrying
-VCONN is the one not used for messages, so the switch and the BMC circuits
-are never active on the same pin at the same time.
+*On-chip option.* A 5 V or 6 V PMOS switch per CC pin from a 5 V supply,
+with a current limit of a few tens of milliamps; 5.5 V is within the
+standard device ratings. The pin carrying VCONN is the one not used for
+messages, so the switch and the BMC circuits are not active on the same pin
+at the same time. The switch sits behind the CC protection, so a VBUS short
+reaches it only if that protection is on chip as well.
+
+*External option.* A load switch with current limit, or a protection chip
+whose CC switches pass VCONN (TPD8S300A passes 600 mA).
 
 CC comparators
 ~~~~~~~~~~~~~~
@@ -1962,65 +2041,102 @@ hysteresis (about 0.25/0.53 V as sink, 0.60/0.88 V as source) and, if FRS is
 supported, about 0.52 V.
 
 *Commercial practice.* TPS65987D lists all of these as fixed thresholds
-(Sections 6.8 and 6.9); FUSB302B uses three fixed comparators plus a 6-bit DAC
-(42 mV steps) and comparator (Table 10).
+([USBPD-TPS65987D]_, Sections 6.8 and 6.9); FUSB302B uses three fixed
+comparators plus a 6-bit DAC (42 mV steps) and comparator
+([USBPD-FUSB302B]_, Table 10).
 
-*On gf180mcu.* One fast comparator per CC pin with a low-pass filter
-(time constant at least 100 ns) for BMC and FRS, with its threshold selected
-by a small DAC or resistor ladder; attach and Rp-level checks are slow and
-can use the same comparator between messages, or a shared ADC. A reference
-voltage is needed; the open gf180mcu PDK lists no bandgap among its IP blocks
-(PDK documentation, IPs page).
+*On evampire.* One fast comparator per CC pin with a low-pass filter (time
+constant at least 100 ns) for BMC and FRS, its threshold selected by a small
+DAC or resistor ladder; attach and Rp-level checks are slow and can use the
+same comparator between messages, or a shared ADC. All voltages are within
+the standard device ratings.
 
 BMC driver
 ~~~~~~~~~~
 
 *Requirement.* Drive 0 V and 1.05-1.2 V with 33-75 Ω output impedance, edges
-of 300 ns to about 640 ns (10 %-90 %, see the calculation above),
-high impedance otherwise, survive a 120 µs short to ground (PD Section
-5.3.4.10).
+of 300 ns to about 640 ns (10 %-90 %, see the calculation above), high
+impedance otherwise, survive a 120 µs short to ground (PD Section 5.3.4.10).
 
 *Commercial practice.* TPS65987D: 1.05-1.2 V, 33-75 Ω, rise and fall at least
-300 ns (Section 6.9); STUSB1602 drives the line from bits supplied by an
-external microcontroller.
+300 ns ([USBPD-TPS65987D]_, Section 6.9); STUSB1602 drives the line from bits
+supplied by an external microcontroller ([USBPD-STUSB1602]_).
 
-*On gf180mcu.* A small linear regulator for the 1.125 V rail and a slew
-controlled tri-state stage; the pin side must withstand the 5.5 V the CC pin
-can see, so 5 V or 6 V devices at the pad.
+*On evampire.* A small linear regulator for the 1.125 V rail and a slew
+controlled tri-state stage; the pad side must withstand 5.5 V, so 5 V or 6 V
+devices at the pad.
+
+Reference voltage
+~~~~~~~~~~~~~~~~~
+
+*Requirement.* The driver level (± 6.7 % around 1.125 V), the Rp currents
+(± 8 %) and the thresholds need a reference that is stable over supply and
+temperature.
+
+*On-chip option.* The open gf180mcu PDK has no bandgap reference among its IP
+blocks ([USBPD-GF180-IP]_), so one has to be designed. The PDK documents
+vertical bipolar transistors, the usual basis of a bandgap reference: a
+vertical PNP (P+ in N-well over the P substrate) with a base-emitter voltage
+of 0.63-0.83 V and a current gain of 0.8-2.4, and vertical NPN devices in deep
+N-well ([USBPD-GF180-ELEC]_, section 5.8; [USBPD-GF180-DRM]_, Appendix A).
+Risk: design and characterisation effort; a reference is also needed by the
+Ethernet and Power over Ethernet circuits, so one design can serve all.
+
+*External option.* A reference IC on the board.
 
 VBUS sensing and discharge
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Requirement.* Detect VBUS presence (vSafe5V 4.75 V to 5.5 V), vSafe0V
 (0.8 V) before attaching as source, vSinkDisconnect (3.67 V), and check the
-voltage after each change; discharge VBUS on detach, role swap and Hard Reset.
+voltage after each change; discharge VBUS on detach, role swap and Hard
+Reset. VBUS reaches about 21 V in SPR (20 V + 5 %) and 50.9 V in EPR.
 
-*Commercial practice.* A divider into an ADC or comparator; TPS65987D, CCG5C
-and STUSB1602 integrate VBUS monitoring and discharge paths (STUSB1602
-datasheet features).
+*Commercial practice.* A divider into an ADC or comparator. TPS65987D, CCG5C
+and STUSB1602 bring VBUS onto the chip (TPS65987D VBUS pins are rated to 24 V,
+[USBPD-TPS65987D]_, Section 6.1); TUSB320 uses an external 887 kΩ resistor
+into a 4 V-tolerant pin [USBPD-TUSB320]_.
 
-*On gf180mcu.* VBUS reaches about 21 V in SPR (20 V + 5 %) and 50.9 V in EPR,
-so the divider (at least the top resistor) and the discharge load are
-external; the comparator or ADC input on chip sees only the divided voltage.
+*On-chip option.* A divider made of high-resistance poly resistors, so the
+pin current is small: with the 3 kΩ/square option ([USBPD-GF180-ELEC]_,
+section 6.1C), 1 MΩ takes :math:`1\ \text{M}\Omega / 3\ \text{k}\Omega =
+333` squares and draws :math:`21\ \text{V} / 1\ \text{M}\Omega = 21\ \mu\text{A}`
+at 21 V. The resistor body sits on field oxide; the voltage it can hold to
+the substrate and between resistor segments is **not documented** in the PDK
+documentation, and the pad's ESD structure must also tolerate the full VBUS
+voltage. A discharge load needs a switch that blocks VBUS, which is the same
+problem as the CC protection below.
 
-Bidirectional VBUS power path
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*External option.* An external top resistor (as in TUSB320), so the chip
+sees only the divided voltage, and an external discharge transistor.
+
+Bidirectional VBUS power path and converter control
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Requirement.* As a sink, a switch from VBUS to the board's power bus; as a
-source, a converter from the bus to the negotiated voltage (5 V to 20 V, or up
-to 48 V in EPR) with a current limit; neither may feed power backwards (for
-example, the bus must not appear on VBUS through the sink switch while the
-port is unattached), and VBUS capacitance when not sourcing is at most 10 µF
-(Type-C Table 4-2).
+source, a converter from the bus to the negotiated voltage (5 V to 20 V, or
+up to 48 V in EPR) with a current limit; neither may feed power backwards,
+and VBUS capacitance when not sourcing is at most 10 µF (Type-C Table 4-2).
+Currents are up to 3 A or 5 A.
 
 *Commercial practice.* TPS65987D has two 5 A internal power paths with
 reverse-current blocking that turns off at 3-6 mV (comparator mode) and
-configurable soft start (Section 6.7); CCG5C drives external P-channel MOSFETs
-on separate "consumer" and "provider" paths, with gate drivers tolerant to
-24 V (datasheet features).
+configurable soft start ([USBPD-TPS65987D]_, Section 6.7); CCG5C drives
+external P-channel MOSFETs on separate "consumer" and "provider" paths, with
+gate drivers tolerant to 24 V ([USBPD-CCG5C]_, features).
 
-*On gf180mcu.* All of this is external (see :doc:`index`); evampire provides
-control outputs and monitors the VBUS voltage.
+*On-chip option.* The control part: the converter's pulse-width modulation,
+current and voltage feedback through ADC inputs, the reverse-current
+comparator and soft start can be built on chip at low voltage, with gate
+drive signals to external switches. Gate drivers whose output swings at VBUS
+potential need the same high-voltage isolation as the CC protection. The
+power switches themselves must block 21 V to 50.9 V and carry 3 A to 5 A;
+the highest documented device rating is 13.2 V (LDMOS breakdown), so on-chip
+power switches would need custom stacked structures whose isolation limit is
+not documented, and a large area for low resistance at 5 A.
+
+*External option.* MOSFETs, inductor and gate drivers on the board, as in
+:doc:`index`.
 
 Over-voltage protection on the CC pins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2028,12 +2144,63 @@ Over-voltage protection on the CC pins
 *Requirement.* In normal operation the CC pins see at most 5.5 V. But the CC
 contact sits next to VBUS in the connector, and damaged or non-compliant
 cables and debris can short them. TI explains that twisting or sliding the
-plug, debris or moisture can short 20 V VBUS onto CC (TPD8S300A datasheet,
+plug, debris or moisture can short 20 V VBUS onto CC ([USBPD-TPD8S300A]_,
 Section 3). Infineon notes that such a short rings and can reach about twice
-the VBUS voltage, 44 V for 21.5 V, if nothing clamps it (CYPD3177 datasheet,
+the VBUS voltage, 44 V for 21.5 V, if nothing clamps it ([USBPD-CYPD3177]_,
 Section 1.1.3). Type-C allows a port to clamp its CC pins at 2.9 V or above
-(Type-C Table 4-40), but a dual-role port that supplies VCONN needs up to
-5.5 V on the VCONN pin, so its clamp must sit above 5.5 V.
+(Type-C Table 4-40), but a port that supplies VCONN needs up to 5.5 V on the
+VCONN pin, so any clamp must sit above 5.5 V.
+
+**Why ESD protection does not cover this.** Every I/O pad already has
+protection against electrostatic discharge (ESD), and it survives thousands
+of volts, so it is natural to ask why a 20 V short is a problem. The
+difference is the amount of charge and how long it lasts. An ESD test pulse
+is a small capacitor discharged through a resistor. For the human body model
+(HBM) used to rate chip pins, the charge delivered at the gf180mcu I/O
+library's 2 kV target ([USBPD-GF180-IO]_) is:
+
+.. math::
+
+   Q_\text{HBM} = C_\text{HBM} \cdot V_\text{HBM}
+                = 100\ \text{pF} \times 2000\ \text{V}
+                = 200\ \text{nC}
+
+where :math:`C_\text{HBM}` = 100 pF and the series resistance is 1.5 kΩ
+(the HBM network, [USBPD-TB505]_), and :math:`V_\text{HBM}` = 2000 V. The
+pulse decays with a time constant of
+:math:`1.5\ \text{k}\Omega \times 100\ \text{pF} = 150\ \text{ns}` and peaks
+at :math:`2000\ \text{V} / 1.5\ \text{k}\Omega = 1.33\ \text{A}`
+([USBPD-TB505]_, Figure 2). The system-level test used for connector pins,
+IEC 61000-4-2, uses 150 pF and 330 Ω; at 8 kV the charge is
+:math:`150\ \text{pF} \times 8\ \text{kV} = 1.2\ \mu\text{C}` and the first
+current peak is 30 A, with a rise time below 1 ns ([USBPD-TB505]_). An ESD
+clamp only has to carry this bounded charge for about 100 ns.
+
+A VBUS short is a power supply. A source must not trip its over-current
+protection for any current allowed by the contract (PD Section 4.1.5.1), so
+it can keep delivering 3 A or more until the cable is pulled. *Assumption
+for an order of magnitude:* the short lasts 1 s, the source delivers 3 A, and
+an on-chip clamp holds the pin at 6 V. Then:
+
+.. math::
+
+   Q_\text{short} &= I \cdot t = 3\ \text{A} \times 1\ \text{s} = 3\ \text{C} \\
+   E_\text{clamp} &= V_\text{clamp} \cdot I \cdot t
+                   = 6\ \text{V} \times 3\ \text{A} \times 1\ \text{s}
+                   = 18\ \text{J}
+
+which is :math:`3\ \text{C} / 200\ \text{nC} = 1.5 \times 10^{7}` times the
+HBM charge, and 18 W of continuous dissipation in the clamp. No clamp sized
+for ESD can absorb this. A VBUS short must therefore be *blocked*: a series
+element that holds off the full VBUS voltage (plus the ringing, unless a
+clamp limits it) and opens quickly enough that the low-voltage circuits behind
+it see only a brief overshoot, which an ordinary ESD-type clamp can then
+absorb. TPD8S300A opens in typically 70 ns ([USBPD-TPD8S300A]_, Section 7.7);
+NXP's NX48P0407, made for EPR, is specified for a short to 48 V VBUS with an
+absolute maximum of 60 V on its CC pins and a response below 60 ns
+[USBPD-NX48P0407]_. VBUS itself is protected against surges at board level,
+for example with a transient voltage suppressor (TVS) diode
+([USBPD-TPS25750]_, Section 10.2.3.2.2).
 
 .. list-table:: CC pin voltage ratings of commercial parts
    :header-rows: 1
@@ -2044,95 +2211,189 @@ Section 1.1.3). Type-C allows a port to clamp its CC pins at 2.9 V or above
      - Source
    * - TI TPS65987D (dual-role)
      - -0.5 V to 6 V absolute maximum
-     - Datasheet SLVSES1D, Section 6.1
+     - [USBPD-TPS65987D]_, Section 6.1
    * - TI TPS25750 (dual-role)
      - -0.5 V to 26 V absolute maximum
-     - Datasheet SLVSFR7A, Section 7.1
+     - [USBPD-TPS25750]_, Section 7.1
    * - Infineon CCG5C (dual-role)
      - 24 V maximum
-     - Datasheet 002-23803 Rev. \*D, absolute maximum ratings
+     - [USBPD-CCG5C]_, absolute maximum ratings
    * - ST STUSB1602 (dual-role)
-     - 22 V short-to-VBUS protection
-     - Datasheet DocID028319 Rev 2, features
+     - 22 V short-to-VBUS protection; "designed in a 20 V technology"
+     - [USBPD-STUSB1602]_, features and description
    * - onsemi FUSB302B (PHY, dual-role capable)
      - -0.5 V to 6.0 V absolute maximum
-     - Datasheet Rev. 5, Table 7
+     - [USBPD-FUSB302B]_, Table 7
    * - TI TPD8S300A (external protector)
-     - 24 V short-to-VBUS tolerance; series switches open when CC exceeds
-       5.75 V to 6.2 V, typically within 70 ns
-     - Datasheet SLVSEL9, Sections 7.6 and 7.7
+     - 24 V short-to-VBUS tolerance; switches open at 5.75 V to 6.2 V,
+       typically within 70 ns
+     - [USBPD-TPD8S300A]_, Sections 7.6 and 7.7
+   * - NXP NX48P0407 (external protector, EPR)
+     - CC shorted to 48 V VBUS; 60 V absolute maximum; response below 60 ns
+     - [USBPD-NX48P0407]_
 
-A controller with low-voltage CC pins (6 V class) uses an external protector
-like the last row; its series switches must pass the BMC signal, the Rp and
-Rd currents, the dead-battery Rd and the VCONN current.
+Controllers with 20 V-class CC pins are made in processes with high-voltage
+devices (STUSB1602's description says so explicitly); controllers whose CC
+pins are rated to 6 V (TPS65987D, FUSB302B) need an external protector
+against a VBUS short.
 
-*On gf180mcu.* No PDK device withstands 20 V (see below), so protection
-against a VBUS short is external, as is protection against electrostatic
-discharge at the connector (specified with the IEC 61000-4-2 system-level
-test, as TPD8S300A and CCG5C do for their CC pins).
+*On-chip option.* A series blocking switch per CC pin, built from custom
+high-voltage structures: transistors stacked in isolated wells so that each
+holds part of the voltage, or custom drain-extended transistors. Stacking
+low-voltage transistors to handle several times their rated voltage is
+established in standard CMOS: Serneels and co-authors built an output driver
+in a 2.5 V, 0.25 µm CMOS process that operates at three times the nominal
+supply [USBPD-SERNEELS]_, and Ballan and Declercq describe high-voltage
+devices built in standard CMOS without extra process steps
+[USBPD-BALLAN]_. The switch must block 21.55 V for SPR (the highest
+voltage a 20 V cable may see, PD Table 6.45) and 50.9 V for EPR, plus the
+ringing unless a clamp behind it limits that, open within about 100 ns, pass
+the BMC signal, Rp/Rd currents and VCONN with low resistance, and keep the
+dead-battery Rd visible without power. The limit that decides feasibility is
+the breakdown of the isolating well to the substrate, which is **not
+documented** for deep N-well (see below); the documented N-well to substrate
+breakdown is at least 10 V. Feasibility therefore has to be established with
+test structures, and the risk is high, especially for EPR.
 
-What can be built on gf180mcu
------------------------------
+*External option.* A protector such as TPD8S300A (SPR) or NX48P0407 (EPR) in
+front of evampire's CC pins, which can then use standard 5 V or 6 V devices.
 
-The gf180mcu PDK documentation describes the process as "0.18 µm 3.3V/(5V)6V
-dual-gate MCU technology" (PDK Design Manual, Section 1.0), with low-voltage
-devices at 3.3 V and high-voltage devices at 5 V or 6 V (Section 2.7). The
-device list also contains 10 V LDMOS transistors (Appendix A).
+Limits of the gf180mcu process
+------------------------------
 
-.. list-table:: gf180mcu device voltage ratings from the PDK documentation
+Three different kinds of limit matter, and they should not be confused.
+
+**(a) Ratings of the standard devices.** These are conservative continuous
+operating limits for the devices in the PDK. The process is described as
+"0.18 µm 3.3V/(5V)6V dual-gate MCU technology" ([USBPD-GF180-DRM]_, Section
+1.0), with low-voltage devices at 3.3 V and high-voltage devices at 5 V or
+6 V (Section 2.7), and the device list also contains 10 V LDMOS transistors
+(Appendix A).
+
+.. list-table:: (a) Standard device operating voltages
    :header-rows: 1
-   :widths: 30 35 35
+   :widths: 40 60
 
    * - Device
      - Operating voltage
-     - Breakdown data
    * - nfet_03v3, pfet_03v3
      - 3.3 V
-     - BVDSS at least 7 V (N) and 6.5 V (P); gate oxide at least 7 V
-       (electrical specification sections 1.0 and 5.4)
-   * - nfet_05v0, pfet_05v0
-     - 5 V (same devices as 6 V, with a 5 V marker layer)
-     - BVDSS at least 8.5 V (section 3.0)
-   * - nfet_06v0, pfet_06v0
-     - 6 V
-     - BVDSS at least 8.5 V; gate oxide at least 12 V (sections 2.0 and 5.4)
-   * - nfet_06v0_nvt (native)
-     - 6 V
-     - Threshold -0.32 V to 0.08 V; BVDSS at least 8 V (section 4.0)
-   * - nfet_10v0_asym, pfet_10v0_asym (LDMOS)
-     - 10 V drain, 6 V gate
-     - BVDSS at least 13.2 V (sections 8.1 and 8.2; Design Manual Section
-       10.12)
-   * - N-well to substrate junction
-     -
-     - Breakdown at least 10 V (section 5.5)
-
-.. list-table:: Pin voltages and where each function can be built
-   :header-rows: 1
-   :widths: 22 30 48
-
-   * - Node
-     - Voltage
-     - Placement
-   * - CC1, CC2, normal operation
-     - 0 V to 2.2 V with Rd; up to 5.5 V with Rd removed or as VCONN; BMC 0
-       V to 1.2 V
-     - On chip with 5 V or 6 V devices at the pin: Rp, Rd, dead-battery Rd,
-       VCONN switch, comparators, BMC driver.
-   * - CC1, CC2, fault (shorted to VBUS)
-     - Up to about 21 V (SPR) or 50.9 V (EPR), with ringing up to about
-       twice that
-     - External series protection switch and ESD protection.
-   * - VBUS sense and discharge
-     - 0 V to about 21 V (SPR) or 50.9 V (EPR)
-     - External divider and discharge load; on-chip comparator or ADC on the
-       divided voltage.
-   * - VBUS power path
-     - Same, at up to 3 A or 5 A
-     - External sink switch and source converter; on-chip control outputs.
-   * - VCONN supply
+   * - nfet_05v0, pfet_05v0 (6 V devices with a 5 V marker layer)
      - 5 V
-     - External 5 V rail; switch on chip.
+   * - nfet_06v0, pfet_06v0, nfet_06v0_nvt (native)
+     - 6 V
+   * - nfet_10v0_asym, pfet_10v0_asym (LDMOS)
+     - 10 V drain, 6 V gate ([USBPD-GF180-ELEC]_, sections 8.1 and 8.2)
+   * - MIM capacitor, 1.5 fF/µm² option
+     - at most 10 V ([USBPD-GF180-ELEC]_, section 6.2)
+   * - MIM capacitor, 1 fF/µm² option
+     - "≤ 20 V application" ([USBPD-GF180-ELEC]_, section 6.2)
+
+**(b) Physical limits of the layers.** Breakdown voltages measured on test
+structures, where documented ([USBPD-GF180-ELEC]_, sections 1 to 8):
+
+.. list-table:: (b) Documented breakdown limits
+   :header-rows: 1
+   :widths: 50 25 25
+
+   * - Structure
+     - Minimum
+     - Typical
+   * - Gate oxide, 3.3 V devices
+     - 7 V
+     - 8.8-9 V
+   * - Gate oxide, 6 V devices
+     - 12 V
+     - 16 V
+   * - N+ to P-well junction, 6 V NMOS
+     - 8.5 V
+     - 11 V
+   * - N-well to P-substrate junction
+     - 10 V
+     - 14 V
+   * - LDMOS drain (BVDSS)
+     - 13.2 V
+     - 14.5 V
+   * - Vertical PNP collector-emitter (BVCEO)
+     - 10 V
+     - 15 V
+   * - MIM dielectric, 1.5 fF/µm²
+     - 10 V
+     - 30 V
+   * - MIM dielectric, 1 fF/µm²
+     - 20 V
+     - 40 V
+   * - Deep N-well to P-substrate junction
+     - not documented
+     -
+   * - Field oxide under poly or metal, and between metal layers
+     - not documented
+     -
+
+Which MIM option, and whether the LDMOS and deep N-well layers, are available
+on the wafer.space shuttle has to be confirmed.
+
+**(c) What custom structures could reach.** These are design possibilities
+whose limits come from (b), not from (a):
+
+* *Stacked transistors in isolated wells.* Each transistor holds a share of
+  the voltage within its own rating; the stack is limited by the breakdown of
+  the isolating well to the substrate (deep N-well: not documented) and by
+  the gate oxide of each device relative to its own well. Published example:
+  [USBPD-SERNEELS]_.
+* *Custom drain-extended transistors.* A longer, lightly doped drain region
+  drawn from existing layers, as described by [USBPD-BALLAN]_; the PDK's own
+  LDMOS reaches at least 13.2 V this way.
+* *Series capacitor stacks.* For coupling or sensing AC signals across a
+  high voltage; with the 1 fF/µm² MIM option each capacitor withstands at
+  least 20 V, but the bottom plate to substrate isolation is not documented.
+* *High-resistance poly dividers.* 1 kΩ, 2 kΩ or 3 kΩ per square
+  ([USBPD-GF180-ELEC]_, section 6.1); limited by the undocumented field oxide
+  breakdown.
+* *Custom clamps and references.* Clamps from the documented diodes and
+  bipolar transistors; a bandgap reference from the vertical PNP.
+
+Pin voltages and placement options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. list-table:: Where each function can be built
+   :header-rows: 1
+   :widths: 22 24 27 27
+
+   * - Function
+     - Voltage
+     - On chip
+     - External
+   * - Rp, Rd, comparators, BMC driver and receiver, VCONN switch
+     - 0 V to 5.5 V
+     - Standard 5 V / 6 V devices
+     - Not needed
+   * - Dead-battery Rd
+     - up to about 2.2 V, unpowered
+     - Native NMOS and poly resistor
+     - In the CC protector
+   * - Reference
+     - low voltage
+     - Custom bandgap from vertical PNP
+     - Reference IC
+   * - CC protection against VBUS short
+     - about 21.6 V (SPR) or 50.9 V (EPR), plus ringing
+     - Custom stacked switch; limit not documented; high risk
+     - Protector (TPD8S300A, NX48P0407)
+   * - VBUS sensing
+     - up to about 21 V or 50.9 V
+     - Poly divider; field oxide limit not documented
+     - External top resistor
+   * - VBUS discharge
+     - same
+     - Needs a blocking switch as above
+     - External transistor and load
+   * - Power path switches and source converter
+     - same, at 3 A to 5 A
+     - Control and feedback on chip; power devices beyond documented limits
+     - MOSFETs, inductor, gate drivers
+
+The choice for each row is listed under `Open design decisions`_.
 
 Open design decisions
 ---------------------
@@ -2154,82 +2415,118 @@ Open design decisions
   ask for a power role swap, given the power budget.
 * **Fast role swap.** Whether the board signals or accepts FRS; this needs a
   strong CC pull-down, hold-up energy, and a source converter kept running.
-* **CC protection.** An external protector chip or discrete high-voltage
-  switches; either must pass VCONN and keep the dead-battery Rd visible.
-* **Dead-battery Rd.** On chip (native NMOS and poly resistor) or in the
+* **CC protection against a VBUS short.** A custom on-chip blocking switch
+  (which first needs test structures to measure the deep N-well isolation
+  limit) or an external protector; either must pass VCONN and keep the
+  dead-battery Rd visible.
+* **Dead-battery Rd.** On chip (native NMOS and poly resistor) or in an
   external protector.
-* **Reference voltage** for the BMC driver level, Rp currents and
-  thresholds: an on-chip bandgap reference or an external one.
-* **Power path and budget margins**, including how fast the board can react
-  when the Ethernet input is reduced or lost (see :doc:`index` and
+* **VCONN switch.** On chip (standard 5 V / 6 V devices) or external.
+* **Reference voltage.** A custom on-chip bandgap reference from the vertical
+  PNP, shared with the Ethernet and Power over Ethernet circuits, or an
+  external reference.
+* **VBUS sensing and discharge.** An on-chip poly divider (field oxide limit
+  to be established) or an external top resistor and discharge transistor.
+* **Power path and converter.** Which parts of the control (modulation,
+  feedback, reverse-current detection, gate drive) are on chip; the power
+  switches themselves, and budget margins, including how fast the board can
+  react when the Ethernet input is reduced or lost (see :doc:`index` and
   :doc:`poe`).
+* **Process options.** Which MIM option and whether the LDMOS and deep N-well
+  layers are available on the wafer.space shuttle.
 
 References
 ----------
 
-Specifications (free from usb.org):
+.. [USBPD-TYPEC] USB Implementers Forum, *USB Type-C Cable and Connector
+   Specification*, Release 2.5, March 2026 (download "USB Type-C 2.5 Release
+   202603").
+   https://www.usb.org/document-library/usb-type-cr-cable-and-connector-specification-release-25
 
-* USB Implementers Forum, *USB Type-C Cable and Connector Specification*,
-  Release 2.5, March 2026. Document library:
-  https://www.usb.org/document-library/usb-type-cr-cable-and-connector-specification-release-24
-  (download: "USB Type-C 2.5 Release 202603").
-* USB Implementers Forum, *USB Power Delivery Specification*, Revision 3.3,
-  Version 1.0, 2026-10-16. Document library:
-  https://www.usb.org/document-library/usb-power-delivery
-  (download: USB_PD_R3.3_V1.0.zip).
-* USB Implementers Forum, *Alternate BMC Receiver Design Examples*,
-  informative white paper, Revision 1.1, 2026-01-01. Included in the USB
-  Power Delivery download above.
+.. [USBPD-PD] USB Implementers Forum, *USB Power Delivery Specification*,
+   Revision 3.3, Version 1.0, 2026-10-16 (download USB_PD_R3.3_V1.0.zip).
+   https://www.usb.org/document-library/usb-power-delivery
 
-Datasheets:
+.. [USBPD-BMCRX] USB Implementers Forum, *Alternate BMC Receiver Design
+   Examples*, informative white paper, Revision 1.1, 2026-01-01. Included in
+   the [USBPD-PD]_ download.
 
-* Texas Instruments, *TPS65987D USB Type-C and USB PD Controller with
-  Integrated Source and Sink Power Path*, SLVSES1D, revised October 2022.
-  https://www.ti.com/lit/ds/symlink/tps65987d.pdf
-* Texas Instruments, *TPS25750 USB Type-C and USB PD Controller with
-  Integrated Power Switches*, SLVSFR7A, revised November 2020.
-  https://www.ti.com/lit/ds/symlink/tps25750.pdf
-* Texas Instruments, *TPD8S300A USB Type-C Port Protector*, SLVSEL9, June
-  2018. https://www.ti.com/lit/ds/symlink/tpd8s300a.pdf
-* onsemi, *FUSB302B Programmable USB Type-C Controller with PD*, Rev. 5,
-  August 2021. https://www.onsemi.com/download/data-sheet/pdf/fusb302b-d.pdf
-* STMicroelectronics, *STUSB1602 USB Type-C controller with TX/RX line driver
-  and BMC*, DocID028319 Rev 2, April 2017. Product page:
-  https://www.st.com/en/interfaces-and-transceivers/stusb1602.html
-* STMicroelectronics, *STUSB4500 Standalone USB PD Controller (Sink)*,
-  DS12499 Rev 3, December 2019.
-  https://www.st.com/resource/en/datasheet/stusb4500.pdf
-* Infineon (Cypress), *EZ-PD CCG5C USB Type-C Port Controller*, 002-23803
-  Rev. \*D, 2019-02-18.
-  https://www.infineon.com/assets/row/public/documents/24/49/infineon-ez-pd-ccg5c-usb-type-c-port-controller-datasheet-en.pdf
-* Infineon, *EZ-PD BCR USB Type-C Port Controller for Power Sinks
-  (CYPD3177)*, 002-25383 Rev. \*C, 2024-09-18.
-  https://www.infineon.com/assets/row/public/documents/24/49/infineon-cypd3177-24lqxq-datasheet-en.pdf
+.. [USBPD-TPS65987D] Texas Instruments, *TPS65987D USB Type-C and USB PD
+   Controller with Integrated Source and Sink Power Path*, SLVSES1D, revised
+   2022-10. https://www.ti.com/lit/ds/symlink/tps65987d.pdf
 
-Processor references:
+.. [USBPD-TPS25750] Texas Instruments, *TPS25750 USB Type-C and USB PD
+   Controller with Integrated Power Switches*, SLVSFR7A, revised 2020-11.
+   https://www.ti.com/lit/ds/symlink/tps25750.pdf
 
-* YosysHQ, *PicoRV32 - A Size-Optimized RISC-V CPU*, README (CPI table).
-  https://github.com/YosysHQ/picorv32
-* eeNews Europe, "X-FAB Silicon Foundries tapes out open source RISC-V MCU"
-  (Raven, PicoRV32 in X-FAB XH018).
-  https://www.eenewseurope.com/news/x-fab-silicon-foundries-tapes-out-open-source-risc-v-mcu
+.. [USBPD-TPD8S300A] Texas Instruments, *TPD8S300A USB Type-C Port
+   Protector: Short-to-VBUS Overvoltage and IEC ESD Protection*, SLVSEL9,
+   2018-06. https://www.ti.com/lit/ds/symlink/tpd8s300a.pdf
 
-gf180mcu process:
+.. [USBPD-TUSB320] Texas Instruments, *TUSB320 USB Type-C Configuration
+   Channel Logic and Port Control*, SLLSEN9F, revised 2022-03.
+   https://www.ti.com/lit/ds/symlink/tusb320.pdf
 
-* GlobalFoundries GF180MCU PDK documentation:
-  https://gf180mcu-pdk.readthedocs.io/
-* Design Manual, Section 2.0 (process and operating voltages):
-  https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_02.html
-* Design Manual, Appendix A (device list):
-  https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_15.html
-* Design Manual, Section 10.12 (10 V LDMOS rules):
-  https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_10_12.html
-* Electrical Parameters Specification:
-  https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs.html
-* 7-track standard cell library, D flip-flop gf180mcu_fd_sc_mcu7t5v0__dffq_1
-  and databook conditions:
-  https://gf180mcu-pdk.readthedocs.io/en/latest/digital/standard_cells/gf180mcu_fd_sc_mcu7t5v0/cells/dffq/gf180mcu_fd_sc_mcu7t5v0__dffq_1.html
-  and
-  https://gf180mcu-pdk.readthedocs.io/en/latest/digital/standard_cells/gf180mcu_fd_sc_mcu7t5v0/setup.html
-* IPs and macros (I/O and SRAM only):
-  https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/ips.html
+.. [USBPD-FUSB302B] onsemi, *FUSB302B Programmable USB Type-C Controller with
+   PD*, Rev. 5, 2021-08.
+   https://www.onsemi.com/download/data-sheet/pdf/fusb302b-d.pdf
+
+.. [USBPD-STUSB1602] STMicroelectronics, *STUSB1602 USB Type-C controller
+   with TX/RX line driver and BMC*, DocID028319 Rev 2, 2017-04. Copy used:
+   https://datasheet.chipsmall.com/STUSB1602QTR/628546.pdf (st.com could not
+   be reached when this page was written).
+
+.. [USBPD-STUSB4500] STMicroelectronics, *STUSB4500 Standalone USB PD
+   Controller (Sink)*, DS12499 Rev 3, 2019-12. Copy used:
+   https://cdn.sparkfun.com/assets/b/6/e/8/9/DS-15801-STUSB4500.pdf
+
+.. [USBPD-CCG5C] Infineon (Cypress), *EZ-PD CCG5C USB Type-C Port
+   Controller*, 002-23803 Rev. \*D, 2019-02-18.
+   https://www.infineon.com/assets/row/public/documents/24/49/infineon-ez-pd-ccg5c-usb-type-c-port-controller-datasheet-en.pdf
+
+.. [USBPD-CYPD3177] Infineon, *EZ-PD BCR USB Type-C Port Controller for
+   Power Sinks (CYPD3177)*, 002-25383 Rev. \*C, 2024-09-18.
+   https://www.infineon.com/assets/row/public/documents/24/49/infineon-cypd3177-24lqxq-datasheet-en.pdf
+
+.. [USBPD-NX48P0407] NXP Semiconductors, *NX48P0407 48 V USB Type-C CC/SBU
+   Protection IC*, product page. https://www.nxp.com/products/NX48P0407
+
+.. [USBPD-TB505] Renesas, *TB505 Understanding the Difference between HBM and
+   IEC 61000-4-2 ESD Immunity*, Rev 0.00, 2016-07-29.
+   https://www.renesas.com/us/en/document/oth/tb505-understanding-difference-between-hbm-and-iec-61000-4-2-esd-immunity
+
+.. [USBPD-SERNEELS] B. Serneels, T. Piessens, M. Steyaert and W. Dehaene,
+   "A high-voltage output driver in a 2.5-V 0.25-µm CMOS technology", *IEEE
+   Journal of Solid-State Circuits*, vol. 40, no. 3, pp. 576-583, 2005-03.
+
+.. [USBPD-BALLAN] H. Ballan and M. Declercq, *High Voltage Devices and
+   Circuits in Standard CMOS Technologies*, Kluwer Academic Publishers, 1999.
+   https://link.springer.com/book/9780792382348
+
+.. [USBPD-PICORV32] YosysHQ, *PicoRV32 - A Size-Optimized RISC-V CPU*,
+   README (cycles per instruction table). https://github.com/YosysHQ/picorv32
+
+.. [USBPD-RAVEN] eeNews Europe, "X-FAB Silicon Foundries tapes out open
+   source RISC-V MCU" (Raven, PicoRV32 in the X-FAB XH018 process).
+   https://www.eenewseurope.com/news/x-fab-silicon-foundries-tapes-out-open-source-risc-v-mcu
+
+.. [USBPD-GF180-DRM] GlobalFoundries, *GF180MCU PDK Design Manual*: Section
+   1.0 and 2.0 (process and operating voltages), Section 10.12 (10 V LDMOS
+   rules), Appendix A (device list).
+   https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_man.html
+
+.. [USBPD-GF180-ELEC] GlobalFoundries, *GF180MCU Electrical Parameters
+   Specification*, sections 1 to 8.
+   https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs.html
+
+.. [USBPD-GF180-SC] GlobalFoundries, *gf180mcu_fd_sc_mcu7t5v0 7-track
+   standard cell library*: cell gf180mcu_fd_sc_mcu7t5v0__dffq_1 and databook
+   conditions.
+   https://gf180mcu-pdk.readthedocs.io/en/latest/digital/standard_cells/gf180mcu_fd_sc_mcu7t5v0/index.html
+
+.. [USBPD-GF180-IO] GlobalFoundries, *gf180mcu_fd_io 5 V I/O library*, ESD
+   protection targets.
+   https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/IO/gf180mcu_fd_io/esd.html
+
+.. [USBPD-GF180-IP] GlobalFoundries, *GF180MCU PDK IPs and macros* (I/O and
+   SRAM only). https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/ips.html
