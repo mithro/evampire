@@ -404,3 +404,17 @@ gives a short description and a link to the full explanation.
       PDP, may be lower than its maximum and may change during operation, for
       example because it shares one supply with other ports
       (:pd:`Section 3.2.3`, see :doc:`power/usb-pd/two-ports`).
+
+   Adjustable voltage supply
+   AVS
+      In USB Power Delivery, a supply whose voltage the sink sets in 100 mV
+      steps, from 9 V to 20 V in the standard power range and from 15 V to
+      48 V in the extended power range (:pd:`Table 4.3`, :pd:`Table 4.4`;
+      see :ref:`usbpd-power-levels`).
+
+   PDP
+   PD Power
+      In USB Power Delivery, the output power of a source or the input power
+      of a sink. A source reports its Port Maximum PDP, the most it will
+      ever provide, and its Port Present PDP, what it can provide at present
+      (:pd:`Table 6.29`; see :ref:`usbpd-building-offer`).
