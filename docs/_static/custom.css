@@ -47,3 +47,17 @@ span.backrefs,
 div.citation {
   overflow-wrap: anywhere;
 }
+
+/* The "Open diagram at full size" link added by diagram-links.js is only
+ * shown on narrow screens, where diagrams are scaled down. */
+a.diagram-full-size {
+  display: none;
+}
+
+@media (max-width: 46em) {
+  a.diagram-full-size {
+    display: block;
+    font-size: 0.85em;
+    margin-top: 0.25rem;
+  }
+}

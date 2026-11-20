@@ -81,6 +81,10 @@ linkcheck_ignore = [
     r"https://ietresearch\.onlinelibrary\.wiley\.com/.*",
     r"https://doi\.org/10\.1088/.*",
     r"https://iopscience\.iop\.org/.*",
+    # MDPI and Littelfuse also answer 403 to automated clients.
+    r"https://doi\.org/10\.3390/.*",
+    r"https://www\.mdpi\.com/.*",
+    r"https://www\.littelfuse\.com/.*",
 ]
 
 myst_enable_extensions = [
@@ -94,6 +98,9 @@ html_theme = "furo"
 html_title = "evampire"
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+# Adds an "Open diagram at full size" link under each diagram on narrow
+# screens, where diagrams are scaled down to the column width.
+html_js_files = ["diagram-links.js"]
 
 # Pull request previews on Read the Docs are built from a commit that is not
 # on main; point the "view source" links at that commit.
