@@ -25,10 +25,6 @@ Estimate
    A number calculated on this page from required or published values. Each
    estimate states its assumptions. Estimates are not requirements.
 
-.. contents:: On this page
-   :local:
-   :depth: 2
-
 The interface to the forwarding logic
 -------------------------------------
 

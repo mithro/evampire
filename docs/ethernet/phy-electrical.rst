@@ -35,10 +35,6 @@ The requirements for evampire are:
 
    phy-electrical/integration
 
-.. contents:: On this page
-   :local:
-   :depth: 1
-
 The job of the transceiver
 --------------------------
 
