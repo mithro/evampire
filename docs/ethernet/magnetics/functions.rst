@@ -26,7 +26,7 @@ way of meeting them ([MAG-ENT98]_, section 2.1).
      - MDI impedance balance, :clause:`40.8.3.2`
    * - :ref:`Blocking DC <magnetics-common-mode>`
      - transformer
-     - isolation, and Power over Ethernet at up to 57 V
+     - isolation, and Power over Ethernet at up to 57 V
    * - :ref:`Matching the 100 Ω cable <magnetics-return-loss>`
      - 1:1 transformer
      - MDI return loss, :clause:`40.8.3.1`
@@ -34,7 +34,7 @@ way of meeting them ([MAG-ENT98]_, section 2.1).
      - transformer inductance
      - transmitter droop, :clause:`40.6.1.2.2`
    * - :ref:`Terminating common-mode signals <magnetics-cm-termination>`
-     - 75 Ω resistors and a 1000 pF capacitor
+     - 75 Ω resistors and a 1000 pF capacitor
      - radio-emission limits
    * - :ref:`Filtering common-mode noise <magnetics-choke>`
      - common-mode choke
@@ -92,29 +92,29 @@ must withstand at least one of the tests in
      - Duration
    * - Alternating voltage
      - 1500 rms
-     - 50 Hz to 60 Hz
-     - 60 s
+     - 50 Hz to 60 Hz
+     - 60 s
    * - Direct voltage
      - 2250
      - steady
-     - 60 s
+     - 60 s
    * - Impulses, port without Power over Ethernet
      - 2400
-     - 1.2/50 µs
+     - 1.2/50 µs
      - ten impulses
    * - Impulses, port with Power over Ethernet
      - 1500
-     - 10/700 µs
+     - 10/700 µs
      - ten impulses
 
-A 1.2/50 µs impulse rises in 1.2 µs and falls to half its peak in 50 µs.
-The impulses of the first impulse test alternate in polarity, at least 1 s
+A 1.2/50 µs impulse rises in 1.2 µs and falls to half its peak in 50 µs.
+The impulses of the first impulse test alternate in polarity, at least 1 s
 apart (:std:`Annex J.1 <802.3>`). The impulses for a Power over Ethernet
-port are 60 s apart (:clause:`145.4.1`). The 1500 V rms test has a peak of
-2121 V.
+port are 60 s apart (:clause:`145.4.1`). The 1500 V rms test has a peak of
+2121 V.
 
 The port passes when there is no insulation breakdown during the test, and
-the resistance afterwards is at least 2 MΩ, measured at 500 V. Annex J.1
+the resistance afterwards is at least 2 MΩ, measured at 500 V. Annex J.1
 counts as breakdown a current that rises rapidly and without control. A
 steady current through a capacitor is therefore not breakdown, which
 matters for ports coupled through capacitors (:doc:`isolation`).
@@ -141,10 +141,10 @@ a part must withstand the voltage of the test that the port is qualified
 with.
 
 These pages take a part as suitable when its maker states a withstand
-(test) voltage at least as high as that test voltage: 2121 V peak for the
-alternating test, or 2250 V for the direct test. Its rated working voltage
+(test) voltage at least as high as that test voltage: 2121 V peak for the
+alternating test, or 2250 V for the direct test. Its rated working voltage
 can be lower. Magnetics data sheets state the isolation of the whole part,
-most often 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
+most often 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
 
 .. _magnetics-common-mode:
 
@@ -165,15 +165,15 @@ end, a ground difference or Power over Ethernet puts it.
 Real transformers pass some common-mode signal through the capacitance
 between their windings at high frequencies, which is why a choke is added
 (:ref:`magnetics-choke`). Data sheets give the rejection as "common-mode
-rejection": for example 33 dB to 43 dB from 30 MHz to 100 MHz for the Pulse
-H5007NL ([MAG-PULSE]_, electrical table), and 30 dB to 35 dB for the Bel
+rejection": for example 33 dB to 43 dB from 30 MHz to 100 MHz for the Pulse
+H5007NL ([MAG-PULSE]_, electrical table), and 30 dB to 35 dB for the Bel
 0826-1G1T-23-F ([MAG-BEL]_, electrical table).
 
 IEEE 802.3 sets the related requirement at the MDI as an impedance balance
 (:clause:`40.8.3.2`). A common-mode voltage applied to the pair must produce
 only a small differential voltage: the ratio must exceed
 :math:`34 - 19.2 \log_{10}(f / 50\ \text{MHz})` dB from 1 MHz to 100 MHz.
-This is 66.6 dB at 1 MHz and 28.2 dB at 100 MHz.
+This is 66.6 dB at 1 MHz and 28.2 dB at 100 MHz.
 
 .. _magnetics-cm-termination:
 
@@ -184,17 +184,17 @@ Each pair, taken as a whole, also forms a transmission line with every
 other pair. Common-mode currents travel along these lines. If the ends are
 left open, the currents reflect back and forth and radiate.
 
-Each cable-side centre tap therefore goes through a 75 Ω resistor to a node
+Each cable-side centre tap therefore goes through a 75 Ω resistor to a node
 shared by the four pairs. Between any two pairs there are then two
-resistors in series, 150 Ω. This is close to the 145 Ω pair-to-pair
+resistors in series, 150 Ω. This is close to the 145 Ω pair-to-pair
 impedance of :wikipedia:`Category 5 <Category_5_cable>` cable, so the
 energy is absorbed in the resistors instead of radiated. The patent that
-describes the network reports about 10 dB less emission and susceptibility
+describes the network reports about 10 dB less emission and susceptibility
 [MAG-SMITH]_. The network is called the
 :term:`Bob Smith termination` after its inventor.
 
 The shared node goes to chassis ground through one capacitor, most often
-1000 pF rated 2 kV ([MAG-KSZ9031]_, section 12; [MAG-WURTH]_;
+1000 pF rated 2 kV ([MAG-KSZ9031]_, section 12; [MAG-WURTH]_;
 [MAG-BEL]_). The capacitor is not part of the patent ([MAG-ENT98]_, section
 3.2). Its impedance falls with frequency:
 
@@ -219,7 +219,7 @@ The shared node goes to chassis ground through one capacitor, most often
      - Capacitance
      - F
 
-For :math:`C = 1000\ \text{pF}`, at 50 Hz and at 30 MHz:
+For :math:`C = 1000\ \text{pF}`, at 50 Hz and at 30 MHz:
 
 .. math::
 
@@ -292,14 +292,14 @@ Current-mode driver
    The driver switches a current between the two pins of the pair, and its
    transistors only sink current. The current is supplied through pull-up
    resistors and the centre tap, which are tied to a supply. Texas
-   Instruments' DP83848 uses a 49.9 Ω resistor from each pin to the 3.3 V
+   Instruments' DP83848 uses a 49.9 Ω resistor from each pin to the 3.3 V
    analogue supply, with the centre taps tied to the same supply
    ([MAG-SDAA089]_, section 3.2).
 Voltage-mode driver
    The driver drives each pin from a low impedance, sets its own
    common-mode voltage, and has its termination on the chip. The centre tap
    is not tied to a supply: each centre tap goes to ground through its own
-   0.1 µF capacitor ([MAG-KSZ9031]_, section 12; [MAG-DP83867]_,
+   0.1 µF capacitor ([MAG-KSZ9031]_, section 12; [MAG-DP83867]_,
    section 9.2).
 
 Both kinds of driver also work with capacitors in place of the

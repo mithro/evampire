@@ -40,8 +40,8 @@ by unequal wire resistance, biases it ([MAG-TPS2376H]_, section 9.2.1.2).
    :align: center
 
 The termination resistors of :doc:`functions` connect to the same centre
-taps. In a Power over Ethernet port each 75 Ω resistor needs a series
-capacitor of about 10 nF to block the direct voltage ([MAG-ENT98]_,
+taps. In a Power over Ethernet port each 75 Ω resistor needs a series
+capacitor of about 10 nF to block the direct voltage ([MAG-ENT98]_,
 section 3.9).
 
 :numref:`tbl-magnetics-poe-numbers` gives the Power over Ethernet values
@@ -109,8 +109,8 @@ The transformer hides the data circuits from detection
 ------------------------------------------------------
 
 Before it switches power on, power sourcing equipment detects a powered
-device by its signature resistance and capacitance, measured between 2.7 V
-and 10.1 V, and then classifies it (:clause:`Table 145-21 <145>`). At direct
+device by its signature resistance and capacitance, measured between 2.7 V
+and 10.1 V, and then classifies it (:clause:`Table 145-21 <145>`). At direct
 voltages the transceiver is not connected to the cable at all, because the
 transformer blocks direct current. The power sourcing equipment therefore
 sees only the powered device's signature.

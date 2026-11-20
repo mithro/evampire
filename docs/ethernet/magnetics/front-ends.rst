@@ -54,10 +54,10 @@ port of four pairs.
      - Value
    * - High-voltage coupling capacitor paths
      - 8
-     - 16 nF or more; 33 nF to 100 nF preferred (:doc:`coupling-capacitors`)
+     - 16 nF or more; 33 nF to 100 nF preferred (:doc:`coupling-capacitors`)
    * - Centre-tapped inductors, for four-pair Power over Ethernet
      - 4
-     - 80 µH or more across the pair (:doc:`without-transformer`)
+     - 80 µH or more across the pair (:doc:`without-transformer`)
    * - Common-mode termination resistors
      - 8
      - open question (:doc:`without-transformer`)
@@ -76,7 +76,7 @@ coupling is used in automotive Ethernet ([MAG-DP83TC811]_,
 [MAG-OA100T1]_) and on backplanes ([MAG-ENT114]_). Inductors carry power
 over a single pair ([MAG-DP83TD510E]_, [MAG-TDKSPE]_), and centre-tapped
 windings carry Power over Ethernet in standard magnetics ([MAG-ENT98]_,
-section 3.9). The combination at 1000 Mbit/s over 100 m of cable is
+section 3.9). The combination at 1000 Mbit/s over 100 m of cable is
 reported in one vendor test, without a choke ([MAG-ADIWIKI]_).
 
 The active front end moves work onto evampire
@@ -114,38 +114,38 @@ on :doc:`../phy-electrical/index`.
      - Specification
      - Basis
    * - Line driver amplitude
-     - 0.67 V to 0.82 V peak differential in the test pattern
+     - 0.67 V to 0.82 V peak differential in the test pattern
      - :clause:`40.6.1.2.1`
    * - Line driver impedance
-     - 100 Ω, within the return loss budget
+     - 100 Ω, within the return loss budget
      - :clause:`40.8.3.1`
    * - Signal at each pin
-     - about ±0.4 V of transmit signal, plus the received signal, around
+     - about ±0.4 V of transmit signal, plus the received signal, around
        the common-mode level
      - estimate
    * - Capacitance across each pair, chip side
-     - at most about 12.8 pF, including pads, protection and traces
+     - at most about 12.8 pF, including pads, protection and traces
      - estimate, :doc:`gigabit-risk`
    * - Baseline-wander correction
-     - tracks a high-pass time constant of 1.6 µs or more, for the far-end
+     - tracks a high-pass time constant of 1.6 µs or more, for the far-end
        signal and the echo
      - estimate, :doc:`gigabit-risk`
    * - Receiver common-mode rejection
-     - about 40 dB from 1 MHz to 250 MHz, together with any choke
+     - about 40 dB from 1 MHz to 250 MHz, together with any choke
      - estimate, :doc:`gigabit-risk`
    * - Common-mode feedback bandwidth
-     - up to 250 MHz if it replaces the choke
+     - up to 250 MHz if it replaces the choke
      - :clause:`40.6.1.3.3` test range
    * - Pin protection
-     - 2 kV human-body model or more, plus the charge passed by the
+     - 2 kV human-body model or more, plus the charge passed by the
        capacitors
      - [MAG-GFIO]_, :doc:`without-transformer`
    * - Active inductor control
-     - 80 µH or more across the pair, about 0.5 A per wire
+     - 80 µH or more across the pair, about 0.5 A per wire
      - :doc:`without-transformer`
 
-If 10BASE-T is supported, the line driver also reaches 2.2 V to 2.8 V peak
-(:clause:`14.3.1.2.1`), about ±1.4 V at each pin.
+If 10BASE-T is supported, the line driver also reaches 2.2 V to 2.8 V peak
+(:clause:`14.3.1.2.1`), about ±1.4 V at each pin.
 
 Which IEEE 802.3 requirements a transformer-free port meets
 -----------------------------------------------------------
@@ -167,35 +167,35 @@ choices, and "open" where only a measurement answers it.
      - How
    * - Isolation, direct-voltage test
      - conditional
-     - Capacitors that withstand 2250 V, and an isolated power path
+     - Capacitors that withstand 2250 V, and an isolated power path
        (:doc:`isolation`).
    * - Isolation, alternating-voltage test
      - conditional
-     - The tester must supply 38 mA to 377 mA of capacitive current
+     - The tester must supply 38 mA to 377 mA of capacitive current
        (:doc:`isolation`).
    * - Isolation, impulse test
      - conditional
-     - Capacitors and clamps that hold 2400 V, or 1500 V with Power over
+     - Capacitors and clamps that hold 2400 V, or 1500 V with Power over
        Ethernet.
    * - Return loss
      - met
-     - At least 9.9 nF per wire, and at most about 12.8 pF across each pair
+     - At least 9.9 nF per wire, and at most about 12.8 pF across each pair
        on the chip side.
    * - Droop
      - met
-     - At least 16 nF per wire, and 80 µH across the pair for any inductor.
+     - At least 16 nF per wire, and 80 µH across the pair for any inductor.
    * - Impedance balance
      - open
      - Set by the matching of the capacitors and the chip-side circuits.
    * - Common-mode noise rejection
      - open
-     - About 40 dB in the receiver and any choke; to be measured.
-   * - Operation over a 100 m link
+     - About 40 dB in the receiver and any choke; to be measured.
+   * - Operation over a 100 m link
      - open
      - Reported in one vendor test; see :doc:`gigabit-risk`.
    * - Power over Ethernet signature
      - conditional
-     - The coupling capacitors' capacitance fits in the 50 nF to 120 nF
+     - The coupling capacitors' capacitance fits in the 50 nF to 120 nF
        window.
    * - Radio-emission limits
      - open
@@ -210,7 +210,7 @@ Open questions
 --------------
 
 * How will the port be tested against IEEE 802.3 where the standard is
-  written for a transformer, for example the 350 µH inductance of
+  written for a transformer, for example the 350 µH inductance of
   100BASE-TX if that speed is supported?
 * Does the impedance balance of :clause:`40.8.3.2` hold with coupling
   capacitors of ordinary tolerance?

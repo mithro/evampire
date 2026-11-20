@@ -2,19 +2,19 @@ Matching the cable and passing low frequencies
 ==============================================
 
 This page works out two requirements that the :term:`magnetics` of a
-gigabit port help to meet: how closely the port must match the 100 Ω cable
+gigabit port help to meet: how closely the port must match the 100 Ω cable
 (its :term:`return loss`), and how much of a slow signal it must pass (its
 :term:`droop`). The same numbers set the size of the capacitors that
 replace the transformer on :doc:`coupling-capacitors`.
 
 .. _magnetics-return-loss:
 
-The port must match 100 Ω to within a return loss
+The port must match 100 Ω to within a return loss
 -------------------------------------------------
 
-Ethernet transceivers drive and terminate a 100 Ω differential load
+Ethernet transceivers drive and terminate a 100 Ω differential load
 directly ([MAG-KSZ9031]_, section 12; [MAG-DP83867]_, section 9.2),
-so the transformer has a 1:1 ratio and the cable appears as 100 Ω at the
+so the transformer has a 1:1 ratio and the cable appears as 100 Ω at the
 transceiver. Any difference between the port's impedance and the cable's
 reflects part of the arriving signal. The reflection is described by the
 :wikipedia:`reflection coefficient <Reflection_coefficient>`, and the return
@@ -50,10 +50,10 @@ loss says how much weaker the reflected signal is than the arriving one:
 These are the standard definitions for a reflection at the end of a
 transmission line (see :wikipedia:`Return loss <Return_loss>`).
 
-A 1000BASE-T port must have a return loss of at least 16 dB from 1 MHz to
-40 MHz, against any cable impedance from 85 Ω to 115 Ω, that is 100 Ω
-± 15 % (:clause:`40.8.3.1`). Solving the two equations for a purely
-resistive port on a 100 Ω cable gives the range of port impedance that
+A 1000BASE-T port must have a return loss of at least 16 dB from 1 MHz to
+40 MHz, against any cable impedance from 85 Ω to 115 Ω, that is 100 Ω
+± 15 % (:clause:`40.8.3.1`). Solving the two equations for a purely
+resistive port on a 100 Ω cable gives the range of port impedance that
 meets the limit:
 
 .. math::
@@ -66,12 +66,12 @@ meets the limit:
 
    Z_\text{min} &= Z_0 \frac{1 - 0.158}{1 + 0.158} = 73\ \Omega
 
-The port alone can be anywhere from 73 Ω to 138 Ω on a 100 Ω cable. The
+The port alone can be anywhere from 73 Ω to 138 Ω on a 100 Ω cable. The
 transceiver and everything between it and the cable share that budget.
-Microchip recommends magnetics with at least 2 dB of margin on the limit
+Microchip recommends magnetics with at least 2 dB of margin on the limit
 ([MAG-ENT98]_, section 4.2).
 
-From 40 MHz to 100 MHz the limit falls with frequency (:clause:`40.8.3.1`):
+From 40 MHz to 100 MHz the limit falls with frequency (:clause:`40.8.3.1`):
 
 .. math::
 
@@ -88,16 +88,16 @@ From 40 MHz to 100 MHz the limit falls with frequency (:clause:`40.8.3.1`):
      - Smallest return loss allowed
      - dB
    * - :math:`f`
-     - Frequency, from 40 MHz to 100 MHz
+     - Frequency, from 40 MHz to 100 MHz
      - Hz
 
-At 100 MHz the limit is
+At 100 MHz the limit is
 :math:`10 - 20 \times \log_{10} 1.25 = 10 - 1.9 = 8.1\ \text{dB}`.
 
 The :wikipedia:`insertion loss <Insertion_loss>` of the magnetics is the
-signal lost in passing through them. Gigabit magnetics state at most 1 dB
-from 1 MHz to 100 MHz ([MAG-PULSE]_, electrical table; [MAG-WURTH]_,
-electrical table). An insertion loss of 1 dB is an amplitude ratio of
+signal lost in passing through them. Gigabit magnetics state at most 1 dB
+from 1 MHz to 100 MHz ([MAG-PULSE]_, electrical table; [MAG-WURTH]_,
+electrical table). An insertion loss of 1 dB is an amplitude ratio of
 :math:`10^{-1/20} = 0.89`, so at most 11 % of the signal amplitude is lost.
 
 .. _magnetics-droop:
@@ -122,8 +122,8 @@ A first-order model gives the droop
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Treat the transformer as an ideal 1:1 transformer with its magnetising
-inductance across it. Seen from that inductance, the transceiver's 100 Ω
-source and the 100 Ω cable are in parallel. The circuit is a first-order
+inductance across it. Seen from that inductance, the transceiver's 100 Ω
+source and the 100 Ω cable are in parallel. The circuit is a first-order
 :wikipedia:`high-pass filter <High-pass_filter>`, and droop is an
 exponential decay with a :wikipedia:`time constant <Time_constant>`:
 
@@ -143,10 +143,10 @@ exponential decay with a :wikipedia:`time constant <Time_constant>`:
      - Meaning
      - Unit
    * - :math:`R_\text{s}`
-     - Output resistance of the transceiver, 100 Ω
+     - Output resistance of the transceiver, 100 Ω
      - Ω
    * - :math:`Z_0`
-     - Impedance of the cable, 100 Ω
+     - Impedance of the cable, 100 Ω
      - Ω
    * - :math:`R_\text{p}`
      - The two in parallel
@@ -177,11 +177,11 @@ With :math:`R_\text{p} = 50\ \Omega` and the usual data-sheet value
 
    f_\text{c} = \frac{1}{2\pi \times 7.0\ \mu\text{s}} = 23\ \text{kHz}
 
-1000BASE-T needs at least 80 µH
+1000BASE-T needs at least 80 µH
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-500 ns after the start of a constant level in the transmitter test pattern,
-more than 73.1 % of the voltage must remain, into a 100 Ω test load
+500 ns after the start of a constant level in the transmitter test pattern,
+more than 73.1 % of the voltage must remain, into a 100 Ω test load
 (:clause:`40.6.1.2.2`). In the model the remaining fraction is
 :math:`e^{-t/\tau}`:
 
@@ -201,7 +201,7 @@ more than 73.1 % of the voltage must remain, into a 100 Ω test load
      - Meaning
      - Unit
    * - :math:`t`
-     - Time after the start of the constant level, 500 ns
+     - Time after the start of the constant level, 500 ns
      - s
    * - :math:`k`
      - Fraction of the voltage that must remain, 0.731
@@ -216,30 +216,30 @@ With these values:
 
    L > 1.6\ \mu\text{s} \times 50\ \Omega = 80\ \mu\text{H}
 
-An IEEE 802.3 maintenance proposal reaches the same 80 µH ([MAG-TRACY]_,
-slide 5). With 350 µH, :math:`e^{-0.5/7.0} = 0.93`: 93 % of the voltage
-remains, a large margin over 73.1 %.
+An IEEE 802.3 maintenance proposal reaches the same 80 µH ([MAG-TRACY]_,
+slide 5). With 350 µH, :math:`e^{-0.5/7.0} = 0.93`: 93 % of the voltage
+remains, a large margin over 73.1 %.
 
 The transmit waveform templates of :clause:`40.6.1.2.3` were drawn for a
-transformer high-pass pole anywhere from 1 Hz to 100 kHz
-(:clause:`40.6.1.2.3`, note 1). A 1.6 µs time constant puts the pole at
-99.5 kHz, at the edge of that range.
+transformer high-pass pole anywhere from 1 Hz to 100 kHz
+(:clause:`40.6.1.2.3`, note 1). A 1.6 µs time constant puts the pole at
+99.5 kHz, at the edge of that range.
 
-Gigabit magnetics are specified at 350 µH for 100BASE-TX
+Gigabit magnetics are specified at 350 µH for 100BASE-TX
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Gigabit magnetics are specified at 350 µH because the same parts serve
+Gigabit magnetics are specified at 350 µH because the same parts serve
 100BASE-TX. 100BASE-TX takes its electrical specification from the FDDI
 twisted-pair standard, :std:`ANSI X3.263 <X3.263>` (:clause:`25`). Its
-section 9.1.7 requires at least 350 µH at the transmitter with any direct
-bias current from 0 mA to 8 mA ([MAG-LAW]_, slide 3). Data sheets therefore
-give the inductance at 100 kHz, 100 mV and 8 mA of bias
+section 9.1.7 requires at least 350 µH at the transmitter with any direct
+bias current from 0 mA to 8 mA ([MAG-LAW]_, slide 3). Data sheets therefore
+give the inductance at 100 kHz, 100 mV and 8 mA of bias
 ([MAG-KSZ9031]_, section 12).
 
 IEEE 802.3-2022 gives a 100BASE-TX transmitter in Power over Ethernet
 equipment a second way to comply. A transmitter in a Type 2 port above
-13 W, or in any Type 3 or Type 4 port, can instead show an equivalent time
-constant above 2.4 µs (:clause:`25.4.5`, :clause:`25.4.5.1`).
+13 W, or in any Type 3 or Type 4 port, can instead show an equivalent time
+constant above 2.4 µs (:clause:`25.4.5`, :clause:`25.4.5.1`).
 
 Two time constants are the targets for a port without a transformer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -5,7 +5,7 @@ This page works through what can limit gigabit Ethernet, 1000BASE-T,
 running through coupling capacitors over a long cable, and gives the
 measurements that would show whether it does. Capacitor coupling is shown
 for short links and backplanes, and in one vendor test for cables up to
-100 m ([MAG-ADIWIKI]_). Cable reach of the integrated transceiver is a
+100 m ([MAG-ADIWIKI]_). Cable reach of the integrated transceiver is a
 parameter (:ref:`requirements-open-questions`), so the effects that
 depend on it are given as a function of reach.
 
@@ -50,7 +50,7 @@ the power below the corner is:
      - Corner of the high-pass filter, :math:`1/(2\pi\tau)`
      - Hz
    * - :math:`T`
-     - Symbol period, 8 ns at 125 million symbols per second
+     - Symbol period, 8 ns at 125 million symbols per second
      - s
 
 This is an estimate: real symbols are not square and the shaping filter is
@@ -61,9 +61,10 @@ left out. For :math:`C_\text{w} = 16\ \text{nF}`, the time constant is
 
    f_\text{c} = \frac{1}{2\pi \times 1.6\ \mu\text{s}} = 99.5\ \text{kHz}
 
-   P_\text{below} = 2 \times 99.5\ \text{kHz} \times 8\ \text{ns} = 0.0016
+   P_\text{below} &= 2 \times 99.5\ \text{kHz} \times 8\ \text{ns} \\
+   &= 0.0016
 
-That is 0.16 % of the power.
+That is 0.16 % of the power.
 
 The baseline wander is a small fraction of a decision step
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,8 +76,9 @@ root-mean-square size:
 
 .. math::
 
-   \sigma_\text{w}^2 = \sigma^2 \sum_{k=0}^{\infty} h_k^2,
-   \qquad h_k = \frac{T}{\tau} e^{-kT/\tau}
+   \sigma_\text{w}^2 = \sigma^2 \sum_{k=0}^{\infty} h_k^2
+
+   h_k = \frac{T}{\tau} e^{-kT/\tau}
 
    \frac{\sigma_\text{w}}{\sigma} \approx \sqrt{\frac{T}{2\tau}}
 
@@ -118,10 +120,10 @@ For :math:`C_\text{w} = 16\ \text{nF}`:
 
 .. math::
 
-   \sigma_\text{w} = 1.41 \times \sqrt{\frac{8\ \text{ns}}{2 \times 1.6\ \mu\text{s}}}
-   = 1.41 \times 0.050 = 0.071\ \text{level steps}
+   \sigma_\text{w} &= 1.41 \times \sqrt{\frac{8\ \text{ns}}{2 \times 1.6\ \mu\text{s}}} \\
+   &= 1.41 \times 0.050 = 0.071\ \text{level steps}
 
-That is 14 % of half a step. :numref:`tbl-magnetics-lowfreq` applies the
+That is 14 % of half a step. :numref:`tbl-magnetics-lowfreq` applies the
 formulas to four capacitor values.
 
 .. list-table:: Low-frequency effect of the coupling capacitors at one end
@@ -145,7 +147,7 @@ formulas to four capacitor values.
      - 48.2
      - 22.7
      - 15.9
-   * - Left after 500 ns (%)
+   * - Left after 500 ns (%)
      - 73.2
      - 85.9
      - 93.1
@@ -166,8 +168,8 @@ formulas to four capacitor values.
      - 875
      - 1250
 
-At 70 nF the capacitors behave like standard 350 µH magnetics, so a
-receiver designed for transformers sees nothing new. At 16 nF the wander is
+At 70 nF the capacitors behave like standard 350 µH magnetics, so a
+receiver designed for transformers sees nothing new. At 16 nF the wander is
 :math:`\sqrt{7.0 / 1.6} = 2.1` times larger, and the receiver's correction
 must absorb it. A message on the IEEE 802.3 reflector, the working group's
 mailing list, states that the scrambler makes baseline wander too small to
@@ -193,7 +195,7 @@ symbols ([MAG-AB-TUTORIAL]_, slide 51). The tail is therefore left to the
 baseline-wander correction, as it already is for transformer tails
 ([MAG-US6775529]_).
 
-The echo can be up to 10 dB stronger than the far-end
+The echo can be up to 10 dB stronger than the far-end
 signal, so its baseline wander matters more ([MAG-US7738567]_). With
 capacitors at the near end and a transformer at the far end, the echo
 passes through one high-pass filter and the far-end signal through two;
@@ -203,15 +205,15 @@ Common-mode noise reaches the receiver
 --------------------------------------
 
 The receiver of :clause:`40.6.1.3.3` must keep receiving while a
-common-mode signal of 1.0 V rms, swept from 1 MHz to 250 MHz, is coupled
-onto all four pairs of a 100 m cable by a clamp 20 cm from the receiver. A
+common-mode signal of 1.0 V rms, swept from 1 MHz to 250 MHz, is coupled
+onto all four pairs of a 100 m cable by a clamp 20 cm from the receiver. A
 transformer and choke reject this signal before the transceiver. Coupling
-capacitors pass it almost completely: 33 nF is 4.8 Ω at 1 MHz. The
+capacitors pass it almost completely: 33 nF is 4.8 Ω at 1 MHz. The
 receiver itself, with any external choke, must reject it.
 
 The IEEE 802.3ab task force ([MAG-8023AB]_), which wrote :clause:`40`,
-chose the 1.0 V rms level to keep the differential noise it produces below
-30 mV peak to peak ([MAG-AB-MINUTES]_, page 3). Meeting that needs a
+chose the 1.0 V rms level to keep the differential noise it produces below
+30 mV peak to peak ([MAG-AB-MINUTES]_, page 3). Meeting that needs a
 common-mode rejection ratio (CMRR) of at least:
 
 .. math::
@@ -243,18 +245,18 @@ and :math:`V_\text{dm} = 30\ \text{mV}`:
    \text{CMRR} \ge 20 \log_{10} \frac{2.83\ \text{V}}{0.030\ \text{V}}
    = 39.5\ \text{dB}
 
-The result is an estimate: it assumes the clamp puts the full 1.0 V rms on
-the pair at the receiver. It is consistent with the 30 dB to 43 dB that
+The result is an estimate: it assumes the clamp puts the full 1.0 V rms on
+the pair at the receiver. It is consistent with the 30 dB to 43 dB that
 magnetics give (:doc:`functions`). For reference, Analog Devices
 recommends an external choke for capacitor-coupled cables longer than
-about 1 m for this reason ([MAG-ADIWIKI]_).
+about 1 m for this reason ([MAG-ADIWIKI]_).
 
 Parasitic capacitance uses up the return loss
 ---------------------------------------------
 
 Everything on the chip side of the capacitors adds capacitance across the
 line: pads, on-chip protection, external protection diodes and board
-traces. A capacitance across a 100 Ω port reflects part of the signal:
+traces. A capacitance across a 100 Ω port reflects part of the signal:
 
 .. math::
 
@@ -278,21 +280,21 @@ traces. A capacitance across a 100 Ω port reflects part of the signal:
      - Angular frequency, :math:`2\pi f`
      - rad/s
    * - :math:`R`
-     - Port resistance, 100 Ω
+     - Port resistance, 100 Ω
      - Ω
 
 The formula gives the reflection of a capacitor in parallel with a matched
-100 Ω port, from the reflection coefficient of :doc:`matching-and-droop`. At
-40 MHz, where the limit is still 16 dB (:math:`\lvert\Gamma\rvert = 0.1585`):
+100 Ω port, from the reflection coefficient of :doc:`matching-and-droop`. At
+40 MHz, where the limit is still 16 dB (:math:`\lvert\Gamma\rvert = 0.1585`):
 
 .. math::
 
-   C_\text{d} \le \frac{0.321}{2\pi \times 40\ \text{MHz} \times 100\ \Omega}
-   = 12.8\ \text{pF}
+   C_\text{d} &\le \frac{0.321}{2\pi \times 40\ \text{MHz} \times 100\ \Omega} \\
+   &= 12.8\ \text{pF}
 
-That is 12.8 pF across the pair, or about 25 pF from each wire to ground,
-two in series. At 100 MHz, where the limit is 8.1 dB, the budget is
-13.7 pF. This is the whole budget, shared with the error of the
+That is 12.8 pF across the pair, or about 25 pF from each wire to ground,
+two in series. At 100 MHz, where the limit is 8.1 dB, the budget is
+13.7 pF. This is the whole budget, shared with the error of the
 transceiver's own termination. It limits how large the protection on the
 chip side can be.
 
@@ -307,7 +309,7 @@ The cable attenuates the far-end signal, while the echo, the common-mode
 noise injected near the receiver, and any residue from the coupling
 capacitors stay the same size. The extra impairments of capacitor coupling
 therefore cost more margin on a longer cable. IEEE 802.3 limits the
-insertion loss of a 100 m link (:clause:`40.7.2.1`); for a shorter cable
+insertion loss of a 100 m link (:clause:`40.7.2.1`); for a shorter cable
 it scales roughly with length:
 
 .. math::
@@ -333,11 +335,11 @@ it scales roughly with length:
      - m
 
 The scaling by length is an estimate; the standard gives the limit only
-for a full link. :numref:`tbl-magnetics-reach` gives the loss at 62.5 MHz,
+for a full link. :numref:`tbl-magnetics-reach` gives the loss at 62.5 MHz,
 half the symbol rate, together with an estimate of the common-mode
 rejection needed. That estimate assumes the noise the receiver tolerates
-scales with the far-end signal at the same frequency, so the 39.5 dB at
-100 m falls by the loss saved on a shorter cable.
+scales with the far-end signal at the same frequency, so the 39.5 dB at
+100 m falls by the loss saved on a shorter cable.
 
 .. list-table:: Cable loss and common-mode rejection target as a function
                 of reach (estimates)
@@ -346,7 +348,7 @@ scales with the far-end signal at the same frequency, so the 39.5 dB at
    :widths: 30 35 35
 
    * - Reach (m)
-     - Loss at 62.5 MHz (dB)
+     - Loss at 62.5 MHz (dB)
      - CMRR target (dB)
    * - 1
      - 0.2
@@ -365,30 +367,30 @@ scales with the far-end signal at the same frequency, so the 39.5 dB at
      - 39.5
 
 The low-frequency results of :numref:`tbl-magnetics-lowfreq` change little
-with reach, because the cable attenuates little below 1 MHz (2.5 dB at
-1 MHz over 100 m).
+with reach, because the cable attenuates little below 1 MHz (2.5 dB at
+1 MHz over 100 m).
 
 Open questions
 --------------
 
 Each question names the measurement that would answer it.
 
-* Does capacitor-coupled 1000BASE-T work reliably over a full 100 m link
+* Does capacitor-coupled 1000BASE-T work reliably over a full 100 m link
   with standard link partners, and with which capacitor value and choke? A
   board with an external gigabit transceiver, a voltage-mode driver and
   on-chip termination (for reference, the KSZ9031RNX [MAG-KSZ9031]_ or the
   ADIN1300 [MAG-ADIWIKI]_) answers it. It connects through coupling
-  capacitors to an RJ45 socket, with footprints for 16 nF to 100 nF per
+  capacitors to an RJ45 socket, with footprints for 16 nF to 100 nF per
   wire, chokes, protection diodes and a standard-magnetics variant.
-  Running 1000BASE-T against several commercial switches over 1 m, 10 m,
-  30 m, 50 m and 100 m of Category 5e cable, at the temperature extremes,
+  Running 1000BASE-T against several commercial switches over 1 m, 10 m,
+  30 m, 50 m and 100 m of Category 5e cable, at the temperature extremes,
   and recording frame errors, the transceiver's signal-quality readout and
   link drops, answers it as a function of reach.
 * Does that board pass the :clause:`40` transmitter tests, the MDI return
   loss (:clause:`40.8.3.1`), the impedance balance (:clause:`40.8.3.2`) and
   the common-mode noise test (:clause:`40.6.1.3.3`)? The UNH-IOL test suite
   implements them ([MAG-UNH40]_).
-* Does it pass the 2250 V isolation test, :std:`IEC 61000-4-2` discharges,
+* Does it pass the 2250 V isolation test, :std:`IEC 61000-4-2` discharges,
   :std:`IEC 61000-4-5` surges, radio-emission limits
   (:std:`FCC Part 15 <fcc-part-15>`), and Power over Ethernet detection and
   classification against standard power sourcing equipment?

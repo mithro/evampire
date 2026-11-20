@@ -34,7 +34,7 @@ Magnetics come as a module or inside the socket
 
 Discrete module
    All four channels in one surface-mount part, placed between the
-   transceiver and an ordinary RJ45 socket. The 75 Ω resistors and the
+   transceiver and an ordinary RJ45 socket. The 75 Ω resistors and the
    high-voltage capacitor are separate parts.
 RJ45 socket with integrated magnetics
    The magnetics, in most parts the termination, and often two LEDs driven by
@@ -54,12 +54,12 @@ embedded in the board and the windings are made from its copper layers and
 vias. For reference, a four-layer embedded Ethernet filter with eight
 transformer elements has been built ([MAG-QUILICI]_, figure 4), and
 board-embedded transformers have coupled 1000BASE-T Ethernet
-([MAG-BOWEN14]_). Racetrack-shaped embedded cores reached the 350 µH
+([MAG-BOWEN14]_). Racetrack-shaped embedded cores reached the 350 µH
 inductance in some samples, with large variation in the ferrite's
 permeability after machining ([MAG-BOWEN17]_).
 
-Industry has kept wound parts. An embedded part needs a footprint 20 % to
-50 % larger than a wound one, and its advantage is less hand labour
+Industry has kept wound parts. An embedded part needs a footprint 20 % to
+50 % larger than a wound one, and its advantage is less hand labour
 ([MAG-QUILICI]_, design methodology), while wound magnetics are already
 cheap. Those reasons apply to evampire's first version too. Embedding also
 needs a board fabricator that places ferrite in the laminate. For the full
@@ -70,7 +70,7 @@ Keep the grounds apart and the pairs short
 
 :numref:`fig-magnetics-layout` shows the board areas around one port. Board
 dimensions are given in millimetres, with the mil (one thousandth of an
-inch, 25.4 µm) of the cited guidance in brackets.
+inch, 25.4 µm) of the cited guidance in brackets.
 
 .. graphviz:: layout.dot
    :name: fig-magnetics-layout
@@ -86,14 +86,14 @@ inch, 25.4 µm) of the cited guidance in brackets.
 * Use a metal shielded RJ45 socket with its shield on chassis ground, and
   keep chassis ground an isolated area that does not overlap the signal
   ground planes ([MAG-DP83867]_, section 9.2.2).
-* Join the two grounds through a resistor of 1 MΩ or more and a capacitor,
-  with a keep-out of at least 0.51 mm (20 mil) on all layers
+* Join the two grounds through a resistor of 1 MΩ or more and a capacitor,
+  with a keep-out of at least 0.51 mm (20 mil) on all layers
   ([MAG-SNLA387]_, section 2). These parts bridge the isolation barrier, so
   they must withstand the isolation test voltage (:doc:`functions`).
-* Route each pair as a 100 Ω ± 10 % differential pair over a continuous
-  ground plane, under 51 mm (2 inches) long, with its two traces matched
-  within 0.51 mm (20 mil) at 1000 Mbit/s, and pairs at least 0.76 mm
-  (30 mil) apart ([MAG-SNLA387]_, section 2).
+* Route each pair as a 100 Ω ± 10 % differential pair over a continuous
+  ground plane, under 51 mm (2 inches) long, with its two traces matched
+  within 0.51 mm (20 mil) at 1000 Mbit/s, and pairs at least 0.76 mm
+  (30 mil) apart ([MAG-SNLA387]_, section 2).
 * Keep all copper away from under the magnetics on every layer
   ([MAG-SNLA387]_, section 2).
 * Place protection diodes on the transceiver side of the magnetics
@@ -114,16 +114,16 @@ turn, with a centre tap (CT) on both windings.
    * - Parameter
      - Requirement
    * - Turns ratio
-     - 1CT:1CT, within ±2 % ([MAG-ENT98]_, section 3.1)
+     - 1CT:1CT, within ±2 % ([MAG-ENT98]_, section 3.1)
    * - Open-circuit inductance
-     - 350 µH or more at 100 kHz, 100 mV and 8 mA bias ([MAG-KSZ9031]_, section 12)
+     - 350 µH or more at 100 kHz, 100 mV and 8 mA bias ([MAG-KSZ9031]_, section 12)
    * - Insertion loss
-     - 1 dB or less from 1 MHz to 100 MHz ([MAG-KSZ9031]_, section 12)
+     - 1 dB or less from 1 MHz to 100 MHz ([MAG-KSZ9031]_, section 12)
    * - Return loss
-     - 18 dB or more from 1 MHz to 30 MHz, 2 dB inside the 16 dB limit
+     - 18 dB or more from 1 MHz to 30 MHz, 2 dB inside the 16 dB limit
        ([MAG-ENT98]_, section 4.2)
    * - Isolation
-     - 1500 V rms for 60 s ([MAG-KSZ9031]_, section 12)
+     - 1500 V rms for 60 s ([MAG-KSZ9031]_, section 12)
    * - Circuit-side centre taps
      - four separate taps for a voltage-mode transceiver
        ([MAG-KSZ9031]_, section 12)
@@ -133,36 +133,28 @@ turn, with a centre tap (CT) on both windings.
      - rated for the current, on a port that takes or supplies power
        (:doc:`poe`)
 
-:numref:`tbl-magnetics-parts` gives three examples, with values from the
-makers' data sheets. The return loss column gives the value from 1 MHz to
-30 MHz.
+:numref:`tbl-magnetics-parts` gives two examples, with values from the
+makers' data sheets. The return loss column gives the value from 1 MHz to
+30 MHz.
 
 .. list-table:: Example gigabit magnetics
    :name: tbl-magnetics-parts
    :header-rows: 1
-   :widths: 30 20 16 16 18
+   :widths: 40 20 20 20
 
    * - Part
-     - Form
      - Inductance (µH)
      - Return loss (dB)
      - Isolation (V rms)
-   * - Pulse H5007NL [MAG-PULSE]_
-     - module
-     - not stated
-     - 18
-     - 1500
-   * - Würth Elektronik 7499111221A [MAG-WURTH]_
-     - socket
+   * - Würth Elektronik 7499111221A socket [MAG-WURTH]_
      - 350
      - 18
      - 1500
-   * - Bel Fuse 0826-1G1T-23-F [MAG-BEL]_
-     - socket
+   * - Bel Fuse 0826-1G1T-23-F socket [MAG-BEL]_
      - 350
      - 18
      - 1500
 
-The Würth and Bel sockets include the four 75 Ω resistors and a 1000 pF,
-2 kV capacitor. The Würth part is not for Power over Ethernet; the Bel part
+The Würth and Bel sockets include the four 75 Ω resistors and a 1000 pF,
+2 kV capacitor. The Würth part is not for Power over Ethernet; the Bel part
 has 12 cores and every part is tested for isolation.

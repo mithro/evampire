@@ -71,7 +71,7 @@ This is an estimate: it treats the bias circuit as a plain resistance. For
 
    \frac{V_\text{chip}}{V_\text{cable}} = \frac{1}{\sqrt{1 + 48^2}} = 0.021
 
-About 2 % of a mains-frequency ground difference reaches the chip. At
+About 2 % of a mains-frequency ground difference reaches the chip. At
 signal frequencies the capacitors pass common-mode noise almost completely,
 so rejection there comes from the receiver and from a choke or termination.
 
@@ -80,19 +80,19 @@ Options for common-mode rejection
 
 External common-mode choke
    As in single-pair automotive Ethernet. For reference, the DP83TC811
-   uses 200 µH chokes with 42 dB of common-mode rejection from 10 MHz to
-   100 MHz ([MAG-DP83TC811]_, MDI table).
+   uses 200 µH chokes with 42 dB of common-mode rejection from 10 MHz to
+   100 MHz ([MAG-DP83TC811]_, MDI table).
 Receiver with a wide common-mode range and high rejection
    Together with a common-mode feedback loop that senses the pair's
    common-mode voltage and drives it back to the bias point. For reference,
    integrated receivers for other twisted-pair buses take a wide range: a
-   CAN receiver takes −12 V to +12 V of common-mode voltage
+   CAN receiver takes −12 V to +12 V of common-mode voltage
    ([MAG-TCAN1044]_, common-mode input range), and an RS-485
-   receiver −25 V to +25 V ([MAG-THVD2450]_, common-mode input range).
+   receiver −25 V to +25 V ([MAG-THVD2450]_, common-mode input range).
 Active common-mode choke
    A circuit that senses and cancels common-mode current. For reference, a
-   commercial part adds up to 10 dB of common-mode suppression from 1 MHz
-   to 125 MHz, used alongside a transformer ([MAG-KTA1552]_). The patent
+   commercial part adds up to 10 dB of common-mode suppression from 1 MHz
+   to 125 MHz, used alongside a transformer ([MAG-KTA1552]_). The patent
    behind it notes a trade-off between loop stability and common-mode
    rejection ([MAG-US7965480]_).
 
@@ -104,14 +104,14 @@ drain-extended or custom input devices extend it further. The range needed
 is set by the fast common-mode steps that pass the capacitors, which is an
 open question below.
 
-The rejection that magnetics give, 30 dB to 43 dB (:doc:`functions`),
-and the estimate of about 40 dB on :doc:`gigabit-risk` set the target for
+The rejection that magnetics give, 30 dB to 43 dB (:doc:`functions`),
+and the estimate of about 40 dB on :doc:`gigabit-risk` set the target for
 the choke, capacitors and on-chip circuits together.
 
 The termination is already on the chip
 --------------------------------------
 
-With a voltage-mode driver the 100 Ω termination is already on the chip
+With a voltage-mode driver the 100 Ω termination is already on the chip
 ([MAG-KSZ9031]_, section 12), so matching the cable does not need a
 transformer. The coupling capacitors add a series reactance at low
 frequencies, sized on :doc:`coupling-capacitors`.
@@ -121,14 +121,14 @@ output impedance by feedback instead of by a resistor. It saves transmit
 power. For reference, it is used in line drivers for telephone-line data
 links ([MAG-US6538500]_). It can also cancel part of the coupling
 capacitors' reactance. Whether it reaches the 1000BASE-T return loss over
-1 MHz to 100 MHz is an open question.
+1 MHz to 100 MHz is an open question.
 
 Any inductor across the pair adds to the droop
 ----------------------------------------------
 
 The coupling capacitors set the droop (:doc:`coupling-capacitors`). Power
 over Ethernet inductors fitted across the pair also shunt low frequencies,
-as a transformer's magnetising inductance does. The 80 µH minimum of
+as a transformer's magnetising inductance does. The 80 µH minimum of
 :doc:`matching-and-droop` therefore applies to their inductance across the
 pair ([MAG-GARDNER14]_, slide 4). The receiver's baseline-wander correction
 (:doc:`../phy-electrical/index`) absorbs whatever the capacitors and
@@ -138,18 +138,18 @@ The common mode needs a termination and a filter
 ------------------------------------------------
 
 External termination on the cable side
-   As in the standard circuit: 75 Ω per pair to a shared capacitor to
+   As in the standard circuit: 75 Ω per pair to a shared capacitor to
    chassis, with a blocking capacitor in series with each resistor when
    Power over Ethernet is present. Without a transformer the pair has no
    centre tap, so two resistors per pair, one from each wire, form one. For
-   reference, single-pair automotive Ethernet uses two 1 kΩ resistors and a
-   4.7 nF capacitor ([MAG-OA100T1]_, figure 1). Values for four-pair
+   reference, single-pair automotive Ethernet uses two 1 kΩ resistors and a
+   4.7 nF capacitor ([MAG-OA100T1]_, figure 1). Values for four-pair
    1000BASE-T are an open question.
 External choke
    As for common-mode rejection above.
 Active common-mode termination on evampire
    The common-mode feedback loop can present a set impedance, for example
-   75 Ω, to common-mode signals at the chip side of the capacitors. Its
+   75 Ω, to common-mode signals at the chip side of the capacitors. Its
    bandwidth must reach the frequencies at which emissions are measured.
 
 Protection behind the capacitors is open
@@ -165,11 +165,11 @@ External protection diodes
    Between each chip-side node and signal ground, after the coupling
    capacitors. They do not break the isolation, because the capacitors are
    in series with them. For reference, Analog Devices simulated fast
-   transient bursts of 1 kV and 4 kV on a 2 m cable into an ADIN1300 with
-   33 nF capacitors. Without a protection diode, 100 V to 400 V reached the
-   transceiver pins; with one, less than 10 V ([MAG-ADIWIKI]_).
+   transient bursts of 1 kV and 4 kV on a 2 m cable into an ADIN1300 with
+   33 nF capacitors. Without a protection diode, 100 V to 400 V reached the
+   transceiver pins; with one, less than 10 V ([MAG-ADIWIKI]_).
 Clamps on evampire
-   The gf180mcu I/O cells target 2 kV human-body model; the analogue pad
+   The gf180mcu I/O cells target 2 kV human-body model; the analogue pad
    cells contain only diodes ([MAG-GFIO]_). Custom clamps, for example
    thyristor (SCR) or parasitic-bipolar clamps sized for the charge that
    passes the capacitors, are possible. The system-level and surge events
@@ -181,7 +181,7 @@ Both
 
 Which split is used depends on the events the product must pass, the
 charge that reaches the chip side, and the capacitance the clamps add. That
-capacitance counts against the return loss budget of about 12.8 pF across
+capacitance counts against the return loss budget of about 12.8 pF across
 each pair (:doc:`gigabit-risk`). A diode across each pair on the cable
 side, with no connection to ground, limits differential surges and does
 not affect the isolation.
@@ -196,8 +196,8 @@ disappears.
 A current-mode driver also works through capacitors. It takes its supply
 from pull-up resistors to the supply on the chip side of the capacitors,
 in place of the transformer's centre tap. For reference, Texas Instruments
-couples a current-mode DP83848 through 33 nF capacitors this way, with
-pull-up resistors to 3.3 V on each pin ([MAG-SNLA088]_, figure 5). An
+couples a current-mode DP83848 through 33 nF capacitors this way, with
+pull-up resistors to 3.3 V on each pin ([MAG-SNLA088]_, figure 5). An
 inductor can take the place of the resistors.
 
 Power over Ethernet needs a separate current path
@@ -212,8 +212,8 @@ Centre-tapped inductor across each pair
    the fields cancel, and the core sees only the unbalance. Texas
    Instruments mentions a centre-tapped inductor as a way to carry Power
    over Ethernet current ([MAG-TPS2376H]_, section 9.2.1.3). Its
-   inductance across the pair must be at least 80 µH. Only its leakage
-   inductance counts against the 100 µH limit of a powered device
+   inductance across the pair must be at least 80 µH. Only its leakage
+   inductance counts against the 100 µH limit of a powered device
    (:doc:`poe`), because the current flows through the two halves in
    opposite directions. For reference, standard Power over Ethernet
    magnetics use such windings ([MAG-ENT98]_, section 3.9).
@@ -221,23 +221,23 @@ Two separate inductors per pair
    Each inductor carries the current of one wire, up to
    :math:`0.948\ \text{A} / 2 = 0.474\ \text{A}` with equal sharing at
    Class 8 (:doc:`poe`), without saturating. Together they must exceed
-   80 µH across the pair. Their series inductance on the power path is the
-   full inductance, which conflicts with the 100 µH limit of a powered
+   80 µH across the pair. Their series inductance on the power path is the
+   full inductance, which conflicts with the 100 µH limit of a powered
    device. For reference, coupled inductors sold for single-pair power have
-   56 µH to 250 µH per winding and saturation currents of 0.36 A to 2.1 A
+   56 µH to 250 µH per winding and saturation currents of 0.36 A to 2.1 A
    ([MAG-TDKSPE]_, product table).
 Active inductor
    A transistor circuit, also called a :wikipedia:`gyrator <Gyrator>`, that
    passes direct current with a low resistance but presents a high
    impedance at signal frequencies. For reference, patents describe it for
-   single-pair power, with a drop of about 2 V and an emulated inductance
-   "on the order of millihenries", for data rates up to about 100 Mbit/s
+   single-pair power, with a drop of about 2 V and an emulated inductance
+   "on the order of millihenries", for data rates up to about 100 Mbit/s
    ([MAG-US11038490]_, [MAG-US11394315]_).
 
 The pass device of an active inductor must hold the Power over Ethernet
-voltage, 57 V, and carry about 0.5 A. The current is a matter of device
+voltage, 57 V, and carry about 0.5 A. The current is a matter of device
 width. The voltage is the limit: no documented gf180mcu junction is
-specified to hold 57 V to the substrate (:doc:`isolation`). The pass
+specified to hold 57 V to the substrate (:doc:`isolation`). The pass
 device is therefore an external transistor controlled from evampire,
 unless a custom on-chip structure is shown to hold the voltage. Its loss
 is about :math:`0.5\ \text{A} \times 2\ \text{V} = 1\ \text{W}` per pair at
@@ -271,13 +271,13 @@ two pairs are joined through two such groups in series:
 
 This is an estimate for one grounding arrangement. With
 :math:`C_\text{w} = 33\ \text{nF}`, it adds 33 nF to the 50 nF to 120 nF
-window of a powered device's signature (:doc:`poe`); with 100 nF it adds
-100 nF, almost the whole window. The real value depends on where the chip
+window of a powered device's signature (:doc:`poe`); with 100 nF it adds
+100 nF, almost the whole window. The real value depends on where the chip
 ground sits relative to the powered device's input.
 
 When the port supplies power, the chip-side nodes must also survive the
 detection, classification and power-on steps of the power sourcing
-equipment, from 2.7 V up to 57 V (:doc:`../../power/poe/index`). The
+equipment, from 2.7 V up to 57 V (:doc:`../../power/poe/index`). The
 capacitors hold this direct voltage.
 
 All four channels stay identical
@@ -302,7 +302,7 @@ Open questions
 * What external protection is needed for system-level discharges, surges
   and charged cables, and what charge must clamps on evampire absorb?
 * Centre-tapped inductors, separate inductors or active inductors? Can a
-  centre-tapped inductor meet both the 80 µH data requirement and the
-  100 µH powered-device limit at 0.948 A per pair?
+  centre-tapped inductor meet both the 80 µH data requirement and the
+  100 µH powered-device limit at 0.948 A per pair?
 * How much capacitance do the coupling capacitors add to the powered-device
   signature in the real grounding arrangement?

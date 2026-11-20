@@ -21,7 +21,7 @@ three parts on its way from the :term:`Ethernet transceiver` to the
 
 Both windings of the transformer have a :term:`centre tap`, a connection to
 the middle of the winding. The circuit-side centre tap serves the
-transceiver's line driver. The cable-side centre tap goes, through a 75 Ω
+transceiver's line driver. The cable-side centre tap goes, through a 75 Ω
 resistor and a high-voltage capacitor, to chassis ground: the metal frame or
 case of the equipment, and the metal shield of the RJ45 socket.
 
@@ -42,9 +42,9 @@ The four pairs share one termination capacitor
 
 :numref:`fig-magnetics-four-pairs` shows all four pairs on the cable side.
 Each block marked "transformer + choke" is one channel of the magnetics: a transformer followed,
-on the cable side, by a common-mode choke. The 75 Ω resistors from the four
-cable-side centre taps join at one node, which goes through one 1000 pF
-capacitor rated 2 kV to chassis ground. The circuit-side centre taps are
+on the cable side, by a common-mode choke. The 75 Ω resistors from the four
+cable-side centre taps join at one node, which goes through one 1000 pF
+capacitor rated 2 kV to chassis ground. The circuit-side centre taps are
 wired as in :numref:`fig-magnetics-one-pair` and are left out of this
 figure.
 

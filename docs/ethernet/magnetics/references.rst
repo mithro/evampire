@@ -141,7 +141,7 @@ Data sheets
    <https://www.kinet-ic.com/uploads/web/KTA1552/KTA1552-04b.pdf>`__.
 .. [MAG-KEMET1812] KEMET, `C1812C103KGRACTU specification sheet
    <https://search.kemet.com/component-documentation/download/specsheet/C1812C103KGRACTU>`__:
-   10 nF, rated 2000 V, tested at 2400 V, 1812 package.
+   10 nF, rated 2000 V, tested at 2400 V, 1812 package.
 .. [MAG-KEMETCAS] KEMET (Yageo), `Safety-certified surface-mount ceramic
    capacitors, CAS series
    <https://yageogroup.com/content/datasheet/asset/file/KEM_C1100_CAS_SMD>`__.

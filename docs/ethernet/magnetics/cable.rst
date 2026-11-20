@@ -24,7 +24,7 @@ equally, as a :term:`common-mode voltage`, and does not change the
 difference.
 
 Gigabit Ethernet, :term:`1000BASE-T`, sends data on all four pairs in both
-directions at the same time (:clause:`40`). 10 Mbit/s Ethernet (10BASE-T,
+directions at the same time (:clause:`40`). 10 Mbit/s Ethernet (10BASE-T,
 :clause:`14`) and 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) use two
 pairs, one in each direction. Whether an integrated transceiver also
 supports these two speeds is open (:ref:`requirements-open-questions`), so
@@ -78,7 +78,7 @@ A transmitter at one end of a cable must reach the receiver at the other
 end. With a straight-through cable, contact 1 to contact 1 and so on, this
 works only when the two ends use opposite pin assignments, called
 :term:`MDI` and :term:`MDI-X`. :numref:`fig-magnetics-crossover` shows the
-two assignments at 10 and 100 Mbit/s. At 1000 Mbit/s, MDI-X swaps pair A
+two assignments at 10 and 100 Mbit/s. At 1000 Mbit/s, MDI-X swaps pair A
 with pair B and pair C with pair D (:clause:`Table 40-12 <40>`).
 
 .. graphviz:: crossover.dot
@@ -94,7 +94,7 @@ with pair B and pair C with pair D (:clause:`Table 40-12 <40>`).
 Automatic MDI/MDI-X configuration (:clause:`40.4.4`) lets a port find the
 right assignment by itself. While there is no link, the port chooses MDI
 or MDI-X from a pseudo-random sequence, and listens for the other end for
-one sample period of 62 ms ± 2 ms (:clause:`40.4.5.2`). It keeps the
+one sample period of 62 ms ± 2 ms (:clause:`40.4.5.2`). It keeps the
 assignment that hears the other end. The function is optional in
 1000BASE-T. For reference, the KSZ9031RNX transceiver implements it
 [MAG-KSZ9031]_.
