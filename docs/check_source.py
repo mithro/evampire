@@ -20,10 +20,14 @@ import sys
 ROLE = re.compile(r":(clause|pd|typec):`[^`]*`")
 # "Clause 40", "clauses 24", "Clause 40.8.3.1", "subclause 25.4.5", and
 # USB specification references such as "PD Table 5.10" or
-# "Type-C Sections 4.5.2.2".
+# "Type-C Sections 4.5.2.2". IEEE 802.3 tables, figures and annexes use the
+# :clause: role with an explicit title, e.g. :clause:`Table 145-24 <145>`.
 PLAIN = re.compile(
     r"\b(sub)?clauses?\s+\d"
-    r"|\b(PD|Type-C)\s+(sections?|tables?|figures?)\s+\d",
+    r"|\b(PD|Type-C)\s+(sections?|tables?|figures?)\s+\d"
+    # IEEE 802.3 tables, figures and annexes, e.g. "Table 145-24", "Annex 33A".
+    r"|\b(tables?|figures?)\s+\d+-\d+"
+    r"|\bannex(es)?\s+\d+[A-Z]\b",
     re.IGNORECASE,
 )
 # The standards page itself names every clause in its entries.
