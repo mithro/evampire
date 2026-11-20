@@ -9,6 +9,11 @@ build:
     python: "3.12"
   apt_packages:
     - graphviz
+  jobs:
+    # Fail the build if a rendered page contains an error box that Sphinx
+    # does not report as a warning.
+    post_build:
+      - python docs/check_html.py $READTHEDOCS_OUTPUT/html
 
 sphinx:
   configuration: docs/conf.py
