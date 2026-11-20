@@ -217,14 +217,15 @@ show("DAC bits for 20 mV in 21 V", math.log2(21.0 / 0.020), "bits", ".3g")
 show("DAC bits for 100 mV in 48 V", math.log2(48.0 / 0.100), "bits", ".3g")
 
 # ---------------------------------------------------------------------------
-section("9. Software control: instruction budget per update")
-for f_cpu in (25e6, 62.5e6, 125e6):
-    for cpi in (1.0, 4.0):
-        for f_upd in (250e3, 40e3, 4e3):
-            n_instr = f_cpu / (cpi * f_upd)
-            print(f"  f_cpu={f_cpu / 1e6:5.1f} MHz CPI={cpi:.0f} "
-                  f"f_update={f_upd / 1e3:5.0f} kHz: {n_instr:7.1f} instructions")
+section("9. Control loop rates and processing needed")
 show("crossover 1/10 of 250 kHz", 250e3 / 10 / 1e3, "kHz")
+# Processing rate needed: operations per update x update rate x converters.
+show("R_ops, 50 ops at 250 kHz for 3 converters", 50 * 250e3 * 3 / 1e6, "Mops/s")
+show("R_ops, 50 ops at 40 kHz for 1 converter", 50 * 40e3 / 1e6, "Mops/s")
+# Latency budgets in the loop-needs table.
+show("one period at 250 kHz", 1 / 250e3 * 1e6, "us")
+show("one update period at 40 kHz", 1 / 40e3 * 1e6, "us")
+show("on time at D = 0.21, 250 kHz", 0.21 / 250e3 * 1e6, "us")
 show("update rate 10x a 4 kHz crossover", 40.0, "kHz")
 
 # ---------------------------------------------------------------------------
@@ -235,6 +236,11 @@ for vin, L, name in ((57.0, 47e-6, "buck, 57 V across 47 uH"),
     show(f"{name}: dI/dt", slope / 1e6, "A/us")
     for t in (100e-9, 1e-6, 4e-6, 10e-6, 100e-6):
         print(f"    rise in {t * 1e6:7.1f} us: {slope * t:8.3f} A")
+show("response time for a 1 A margin, 47 uH, 57 V: L dI / V",
+     47e-6 * 1.0 / 57.0 * 1e6, "us", ".3g")
+# TPS23881 short-circuit threshold as a current through 0.2 ohm.
+show("TPS23881 Vshort 205 mV / 0.2 ohm", 0.205 / 0.2, "A", ".3g")
+show("TPS23881 Vshort 245 mV / 0.2 ohm", 0.245 / 0.2, "A", ".3g")
 
 # ---------------------------------------------------------------------------
 section("11. Monitoring resolution")

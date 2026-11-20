@@ -294,24 +294,23 @@ circuits after them (:numref:`tab-conv-sense-uses`).
 .. list-table:: What each use of the sensed signals needs
    :name: tab-conv-sense-uses
    :header-rows: 1
-   :widths: 19 27 27 27
+   :widths: 28 36 36
 
    * - Use
-     - Response or bandwidth
+     - Response
      - Accuracy
-     - Circuit
-   * - Converter control
-     - Within one period: tens of ns for peak current
+   * - Control
+     - Tens of ns (peak current)
      - Sets the output and limit accuracy
-     - Comparator on the current; DAC reference
    * - Protection
-     - Within one period for the converter; µs for a port short
-     - Coarse; must not trip within the negotiated limits
-     - Comparator with its own threshold
+     - One period (converter); µs (port short)
+     - Coarse; no trip within the negotiated limits
    * - Monitoring and power limits
-     - Averaged over ms; 1 kHz or less
-     - Fine: the budget margin depends on it
-     - ADC with averaging
+     - Averaged over ms; 1 kHz or less
+     - Fine; sets the budget margin
+
+Control and protection use comparators, each with its own threshold from a
+DAC; monitoring uses an ADC with averaging.
 
 Two differences limit the sharing:
 

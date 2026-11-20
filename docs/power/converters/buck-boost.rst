@@ -163,45 +163,46 @@ evampire values.
 .. list-table:: Four-switch buck-boost controllers and converters
    :name: tab-conv-four-switch-parts
    :header-rows: 1
-   :widths: 16 15 15 18 36
+   :widths: 28 24 24 24
 
    * - Part
      - Input (V)
      - Output (V)
-     - Switching frequency (kHz)
-     - Notes
+     - Frequency (kHz)
    * - LM5176 [CONV-LM5176]_
      - 4.2 to 55
      - 0.8 to 55
      - 100 to 600
-     - Current-mode control; 2 A gate drivers; USB Power Delivery is a
-       listed application
    * - LM5177 [CONV-LM5177]_
      - 3.5 to 60
      - 3.3 to 60
      - 100 to 600
-     - Bidirectional; 5 V gate drive; Power over Ethernet routers are a
-       listed application
    * - LT8390 [CONV-LT8390]_
      - 4 to 60
      - 0 to 60
      - 150 to 650
-     - Peak buck and peak boost current-mode control; spread spectrum
    * - LTC3780 [CONV-LTC3780]_
      - 4 to 36
      - 0.8 to 30
      - 200 to 400
-     - Current-mode control: valley current in buck, peak current in boost
    * - TPS55289 [CONV-TPS55289]_
      - 3 to 30
      - 0.8 to 22
      - 200 to 2200
-     - Switches on chip; output set over I²C in 10 mV steps; made for USB
-       Power Delivery programmable supplies
 
 Sources: LM5176 Features and Section 6.3; LM5177 Features and Section 5.3;
-LT8390 Features; LTC3780 Features and Applications Information; TPS55289
-Features.
+LT8390 Features; LTC3780 Features; TPS55289 Features.
+
+* The LM5176 uses current-mode control and has 2 A gate drivers; USB
+  Power Delivery is one of its listed applications.
+* The LM5177 is bidirectional and drives its transistors from a 5 V
+  supply; Power over Ethernet routers are one of its listed applications.
+* The LT8390 uses peak buck and peak boost current-mode control and spreads
+  its switching frequency.
+* The LTC3780 controls the valley current in its buck region and the peak
+  current in its boost region [CONV-LTC3780]_ (Applications Information).
+* The TPS55289 has its switches on chip, sets its output over I²C in
+  10 mV steps, and is made for USB Power Delivery programmable supplies.
 
 Isolated converters
 -------------------

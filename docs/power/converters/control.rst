@@ -117,8 +117,8 @@ control terms this is a *right-half-plane zero*, at
 
 .. math::
 
-   f_\text{RHP} = \frac{(1 - D)^2 \, R_\text{load}}{2 \pi L},
-   \qquad
+   f_\text{RHP} = \frac{(1 - D)^2 \, R_\text{load}}{2 \pi L}
+
    R_\text{load} = \frac{V_\text{out}^2}{P_\text{out}}
 
 [CONV-LM5177]_ (Section 7.3.8, Equation 6), with the symbols in
@@ -206,7 +206,9 @@ transistor takes a few nanoseconds to turn off, so the controller leaves a
 gap, the :wikipedia:`dead time <Dead_time>`, between one switch turning off
 and the other turning on. During the gap the inductor current flows through
 the off switch's body diode, which has a larger voltage drop, so the gap
-should be as short as is safe. For reference, the LM5176 has a fixed 45 ns
+should be as short as is safe.
+
+For reference, the LM5176 has a fixed 45 ns
 dead time [CONV-LM5176]_ (Section 6.5, tDT1 and tDT2), and the LM5177
 measures about 20 ns to 23 ns with a 3.3 nF load [CONV-LM5177]_ (Section
 5.5). The LM5122 adapts the dead time to the measured switching
@@ -307,12 +309,14 @@ The loss in a converter has four main parts, each with a simple estimate
 
 .. math::
 
-   P_\text{cond} = I_\text{rms}^2 \, R, \qquad
+   P_\text{cond} = I_\text{rms}^2 \, R
+
    P_\text{sw} = \tfrac{1}{2} \, V_\text{in} \, I \, (t_r + t_f) \, f_\text{sw}
 
 .. math::
 
-   P_\text{gate} = Q_g \, V_g \, f_\text{sw}, \qquad
+   P_\text{gate} = Q_g \, V_g \, f_\text{sw}
+
    P_\text{dead} = V_\text{diode} \, I \, 2 \, t_\text{dead} \, f_\text{sw}
 
 with the symbols in :numref:`tab-conv-sym-loss`.
@@ -355,8 +359,15 @@ with the symbols in :numref:`tab-conv-sym-loss`.
 
 For the buck worked example (48 V to 12 V, 2.125 A, 250 kHz) with
 illustrative part values, the switching loss with 40 ns of rise plus fall
-time is :math:`0.5 \times 48 \times 2.125 \times 40 \times 10^{-9} \times
-250 \times 10^{3} = 0.51` W, and the gate loss for a 10 nC gate at 5 V is
+time is
+
+.. math::
+
+   P_\text{sw} &= 0.5 \times 48 \times 2.125 \\
+               &\quad \times 40 \times 10^{-9} \times 250 \times 10^{3} \\
+               &= 0.51 \ \text{W}
+
+and the gate loss for a 10 nC gate at 5 V is
 12.5 mW. The conduction loss of a 20 mΩ low-side switch is 0.068 W
 (:doc:`buck`). These are illustrations of the method; the losses of
 evampire's converters depend on parts and frequencies that are open

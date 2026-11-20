@@ -65,10 +65,10 @@ USB Power Delivery voltages at 3 A (:doc:`../usb-pd`). For example, at
    :header-rows: 1
    :widths: 18 18 16 16 16 16
 
-   * - Input (V)
-     - Output (V)
-     - Output power (W)
-     - Input power (W)
+   * - In (V)
+     - Out (V)
+     - Out (W)
+     - In (W)
      - Loss (W)
      - Efficiency (%)
    * - 37

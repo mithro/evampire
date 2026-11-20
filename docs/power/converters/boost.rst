@@ -149,23 +149,27 @@ each fixed USB Power Delivery voltage.
 At high duty cycles the off time, during which all the energy is passed to
 the output, becomes short. The current in S2 and the output capacitor then
 comes in short, high pulses, and the losses in the parts' resistances rise.
+
 Controllers limit the duty cycle: for example the LM5155 boost controller
 has a maximum duty cycle of 80 % to 90 % or 90 % to 96 %, depending on its
-frequency setting [CONV-LM5155]_ (Section 8.5, DMAX1 and DMAX2). For
-reference, the PMP7979 design takes 12 V to 67 V in and produces 54 V at
+frequency setting [CONV-LM5155]_ (Section 8.5, DMAX1 and DMAX2).
+
+For reference, the PMP7979 design takes 12 V to 67 V in and produces 54 V at
 4.8 A with a two-phase
 boost converter [CONV-PMP7979]_. A large ratio can also be split between two
 stages, or made with a transformer or a switched-capacitor stage
 (:doc:`arrangement`).
 
-A boost converter cannot interrupt a short circuit
---------------------------------------------------
+A short on a boost output bypasses the switches
+-----------------------------------------------
 
 In a boost converter there is always a path from the input, through the
 inductor and S2 (or its diode, or the body diode of a transistor), to the
 output. If the output is short-circuited, current flows along that path
 whatever the switches do, limited only by the source and the resistance of
-the path. Turning S1 off does not stop it. Stopping it needs a switch in
+the path. Turning S1 off does not stop it.
+
+Stopping it needs a switch in
 series with the input or the output that can block current, or a converter
 in which a series switch is part of the power stage, such as the
 four-switch buck-boost converter (:doc:`buck-boost`). This matters for the

@@ -197,7 +197,9 @@ the converter is in *continuous conduction mode*. When the load current
 falls below half the ripple, :math:`I_\text{out} < \Delta I_L / 2`
 (0.383 A in the example), the current would fall below zero at the end of
 each period. With a diode as S2, the diode stops it at zero and the current
-stays at zero for part of the period: *discontinuous conduction mode*. The
+stays at zero for part of the period: *discontinuous conduction mode*.
+
+The
 volt-second balance then has a third interval with no voltage across the
 inductor, and the duty cycle is no longer :math:`V_\text{out} / V_\text{in}`
 but depends on the load.

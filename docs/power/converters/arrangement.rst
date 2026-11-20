@@ -102,44 +102,42 @@ USB converter: USB Power Delivery out, and in
 .. list-table:: USB Type-C port voltage and current in each USB Power Delivery range
    :name: tab-conv-usb-ranges
    :header-rows: 1
-   :widths: 30 22 18 15 15
+   :widths: 34 26 20 20
 
-   * - Supply kind
+   * - Supply
      - Voltage (V)
-     - Highest voltage with tolerances (V)
-     - Most current (A)
-     - Most power (W)
-   * - Standard power range, fixed
+     - Current (A)
+     - Power (W)
+   * - Standard, fixed
      - 5, 9, 15 or 20
-     - 21.5
-     - 3, or 5 at 20 V
-     - 100
-   * - Standard power range, programmable
-     - 5 to 21 in 20 mV steps
-     - 21.5
      - 3 or 5
      - 100
-   * - Standard power range, adjustable
-     - 9 to 20 in 100 mV steps
-     - 21.5
+   * - Standard, programmable
+     - 5 to 21
      - 3 or 5
      - 100
-   * - Extended power range, fixed
+   * - Standard, adjustable
+     - 9 to 20
+     - 3 or 5
+     - 100
+   * - Extended, fixed
      - 28, 36 or 48
-     - 50.9
      - 5
      - 240
-   * - Extended power range, adjustable
-     - 15 to 48 in 100 mV steps
-     - 50.9
+   * - Extended, adjustable
+     - 15 to 48
      - 5
      - 240
+
+"Standard" and "extended" are the standard and extended power ranges.
+The programmable
+supply moves in 20 mV steps and the adjustable supplies in 100 mV steps;
+5 A needs a cable rated for it, and the standard range offers it only at 20 V.
 
 Source: :pd:`Table 3.1`, :pd:`Table 4.2`, :pd:`Table 4.7` and
 :pd:`Section 3.2.5.3`, as described on :doc:`../usb-pd`. A fixed supply may
 be 5 % above its nominal voltage and VBUS may rise another 0.5 V during
-changes, giving 21.5 V and 50.9 V. A 5 A current needs a cable that
-supports it.
+changes, giving 21.5 V and 50.9 V.
 
 Where the ranges overlap
 ------------------------
@@ -332,7 +330,7 @@ The input can be anywhere in its range, so a pass-through meets the output
 window only when the measured input is high enough. evampire measures the
 input voltage (:doc:`first-version`), so software can choose pass-through
 when the input allows it and a regulated path otherwise. A linear regulator
-is a third choice where the input is just above the output:
+is a third choice where the input is slightly above the output:
 
 .. math::
 
@@ -354,44 +352,56 @@ port, one USB port; :ref:`power-board-configs`). Switches in the powered
 device front end and the power sourcing equipment switch are present in
 every arrangement and are not counted.
 
-.. list-table:: Arrangements compared
+.. list-table:: Converter parts of each arrangement
    :name: tab-conv-arrangements
    :header-rows: 1
-   :widths: 28 12 12 16 16 16
+   :widths: 50 25 25
 
    * - Arrangement
      - Converter switches
      - Inductors
-     - Conversions, Ethernet to USB
-     - Conversions, USB to Ethernet
-     - Conversions, Ethernet to Ethernet
    * - Three separate converters
      - 8
      - 3
+   * - One bidirectional four-switch converter
+     - 4
+     - 1
+   * - High bus, standard power range USB only
+     - 2
+     - 1
+   * - High bus, extended power range USB
+     - 4
+     - 1
+
+"High bus" is the arrangement with a power bus near the Power over Ethernet
+voltage. :numref:`tab-conv-conversions` counts the conversions that power
+passes through in each operating mode.
+
+.. list-table:: Conversions in series in each operating mode
+   :name: tab-conv-conversions
+   :header-rows: 1
+   :widths: 40 20 20 20
+
+   * - Arrangement
+     - Ethernet to USB
+     - USB to Ethernet
+     - Ethernet to Ethernet
+   * - Three separate converters
      - 2
      - 1
      - 2
    * - One bidirectional four-switch converter
-     - 4
      - 1
      - 1
-     - 1
-     - 0 (pass-through)
-   * - Bus near the Power over Ethernet voltage, standard power range USB
-     - 2
-     - 1
-     - 1
-     - 1
-     - 0 or 1
-   * - Bus near the Power over Ethernet voltage, extended power range USB
-     - 4
-     - 1
+     - 0
+   * - High bus
      - 1
      - 1
      - 0 or 1
 
 The three-converter count is 2 (input buck) + 4 (USB four-switch) + 2
-(boost). The "0 or 1" depends on whether the optional regulator is fitted.
+(boost). A 0 is a pass-through; the "0 or 1" depends on whether the
+optional regulator is fitted.
 Every switch on the Power over Ethernet side must block 57 V plus
 transients; the switches on the USB side block up to 21.5 V or 50.9 V.
 

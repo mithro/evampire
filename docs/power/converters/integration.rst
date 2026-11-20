@@ -185,13 +185,17 @@ High-side drivers
    A high-side driver floats on the switch node, which swings up to 57 V
    every period; its supply sits a further 5 V or so above it, so up to
    62 V above the substrate. This is a continuous, periodic stress, present
-   for the on time of every period, not a transient. A floating circuit in
+   for the on time of every period, not a transient.
+
+   A floating circuit in
    a standard n-well relies on the n-well to substrate junction, whose
    documented breakdown is 10 V minimum (:numref:`tab-conv-gf180-limits`).
-   A high-side driver for a 57 V switch node on evampire therefore needs
+   A high-side driver for a 57 V switch node on evampire therefore uses
    another isolation structure: a deep n-well, if its breakdown is high
    enough; more than one junction in series; or devices built in
-   polysilicon, which has no junction to the substrate. For reference, a
+   polysilicon, which has no junction to the substrate.
+
+   For reference, a
    36 V charge pump has been built in nanometre-scale bulk CMOS
    [CONV-ISMAIL2017]_ (Title), and a charge pump with polysilicon diodes
    in low-voltage bulk CMOS [CONV-KER2007]_ (Title). For a lower switch
