@@ -198,7 +198,8 @@ difference would drive current along the cable wires and through both
 transceivers.
 
 IEEE 802.3 requires each twisted-pair port to be isolated from the rest of
-the equipment, including its frame ground, and to pass at least one of three
+the equipment, including its frame ground (the metal frame or enclosure),
+and to pass at least one of three
 electrical strength tests. The requirement appears separately for each speed:
 Clause 14.3.1.1 for 10BASE-T, Clause 25.4.6 for 100BASE-TX and
 Clause 40.6.1.1 for 1000BASE-T.
@@ -357,7 +358,8 @@ maintenance proposal by TE Connectivity (Tracy and Eminhizer, 2011). With
 the peak.
 
 The 350 µH figure itself comes from 100BASE-TX. Clause 25 adopts the
-twisted-pair physical layer of the FDDI standard, ANSI X3.263-1995 (often
+twisted-pair physical layer of FDDI, an older 100 Mbit/s network standard,
+ANSI X3.263-1995 (often
 called TP-PMD), and its subclause 9.1.7 requires at least 350 µH at the
 transmitter "with any DC bias current between 0 mA and +8 mA". The reason is
 *baseline wander*: the 100BASE-TX signal can contain long stretches whose
@@ -497,7 +499,7 @@ The standard fix is to terminate these pair-to-pair lines in roughly their
 characteristic impedance. Each cable-side centre tap goes through a 75 Ω
 resistor to a shared node. Between any two pairs there are then two 75 Ω
 resistors in series, 150 Ω, close to the roughly 145 Ω pair-to-pair
-impedance of a Category 5 cable. The energy is absorbed as heat in the
+impedance of a Category 5 cable (a common grade of Ethernet cable). The energy is absorbed as heat in the
 resistors instead of being radiated.
 
 This network is widely called the *Bob Smith termination*, after Robert W.
