@@ -173,6 +173,23 @@ Power bridging
      power budget: the power offered on the output ports never exceeds the
      power granted on the input port, minus the board's own consumption and
      conversion losses.
+   * The software translates the power available on the input port into a
+     valid offer in the standard used by each output port:
+
+     - **Ethernet in, USB out:** from the Power over Ethernet power granted
+       to the board, the software works out the USB Power Delivery source
+       offer (the list of voltage and current combinations) that fits in
+       the budget and follows the USB Power Delivery rules.
+     - **USB in, Ethernet out:** from the power the USB Power Delivery
+       source provides, the software chooses the Power over Ethernet type
+       and class whose power fits in the budget, and the port advertises
+       that class when it supplies power.
+     - **Ethernet in, Ethernet out:** the same, from one Power over Ethernet
+       port to the other.
+
+     When the input power changes, the offers on the outputs are updated to
+     match, reduced before the input power falls. See
+     :ref:`power-translation`.
    * The first version of the board has one Ethernet port that receives
      power (port A), one Ethernet port that supplies power (port B), and one
      USB Type-C port. The full design allows either Ethernet port to take

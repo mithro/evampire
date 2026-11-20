@@ -68,6 +68,52 @@ power the board itself uses and the losses in the voltage converters. When
 the granted input power changes, for example after a USB role swap, the
 processor lowers the power offered on the outputs first.
 
+.. _power-translation:
+
+Translating power between the standards
+---------------------------------------
+
+The two standards describe power differently. Power over Ethernet grants
+power in fixed steps called *classes*, each with a maximum power at the
+powered device. USB Power Delivery describes power as a list of offers, each
+a supply voltage with a maximum current. When power comes in through one
+standard and goes out through the other, the software on evampire translates
+between them.
+
+The software first works out the power left for the outputs:
+
+.. math::
+
+   P_\text{out} = P_\text{in} \times \eta - P_\text{board}
+
+where :math:`P_\text{in}` is the power granted on the input port,
+:math:`\eta` is the efficiency of the voltage converters (see
+:doc:`converters`), and :math:`P_\text{board}` is the power the board itself
+uses. All three are in watts, except :math:`\eta`, which is a fraction.
+
+It then builds the offer for each output port:
+
+Ethernet in, USB out
+   The USB Type-C port offers the set of voltage and current combinations
+   whose power does not exceed :math:`P_\text{out}` and which the USB Power
+   Delivery rules allow for a source of that power. :doc:`usb-pd` explains
+   these rules and gives worked examples for each Power over Ethernet class.
+
+USB in, Ethernet out
+   The Ethernet port that supplies power advertises the highest Power over
+   Ethernet type and class whose power at the power sourcing equipment does
+   not exceed :math:`P_\text{out}`. :doc:`poe` explains how the class is
+   advertised and gives worked examples for each USB Power Delivery offer.
+
+Ethernet in, Ethernet out
+   The supplying Ethernet port advertises the highest class that fits, in
+   the same way.
+
+When the input changes, for example when the USB charger offers a different
+power or a role swap moves the input to another port, the software first
+reduces the offers on the outputs to fit the new budget, and then accepts
+the new input.
+
 .. _power-board-configs:
 
 Board configurations
