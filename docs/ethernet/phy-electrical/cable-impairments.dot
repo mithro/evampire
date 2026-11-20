@@ -1,0 +1,49 @@
+// What arrives at the receiver of pair A in 1000BASE-T. Only pairs A and B
+// are drawn; pairs C and D add the same kinds of coupling. Each kind of
+// signal has its own line style and a text label, so the figure does not
+// rely on colour.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph impairments {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.2"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.2, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    // Outlines of the two transceivers.
+    g_loc [pos="1.0,1.55!", width=1.7, height=3.0, label="Local\ntransceiver",
+           labelloc=b, style="rounded", color="#1f4e79", fillcolor="none"];
+    g_far [pos="6.4,1.55!", width=1.7, height=3.0,
+           label="Far-end transceiver\n(up to 100 m away)", labelloc=b,
+           style="rounded", color="#888888", fillcolor="none"];
+
+    la [pos="1.0,2.5!", label="Pair A\ntransmit and\nreceive", fillcolor="#dbe8f5"];
+    lb [pos="1.0,1.1!", label="Pair B\ntransmit and\nreceive"];
+    fa [pos="6.4,2.5!", label="Pair A\ntransmit and\nreceive"];
+    fb [pos="6.4,1.1!", label="Pair B\ntransmit and\nreceive"];
+
+    // Text labels placed beside the lines they name.
+    l_want [pos="3.7,2.75!", shape=plaintext, style="", width=2.6, height=0.25,
+            label="1  wanted signal, weakened by the cable"];
+    l_echo [pos="1.0,3.25!", shape=plaintext, style="", width=1.9, height=0.25,
+            label="2  echo of its own signal"];
+    l_next [pos="1.85,1.8!", shape=plaintext, style="", width=1.2, height=0.4,
+            label="3  near-end\ncrosstalk"];
+    l_fext [pos="4.35,1.45!", shape=plaintext, style="", width=1.5, height=0.25,
+            label="4  far-end crosstalk"];
+
+    // Corner points for the echo loop.
+    node [shape=point, width=0.01, height=0.01, label=""];
+    e1 [pos="1.75,2.95!"];
+    e2 [pos="0.25,2.95!"];
+
+    fa -> la [penwidth=3, color="#2e7d32"];
+    la -> e1 [style=dashed, color="#c62828", arrowhead=none];
+    e1 -> e2 [style=dashed, color="#c62828", arrowhead=none];
+    e2 -> la [style=dashed, color="#c62828"];
+    lb -> la [style=dotted, penwidth=2, color="#ef6c00"];
+    fb -> la [style=solid, penwidth=1, color="#6a1b9a", arrowhead=empty];
+}
