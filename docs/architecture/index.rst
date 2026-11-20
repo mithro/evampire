@@ -26,6 +26,12 @@ RGMII interfaces A and B
    them with a transmit clock generated inside evampire. See
    :doc:`../ethernet/rgmii`.
 
+   In the full design, an integrated Ethernet transceiver can take the place
+   of each RGMII interface and its external transceiver. It presents the
+   same one-byte-per-clock interface to the forwarding logic, and drives the
+   cable without coupling transformers. See :doc:`../ethernet/phy-electrical`
+   and :doc:`../ethernet/magnetics`.
+
 Rate-matching buffers
    Received data arrives on the clock that the transceiver recovers from the
    cable, which is set by the crystal at the far end of the cable.
@@ -87,8 +93,12 @@ Transceiver configuration interface
    settings.
 
 Power negotiation interface
-   The analog and digital circuits the processor uses to request power from
-   a Power over Ethernet or USB Power Delivery source. See
+   The analog and digital circuits the processor uses to negotiate power on
+   each port: to request power as a Power over Ethernet powered device or
+   USB Power Delivery sink, to offer power as Power over Ethernet power
+   sourcing equipment or a USB Power Delivery source, and to swap the power
+   role of a USB Type-C port. It also controls the external power switches
+   and voltage converters that move power between the ports. See
    :doc:`../power/index`.
 
 Clock and reset
