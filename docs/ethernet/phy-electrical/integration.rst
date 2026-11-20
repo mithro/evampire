@@ -757,6 +757,293 @@ The symbol clock must be within ±100 parts per million of 125 MHz
 (required, [PHY-UNH40]_). Commercial transceivers use a 25 MHz crystal of
 ±50 parts per million [PHY-DP83867]_ and a PLL to 125 MHz.
 
+Area and power of the gigabit transceiver
+-----------------------------------------
+
+This section adds up the estimates above for one port and for evampire's
+two ports. Every value is an estimate built from the stated published
+results and assumptions.
+
+.. list-table:: Estimated area and power of one 1000BASE-T port on gf180mcu
+   (estimate)
+   :header-rows: 1
+   :widths: 34 22 22 22
+
+   * - Part
+     - Basis
+     - Area
+     - Power
+   * - 4 ADCs
+     - 0.53–1.02 mm², 71–120 mW each (ADC table)
+     - 2.1–4.1 mm²
+     - 0.28–0.48 W
+   * - 4 DACs and line drivers
+     - 0.13–0.16 mm², 24–38 mW each [PHY-BUHR21]_ [PHY-RICHTER14]_
+     - 0.5–0.6 mm²
+     - 0.10–0.15 W
+   * - PLL and phase interpolator
+     - [PHY-BUHR21]_
+     - 0.07 mm²
+     - 0.004 W
+   * - Signal processing at 3.3 V
+     - 250,000–400,000 gates (section above)
+     - 3.9–8.1 mm²
+     - 0.48–1.54 W
+   * - **Total at 3.3 V**
+     -
+     - **6.6–12.8 mm²**
+     - **0.86–2.17 W**
+   * - Signal processing at 1.8 V instead
+     - 30 % more gates assumed for parallel paths
+     -
+     - 0.17–0.54 W
+   * - **Total with 1.8 V signal processing**
+     -
+     -
+     - **0.55–1.18 W**
+
+Not included: receive amplifiers and filters, the hybrids, protection,
+clock distribution and leakage (no published gigabit figures were found for
+these blocks in a comparable process), and the optional analog echo
+pre-cancellers (about 1 mm² and 43 mW each in 0.4 µm [PHY-LEE01]_).
+
+For the two ports:
+
+.. math::
+
+   A_\text{2 ports} = 2 \times (6.6\ \text{to}\ 12.8)\ \text{mm}^2
+   = 13.2\ \text{to}\ 25.7\ \text{mm}^2
+
+.. math::
+
+   P_\text{2 ports} = 2 \times (0.55\ \text{to}\ 2.17)\ \text{W}
+   = 1.1\ \text{to}\ 4.3\ \text{W}
+
+(the two-port area total is from unrounded per-port values).
+
+**Compared with the die.** A wafer.space gf180mcu slot provides a die of
+:math:`3.88 \times 5.07 = 19.67` mm² [PHY-WAFERSPACE]_. The two ports alone
+would take :math:`13.2 / 19.67 = 67\,\%` to :math:`25.7 / 19.67 = 131\,\%`
+of it (estimate), before the forwarding logic, the processor, its memory
+and the pads. Area is therefore as serious a constraint as power, and the
+lower end of the DSP range (look-ahead decoder, reduced tap counts, smaller
+custom cells) matters as much for area as for power.
+
+**Compared with commercial transceivers.** Published 0.13 µm parts use about
+0.64 W per port (VSC8244 [PHY-VSC8244]_), and the external transceivers of
+the first version 0.45 W to 0.62 W per chip (see :doc:`../phy-electrical`).
+The gf180mcu estimate per port, 0.55 W to 2.17 W, is
+:math:`0.55 / 0.64 = 0.9` to :math:`2.17 / 0.64 = 3.4` times the VSC8244
+figure.
+
+**Compared with the power budget.** A board powered over Ethernet receives
+at most the powered-device power of its class [PHY-EA-BT]_. The two
+gigabit ports take the following share of it (estimate):
+
+.. list-table:: Two gigabit ports as a share of the Power over Ethernet
+   input (estimate)
+   :header-rows: 1
+   :widths: 30 20 25 25
+
+   * - Powered device type
+     - Power at the device
+     - Share at 1.1 W
+     - Share at 4.3 W
+   * - Type 1 (class 3)
+     - 13 W
+     - 8.5 %
+     - 33 %
+   * - Type 2 (class 4)
+     - 25.5 W
+     - 4.3 %
+     - 17 %
+   * - Type 3 (class 6)
+     - 51 W
+     - 2.2 %
+     - 8.5 %
+   * - Type 4 (class 8)
+     - 71.3 W
+     - 1.6 %
+     - 6.1 %
+
+Each share is the two-port power divided by the input power, for example
+:math:`4.34 / 13 = 33\,\%`. The power bridging requirement (see
+:doc:`../../power/index`) passes the input power on to a USB or Ethernet
+output after the board's own consumption, so every watt the transceivers
+use is a watt less for the output port. With a 13 W input, the upper
+estimate leaves about 8.7 W for the rest of the board, the converters'
+losses and the output port.
+
+Building it on gf180mcu
+-----------------------
+
+The assessment separates three kinds of limit.
+
+Ratings and speed of the standard cells
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The standard-cell libraries are characterised conservatively and are the
+starting point for the signal-processing estimates above [PHY-GF180SC]_:
+
+* Both libraries (7-track, 3.92 µm rows; 9-track, 5.04 µm rows) use 5 V
+  transistors, characterised at 1.8 V, 3.3 V and 5 V corners.
+* Flip-flop minimum period: 1.54 ns to 1.71 ns (7-track, typical, 3.3 V);
+  3.10 ns to 3.56 ns (7-track, slow, 3.0 V, 125 °C); 3.95 ns to 4.71 ns
+  (7-track, typical, 1.8 V).
+* The general-purpose I/O cells run at 100 MHz into 30 pF (fast slew,
+  16 mA) from a 5 V I/O supply; analog pads contain only protection
+  diodes [PHY-GF180IO]_.
+
+Devices and their physical limits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+From the gf180mcu PDK electrical specifications and design manual
+[PHY-GF180PDK]_:
+
+.. list-table:: gf180mcu transistors (typical values)
+   :header-rows: 1
+   :widths: 24 14 16 22 24
+
+   * - Device
+     - Gate length
+     - Threshold voltage
+     - Saturation current, W/L = 10 µm/min
+     - Breakdown
+   * - 3.3 V n-channel
+     - 0.28 µm
+     - 0.63 V
+     - 510 µA/µm at 3.3 V
+     - Gate oxide 7 V minimum; drain 7 V to 9 V
+   * - 3.3 V p-channel
+     - 0.28 µm
+     - -0.73 V
+     - 250 µA/µm at 3.3 V
+     - Gate oxide 7 V minimum
+   * - 5 V n-channel
+     - 0.6 µm
+     - 0.70 V
+     - 500 µA/µm at 5 V
+     - Gate oxide 12 V minimum (6 V gate)
+   * - 6 V n-channel
+     - 0.7 µm
+     - 0.73 V
+     - 570 µA/µm at 6 V
+     - Gate oxide 12 V minimum
+   * - 10 V drain-extended n-channel (LDMOS), characterised device
+     - 0.6 µm
+     - 0.84 V
+     - 535 µA/µm (gate 6 V, drain 10 V)
+     - Drain 13.2 V minimum
+
+Other devices: MIM capacitors (one of 1.0, 1.5 or 2.0 fF/µm² per process,
+up to 20 V for the 1.0 fF/µm² option), polysilicon resistors from about
+7 Ω to 3000 Ω per square, vertical NPN and PNP transistors, Schottky
+diodes, and 2 to 6 metal layers with optional thick top metal.
+
+Not documented: the transition frequency (:math:`f_\text{T}`), maximum
+oscillation frequency and transconductance efficiency (:math:`g_m/I_D`) of
+any transistor, and any inductor model. These matter for the 125 MHz ADC,
+DAC and line driver, and must be obtained by simulation with the PDK models
+or by measurement.
+
+What custom circuits have reached
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. list-table:: Published Ethernet transceivers and blocks in 0.16 µm to
+   0.6 µm CMOS
+   :header-rows: 1
+   :widths: 36 14 50
+
+   * - Design
+     - Process
+     - Result
+   * - 1000BASE-T DSP receiver [PHY-HE01]_
+     - 0.18 µm
+     - Trellis decoder with 6 dB coding gain at 125 MBaud
+   * - 10/100/1000 single-port chip [PHY-ED2000]_
+     - 0.18 µm
+     - 1.8 W from 3.3 V (trade press)
+   * - Joint equalizer and trellis decoder [PHY-HARATSCH01]_
+     - 0.25 µm, 3.3 V
+     - 1 Gbit/s at 125 MHz
+   * - Pipelined 14-tap decoder [PHY-HARATSCH01B]_
+     - 0.16 µm, 3.3 V
+     - 125 MHz
+   * - 1000BASE-T baseband DSP layout [PHY-NTU04]_
+     - 0.25 µm, 2.5 V
+     - 7.48 ns critical path, 4.54 mm × 4.54 mm chip
+   * - Analog echo canceller, 4 taps [PHY-LEE01]_
+     - 0.4 µm
+     - 10 dB suppression, 43 mW, about 1 mm²
+   * - 8-bit 200 MS/s folding ADC [PHY-HEO02]_
+     - 0.35 µm, 3.3 V
+     - 120 mW, 1.02 mm²
+   * - 8-bit 150 MS/s time-interleaved ADC [PHY-LIMOTYRAKIS05]_
+     - 0.18 µm, 1.8 V
+     - 45.4 dB SNDR, 71 mW
+   * - 100BASE-TX transceiver [PHY-BUHR21]_ [PHY-BUHR19]_
+     - 180 nm GF
+     - 2.6 mm², at most 69 mW, error-free to 100 m (measured)
+   * - Line driver, active impedance [PHY-BUHR20B]_
+     - 180 nm
+     - 80 Ω to 130 Ω, 200 MHz bandwidth, 24.3 mW
+   * - PLL and phase interpolator [PHY-BUHR21]_
+     - 180 nm GF
+     - 125 MHz, 4.9 ps rms, 4.0 mW, 0.065 mm²
+
+No physical limit found in the gf180mcu documentation rules out
+1000BASE-T, and every gigabit block has a published counterpart in a
+process of similar or larger feature size. The 0.18 µm designs whose supply
+is stated used 1.8 V transistors, which gf180mcu does not have; the gigabit
+decoders above were, however, built from 3.3 V standard cells in 0.16 µm and
+0.25 µm.
+
+Design problems and how to reduce their risk
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. list-table:: Gigabit design problems, candidate approaches and
+   verification
+   :header-rows: 1
+   :widths: 20 45 35
+
+   * - Problem
+     - Candidate approaches (sections above)
+     - How it can be verified before the whole transceiver exists
+   * - Signal-processing area and power
+     - Shift-and-add cancellers; look-ahead or reduced-state decoder (about
+       half the decoder gates); reduced tap counts; custom 3.3 V-transistor
+       cells; lower supply with parallel paths
+     - Synthesis and power estimation of the filters and decoder for
+       gf180mcu; FPGA implementation on captured cable samples
+   * - 8 ns decision loop
+     - Look-ahead prefilter and 1-tap decoder (125 MHz shown at 3.3 V in
+       0.25 µm); pipelined decoder; faster custom cells
+     - Static timing of the loop at the slow corner after synthesis and
+       layout
+   * - Four 125 MHz ADCs of about 7 effective bits
+     - Folding (shown at 3.3 V in 0.35 µm); pipelined or time-interleaved
+       redesigned for 3.3 V transistors; one bit fewer with analog echo
+       pre-cancellation
+     - A test chip with one ADC, measured for ENOB at 125 MS/s
+   * - Hybrid without a transformer
+     - Replica hybrid on the capacitor-coupled pins; analog echo
+       pre-canceller; merged driver and receiver
+     - Measurement of echo rejection on a test chip with a real cable and
+       the external components of :doc:`../magnetics`
+   * - Echo and crosstalk cancellation
+     - Adaptive filters with symbol inputs; tap counts set by simulation
+       against the channel limits
+     - Simulation with measured cable responses; FPGA on captured samples
+   * - Clock recovery and master/slave timing
+     - PLL plus phase interpolator (180 nm example: 31.25 ps steps,
+       4.9 ps rms); digital timing recovery
+     - Jitter measurement of the PLL on a test chip; timing recovery on an
+       FPGA
+   * - Line driver linearity and swing
+     - Matched voltage-mode or active-termination driver from 3.3 V
+     - The four transmitter test modes need no receiver and can be measured
+       on the driver alone
+
 References
 ----------
 
