@@ -1,0 +1,38 @@
+// A resistive hybrid: the driver feeds the line through a matching
+// resistor and, at the same time, a replica network. The receiver takes the
+// difference between the line node and the replica node, so the
+// transceiver's own signal cancels and the far-end signal remains.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph hybrid {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.6"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.3, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7, penwidth=1.5];
+
+    drv   [pos="0.7,1.4!", label="Driver\n(DAC output)"];
+    rs    [pos="2.6,2.3!", width=1.2, label="Matching\nresistance"];
+    rr    [pos="2.6,0.5!", width=1.2, label="Replica\nresistance"];
+    line  [pos="5.6,2.3!", width=1.6, label="Pair and cable\n(100 Ω)",
+           fillcolor="#ffffff"];
+    ref   [pos="5.6,0.5!", width=1.6, label="Replica load\n(matched to line)"];
+    sub   [pos="4.1,1.4!", shape=circle, width=0.45, height=0.45, label="−",
+           fontsize=16, fillcolor="#ffffff"];
+    rx    [pos="6.7,1.4!", width=1.1, label="To receiver\nand ADC",
+           fillcolor="#f2f2f2"];
+
+    drv -> rs   [label="own signal"];
+    drv -> rr   [label="own signal"];
+    rs  -> line [dir=both];
+    rr  -> ref;
+    l_line [pos="4.1,2.55!", shape=plaintext, style="", width=1.6, height=0.25,
+            fontsize=10, label="line node: own + far-end"];
+    l_ref  [pos="4.1,0.25!", shape=plaintext, style="", width=1.6, height=0.25,
+            fontsize=10, label="replica node: own only"];
+    rs  -> sub  [label="+"];
+    rr  -> sub;
+    sub -> rx   [label="far-end\nsignal"];
+}

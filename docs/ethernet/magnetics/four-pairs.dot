@@ -1,0 +1,119 @@
+// All four pairs of one port: transceiver, magnetics, RJ45 socket and the
+// shared common-mode termination on the cable side.
+//
+// Node positions are fixed (in inches) so that the drawing reads like a
+// schematic.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph four_pairs {
+    graph [layout=neato, splines=line, fontname="Helvetica", fontsize=11,
+           outputorder=edgesfirst];
+    node  [fontname="Helvetica", fontsize=10, shape=plain, pin=true];
+    edge  [penwidth=1.3];
+
+    phy [pos="0,0!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5"
+             bgcolor="#dbe8f5">
+        <tr><td><b>Transceiver</b></td></tr>
+        <tr><td port="ap" align="right">A +</td></tr>
+        <tr><td port="an" align="right">A −</td></tr>
+        <tr><td port="bp" align="right">B +</td></tr>
+        <tr><td port="bn" align="right">B −</td></tr>
+        <tr><td port="cp" align="right">C +</td></tr>
+        <tr><td port="cn" align="right">C −</td></tr>
+        <tr><td port="dp" align="right">D +</td></tr>
+        <tr><td port="dn" align="right">D −</td></tr>
+      </table>>];
+
+    // One transformer and one common-mode choke per pair. The port on the
+    // bottom row is the cable-side centre tap.
+    ma [pos="2.6,1.45!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fff2cc">
+        <tr><td port="ip">●</td><td rowspan="2">pair A<br/>transformer + choke</td><td port="op">●</td></tr>
+        <tr><td port="in">●</td><td port="on">●</td></tr>
+        <tr><td></td><td align="right"><font point-size="8">centre tap</font></td><td port="ct">○</td></tr>
+      </table>>];
+    mb [pos="2.6,0.45!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fff2cc">
+        <tr><td port="ip">●</td><td rowspan="2">pair B<br/>transformer + choke</td><td port="op">●</td></tr>
+        <tr><td port="in">●</td><td port="on">●</td></tr>
+        <tr><td></td><td align="right"><font point-size="8">centre tap</font></td><td port="ct">○</td></tr>
+      </table>>];
+    mc [pos="2.6,-0.55!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fff2cc">
+        <tr><td port="ip">●</td><td rowspan="2">pair C<br/>transformer + choke</td><td port="op">●</td></tr>
+        <tr><td port="in">●</td><td port="on">●</td></tr>
+        <tr><td></td><td align="right"><font point-size="8">centre tap</font></td><td port="ct">○</td></tr>
+      </table>>];
+    md [pos="2.6,-1.55!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#fff2cc">
+        <tr><td port="ip">●</td><td rowspan="2">pair D<br/>transformer + choke</td><td port="op">●</td></tr>
+        <tr><td port="in">●</td><td port="on">●</td></tr>
+        <tr><td></td><td align="right"><font point-size="8">centre tap</font></td><td port="ct">○</td></tr>
+      </table>>];
+
+    // Pins are listed pair by pair, not in physical order: pair B uses
+    // pins 3 and 6, which sit on either side of pins 4 and 5.
+    rj45 [pos="6.15,0.0!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="0"
+             bgcolor="#f2f2f2">
+        <tr><td height="30"><b>&nbsp;RJ45 socket&nbsp;</b></td></tr>
+        <tr><td port="p1" align="left" height="23" cellpadding="4">pin 1</td></tr>
+        <tr><td port="p2" align="left" height="23" cellpadding="4">pin 2</td></tr>
+        <tr><td height="26"></td></tr>
+        <tr><td port="p3" align="left" height="23" cellpadding="4">pin 3</td></tr>
+        <tr><td port="p6" align="left" height="23" cellpadding="4">pin 6</td></tr>
+        <tr><td height="26"></td></tr>
+        <tr><td port="p4" align="left" height="23" cellpadding="4">pin 4</td></tr>
+        <tr><td port="p5" align="left" height="23" cellpadding="4">pin 5</td></tr>
+        <tr><td height="26"></td></tr>
+        <tr><td port="p7" align="left" height="23" cellpadding="4">pin 7</td></tr>
+        <tr><td port="p8" align="left" height="23" cellpadding="4">pin 8</td></tr>
+        <tr><td port="sh" align="left" height="26" cellpadding="4">metal shield</td></tr>
+      </table>>];
+
+    // Common-mode termination: one 75 ohm resistor per pair, all joined at
+    // one node, then one high-voltage capacitor to chassis ground.
+    node [shape=box, style="filled", fillcolor="#ffffff", fontsize=9,
+          width=0.5, height=0.22, margin="0.03,0.01", fixedsize=true];
+    ra [pos="4.0,1.17!", label="75 Ω"];
+    rb [pos="4.0,0.17!", label="75 Ω"];
+    rc [pos="4.0,-0.83!", label="75 Ω"];
+    rd [pos="4.0,-1.83!", label="75 Ω"];
+
+    node [shape=point, width=0.07, style=filled, fillcolor="#404040",
+          fixedsize=false];
+    ja [pos="4.45,1.17!"];
+    jb [pos="4.45,0.17!"];
+    jc [pos="4.45,-0.83!"];
+    jd [pos="4.45,-1.83!"];
+    jcap [pos="4.45,-2.45!", shape=none, width=0, height=0, label=""];
+
+    node [shape=box, style="filled", fixedsize=false, fontsize=10,
+          margin="0.08,0.04"];
+    chv [pos="4.45,-2.65!", label="1000 pF, 2 kV", fillcolor="#ffffff"];
+    chassis [pos="6.15,-2.65!", label="Chassis ground", fillcolor="#d9d9d9"];
+
+    // Pairs, transceiver side.
+    phy:ap -- ma:ip; phy:an -- ma:in;
+    phy:bp -- mb:ip; phy:bn -- mb:in;
+    phy:cp -- mc:ip; phy:cn -- mc:in;
+    phy:dp -- md:ip; phy:dn -- md:in;
+
+    // Pairs, cable side.
+    ma:op -- rj45:p1 [color="#2e75b6"]; ma:on -- rj45:p2 [color="#2e75b6"];
+    mb:op -- rj45:p3 [color="#c55a11"]; mb:on -- rj45:p6 [color="#c55a11"];
+    mc:op -- rj45:p4 [color="#548235"]; mc:on -- rj45:p5 [color="#548235"];
+    md:op -- rj45:p7 [color="#7030a0"]; md:on -- rj45:p8 [color="#7030a0"];
+
+    // Common-mode termination.
+    edge [color="#595959", style=dashed];
+    ma:ct -- ra; ra -- ja;
+    mb:ct -- rb; rb -- jb;
+    mc:ct -- rc; rc -- jc;
+    md:ct -- rd; rd -- jd;
+    ja -- jb -- jc -- jd -- chv;
+    chv -- chassis;
+    rj45:sh -- chassis;
+}

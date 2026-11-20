@@ -1,0 +1,32 @@
+// Where an Ethernet transceiver sits: between the logic that handles whole
+// frames and the twisted pairs of the cable. Read left to right.
+//
+// Colours follow the other diagrams on these pages: grey for digital
+// logic, orange for analogue circuits, white for parts outside the chip.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph position {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.2"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.3, height=0.75,
+           fixedsize=true];
+    edge  [arrowsize=0.7, dir=both, penwidth=1.5];
+
+    fwd   [pos="0.65,0.6!", label="Forwarding\nlogic (MAC\nrole)"];
+    phy   [pos="2.85,0.6!", label="Ethernet\ntransceiver", fillcolor="#fbe5d6"];
+    mag   [pos="5.05,0.6!", label="Magnetics or\ntransformer-\nfree coupling",
+           fillcolor="#ffffff"];
+    rj45  [pos="6.85,0.6!", width=0.95, label="RJ45\nsocket", fillcolor="#ffffff"];
+
+    // Edge labels, placed above the lines they name.
+    node  [shape=plaintext, style="", fontsize=10, height=0.4, width=0.9];
+    l1 [pos="1.75,1.25!", label="bytes, one\nevery 8 ns"];
+    l2 [pos="3.95,1.25!", label="analogue,\n4 pairs"];
+    l3 [pos="6.0,1.25!", label="cable\nside"];
+
+    fwd -> phy;
+    phy -> mag;
+    mag -> rj45;
+}

@@ -1,0 +1,74 @@
+// One twisted pair between an Ethernet transceiver and the RJ45 socket,
+// through standard magnetics (first version of evampire boards).
+//
+// Fixed grid, positions in inches. Top row: signal path. Bottom row:
+// centre-tap connections.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph one_pair {
+    graph [layout=neato, splines=line, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, shape=plain, pin=true];
+    edge  [penwidth=1.3];
+
+    phy [pos="0.45,2.0!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="4"
+             bgcolor="#dbe8f5">
+        <tr><td><b>Transceiver</b></td></tr>
+        <tr><td port="p" align="right">pair A +</td></tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr><td port="n" align="right">pair A −</td></tr>
+      </table>>];
+
+    xfmr [pos="2.35,2.0!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="3"
+             bgcolor="#fff2cc">
+        <tr><td colspan="3"><b>Transformer, 1:1</b></td></tr>
+        <tr><td align="left"><font color="#1f4e79">circuit<br/>side</font></td><td></td>
+            <td align="right"><font color="#c55a11">cable<br/>side</font></td></tr>
+        <tr><td port="lp">●</td><td rowspan="2">║ isolation ║<br/>barrier</td><td port="rp">●</td></tr>
+        <tr><td port="ln">●</td><td port="rn">●</td></tr>
+        <tr><td port="lct"><font point-size="8">centre<br/>tap</font></td><td></td>
+            <td port="rct"><font point-size="8">centre<br/>tap</font></td></tr>
+      </table>>];
+
+    cmc [pos="4.25,2.0!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="4"
+             bgcolor="#e2efda">
+        <tr><td colspan="3"><b>Common-mode<br/>choke</b></td></tr>
+        <tr><td port="ip">●</td><td rowspan="2">two windings,<br/>one core</td><td port="op">●</td></tr>
+        <tr><td port="in">●</td><td port="on">●</td></tr>
+      </table>>];
+
+    rj45 [pos="6.15,2.0!", label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="4"
+             bgcolor="#f2f2f2">
+        <tr><td><b>RJ45</b></td></tr>
+        <tr><td port="p1" align="left">pin 1</td></tr>
+        <tr><td port="p2" align="left">pin 2</td></tr>
+        <tr><td port="sh" align="left">shield</td></tr>
+      </table>>];
+
+    node [shape=box, style=filled, fillcolor="#ffffff", fontsize=9];
+    c_ct    [pos="1.75,0.45!", label="0.1 µF to\nsignal ground"];
+    r75     [pos="3.2,0.45!", label="75 Ω"];
+    chv     [pos="4.55,0.45!", label="1000 pF, 2 kV\n(shared by the\nfour pairs)"];
+    chassis [pos="6.15,0.45!", label="Chassis\nground", fillcolor="#d9d9d9"];
+
+    // Signal path.
+    phy:p   -- xfmr:lp;
+    phy:n   -- xfmr:ln;
+    xfmr:rp -- cmc:ip;
+    xfmr:rn -- cmc:in;
+    cmc:op  -- rj45:p1;
+    cmc:on  -- rj45:p2;
+
+    // Centre taps.
+    edge [style=dashed];
+    xfmr:lct:s -- c_ct [color="#1f4e79"];
+    xfmr:rct:s -- r75 [color="#c55a11"];
+    r75 -- chv [color="#c55a11"];
+    chv -- chassis [color="#c55a11"];
+    rj45:sh:s -- chassis [color="#808080"];
+}

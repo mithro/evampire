@@ -1,0 +1,50 @@
+// The decision-feedback loop before and after look-ahead. Left: the
+// feedback filter's output must be subtracted and a decision made inside
+// one 8 ns symbol period. Right: candidates for every possible previous
+// decision are computed outside the loop, so the loop only selects one.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph loop {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.5, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
+
+    t_a [pos="1.6,3.35!", shape=plaintext, style="", width=3.0, height=0.3,
+         fontsize=12, label="Direct loop"];
+    t_b [pos="5.6,3.35!", shape=plaintext, style="", width=3.0, height=0.3,
+         fontsize=12, label="With look-ahead"];
+
+    // Direct loop.
+    a_in  [pos="1.6,2.8!", label="Equalised samples", fillcolor="#ffffff"];
+    a_sub [pos="1.6,1.95!", label="Subtract feedback"];
+    a_dec [pos="1.6,1.1!", label="Decide symbols\n(trellis decoder)"];
+    a_fb  [pos="0.3,1.5!", width=0.7, height=0.9, label="Feedback\nfilter"];
+    a_out [pos="1.6,0.25!", label="Decisions", fillcolor="#ffffff"];
+    a_lp  [pos="2.85,1.5!", shape=plaintext, style="", width=0.9, height=0.4,
+           fontcolor="#c62828", label="loop:\none 8 ns\nperiod"];
+
+    a_in  -> a_sub;
+    a_sub -> a_dec;
+    a_dec -> a_out;
+    a_dec -> a_fb  [style=bold, color="#c62828"];
+    a_fb  -> a_sub [style=bold, color="#c62828"];
+
+    // Look-ahead.
+    b_in  [pos="5.6,2.8!", label="Equalised samples", fillcolor="#ffffff"];
+    b_pre [pos="5.6,1.95!", width=2.2, label="Precompute candidates for\neach possible past decision"];
+    b_sel [pos="5.6,1.1!", label="Select candidate\nand decide"];
+    b_out [pos="5.6,0.25!", label="Decisions", fillcolor="#ffffff"];
+    b_lp  [pos="7.05,1.1!", shape=plaintext, style="", width=0.8, height=0.4,
+           fontcolor="#c62828", label="loop:\nselect only"];
+
+    b_in  -> b_pre;
+    b_pl  [pos="6.55,2.45!", shape=plaintext, style="", width=1.4, height=0.3,
+           label="pipelined, outside the loop"];
+    b_pre -> b_sel;
+    b_sel -> b_out;
+    b_sel -> b_sel [style=bold, color="#c62828"];
+}

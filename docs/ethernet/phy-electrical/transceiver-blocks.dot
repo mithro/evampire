@@ -1,0 +1,102 @@
+// Inside a gigabit Ethernet transceiver: one of the four identical pair
+// channels in detail, plus the blocks shared by all four.
+//
+// The blocks are placed on a fixed grid (positions in inches) so that the
+// diagram reads top to bottom and fits the width of a documentation page:
+//
+//   column 1 (x=1.2)  transmit path, downwards
+//   column 2 (x=3.0)  echo and crosstalk cancellers
+//   column 3 (x=4.8)  receive path, upwards
+//
+// Group outlines are drawn as background boxes first. Edges are straight
+// lines, placed so that none of them crosses a block.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph transceiver {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=12, width=1.4, height=0.55,
+           fixedsize=true];
+    edge  [arrowsize=0.8];
+
+    // Group outlines.
+    g_bytes  [pos="3.0,9.45!", width=5.6, height=0.8, label="Byte interface\n(RGMII, or on-chip)",
+              fontsize=12, style="rounded,filled", color="#5b9bd5",
+              fillcolor="#dbe8f5"];
+    g_dsp    [pos="3.0,6.7!", width=5.6, height=4.3, label="Digital signal processing, one pair",
+              labelloc=t, fontsize=13, fontcolor="#2e75b6", style="rounded",
+              color="#5b9bd5", fillcolor="none"];
+    g_analog [pos="3.0,3.375!", width=5.6, height=2.15, label="Analogue front end, one pair",
+              labelloc=t, fontsize=13, fontcolor="#c55a11", style="rounded",
+              color="#ed7d31", fillcolor="none"];
+    g_shared [pos="3.0,0.75!", width=5.6, height=1.2, label="Shared by all four pairs",
+              labelloc=t, fontsize=13, fontcolor="#548235", style="rounded",
+              color="#70ad47", fillcolor="none"];
+
+    // Byte interface to the forwarding logic: bytes to send on the left,
+    // received bytes on the right, so both connections run straight down.
+    tx_bytes [pos="1.2,9.45!", label="Bytes to send", fillcolor="#ffffff"];
+    rx_bytes [pos="4.8,9.45!", label="Received bytes", fillcolor="#ffffff"];
+
+    // Digital signal processing.
+    enc   [pos="1.2,7.9!", label="Scrambler and\ntrellis encoder"];
+    shape [pos="1.2,6.9!", label="Transmit\nshaping filter"];
+    echo  [pos="3.0,6.9!", label="Echo\ncanceller"];
+    next  [pos="3.0,5.9!", label="3 near-end\ncrosstalk cancellers",
+           width=1.85, height=0.6];
+    other [pos="3.0,4.95!", label="Symbols sent\non the other 3 pairs",
+           width=1.9, style="rounded,dashed,filled", fillcolor="#ffffff"];
+    dec   [pos="4.8,7.9!", width=1.6, label="Trellis decoder\nand descrambler"];
+    eq    [pos="4.8,6.9!", label="Adaptive\nequaliser"];
+    sum   [pos="4.8,5.9!", label="−", shape=circle, width=0.35, height=0.35,
+           fontsize=16];
+
+    sum_l [pos="5.5,5.9!", shape=plaintext, style="", width=0.9, height=0.4,
+           fontsize=10, label="subtract\npredicted\necho and\ncrosstalk"];
+    data_l [pos="0.55,5.4!", shape=plaintext, style="", width=0.6, height=0.4,
+            fontsize=10, label="data\n(bold)"];
+
+    // Analogue front end.
+    dac    [pos="1.2,3.9!", label="DAC and\nline driver", fillcolor="#fbe5d6"];
+    adc    [pos="4.8,3.9!", label="Amplifier, filter\nand ADC", fillcolor="#fbe5d6"];
+    hybrid [pos="3.0,2.95!", label="Hybrid", fillcolor="#fbe5d6"];
+
+    // Cable side.
+    cable [pos="3.0,1.75!", width=5.0, height=0.45,
+           label="Cable interface (magnetics or transformer-free coupling, RJ45)",
+           fontsize=11, fillcolor="#ffffff"];
+
+    // Shared blocks.
+    xtal [pos="0.8,0.6!", width=1.0, fontsize=11, label="25 MHz\ncrystal", fillcolor="#e2efda"];
+    pll  [pos="2.15,0.6!", width=1.45, fontsize=11, label="Clock synthesis\nand recovery", fillcolor="#e2efda"];
+    an   [pos="3.6,0.6!", width=1.3, fontsize=11, label="Autonegotiation", fillcolor="#e2efda"];
+    mgmt [pos="4.95,0.6!", width=1.25, label="Management\nregisters", fontsize=11,
+          fillcolor="#e2efda"];
+
+    // Transmit path.
+    tx_bytes -> enc [penwidth=2.5];
+    enc   -> shape  [penwidth=2.5];
+    shape -> dac    [penwidth=2.5];
+    dac   -> hybrid [penwidth=2.5];
+    hybrid -> cable [penwidth=2.5, dir=both];
+
+    // Receive path.
+    hybrid -> adc   [penwidth=2.5];
+    adc   -> sum    [penwidth=2.5];
+    sum   -> eq     [penwidth=2.5];
+    eq    -> dec    [penwidth=2.5];
+    dec   -> rx_bytes [penwidth=2.5];
+
+    // Cancellers: copies of the transmitted symbols, subtracted from the
+    // received signal.
+    enc   -> echo   [style=dashed, xlabel="sent\nsymbols", fontsize=9];
+    echo  -> sum;
+    other -> next   [style=dashed, xlabel="sent symbols", fontsize=9];
+    next  -> sum;
+
+    // Shared blocks.
+    xtal -> pll  [style=dotted];
+    an   -> mgmt [style=dotted];
+}
