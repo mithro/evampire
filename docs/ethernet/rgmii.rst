@@ -140,10 +140,13 @@ Each port also uses the management interface (MDC and MDIO, described in
 `Management interface (MDC and MDIO)`_). Unlike the data signals, the
 management interface can be shared by several transceivers.
 
-There is no separate signal for "carrier sense" or "collision" in RGMII. In
-half duplex these are recovered from RX_CTL and RXD
-([RGMII20]_ section 3.4.2). evampire uses full duplex only (see
-`Speed and duplex of the two ports`_), so it does not need them.
+A link runs in *full duplex*, where both ends may send at the same time,
+or in *half duplex*, where only one end may send at a time. Half duplex
+needs two extra indications: "carrier sense" (the other end is sending) and
+"collision" (both ends sent at once). RGMII has no separate wires for these;
+they are recovered from RX_CTL and RXD ([RGMII20]_ section 3.4.2). evampire
+uses full duplex only (see `Speed and duplex of the two ports`_), so it does
+not need them.
 
 Data rates and clocking
 -----------------------
@@ -698,8 +701,8 @@ voltage.
   signals and also for MDC and MDIO: output high at least 2.0 V, output low
   at most 0.40 V (at 1 mA), input high at least 1.7 V, input low at most
   0.70 V ([RGMII13]_ section 4.0, Table 5).
-* **Version 2.0** changed this to 1.5 V HSTL Class 1 levels (JEDEC
-  JESD8-6) ([RGMII20]_ section 4.0).
+* **Version 2.0** changed this to 1.5 V HSTL Class 1 levels (HSTL is a
+  1.5 V signalling standard, JEDEC JESD8-6) ([RGMII20]_ section 4.0).
 * **Real transceivers** use neither choice exclusively. Their RGMII pins run
   from a separate I/O supply that the board designer chooses.
 
@@ -768,7 +771,8 @@ MDIO
 Several transceivers can share one MDC/MDIO pair. Each transceiver has an
 address set by pins sampled at power-up, and responds only to frames carrying
 its address. evampire can therefore drive both of its transceivers from one
-pair of pins, provided the two are strapped to different addresses.
+pair of pins, provided the two are set to different addresses by their
+configuration pins.
 
 Clock rate
    Clause 22 sets a minimum MDC period of 400 ns, that is at most 2.5 MHz.
@@ -841,6 +845,11 @@ Frame format
 Registers evampire uses
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+*Autonegotiation* is the exchange, at link start-up, in which the two
+transceivers on a cable tell each other which speeds and duplex modes they
+support and both pick the best common one. *1000BASE-T* is the IEEE 802.3
+name for 1000 Mbit/s over the usual four-pair copper cable.
+
 Registers 0 to 15 are defined by IEEE 802.3 and have the same meaning in
 every transceiver; registers 16 to 31 are specific to each manufacturer
 ([KSZ9031]_ section 4.2). The bit definitions below are taken from the
@@ -886,9 +895,7 @@ KSZ9031RNX datasheet ([KSZ9031]_ section 4.2).
      - Bit 11: far end offers 1000 Mbit/s full duplex. Bit 10: far end
        offers 1000 Mbit/s half duplex.
 
-*Autonegotiation* is the exchange, at link start-up, in which the two
-transceivers on a cable tell each other which speeds and duplex modes they
-support and both pick the best common one. The result is the highest speed
+The result of autonegotiation is the highest speed
 offered by both ends (in registers 4 and 9 at this end, 5 and 10 at the far
 end). Most transceivers also report the result directly in a
 manufacturer-specific register, for example register 0x11 of the DP83867
@@ -944,6 +951,11 @@ Pins
    * - Total
      - 27
      -
+
+The 125 MHz reference clock can come from an oscillator or from a clock
+output of one of the transceivers: the DP83867 has a 25 MHz or 125 MHz clock
+output (CLK_OUT, [DP83867]_ sections 1 and 7.3) and the KSZ9031RNX a 125 MHz
+reference clock output (CLK125_NDO, [KSZ9031]_ section 3.9).
 
 I/O voltage
 ~~~~~~~~~~~
