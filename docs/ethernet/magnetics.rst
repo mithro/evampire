@@ -24,18 +24,15 @@ means for a chip made in the gf180mcu process, and which questions are still
 open. How the transceiver itself works is covered in :doc:`phy-electrical`.
 
 The Ethernet standard is IEEE 802.3 [MAG-IEEE8023]_. The parts of it that
-matter here are Clause 14 (10 Mbit/s over twisted-pair cable, called
-*10BASE-T*), Clause 25 (100 Mbit/s, *100BASE-TX*), Clause 40 (1000 Mbit/s,
-*1000BASE-T*), and Clauses 33 and 145 (Power over Ethernet). The connection
+matter here are :clause:`14` (10 Mbit/s over twisted-pair cable, called
+*10BASE-T*), :clause:`25` (100 Mbit/s, *100BASE-TX*), :clause:`40`
+(1000 Mbit/s, *1000BASE-T*), and :clause:`Clauses 33 <33>` and
+:clause:`145 <145>` (Power over Ethernet). The connection
 between the transceiver and the cable is called the *MDI*, short for "medium
 dependent interface": the eight wires of the RJ45 socket and the electrical
 requirements on them. Clause numbers on this page are those given in the
 cited documents, which quote editions of IEEE 802.3 from 2002 to 2022; they
 were not checked against the text of the 2022 edition.
-
-.. contents:: On this page
-   :local:
-   :depth: 1
 
 The cable and the RJ45 socket
 -----------------------------
@@ -51,7 +48,7 @@ The RJ45 plug and socket have eight contacts, numbered 1 to 8. One pair uses
 pins 3 and 6, which sit on either side of the pair on pins 4 and 5.
 
 .. list-table:: RJ45 pin use. The 1000BASE-T names are those of IEEE 802.3
-                Clause 40; "BI" means the pair carries data in both
+                :clause:`40`; "BI" means the pair carries data in both
                 directions at once [MAG-KSZ9031]_.
    :header-rows: 1
    :widths: 12 18 25 25 20
@@ -89,7 +86,7 @@ At 10 and 100 Mbit/s a transmitter at one end must reach the receiver at the
 other end. With a "straight-through" cable (pin 1 to pin 1 and so on) this
 works only if the two ends use opposite pin assignments, called *MDI* and
 *MDI-X* (:numref:`fig-magnetics-crossover`). At 1000 Mbit/s, MDI-X swaps
-pair A with B and pair C with D [MAG-KSZ9031]_. IEEE 802.3 Clause 40.4.4
+pair A with B and pair C with D [MAG-KSZ9031]_. IEEE 802.3 :clause:`40.4.4`
 defines *automatic MDI/MDI-X configuration*: while there is no link, a port
 switches between the two assignments at pseudo-random times (a sample timer
 of 62 ms ± 2 ms) until it hears the other end [MAG-UNHXO]_. Because either
@@ -181,8 +178,10 @@ transformer per pair is "the most commonly used method" of meeting them
      - transformer
      - Withstand 1500 V rms at 50–60 Hz for 60 s, *or* 2250 V DC for 60 s,
        *or* ten 2400 V impulses (1500 V with Power over Ethernet); at least
-       2 MΩ at 500 V afterwards (Clauses 14.3.1.1, 25.4.6, 40.6.1.1,
-       33.4.1, 145.4.1) [MAG-WALKER]_.
+       2 MΩ at 500 V afterwards (:clause:`Clauses 14.3.1.1 <14.3.1.1>`,
+       :clause:`25.4.6 <25.4.6>`, :clause:`40.6.1.1 <40.6.1.1>`,
+       :clause:`33.4.1 <33.4.1>`, :clause:`145.4.1 <145.4.1>`)
+       [MAG-WALKER]_.
    * - F2
      - Rejecting common-mode voltage, and letting each side sit at its own
        voltage level
@@ -198,13 +197,14 @@ transformer per pair is "the most commonly used method" of meeting them
      - Matching the 100 Ω cable
      - 1:1 transformer
      - 1000BASE-T return loss ≥ 16 dB from 1 MHz to 40 MHz, against 85 Ω to
-       115 Ω (Clause 40.8.3.1) [MAG-UNH40]_.
+       115 Ω (:clause:`40.8.3.1`) [MAG-UNH40]_.
    * - F5
      - Passing low frequencies (limiting droop and baseline wander)
      - transformer inductance
      - 1000BASE-T: more than 73.1 % of the voltage left 500 ns after a step
-       (Clause 40.6.1.2.2) [MAG-UNH40]_. 100BASE-TX: at least 350 µH with
-       0 mA to 8 mA DC bias (ANSI X3.263 subclause 9.1.7) [MAG-LAW]_.
+       (:clause:`40.6.1.2.2`) [MAG-UNH40]_. 100BASE-TX, if supported: at
+       least 350 µH with 0 mA to 8 mA DC bias (ANSI X3.263, section 9.1.7)
+       [MAG-LAW]_.
    * - F6
      - Terminating common-mode signals on the cable (lower emissions and
        better immunity)
@@ -237,7 +237,7 @@ transformer per pair is "the most commonly used method" of meeting them
    * - F12
      - Identical channels, so any pair can carry any direction
      - four identical channels
-     - Automatic MDI/MDI-X (Clause 40.4.4) [MAG-KSZ9031]_.
+     - Automatic MDI/MDI-X (:clause:`40.4.4`) [MAG-KSZ9031]_.
 
 F1: Galvanic isolation
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -286,7 +286,7 @@ earlier interpretations treated the test as protection of the interface
 against common-mode voltages rather than as a safety test, and notes that
 protection diodes connected to ground defeat isolation [MAG-INTERP0311]_.
 
-For Power over Ethernet, Clause 33 also distinguishes *Environment A* (a
+For Power over Ethernet, :clause:`33` also distinguishes *Environment A* (a
 network inside one building and one low-voltage power distribution system)
 from *Environment B* (a network that crosses between buildings or power
 systems). Environment A relaxes only the isolation *between the power
@@ -345,7 +345,7 @@ where:
   85 Ω to 115 Ω [MAG-UNH40]_;
 * :math:`\text{RL}` is the return loss, in dB.
 
-IEEE 802.3 Clause 40.8.3.1 requires a 1000BASE-T port to have a return loss
+IEEE 802.3 :clause:`40.8.3.1` requires a 1000BASE-T port to have a return loss
 of at least 16 dB from 1 MHz to 40 MHz [MAG-UNH40]_. To see what that means
 for the port impedance, solve for :math:`\lvert\Gamma\rvert` and then for a
 purely resistive :math:`Z` with :math:`Z_0 = 100\ \Omega`:
@@ -374,7 +374,7 @@ Gigabit magnetics specify at most 1 dB from 1 MHz to 100 MHz
 [MAG-PULSE]_ [MAG-WURTH]_, an amplitude ratio of
 :math:`10^{-1/20} = 0.891`: at most 11 % of the signal amplitude is lost.
 
-100BASE-TX, through the FDDI standard ANSI X3.263 that Clause 25 adopts
+100BASE-TX, through the FDDI standard ANSI X3.263 that :clause:`25` adopts
 (FDDI is an older 100 Mbit/s network standard), additionally requires the
 port impedance to be "nominally resistive with a phase angle less than 3°"
 from 2 MHz to 80 MHz [MAG-SNLA088]_. This matters for capacitor coupling
@@ -431,7 +431,7 @@ value [MAG-KSZ9031]_ [MAG-WURTH]_):
 Signals below about 23 kHz are attenuated. Ethernet signals have little
 energy that low, but long runs of the same symbol do.
 
-**Minimum inductance for 1000BASE-T.** Clause 40.6.1.2.2 requires that, 500 ns
+**Minimum inductance for 1000BASE-T.** :clause:`40.6.1.2.2` requires that, 500 ns
 after the start of a constant level in a test pattern, more than 73.1 % of
 the voltage remains [MAG-UNH40]_. In the model the remaining fraction is
 :math:`e^{-t/\tau}`, so:
@@ -458,7 +458,7 @@ and in IEEE 802.3bu work on power over a single pair [MAG-GARDNER14]_. With
 :math:`e^{-0.5/7.0} = 0.931`: 93 % remains, a large margin over 73.1 %.
 
 **Why 350 µH.** The 350 µH figure comes from 100BASE-TX: ANSI X3.263
-subclause 9.1.7 requires at least 350 µH at the transmitter "with any DC
+section 9.1.7 requires at least 350 µH at the transmitter "with any DC
 bias current between 0 mA and +8 mA", to limit baseline wander, and notes
 that DC bias can change the inductance by about 2:1 [MAG-LAW]_. Data sheets
 therefore quote the inductance at 100 kHz, 100 mV and 8 mA of DC bias
@@ -587,7 +587,7 @@ Power over Ethernet (PoE) sends DC power on the data pairs. The *power
 sourcing equipment* puts one polarity on both wires of one pair and the other
 polarity on both wires of another pair; a pair carries no differential DC, so
 the data is unaffected. *Alternative A* uses the pairs on pins 1, 2 and 3, 6;
-*Alternative B* the pairs on pins 4, 5 and 7, 8; Clause 145 (four-pair power)
+*Alternative B* the pairs on pins 4, 5 and 7, 8; :clause:`145` (four-pair power)
 uses both [MAG-SLVAF59]_. The *powered device* must accept power on either
 set of pairs in either polarity, so it uses two bridge rectifiers
 [MAG-TPS2376H]_ (:numref:`fig-magnetics-poe`).
@@ -1546,14 +1546,14 @@ References
 
 .. [MAG-IEEE8023] IEEE Std 802.3-2022, *IEEE Standard for Ethernet*.
    https://standards.ieee.org/ieee/802.3/10422/
-.. [MAG-WALKER] D. Walker and C. Bullock, *Summary of Isolation Requirements,
-   802.3-2015, Clause 126, & Clause 145 D3.0*, IEEE 802.3 isolation ad hoc,
-   2017-08-17.
+.. [MAG-WALKER] D. Walker and C. Bullock, *Summary of Isolation Requirements*
+   (IEEE 802.3-2015, :clause:`126` and :clause:`145` draft 3.0), IEEE 802.3
+   isolation ad hoc, 2017-08-17.
    https://www.ieee802.org/3/ad_hoc/isolation/public/Walker_1_08172017_rev_1.pdf
 .. [MAG-INTERP0311] IEEE 802.3 interpretation request 2-03/11, *Isolation
    Criteria*, 2011-03-20. https://www.ieee802.org/3/interp/interp-2-0311.pdf
 .. [MAG-INTERP1196] IEEE 802.3 interpretation 1, *10BASE-T Transmit Voltage
-   Template* (subclause 14.3.1.2.1).
+   Template* (:clause:`14.3.1.2.1`).
    https://www.ieee802.org/3/interp/interp-1-1196.pdf
 .. [MAG-POTTERF] Potterf (Cisco), *802.3da Isolation Improvements*, IEEE
    P802.3da, 2025-01.
@@ -1561,20 +1561,21 @@ References
 .. [MAG-LEWIS] J. Lewis (Dell EMC), *802.3 Proposed Baseline Text: 60950,
    60950-1 Where Used (IEEE 802.3-2018)*, IEEE P802.3cr, 2019-07-15.
    https://www.ieee802.org/3/cr/public/0719/Lewis_3cr_01a_0719.pdf
-.. [MAG-HSTEWART] IEEE P802.3bt draft D1.5 baseline text (Clause 33,
+.. [MAG-HSTEWART] IEEE P802.3bt draft D1.5 baseline text (:clause:`33`,
    Environments A and B), 2016-01.
    https://www.ieee802.org/3/bt/public/jan16/hstewart_02_0116_baseline.pdf
 .. [MAG-LAW] D. Law, *IEEE P802.3at Power via MDI enhancements, 350 µH ad
-   hoc report*, 2008 (quotes ANSI X3.263-1995 subclause 9.1.7).
+   hoc report*, 2008 (quotes ANSI X3.263-1995, section 9.1.7).
    https://www.ieee802.org/3/at/public/2008/06/law_1_0608.pdf
 .. [MAG-TRACY] N. Tracy and E. Eminhizer (TE Connectivity), *Proposed
-   Changes to IEEE Std 802.3, Sub-clauses 25.4.5, 25.4.5.1 and 25.4.7*,
+   Changes to IEEE Std 802.3* (:clause:`25.4.5`, :clause:`25.4.5.1 <25.4.5.1>`
+   and :clause:`25.4.7 <25.4.7>`),
    2011. https://www.ieee802.org/3/maint/public/tracy_1_0911.pdf
 .. [MAG-GARDNER14] A. Gardner (Linear Technology), *PoDL decoupling*, IEEE
    802.3bu, 2014-05.
    https://www.ieee802.org/3/bu/public/may14/gardner_3bu_1_0514.pdf
 .. [MAG-UNH40] University of New Hampshire InterOperability Laboratory,
-   *Clause 40 Physical Medium Attachment (PMA) Test Suite*, version 1.1
+   *PMA Test Suite* for :clause:`40` physical medium attachment, version 1.1
    (tests 40.6.1.1, 40.6.1.2 and 40.8.3.1).
    https://www.iol.unh.edu/sites/default/files/testsuites/ethernet/CL40_PMA/PMA_Test_Suite_v1.1.pdf
 .. [MAG-UNH25] University of New Hampshire InterOperability Laboratory,
