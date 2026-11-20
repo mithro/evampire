@@ -9,37 +9,37 @@ graph layout_regions {
     edge  [fontname="Helvetica", fontsize=9, penwidth=1.3];
 
     // Board areas, drawn as large boxes behind the parts.
-    gnd [pos="1.4,0.75!", shape=box, style="filled,rounded", fillcolor="#dbe8f5",
-         color="#1f4e79", width=3.6, height=3.1, fixedsize=true,
+    gnd [pos="1.20,0.75!", shape=box, style="filled,rounded", fillcolor="#dbe8f5",
+         color="#1f4e79", width=3.0, height=3.1, fixedsize=true,
          label="", xlabel=""];
-    gnd_t [pos="1.4,2.1!", shape=plain, fontcolor="#1f4e79",
+    gnd_t [pos="1.20,2.1!", shape=plain, fontcolor="#1f4e79",
            label="Signal ground plane\n(solid under the pair traces)"];
 
-    keep [pos="4.25,1.25!", shape=box, style="filled,dashed", fillcolor="#ffffff",
-          color="#7f7f7f", width=1.7, height=2.1, fixedsize=true, label=""];
-    keep_t [pos="4.25,2.1!", shape=plain, fontcolor="#595959",
+    keep [pos="3.65,1.25!", shape=box, style="filled,dashed", fillcolor="#ffffff",
+          color="#7f7f7f", width=1.5, height=2.1, fixedsize=true, label=""];
+    keep_t [pos="3.65,2.1!", shape=plain, fontcolor="#595959",
             label="No copper on\nany layer"];
 
-    chas [pos="6.95,0.75!", shape=box, style="filled,rounded", fillcolor="#e7e6e6",
-          color="#595959", width=1.9, height=3.1, fixedsize=true, label=""];
-    chas_t [pos="6.95,2.1!", shape=plain, fontcolor="#404040",
+    chas [pos="5.98,0.75!", shape=box, style="filled,rounded", fillcolor="#e7e6e6",
+          color="#595959", width=1.7, height=3.1, fixedsize=true, label=""];
+    chas_t [pos="5.98,2.1!", shape=plain, fontcolor="#404040",
             label="Chassis ground\nisland"];
 
     // Parts.
-    phy  [pos="0.5,1.0!", shape=box, style=filled, fillcolor="#ffffff",
+    phy  [pos="0.43,1.0!", shape=box, style=filled, fillcolor="#ffffff",
           label="Transceiver"];
-    cct  [pos="2.6,0.15!", shape=box, style=filled, fillcolor="#ffffff",
+    cct  [pos="2.24,0.15!", shape=box, style=filled, fillcolor="#ffffff",
           fontsize=9, label="centre-tap\ncapacitors"];
-    xfmr [pos="4.25,1.0!", shape=box, style=filled, fillcolor="#fff2cc",
+    xfmr [pos="3.65,1.0!", shape=box, style=filled, fillcolor="#fff2cc",
           label="Transformer\nmodule"];
-    rj45 [pos="7.1,1.0!", shape=box, style=filled, fillcolor="#f2f2f2",
+    rj45 [pos="6.11,1.0!", shape=box, style=filled, fillcolor="#f2f2f2",
           label="RJ45 socket\n(shield to\nchassis)"];
-    bs   [pos="6.7,0.15!", shape=box, style=filled, fillcolor="#ffffff",
+    bs   [pos="5.76,0.15!", shape=box, style=filled, fillcolor="#ffffff",
           fontsize=9, label="75 Ω and\n1000 pF, 2 kV"];
-    rc   [pos="4.25,-0.75!", shape=box, style=filled, fillcolor="#ffffff",
+    rc   [pos="3.65,-0.75!", shape=box, style=filled, fillcolor="#ffffff",
           fontsize=9, label="resistor (1 MΩ or more) and capacitor\nbetween signal ground and chassis ground"];
-    rcl  [pos="1.4,-0.75!", shape=point, width=0.01, height=0.01, style=invis];
-    rcr  [pos="6.95,-0.75!", shape=point, width=0.01, height=0.01, style=invis];
+    rcl  [pos="1.20,-0.75!", shape=point, width=0.01, height=0.01, style=invis];
+    rcr  [pos="5.98,-0.75!", shape=point, width=0.01, height=0.01, style=invis];
 
     phy -- xfmr [label="4 pairs, 100 Ω differential,\nshort and length-matched",
                  penwidth=2.5, color="#2e75b6"];

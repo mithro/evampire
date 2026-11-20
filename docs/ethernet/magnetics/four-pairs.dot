@@ -55,7 +55,7 @@ graph four_pairs {
 
     // Pins are listed pair by pair, not in physical order: pair B uses
     // pins 3 and 6, which sit on either side of pins 4 and 5.
-    rj45 [pos="6.4,0.0!", label=<
+    rj45 [pos="6.15,0.0!", label=<
       <table border="1" cellborder="0" cellspacing="0" cellpadding="0"
              bgcolor="#f2f2f2">
         <tr><td height="30"><b>&nbsp;RJ45 socket&nbsp;</b></td></tr>
@@ -77,23 +77,23 @@ graph four_pairs {
     // one node, then one high-voltage capacitor to chassis ground.
     node [shape=box, style="filled", fillcolor="#ffffff", fontsize=9,
           width=0.5, height=0.22, margin="0.03,0.01", fixedsize=true];
-    ra [pos="4.1,1.17!", label="75 Ω"];
-    rb [pos="4.1,0.17!", label="75 Ω"];
-    rc [pos="4.1,-0.83!", label="75 Ω"];
-    rd [pos="4.1,-1.83!", label="75 Ω"];
+    ra [pos="4.0,1.17!", label="75 Ω"];
+    rb [pos="4.0,0.17!", label="75 Ω"];
+    rc [pos="4.0,-0.83!", label="75 Ω"];
+    rd [pos="4.0,-1.83!", label="75 Ω"];
 
     node [shape=point, width=0.07, style=filled, fillcolor="#404040",
           fixedsize=false];
-    ja [pos="4.6,1.17!"];
-    jb [pos="4.6,0.17!"];
-    jc [pos="4.6,-0.83!"];
-    jd [pos="4.6,-1.83!"];
-    jcap [pos="4.6,-2.45!", shape=none, width=0, height=0, label=""];
+    ja [pos="4.45,1.17!"];
+    jb [pos="4.45,0.17!"];
+    jc [pos="4.45,-0.83!"];
+    jd [pos="4.45,-1.83!"];
+    jcap [pos="4.45,-2.45!", shape=none, width=0, height=0, label=""];
 
     node [shape=box, style="filled", fixedsize=false, fontsize=10,
           margin="0.08,0.04"];
-    chv [pos="4.6,-2.65!", label="1000 pF, 2 kV", fillcolor="#ffffff"];
-    chassis [pos="6.4,-2.65!", label="Chassis ground", fillcolor="#d9d9d9"];
+    chv [pos="4.45,-2.65!", label="1000 pF, 2 kV", fillcolor="#ffffff"];
+    chassis [pos="6.15,-2.65!", label="Chassis ground", fillcolor="#d9d9d9"];
 
     // Pairs, transceiver side.
     phy:ap -- ma:ip; phy:an -- ma:in;

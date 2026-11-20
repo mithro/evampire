@@ -6,7 +6,7 @@
 
 digraph crossover {
     graph [rankdir=LR, fontname="Helvetica", fontsize=11, nodesep=0.3,
-           ranksep=1.6];
+           ranksep=1.15];
     node  [fontname="Helvetica", fontsize=10, shape=plain];
     edge  [fontname="Helvetica", fontsize=9, penwidth=1.4];
 
@@ -24,6 +24,6 @@ digraph crossover {
         <tr><td port="t" bgcolor="#ffffff">pins 3, 6</td><td>transmitter</td></tr>
       </table>>];
 
-    left:t  -> right:r [label="straight-through cable, pair on pins 1, 2", color="#2e75b6"];
+    left:t  -> right:r [label="pair on pins 1, 2", color="#2e75b6"];
     left:r  -> right:t [dir=back, label="pair on pins 3, 6", color="#c55a11"];
 }

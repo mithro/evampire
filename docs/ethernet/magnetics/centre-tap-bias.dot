@@ -49,27 +49,27 @@ graph centre_tap_bias {
     jct1 -- rail1 [color="#c00000", penwidth=1.6];
     jct1 -- c1 [color="#c00000", penwidth=1.6];
 
-    // ---- Voltage-mode driver (right). ----
+    // ---- Voltage-mode driver (below). ----
     node [shape=plain, style="", width=0, height=0];
-    t2 [pos="6.6,3.55!", label=<<b>Voltage-mode driver</b>>];
+    t2 [pos="1.50,-0.15!", label=<<b>Voltage-mode driver</b>>];
 
-    drv2 [pos="5.4,1.4!", label=<
+    drv2 [pos="0.15,-1.30!", label=<
       <table border="1" cellborder="0" cellspacing="0" cellpadding="6" bgcolor="#dbe8f5">
         <tr><td colspan="2"><b>Transceiver</b></td></tr>
         <tr><td rowspan="2">push-pull<br/>drivers with<br/>built-in<br/>termination</td><td port="p" align="right">+</td></tr>
         <tr><td port="n" align="right">−</td></tr>
       </table>>];
 
-    x2 [pos="7.65,1.45!", label=<
+    x2 [pos="2.75,-1.25!", label=<
       <table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#fff2cc">
         <tr><td></td><td port="ct"><font point-size="9">CT</font></td></tr>
         <tr><td port="p">●</td><td rowspan="2">transformer<br/>circuit-side<br/>winding</td></tr>
         <tr><td port="n">●</td></tr>
       </table>>];
 
-    jct2 [pos="7.82,2.3!", shape=point, width=0.06, height=0.06, style=filled,
+    jct2 [pos="2.92,-0.40!", shape=point, width=0.06, height=0.06, style=filled,
           fillcolor="#000000"];
-    c2 [pos="8.75,2.3!", shape=box, style="", fontsize=9,
+    c2 [pos="3.85,-0.40!", shape=box, style="", fontsize=9,
         label="0.1 µF to\nsignal ground\n(no supply)"];
 
     drv2:p -- x2:p;
