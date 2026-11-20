@@ -1044,6 +1044,150 @@ Design problems and how to reduce their risk
      - The four transmitter test modes need no receiver and can be measured
        on the driver alone
 
+Optional: 100BASE-TX and 10BASE-T
+---------------------------------
+
+Whether the integrated transceiver also supports the slower speeds is not
+yet fixed. On top of the gigabit design, they would add the following.
+
+100BASE-TX
+~~~~~~~~~~
+
+.. list-table:: 100BASE-TX requirements (required, [PHY-UNH25]_)
+   :header-rows: 1
+   :widths: 45 55
+
+   * - Quantity
+     - Limit
+   * - Peak differential output into 100 Ω
+     - 0.95 V to 1.05 V; peaks symmetric within 98 % to 102 %
+   * - Rise and fall time (10 % to 90 %)
+     - 3 ns to 5 ns, matched within 0.5 ns
+   * - Overshoot
+     - At most 5 %
+   * - Transmit jitter
+     - At most 1.4 ns peak-to-peak
+   * - Transmit clock
+     - 125 MHz ± 6.25 kHz (±50 parts per million)
+
+What it adds:
+
+* **Coding**: 4B5B, an 11-bit scrambler and MLT-3 (see
+  :doc:`../phy-electrical`); small digital logic.
+* **Transmit edge control**: a rise time between 3 ns and 5 ns. For a
+  single-pole response the bandwidth is :math:`f_\text{3dB} = 0.35 /
+  t_\text{r}`, where :math:`t_\text{r}` is the 10 % to 90 % rise time:
+  :math:`0.35 / 5\ \text{ns} = 70` MHz and :math:`0.35 / 3\ \text{ns} =
+  117` MHz. The gigabit DAC and driver can produce MLT-3 at the same ±1 V
+  swing, with the edge shaping done in the DAC codes (estimate).
+* **Receiver**: 100BASE-TX uses one pair in each direction, so no echo or
+  crosstalk cancellation is needed; the gigabit ADC and equalizer on one
+  pair can receive it. A separate low-power alternative, published in a
+  180 nm GlobalFoundries process, uses an analog equalizer and five
+  comparators instead of an ADC [PHY-BUHR21]_ [PHY-BUHR20A]_.
+
+A complete 100BASE-TX transceiver has been built and measured in a 180 nm
+GlobalFoundries process: 2.6 mm², at most 69 mW, error-free over 100 m of
+Category 5 cable, with coupling transformers [PHY-BUHR21]_ [PHY-BUHR19]_.
+
+10BASE-T
+~~~~~~~~
+
+.. list-table:: 10BASE-T requirements (required, [PHY-UNH14]_)
+   :header-rows: 1
+   :widths: 45 55
+
+   * - Quantity
+     - Limit
+   * - Peak differential output into 100 Ω
+     - 2.2 V to 2.8 V (10BASE-Te: 1.54 V to 1.96 V)
+   * - Harmonics of an all-ones signal
+     - At least 27 dB below the 10 MHz fundamental
+   * - Output return loss, 5 MHz to 10 MHz
+     - At least 15 dB against 85 Ω to 111 Ω
+   * - Output short-circuit current
+     - At most 300 mA, indefinitely, without damage
+   * - Receiver input range
+     - 585 mV to 3.1 V, with up to 13.5 ns of timing jitter
+
+What it adds:
+
+* **Manchester coding** and decoding, and a comparator-based receiver that
+  accepts up to 3.1 V; small digital logic and no ADC.
+* **A higher-swing line driver.** With a matched source the driver needs
+  :math:`V_\text{src} = 2 \times 2.2` to :math:`2 \times 2.8` V, that is
+  4.4 V to 5.6 V peak, which the 3.3 V supply of the gigabit driver cannot
+  provide (estimate; 10BASE-Te would need 3.1 V to 3.9 V). Published ways
+  round this: an active-termination class-AB driver in 180 nm produced a
+  10BASE-T signal of about 2.5 V amplitude from 3.3 V, at 62 mW
+  [PHY-BUHR21]_ [PHY-BUHR20B]_; a 0.4 µm current-feedback driver delivered
+  5 V peak-to-peak into 50 Ω from 3.3 V [PHY-BABANEZHAD99]_. gf180mcu also
+  has 5 V, 6 V and 10 V transistors [PHY-GF180PDK]_.
+
+Blocks evampire would need
+--------------------------
+
+The gigabit blocks are listed in the order in which they depend on each
+other, with what can be verified on its own first. Blocks for the optional
+slower speeds follow.
+
+1. **Reference clock and PLL**: 25 MHz crystal oscillator, PLL to 125 MHz,
+   phase interpolator. Verified alone by measuring frequency and jitter.
+2. **Line interface and termination**: trimmed or active 100 Ω
+   termination, protection, connection to the external components of
+   :doc:`../magnetics`. Verified alone by return-loss measurement.
+3. **DAC and line driver**: verified alone with the four 1000BASE-T
+   transmitter test modes, which need no receiver.
+4. **Link pulse driver and comparator, autonegotiation logic and
+   management registers**: verified against a commercial transceiver,
+   which reports the abilities it receives.
+5. **Hybrid, receive amplifier and ADC** (and optional analog echo
+   pre-canceller): verified alone by capturing samples while transmitting
+   into a real cable.
+6. **Signal processing**: equalizers, echo and crosstalk cancellers,
+   trellis decoder, scramblers and timing recovery. Can be developed and
+   checked in simulation and on an FPGA using samples captured from block
+   5, and synthesised for gf180mcu to confirm area, power and timing before
+   it is committed to silicon.
+7. **Byte interface to the forwarding logic**: the same interface as the
+   RGMII block, verified with the first-version forwarding logic.
+8. **Optional 100BASE-TX coding and edge shaping**, reusing blocks 3, 5
+   and 6.
+9. **Optional 10BASE-T Manchester coding and higher-swing driver.**
+
+Open design questions
+---------------------
+
+* Whether 100 Mbit/s and 10 Mbit/s are also supported, and if so how their
+  bytes are carried on the byte interface (a byte-enable flag on the
+  125 MHz clock, or a slower clock).
+* Whether link pulses for autonegotiation need full 10BASE-T amplitude. The
+  conformance documents used here give the link pulse template's upper
+  bound (±3.1 V) but no minimum amplitude; this needs to be checked in
+  IEEE 802.3 :clause:`14`. The answer decides whether a gigabit-only
+  transceiver needs any of the higher-swing driver.
+* Which cells and supply the signal processing uses: 5 V-transistor
+  standard cells at 3.3 V, the same cells at a lower supply with parallel
+  paths, or custom cells built from 3.3 V transistors.
+* Which decision-loop architecture is used, and how many filter taps are
+  needed per pair for the worst-case channel.
+* Whether the two gigabit ports, the forwarding logic, the processor and
+  the pads fit on one die, given the estimated 13 mm² to 26 mm² for the two
+  transceivers.
+* Whether the two-port transceiver power (estimated 1.1 W to 4.3 W) fits
+  the power budget of a board powered over Ethernet, and the package's
+  thermal limit.
+* How much echo the analog hybrid must remove before the ADC, given the
+  transformer-free connection, and therefore the ADC resolution and whether
+  an analog echo pre-canceller is used.
+* Which ADC architecture suits 3.3 V transistors at 125 MS/s and about
+  7 effective bits.
+* The :math:`f_\text{T}` and :math:`g_m/I_D` of the gf180mcu transistors,
+  which are not documented and set the speed of the analog blocks.
+* How the line driver and receiver survive surges, cable discharge and
+  Power over Ethernet voltages without transformers, which depends on the
+  protection described in :doc:`../magnetics`.
+
 References
 ----------
 
