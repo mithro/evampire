@@ -267,7 +267,7 @@ evampire includes the functions of three voltage converters
 
 * evampire includes the functions of the three
   :wikipedia:`switching voltage converters <Switched-mode_power_supply>` in
-  the power path. See :doc:`power/converters`. The three functions are:
+  the power path. See :doc:`power/converters/index`. The three functions are:
 
   - bringing the Power over Ethernet input down to the board's power bus;
   - producing the USB Type-C output voltage when a USB port is a source;
@@ -288,7 +288,7 @@ Each USB Type-C port carries a USB serial port
   of the communications device class (:std:`USB CDC <usb-cdc>`).
 * The USB data protocol is implemented mostly in software on the
   processor. Built-in hardware assists only where the timing of USB cannot
-  be met in software. :doc:`usb-serial` analyses how the work is split
+  be met in software. :doc:`usb-serial/index` analyses how the work is split
   between hardware and software.
 
 .. _req-process:

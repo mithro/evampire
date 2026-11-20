@@ -33,7 +33,7 @@ but not with the Ethernet or USB Power Delivery standards.
 :doc:`power/index`
    How power moves between Power over Ethernet and USB Type-C, and the
    board configurations.
-:doc:`usb-serial`
+:doc:`usb-serial/index`
    The USB serial port carried on the USB Type-C data wires.
 :doc:`standards`
    The standards that the pages cite, with links to each.
@@ -50,6 +50,6 @@ but not with the Ethernet or USB Power Delivery standards.
    architecture/index
    ethernet/index
    power/index
-   usb-serial
+   usb-serial/index
    standards
    glossary
