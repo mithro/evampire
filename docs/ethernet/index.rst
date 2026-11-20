@@ -16,13 +16,13 @@ transceiver talks to evampire over a digital interface,
 magnetics explain how these parts work and what evampire needs to do the
 same jobs itself.
 
-:doc:`rgmii`
+:doc:`rgmii/index`
    The digital interface between evampire and an external Ethernet
    transceiver: signals, clocking, timing and electrical levels.
-:doc:`phy-electrical`
+:doc:`phy-electrical/index`
    How an Ethernet transceiver turns digital data into the analogue signals
    on the cable, and back again.
-:doc:`magnetics`
+:doc:`magnetics/index`
    How the transceiver connects to the RJ45 socket through coupling
    transformers, and the jobs those transformers do.
 
@@ -30,6 +30,6 @@ same jobs itself.
    :maxdepth: 2
    :hidden:
 
-   rgmii
-   phy-electrical
-   magnetics
+   rgmii/index
+   phy-electrical/index
+   magnetics/index

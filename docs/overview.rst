@@ -16,8 +16,8 @@ external ports, called port A and port B, and one internal port.
 Port A and port B
    Each external port connects to an Ethernet cable through an
    :term:`Ethernet transceiver`, the circuit that drives and receives the
-   electrical signals on the cable (see :doc:`ethernet/phy-electrical`).
-   Each port ends in an :term:`RJ45` socket (see :doc:`ethernet/magnetics`).
+   electrical signals on the cable (see :doc:`ethernet/phy-electrical/index`).
+   Each port ends in an :term:`RJ45` socket (see :doc:`ethernet/magnetics/index`).
    The transceiver is a separate chip or part of evampire, depending on the
    board configuration (:numref:`tab-power-board-configs`).
 

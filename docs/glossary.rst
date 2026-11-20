@@ -15,14 +15,14 @@ gives a short description and a link to the full explanation.
    Class
       In Power over Ethernet, the power level that a powered device asks for
       during classification. Each class has a maximum power at the powered
-      device (:clause:`145`, see :doc:`power/poe`).
+      device (:clause:`145`, see :doc:`power/poe/index`).
 
    Configuration channel
    CC
       The two wires of a USB Type-C connector, CC1 and CC2, that detect a
       connection and its orientation, give the basic current a source
       offers, and carry the USB Power Delivery messages (see
-      :doc:`power/usb-pd`).
+      :doc:`power/usb-pd/index`).
 
    Cut-through forwarding
       Forwarding in which each byte of a frame is sent on a few clock cycles
@@ -41,7 +41,7 @@ gives a short description and a link to the full explanation.
       Ethernet cable. Ethernet documentation usually calls it a PHY, short
       for "physical layer device" (see
       :wikipedia:`Ethernet physical layer <Ethernet_physical_layer>` and
-      :doc:`ethernet/phy-electrical`).
+      :doc:`ethernet/phy-electrical/index`).
 
    Forwarding logic
       The logic in evampire that passes frames between port A and port B,
@@ -78,7 +78,7 @@ gives a short description and a link to the full explanation.
    Magnetics
       The coupling transformers between an Ethernet transceiver and the RJ45
       socket. They isolate the board from the cable and give a path for
-      Power over Ethernet current (see :doc:`ethernet/magnetics`).
+      Power over Ethernet current (see :doc:`ethernet/magnetics/index`).
 
    MDIO
    Management data input/output
@@ -104,7 +104,7 @@ gives a short description and a link to the full explanation.
       Power carried on the same cable as the Ethernet data, from power
       sourcing equipment to a powered device (:clause:`145`, see
       :wikipedia:`Power over Ethernet <Power_over_Ethernet>` and
-      :doc:`power/poe`).
+      :doc:`power/poe/index`).
 
    Power sourcing equipment
    PSE
@@ -121,7 +121,7 @@ gives a short description and a link to the full explanation.
       between a chip and an Ethernet transceiver: 4 data bits and one
       control signal in each direction, transferred on both edges of a
       125 MHz clock at gigabit speed (:std:`RGMII v2.0 <rgmii-2-0>`, see
-      :doc:`ethernet/rgmii` and
+      :doc:`ethernet/rgmii/index` and
       :wikipedia:`Media-independent interface
       <Media-independent_interface>`).
 
@@ -148,7 +148,7 @@ gives a short description and a link to the full explanation.
       of a USB Type-C cable over the configuration channel
       (:std:`USB Power Delivery Specification <usb-pd>`, see
       :wikipedia:`USB Power Delivery <USB_Power_Delivery>` and
-      :doc:`power/usb-pd`).
+      :doc:`power/usb-pd/index`).
 
    USB Type-C
       The reversible 24-pin USB connector and its cable
@@ -157,7 +157,7 @@ gives a short description and a link to the full explanation.
 
    VBUS
       The wire of a USB connector that carries power from the source to the
-      sink (see :doc:`power/usb-pd`).
+      sink (see :doc:`power/usb-pd/index`).
 
    VLAN tag
       An optional 4-byte field in an Ethernet frame that marks the frame as
