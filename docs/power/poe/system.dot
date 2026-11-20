@@ -1,0 +1,48 @@
+// Power over Ethernet: how power reaches an evampire board.
+// Bold arrows: power. Thin arrows: data. Dashed arrows: status signals.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph poe_system {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.35,
+           ranksep=0.45, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    pse [label="Power source\n(switch or injector)\n44–57 V", fillcolor="#fbe5d6"];
+    cable [label="Cable\n4 twisted pairs\nup to 100 m", shape=box, style="rounded",
+           fillcolor="#ffffff"];
+
+    subgraph cluster_board {
+        label="Powered device: a board built around evampire";
+        style="rounded,dashed"; color="#888888";
+
+        rj45 [label="RJ45\nsocket", fillcolor="#ffffff"];
+        mag  [label="Magnetics\n(transformers with\ncentre taps)", fillcolor="#ffffff"];
+        phy  [label="Ethernet\ntransceiver A", fillcolor="#ffffff"];
+
+        bra  [label="Bridge\npairs 1-2 / 3-6", fillcolor="#fff2cc"];
+        brb  [label="Bridge\npairs 4-5 / 7-8", fillcolor="#fff2cc"];
+
+        pdc  [label="Powered-device\ncontroller\n(signature, class,\nisolation switch)", fillcolor="#fff2cc"];
+        dcdc [label="DC-DC\nconverter", fillcolor="#fff2cc"];
+        evp  [label="evampire", fillcolor="#dbe8f5", style="rounded,filled,bold"];
+    }
+
+    { rank=same; bra; brb; }
+
+    pse  -> cable [penwidth=2.5, dir=both];
+    cable -> rj45 [penwidth=2.5, dir=both];
+    rj45 -> mag  [penwidth=2.5, dir=both];
+    mag  -> phy  [dir=both, label="data"];
+    phy  -> evp  [dir=both, label="RGMII"];
+
+    mag  -> bra  [penwidth=2.5, label="centre taps"];
+    mag  -> brb  [penwidth=2.5];
+    bra  -> pdc  [penwidth=2.5];
+    brb  -> pdc  [penwidth=2.5];
+    pdc  -> dcdc [penwidth=2.5, label="37–57 V"];
+    dcdc -> evp  [penwidth=2.5, label="3.3 V"];
+    pdc  -> evp  [style=dashed, label="power good,\nallocated power"];
+}

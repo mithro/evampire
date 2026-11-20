@@ -1,0 +1,52 @@
+// Analog blocks inside a typical powered-device controller chip.
+// Bold arrows: power path. Thin arrows: control. Dashed: outputs.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pd_controller {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.25,
+           ranksep=0.5, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    vin  [label="Rectified input\nVDD to VSS\n0–57 V", fillcolor="#ffffff"];
+    rdet [label="Signature resistor\n24.9 kΩ (external)", fillcolor="#ffffff"];
+    rcls [label="Class resistor\n(external)", fillcolor="#ffffff"];
+    cbulk [label="Bulk capacitor\nand DC-DC converter", fillcolor="#ffffff"];
+    sys  [label="System\n(evampire)", fillcolor="#dbe8f5"];
+
+    subgraph cluster_ic {
+        label="Powered-device controller chip"; labelloc="b"; style="rounded,bold";
+        color="#1f4e79";
+
+        ref   [label="Bandgap\nreference", fillcolor="#e2e2e2"];
+        cmp   [label="Window comparators\nwith hysteresis\n(detect / mark / class /\nturn-on / turn-off)"];
+        fsm   [label="State logic\n(counts class events,\nlatches result)"];
+        detsw [label="Signature\nswitch"];
+        markr [label="Mark-event\nload"];
+        clsreg [label="Class current\nregulator\n(~2.5 V across\nclass resistor)"];
+        hs    [label="Isolation switch\n(100 V MOSFET)\nwith current limit", fillcolor="#fbe5d6"];
+        otsd  [label="Thermal\nshutdown"];
+        pg    [label="Power-good and\nallocated-power\noutputs"];
+    }
+
+    { rank=same; detsw; markr; clsreg; hs; }
+
+    vin  -> cmp;
+    ref  -> cmp;
+    ref  -> clsreg;
+    cmp  -> fsm;
+    fsm  -> detsw;
+    fsm  -> markr;
+    fsm  -> clsreg;
+    fsm  -> hs;
+    fsm  -> pg;
+    otsd -> fsm;
+    rdet -> detsw [dir=both];
+    clsreg -> rcls [dir=both];
+    vin  -> hs    [penwidth=2.5];
+    hs   -> cbulk [penwidth=2.5, label="RTN"];
+    pg   -> sys   [style=dashed];
+    pg   -> cbulk [style=dashed, label="enable"];
+}

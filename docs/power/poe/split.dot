@@ -1,0 +1,45 @@
+// Recommended split of Power over Ethernet functions between external
+// parts and evampire. Bold arrows: power. Dashed arrows: status signals.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph poe_split {
+    graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.3,
+           ranksep=0.55, newrank=true];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    subgraph cluster_hv {
+        label="External parts, 37–57 V side"; style="rounded,dashed";
+        color="#c55a11";
+        bridges [label="Input bridges\nand surge clamp", fillcolor="#fbe5d6"];
+        pdc     [label="Powered-device\ncontroller chip", fillcolor="#fbe5d6"];
+        conv    [label="DC-DC converter\n(flyback or buck)", fillcolor="#fbe5d6"];
+        div     [label="Resistor divider\n(non-isolated\ndesigns only)", fillcolor="#fbe5d6"];
+    }
+
+    subgraph cluster_if {
+        label="External parts, low-voltage side"; labelloc="b"; style="rounded,dashed";
+        color="#888888";
+        opto [label="Optocouplers\n(isolated designs)\nor pull-ups", fillcolor="#ffffff"];
+    }
+
+    subgraph cluster_chip {
+        label="evampire (3.3 V devices)"; labelloc="b"; style="rounded,bold";
+        color="#1f4e79";
+        gpio [label="Status inputs:\npower good,\nallocated power", fillcolor="#dbe8f5"];
+        adc  [label="Supply monitor:\ncomparator or ADC\n(open decision)", fillcolor="#dbe8f5"];
+        cpu  [label="RISC-V software:\nread status,\nlimit load,\nLLDP power request", fillcolor="#dbe8f5"];
+    }
+
+    bridges -> pdc  [penwidth=2.5];
+    pdc     -> conv [penwidth=2.5];
+    conv    -> cpu  [penwidth=2.5, label="3.3 V"];
+    pdc     -> opto [style=dashed];
+    opto    -> gpio [style=dashed];
+    pdc     -> div  [style=dashed];
+    div     -> adc  [style=dashed, label="0–3 V"];
+    gpio    -> cpu;
+    adc     -> cpu;
+}
