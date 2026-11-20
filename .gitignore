@@ -1,0 +1,13 @@
+# Sphinx build output
+docs/_build/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Local scratch space
+tmp/
+
+# Git worktrees
+.worktrees/
