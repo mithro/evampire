@@ -23,6 +23,11 @@ The processor receives the frames whose destination address matches a
 programmed address under a mask, which selects the address bits that must
 match, and it can send frames of its own.
 
+The same documentation describes
+[ebat](https://evampire.readthedocs.io/en/latest/ebat/index.html), a
+reduced variant of evampire that keeps the power functions and has no
+Ethernet data path.
+
 The [block diagram in the evampire documentation](https://evampire.readthedocs.io/en/latest/architecture/index.html#fig-block-diagram)
 shows the blocks inside the chip.
 
