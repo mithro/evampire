@@ -95,6 +95,45 @@ test structure adds about 1.1 pF at 0 V. A pin with 1000 µm diodes to both
 rails carries about 2.3 pF of them. Whether a signal tolerates that is a
 question for each interface.
 
+A pin that works above the supply needs its own clamp
+-----------------------------------------------------
+
+The standard pad cannot serve a pin that must carry more than DVDD in
+normal use. Its PMOS drain is P-type silicon inside an N-type well tied to
+DVDD. Once the pad rises about 0.7 V above DVDD, that P-N junction is
+forward biased and conducts. The pad also snaps back at 10.7 V. Either
+path would load a high-voltage signal.
+
+Such a pin needs a clamp that blocks current up to the pin's working
+voltage. It must also conduct before the weakest junction or oxide behind
+the pin breaks down. A junction breaks down by avalanche: the electric
+field across its depleted region grows strong enough that carriers knock
+further carriers loose. Lighter doping spreads the field over a wider
+region, so the junction withstands more voltage. A gate oxide fails when
+its field exceeds what the oxide withstands, about 12 V across the 6 V
+oxide ([ESD-GF180-EP-OX]_).
+
+How the circuit behind the pin is built sets that weakest point. Take a
+stack of transistors in series that shares a high voltage between them:
+
+* If every transistor sits in its own isolating well, the stack divides
+  the pad voltage evenly. The 13.7 V peak of a +8 kV discharge then puts
+  about 1.4 V on each of ten transistors. The full 13.7 V lands on the
+  junction that isolates the top well from the substrate. That junction
+  must withstand it.
+* If the transistors share the substrate, the top transistor's N-type
+  region meets the P-type substrate at a junction that breaks down at
+  8.5 V minimum and 11 V typical ([ESD-GF180-EP-JN]_). During a discharge
+  that junction becomes a path into the substrate, and no measured
+  failure current covers it.
+
+A clamp that stays off to a set voltage and then carries amperes can be
+built in two ways. One is a stack of snapback devices, whose trigger
+voltages add. The other is a transistor with a long, lightly doped drift
+region that withstands the working voltage, switched on by a timer like
+the rail clamp's. Designing either is a separate task. Neither is
+simulated here.
+
 Other chips reach level 4 on chip
 ---------------------------------
 
@@ -175,6 +214,9 @@ Open questions
   (:doc:`/ethernet/magnetics/events`).
 * For each such pin, whether the board carries a suppressor, the chip
   carries widened protection in a custom I/O cell, or both.
+* Which pins work above DVDD, and the clamp each needs: its turn-on
+  voltage, its failure current, and the breakdown of the weakest junction
+  or oxide it protects.
 * The resistance of evampire's DVDD and DVSS rings, which the pad's voltage
   at 30 A depends on.
 * How the foundry's 100 ns TLP failure currents apply to the 1 ns first
