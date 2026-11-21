@@ -235,3 +235,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/cc-protection.rst`
 - **Issue:** The crowbar's steady current of 3 A to 5 A flows through a CC contact the page rates at 0.5 A, then one pad and bond wire. The peak from the bulk capacitance is tens of amperes.
 - **Suggestion:** Add the contact, pad and bond-wire current limits with arithmetic. They may rule this option out.
+
+### USB suspend current
+
+- **Where:** `docs/usb-serial/signalling.rst`, `docs/usb-serial/usb-pd-roles.rst`, `docs/power/usb-pd/start-up.rst`
+- **Issue:** A suspended USB 2.0 device may draw only 2.5 mA on average *(from memory)*. A board powered from a computer's port cannot run on that when the computer suspends the bus.
+- **Suggestion:** State the limit and its consequences, and check which Type-C current levels and Power Delivery contracts lift it.
