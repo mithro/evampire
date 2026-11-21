@@ -55,3 +55,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/rgmii/io-cells.rst`, `docs/ethernet/rgmii/timing.rst`
 - **Issue:** The page now gives the 0.27 ns rise and fall difference, but there is no full budget for TskewT with pad-to-pad mismatch and load differences, and the slow edges are not converted into threshold-crossing uncertainty at the transceiver.
 - **Suggestion:** Write the budget with each term, evaluate the 24 mA pad cell, and decide whether the loopback calibration on the port-logic page is required for the first version. Needs a SPICE or board-level simulation.
+
+### Pad count for the whole chip
+
+- **Where:** `docs/ethernet/rgmii/io-cells.rst`, `docs/power/converters/first-version.rst`, `docs/power/usb-pd/analogue.rst`
+- **Issue:** Only the RGMII signals (27) and the PWM outputs (8) are counted. Reviewers' estimates are about 33 to 37 for RGMII with resets and supplies, 23 to 35 for converter control and sensing, and 8 to 13 for each USB Type-C port.
+- **Suggestion:** Add one table of pads per function for the first version, with supplies, and compare it with the pad ring of the wafer.space slot.
