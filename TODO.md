@@ -329,3 +329,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/integration/signal-processing.rst`, `docs/ethernet/phy-electrical/integration/decision-loop.dot`
 - **Issue:** The page says look-ahead leaves the loop only a selection. The decoder's add, compare and select is itself a one-symbol recursion and stays in the loop *(from memory of the cited paper)*.
 - **Suggestion:** Check the cited papers, state the smallest loop and its depth, and add a slicer-only receiver for short reach as an alternative.
+
+### Converter resolution and examples
+
+- **Where:** `docs/ethernet/phy-electrical/integration/receiver.rst`
+- **Issue:** The bits-against-reach formula has no floor: at short reach the signal fills the range and no more bits are saved. The examples that reach 7 effective bits use 1.8 V thin-oxide devices that gf180mcu lacks.
+- **Suggestion:** Add a floor of about 5 to 6 effective bits derived from the slicer's needs, and restrict the power range to 3.3 V-class examples.
