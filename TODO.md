@@ -19,3 +19,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/requirements.rst` (longest-frame equation)
 - **Issue:** The example takes a slack of 2 bytes to give 10,000 bytes. The read side starts with up to one clock cycle of uncertainty, which uses about one byte of that slack. No page says what happens when the buffer overruns or the source link drops mid-frame.
 - **Suggestion:** Define the slack after the start uncertainty, total the buffer depth (slack both ways, pointer synchroniser lag, the LLDP delay), and state that an overrun ends the frame with an error.
+
+### Pause frames and Energy-Efficient Ethernet
+
+- **Where:** `docs/requirements.rst` (forwarding), `docs/ethernet/rgmii/mdio.rst`, `docs/ethernet/rgmii/data.rst`
+- **Issue:** Neither is mentioned. Pause frames are forwarded, but processor frames ignore a pause received on that port. Low-power idle would have to pass through two transceivers and the buffer, and a transceiver may stop its receive clock during it.
+- **Suggestion:** Decide and document: forward pause frames and advertise pause only if both link partners do; have software clear the Energy-Efficient Ethernet advertisement on both transceivers.
