@@ -9,20 +9,28 @@ Device mapping (CDL name -> ngspice model):
 
     nfet_06v0          -> nmos_6p0        (subcircuit, called with X)
     pfet_06v0          -> pmos_6p0
-    nfet_06v0_dss      -> nmos_6p0_sab    (silicide-blocked drain)
-    pfet_06v0_dss      -> pmos_6p0_sab
-    diode_nd2ps_06v0   -> np_6p0          (N+ to P-substrate/P-well diode)
-    diode_pd2nw_06v0   -> pn_6p0          (P+ to N-well diode)
-    cap_nmos_06v0      -> nmoscap_6p0
-    ppolyf_u           -> ppolyf_u        (3-terminal poly resistor)
+    nfet_06v0_dss      -> resistors + nmos_6p0  (silicide-blocked drain)
+    pfet_06v0_dss      -> resistors + pmos_6p0
+    diode_nd2ps_06v0   -> np_esd   (N+ to P-well diode, series resistance
+                                   fitted to TLP data; see esd_sim.py)
+    diode_pd2nw_06v0   -> pn_esd   (P+ to N-well diode, likewise)
+    cap_nmos_06v0      -> nmos_6p0 used as a capacitor
+    ppolyf_u           -> resistor of the stated value, plus substrate
+                          capacitance
 
-The silicide-blocked (sab) transistor models of gf180mcu_fd_pr include no
-drain junction diode: the CDL gives them no drain area, and the drain
-resistor model carries only junction capacitance. The real drain is a
-diffusion in a well and forms a diode with it, and in an ESD event that
-diode is the main current path. convert() therefore returns the list of
-sab transistors, so the test bench can add a drain diode for each one
-(see esd_sim.py).
+A silicide-blocked (dss) transistor becomes its drain and source
+resistors in series with the core transistor, which is what the foundry's
+nmos_6p0_sab and pmos_6p0_sab subcircuits contain. Their own resistor
+models are not used, for two reasons. ngspice 44 evaluates their
+voltage-dependent resistance expression wrongly (as it does for
+ppolyf_u). And their junction element, meant to give capacitance only,
+has no saturation current set, so ngspice's default makes it a forward
+diode with no series resistance. The core transistor gets junction areas
+too small to matter (ngspice treats 0 as "compute from the geometry"), so
+it has no junction diode of note either. The real drain forms a
+diode with its well, and in an ESD event that diode is the main current
+path, so convert() returns the list of dss transistors and the test bench
+adds a drain diode fitted to measurement for them (see esd_sim.py).
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -33,12 +41,17 @@ from dataclasses import dataclass
 MOS_MAP = {
     "nfet_06v0": "nmos_6p0",
     "pfet_06v0": "pmos_6p0",
-    "nfet_06v0_dss": "nmos_6p0_sab",
-    "pfet_06v0_dss": "pmos_6p0_sab",
+    "nfet_06v0_dss": "nmos_6p0",
+    "pfet_06v0_dss": "pmos_6p0",
 }
+# Typical sheet resistance (ohm/square) and width correction (m) of the
+# unsalicided drain and source diffusions, from the foundry models
+# (rsh_nplus_u_m, rsh_pplus_u_m and r_dw of nplus_u_m2 and pplus_u_m2).
+SAB_RSH = {"n": 60.0, "p": 185.0}
+SAB_DW = {"n": -5e-8, "p": 2.75e-8}
 DIODE_MAP = {
-    "diode_nd2ps_06v0": "np_6p0",
-    "diode_pd2nw_06v0": "pn_6p0",
+    "diode_nd2ps_06v0": "np_esd",
+    "diode_pd2nw_06v0": "pn_esd",
 }
 # Widest transistor the 6 V model bins cover, in metres.
 MAX_WIDTH = 100.01e-6
@@ -118,6 +131,26 @@ def convert(cdl_text):
                 for key in ("as", "ad", "ps", "pd"):
                     if key in p:
                         p[key] = f"{_num(p[key]) / k:.6g}"
+            if model.endswith("_dss"):
+                # Drain and source resistors of the unsalicided regions.
+                pol = model[0]
+                w_eff = width - 2 * SAB_DW[pol]
+                for term, node, key in (("d", d, "d_sab"), ("s", s, "s_sab")):
+                    length = _num(p.pop(key, "0"))
+                    r = SAB_RSH[pol] * length / w_eff if length else 1e-3
+                    inner = f"{name}_{term}i"
+                    out.append(f"R{name}_{term} {node} {inner} {r:.4g}")
+                    if term == "d":
+                        d = inner
+                    else:
+                        s = inner
+                # Given no junction areas, BSIM4 computes them from the
+                # geometry and adds drain and source diodes with no series
+                # resistance. ngspice treats an area of 0 as not given, so
+                # the core transistor gets areas too small to matter. The
+                # test bench adds the drain diode fitted to measurement.
+                p.update({"as": "1e-18", "ad": "1e-18",
+                          "ps": "1e-12", "pd": "1e-12"})
             args = " ".join(f"{k_}={v}" for k_, v in p.items()
                             if k_ in MOS_PARAMS)
             for i in range(k):
