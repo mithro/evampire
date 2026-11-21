@@ -253,3 +253,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/cc-signalling.rst`, `docs/power/usb-pd/negotiation.rst`, `docs/power/usb-pd/cables.rst`, `docs/power/usb-pd/masks.py`
 - **Issue:** A reviewer's recollection differs from the pages on: the 1.2 V row of the slowest-edge table (344 ns expected for a falling edge at any swing), the receive mask for a port that is neither sourcing nor sinking, and the upper limits of tSenderResponse and tVDMSenderResponse. The reviewer knew older releases than the pages cite.
 - **Suggestion:** Check each against the cited release. Nothing here should change without the specification open.
+
+### Smaller USB items
+
+- **Where:** `docs/power/usb-pd/power-translation.rst`, `docs/usb-serial/timing.rst`, `docs/power/usb-pd/calc.py`
+- **Issue:** The USB to Ethernet translation uses nominal contract power, not the lowest voltage at the sink after cable drop (54.8 W, not 60 W, for 20 V at 3 A). "At least 286 MHz" for USB edge placement is sufficient but not necessary; the calculator shows 250 MHz inside the limit with 0.17 ns of margin. The calculator does not compute the class tables or the dead-battery example.
+- **Suggestion:** Give input power as a range, qualify the 286 MHz claim, and extend the calculator to every number the pages quote.
