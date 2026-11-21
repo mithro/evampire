@@ -341,3 +341,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/integration/transmitter.rst`
 - **Issue:** An untrimmed ±20 % source resistor moves the line amplitude by +11 % and −9 %, outside the amplitude window, and no page has a bias or reference block. Linearity and headroom are worked without the far end's signal or the test fixture's disturber on the pins.
 - **Suggestion:** Add an amplitude error budget and a reference block, and redo swing and linearity with the superimposed signals.
+
+### Echo, jitter and start-up
+
+- **Where:** `docs/ethernet/phy-electrical/1000base-t-echo.rst`, `docs/ethernet/phy-electrical/integration/signal-processing.rst`, `docs/ethernet/phy-electrical/integration/clock-recovery.rst`
+- **Issue:** Cabling return loss is missing from the channel table, and the echo tap bound covers only the round trip. Jitter is compared with the 1.4 ns conformance limit, while 7 effective bits need about 16 ps rms. The training sequence is not described, and software adaptation is not given as a function of processor speed.
+- **Suggestion:** Add the return-loss row and a reach-independent tap term, derive the internal jitter budget, add a start-up section, and give the update ratio as taps × symbol rate × instructions per update / instruction rate.
