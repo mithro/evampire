@@ -55,8 +55,13 @@ Over LLDP
    (:clause:`145.3.6`).
 By classifying again
    Removing the power and running classification again with fewer class
-   events. This interrupts the powered device, so it is the last resort for
-   a powered device of class 1 to 3 without LLDP.
+   events. This interrupts the powered device. One class event already
+   assigns up to class 3 (:numref:`tab-poe-events`), so fewer events lower
+   only a powered device that requested class 4 or higher.
+
+A powered device of class 1 to 3 without LLDP keeps the class it requested
+for as long as it is powered. The only way to take power back from it is to
+remove its power.
 
 Power sourcing equipment may base its allocation on more than the class,
 but not only on how much power the powered device has drawn in the past

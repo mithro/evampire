@@ -45,8 +45,9 @@ A single-signature powered device that requests class 4 or higher must
 support the exchange; for classes 1 to 3 it is optional
 (:clause:`145.3.6`, :clause:`145.5`). The power sourcing equipment's
 support is optional. A powered device of class 1 to 3 that does not support
-it can have its power changed only by removing the power and classifying it
-again.
+it keeps the class it requested while it is powered. Classifying it again
+assigns the same class, so its power can only be removed, not reduced (see
+:doc:`sharing`).
 
 The allocated value sets the assigned class (:clause:`Table 145-12 <145>`),
 as in :numref:`tab-poe-dll-class`.

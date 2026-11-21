@@ -152,9 +152,10 @@ Each port starts with a share of the budget. A USB Power Delivery source can
 change its offer while a device is connected, by sending a new list of
 offers. Power sourcing equipment can change the power it allocates to a
 powered device through :term:`LLDP`, but only powered devices of class 4 and
-higher must support this (:clause:`145.5`, :clause:`79`). For a powered device
-of class 1 to 3, the only way to reduce its power is to remove the power and
-classify the device again.
+higher must support this (:clause:`145.5`, :clause:`79`). A powered device
+of class 1 to 3 that does not support it keeps its class while it is
+powered, so the only way to take power back from it is to remove its power
+(see :doc:`poe/sharing`).
 
 The software uses these changes to move power between ports. When a device
 on one port is unplugged or uses less than its share, the software raises
