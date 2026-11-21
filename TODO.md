@@ -31,3 +31,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/overview.rst`, `README.md`, `CLAUDE.md`
 - **Issue:** In IEEE 802.3 a hub is a half-duplex repeater. The pages specify a full-duplex cut-through relay with one filtered address and a processor tap. The closest standard device may be the IEEE 802.1Q Two-Port MAC Relay *(from memory)*.
 - **Suggestion:** Check the Two-Port MAC Relay definition and its reserved-address table. It may answer the open question about which other frames not to forward. Then either rename the device or say how it differs from a hub.
+
+### Block diagram does not show the LLDP block
+
+- **Where:** `docs/architecture/block-diagram.dot`, `docs/architecture/index.rst`
+- **Issue:** The text now describes an LLDP block that controls the forwarding paths, but the diagram and its alt text have no such block or control arrow.
+- **Suggestion:** Add the block and dashed control arrows to both output selectors, update the alt text, and check the rendered diagram at both widths.
