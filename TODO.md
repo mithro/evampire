@@ -335,3 +335,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/integration/receiver.rst`
 - **Issue:** The bits-against-reach formula has no floor: at short reach the signal fills the range and no more bits are saved. The examples that reach 7 effective bits use 1.8 V thin-oxide devices that gf180mcu lacks.
 - **Suggestion:** Add a floor of about 5 to 6 effective bits derived from the slicer's needs, and restrict the power range to 3.3 V-class examples.
+
+### Transmit amplitude, reference and linearity
+
+- **Where:** `docs/ethernet/phy-electrical/integration/transmitter.rst`
+- **Issue:** An untrimmed ±20 % source resistor moves the line amplitude by +11 % and −9 %, outside the amplitude window, and no page has a bias or reference block. Linearity and headroom are worked without the far end's signal or the test fixture's disturber on the pins.
+- **Suggestion:** Add an amplitude error budget and a reference block, and redo swing and linearity with the superimposed signals.
