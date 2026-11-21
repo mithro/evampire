@@ -315,3 +315,11 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/gigabit-risk.rst`, `docs/ethernet/magnetics/isolation.rst`
 - **Issue:** Baseline wander is compared as an rms value against a peak criterion. The second-die route omits a serial link with a DC-balanced code, which needs only small high-voltage capacitors. The on-die barrier ignores clearance between pads and package leads. The insertion-loss formula may be 0.4/f, not 0.4/√f *(from memory)*.
 - **Suggestion:** Convert the wander to a peak at the target error rate, add the serial-link alternative and the package clearance, and check the formula in Clause 40.
+
+## Integrated transceiver (full design)
+
+### Power and area of the signal processing
+
+- **Where:** `docs/ethernet/phy-electrical/integration/cells.rst`, `docs/ethernet/phy-electrical/integration/area-power.rst`
+- **Issue:** The energy per gate assumes three NAND input loads and no wire capacitance. Scaled from the page's own 0.25 µm reference chip, a reviewer gets 4 to 8 W per port against the page's 0.48 to 1.5 W. The 1.8 V row keeps the same area although that library needs parallel copies to meet 125 MHz.
+- **Suggestion:** Calibrate the model against a reference chip, add wire and clock capacitance, give area as a function of parallelism, and present totals as lower bounds. A trial synthesis of one echo canceller would settle most of it.
