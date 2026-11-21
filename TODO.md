@@ -87,3 +87,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/index.rst` (budget), `docs/power/poe/translation.rst`
 - **Issue:** P_out = P_in × η − P_board subtracts the board's power after both converters, but the board supplies hang off the bus between them. The pass-through table also multiplies by 0.85 where the two efficiencies give 0.846.
 - **Suggestion:** Split η per converter and subtract the board's power at the bus. Say whether bridge and switch losses are inside the input efficiency. Recompute the tables.
+
+### What happens when the input side forces a reduction
+
+- **Where:** `docs/power/poe/sharing.rst`, `docs/power/poe/lldp.rst`, `docs/power/index.rst`
+- **Issue:** Lowering an Ethernet output over LLDP can take 10 s, and class 1 to 3 devices cannot be lowered. No page gives the time port A has to comply with a lowered allocation, or the sequence when the input collapses.
+- **Suggestion:** Add a timeline for each input event (allocation lowered, input lost, role swap) with the response time and who acts, hardware or software. Look up the powered device's compliance time in the standard.
