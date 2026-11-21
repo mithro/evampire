@@ -149,3 +149,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/first-version.rst` (loop needs table), `docs/power/converters/control.rst`
 - **Issue:** The table pairs a 25 kHz crossover with a 4 µs latency, which by one estimate costs about 54° of phase. The right-half-plane zero is worked at one point (20 V, 30 W); at 5 V input it is several times lower.
 - **Suggestion:** Give the latency as a phase budget and the zero over the input range. Needs a loop model or simulation to confirm.
+
+### Minimum on-time and where a buck's current is sensed
+
+- **Where:** `docs/power/converters/buck-boost.rst`, `docs/power/converters/first-version.rst`
+- **Issue:** 57 V to 5 V has a duty cycle of 0.088, an on-time of 146 ns at 600 kHz, close to what a peak-current comparator with blanking can control. Low-side sensing in the ground return does not carry a buck's on-time current, so it cannot end the on-time at the peak.
+- **Suggestion:** Add minimum on-time against frequency for each arrangement, and valley or emulated current-mode control as alternatives. State where the current is sensed for each converter.
