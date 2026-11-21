@@ -291,3 +291,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/without-transformer.rst`, `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/events.rst`
 - **Issue:** The barrier is checked only against the isolation test voltage. The charge it passes (about 74 µC per wire at 2250 V with 33 nF) is hundreds of times an electrostatic discharge, a 4 kV surge charges the capacitor past its 2 kV rating, and the AC test drives about 31 mA into the chip side for 60 s.
 - **Suggestion:** Add a table of charge and current per event and per capacitor value, and the surge level at which the capacitor survives.
+
+### Touch current through the barrier at mains frequency
+
+- **Where:** `docs/ethernet/magnetics/isolation.rst`, `docs/ethernet/magnetics/functions.rst`
+- **Issue:** Eight 33 nF capacitors are about 12 kΩ at 50 Hz and would pass about 21 mA with 250 V across the barrier. IEC 62368-1 touch-current limits are far lower *(from memory)*.
+- **Suggestion:** Add touch current to the safety open question. It bounds the total barrier capacitance well below the droop minimum.
