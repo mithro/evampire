@@ -61,3 +61,11 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/rgmii/io-cells.rst`, `docs/power/converters/first-version.rst`, `docs/power/usb-pd/analogue.rst`
 - **Issue:** Only the RGMII signals (27) and the PWM outputs (8) are counted. Reviewers' estimates are about 33 to 37 for RGMII with resets and supplies, 23 to 35 for converter control and sensing, and 8 to 13 for each USB Type-C port.
 - **Suggestion:** Add one table of pads per function for the first version, with supplies, and compare it with the pad ring of the wafer.space slot.
+
+## Power over Ethernet
+
+### Hardware timers behind each timed step of a port that supplies power
+
+- **Where:** `docs/power/poe/pse-sequencing.rst`, `docs/power/poe/monitoring.rst`
+- **Issue:** The requirement for a safe state now exists, but the limits table still has no row for the signature drop-out, class and mark events or inrush. The page asks for tens to hundreds of readings per second, while a powered device may hold its signature with pulses of about 7 ms *(the 6 ms minimum valid pulse is from memory)*.
+- **Suggestion:** Add a row for each timed state with its hardware maximum. State the continuous sampling rate needed to see a short signature pulse. Consider a hardware state machine for the timed sequence with software setting policy only.
