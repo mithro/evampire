@@ -197,3 +197,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/first-version.rst` (start-up)
 - **Issue:** The hold-up example uses 0.58 mA from a reference part. evampire's own current before start is unknown and probably much larger; a linear path from 57 V dissipates (57 V − V_dd) × I.
 - **Suggestion:** Give the start-up source and its dissipation as functions of the chip's pre-start current, and say what the PWM pads do before the supply is valid.
+
+### Input range and the 48 V bus case
+
+- **Where:** `docs/power/converters/buck.rst`, `docs/power/converters/arrangement.rst`, `docs/power/poe/pd-controller.rst`
+- **Issue:** The converter pages use 37 V to 57 V at the input converter; the powered-device page gives 30 V to 57 V after the switch. With a 48 V bus nothing in the three-converter arrangement produces 50 V to 57 V for Type 2 to 4 ports.
+- **Suggestion:** Use the converter's own input range after the bridge and switch, and add the 48 V bus case to the open questions or the mode table.
