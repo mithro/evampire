@@ -167,3 +167,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/boost.rst`, `docs/power/poe/pse-sequencing.rst`
 - **Issue:** The Power over Ethernet pages hand the ripple limit to the converter, but the boost page has no output-ripple equation. The converter must also supply the inrush current (see the budget item).
 - **Suggestion:** Add the boost output-ripple equation with a worked example, and a row for inrush power against input power.
+
+### USB source behaviour the converter must provide
+
+- **Where:** `docs/power/converters/first-version.rst`, `docs/power/usb-pd/monitoring.rst`, `docs/power/usb-pd/source-sink.rst`
+- **Issue:** A programmable supply must regulate current in current limit, which is a second control loop, not a trip. Voltage changes have a slew limit, and a downward change returns the output capacitor's energy to the bus. The converter pages cover none of these.
+- **Suggestion:** Add the current-limit loop and its accuracy, a slewed reference, and a bleeder or the condition under which the bus absorbs the energy.
