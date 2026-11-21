@@ -229,3 +229,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/two-ports.rst`, `docs/power/usb-pd/analogue.rst`
 - **Issue:** Not covered: both ports on chargers from a dead start, keeping an unattached receptacle at 0 V while the other port sinks, two different contract voltages, and a start-up path that conducts with no control yet blocks 20 V later.
 - **Suggestion:** Add a section with a default-on start-up path and a controlled back-to-back path per port, and say which port wins.
+
+### On-chip crowbar: current path
+
+- **Where:** `docs/power/usb-pd/cc-protection.rst`
+- **Issue:** The crowbar's steady current of 3 A to 5 A flows through a CC contact the page rates at 0.5 A, then one pad and bond wire. The peak from the bulk capacitance is tens of amperes.
+- **Suggestion:** Add the contact, pad and bond-wire current limits with arithmetic. They may rule this option out.
