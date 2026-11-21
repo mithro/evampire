@@ -28,9 +28,20 @@ low, which is where an unpowered core leaves them. The rings have no
 resistance in the main runs, and :doc:`results-hbm` shows the effect of
 1 Ω.
 
-The script :download:`sim/esd_sim.py <sim/esd_sim.py>` builds and runs
-every test circuit, and :download:`sim/cdl2spice.py <sim/cdl2spice.py>`
-translates the foundry's netlists into ngspice form.
+The script :download:`sim/esd_sim.py <sim/esd_sim.py>` runs every test
+circuit. It uses four modules in the same folder:
+
+* :download:`sim/cdl2spice.py <sim/cdl2spice.py>` translates the
+  foundry's netlists into ngspice form.
+* :download:`sim/calibrate.py <sim/calibrate.py>` fits the device models
+  to the foundry's measurements.
+* :download:`sim/testbench.py <sim/testbench.py>` builds the test circuit
+  and the test generators.
+* :download:`sim/report.py <sim/report.py>` draws the figures and writes
+  the tables.
+
+:download:`sim/spice.py <sim/spice.py>` holds the paths, the foundry
+figures and the code that runs ngspice.
 
 Three changes add the behaviour of an ESD event
 -----------------------------------------------
