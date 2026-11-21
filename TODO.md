@@ -259,3 +259,11 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/power-translation.rst`, `docs/usb-serial/timing.rst`, `docs/power/usb-pd/calc.py`
 - **Issue:** The USB to Ethernet translation uses nominal contract power, not the lowest voltage at the sink after cable drop (54.8 W, not 60 W, for 20 V at 3 A). "At least 286 MHz" for USB edge placement is sufficient but not necessary; the calculator shows 250 MHz inside the limit with 0.17 ns of margin. The calculator does not compute the class tables or the dead-battery example.
 - **Suggestion:** Give input power as a range, qualify the 286 MHz claim, and extend the calculator to every number the pages quote.
+
+## Magnetics and isolation
+
+### Capacitor and inductor minima cannot be used together
+
+- **Where:** `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/without-transformer.rst`
+- **Issue:** The droop row is marked as met with 16 nF per wire and 80 µH across the pair, each a minimum taken alone. A reviewer's simulation of the two together leaves 47 % at 500 ns against the 73 % needed; 33 nF needs about 182 µH.
+- **Suggestion:** Reproduce the second-order step response in a script, replace the two minima with a joint constraint, and mark the row conditional.
