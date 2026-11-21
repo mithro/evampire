@@ -323,3 +323,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/integration/cells.rst`, `docs/ethernet/phy-electrical/integration/area-power.rst`
 - **Issue:** The energy per gate assumes three NAND input loads and no wire capacitance. Scaled from the page's own 0.25 µm reference chip, a reviewer gets 4 to 8 W per port against the page's 0.48 to 1.5 W. The 1.8 V row keeps the same area although that library needs parallel copies to meet 125 MHz.
 - **Suggestion:** Calibrate the model against a reference chip, add wire and clock capacitance, give area as a function of parallelism, and present totals as lower bounds. A trial synthesis of one echo canceller would settle most of it.
+
+### The 8 ns decision loop
+
+- **Where:** `docs/ethernet/phy-electrical/integration/signal-processing.rst`, `docs/ethernet/phy-electrical/integration/decision-loop.dot`
+- **Issue:** The page says look-ahead leaves the loop only a selection. The decoder's add, compare and select is itself a one-symbol recursion and stays in the loop *(from memory of the cited paper)*.
+- **Suggestion:** Check the cited papers, state the smallest loop and its depth, and add a slicer-only receiver for short reach as an alternative.
