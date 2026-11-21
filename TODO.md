@@ -223,3 +223,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/requirements.rst` (processor), all topic pages
 - **Issue:** Each page states its own need: about 1 ms latency for Power over Ethernet, about 4 µs for a converter loop, tens of millions of instructions per second for Power Delivery receive, USB replies, transceiver adaptation. No page sums them for one core.
 - **Suggestion:** Add a table of every demand on the processor (rate, latency, longest non-interruptible section) so that a core and the hardware helpers can be chosen against it.
+
+### Two-port power path and start-up
+
+- **Where:** `docs/power/usb-pd/two-ports.rst`, `docs/power/usb-pd/analogue.rst`
+- **Issue:** Not covered: both ports on chargers from a dead start, keeping an unattached receptacle at 0 V while the other port sinks, two different contract voltages, and a start-up path that conducts with no control yet blocks 20 V later.
+- **Suggestion:** Add a section with a default-on start-up path and a controlled back-to-back path per port, and say which port wins.
