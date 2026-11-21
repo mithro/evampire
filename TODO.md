@@ -297,3 +297,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/isolation.rst`, `docs/ethernet/magnetics/functions.rst`
 - **Issue:** Eight 33 nF capacitors are about 12 kΩ at 50 Hz and would pass about 21 mA with 250 V across the barrier. IEC 62368-1 touch-current limits are far lower *(from memory)*.
 - **Suggestion:** Add touch current to the safety open question. It bounds the total barrier capacitance well below the droop minimum.
+
+### Common-mode choke carries the Power over Ethernet current
+
+- **Where:** `docs/ethernet/magnetics/arch-capacitor.dot`, `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/first-version.rst`
+- **Issue:** The choke is drawn between the socket and the power tap, where the supply current flows the same way in both wires of a pair and would saturate a signal choke. Converter noise also reaches the cable through the taps.
+- **Suggestion:** Move the choke to the chip side of the tap or wind it across a pair set, and add a filter for the power path.
