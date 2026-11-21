@@ -69,3 +69,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/pse-sequencing.rst`, `docs/power/poe/monitoring.rst`
 - **Issue:** The requirement for a safe state now exists, but the limits table still has no row for the signature drop-out, class and mark events or inrush. The page asks for tens to hundreds of readings per second, while a powered device may hold its signature with pulses of about 7 ms *(the 6 ms minimum valid pulse is from memory)*.
 - **Suggestion:** Add a row for each timed state with its hardware maximum. State the continuous sampling rate needed to see a short signature pulse. Consider a hardware state machine for the timed sequence with software setting policy only.
+
+### Class steps in the translation tables
+
+- **Where:** `docs/power/poe/translation.rst`, `docs/power/poe/sequence.rst`
+- **Issue:** The tables say "class 5 fits" or "class 2 applies" as if the port could assign any class. The number of class events caps the result at class 3, 4, 6 or 8, and a device gets the class it asked for if that is within the cap. A device asking for class 6 cannot be given class 5 *(from memory)*.
+- **Suggestion:** Check Table 145-11 and rework the tables by requested class: assigned if it fits, otherwise the next lower cap, otherwise no power.
