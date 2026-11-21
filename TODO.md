@@ -93,3 +93,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/sharing.rst`, `docs/power/poe/lldp.rst`, `docs/power/index.rst`
 - **Issue:** Lowering an Ethernet output over LLDP can take 10 s, and class 1 to 3 devices cannot be lowered. No page gives the time port A has to comply with a lowered allocation, or the sequence when the input collapses.
 - **Suggestion:** Add a timeline for each input event (allocation lowered, input lost, role swap) with the response time and who acts, hardware or software. Look up the powered device's compliance time in the standard.
+
+### Dual-role port: reverse path, unpowered state and self-loop
+
+- **Where:** `docs/power/poe/dual-role.rst`
+- **Issue:** The supply-side switch described blocks one direction only, so a remote source of the other polarity could charge the port's supply rail through the body diode. With no power the port must still show the signature. The port's own supply could also turn on its own powered-device path.
+- **Suggestion:** State that the disconnect blocks in both directions, give the leakage allowed beside the signature resistor (about 615 kΩ by one estimate), define the unpowered default, and say how the self-loop is prevented.
