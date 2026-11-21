@@ -241,3 +241,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/usb-serial/signalling.rst`, `docs/usb-serial/usb-pd-roles.rst`, `docs/power/usb-pd/start-up.rst`
 - **Issue:** A suspended USB 2.0 device may draw only 2.5 mA on average *(from memory)*. A board powered from a computer's port cannot run on that when the computer suspends the bus.
 - **Suggestion:** State the limit and its consequences, and check which Type-C current levels and Power Delivery contracts lift it.
+
+### Comparators per CC pin and the missing debounce
+
+- **Where:** `docs/power/usb-pd/analogue.rst`, `docs/power/usb-pd/attach.rst`
+- **Issue:** One comparator is asked to slice BMC, detect detach, read the Rp level and detect fast role swap, at different thresholds, some of them continuously. The tPDDebounce time (10 to 20 ms, *from memory*) is on no page.
+- **Suggestion:** Give the comparator count per pin as a function of the features kept, and add the debounce.
