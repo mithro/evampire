@@ -52,9 +52,9 @@ print(f"  9 V 3 A fixed PDO: voltage field {9/0.05:.0f}, current field {3/0.01:.
 print(f"  RDO pos 2, 2 A: {(2 << 28) | (200 << 10) | 200:08X}")
 
 print("== Source power budget example (ASSUMPTION: illustrative numbers) ==")
-p_in, p_board, eff = 25.0, 5.0, 0.90
-p_out = (p_in - p_board) * eff
-print(f"  P_out = ({p_in} - {p_board}) x {eff} = {p_out:.1f} W")
+p_in, p_board, eff = 25.5, 3.10, 0.900
+p_out = p_in * eff - p_board
+print(f"  P_out = {p_in} x {eff} - {p_board} = {p_out:.2f} W")
 print(f"  5 V max current = {p_out/5:.2f} A -> capped at 3 A; 9 V = {p_out/9:.3f} A -> {math.floor(p_out/9*100)/100:.2f} A")
 
 print("== VCONN inrush (Type-C Tables 4-5, 4-6, 4-32) ==")
