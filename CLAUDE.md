@@ -61,13 +61,15 @@ them and commit what they write:
 uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline.svg
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
+uv run python docs/high-voltage/figures.py docs/high-voltage  # cross-sections
 ```
 
-Three scripts print the numbers their pages quote, so re-run one after
+Four scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
 
 - `docs/power/usb-pd/calc.py`
 - `docs/power/converters/calc.py`
+- `docs/high-voltage/calc.py`
 - `docs/usb-serial/calc.py`
 
 `docs/usb-serial/calc.py` prints its last table only when given the path to
@@ -78,13 +80,13 @@ comes from the gf180mcu PDK and is not in this repository.
 
 - Each topic is a folder with an `index.rst` and short child pages of about
   five A4 pages each, ordered simplest first. The topics are
-  `ethernet/{rgmii,phy-electrical,magnetics}`, `power/{poe,usb-pd,converters}`
-  and `usb-serial`. `power/index.rst` holds what the power topics share:
+  `ethernet/{rgmii,phy-electrical,magnetics}`, `power/{poe,usb-pd,converters}`,
+  `high-voltage` and `usb-serial`. `power/index.rst` holds what the power topics share:
   roles, modes, the budget, translation, sharing, and the board
   configurations table (`tab-power-board-configs`). Pages link to that table
   rather than restating the configurations.
 - Each topic has its own `references.rst`. Citation keys carry a per-topic
-  prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `USBSER-`)
+  prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `HV-`, `USBSER-`)
   so they don't clash across the site. A new topic picks its own prefix.
 - `docs/glossary.rst` is one site-wide `.. glossary::` with `:sorted:`. Every
   `:term:` resolves there. When merging branches, keep the terms from both

@@ -33,6 +33,8 @@ but not with the Ethernet or USB Power Delivery standards.
 :doc:`power/index`
    How power moves between Power over Ethernet and USB Type-C, and the
    board configurations.
+:doc:`high-voltage/index`
+   How a circuit can sit tens of volts above the chip's substrate.
 :doc:`usb-serial/index`
    The USB serial port carried on the USB Type-C data wires.
 :doc:`standards`
@@ -50,6 +52,7 @@ but not with the Ethernet or USB Power Delivery standards.
    architecture/index
    ethernet/index
    power/index
+   high-voltage/index
    usb-serial/index
    standards
    glossary
