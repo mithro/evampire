@@ -25,3 +25,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/requirements.rst` (forwarding), `docs/ethernet/rgmii/mdio.rst`, `docs/ethernet/rgmii/data.rst`
 - **Issue:** Neither is mentioned. Pause frames are forwarded, but processor frames ignore a pause received on that port. Low-power idle would have to pass through two transceivers and the buffer, and a transceiver may stop its receive clock during it.
 - **Suggestion:** Decide and document: forward pause frames and advertise pause only if both link partners do; have software clear the Energy-Efficient Ethernet advertisement on both transceivers.
+
+### "Hub" is not what the pages specify
+
+- **Where:** `docs/overview.rst`, `README.md`, `CLAUDE.md`
+- **Issue:** In IEEE 802.3 a hub is a half-duplex repeater. The pages specify a full-duplex cut-through relay with one filtered address and a processor tap. The closest standard device may be the IEEE 802.1Q Two-Port MAC Relay *(from memory)*.
+- **Suggestion:** Check the Two-Port MAC Relay definition and its reserved-address table. It may answer the open question about which other frames not to forward. Then either rename the device or say how it differs from a hub.
