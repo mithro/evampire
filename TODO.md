@@ -267,3 +267,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/without-transformer.rst`
 - **Issue:** The droop row is marked as met with 16 nF per wire and 80 µH across the pair, each a minimum taken alone. A reviewer's simulation of the two together leaves 47 % at 500 ns against the 73 % needed; 33 nF needs about 182 µH.
 - **Suggestion:** Reproduce the second-order step response in a script, replace the two minima with a joint constraint, and mark the row conditional.
+
+### Two separate inductors against the 100 µH limit
+
+- **Where:** `docs/ethernet/magnetics/without-transformer.rst`
+- **Issue:** The page says two separate inductors conflict with the 100 µH limit on the power path. For 80 µH across the pair, each is 40 µH; in parallel within a pair and with two pairs in the loop that is 40 µH, under the limit.
+- **Suggestion:** Redo the arithmetic and state the range of inductance that satisfies both limits. Add the DC current at which the inductance must hold.
