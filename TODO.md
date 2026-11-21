@@ -359,3 +359,11 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/integration/requirements.rst`, `docs/ethernet/phy-electrical/integration/control.rst`, `docs/ethernet/phy-electrical/integration/slower-speeds.rst`
 - **Issue:** The requirements table omits the transmit templates, receiver tolerance tests and balance; the block table omits deskew, descrambler, baseline wander and a reference. Autonegotiation choices (half duplex, port type) are not made. The 10BASE-T options omit a current-mode driver.
 - **Suggestion:** Add the rows with links to the magnetics pages, make the autonegotiation choices, and add the current-mode option.
+
+## Whole chip
+
+### Verification and bring-up plan
+
+- **Where:** new page
+- **Issue:** No page covers how the design is verified before tape-out or tested afterwards: an FPGA prototype of the digital path, test modes, loopback, or how first silicon is brought up.
+- **Suggestion:** Add a page. For a first tape-out this is the largest gap in the documentation.
