@@ -275,6 +275,12 @@ Software makes every power decision, within hardware limits
 * Built-in hardware enforces these limits. It switches a port off when a
   fault happens faster than software can react, for example a short
   circuit, and then reports the fault to the software.
+* Built-in hardware also brings every port that supplies power to a safe
+  state when the software stops responding, for example through a
+  :wikipedia:`watchdog timer <Watchdog_timer>`. The standards' time limits
+  for removing power after a device is unplugged apply whether or not the
+  software is running (:doc:`power/poe/pse-sequencing`,
+  :doc:`power/usb-pd/source-sink`).
 
 .. _req-converters:
 
@@ -356,6 +362,9 @@ Open questions
   detection and classification and at each class. :doc:`power/usb-pd/index` gives
   the power available from a USB Type-C charger at each basic current level
   before any USB Power Delivery negotiation.
+* Which timed steps of each power port need a hardware timer behind the
+  software, what the safe state of each port is, and which settings survive
+  a reset of the processor.
 * Whether the three converter functions are three separate converters, one
   converter whose connections change with the operating mode, or another
   arrangement. The input and output voltage ranges of USB Power Delivery and

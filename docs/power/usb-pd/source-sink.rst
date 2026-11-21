@@ -196,7 +196,9 @@ tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
 (:pd:`Section 4.1.5.5`, :pd:`Table 4.9`). It also discharges VBUS before
 attaching (the AttachWait.SRC state, :typec:`Section 4.5.2.2.8.1`) and
 during a power role swap. A switched load from VBUS to ground, controlled by
-the processor, does this (:ref:`usbpd-vbus-sensing`).
+the processor, does this (:ref:`usbpd-vbus-sensing`). Built-in hardware
+switches VBUS off and the load on when the software stops responding
+(:ref:`req-power-control`).
 
 .. _usbpd-sink-sequence:
 
