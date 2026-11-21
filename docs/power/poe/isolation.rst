@@ -54,13 +54,18 @@ The barrier can sit in two places
 Barrier between evampire and the cable
    evampire's ground is shared with the USB Type-C connectors and any other
    accessible conductor. Every circuit connected to the cable then sits
-   across a barrier from evampire: an isolated input converter for power
-   (:doc:`../converters/index`), and isolated links for the signals.
+   across a barrier from evampire. The input converter of a port that takes
+   power is isolated, and so is the supply of a port that supplies power
+   (:doc:`../converters/index`). The sensing and control signals of both
+   cross isolated links.
 
 Barrier at the other connectors
    evampire's ground is on the cable side, and the isolation moves to the
    USB Type-C ports and any other accessible conductor. Cable-side
-   functions can then share evampire's die. In Environment B this works for
+   functions can then share evampire's die. Each USB Type-C port then
+   needs an isolated converter for its power in both directions, and
+   isolated links for its :term:`configuration channel` and USB data
+   wires. In Environment B this works for
    only one Ethernet port, because the two ports must be isolated from each
    other.
 

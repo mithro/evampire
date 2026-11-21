@@ -55,6 +55,14 @@ on :doc:`arrangement`.
    * - Bus near the Power over Ethernet voltage, extended power range USB
      - 4 (plus 2 for the optional regulator)
 
+:numref:`fig-conv-control-split` shows evampire and the power stage on one
+ground. A converter that crosses the isolation barrier
+(:doc:`../poe/isolation`) has its switches and sensing on both sides, and
+evampire is on only one side. The PWM outputs, comparator inputs and ADC
+inputs for the other side then cross an isolated link, or a separate
+controller on that side does their job. Which signals cross, and how, is an
+open question.
+
 The voltages to be sensed reach 57 V. In the first version the external
 parts bring them within evampire's input range: resistor dividers for
 voltages, and a sense resistor in the ground return (low-side sensing) or
@@ -598,5 +606,9 @@ Open questions
   converter's inductor current.
 * The power the board needs to start, :math:`P_\text{start}`, and so the
   class the start-up sequencer requests and the start-up path's rating.
+* Which control and sensing signals cross the isolation barrier, and by
+  what means: a gate-drive transformer, a digital isolator, an
+  opto-isolator, or a separate controller on the far side
+  (:doc:`../poe/isolation`).
 * The default bus voltage and the start-up path (resistor, current source,
   or external regulator) in the first version.

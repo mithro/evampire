@@ -24,7 +24,9 @@ Each of Ethernet ports A and B (:ref:`requirements`) needs:
 
 The port that takes or supplies Power over Ethernet also needs magnetics
 rated for the current, blocking capacitors in the termination, and the
-power circuits on the cable-side centre taps (:doc:`poe`). In the first
+power circuits on the cable-side centre taps (:doc:`poe`). The magnetics
+isolate only the data. The power taken from the centre taps needs its own
+isolation in the converters (:doc:`../../power/poe/isolation`). In the first
 version, port A takes power and port B supplies it
 (:ref:`board configurations <tab-power-board-configs>`,
 :ref:`power-flow`).

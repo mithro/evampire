@@ -232,6 +232,16 @@ types named here are those of the first-version board. Whether the converter
 functions are separate converters is an open question
 (:ref:`requirements-open-questions`).
 
+The types also depend on where the isolation barrier sits
+(:doc:`poe/isolation`). The cable conductors of an Ethernet port that takes
+or supplies power must be isolated from the USB Type-C connectors. A switch,
+a buck-boost converter and a boost converter each have one ground on both
+sides, so none of them can cross the barrier. Every path between an Ethernet
+port and a USB Type-C port therefore includes one isolated converter, built
+around a transformer. Which converter that is in each
+:ref:`operating mode <power-modes>` is an open question
+(:doc:`converters/arrangement`).
+
 Powered device front end
    Sits on port A. It corrects the polarity of the cable voltage and
    presents the signature that tells the far end a powered device is
