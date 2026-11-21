@@ -353,3 +353,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/integration/area-power.rst`, `docs/power/poe/types-classes.rst`
 - **Issue:** The page's own two-port figure is 1.3 W to 4.4 W, comparable to a class 1 input of 3.84 W and to a 5 V USB port before negotiation. The two ranges never appear together.
 - **Suggestion:** Add a table of transceiver power beside each input level, and consider keeping the transceivers off until power is negotiated.
+
+### Missing rows and choices
+
+- **Where:** `docs/ethernet/phy-electrical/integration/requirements.rst`, `docs/ethernet/phy-electrical/integration/control.rst`, `docs/ethernet/phy-electrical/integration/slower-speeds.rst`
+- **Issue:** The requirements table omits the transmit templates, receiver tolerance tests and balance; the block table omits deskew, descrambler, baseline wander and a reference. Autonegotiation choices (half duplex, port type) are not made. The 10BASE-T options omit a current-mode driver.
+- **Suggestion:** Add the rows with links to the magnetics pages, make the autonegotiation choices, and add the current-mode option.
