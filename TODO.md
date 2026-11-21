@@ -247,3 +247,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/analogue.rst`, `docs/power/usb-pd/attach.rst`
 - **Issue:** One comparator is asked to slice BMC, detect detach, read the Rp level and detect fast role swap, at different thresholds, some of them continuously. The tPDDebounce time (10 to 20 ms, *from memory*) is on no page.
 - **Suggestion:** Give the comparator count per pin as a function of the features kept, and add the debounce.
+
+### Values to check against the specifications
+
+- **Where:** `docs/power/usb-pd/cc-signalling.rst`, `docs/power/usb-pd/negotiation.rst`, `docs/power/usb-pd/cables.rst`, `docs/power/usb-pd/masks.py`
+- **Issue:** A reviewer's recollection differs from the pages on: the 1.2 V row of the slowest-edge table (344 ns expected for a falling edge at any swing), the receive mask for a port that is neither sourcing nor sinking, and the upper limits of tSenderResponse and tVDMSenderResponse. The reviewer knew older releases than the pages cite.
+- **Suggestion:** Check each against the cited release. Nothing here should change without the specification open.
