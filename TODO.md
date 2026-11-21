@@ -37,3 +37,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/architecture/block-diagram.dot`, `docs/architecture/index.rst`
 - **Issue:** The text now describes an LLDP block that controls the forwarding paths, but the diagram and its alt text have no such block or control arrow.
 - **Suggestion:** Add the block and dashed control arrows to both output selectors, update the alt text, and check the rendered diagram at both widths.
+
+### 125 MHz clock source, reset and link-down behaviour
+
+- **Where:** `docs/architecture/index.rst` (clock and reset), `docs/ethernet/rgmii/io-cells.rst`, `docs/ethernet/rgmii/port-logic.rst`
+- **Issue:** The source of the 125 MHz clock, its duty cycle and its tolerance are not specified, and no page defines reset. A clock taken from a transceiver disappears when that transceiver is reset. Forwarding depends on software having booted and configured both transceivers.
+- **Suggestion:** Add a clock and reset page: source options (oscillator, transceiver output, 25 MHz with an on-chip PLL, one oscillator shared with both transceivers), the duty cycle the source must meet, reset defaults (forwarding off), and how a buffer is flushed when its receive clock stops.
