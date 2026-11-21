@@ -105,3 +105,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/monitoring.rst`, `docs/power/poe/hv-options.rst`
 - **Issue:** "57 W for 75 ms" (4.3 J) is given as the switch requirement. The standard obliges only 6 ms or 10 ms of current limit, about a tenth of that energy, and the difference decides whether an on-chip switch is plausible.
 - **Suggestion:** Give the energy as a range from the minimum obligation to the chosen maximum, apply the page's thermal estimate to each end, and treat foldback as a design choice.
+
+### Stacked devices against the documented N-well limit
+
+- **Where:** `docs/power/poe/hv-limits.rst`, `docs/power/poe/hv-options.rst`, `docs/power/poe/pd-controller.rst`
+- **Issue:** The limits table gives N-well to substrate as 10 V minimum, yet the page says no documented limit rules stacking out. That value does rule out any stack whose wells are plain N-wells at up to 57 V. A low-side isolation switch also leaves the rest of the die up to 57 V above the substrate until it closes.
+- **Suggestion:** Say which isolation structures remain (deep N-well, drift regions, devices on field oxide) and what each needs from the foundry. Compare low-side and high-side isolation switches.
