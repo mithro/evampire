@@ -191,3 +191,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/integration.rst`
 - **Issue:** An integrated low-side switch node goes below the substrate in every dead time and injects carriers, next to the transceiver's converters in the full design. The page gives the gate width of a stacked 100 mΩ switch but not its area (about 3 to 7 mm² by its own figures).
 - **Suggestion:** Add substrate injection and noise coupling to the process needs and open questions, and give the area per switch.
+
+### Start-up supply is sized from a commercial controller's current
+
+- **Where:** `docs/power/converters/first-version.rst` (start-up)
+- **Issue:** The hold-up example uses 0.58 mA from a reference part. evampire's own current before start is unknown and probably much larger; a linear path from 57 V dissipates (57 V − V_dd) × I.
+- **Suggestion:** Give the start-up source and its dissipation as functions of the chip's pre-start current, and say what the PWM pads do before the supply is valid.
