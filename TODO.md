@@ -309,3 +309,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/requirements.rst` (cable), `docs/ethernet/magnetics/isolation.rst`, `docs/ethernet/magnetics/first-version.rst`
 - **Issue:** The requirements say the board still provides isolation; the magnetics page has a section on partial isolation and asks whether the test must be passed. The first-version page says the resistor and capacitor between signal ground and chassis bridge the barrier, which looks wrong: both grounds are on the equipment side.
 - **Suggestion:** Make the requirement and the open question agree. Check which parts bridge the barrier against the standard's definition.
+
+### Smaller magnetics items
+
+- **Where:** `docs/ethernet/magnetics/gigabit-risk.rst`, `docs/ethernet/magnetics/isolation.rst`
+- **Issue:** Baseline wander is compared as an rms value against a peak criterion. The second-die route omits a serial link with a DC-balanced code, which needs only small high-voltage capacitors. The on-die barrier ignores clearance between pads and package leads. The insertion-loss formula may be 0.4/f, not 0.4/√f *(from memory)*.
+- **Suggestion:** Convert the wander to a peak at the target error rate, add the serial-link alternative and the package clearance, and check the formula in Clause 40.
