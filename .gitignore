@@ -18,3 +18,6 @@ tmp/
 
 # Playwright browser output
 .playwright-mcp/
+
+# Waveforms cached by docs/esd/sim/esd_sim.py for --reuse
+docs/esd/sim/cache/

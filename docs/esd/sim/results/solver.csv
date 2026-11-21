@@ -1,0 +1,4 @@
+Event,Integration method,Simulated to (ns)
+IEC contact -4 kV,"trap, trtol=1",150
+IEC contact -6 kV,"gear, 0.1 ns step",150
+IEC contact -15 kV,"gear, 0.1 ns step",150

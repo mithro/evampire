@@ -1,0 +1,4 @@
+Change,PAD at peak (V),Highest PAD (V),Highest gate (V),PMOS diode (mA/µm)
+as simulated,4.0,5.6,5.4,2.5
+drain diode resistance × 2,4.2,5.6,5.5,2.3
+ring resistance 1 Ω each way,5.3,5.8,5.6,2.4
