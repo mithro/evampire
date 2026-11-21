@@ -99,3 +99,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/dual-role.rst`
 - **Issue:** The supply-side switch described blocks one direction only, so a remote source of the other polarity could charge the port's supply rail through the body diode. With no power the port must still show the signature. The port's own supply could also turn on its own powered-device path.
 - **Suggestion:** State that the disconnect blocks in both directions, give the leakage allowed beside the signature resistor (about 615 kΩ by one estimate), define the unpowered default, and say how the self-loop is prevented.
+
+### Port switch energy is quoted at the maximum
+
+- **Where:** `docs/power/poe/monitoring.rst`, `docs/power/poe/hv-options.rst`
+- **Issue:** "57 W for 75 ms" (4.3 J) is given as the switch requirement. The standard obliges only 6 ms or 10 ms of current limit, about a tenth of that energy, and the difference decides whether an on-chip switch is plausible.
+- **Suggestion:** Give the energy as a range from the minimum obligation to the chosen maximum, apply the page's thermal estimate to each end, and treat foldback as a design choice.
