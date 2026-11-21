@@ -273,3 +273,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/without-transformer.rst`
 - **Issue:** The page says two separate inductors conflict with the 100 µH limit on the power path. For 80 µH across the pair, each is 40 µH; in parallel within a pair and with two pairs in the loop that is 40 µH, under the limit.
 - **Suggestion:** Redo the arithmetic and state the range of inductance that satisfies both limits. Add the DC current at which the inductance must hold.
+
+### Impedance balance with coupling capacitors
+
+- **Where:** `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/functions.rst`
+- **Issue:** Balance is left open. A 10 % mismatch between two 33 nF capacitors with about 50 Ω to ground on the chip side gives roughly −40 dB of conversion at 1 MHz, against a limit of 66.6 dB.
+- **Suggestion:** Work the estimate into the page. It probably makes a common-mode choke or a high-impedance common-mode node mandatory.
