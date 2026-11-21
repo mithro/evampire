@@ -45,7 +45,7 @@ The processor receives selected frames and sends its own
 
 The processor sees a copy of the frames whose destination address matches a
 filter that it sets. It can also send frames of its own, which evampire
-sends in the gaps between the frames it forwards. The processor's network
+starts when the output port is idle. The processor's network
 traffic is below 1 Mbit/s, so it does not need to keep up with gigabit
 traffic.
 

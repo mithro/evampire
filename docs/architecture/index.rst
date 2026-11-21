@@ -104,6 +104,18 @@ Output selectors A and B
    and processor traffic of 1 Mbit/s on a 1000 Mbit/s port
    (:math:`T = 0.001`) give :math:`D \approx 0.0005`.
 
+   The fraction of forwarded frames that are dropped is about :math:`T`,
+   whatever the load. A forwarded frame is dropped when it starts arriving
+   during a processor frame, and processor frames occupy the fraction
+   :math:`T` of the port's time. In the example, 0.1 % of forwarded frames
+   are dropped. The drops come in bursts: one 1522-byte processor frame
+   lasts as long as about 18 forwarded frames of the minimum 64 bytes sent
+   back to back.
+
+   :math:`T` is the processor's bit rate divided by the link speed. The same
+   1 Mbit/s of processor traffic gives :math:`T = 0.01` on a 100 Mbit/s
+   link and :math:`T = 0.1` on a 10 Mbit/s link.
+
    Ethernet does not guarantee delivery. Higher-level protocols such as
    :wikipedia:`TCP <Transmission_Control_Protocol>` resend lost data;
    others such as :wikipedia:`UDP <User_Datagram_Protocol>` do not.

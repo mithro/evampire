@@ -55,8 +55,10 @@ Ports A and B forward every frame to each other, except LLDP frames
 -------------------------------------------------------------------
 
 * Every :term:`frame` received on port A is transmitted on port B, and every
-  frame received on port B is transmitted on port A, except the frames
-  described in the next item.
+  frame received on port B is transmitted on port A. The exceptions are the
+  LLDP frames described in the next item, and a frame that arrives while a
+  processor frame is being sent on its output port (see
+  :ref:`the output selectors <arch-output-selectors>`).
 * :term:`LLDP` frames (:std:`IEEE 802.1AB <802.1AB>`), sent to the
   destination address ``01-80-C2-00-00-0E``, are not forwarded. They carry
   the Power over Ethernet power negotiation between the two ends of one
@@ -132,14 +134,17 @@ The processor receives the frames that match its address filter
 
 .. _req-processor-transmit:
 
-The processor sends frames in the gaps between forwarded frames
----------------------------------------------------------------
+The processor sends frames when the output port is idle
+-------------------------------------------------------
 
 * The processor writes a frame into a transmit buffer and requests that it
   be sent out of port A, port B or both.
 * The chip adds the frame's :term:`preamble`, :term:`start frame delimiter`
   and checksum.
-* Processor frames are sent only in the gaps between forwarded frames.
+* A processor frame is started only when its output port is idle, and never
+  interrupts a forwarded frame. A forwarded frame that arrives while the
+  processor frame is being sent is dropped (see
+  :ref:`the output selectors <arch-output-selectors>`).
 
 .. _req-memory:
 
