@@ -266,13 +266,16 @@ its :ref:`power budget <power-budget>`, as set out for each
   prefers the source role and uses Try.SRC.
 * With no other input, the board can only be a sink
   (:ref:`usbpd-dead-battery`).
-* With input power but none to spare, the port prefers the sink role and
-  uses Try.SNK.
+* With input power but none to spare, the port acts as a sink only. It
+  presents :term:`Rd` and does not toggle. A port that presents
+  :term:`Rp` advertises at least the default USB current
+  (:doc:`resistor-advertisement`), which the board could not supply.
 
 The other end limits the choice. A charger, which can only be a source,
 leaves evampire as the sink even with Try.SRC. A phone that can only be a
-sink leaves it as the source even with Try.SNK. The software therefore
-handles both roles on every attach.
+sink leaves a toggling port as the source even with Try.SNK, which is why
+a port with nothing to spare does not toggle. The software handles both
+roles on every attach of a toggling port.
 
 The options for setting the role, and their costs, are:
 
