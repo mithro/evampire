@@ -65,13 +65,13 @@ digraph overview {
 
     full_lbl   [shape=plaintext, style="", fixedsize=false, fontsize=12,
                 fontcolor="#1f4e79", pos="2.5,7.72!",
-                label=<<b>Full design</b>: transceivers<br/>also on the chip>];
+                label=<<b>Full design:</b><br/>transceivers on chip too>];
     first_lbl  [shape=plaintext, style="", fixedsize=false, fontsize=12,
                 fontcolor="#1f4e79", pos="5.25,7.55!",
-                label=<<b>evampire chip</b>, first version>];
+                label=<<b>evampire chip: first version</b>>];
     stages_lbl [shape=plaintext, style="", fixedsize=false, fontsize=12,
                 fontcolor="#9c4221", pos="2.55,1.55!",
-                label=<<b>Power stages</b>:<br/>on the chip or<br/>external parts<br/>(open question)>];
+                label=<<b>Power stages:</b><br/>on the chip or<br/>external parts<br/>(open question)>];
     rgmii_a    [shape=plaintext, style="", fixedsize=false, fontsize=11,
                 fontcolor="#2b6cb0", pos="3.8,6.8!", label="RGMII"];
     rgmii_b    [shape=plaintext, style="", fixedsize=false, fontsize=11,
@@ -102,16 +102,16 @@ digraph overview {
            fontsize=12, label="Power control\nand monitoring"];
 
     // ---- Power path. ----
-    poe_sink [pos="1.95,2.9!", width=1.15, fillcolor="#feebc8",
-              label="PoE sink"];
-    buck     [pos="3.3,2.9!", width=1.1, fillcolor="#feebc8",
+    poe_sink [pos="2.0,2.9!", width=1.25, height=0.7, fillcolor="#feebc8",
+              fontsize=12, label="PoE sink\n(powered\ndevice)"];
+    buck     [pos="3.4,2.9!", width=1.1, fillcolor="#feebc8",
               label="Buck\nconverter"];
     bus      [pos="5.4,2.9!", width=1.7, fillcolor="#fbd38d",
               style="rounded,filled,bold", label="Power bus"];
-    boost    [pos="7.2,2.9!", width=1.1, fillcolor="#feebc8",
+    boost    [pos="7.0,2.9!", width=1.1, fillcolor="#feebc8",
               label="Boost\nconverter"];
-    poe_src  [pos="8.55,2.9!", width=1.15, fillcolor="#feebc8",
-              label="PoE source"];
+    poe_src  [pos="8.45,2.9!", width=1.35, height=0.7, fillcolor="#feebc8",
+              fontsize=12, label="PoE source\n(power sourcing\nequipment)"];
     usb_sink [pos="4.9,1.65!", width=1.0, fillcolor="#feebc8",
               fontsize=12, label="USB-PD\nsink switch"];
     usb_src  [pos="6.0,1.65!", width=1.0, height=0.7, fillcolor="#feebc8",

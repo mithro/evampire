@@ -17,6 +17,45 @@ own. A
 board built around evampire can be powered over Ethernet and supply power
 over USB Type-C, or the other way around.
 
+:numref:`fig-overview` shows the main blocks of evampire and how data and
+power flow between them.
+
+.. graphviz:: index/overview.dot
+   :name: fig-overview
+   :caption: The main blocks of evampire. Data flows along the top row and
+             power along the bottom row, each from Ethernet port A to port B.
+             The solid outline is the chip in the first version, the dashed
+             outline the chip in the full design.
+   :alt: Block diagram. Data runs in a straight line along the top, between
+         Ethernet port A, Ethernet transceiver A, the cut-through Ethernet
+         hub, Ethernet transceiver B and Ethernet port B, with RGMII links
+         between each transceiver and the hub. The hub exchanges data with
+         the RISC-V management processor below it, which exchanges data with
+         the USB serial port and USB Power Delivery interface. That interface
+         connects straight down to the USB Type-C port over the D+, D− and
+         CC wires. The processor also controls the power control and
+         monitoring block, which controls the power stages. Power runs in a
+         straight line along the bottom: from Ethernet port A through the
+         PoE sink (powered device) and buck converter to the power bus, then
+         through the boost converter and PoE source (power sourcing
+         equipment) to Ethernet port B. Below the bus, power comes up from
+         the USB Type-C port through the USB Power Delivery sink switch, and
+         goes down to it through the USB Power Delivery source buck-boost
+         converter. A solid outline around the hub, processor, USB interface
+         and power control marks the chip in the first version. A dashed
+         outline that also includes both Ethernet transceivers marks the chip
+         in the full design. A dotted outline around the power stages is
+         labelled as an open question: on the chip or external parts.
+   :align: center
+
+The two chip outlines are the two board configurations of
+:numref:`tab-power-board-configs`. The first version connects to separate
+Ethernet transceiver chips over RGMII, and the full design builds the
+transceivers into evampire. Which power stages inside the dotted outline
+move onto the chip is an open question (:ref:`requirements-open-questions`).
+The figure shows the power roles of the first version: port A receives power
+and port B supplies it.
+
 This documentation describes what the chip does and explains the Ethernet
 and power-delivery standards that evampire implements. It is written for
 readers who are familiar with digital and analogue integrated circuit design
