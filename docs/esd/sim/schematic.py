@@ -22,7 +22,8 @@ import schemdraw.elements as elm  # noqa: E402
 from schemdraw import logic  # noqa: E402
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
-schemdraw.config(fontsize=11, inches_per_unit=0.42, lw=1.4)
+schemdraw.use("svg")
+schemdraw.config(fontsize=17, inches_per_unit=0.42, lw=1.6, margin=1.0)
 
 TOP = 9.0    # DVDD rail
 BOT = 0.0    # DVSS rail
@@ -68,10 +69,11 @@ def main():
         d += elm.Dot().at((3.5, BOT))
 
         # Secondary protection.
-        d += elm.Line().at((3.5, MID)).to((7.0, MID))
-        d += (elm.Resistor().right().at((7.0, MID)).to((10.5, MID))
+        d += elm.Line().at((3.5, MID)).to((5.5, MID))
+        d += (elm.Resistor().right().at((5.5, MID)).to((8.5, MID))
               .color(SECONDARY)
-              .label("4 × 440 Ω in parallel\n≈ 110 Ω", loc="top", ofst=0.5))
+              .label("110 Ω\n(4 × 440 Ω)", loc="top", ofst=0.3))
+        d += elm.Line().at((8.5, MID)).to((10.5, MID))
         d += elm.Dot().at((10.5, MID))
         d += (elm.Diode().up().at((10.5, MID)).to((10.5, TOP))
               .color(SECONDARY).label("40 µm²", loc="bottom", ofst=0.2))
@@ -86,10 +88,10 @@ def main():
         # Rail clamp, in each DVDD and DVSS pad cell.
         d += elm.Line().at((17.0, TOP)).to((17.0, TOP - 0.5))
         d += (elm.Resistor().down().at((17.0, TOP - 0.5)).to((17.0, MID))
-              .color(CLAMP).label("360 kΩ", loc="bottom"))
+              .color(CLAMP).label("360 kΩ", loc="top"))
         d += elm.Dot().at((17.0, MID))
         d += (elm.Capacitor().down().at((17.0, MID)).to((17.0, BOT))
-              .color(CLAMP).label("MOS\ncapacitor", loc="bottom"))
+              .color(CLAMP).label("MOS\ncapacitor", loc="top"))
         d += elm.Dot().at((17.0, TOP))
         d += elm.Dot().at((17.0, BOT))
         d += elm.Line().at((17.0, MID)).to((18.0, MID))
