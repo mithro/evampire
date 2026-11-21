@@ -250,8 +250,9 @@ USB power path
 High-voltage converter
    A :wikipedia:`boost converter <Boost_converter>` that raises the bus
    voltage to the 44 V to 57 V needed on an Ethernet cable (:clause:`145`).
-   A boost converter needs a bus below 44 V. It does not apply when the bus
-   sits at a 48 V USB extended power range voltage.
+   A boost converter only raises a voltage, so the bus must sit below the
+   port voltage. A bus at a 48 V USB extended power range voltage is close
+   to that range or inside it; :doc:`poe/pse-sequencing` treats that case.
 Power sourcing equipment switch
    Checks for a valid powered device on port B and measures its
    :term:`class`, the power level the device asks for. It then connects the
