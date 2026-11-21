@@ -129,3 +129,11 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/index.rst` (board configurations), `docs/power/poe/hv-options.rst`
 - **Issue:** The board configurations table fixes only the converter gate drivers and power transistors as external. The bridge, powered-device controller, port switch and surge suppressor are left open for both configurations.
 - **Suggestion:** Add rows for these parts to the board configurations table, or say plainly that they are open for the first version.
+
+## Converters
+
+### Isolated topologies and the arrangement comparison
+
+- **Where:** `docs/power/converters/buck-boost.rst`, `docs/power/converters/arrangement.rst`
+- **Issue:** The pages now say one converter in each Ethernet-to-USB path must be isolated, but the flyback is the only isolated topology described, and the comparison tables still count switches and efficiency without a barrier.
+- **Suggestion:** Add the alternatives (active-clamp forward or flyback, a fixed-ratio isolated bus converter followed by non-isolated regulation, a dual active bridge, a commercial controller supervised by evampire). Redo the tables with a barrier column and an isolated-stage efficiency row.
