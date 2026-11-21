@@ -155,3 +155,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/buck-boost.rst`, `docs/power/converters/first-version.rst`
 - **Issue:** 57 V to 5 V has a duty cycle of 0.088, an on-time of 146 ns at 600 kHz, close to what a peak-current comparator with blanking can control. Low-side sensing in the ground return does not carry a buck's on-time current, so it cannot end the on-time at the peak.
 - **Suggestion:** Add minimum on-time against frequency for each arrangement, and valley or emulated current-mode control as alternatives. State where the current is sensed for each converter.
+
+### Bootstrap supply for switches that stay on
+
+- **Where:** `docs/power/converters/control.rst`, `docs/power/converters/buck-boost.rst`
+- **Issue:** A bootstrap capacitor is sized for one gate charge, but the four-switch stage, the pass-through switch and the USB sink switch hold a high-side switch on indefinitely.
+- **Suggestion:** State the need for a charge pump, refresh pulses or p-channel switches for static paths, and carry it into the integration page.
