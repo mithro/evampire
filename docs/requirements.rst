@@ -218,7 +218,9 @@ The requirements on power bridging are:
 * The software translates the power available on the input port into a
   valid offer in the standard used by each output port, as described below.
 * When the input power changes, the offers on the outputs are updated to
-  match, and are reduced before the input power falls. See
+  match. Where the input gives notice, the offers are reduced before the
+  input power falls. Where it does not, for example when a cable is
+  unplugged, the outputs rely on their hardware limits. See
   :ref:`translating power between the standards <power-translation>`.
 * When more than one port supplies power at the same time, the software
   shares the output budget between them. It moves power from one port to
