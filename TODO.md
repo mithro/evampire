@@ -217,3 +217,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/software.rst`, `docs/usb-serial/software-cost.rst`
 - **Issue:** The Power Delivery page keeps "interrupts off for 2.3 ms" as an option, while a USB reply is due within about 540 ns. No page bounds how late the receive loop may be entered, and the helper list omits Hard Reset detection, bus-idle detection and the fast role swap path.
 - **Suggestion:** State that software Power Delivery with interrupts off cannot coexist with software USB handshakes, complete the helper list, and estimate the size of a hardware receive and GoodCRC block.
+
+### Processor demands are never added up
+
+- **Where:** `docs/requirements.rst` (processor), all topic pages
+- **Issue:** Each page states its own need: about 1 ms latency for Power over Ethernet, about 4 µs for a converter loop, tens of millions of instructions per second for Power Delivery receive, USB replies, transceiver adaptation. No page sums them for one core.
+- **Suggestion:** Add a table of every demand on the processor (rate, latency, longest non-interruptible section) so that a core and the hardware helpers can be chosen against it.
