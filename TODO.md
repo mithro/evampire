@@ -303,3 +303,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/arch-capacitor.dot`, `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/first-version.rst`
 - **Issue:** The choke is drawn between the socket and the power tap, where the supply current flows the same way in both wires of a pair and would saturate a signal choke. Converter noise also reaches the cable through the taps.
 - **Suggestion:** Move the choke to the chip side of the tap or wind it across a pair set, and add a filter for the power path.
+
+### Is isolation required, and which parts bridge the barrier
+
+- **Where:** `docs/requirements.rst` (cable), `docs/ethernet/magnetics/isolation.rst`, `docs/ethernet/magnetics/first-version.rst`
+- **Issue:** The requirements say the board still provides isolation; the magnetics page has a section on partial isolation and asks whether the test must be passed. The first-version page says the resistor and capacitor between signal ground and chassis bridge the barrier, which looks wrong: both grounds are on the equipment side.
+- **Suggestion:** Make the requirement and the open question agree. Check which parts bridge the barrier against the standard's definition.
