@@ -117,3 +117,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/startup.rst`, `docs/power/poe/powered-device.rst`
 - **Issue:** The energy example uses the long first class event. A source that classifies with a 6 ms event, or not at all, gives almost no energy before power-on. The page does not say that the board must stay within class 3 power until software reads the assigned class, or how accurate the sequencer's time base must be. The offset current uses 12 µA where the powered device's own limit may be 10 µA *(from memory)*.
 - **Suggestion:** Add the zero-energy case, the boot power ceiling and the hardware that holds the outputs off, and the time base accuracy (about ±7 % to tell a long first event). Check the offset current in Table 145-21.
+
+### Voltages above 57 V and the energy comparisons
+
+- **Where:** `docs/power/poe/hv-limits.rst`, `docs/power/usb-pd/cc-protection.rst`
+- **Issue:** The surge estimate assumes a clamp holding 90 V at 35 A, far above the rated pulse current of the example part. Cable ringing at turn-on is not treated. Both pages compare a clamp's energy with the 0.2 mJ of a human-body-model pulse, but almost all of that energy burns in the model's 1.5 kΩ resistor, so the true ratio is far larger.
+- **Suggestion:** State the differential surge current assumed and the clamp voltage at that current. Add the ringing case. Compare with the energy the clamp itself absorbs in the human-body model (a few µJ).
