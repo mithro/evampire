@@ -113,11 +113,13 @@ Output selectors A and B
 Destination address filter and checksum check
    Watches the frames received on both external ports. It takes them from
    the output of the rate-matching buffers, so that all of its logic runs on
-   the one 125 MHz clock. The first 6 bytes of every frame are its
+   the one 125 MHz clock. Frames can arrive on both ports at the same time,
+   so each port has its own comparison and checksum check. The first 6 bytes of every frame are its
    destination :term:`MAC address` (:clause:`3`). The filter compares those
    bytes with a programmed address, using a programmed mask to select which
    bits must match. A matching frame is copied into the receive frame
-   buffer.
+   buffer, marked with the port it arrived on. LLDP frames are copied
+   whatever is programmed (see :ref:`req-processor-delivery`).
 
    The 4-byte checksum at the end of the frame is checked as the frame
    arrives. A frame with a bad checksum, or one too long to fit in the

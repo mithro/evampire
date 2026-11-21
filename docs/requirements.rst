@@ -120,6 +120,13 @@ The processor receives the frames that match its address filter
   address.
 * Matching frames are copied into a receive buffer that the processor can
   read.
+* :term:`LLDP` frames are delivered to the processor whatever address and
+  mask are programmed.
+* Each delivered frame is marked with the port it arrived on. The Power over
+  Ethernet negotiation is separate for each port, so the software must know
+  which port an LLDP frame came from.
+* Ports A and B can receive frames at the same time, so each port has its
+  own address comparison and checksum check.
 * The receive checksum, the :term:`frame check sequence`, is checked in
   hardware. A frame with a bad checksum is not given to the processor.
 
@@ -329,6 +336,9 @@ Open questions
   cell library it is built from.
 * Whether any frames other than LLDP frames must not be forwarded, and for
   what reason.
+* How many address and mask pairs the filter has. One pair cannot select
+  the processor's own address and the broadcast address without also
+  matching other traffic.
 * How an LLDP frame is stopped: by delaying every frame until its
   destination address has been compared, or by cutting the LLDP frame off
   after it has started (see :ref:`the LLDP block <arch-lldp-block>`).
