@@ -203,3 +203,11 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/buck.rst`, `docs/power/converters/arrangement.rst`, `docs/power/poe/pd-controller.rst`
 - **Issue:** The converter pages use 37 V to 57 V at the input converter; the powered-device page gives 30 V to 57 V after the switch. With a 48 V bus nothing in the three-converter arrangement produces 50 V to 57 V for Type 2 to 4 ports.
 - **Suggestion:** Use the converter's own input range after the bridge and switch, and add the 48 V bus case to the open questions or the mode table.
+
+## USB Power Delivery and USB serial
+
+### Instruction rate and timing budget of polled receive
+
+- **Where:** `docs/power/usb-pd/software.rst`, `docs/power/usb-pd/calc.py`
+- **Issue:** The 15 M instructions per second is an average. The work at one edge must finish before the next, which gives a peak of about 27 to 40 M by one estimate. The 333 ns budget assumes the bit rate has already been measured; with a fixed threshold the window is about ±118 ns.
+- **Suggestion:** State the peak requirement, give both the fixed and adaptive threshold cases, and add the cost of measuring the bit rate on the preamble. Recheck the arithmetic before changing the page.
