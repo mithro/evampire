@@ -211,3 +211,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/usb-pd/software.rst`, `docs/power/usb-pd/calc.py`
 - **Issue:** The 15 M instructions per second is an average. The work at one edge must finish before the next, which gives a peak of about 27 to 40 M by one estimate. The 333 ns budget assumes the bit rate has already been measured; with a fixed threshold the window is about ±118 ns.
 - **Suggestion:** State the peak requirement, give both the fixed and adaptive threshold cases, and add the cost of measuring the bit rate on the preamble. Recheck the arithmetic before changing the page.
+
+### One processor serving Power Delivery, USB and a second port
+
+- **Where:** `docs/power/usb-pd/software.rst`, `docs/usb-serial/software-cost.rst`
+- **Issue:** The Power Delivery page keeps "interrupts off for 2.3 ms" as an option, while a USB reply is due within about 540 ns. No page bounds how late the receive loop may be entered, and the helper list omits Hard Reset detection, bus-idle detection and the fast role swap path.
+- **Suggestion:** State that software Power Delivery with interrupts off cannot coexist with software USB handshakes, complete the helper list, and estimate the size of a hardware receive and GoodCRC block.
