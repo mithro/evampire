@@ -1,0 +1,184 @@
+.. _esd-higher-levels:
+
+Protecting a pin for IEC level 4
+================================
+
+This page works out what a pin wired to a connector needs to survive
+:std:`IEC 61000-4-2` level 4, ±8 kV contact or ±15 kV air discharge, and
+compares the ways to provide it: on the chip, on the board, or both. The
+choice for each of evampire's connector pins is an open design decision
+(:ref:`esd-open`).
+
+The test asks the pin to carry 30 A
+-----------------------------------
+
+The level 4 contact discharge peaks at 30 A ([ESD-TB505]_, Figure 2), and
+the simulated generator at 29.4 A (:doc:`simulation`). The protection must
+carry that current without any device exceeding its failure current, and
+hold the pad low enough for every circuit behind it.
+
+The width of protection device that carries a peak current at its failure
+current is:
+
+.. math::
+
+   W_\text{min} = \frac{I_\text{peak}}{I_\text{t2}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`W_\text{min}`
+     - Device width at which the peak current reaches the failure current
+     - µm
+   * - :math:`I_\text{peak}`
+     - Peak current of the discharge
+     - A
+   * - :math:`I_\text{t2}`
+     - :term:`Second breakdown current` of the device, per micrometre
+       (:numref:`tab-esd-limits`)
+     - mA/µm
+
+It applies to one device carrying the whole current, and has no margin.
+For a 6 V diode at 30 mA/µm,
+:math:`W_\text{min} = 30\ \text{A} / 30\ \text{mA/µm} = 1000\ \text{µm}`.
+For a grounded-gate NMOS at 7 mA/µm,
+:math:`W_\text{min} = 30\ \text{A} / 7\ \text{mA/µm} = 4300\ \text{µm}`.
+The standard pad's drain diodes are 480 µm (PMOS) and 304 µm (NMOS)
+(:doc:`io-cells`).
+
+The voltage budget is the second limit. At 30 A, every 0.1 Ω between the
+pad and the grounded supply adds 3 V. The pad must stay below the output
+NMOS's 10.7 V trigger, if snapback is not to carry the current, and the
+input gates below their 12 V minimum oxide breakdown (:ref:`esd-limits`).
+
+Wider diodes and more clamps lower the stress
+---------------------------------------------
+
+:numref:`tab-esd-scaled` repeats the ±8 kV contact discharge with the pad's
+diodes widened, as if dedicated diodes were added beside the output
+drivers, and with more DVDD and DVSS pads, each with its rail clamp. The
+output NMOS and its snapback stay as they are.
+
+.. csv-table:: ±8 kV contact discharge with wider diodes and more supply
+               pads
+   :name: tab-esd-scaled
+   :file: sim/results/scaled.csv
+   :header-rows: 1
+
+The two polarities respond differently:
+
+* In the negative discharge the NMOS drain diode alone carries the
+  current, so only the diode width matters: the rows with one and with four
+  supply pads agree. Four times the standard width brings the diode to
+  0.80 of its failure current.
+* In the positive discharge the current crosses the PMOS drain diode and
+  the rail clamps, and the clamps need several volts to carry their share
+  of it. In every case simulated the pad still passes the output NMOS's
+  10.7 V trigger during the first peak, and the snapped-back NMOS remains
+  the most stressed device. With four times the diode width and four DVDD
+  and four DVSS pads, the NMOS carries 2.06 times its failure current.
+
+A pad for a positive level 4 discharge therefore needs either clamps that
+hold the pad below 10.7 V at 30 A, or a snapback device wide enough to
+carry the current that reaches it. At 7 mA/µm the second takes about
+4300 µm of grounded-gate NMOS (above). Sizing either is a custom I/O cell
+design, and needs the ring resistance of the evampire layout.
+
+The added diode width adds capacitance to the pin. From the foundry diode
+model's junction capacitance (0.95 fF/µm² of area and 0.133 fF/µm of
+perimeter, [ESD-GF180-MODELS-DIODE]_), each 1000 µm of diode built like the TLP
+test structure adds about 1.1 pF at 0 V. A pin with 1000 µm diodes to both
+rails carries about 2.3 pF of them. Whether a signal tolerates that is a
+question for each interface.
+
+Other chips reach level 4 on chip
+---------------------------------
+
+For reference, the Texas Instruments TRS3232E, an RS-232 transceiver,
+specifies ±8 kV contact and ±15 kV air discharge on its four bus pins
+([ESD-TRS3232E]_, section 5.3). Its other pins are rated ±2 kV human body
+model, its bus pins ±15 kV ([ESD-TRS3232E]_, section 5.2). In its RGT, D,
+DB and PW packages the IEC rating needs a capacitor of at least 1 µF from
+its supply to ground, and for its DYY package the datasheet recommends a
+series resistor of at least 50 Ω on logic inputs tied to a supply
+([ESD-TRS3232E]_, section 5.3, notes 1 and 2). The TRS3232E is made in another process, so its
+rating says nothing about gf180mcu.
+
+A board protection part takes the current off the chip
+------------------------------------------------------
+
+The common alternative puts a :term:`transient voltage suppressor <TVS>`
+at the connector, with a series resistor between it and the chip. The
+suppressor carries most of the current, and the resistor limits what
+reaches the chip's own protection. For reference:
+
+* The Texas Instruments TPD1E10B06 suppressor is rated ±30 kV contact and
+  ±30 kV air discharge ([ESD-TPD1E10B06]_, section 5.3). It has 12 pF of
+  capacitance, a dynamic resistance of 0.32 Ω to 0.38 Ω, and clamps at
+  14 V at most with 5 A of 8/20 µs surge current ([ESD-TPD1E10B06]_,
+  section 5.6).
+* Texas Instruments shows its SN65HVD1781 RS-485 transceiver, rated
+  ±16 kV human body model on its bus pins, with a protection circuit for
+  8 kV IEC discharges: an SMBJ43CA suppressor and two 10 Ω pulse-proof
+  resistors ([ESD-SN65HVD1781]_, section 1 and section 10.2, Figure 19 and
+  Table 4).
+
+The share of the current that still reaches the chip depends on the
+suppressor's clamping voltage, the series resistor and the chip's own
+protection. While both conduct, the chip pin's current is approximately:
+
+.. math::
+
+   I_\text{chip} \approx \frac{V_\text{TVS} - V_\text{pin}}{R_\text{series}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`I_\text{chip}`
+     - Current into the chip's pin
+     - A
+   * - :math:`V_\text{TVS}`
+     - Voltage across the suppressor at the discharge current
+     - V
+   * - :math:`V_\text{pin}`
+     - Voltage at which the chip's protection holds its pin
+       (:numref:`tab-esd-events-voltage`)
+     - V
+   * - :math:`R_\text{series}`
+     - Resistor between the suppressor and the pin
+     - Ω
+
+It neglects the inductance of the board traces. As an example, take the
+TPD1E10B06 at its 14 V maximum for 5 A, the standard pad holding about 4 V
+at a current near 1 A (:doc:`results-hbm`), and 10 Ω in series:
+:math:`(14\ \text{V} - 4\ \text{V}) / 10\ \Omega = 1\ \text{A}`. The
+30 A of a level 4 discharge is six times the datasheet's 5 A clamping
+figure, so the current that reaches the pin at level 4 follows from the
+suppressor's measured characteristic at that current.
+
+.. _esd-open:
+
+Open questions
+--------------
+
+* Which of evampire's pins are wired to connectors and so face the IEC test:
+  the Ethernet pairs, the USB Type-C pins, the power inputs, or others. The
+  Ethernet pairs also face charged cable discharges
+  (:doc:`/ethernet/magnetics/events`).
+* For each such pin, whether the board carries a suppressor, the chip
+  carries widened protection in a custom I/O cell, or both.
+* The resistance of evampire's DVDD and DVSS rings, which the pad's voltage
+  at 30 A depends on.
+* How the foundry's 100 ns TLP failure currents apply to the 1 ns first
+  peak of the IEC pulse. A very fast TLP measurement of gf180mcu test
+  structures would establish it.
+* The charged device model rating of evampire's pins, which depends on the
+  package.
