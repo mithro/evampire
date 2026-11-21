@@ -161,3 +161,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/control.rst`, `docs/power/converters/buck-boost.rst`
 - **Issue:** A bootstrap capacitor is sized for one gate charge, but the four-switch stage, the pass-through switch and the USB sink switch hold a high-side switch on indefinitely.
 - **Suggestion:** State the need for a charge pump, refresh pulses or p-channel switches for static paths, and carry it into the integration page.
+
+### Port B's ripple and inrush from the high-voltage converter
+
+- **Where:** `docs/power/converters/boost.rst`, `docs/power/poe/pse-sequencing.rst`
+- **Issue:** The Power over Ethernet pages hand the ripple limit to the converter, but the boost page has no output-ripple equation. The converter must also supply the inrush current (see the budget item).
+- **Suggestion:** Add the boost output-ripple equation with a worked example, and a row for inrush power against input power.
