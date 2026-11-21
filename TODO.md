@@ -123,3 +123,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/hv-limits.rst`, `docs/power/usb-pd/cc-protection.rst`
 - **Issue:** The surge estimate assumes a clamp holding 90 V at 35 A, far above the rated pulse current of the example part. Cable ringing at turn-on is not treated. Both pages compare a clamp's energy with the 0.2 mJ of a human-body-model pulse, but almost all of that energy burns in the model's 1.5 kΩ resistor, so the true ratio is far larger.
 - **Suggestion:** State the differential surge current assumed and the clamp voltage at that current. Add the ringing case. Compare with the energy the clamp itself absorbs in the human-body model (a few µJ).
+
+### Which Power over Ethernet parts are external in the first version
+
+- **Where:** `docs/power/index.rst` (board configurations), `docs/power/poe/hv-options.rst`
+- **Issue:** The board configurations table fixes only the converter gate drivers and power transistors as external. The bridge, powered-device controller, port switch and surge suppressor are left open for both configurations.
+- **Suggestion:** Add rows for these parts to the board configurations table, or say plainly that they are open for the first version.
