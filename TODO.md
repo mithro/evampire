@@ -81,3 +81,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/index.rst` (budget), `docs/power/poe/translation.rst`, `docs/power/poe/power-sourcing.rst`
 - **Issue:** A port must supply at least 0.4 A during inrush, about 20 W for 50 to 75 ms, whatever the class. A 15 W USB input cannot. A powered device may also draw peak power above its class for 50 ms.
 - **Suggestion:** Add inrush and peak terms to the budget, as bus hold-up energy or reserved headroom, and say which input levels cannot start a port at all.
+
+### Where the budget formula subtracts the board's power
+
+- **Where:** `docs/power/index.rst` (budget), `docs/power/poe/translation.rst`
+- **Issue:** P_out = P_in × η − P_board subtracts the board's power after both converters, but the board supplies hang off the bus between them. The pass-through table also multiplies by 0.85 where the two efficiencies give 0.846.
+- **Suggestion:** Split η per converter and subtract the board's power at the bus. Say whether bridge and switch losses are inside the input efficiency. Recompute the tables.
