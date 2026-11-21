@@ -24,7 +24,9 @@ and from them runs across to the right.
          check, which feeds the receive frame buffer and then the RISC-V
          processor. The processor feeds the transmit frame buffer and the
          preamble and checksum generator, which feeds both output
-         selectors. The processor also controls the transceiver
+         selectors. Both rate-matching buffers also feed the LLDP block,
+         which controls both output selectors. The processor also controls
+         the transceiver
          configuration interface and the power negotiation, monitoring and
          limiting block, which connects to the power circuits outside the
          chip.
