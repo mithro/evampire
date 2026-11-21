@@ -126,6 +126,10 @@ public gf180mcu electrical specifications are lower:
 | 6 V NMOS N+ to P-well junction | 8.5 V | 11 V | [5.5 Junction Breakdown Voltage](https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_5.html) |
 | N-well to P-substrate junction | 10 V | 14 V | same page |
 | 6 V gate oxide | 12 V | 16 V | [5.4 Oxide Breakdown Voltage](https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_4.html) |
+| Deep N-well to P-substrate | not published | not published | the model alone uses 30.5 V |
+
+The 31 V limit in variant B therefore rests only on a fitted model value.
+No measured minimum backs it.
 
 The simulated 11.5 V avalanche in variant A matches the 11 V typical figure.
 A design has to work at 8.5 V. Neither page says how breakdown is defined
