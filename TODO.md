@@ -185,3 +185,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/arrangement.rst`, `docs/power/index.rst`, `docs/power/usb-pd/two-ports.rst`, `docs/power/poe/dual-role.rst`
 - **Issue:** No page says what happens when Power over Ethernet and a USB charger are both connected, or when two USB chargers are. In the shared-node arrangements the 54 V node could reach port A's cable through an active bridge. Reversing a shared converter is not described.
 - **Suggestion:** Add an input-priority rule, the blocking each input path needs, and the steps and hold-up energy of a reversal.
+
+### Integration: substrate injection and the area of a stacked switch
+
+- **Where:** `docs/power/converters/integration.rst`
+- **Issue:** An integrated low-side switch node goes below the substrate in every dead time and injects carriers, next to the transceiver's converters in the full design. The page gives the gate width of a stacked 100 mΩ switch but not its area (about 3 to 7 mm² by its own figures).
+- **Suggestion:** Add substrate injection and noise coupling to the process needs and open questions, and give the area per switch.
