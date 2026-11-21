@@ -213,8 +213,8 @@ for taps in (4, 8, 16, 32):
     print(f"  125 MHz counter + {taps:2d}-tap delay line: step {step * 1e12:6.0f} ps, "
           f"steps per 250 kHz period {(1 / 250e3) / step:7.0f}")
 # 100 mV steps (AVS) at 48 V output, through a feedback divider: DAC bits.
-show("DAC bits for 20 mV in 21 V", math.log2(21.0 / 0.020), "bits", ".3g")
-show("DAC bits for 100 mV in 48 V", math.log2(48.0 / 0.100), "bits", ".3g")
+show("DAC bits for 20 mV in 21 V", math.ceil(math.log2(21.0 / 0.020)), "bits", "d")
+show("DAC bits for 100 mV in 48 V", math.ceil(math.log2(48.0 / 0.100)), "bits", "d")
 
 # ---------------------------------------------------------------------------
 section("9. Control loop rates and processing needed")

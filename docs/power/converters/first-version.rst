@@ -172,7 +172,7 @@ often combined:
 
 In peak current-mode control the duty cycle comes from a comparator, not
 from a counter, so the voltage step is set by the reference DAC instead:
-10 bits for 20 mV steps over 21 V, and 9 bits for 100 mV steps over 48 V
+11 bits for 20 mV steps over 21 V (1050 steps), and 9 bits for 100 mV steps over 48 V
 (the adjustable supply step, :pd:`Table 4.7`).
 
 A digital loop also needs the PWM step to be finer than the step of the ADC
