@@ -139,8 +139,12 @@ and one transceiver input. The input delay is for a load of 0.04 pF on the
 core side of the pad.
 
 TXC goes through the same type of pad as TXD, and RXC through the same type
-as RXD. The pad delay is common to clock and data, so the absolute delay
-cancels.
+as RXD. The pad delay is common to clock and data only when both make the
+same transition. A TXD bit that falls while TXC rises leaves its pad later
+than TXC, by the difference between the falling and rising output delays:
+0.10 ns at FF, 0.16 ns at TT and 0.27 ns at SS. At SS that is more than
+half of the ±0.5 ns of TskewT (:numref:`tab-rgmii-timing`), before any
+mismatch between pads, loads or traces is added.
 
 .. _rgmii-pad-duty:
 

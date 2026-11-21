@@ -55,8 +55,10 @@ Ports A and B forward every frame to each other, except LLDP frames
 -------------------------------------------------------------------
 
 * Every :term:`frame` received on port A is transmitted on port B, and every
-  frame received on port B is transmitted on port A, except the frames
-  described in the next item.
+  frame received on port B is transmitted on port A. The exceptions are the
+  LLDP frames described in the next item, and a frame that arrives while a
+  processor frame is being sent on its output port (see
+  :ref:`the output selectors <arch-output-selectors>`).
 * :term:`LLDP` frames (:std:`IEEE 802.1AB <802.1AB>`), sent to the
   destination address ``01-80-C2-00-00-0E``, are not forwarded. They carry
   the Power over Ethernet power negotiation between the two ends of one
@@ -65,8 +67,9 @@ Ports A and B forward every frame to each other, except LLDP frames
   They are delivered only to the internal processor, which handles the power
   negotiation for its own port.
 * Forwarding is :term:`cut-through <cut-through forwarding>`. The delay
-  through the chip is a small fixed number of clock cycles, not a whole
-  frame.
+  through the chip is a fixed number of byte times, not a whole frame.
+  Stopping LLDP frames sets its lower bound (see
+  :ref:`the LLDP block <arch-lldp-block>`).
 * Cut-through forwarding needs both ports to run at the same link speed.
   :doc:`ethernet/rgmii/index` explains why.
 * Forwarded frames are passed on unchanged.
@@ -119,19 +122,29 @@ The processor receives the frames that match its address filter
   address.
 * Matching frames are copied into a receive buffer that the processor can
   read.
+* :term:`LLDP` frames are delivered to the processor whatever address and
+  mask are programmed.
+* Each delivered frame is marked with the port it arrived on. The Power over
+  Ethernet negotiation is separate for each port, so the software must know
+  which port an LLDP frame came from.
+* Ports A and B can receive frames at the same time, so each port has its
+  own address comparison and checksum check.
 * The receive checksum, the :term:`frame check sequence`, is checked in
   hardware. A frame with a bad checksum is not given to the processor.
 
 .. _req-processor-transmit:
 
-The processor sends frames in the gaps between forwarded frames
----------------------------------------------------------------
+The processor sends frames when the output port is idle
+-------------------------------------------------------
 
 * The processor writes a frame into a transmit buffer and requests that it
   be sent out of port A, port B or both.
 * The chip adds the frame's :term:`preamble`, :term:`start frame delimiter`
   and checksum.
-* Processor frames are sent only in the gaps between forwarded frames.
+* A processor frame is started only when its output port is idle, and never
+  interrupts a forwarded frame. A forwarded frame that arrives while the
+  processor frame is being sent is dropped (see
+  :ref:`the output selectors <arch-output-selectors>`).
 
 .. _req-memory:
 
@@ -205,7 +218,9 @@ The requirements on power bridging are:
 * The software translates the power available on the input port into a
   valid offer in the standard used by each output port, as described below.
 * When the input power changes, the offers on the outputs are updated to
-  match, and are reduced before the input power falls. See
+  match. Where the input gives notice, the offers are reduced before the
+  input power falls. Where it does not, for example when a cable is
+  unplugged, the outputs rely on their hardware limits. See
   :ref:`translating power between the standards <power-translation>`.
 * When more than one port supplies power at the same time, the software
   shares the output budget between them. It moves power from one port to
@@ -260,6 +275,12 @@ Software makes every power decision, within hardware limits
 * Built-in hardware enforces these limits. It switches a port off when a
   fault happens faster than software can react, for example a short
   circuit, and then reports the fault to the software.
+* Built-in hardware also brings every port that supplies power to a safe
+  state when the software stops responding, for example through a
+  :wikipedia:`watchdog timer <Watchdog_timer>`. The standards' time limits
+  for removing power after a device is unplugged apply whether or not the
+  software is running (:doc:`power/poe/pse-sequencing`,
+  :doc:`power/usb-pd/source-sink`).
 
 .. _req-converters:
 
@@ -328,6 +349,12 @@ Open questions
   cell library it is built from.
 * Whether any frames other than LLDP frames must not be forwarded, and for
   what reason.
+* How many address and mask pairs the filter has. One pair cannot select
+  the processor's own address and the broadcast address without also
+  matching other traffic.
+* How an LLDP frame is stopped: by delaying every frame until its
+  destination address has been compared, or by cutting the LLDP frame off
+  after it has started (see :ref:`the LLDP block <arch-lldp-block>`).
 * The maximum power that the board supports.
 * How much power evampire and the rest of the board need, both to start and
   in normal operation, and so how much the start-up sequencer must do.
@@ -335,6 +362,9 @@ Open questions
   detection and classification and at each class. :doc:`power/usb-pd/index` gives
   the power available from a USB Type-C charger at each basic current level
   before any USB Power Delivery negotiation.
+* Which timed steps of each power port need a hardware timer behind the
+  software, what the safe state of each port is, and which settings survive
+  a reset of the processor.
 * Whether the three converter functions are three separate converters, one
   converter whose connections change with the operating mode, or another
   arrangement. The input and output voltage ranges of USB Power Delivery and

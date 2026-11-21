@@ -35,16 +35,17 @@ port B is sent out of port A. The few exceptions are listed in
 :ref:`the forwarding requirements <req-forwarding>`.
 
 evampire does not wait for a whole frame to arrive before it starts sending
-it on. Each byte is passed to the other side a few clock cycles after it
-arrives. This is called :term:`cut-through forwarding`. It needs only a few
-bytes of storage on each path, not a whole frame.
+it on. Each byte is passed to the other side a fixed, short time after it
+arrives, of a few tens of byte times at most. This is called
+:term:`cut-through forwarding`. It needs only a few bytes of storage on each
+path, not a whole frame.
 
 The processor receives selected frames and sends its own
 --------------------------------------------------------
 
 The processor sees a copy of the frames whose destination address matches a
 filter that it sets. It can also send frames of its own, which evampire
-sends in the gaps between the frames it forwards. The processor's network
+starts when the output port is idle. The processor's network
 traffic is below 1 Mbit/s, so it does not need to keep up with gigabit
 traffic.
 

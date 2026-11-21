@@ -109,11 +109,11 @@ reference examples or assumptions named in its source column.
      - 0.48 to 1.5
    * - Total at 3.3 V
      - sum of the rows above
-     - 6.6 to 12.8
+     - 6.6 to 12.9
      - 0.67 to 2.2
    * - Total with the signal processing at 1.8 V
      - same, with 0.13 W to 0.42 W for the signal processing
-     - 6.6 to 12.8
+     - 6.6 to 12.9
      - 0.32 to 1.1
 
 Not estimated, for want of a gigabit reference example in a comparable

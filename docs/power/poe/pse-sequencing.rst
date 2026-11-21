@@ -118,6 +118,12 @@ margin on each side, so a timer resolution and a response latency of 1 ms
 or better meet every window. This is an estimate of the need; the
 processor that meets it is open (:ref:`requirements-open-questions`).
 
+These windows still apply when the software has stopped. A port left
+powered after its powered device is unplugged would put the operating
+voltage on the next device connected, without detection. Built-in hardware
+therefore removes power when the software stops responding
+(:ref:`req-power-control`).
+
 Each measurement is read after the port settles: at least 6 ms into a class
 event (:clause:`Table 145-14 <145>`, item 7), and after the detection
 voltage settles to within 1 % (:clause:`145.2.6.2`). The software takes a

@@ -198,6 +198,15 @@ output has to step up at some inputs and down at others
 Ways of arranging the converters
 --------------------------------
 
+Each arrangement below is described with one ground throughout. The
+isolation that Power over Ethernet requires (:doc:`../poe/isolation`) adds a
+condition: every path between an Ethernet port and a USB Type-C port needs
+one converter with a transformer, such as the flyback on :doc:`buck-boost`.
+A buck, a boost and a four-switch buck-boost share one ground between input
+and output, and cannot be that converter. Where the barrier goes in each
+arrangement is an open question, and the switch counts and efficiencies
+below do not yet include it.
+
 Three separate converters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -554,5 +563,7 @@ Open questions
   converter, or a converter with several outputs.
 * Fixed-frequency PWM or variable-frequency control at light load, and the
   effect of each on the Ethernet signals, measured on a board.
-* Whether the powered device input converter is isolated
-  (:doc:`buck-boost`, :doc:`../poe/index`).
+* Which converter carries the isolation barrier in each operating mode, and
+  so which side of the barrier evampire is on (:doc:`buck-boost`,
+  :doc:`../poe/isolation`). The port that supplies Power over Ethernet
+  needs the barrier as much as the port that takes it.
