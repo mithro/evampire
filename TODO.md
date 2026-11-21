@@ -347,3 +347,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/phy-electrical/1000base-t-echo.rst`, `docs/ethernet/phy-electrical/integration/signal-processing.rst`, `docs/ethernet/phy-electrical/integration/clock-recovery.rst`
 - **Issue:** Cabling return loss is missing from the channel table, and the echo tap bound covers only the round trip. Jitter is compared with the 1.4 ns conformance limit, while 7 effective bits need about 16 ps rms. The training sequence is not described, and software adaptation is not given as a function of processor speed.
 - **Suggestion:** Add the return-loss row and a reach-independent tap term, derive the internal jitter budget, add a start-up section, and give the update ratio as taps × symbol rate × instructions per update / instruction rate.
+
+### Port power beside the input power
+
+- **Where:** `docs/ethernet/phy-electrical/integration/area-power.rst`, `docs/power/poe/types-classes.rst`
+- **Issue:** The page's own two-port figure is 1.3 W to 4.4 W, comparable to a class 1 input of 3.84 W and to a 5 V USB port before negotiation. The two ranges never appear together.
+- **Suggestion:** Add a table of transceiver power beside each input level, and consider keeping the transceivers off until power is negotiated.
