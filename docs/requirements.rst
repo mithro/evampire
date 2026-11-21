@@ -65,8 +65,9 @@ Ports A and B forward every frame to each other, except LLDP frames
   They are delivered only to the internal processor, which handles the power
   negotiation for its own port.
 * Forwarding is :term:`cut-through <cut-through forwarding>`. The delay
-  through the chip is a small fixed number of clock cycles, not a whole
-  frame.
+  through the chip is a fixed number of byte times, not a whole frame.
+  Stopping LLDP frames sets its lower bound (see
+  :ref:`the LLDP block <arch-lldp-block>`).
 * Cut-through forwarding needs both ports to run at the same link speed.
   :doc:`ethernet/rgmii/index` explains why.
 * Forwarded frames are passed on unchanged.
@@ -328,6 +329,9 @@ Open questions
   cell library it is built from.
 * Whether any frames other than LLDP frames must not be forwarded, and for
   what reason.
+* How an LLDP frame is stopped: by delaying every frame until its
+  destination address has been compared, or by cutting the LLDP frame off
+  after it has started (see :ref:`the LLDP block <arch-lldp-block>`).
 * The maximum power that the board supports.
 * How much power evampire and the rest of the board need, both to start and
   in normal operation, and so how much the start-up sequencer must do.

@@ -121,9 +121,37 @@ Destination address filter and checksum check
 
    The 4-byte checksum at the end of the frame is checked as the frame
    arrives. A frame with a bad checksum, or one too long to fit in the
-   buffer, is discarded instead of being handed to the processor. Filtering
-   has no effect on forwarding: every frame is still forwarded to the other
-   external port, except the frames listed in :ref:`the forwarding requirements <req-forwarding>`.
+   buffer, is discarded instead of being handed to the processor. The
+   programmed filter has no effect on forwarding: a frame copied to the
+   processor is still forwarded to the other external port. Only the LLDP
+   block stops a frame.
+
+.. _arch-lldp-block:
+
+LLDP block
+   Stops :term:`LLDP` frames on each forwarding path, as
+   :ref:`the forwarding requirements <req-forwarding>` ask. It compares the
+   destination address of every frame with ``01-80-C2-00-00-0E``, and is
+   separate from the programmed filter.
+
+   The destination address is complete only 6 byte times after the
+   :term:`start frame delimiter` arrives. There are two ways to stop the
+   frame, and the choice is open (see :ref:`requirements-open-questions`).
+
+   Delay
+      The forwarding path holds each frame until its address has been
+      compared, so an LLDP frame is never started on the other port. The
+      transmitted start frame delimiter then leaves at least 6 byte times
+      after the received one. Counted from the start of a full preamble,
+      the delay is at least 14 byte times plus the buffer crossing. That is
+      112 ns at 1000 Mbit/s, 1.12 µs at 100 Mbit/s and 11.2 µs at
+      10 Mbit/s. The rate-matching buffer holds these bytes in addition to
+      its slack.
+   Abort
+      The forwarding path keeps a shorter delay and cuts the frame off once
+      the address matches. The far end then receives the start of every
+      LLDP frame as a fragment, which it discards and may count as an
+      error.
 
 Receive and transmit frame buffers
    :wikipedia:`SRAM <Static_random-access_memory>` that holds whole frames
@@ -213,5 +241,6 @@ Each data path passes through a fixed sequence of blocks
        both
 
 :numref:`tab-data-paths` lists the blocks on each path. The delay from one
-external port to the other is a fixed small number of clock cycles. A frame
+external port to the other is a fixed number of byte times, with a lower
+bound set by the :ref:`LLDP block <arch-lldp-block>`. A frame
 copied to the processor is also forwarded to the other port as usual.
