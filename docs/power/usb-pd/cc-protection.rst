@@ -335,7 +335,11 @@ On-chip blocking switch
    connector side sits at the full VBUS voltage above the substrate. An
    N-well holds at least 10 V to the substrate, below 21.5 V. A deep N-well
    holds 30.48 V in the PDK's SPICE models, above the 22.15 V of SPR with PPS and
-   below the 50.9 V of EPR (:ref:`usbpd-process-limits`).
+   below the 50.9 V of EPR (:ref:`usbpd-process-limits`). The ringing of a
+   short reaches about twice the step, 44 V on a 20 V port, which is above
+   30.48 V. The switch therefore needs either a well that holds about 44 V,
+   or a clamp that starts above 22.15 V and holds the pin below the well's
+   breakdown voltage.
 On-chip crowbar
    A device from the CC pin to ground, such as a large NMOS or a
    :wikipedia:`thyristor <Thyristor>` built from the parasitic bipolar
