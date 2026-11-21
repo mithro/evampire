@@ -43,3 +43,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/architecture/index.rst` (clock and reset), `docs/ethernet/rgmii/io-cells.rst`, `docs/ethernet/rgmii/port-logic.rst`
 - **Issue:** The source of the 125 MHz clock, its duty cycle and its tolerance are not specified, and no page defines reset. A clock taken from a transceiver disappears when that transceiver is reset. Forwarding depends on software having booted and configured both transceivers.
 - **Suggestion:** Add a clock and reset page: source options (oscillator, transceiver output, 25 MHz with an on-chip PLL, one oscillator shared with both transceivers), the duty cycle the source must meet, reset defaults (forwarding off), and how a buffer is flushed when its receive clock stops.
+
+### Speed policy only steps down and does not check duplex
+
+- **Where:** `docs/ethernet/rgmii/speed-policy.rst`
+- **Issue:** After a link drops, only that port advertises every speed again; the other port stays restricted, so the pair may never return to 1000 Mbit/s. The policy compares speed only, so a partner detected as half duplex gives a duplex mismatch.
+- **Suggestion:** Restore the advertisement on both ports when either link drops, compare duplex as well as speed, and state how fast software must react to a speed change.
