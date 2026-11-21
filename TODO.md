@@ -143,3 +143,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/first-version.rst` (fault table)
 - **Issue:** With peak-current control in hardware and the voltage loop in software, a stalled processor leaves the stage as a current source. Unplugging the load then raises the output at tens of volts per millisecond.
 - **Suggestion:** Add an output over-voltage comparator per converter that stops switching, a row for it and for loss of loop updates in the fault table, and the reaction time as C × ΔV / I.
+
+### Loop latency and the right-half-plane zero
+
+- **Where:** `docs/power/converters/first-version.rst` (loop needs table), `docs/power/converters/control.rst`
+- **Issue:** The table pairs a 25 kHz crossover with a 4 µs latency, which by one estimate costs about 54° of phase. The right-half-plane zero is worked at one point (20 V, 30 W); at 5 V input it is several times lower.
+- **Suggestion:** Give the latency as a phase budget and the zero over the input range. Needs a loop model or simulation to confirm.
