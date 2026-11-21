@@ -373,3 +373,9 @@ of a standard and must be checked against it first.
 - **Where:** new page or `docs/architecture/index.rst`
 - **Issue:** Boot, firmware storage and update, the watchdog, brown-out behaviour and debug access appear only in passing. A board powered only from Ethernet makes boot and brown-out part of the power sequence.
 - **Suggestion:** Add a page that states each function and what it needs, without choosing a core.
+
+### Order the open questions
+
+- **Where:** `docs/requirements.rst` (open questions)
+- **Issue:** The open questions are a flat list. Some, such as the processor's clock and the isolation barrier's position, block several pages.
+- **Suggestion:** Mark which questions block the first version and which pages wait on each.
