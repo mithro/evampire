@@ -49,3 +49,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/rgmii/speed-policy.rst`
 - **Issue:** After a link drops, only that port advertises every speed again; the other port stays restricted, so the pair may never return to 1000 Mbit/s. The policy compares speed only, so a partner detected as half duplex gives a duplex mismatch.
 - **Suggestion:** Restore the advertisement on both ports when either link drops, compare duplex as well as speed, and state how fast software must react to a speed change.
+
+### Transmit skew budget for the standard pad
+
+- **Where:** `docs/ethernet/rgmii/io-cells.rst`, `docs/ethernet/rgmii/timing.rst`
+- **Issue:** The page now gives the 0.27 ns rise and fall difference, but there is no full budget for TskewT with pad-to-pad mismatch and load differences, and the slow edges are not converted into threshold-crossing uncertainty at the transceiver.
+- **Suggestion:** Write the budget with each term, evaluate the 24 mA pad cell, and decide whether the loopback calibration on the port-logic page is required for the first version. Needs a SPICE or board-level simulation.
