@@ -111,3 +111,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/hv-limits.rst`, `docs/power/poe/hv-options.rst`, `docs/power/poe/pd-controller.rst`
 - **Issue:** The limits table gives N-well to substrate as 10 V minimum, yet the page says no documented limit rules stacking out. That value does rule out any stack whose wells are plain N-wells at up to 57 V. A low-side isolation switch also leaves the rest of the die up to 57 V above the substrate until it closes.
 - **Suggestion:** Say which isolation structures remain (deep N-well, drift regions, devices on field oxide) and what each needs from the foundry. Compare low-side and high-side isolation switches.
+
+### Start-up worst case and limits before software runs
+
+- **Where:** `docs/power/poe/startup.rst`, `docs/power/poe/powered-device.rst`
+- **Issue:** The energy example uses the long first class event. A source that classifies with a 6 ms event, or not at all, gives almost no energy before power-on. The page does not say that the board must stay within class 3 power until software reads the assigned class, or how accurate the sequencer's time base must be. The offset current uses 12 µA where the powered device's own limit may be 10 µA *(from memory)*.
+- **Suggestion:** Add the zero-energy case, the boot power ceiling and the hardware that holds the outputs off, and the time base accuracy (about ±7 % to tell a long first event). Check the offset current in Table 145-21.
