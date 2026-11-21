@@ -105,9 +105,53 @@ transistors themselves do almost nothing above about 12 V.
 N-well of the top transistor, which is tied to V_in, breaks down to the
 substrate (`bv = 30.5` V). Above that, the source drives amps straight into
 the substrate. The next deep N-well down then clamps n1 at about 31 V, so M1
-takes the excess. **Wells only raise the limit from about 11.5 V to about
-31 V.** In this process nothing can sit more than about 30 V above the
-substrate.
+takes the excess. **Isolating each transistor moves the weak point from
+about 11.5 V to about 31 V.** That 31 V comes from how this deep N-well is
+doped and shaped, not from silicon itself. A junction's breakdown voltage
+rises as its lighter-doped side gets more lightly doped, because the
+depletion region spreads wider before the field reaches its avalanche value
+(about 3×10⁵ V/cm). Sze's empirical rule for silicon gives about 60 V at
+10¹⁶ cm⁻³ and about 340 V at 10¹⁵ cm⁻³. So holding more voltage needs an
+isolation junction that is lightly doped, several µm wide, and has gently
+curved edges. That would be a new structure to design and model, not one this
+process forbids.
+
+### Foundry figures
+
+The models are fitted to typical silicon. The guaranteed minimums from the
+public gf180mcu electrical specifications are lower:
+
+| Breakdown | Minimum | Typical | Source |
+|---|---:|---:|---|
+| 6 V NMOS N+ to P-well junction | 8.5 V | 11 V | [5.5 Junction Breakdown Voltage](https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_5.html) |
+| N-well to P-substrate junction | 10 V | 14 V | same page |
+| 6 V gate oxide | 12 V | 16 V | [5.4 Oxide Breakdown Voltage](https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_4.html) |
+
+The simulated 11.5 V avalanche in variant A matches the 11 V typical figure.
+A design has to work at 8.5 V. Neither page says how breakdown is defined
+(for example, at what leakage current).
+
+### On a pin with ESD protection
+
+The ESD simulations (`docs/esd/`, from another session) show the standard
+gf180mcu I/O cell holding its pad below about 5.6 V for a +2 kV HBM
+discharge, and at up to 13.7 V for a +8 kV IEC contact discharge. If this
+stack sat on such a pin:
+
+* **Isolated stack (B):** 13.7 V puts about 1.4 V on each transistor and
+  13.7 V on the top deep N-well, far below its 31 V. The stack draws under
+  1 mA, while the protection carries amps, so the stack is not the weak point.
+* **Shared-substrate stack (A):** its top junction to the substrate avalanches
+  at about 11.5 V (8.5 V minimum), so it becomes an extra ESD path into the
+  substrate. It was never designed to carry ESD current.
+
+A pin that is *meant* to carry high voltage can't use the standard cell
+at all. Its positive path is a diode from the pad to the I/O supply, which
+conducts as soon as the pad rises about 0.7 V above that supply. Its output
+NMOS also snaps back at 10.7 V. A high-voltage pin needs a clamp that stays
+off up to the pin's working voltage, but turns on before the weakest
+junction or oxide attached to the pin breaks down. For a stack, that weakest
+point is the isolation junction to the substrate.
 
 ### What the simulation cannot tell you
 
