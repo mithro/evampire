@@ -367,3 +367,9 @@ of a standard and must be checked against it first.
 - **Where:** new page
 - **Issue:** No page covers how the design is verified before tape-out or tested afterwards: an FPGA prototype of the digital path, test modes, loopback, or how first silicon is brought up.
 - **Suggestion:** Add a page. For a first tape-out this is the largest gap in the documentation.
+
+### Processor support functions
+
+- **Where:** new page or `docs/architecture/index.rst`
+- **Issue:** Boot, firmware storage and update, the watchdog, brown-out behaviour and debug access appear only in passing. A board powered only from Ethernet makes boot and brown-out part of the power sequence.
+- **Suggestion:** Add a page that states each function and what it needs, without choosing a core.
