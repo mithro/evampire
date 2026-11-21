@@ -137,3 +137,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/buck-boost.rst`, `docs/power/converters/arrangement.rst`
 - **Issue:** The pages now say one converter in each Ethernet-to-USB path must be isolated, but the flyback is the only isolated topology described, and the comparison tables still count switches and efficiency without a barrier.
 - **Suggestion:** Add the alternatives (active-clamp forward or flyback, a fixed-ratio isolated bus converter followed by non-isolated regulation, a dual active bridge, a commercial controller supervised by evampire). Redo the tables with a barrier column and an isolated-stage efficiency row.
+
+### Hardware over-voltage stop for each converter
+
+- **Where:** `docs/power/converters/first-version.rst` (fault table)
+- **Issue:** With peak-current control in hardware and the voltage loop in software, a stalled processor leaves the stage as a current source. Unplugging the load then raises the output at tens of volts per millisecond.
+- **Suggestion:** Add an output over-voltage comparator per converter that stops switching, a row for it and for loss of loop updates in the fault table, and the reaction time as C × ΔV / I.
