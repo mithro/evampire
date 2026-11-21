@@ -279,3 +279,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/functions.rst`
 - **Issue:** Balance is left open. A 10 % mismatch between two 33 nF capacitors with about 50 Ω to ground on the chip side gives roughly −40 dB of conversion at 1 MHz, against a limit of 66.6 dB.
 - **Suggestion:** Work the estimate into the page. It probably makes a common-mode choke or a high-impedance common-mode node mandatory.
+
+### Common-mode termination without a transformer
+
+- **Where:** `docs/ethernet/magnetics/without-transformer.rst`, `docs/ethernet/magnetics/front-ends.rst`
+- **Issue:** A 75 Ω common-mode termination from two resistors per pair puts 300 Ω across the pair and uses the whole return-loss budget. The page says a pair has no centre tap without a transformer, yet the passive front end has a centre-tapped inductor on every pair.
+- **Suggestion:** Correct the centre-tap statement for the passive front end and give the return loss of each termination option.
