@@ -75,3 +75,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/poe/translation.rst`, `docs/power/poe/sequence.rst`
 - **Issue:** The tables say "class 5 fits" or "class 2 applies" as if the port could assign any class. The number of class events caps the result at class 3, 4, 6 or 8, and a device gets the class it asked for if that is within the cap. A device asking for class 6 cannot be given class 5 *(from memory)*.
 - **Suggestion:** Check Table 145-11 and rework the tables by requested class: assigned if it fits, otherwise the next lower cap, otherwise no power.
+
+### Inrush and peak power are not in the power budget
+
+- **Where:** `docs/power/index.rst` (budget), `docs/power/poe/translation.rst`, `docs/power/poe/power-sourcing.rst`
+- **Issue:** A port must supply at least 0.4 A during inrush, about 20 W for 50 to 75 ms, whatever the class. A 15 W USB input cannot. A powered device may also draw peak power above its class for 50 ms.
+- **Suggestion:** Add inrush and peak terms to the budget, as bus hold-up energy or reserved headroom, and say which input levels cannot start a port at all.
