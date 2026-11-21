@@ -285,3 +285,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/ethernet/magnetics/without-transformer.rst`, `docs/ethernet/magnetics/front-ends.rst`
 - **Issue:** A 75 Ω common-mode termination from two resistors per pair puts 300 Ω across the pair and uses the whole return-loss budget. The page says a pair has no centre tap without a transformer, yet the passive front end has a centre-tapped inductor on every pair.
 - **Suggestion:** Correct the centre-tap statement for the passive front end and give the return loss of each termination option.
+
+### What passes through a capacitor barrier
+
+- **Where:** `docs/ethernet/magnetics/without-transformer.rst`, `docs/ethernet/magnetics/front-ends.rst`, `docs/ethernet/magnetics/events.rst`
+- **Issue:** The barrier is checked only against the isolation test voltage. The charge it passes (about 74 µC per wire at 2250 V with 33 nF) is hundreds of times an electrostatic discharge, a 4 kV surge charges the capacitor past its 2 kV rating, and the AC test drives about 31 mA into the chip side for 60 s.
+- **Suggestion:** Add a table of charge and current per event and per capacitor value, and the surge level at which the capacitor survives.
