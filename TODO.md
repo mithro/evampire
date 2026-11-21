@@ -173,3 +173,9 @@ of a standard and must be checked against it first.
 - **Where:** `docs/power/converters/first-version.rst`, `docs/power/usb-pd/monitoring.rst`, `docs/power/usb-pd/source-sink.rst`
 - **Issue:** A programmable supply must regulate current in current limit, which is a second control loop, not a trip. Voltage changes have a slew limit, and a downward change returns the output capacitor's energy to the bus. The converter pages cover none of these.
 - **Suggestion:** Add the current-limit loop and its accuracy, a slewed reference, and a bleeder or the condition under which the bus absorbs the energy.
+
+### Parts and losses left out of the arrangement comparison
+
+- **Where:** `docs/power/converters/arrangement.rst`, `docs/power/converters/control.rst`
+- **Issue:** The static switches and the board's own supply converter are not counted, and they differ per arrangement. The 90 % to 97 % range comes from 12 V to 20 V examples; at 57 V to 5 V the page's own loss formulas plus reverse recovery give about 88 % by one estimate.
+- **Suggestion:** Count every switch and the board supply. Make the efficiency range depend on the conversion ratio, and add reverse-recovery and output-capacitance losses.
