@@ -3,7 +3,7 @@ pages as SVG files.
 
 Usage: python figures.py OUTPUT-DIRECTORY
 
-Writes stack-section.svg and grading.svg. The drawings are schematic: shapes
+Writes stack-section.svg, grading.svg and metal-gate.svg. The drawings are schematic: shapes
 and spacings are not to scale.
 
 SPDX-License-Identifier: Apache-2.0
@@ -159,6 +159,51 @@ def grading():
     return svg(w, h, body)
 
 
+def metal_gate():
+    w, h = 640, 400
+    body = [ARROW]
+    # Insulator stack above the silicon, with the five metal levels.
+    body.append(rect(20, 40, 600, 220, OXIDE))
+    for k in range(5):
+        y = 230 - k * 45
+        body.append(line(150, y, 560, y, stroke="#888888", dash="3 4",
+                         width=1))
+        body.append(text(570, y + 4, f"Metal{k + 1}", anchor="start",
+                         size=12))
+    # Gate plate on Metal5 at the high voltage.
+    body.append(rect(210, 44, 220, 14, METAL))
+    body.append(text(320, 32, "gate on Metal5, at the sensed node (57 V)",
+                     size=13, weight="bold"))
+    # Silicon.
+    body.append(rect(20, 260, 600, 120, SUB))
+    body.append(text(320, 370, "P substrate, 0 V", size=13))
+    # Source and drain, with field oxide between them.
+    body.append(rect(150, 260, 70, 26, NWELL))
+    body.append(rect(420, 260, 70, 26, NWELL))
+    body.append(text(185, 278, "N+", size=12))
+    body.append(text(455, 278, "N+", size=12))
+    body.append(rect(220, 260, 200, 22, "#cfcfcf"))
+    body.append(text(320, 276, "field oxide", size=12))
+    # Inversion layer under the field oxide.
+    body.append(rect(220, 282, 200, 5, "#2e86de", stroke="#2e86de"))
+    body.append(text(320, 304, "inversion layer, near 0 V", size=12))
+    # Source and drain wires down through the stack.
+    body.append(rect(176, 140, 6, 120, METAL))
+    body.append(rect(458, 140, 6, 120, METAL))
+    body.append(text(170, 134, "source, 0 V", anchor="end", size=12))
+    body.append(text(470, 134, "drain, 1 V", anchor="start", size=12))
+    # P+ taps that stop inversion spreading beyond the device.
+    for x in (60, 540):
+        body.append(rect(x, 260, 40, 16, "#7fa7d6"))
+    body.append(text(80, 252, "P+ tap", size=11))
+    body.append(text(560, 252, "P+ tap", size=11))
+    # Voltage across the insulator.
+    body.append(line(320, 62, 320, 255, marker=True))
+    body.append(text(330, 160, "57 V across", anchor="start", size=12))
+    body.append(text(330, 176, "the insulator", anchor="start", size=12))
+    return svg(w, h, body)
+
+
 def main(argv):
     if len(argv) != 2:
         print(__doc__)
@@ -166,6 +211,7 @@ def main(argv):
     out = pathlib.Path(argv[1])
     (out / "stack-section.svg").write_text(stack_section(), encoding="utf-8")
     (out / "grading.svg").write_text(grading(), encoding="utf-8")
+    (out / "metal-gate.svg").write_text(metal_gate(), encoding="utf-8")
     return 0
 
 
