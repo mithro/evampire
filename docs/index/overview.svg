@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="936" height="704" viewBox="0 0 936 704" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<style>
+  .title { font-size: 14px; font-weight: 600; fill: #1d2433; }
+  .detail { font-size: 12.5px; fill: #5b6577; }
+  .tag { font-size: 12.5px; font-weight: 600; }
+  .port { font-size: 14px; font-weight: 600; fill: #1d2433; }
+  .note { font-size: 12.5px; fill: #5b6577; }
+  .net { font-size: 11.5px; font-weight: 600; }
+</style>
+<defs>
+<marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="3.33" markerHeight="3.33" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1c64d4"/></marker>
+<marker id="arrow-power" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="2.96" markerHeight="2.96" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f2620c"/></marker>
+<marker id="arrow-ctrl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.07" markerHeight="4.07" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6b46d6"/></marker>
+</defs>
+<rect width="936" height="704" fill="#ffffff"/>
+<rect x="310" y="44" width="316" height="306" rx="6" fill="#f7f8fb" stroke="#2b3445" stroke-width="2.5"/>
+<rect x="134" y="18" width="668" height="348" rx="14" fill="none" stroke="#2b3445" stroke-width="1.5" stroke-dasharray="7 5"/>
+<rect x="110" y="396" width="718" height="208" rx="14" fill="none" stroke="#f2620c" stroke-width="2.25" stroke-dasharray="1.5 5" stroke-linecap="round"/>
+<rect x="332.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="376.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="398.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="420.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="442.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="464.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="486.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="508.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="530.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="574.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="596.5" y="338.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="66.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="66.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="110.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="110.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="132.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="132.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="154.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="154.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="176.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="176.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="198.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="198.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="220.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="220.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="242.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="242.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="264.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="264.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="286.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="286.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="314.5" y="308.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="614.5" y="308.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="313" y="91" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="613" y="91" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="355" y="337" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="543" y="337" width="10" height="10" rx="1.5" fill="#6b46d6"/>
+<rect x="16" y="56" width="76" height="430" rx="4" fill="#ffffff" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="844" y="56" width="76" height="430" rx="4" fill="#ffffff" stroke="#1d2433" stroke-width="1.5"/>
+<text x="54" y="232" class="port" text-anchor="middle">Ethernet</text>
+<text x="54" y="249" class="port" text-anchor="middle">port A</text>
+<path d="M36 268 h36 v21 h-11 v7 h-14 v-7 h-11 z" fill="none" stroke="#1d2433" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="42" y1="271" x2="42" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="45.4" y1="271" x2="45.4" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="48.8" y1="271" x2="48.8" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="52.2" y1="271" x2="52.2" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="55.6" y1="271" x2="55.6" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="59" y1="271" x2="59" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="62.4" y1="271" x2="62.4" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="65.8" y1="271" x2="65.8" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<text x="54" y="324" class="note" text-anchor="middle">data and</text>
+<text x="54" y="339" class="note" text-anchor="middle">power in</text>
+<text x="882" y="232" class="port" text-anchor="middle">Ethernet</text>
+<text x="882" y="249" class="port" text-anchor="middle">port B</text>
+<path d="M864 268 h36 v21 h-11 v7 h-14 v-7 h-11 z" fill="none" stroke="#1d2433" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="870" y1="271" x2="870" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="873.4" y1="271" x2="873.4" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="876.8" y1="271" x2="876.8" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="880.2" y1="271" x2="880.2" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="883.6" y1="271" x2="883.6" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="887" y1="271" x2="887" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="890.4" y1="271" x2="890.4" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="893.8" y1="271" x2="893.8" y2="277" stroke="#1d2433" stroke-width="1.2"/>
+<text x="882" y="324" class="note" text-anchor="middle">data and</text>
+<text x="882" y="339" class="note" text-anchor="middle">power out</text>
+<rect x="340" y="628" width="260" height="48" rx="4" fill="#ffffff" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="373" y="646" width="34" height="12" rx="6" fill="none" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="381" y="650.5" width="18" height="3" rx="1.5" fill="#1d2433"/>
+<text x="484" y="657" class="port" text-anchor="middle">USB Type-C port</text>
+<rect x="150" y="69" width="140" height="54" rx="8" fill="#eaf1fd" stroke="#9dbcef" stroke-width="1.25"/>
+<text x="220" y="92" class="title" text-anchor="middle">Ethernet</text>
+<text x="220" y="108" class="title" text-anchor="middle">transceiver A</text>
+<rect x="384" y="69" width="168" height="54" rx="8" fill="#eaf1fd" stroke="#9dbcef" stroke-width="1.25"/>
+<text x="468" y="92.5" class="title" text-anchor="middle">Cut-through hub</text>
+<text x="468" y="108.5" class="detail" text-anchor="middle">forwards A to B, B to A</text>
+<rect x="646" y="69" width="140" height="54" rx="8" fill="#eaf1fd" stroke="#9dbcef" stroke-width="1.25"/>
+<text x="716" y="92" class="title" text-anchor="middle">Ethernet</text>
+<text x="716" y="108" class="title" text-anchor="middle">transceiver B</text>
+<rect x="370" y="178" width="196" height="56" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="468" y="202.5" class="title" text-anchor="middle">RISC-V processor</text>
+<text x="468" y="218.5" class="detail" text-anchor="middle">runs the management software</text>
+<rect x="322" y="274" width="132" height="56" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="388" y="298.5" class="title" text-anchor="middle">USB interface</text>
+<text x="388" y="314.5" class="detail" text-anchor="middle">serial port, USB-PD</text>
+<rect x="482" y="274" width="132" height="56" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="548" y="298.5" class="title" text-anchor="middle">Power control</text>
+<text x="548" y="314.5" class="detail" text-anchor="middle">measures and limits</text>
+<rect x="124" y="416" width="108" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="178" y="434.5" class="title" text-anchor="middle">Powered</text>
+<text x="178" y="450.5" class="title" text-anchor="middle">device</text>
+<text x="178" y="466.5" class="detail" text-anchor="middle">PoE input</text>
+<rect x="256" y="416" width="84" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="298" y="442.5" class="title" text-anchor="middle">Buck</text>
+<text x="298" y="458.5" class="detail" text-anchor="middle">converter</text>
+<rect x="380" y="416" width="196" height="60" rx="8" fill="#fff2e8" stroke="#f2620c" stroke-width="2"/>
+<text x="478" y="444" class="title" text-anchor="middle">Power bus</text>
+<text x="478" y="460" class="detail" text-anchor="middle">on the board</text>
+<rect x="604" y="416" width="80" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="644" y="442.5" class="title" text-anchor="middle">Boost</text>
+<text x="644" y="458.5" class="detail" text-anchor="middle">converter</text>
+<rect x="708" y="416" width="116" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="766" y="434.5" class="title" text-anchor="middle">Power sourcing</text>
+<text x="766" y="450.5" class="title" text-anchor="middle">equipment</text>
+<text x="766" y="466.5" class="detail" text-anchor="middle">PoE output</text>
+<rect x="386" y="528" width="84" height="56" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="428" y="544.5" class="title" text-anchor="middle">USB-PD</text>
+<text x="428" y="560.5" class="title" text-anchor="middle">sink</text>
+<text x="428" y="576.5" class="detail" text-anchor="middle">switch</text>
+<rect x="486" y="528" width="84" height="56" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="528" y="544.5" class="title" text-anchor="middle">USB-PD</text>
+<text x="528" y="560.5" class="title" text-anchor="middle">source</text>
+<text x="528" y="576.5" class="detail" text-anchor="middle">buck-boost</text>
+<rect x="377.2" y="33" width="234.8" height="22" rx="11" fill="#2b3445" stroke="#2b3445" stroke-width="1.5"/>
+<text x="494.6" y="48.5" class="tag" text-anchor="middle" fill="#ffffff">evampire chip, first version</text>
+<rect x="148" y="7" width="272.8" height="22" rx="11" fill="#ffffff" stroke="#2b3445" stroke-width="1.5"/>
+<text x="284.4" y="22.5" class="tag" text-anchor="middle" fill="#2b3445">Full design adds the transceivers</text>
+<rect x="124" y="385" width="234.8" height="22" rx="11" fill="#ffffff" stroke="#f2620c" stroke-width="1.5"/>
+<text x="241.4" y="400.5" class="tag" text-anchor="middle" fill="#f2620c">Power stages: placement open</text>
+<path d="M92 96 L150 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M290 96 L384 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M552 96 L646 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M786 96 L844 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M468 123 L468 178" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M410 234 L410 274" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M360 330 V436 A10 10 0 0 1 360 456 L360 628" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<text x="351" y="86" class="net" text-anchor="middle" fill="#1c64d4">RGMII</text>
+<text x="585" y="86" class="net" text-anchor="middle" fill="#1c64d4">RGMII</text>
+<text x="350" y="560" class="net" text-anchor="end" fill="#1c64d4">D+, D−, CC</text>
+<path d="M92 446 L124 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M232 446 L256 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M340 446 L380 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M576 446 L604 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M684 446 L708 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M824 446 L844 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M428 628 L428 584" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M428 528 L428 476" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M528 476 L528 528" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M528 584 L528 628" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M530 234 L530 274" fill="none" stroke="#6b46d6" stroke-width="1.75" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#arrow-ctrl)"/>
+<path d="M548 330 L548 396" fill="none" stroke="#6b46d6" stroke-width="1.75" stroke-dasharray="5 4" stroke-linejoin="round" marker-start="url(#arrow-ctrl)" marker-end="url(#arrow-ctrl)"/>
+<path d="M668 634 L712 634" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-data)"/>
+<text x="724" y="638" class="note" text-anchor="start">Data</text>
+<path d="M668 656 L712 656" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<text x="724" y="660" class="note" text-anchor="start">Power</text>
+<path d="M668 678 L712 678" fill="none" stroke="#6b46d6" stroke-width="1.75" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#arrow-ctrl)"/>
+<text x="724" y="682" class="note" text-anchor="start">Control</text>
+</svg>

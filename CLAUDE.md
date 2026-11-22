@@ -58,6 +58,7 @@ The build does not run these scripts. When you change their inputs, re-run
 them and commit what they write:
 
 ```sh
+uv run python docs/index/overview.py docs/index/overview.svg
 uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline.svg
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot

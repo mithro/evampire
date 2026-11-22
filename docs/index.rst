@@ -20,33 +20,35 @@ over USB Type-C, or the other way around.
 :numref:`fig-overview` shows the main blocks of evampire and how data and
 power flow between them.
 
-.. graphviz:: index/overview.dot
+.. figure:: index/overview.svg
    :name: fig-overview
-   :caption: The main blocks of evampire. Data flows along the top row and
-             power along the bottom row, each from Ethernet port A to port B.
-             The solid outline is the chip in the first version, the dashed
-             outline the chip in the full design.
    :alt: Block diagram. Data runs in a straight line along the top, between
-         Ethernet port A, Ethernet transceiver A, the cut-through Ethernet
-         hub, Ethernet transceiver B and Ethernet port B, with RGMII links
-         between each transceiver and the hub. The hub exchanges data with
-         the RISC-V management processor below it, which exchanges data with
-         the USB serial port and USB Power Delivery interface. That interface
-         connects straight down to the USB Type-C port over the D+, D− and
-         CC wires. The processor also controls the power control and
-         monitoring block, which controls the power stages. Power runs in a
+         Ethernet port A, Ethernet transceiver A, the cut-through hub,
+         Ethernet transceiver B and Ethernet port B, with RGMII links between
+         each transceiver and the hub. The hub exchanges data with the RISC-V
+         processor below it, which exchanges data with the USB interface for
+         the serial port and USB Power Delivery. That interface connects
+         straight down to the USB Type-C port over the D+, D− and CC wires,
+         hopping over the power row. The processor controls the power control
+         block, which measures and limits the power stages. Power runs in a
          straight line along the bottom: from Ethernet port A through the
-         PoE powered device and buck converter to the power bus, then
-         through the boost converter and PoE power sourcing equipment to
-         Ethernet port B. Below the bus, power comes up from
-         the USB Type-C port through the USB Power Delivery sink switch, and
-         goes down to it through the USB Power Delivery source buck-boost
-         converter. A solid outline around the hub, processor, USB interface
-         and power control marks the chip in the first version. A dashed
-         outline that also includes both Ethernet transceivers marks the chip
-         in the full design. A dotted outline around the power stages is
-         labelled as an open question: on the chip or external parts.
+         powered device and buck converter to the power bus on the board,
+         then through the boost converter and power sourcing equipment to
+         Ethernet port B. Below the bus, power comes up from the USB Type-C
+         port through the USB Power Delivery sink switch, and goes down to it
+         through the USB Power Delivery source buck-boost converter. The
+         first-version chip is drawn as a die with a ring of bond pads around
+         the hub, processor, USB interface and power control; coloured pads
+         mark the RGMII links, the USB wires and the power control signals
+         that leave it. A dashed outline that also includes both Ethernet
+         transceivers marks the chip in the full design. A dotted outline
+         around the power stages is labelled "placement open".
    :align: center
+
+   The main blocks of evampire. Data flows along the top row and power along
+   the bottom row, each from Ethernet port A to port B. The first-version
+   chip is drawn as a die, where a coloured pad marks each signal that leaves
+   it, and the dashed outline is the chip in the full design.
 
 The two chip outlines are the two board configurations of
 :numref:`tab-power-board-configs`. The first version connects to separate
