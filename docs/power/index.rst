@@ -199,9 +199,9 @@ the first version and the full design.
      - Dual-role
    * - Converter gate drivers and power transistors
      - External parts
-     - Open question
+     - On evampire, except possibly some high-voltage switches
 
-The open question in the table, and the question of how the full design
+Which high-voltage switches stay external in the full design, and how it
 makes the isolation without coupling transformers, are listed in
 :ref:`requirements-open-questions`.
 
@@ -283,9 +283,9 @@ gate.\ [#gf180-ldmos]_
 
 Custom structures, such as transistors stacked in isolated wells,
 drain-extended transistors and high-voltage capacitors, extend the voltages
-that circuits on the chip can handle (see :ref:`the process requirements <req-process>`). Which
-functions are built on evampire and which use external parts is chosen per
-function. The pages on :doc:`poe/index`, :doc:`usb-pd/index` and :doc:`converters/index`
+that circuits on the chip can handle (see :ref:`the process requirements <req-process>`). The
+full design builds most of these functions on evampire, and may keep some
+high-voltage switches as external parts. The pages on :doc:`poe/index`, :doc:`usb-pd/index` and :doc:`converters/index`
 analyse the choice for each standard.
 
 .. [#gf180-supply] `gf180mcu design manual, section 14.1, "Power supply

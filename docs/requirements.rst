@@ -342,5 +342,6 @@ Open questions
   converter whose connections change with the operating mode, or another
   arrangement. The input and output voltage ranges of USB Power Delivery and
   Power over Ethernet overlap, which makes sharing possible.
-* Whether the full design moves the converters' gate drivers, and then their
-  power transistors, onto evampire.
+* Which high-voltage switches, if any, the full design keeps as external
+  parts. It builds the rest of the power stages on evampire, including the
+  converters' gate drivers and power transistors.
