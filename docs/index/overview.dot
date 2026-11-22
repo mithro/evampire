@@ -13,7 +13,8 @@
 //   row y=7.0   data path: port A, transceiver A, hub, transceiver B, port B
 //   row y=5.75  RISC-V management processor
 //   row y=4.55  USB serial and USB-PD interface, power control
-//   row y=2.9   power path: PoE sink, buck, power bus, boost, PoE source
+//   row y=2.9   power path: PoE powered device, buck, power bus, boost,
+//               PoE power sourcing equipment
 //   row y=1.65  USB-PD sink switch, USB-PD source converter
 //   row y=0.45  USB Type-C port
 //
@@ -64,8 +65,8 @@ digraph overview {
             style="rounded,dotted", color="#9c4221", penwidth=2.0];
 
     full_lbl   [shape=plaintext, style="", fixedsize=false, fontsize=12,
-                fontcolor="#1f4e79", pos="2.5,7.72!",
-                label=<<b>Full design:</b><br/>transceivers on chip too>];
+                fontcolor="#1f4e79", pos="2.4,7.7!",
+                label=<<b>Full design:</b><br/>transceivers<br/>on chip too>];
     first_lbl  [shape=plaintext, style="", fixedsize=false, fontsize=12,
                 fontcolor="#1f4e79", pos="5.25,7.55!",
                 label=<<b>evampire chip: first version</b>>];
@@ -103,7 +104,7 @@ digraph overview {
 
     // ---- Power path. ----
     poe_sink [pos="2.0,2.9!", width=1.25, height=0.7, fillcolor="#feebc8",
-              fontsize=12, label="PoE sink\n(powered\ndevice)"];
+              fontsize=12, label="PoE\npowered\ndevice"];
     buck     [pos="3.4,2.9!", width=1.1, fillcolor="#feebc8",
               label="Buck\nconverter"];
     bus      [pos="5.4,2.9!", width=1.7, fillcolor="#fbd38d",
@@ -111,7 +112,7 @@ digraph overview {
     boost    [pos="7.0,2.9!", width=1.1, fillcolor="#feebc8",
               label="Boost\nconverter"];
     poe_src  [pos="8.45,2.9!", width=1.35, height=0.7, fillcolor="#feebc8",
-              fontsize=12, label="PoE source\n(power sourcing\nequipment)"];
+              fontsize=12, label="PoE power\nsourcing\nequipment"];
     usb_sink [pos="4.9,1.65!", width=1.0, fillcolor="#feebc8",
               fontsize=12, label="USB-PD\nsink switch"];
     usb_src  [pos="6.0,1.65!", width=1.0, height=0.7, fillcolor="#feebc8",

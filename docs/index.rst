@@ -36,9 +36,9 @@ power flow between them.
          CC wires. The processor also controls the power control and
          monitoring block, which controls the power stages. Power runs in a
          straight line along the bottom: from Ethernet port A through the
-         PoE sink (powered device) and buck converter to the power bus, then
-         through the boost converter and PoE source (power sourcing
-         equipment) to Ethernet port B. Below the bus, power comes up from
+         PoE powered device and buck converter to the power bus, then
+         through the boost converter and PoE power sourcing equipment to
+         Ethernet port B. Below the bus, power comes up from
          the USB Type-C port through the USB Power Delivery sink switch, and
          goes down to it through the USB Power Delivery source buck-boost
          converter. A solid outline around the hub, processor, USB interface
