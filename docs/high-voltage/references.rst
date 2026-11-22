@@ -16,6 +16,12 @@ gf180mcu process data
    <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr/blob/9f992d5a9186d1f7820c58f039c484ad35b2edea/models/ngspice/sm141064.ngspice#L38194-L38197>`__,
    commit 9f992d5.
 
+.. [HV-OPENPDKS-EXTRACT] R. T. Edwards and contributors, `open_pdks,
+   gf180mcu/magic/gf180mcu-extract.tech
+   <https://github.com/RTimothyEdwards/open_pdks/blob/bb8c82ecc7a9750faabeea98d5ca13e76e4ae744/gf180mcu/magic/gf180mcu-extract.tech#L464-L616>`__,
+   commit bb8c82e, nominal capacitances, lines 464–616; the file gives
+   GlobalFoundries document PDS_035_03 as their source.
+
 .. [HV-SIM-STACK] evampire, `Ten 5 V transistors in series as diodes, swept
    to 100 V
    <https://github.com/mithro/evampire/blob/main/sim/diode_stack/README.md>`__,
@@ -37,6 +43,23 @@ Semiconductor physics
    Microelectronic Devices and Circuits, Lecture 6: PN junction and MOS
    electrostatics (III)
    <https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/resources/lec6/>`__,
+   OpenCourseWare, 2005.
+
+.. [HV-MIT-6012-L7] Massachusetts Institute of Technology, `6.012
+   Microelectronic Devices and Circuits, Lecture 7: PN junction and MOS
+   electrostatics (IV)
+   <https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/resources/lec7/>`__,
+   OpenCourseWare, 2005.
+
+.. [HV-MIT-6012-L8] Massachusetts Institute of Technology, `6.012
+   Microelectronic Devices and Circuits, Lecture 8: PN junction and MOS
+   electrostatics (V)
+   <https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/resources/lec8/>`__,
+   OpenCourseWare, 2005.
+
+.. [HV-MIT-6012-L10] Massachusetts Institute of Technology, `6.012
+   Microelectronic Devices and Circuits, Lecture 10: MOSFET (II)
+   <https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2005/resources/lec10/>`__,
    OpenCourseWare, 2005.
 
 .. [HV-IOFFE] Ioffe Institute, `Electrical properties of silicon

@@ -12,7 +12,8 @@ The routes side by side
 Each route moves the voltage to the substrate onto a different structure
 (:numref:`tab-hv-routes`). The well routes are explained on
 :doc:`junctions`, the rings, plates, thin layer and resistor chain on
-:doc:`grading`, and the insulator routes on :doc:`dielectric`. They combine: a high-voltage well can have a
+:doc:`grading`, the insulator routes on :doc:`dielectric`, and metal-gate sensing on
+:doc:`metal-gate`. They combine: a high-voltage well can have a
 field plate and floating rings, and polysilicon devices on the field oxide
 can bias the rings.
 
@@ -53,6 +54,10 @@ can bias the rings.
      - Field oxide
      - Weaker devices than in the crystal
      - Strength of the field oxide
+   * - Metal-gate sensing
+     - Insulator under a metal plate
+     - Measured, drifting threshold
+     - Charge in the dielectrics
    * - Removing the substrate
      - Insulating carrier and oxide
      - Extra steps after the foundry
@@ -76,6 +81,9 @@ structures on a gf180mcu run would measure directly:
   against voltage, which give the substrate's doping profile.
 * Polysilicon strips over the field oxide, and metal plates over each
   dielectric, swept to breakdown against the substrate.
+* Metal-gate transistors with the gate on each metal layer, over field
+  oxide and over active silicon, at several channel lengths, measured for
+  threshold, current and drift over temperature and time.
 
 Device simulation of the same structures, with the gf180mcu doping as an
 input, would narrow the dimensions to put on the test run.
@@ -94,5 +102,14 @@ Open questions
   substrate, continuously and as a short pulse?
 * Does an available N layer have a charge per area close enough to the
   RESURF value? (:doc:`grading`)
+* What threshold does a transistor gated by each metal layer have, how much
+  charge do the dielectrics hold, and how far does it drift?
+  (:doc:`metal-gate`)
+* How long must the channel of a metal-gate transistor be for the gate to
+  control it, and how close may low-voltage metal sit beside a plate at
+  57 V? (:doc:`metal-gate`)
+* Can the silicon under a metal gate be left without source and drain
+  doping and without polysilicon, for a channel over active silicon instead
+  of field oxide? (:doc:`metal-gate`)
 * Can wafers from a gf180mcu run be processed afterwards to remove the
   substrate, and at what cost? (:doc:`dielectric`)

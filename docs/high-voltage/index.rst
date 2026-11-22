@@ -19,6 +19,9 @@ to most involved. The voltage limits of the gf180mcu process are listed on
    so that no single edge holds all of it.
 :doc:`dielectric`
    Replacing the junction to the substrate with an insulator.
+:doc:`metal-gate`
+   Transistors whose gate is a metal layer, which sense a high-voltage node
+   with only insulator between it and the silicon.
 :doc:`routes`
    The routes side by side, and the measurements that would decide between
    them.
@@ -32,5 +35,6 @@ to most involved. The voltage limits of the gf180mcu process are listed on
    junctions
    grading
    dielectric
+   metal-gate
    routes
    references
