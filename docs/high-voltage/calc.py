@@ -125,3 +125,89 @@ show("substrate resistivity at 1e15 cm^-3", rho, "ohm cm")
 show("slab 1 mm long, 1 mm wide, 300 um thick: resistance", r_slab, "ohm")
 show("  current at 57 V", 57 / r_slab * 1e3, "mA")
 show("  power at 57 V", 57 ** 2 / r_slab, "W")
+
+# ---------------------------------------------------------------------------
+section("7. Transistors with a metal layer as the gate")
+# Area capacitance of each metal layer to the substrate over the field
+# oxide, and over active silicon, in aF/um^2: nominal (min to max corner).
+# open_pdks bb8c82e, gf180mcu/magic/gf180mcu-extract.tech, "defaultareacap"
+# and "defaultoverlap ... alllvactivenonfet active" lines; the file says the
+# values come from GlobalFoundries document PDS_035_03.
+STACK = {
+    "Metal1": ((29.304, 26.273, 33.126), (39.502, 35.846, 43.987)),
+    "Metal2": ((15.016, 13.797, 16.471), (17.305, 16.047, 18.777)),
+    "Metal3": ((10.094, 9.354, 10.961), (11.079, 10.337, 11.936)),
+    "Metal4": ((7.602, 7.076, 8.213), (8.148, 7.625, 8.749)),
+    "Metal5": ((5.798, 5.414, 6.240), (6.110, 5.729, 6.545)),
+}
+EPS_OX = 3.9 * 8.854e-14   # F/cm, MIT 6.012 slide 7-3
+KT = 0.02585               # V at 300 K
+NI = 1e10                  # cm^-3; gives 417 mV at 1e17, MIT 6.012 slide 7-12
+V_FB = -0.9                # V, illustration: an aluminium gate on P-type Si
+MU_N = 400.0               # cm^2/(V s), illustration: electrons at the surface
+DOPINGS = (1.2e15, 5.3e15, 1e17)   # substrate estimates (section 2), and a
+                                   # P-well as an illustration
+
+
+def mos(n, c_ox):
+    """Threshold (V), max depletion width (cm) and slope (mV/decade)."""
+    phi_f = KT * math.log(n / NI)
+    q_dep = math.sqrt(2 * Q * EPS_SI * n * 2 * phi_f)
+    x_dmax = math.sqrt(2 * EPS_SI * 2 * phi_f / (Q * n))
+    vt = V_FB + 2 * phi_f + q_dep / c_ox
+    slope = KT * math.log(10) * 1e3 * (1 + (EPS_SI / x_dmax) / c_ox)
+    return vt, phi_f, q_dep, slope
+
+
+print("  Worked example, Metal5 over field oxide, N = 1.2e15 cm^-3:")
+c5 = STACK["Metal5"][0][0] * 1e-10            # aF/um^2 -> F/cm^2
+vt, phi_f, q_dep, slope = mos(1.2e15, c5)
+show("C_ox", c5, "F/cm^2")
+show("phi_F", phi_f, "V")
+show("Q_dep (charge per area at threshold)", q_dep, "C/cm^2")
+show("Q_dep / C_ox", q_dep / c5, "V")
+show("V_T", vt, "V")
+print()
+print("  layer   C field  t_eq field  t_eq active  C spread  "
+      "E_ox at 57 V (MV/cm)")
+for name, (field, active) in STACK.items():
+    c, cmin, cmax = field
+    t_f = EPS_OX / (c * 1e-10) * 1e4         # um
+    t_a = EPS_OX / (active[0] * 1e-10) * 1e4
+    print(f"  {name}  {c:7.2f}  {t_f:10.2f}  {t_a:11.2f}  "
+          f"{(cmin / c - 1) * 100:+.0f}/{(cmax / c - 1) * 100:+.0f} %  "
+          f"{57 / (t_f * 1e-4) / 1e6:8.2f}")
+print()
+print("  layer   V_T at N = 1.2e15, 5.3e15, 1e17 (V)   "
+      "slope at 1.2e15 (mV/dec)  dV_T per 1e11 cm^-2 (V)")
+for name, (field, _) in STACK.items():
+    c = field[0] * 1e-10
+    vts = [mos(n, c)[0] for n in DOPINGS]
+    s = mos(DOPINGS[0], c)[3]
+    print(f"  {name}  " + "  ".join(f"{v:7.1f}" for v in vts)
+          + f"   {s:8.0f}   {Q * 1e11 / c:6.2f}")
+print()
+V_DS = 1.0     # V, illustration: a low-voltage drain
+
+
+def i_lin(w_over_l, c, v_g, vt):
+    """Linear-region drain current (A), MIT 6.012 slide 10-3."""
+    return w_over_l * MU_N * c * (v_g - V_DS / 2 - vt) * V_DS
+
+
+print("  layer   mu*C_ox (uA/V^2)  I_D at V_G = 57 V, V_DS = 1 V, W/L = 10, "
+      "N = 1.2e15 (uA)   gate C of 100 um x 100 um (fF)")
+for name, (field, _) in STACK.items():
+    c = field[0] * 1e-10
+    vt = mos(DOPINGS[0], c)[0]
+    print(f"  {name}  {MU_N * c * 1e6:8.2f}  "
+          f"{i_lin(10, c, 57, vt) * 1e6:10.0f}  {field[0] * 10:8.1f}")
+print()
+print("  Level shift: two Metal1 gates at V_f and V_f + 5 V, N = 1.2e15, "
+      "V_DS = 1 V, W/L = 10")
+c1 = STACK["Metal1"][0][0] * 1e-10
+vt1 = mos(DOPINGS[0], c1)[0]
+for vf in (10.0, 20.0, 40.0):
+    lo, hi = i_lin(10, c1, vf, vt1), i_lin(10, c1, vf + 5, vt1)
+    print(f"  V_f = {vf:4.0f} V: {lo * 1e6:6.1f} uA and {hi * 1e6:6.1f} uA, "
+          f"difference {(hi - lo) * 1e6:5.1f} uA")
