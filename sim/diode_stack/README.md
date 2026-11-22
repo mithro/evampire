@@ -15,10 +15,12 @@ swept from 0 V to 100 V across the whole stack.
 uv run sim/diode_stack/run.py
 ```
 
-This needs Docker and the `hpretl/iic-osic-tools` image, which holds
-ngspice-47 and the open gf180mcuD PDK. `run.py` writes one netlist per variant
-(`results/*.cir`), runs ngspice, and writes `results/summary.md` plus three
-plots. It also runs `junction_check.cir`.
+This needs Docker and the latest `hpretl/iic-osic-tools` image, which holds
+ngspice and the open gf180mcuD PDK. Set `IIC_OSIC_IMAGE` to pin another tag
+or image ID. `run.py` writes one netlist per variant (`results/*.cir`), runs
+ngspice, and writes `results/summary.md` plus three plots. It also runs
+`junction_check.cir`. The first line of `results/summary.md` records the
+image ID and ngspice version that produced the results.
 
 ### Memory limits
 

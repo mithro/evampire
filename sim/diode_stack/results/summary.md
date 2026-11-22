@@ -1,3 +1,4 @@
+Image `hpretl/iic-osic-tools:latest`, ID `sha256:fd31cb46f41bea25c60bcdff1a8106f9e3889b3f05260af80c75a8b625a1c1db`. ngspice: ngspice-47.
 
 ## A_shared_substrate
 Bulk of every NMOS is the common P-substrate (0 V). This is what you get in gf180mcu without deep N-well.

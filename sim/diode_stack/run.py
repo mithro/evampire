@@ -14,6 +14,7 @@ Run with:  uv run sim/diode_stack/run.py
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -22,9 +23,10 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
-# Local image ID of hpretl/iic-osic-tools (ngspice-47, gf180mcuD); override
-# with IIC_OSIC_IMAGE=hpretl/iic-osic-tools:<tag> on another machine.
-IMAGE = os.environ.get("IIC_OSIC_IMAGE", "fd31cb46f41b")
+# The latest IIC-OSIC-TOOLS image (ngspice and the gf180mcuD PDK). The image
+# ID and ngspice version actually used are recorded in results/summary.md.
+# Pin a tag or image ID with IIC_OSIC_IMAGE=hpretl/iic-osic-tools:<tag>.
+IMAGE = os.environ.get("IIC_OSIC_IMAGE", "hpretl/iic-osic-tools:latest")
 NGSPICE = "/foss/tools/ngspice/bin/ngspice"
 PDK = "/foss/pdks/gf180mcuD/libs.tech/ngspice"
 
@@ -311,6 +313,17 @@ def plot(results: dict[str, dict]) -> None:
     plt.close(fig)
 
 
+def tool_versions() -> str:
+    """Image ID and ngspice version, so a result can be traced to its tools."""
+    image_id = subprocess.run(
+        ["docker", "image", "inspect", "--format", "{{.Id}}", IMAGE],
+        capture_output=True, text=True, check=True).stdout.strip()
+    log = (RESULTS / "A_shared_substrate.log").read_text().splitlines()
+    found = (re.search(r"ngspice-\d+\S*", s) for s in log)
+    ngspice = next((m.group(0) for m in found if m), "unknown")
+    return (f"Image `{IMAGE}`, ID `{image_id}`. ngspice: {ngspice}.\n")
+
+
 def main() -> None:
     RESULTS.mkdir(exist_ok=True)
     (RESULTS / ".spiceinit").write_text("set ngbehavior=hsa\nset ng_nomodcheck\n")
@@ -319,7 +332,7 @@ def main() -> None:
         print(f"running {v} ...", flush=True)
         results[v] = load(run_ngspice(v))
     print("running junction_check ...", flush=True)
-    table = summarise(results) + run_junction_check()
+    table = tool_versions() + summarise(results) + run_junction_check()
     (RESULTS / "summary.md").write_text(table)
     print(table)
     plot(results)
