@@ -144,7 +144,7 @@ on :doc:`../phy-electrical/index`.
      - 80 µH or more across the pair, about 0.5 A per wire
      - :doc:`without-transformer`
 
-If 10BASE-T is supported, the line driver also reaches 2.2 V to 2.8 V peak
+For 10BASE-T the line driver also reaches 2.2 V to 2.8 V peak
 (:clause:`14.3.1.2.1`), about ±1.4 V at each pin.
 
 Which IEEE 802.3 requirements a transformer-free port meets
@@ -211,6 +211,6 @@ Open questions
 
 * How will the port be tested against IEEE 802.3 where the standard is
   written for a transformer, for example the 350 µH inductance of
-  100BASE-TX if that speed is supported?
+  100BASE-TX?
 * Does the impedance balance of :clause:`40.8.3.2` hold with coupling
   capacitors of ordinary tolerance?

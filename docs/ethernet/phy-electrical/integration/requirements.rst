@@ -4,8 +4,8 @@ What the integrated transceiver must do
 =======================================
 
 This page lists the interface, the blocks and the requirements of one
-integrated 1000BASE-T port, and points to the limits of the optional
-slower speeds.
+integrated 1000BASE-T port, and points to the limits of the slower
+speeds.
 
 .. _phy-int-interface:
 
@@ -131,7 +131,7 @@ unfiltered jitter, measured against the master's clock, is also less than
 The slower speeds have their own limits
 ---------------------------------------
 
-If the integrated transceiver also supports the slower speeds, it meets
+The integrated transceiver also supports the slower speeds, and meets
 the limits of :numref:`tab-phy-100base-tx` for 100BASE-TX and
 :numref:`tab-phy-10base-t` for 10BASE-T. :doc:`slower-speeds` lists the
 blocks they add.

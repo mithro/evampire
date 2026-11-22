@@ -40,8 +40,7 @@ link all the time.
      - :clause:`Table 145-16 <145>`
 
 Power over Ethernet also carries up to 0.948 A on each pair
-(:doc:`poe`). The 100BASE-TX and 10BASE-T rows matter only if those speeds
-are supported (:ref:`requirements-open-questions`).
+(:doc:`poe`).
 
 Tests and disturbances are short
 --------------------------------
