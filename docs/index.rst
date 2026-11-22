@@ -24,25 +24,29 @@ power flow between them.
    :name: fig-overview
    :alt: Block diagram. Data runs in a straight line along the top, between
          Ethernet port A, Ethernet transceiver A, the cut-through hub,
-         Ethernet transceiver B and Ethernet port B, with RGMII links between
-         each transceiver and the hub. The hub exchanges data with the RISC-V
-         processor below it, which exchanges data with the USB interface for
-         the serial port and USB Power Delivery. That interface connects
-         straight down to the USB Type-C port over the D+, D− and CC wires,
-         hopping over the power row. The processor controls the power control
-         block, which measures and limits the power stages. Power runs in a
-         straight line along the bottom: from Ethernet port A through the
-         powered device and buck converter to the power bus on the board,
-         then through the boost converter and power sourcing equipment to
-         Ethernet port B. Below the bus, power comes up from the USB Type-C
-         port through the USB Power Delivery sink switch, and goes down to it
-         through the USB Power Delivery source buck-boost converter. The
-         first-version chip is drawn as a die with a ring of bond pads around
-         the hub, processor, USB interface and power control; coloured pads
-         mark the RGMII links, the USB wires and the power control signals
-         that leave it. A dashed outline that also includes both Ethernet
-         transceivers marks the chip in the full design. A dotted outline
-         around the power stages is labelled "placement open".
+         Ethernet transceiver B and Ethernet port B. Each transceiver is
+         labelled 1000BASE-T, the hub 1000 Mbit/s each way, and each link
+         between a transceiver and the hub RGMII, 125 MHz DDR. The hub
+         passes frames, below 1 Mbit/s, to and from the RISC-V processor
+         below it. The processor connects to three blocks: power control
+         (measure, limit), the USB 2.0 serial port (12 Mbit/s) and USB-PD
+         (BMC, 300 kbit/s). The serial port connects straight down to the USB
+         Type-C port over the D+ and D− wires, and USB-PD over the CC wire;
+         both hop over the power row. Power control controls the power
+         stages. Power runs in a straight line along the bottom: from
+         Ethernet port A (PoE in, 37–57 V) through the powered device and
+         buck converter to the power bus on the board, then through the boost
+         converter and power sourcing equipment to Ethernet port B (PoE out,
+         44–57 V). Below the bus, power comes up from the USB Type-C port
+         through the VBUS sink switch, and goes down to it through the VBUS
+         source buck-boost converter. The USB Type-C port is labelled VBUS
+         5–20 V, up to 48 V with EPR. The first-version chip is drawn as a
+         die with a ring of bond pads around the hub, processor, power
+         control, serial port and USB-PD; coloured pads mark the RGMII links,
+         the USB wires and the power control signals that leave it. A dashed
+         outline that also includes both Ethernet transceivers marks the chip
+         in the full design. A dotted outline around the power stages is
+         labelled "placement open".
    :align: center
 
    The main blocks of evampire. Data flows along the top row and power along
@@ -57,6 +61,12 @@ transceivers into evampire. Which power stages inside the dotted outline
 move onto the chip is an open question (:ref:`requirements-open-questions`).
 The figure shows the power roles of the first version: port A receives power
 and port B supplies it.
+
+The labels use three abbreviations. RGMII sends data on both edges of its
+clock, which is called :wikipedia:`double data rate (DDR) <Double_data_rate>`.
+USB Power Delivery messages on the :term:`CC` wire use
+:term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the
+extended power range of USB Power Delivery.
 
 This documentation describes what the chip does and explains the Ethernet
 and power-delivery standards that evampire implements. It is written for

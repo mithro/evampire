@@ -8,6 +8,18 @@ a signal's colour marks where that signal leaves the chip. A dashed outline
 marks the chip in the full design, and a dotted outline the power stages
 whose place, on the chip or in external parts, is an open question.
 
+The speeds, protocols and voltages written on the figure come from these
+pages, which are the place to change them:
+
+- 1000BASE-T at 1000 Mbit/s: requirements.rst.
+- RGMII, 4 bits on both edges of a 125 MHz clock: architecture/index.rst.
+- Processor network traffic below 1 Mbit/s: overview.rst.
+- USB 2.0 full speed, 12 Mbit/s, on D+ and D-: requirements.rst.
+- USB-PD biphase mark coding on CC, 300 kbit/s: power/usb-pd/cc-signalling.rst.
+- PoE 37 V to 57 V at the powered device, 44 V to 57 V from the power
+  sourcing equipment, and VBUS 5 V to 20 V, up to 48 V in the extended power
+  range: power/index.rst.
+
 Usage: python overview.py OUTPUT.svg
 
 SPDX-License-Identifier: Apache-2.0
@@ -15,7 +27,7 @@ SPDX-License-Identifier: Apache-2.0
 
 import sys
 
-W, H = 936, 704
+W, H = 944, 704
 
 # Colours: one per kind of connection, a tint of each for the blocks it
 # connects, and neutral colours for the silicon and text.
@@ -30,17 +42,24 @@ FONT = ("-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, "
         "sans-serif")
 
 # Rows (centre y of each row of blocks).
-Y_DATA, Y_CPU, Y_IF = 96, 206, 302
-Y_POWER, Y_USB, Y_USBC = 446, 556, 652
+Y_DATA, Y_CPU, Y_IF = 96, 206, 306
+Y_POWER, Y_USB, Y_USBC = 446, 556, 656
 
 # Outlines: (left, top, right, bottom).
-DIE = (310, 44, 626, 350)
-FULL = (134, 18, 802, 366)
-STAGES = (110, 396, 828, 604)
+DIE = (282, 44, 662, 356)
+FULL = (124, 18, 820, 372)
+STAGES = (90, 396, 840, 604)
 
-# The one place where the data and power networks cross: the USB data line
-# passes over the power row between the buck converter and the power bus.
-X_USB = 360
+# Board connectors: (left, top, right, bottom).
+PORT_A = (12, 56, 80, 486)
+PORT_B = (864, 56, 932, 486)
+USBC = (300, Y_USBC - 28, 600, Y_USBC + 28)
+
+# The only place where the data and power networks cross: the two USB wires,
+# D+ and D- from the serial port and CC from USB-PD, pass over the power row
+# between the power bus and the boost converter.
+X_DPDM, X_CC = 506, 566
+X_PCTRL = 350             # control from power control to the power stages
 
 out = []
 
@@ -205,49 +224,58 @@ def main(out_path):
     outline(FULL, "dashed", SILICON, 1.5)
     outline(STAGES, "dotted", POWER, 2.25)
     pads(DIE, {("left", Y_DATA): DATA, ("right", Y_DATA): DATA,
-               ("bottom", X_USB): DATA, ("bottom", 548): CTRL})
+               ("bottom", X_PCTRL): CTRL, ("bottom", X_DPDM): DATA,
+               ("bottom", X_CC): DATA})
 
     # Board connectors.
-    connector(16, 56, 92, 486)
-    connector(844, 56, 920, 486)
-    for cx, label, flow in ((54, "port A", "in"), (882, "port B", "out")):
-        text(cx, 232, "Ethernet", "port")
-        text(cx, 249, label, "port")
-        rj45(cx, 282)
-        text(cx, 324, "data and", "note")
-        text(cx, 339, f"power {flow}", "note")
-    connector(340, Y_USBC - 24, 600, Y_USBC + 24)
-    usbc_icon(390, Y_USBC)
-    text(484, Y_USBC + 5, "USB Type-C port", "port")
+    connector(*PORT_A)
+    connector(*PORT_B)
+    for box, label, flow, volts in ((PORT_A, "port A", "in", "37–57 V"),
+                                    (PORT_B, "port B", "out", "44–57 V")):
+        cx = (box[0] + box[2]) / 2
+        text(cx, 222, "Ethernet", "port")
+        text(cx, 239, label, "port")
+        rj45(cx, 272)
+        text(cx, 314, f"PoE {flow}", "note")
+        text(cx, 330, volts, "note")
+    connector(*USBC)
+    usbc_icon(332, Y_USBC)
+    text(362, Y_USBC - 2, "USB Type-C port", "port", anchor="start")
+    text(362, Y_USBC + 15, "VBUS 5–20 V, up to 48 V with EPR", "note",
+         anchor="start")
 
     # Data path along the top row.
-    card(220, Y_DATA, 140, 54, ["Ethernet", "transceiver A"])
-    card(468, Y_DATA, 168, 54, ["Cut-through hub"],
-         "forwards A to B, B to A")
-    card(716, Y_DATA, 140, 54, ["Ethernet", "transceiver B"])
+    a = card(200, Y_DATA, 136, 58, ["Ethernet", "transceiver A"],
+             "1000BASE-T")
+    hub = card(472, Y_DATA, 176, 58, ["Cut-through hub"],
+               "1000 Mbit/s each way")
+    b = card(744, Y_DATA, 136, 58, ["Ethernet", "transceiver B"],
+             "1000BASE-T")
 
-    # Processor and its interfaces.
-    card(468, Y_CPU, 196, 56, ["RISC-V processor"],
-         "runs the management software", "ctrl")
-    card(388, Y_IF, 132, 56, ["USB interface"], "serial port, USB-PD",
-         "ctrl")
-    card(548, Y_IF, 132, 56, ["Power control"], "measures and limits",
-         "ctrl")
+    # Processor and its interfaces, along the bottom of the die.
+    cpu = card(472, Y_CPU, 200, 56, ["RISC-V processor"],
+               "runs the management software", "ctrl")
+    pctl = card(350, Y_IF, 110, 64, ["Power", "control"], "measure, limit",
+                "ctrl")
+    ser = card(472, Y_IF, 110, 64, ["USB 2.0", "serial port"], "12 Mbit/s",
+               "ctrl")
+    upd = card(594, Y_IF, 110, 64, ["USB-PD"], "BMC, 300 kbit/s", "ctrl")
 
     # Power path along the bottom row.
-    card(178, Y_POWER, 108, 60, ["Powered", "device"], "PoE input", "power")
-    card(298, Y_POWER, 84, 60, ["Buck"], "converter", "power")
-    x0, y0, x1, y1 = 380, Y_POWER - 30, 576, Y_POWER + 30
-    out.append(f'<rect x="{x0}" y="{y0}" width="{x1 - x0}" height="{y1 - y0}" '
-               f'rx="8" fill="{POWER_TINT}" stroke="{POWER}" '
-               f'stroke-width="2"/>')
-    text(478, Y_POWER - 2, "Power bus", "title")
-    text(478, Y_POWER + 14, "on the board", "detail")
-    card(644, Y_POWER, 80, 60, ["Boost"], "converter", "power")
-    card(766, Y_POWER, 116, 60, ["Power sourcing", "equipment"], "PoE output",
-         "power")
-    card(428, Y_USB, 84, 56, ["USB-PD", "sink"], "switch", "power")
-    card(528, Y_USB, 84, 56, ["USB-PD", "source"], "buck-boost", "power")
+    pdev = card(147, Y_POWER, 90, 60, ["Powered", "device"], "PoE input",
+                "power")
+    buck = card(251, Y_POWER, 74, 60, ["Buck"], "converter", "power")
+    bus = (310, Y_POWER - 30, 488, Y_POWER + 30)
+    out.append(f'<rect x="{bus[0]}" y="{bus[1]}" width="{bus[2] - bus[0]}" '
+               f'height="{bus[3] - bus[1]}" rx="8" fill="{POWER_TINT}" '
+               f'stroke="{POWER}" stroke-width="2"/>')
+    text((bus[0] + bus[2]) / 2, Y_POWER - 2, "Power bus", "title")
+    text((bus[0] + bus[2]) / 2, Y_POWER + 14, "on the board", "detail")
+    boost = card(640, Y_POWER, 80, 60, ["Boost"], "converter", "power")
+    pse = card(765, Y_POWER, 122, 60, ["Power sourcing", "equipment"],
+               "PoE output", "power")
+    sink = card(352, Y_USB, 72, 56, ["VBUS", "sink"], "switch", "power")
+    src = card(448, Y_USB, 72, 56, ["VBUS", "source"], "buck-boost", "power")
 
     # Outline tags, drawn over the outlines.
     label = "evampire chip, first version"
@@ -257,43 +285,54 @@ def main(out_path):
     tag(STAGES[0] + 14, STAGES[1], "Power stages: placement open", POWER,
         False)
 
-    # Data connections.
-    line([(92, Y_DATA), (150, Y_DATA)], "data", both=True)
-    line([(290, Y_DATA), (384, Y_DATA)], "data", both=True)
-    line([(552, Y_DATA), (646, Y_DATA)], "data", both=True)
-    line([(786, Y_DATA), (844, Y_DATA)], "data", both=True)
-    line([(468, Y_DATA + 27), (468, Y_CPU - 28)], "data", both=True)
-    line([(410, Y_CPU + 28), (410, Y_IF - 28)], "data", both=True)
-    line([(X_USB, Y_IF + 28), (X_USB, Y_USBC - 24)], "data", both=True,
-         hop_at=Y_POWER)
-    for x in (351, 585):
-        out.append(f'<text x="{x}" y="{Y_DATA - 10}" class="net" '
-                   f'text-anchor="middle" fill="{DATA}">RGMII</text>')
-    out.append(f'<text x="{X_USB - 10}" y="{Y_USB + 4}" class="net" '
-               f'text-anchor="end" fill="{DATA}">D+, D−, CC</text>')
+    def net(x, y, s, colour=DATA, anchor="middle"):
+        out.append(f'<text x="{x:g}" y="{y:g}" class="net" '
+                   f'text-anchor="{anchor}" fill="{colour}">{esc(s)}</text>')
 
-    # Power connections.
-    line([(92, Y_POWER), (124, Y_POWER)], "power")
-    line([(232, Y_POWER), (256, Y_POWER)], "power")
-    line([(340, Y_POWER), (380, Y_POWER)], "power")
-    line([(576, Y_POWER), (604, Y_POWER)], "power")
-    line([(684, Y_POWER), (708, Y_POWER)], "power")
-    line([(824, Y_POWER), (844, Y_POWER)], "power")
-    line([(428, Y_USBC - 24), (428, Y_USB + 28)], "power")
-    line([(428, Y_USB - 28), (428, Y_POWER + 30)], "power")
-    line([(528, Y_POWER + 30), (528, Y_USB - 28)], "power")
-    line([(528, Y_USB + 28), (528, Y_USBC - 24)], "power")
+    # Data connections. Top row, left to right.
+    line([(PORT_A[2], Y_DATA), (a[0], Y_DATA)], "data", both=True)
+    line([(a[2], Y_DATA), (hub[0], Y_DATA)], "data", both=True)
+    line([(hub[2], Y_DATA), (b[0], Y_DATA)], "data", both=True)
+    line([(b[2], Y_DATA), (PORT_B[0], Y_DATA)], "data", both=True)
+    for x in ((DIE[0] + hub[0]) / 2 + 4, (DIE[2] + hub[2]) / 2 - 4):
+        net(x, Y_DATA - 9, "RGMII")
+        net(x, Y_DATA + 19, "125 MHz DDR")
+    # Down to the processor and out to USB.
+    line([(472, hub[3]), (472, cpu[1])], "data", both=True)
+    net(480, (hub[3] + cpu[1]) / 2 + 4, "frames, below 1 Mbit/s",
+        anchor="start")
+    line([(472, cpu[3]), (472, ser[1])], "data", both=True)
+    line([(556, cpu[3]), (556, upd[1])], "data", both=True)
+    line([(X_DPDM, ser[3]), (X_DPDM, USBC[1])], "data", both=True,
+         hop_at=Y_POWER)
+    line([(X_CC, upd[3]), (X_CC, USBC[1])], "data", both=True,
+         hop_at=Y_POWER)
+    net(X_DPDM - 6, USBC[1] - 8, "D+, D−", anchor="end")
+    net(X_CC - 6, USBC[1] - 8, "CC", anchor="end")
+
+    # Power connections. Bottom row, left to right.
+    line([(PORT_A[2], Y_POWER), (pdev[0], Y_POWER)], "power")
+    line([(pdev[2], Y_POWER), (buck[0], Y_POWER)], "power")
+    line([(buck[2], Y_POWER), (bus[0], Y_POWER)], "power")
+    line([(bus[2], Y_POWER), (boost[0], Y_POWER)], "power")
+    line([(boost[2], Y_POWER), (pse[0], Y_POWER)], "power")
+    line([(pse[2], Y_POWER), (PORT_B[0], Y_POWER)], "power")
+    # USB Type-C: up through the sink switch, down through the source.
+    line([(352, USBC[1]), (352, sink[3])], "power")
+    line([(352, sink[1]), (352, bus[3])], "power")
+    line([(448, bus[3]), (448, src[1])], "power")
+    line([(448, src[3]), (448, USBC[1])], "power")
 
     # Control.
-    line([(530, Y_CPU + 28), (530, Y_IF - 28)], "ctrl")
-    line([(548, Y_IF + 28), (548, STAGES[1])], "ctrl", both=True)
+    line([(X_PCTRL + 36, cpu[3]), (X_PCTRL + 36, pctl[1])], "ctrl")
+    line([(X_PCTRL, pctl[3]), (X_PCTRL, STAGES[1])], "ctrl", both=True)
 
     # Legend.
     for i, (kind, label) in enumerate((("data", "Data"), ("power", "Power"),
                                        ("ctrl", "Control"))):
-        y = 634 + i * 22
-        line([(668, y), (712, y)], kind)
-        text(724, y + 4, label, "note", anchor="start")
+        y = 636 + i * 22
+        line([(672, y), (716, y)], kind)
+        text(728, y + 4, label, "note", anchor="start")
 
     out.append("</svg>")
     with open(out_path, "w", encoding="utf-8") as f:
