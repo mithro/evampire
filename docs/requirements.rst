@@ -11,8 +11,8 @@ configurations, the first version and the full design, are described in
 
 .. _req-transceivers:
 
-Every port runs gigabit Ethernet through an Ethernet transceiver
-----------------------------------------------------------------
+Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
+-------------------------------------------------------------------------------
 
 * Each external port uses an :term:`Ethernet transceiver`. The transceiver
   is an external chip or is integrated on evampire, depending on the board
@@ -32,8 +32,11 @@ Every port runs gigabit Ethernet through an Ethernet transceiver
   the same one-byte-per-clock interface that it uses with an RGMII
   interface.
 * Every port supports gigabit Ethernet (1000BASE-T, 1000 Mbit/s over four
-  pairs, :clause:`40`) in both board configurations. An integrated
-  transceiver therefore implements 1000BASE-T.
+  pairs, :clause:`40`), 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) and
+  10 Mbit/s Ethernet (10BASE-T, :clause:`14`) in both board configurations.
+  An integrated transceiver therefore implements all three.
+* Both ports run at the same speed, because forwarding is cut-through (see
+  :ref:`req-forwarding`).
 
 .. _req-cable:
 
@@ -68,7 +71,9 @@ Ports A and B forward every frame to each other, except LLDP frames
   through the chip is a small fixed number of clock cycles, not a whole
   frame.
 * Cut-through forwarding needs both ports to run at the same link speed.
-  :doc:`ethernet/rgmii/index` explains why.
+  When they link at different speeds, forwarding stays off until the faster
+  port has renegotiated down to the slower speed.
+  :ref:`rgmii-same-speed` explains why, and :ref:`rgmii-slow-partner` how.
 * Forwarded frames are passed on unchanged.
 * No whole frame is stored on the forwarding path. The longest frame that
   can be forwarded is set by the slack in the rate-matching buffer, as
@@ -312,8 +317,6 @@ evampire is built on gf180mcu, with custom devices where a function needs them
 Open questions
 --------------
 
-* Whether an integrated transceiver also supports 100 Mbit/s and 10 Mbit/s
-  Ethernet, in addition to 1000BASE-T.
 * The cable reach of the integrated gigabit transceiver. The pages treat it
   as a parameter and give their results as a function of reach.
 * How the isolation is made without coupling transformers. Three routes
