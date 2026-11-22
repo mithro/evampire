@@ -5,14 +5,18 @@ data and power flow between them. Data runs along the top row and power along
 the bottom row, each in a straight line from Ethernet port A to port B. The
 first-version chip is drawn as a die with a ring of bond pads; a pad filled in
 a signal's colour marks where that signal leaves the chip. A dashed outline
-marks the chip in the full design, and a dotted outline the power stages
-whose place, on the chip or in external parts, is an open question.
+marks the chip in the full design, which also holds the transceivers and the
+power stages, except possibly some high-voltage switches.
 
 The speeds, protocols and voltages written on the figure come from these
 pages, which are the place to change them:
 
-- 1000BASE-T at 1000 Mbit/s: requirements.rst.
-- RGMII, 4 bits on both edges of a 125 MHz clock: architecture/index.rst.
+- 10, 100 and 1000 Mbit/s on every port, both ports at the same speed:
+  requirements.rst.
+- RGMII clock up to 125 MHz (25 MHz and 2.5 MHz at the slower speeds):
+  architecture/index.rst and ethernet/rgmii/port-logic.rst.
+- Power stages on the chip in the full design, except possibly some
+  high-voltage switches: power/index.rst (tab-power-board-configs).
 - Processor network traffic below 1 Mbit/s: overview.rst.
 - USB 2.0 full speed, 12 Mbit/s, on D+ and D-: requirements.rst.
 - USB-PD biphase mark coding on CC, 300 kbit/s: power/usb-pd/cc-signalling.rst.
@@ -47,8 +51,7 @@ Y_POWER, Y_USB, Y_USBC = 446, 556, 656
 
 # Outlines: (left, top, right, bottom).
 DIE = (282, 44, 662, 356)
-FULL = (124, 18, 820, 372)
-STAGES = (90, 396, 840, 604)
+FULL = (90, 18, 846, 604)
 
 # Board connectors: (left, top, right, bottom).
 PORT_A = (12, 56, 80, 486)
@@ -59,7 +62,7 @@ USBC = (300, Y_USBC - 28, 600, Y_USBC + 28)
 # D+ and D- from the serial port and CC from USB-PD, pass over the power row
 # between the power bus and the boost converter.
 X_DPDM, X_CC = 506, 566
-X_PCTRL = 350             # control from power control to the power stages
+X_PCTRL = 350             # control from power control to the power bus
 
 out = []
 
@@ -222,7 +225,6 @@ def main(out_path):
                f'rx="6" fill="{DIE_FILL}" stroke="{SILICON}" '
                f'stroke-width="2.5"/>')
     outline(FULL, "dashed", SILICON, 1.5)
-    outline(STAGES, "dotted", POWER, 2.25)
     pads(DIE, {("left", Y_DATA): DATA, ("right", Y_DATA): DATA,
                ("bottom", X_PCTRL): CTRL, ("bottom", X_DPDM): DATA,
                ("bottom", X_CC): DATA})
@@ -246,11 +248,11 @@ def main(out_path):
 
     # Data path along the top row.
     a = card(200, Y_DATA, 136, 58, ["Ethernet", "transceiver A"],
-             "1000BASE-T")
-    hub = card(472, Y_DATA, 176, 58, ["Cut-through hub"],
-               "1000 Mbit/s each way")
+             "10, 100, 1000 Mbit/s")
+    hub = card(472, Y_DATA, 168, 58, ["Cut-through hub"],
+               "same speed on both ports")
     b = card(744, Y_DATA, 136, 58, ["Ethernet", "transceiver B"],
-             "1000BASE-T")
+             "10, 100, 1000 Mbit/s")
 
     # Processor and its interfaces, along the bottom of the die.
     cpu = card(472, Y_CPU, 200, 56, ["RISC-V processor"],
@@ -280,10 +282,12 @@ def main(out_path):
     # Outline tags, drawn over the outlines.
     label = "evampire chip, first version"
     tag(DIE[2] - 14 - tag_width(label), DIE[1], label, SILICON, True)
-    tag(FULL[0] + 14, FULL[1], "Full design adds the transceivers", SILICON,
-        False)
-    tag(STAGES[0] + 14, STAGES[1], "Power stages: placement open", POWER,
-        False)
+    tag(FULL[0] + 14, FULL[1],
+        "Full design adds the transceivers and power stages", SILICON, False)
+    text(FULL[0] + 16, Y_USB - 6, "Some high-voltage switches", "note",
+         anchor="start")
+    text(FULL[0] + 16, Y_USB + 10, "may stay external parts", "note",
+         anchor="start")
 
     def net(x, y, s, colour=DATA, anchor="middle"):
         out.append(f'<text x="{x:g}" y="{y:g}" class="net" '
@@ -296,7 +300,7 @@ def main(out_path):
     line([(b[2], Y_DATA), (PORT_B[0], Y_DATA)], "data", both=True)
     for x in ((DIE[0] + hub[0]) / 2 + 4, (DIE[2] + hub[2]) / 2 - 4):
         net(x, Y_DATA - 9, "RGMII")
-        net(x, Y_DATA + 19, "125 MHz DDR")
+        net(x, Y_DATA + 19, "up to 125 MHz")
     # Down to the processor and out to USB.
     line([(472, hub[3]), (472, cpu[1])], "data", both=True)
     net(480, (hub[3] + cpu[1]) / 2 + 4, "frames, below 1 Mbit/s",
@@ -325,7 +329,7 @@ def main(out_path):
 
     # Control.
     line([(X_PCTRL + 36, cpu[3]), (X_PCTRL + 36, pctl[1])], "ctrl")
-    line([(X_PCTRL, pctl[3]), (X_PCTRL, STAGES[1])], "ctrl", both=True)
+    line([(X_PCTRL, pctl[3]), (X_PCTRL, bus[1])], "ctrl", both=True)
 
     # Legend.
     for i, (kind, label) in enumerate((("data", "Data"), ("power", "Power"),

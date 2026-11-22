@@ -25,15 +25,16 @@ power flow between them.
    :alt: Block diagram. Data runs in a straight line along the top, between
          Ethernet port A, Ethernet transceiver A, the cut-through hub,
          Ethernet transceiver B and Ethernet port B. Each transceiver is
-         labelled 1000BASE-T, the hub 1000 Mbit/s each way, and each link
-         between a transceiver and the hub RGMII, 125 MHz DDR. The hub
+         labelled 10, 100, 1000 Mbit/s, the hub same speed on both ports,
+         and each link between a transceiver and the hub RGMII, up to
+         125 MHz. The hub
          passes frames, below 1 Mbit/s, to and from the RISC-V processor
          below it. The processor connects to three blocks: power control
          (measure, limit), the USB 2.0 serial port (12 Mbit/s) and USB-PD
          (BMC, 300 kbit/s). The serial port connects straight down to the USB
          Type-C port over the D+ and D− wires, and USB-PD over the CC wire;
-         both hop over the power row. Power control controls the power
-         stages. Power runs in a straight line along the bottom: from
+         both hop over the power row. Power control connects to the power
+         bus. Power runs in a straight line along the bottom: from
          Ethernet port A (PoE in, 37–57 V) through the powered device and
          buck converter to the power bus on the board, then through the boost
          converter and power sourcing equipment to Ethernet port B (PoE out,
@@ -44,9 +45,9 @@ power flow between them.
          die with a ring of bond pads around the hub, processor, power
          control, serial port and USB-PD; coloured pads mark the RGMII links,
          the USB wires and the power control signals that leave it. A dashed
-         outline that also includes both Ethernet transceivers marks the chip
-         in the full design. A dotted outline around the power stages is
-         labelled "placement open".
+         outline that also includes both Ethernet transceivers and all the
+         power stages marks the chip in the full design, with a note that
+         some high-voltage switches may stay external parts.
    :align: center
 
    The main blocks of evampire. Data flows along the top row and power along
@@ -56,15 +57,16 @@ power flow between them.
 
 The two chip outlines are the two board configurations of
 :numref:`tab-power-board-configs`. The first version connects to separate
-Ethernet transceiver chips over RGMII, and the full design builds the
-transceivers into evampire. Which power stages inside the dotted outline
-move onto the chip is an open question (:ref:`requirements-open-questions`).
+Ethernet transceiver chips over RGMII and uses external power stages. The
+full design builds the transceivers and the power stages into evampire,
+except possibly some high-voltage switches
+(:ref:`requirements-open-questions`). Both ports run at the same speed, 10,
+100 or 1000 Mbit/s, because forwarding is cut-through (see
+:ref:`the forwarding requirements <req-forwarding>`).
 The figure shows the power roles of the first version: port A receives power
 and port B supplies it.
 
-The labels use three abbreviations. RGMII sends data on both edges of its
-clock, which is called :wikipedia:`double data rate (DDR) <Double_data_rate>`.
-USB Power Delivery messages on the :term:`CC` wire use
+The labels use two abbreviations. USB Power Delivery messages on the :term:`CC` wire use
 :term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the
 extended power range of USB Power Delivery.
 
