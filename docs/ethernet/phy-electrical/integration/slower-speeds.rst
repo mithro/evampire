@@ -5,7 +5,7 @@ What 100BASE-TX and 10BASE-T add
 
 This page lists what the integrated gigabit transceiver needs in addition
 to support 100BASE-TX and 10BASE-T, which every port supports
-(:ref:`req-transceivers`). Their limits are in
+(:ref:`the transceiver requirements <req-transceivers>`). Their limits are in
 :numref:`tab-phy-100base-tx` and :numref:`tab-phy-10base-t`.
 
 .. _phy-int-100:

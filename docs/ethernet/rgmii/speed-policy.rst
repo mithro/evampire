@@ -26,7 +26,7 @@ By requirement, evampire stores no full frame on the forwarding path (see
 Both ports link at the highest speed they share, in full duplex
 ---------------------------------------------------------------
 
-Every port supports 1000, 100 and 10 Mbit/s (see :ref:`req-transceivers`).
+Every port supports 1000, 100 and 10 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
 The processor sets up the transceivers as follows:
 
 #. It sets both transceivers to advertise 1000 Mbit/s full duplex

@@ -36,7 +36,7 @@ Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
   10 Mbit/s Ethernet (10BASE-T, :clause:`14`) in both board configurations.
   An integrated transceiver therefore implements all three.
 * Both ports run at the same speed, because forwarding is cut-through (see
-  :ref:`req-forwarding`).
+  :ref:`the forwarding requirements <req-forwarding>`).
 
 .. _req-cable:
 
@@ -73,7 +73,7 @@ Ports A and B forward every frame to each other, except LLDP frames
 * Cut-through forwarding needs both ports to run at the same link speed.
   When they link at different speeds, forwarding stays off until the faster
   port has renegotiated down to the slower speed.
-  :ref:`rgmii-same-speed` explains why, and :ref:`rgmii-slow-partner` how.
+  :doc:`ethernet/rgmii/speed-policy` explains why and how.
 * Forwarded frames are passed on unchanged.
 * No whole frame is stored on the forwarding path. The longest frame that
   can be forwarded is set by the slack in the rate-matching buffer, as
