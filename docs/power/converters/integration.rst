@@ -5,8 +5,9 @@ This page describes the steps by which more of each converter moves onto
 evampire, and what each step needs from the
 `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_ process. The first
 version keeps the gate drivers and power transistors external
-(:ref:`requirements`, :doc:`first-version`). Later versions explore moving
-the gate drivers on chip, and then the power transistors.
+(:ref:`requirements`, :doc:`first-version`). The full design moves the
+gate drivers on chip, and then the power transistors
+(:numref:`tab-power-board-configs`).
 
 The steps are explored by building and measuring them: a design simulated
 with the gf180mcu models, then test structures on a wafer.space run, then a

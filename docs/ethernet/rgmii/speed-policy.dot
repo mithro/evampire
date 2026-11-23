@@ -11,11 +11,14 @@ digraph speed_policy {
 
     down  [label="One or both links down\nforwarding off"];
     diff  [label="Different speeds\nforwarding off", fillcolor="#fbe5d6"];
+    half  [label="A link in half duplex\nforwarding off", fillcolor="#fbe5d6"];
     same  [label="Same speed, full duplex\nforwarding on", fillcolor="#e2efda"];
 
-    down -> same [label="  second link up,\n  same speed"];
+    down -> same [label="  second link up,\n  same speed, full duplex"];
+    down -> half [label="  a link up\n  in half duplex"];
     down -> diff [label="  second link up,\n  different speed"];
     diff -> same [label="  faster port\n  renegotiates"];
     same -> down [label="  a link goes down"];
     diff -> down [label="  a link goes down"];
+    half -> down [label="  a link goes down"];
 }

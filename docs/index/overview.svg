@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="944" height="704" viewBox="0 0 944 704" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<style>
+  .title { font-size: 14px; font-weight: 600; fill: #1d2433; }
+  .detail { font-size: 12.5px; fill: #5b6577; }
+  .tag { font-size: 12.5px; font-weight: 600; }
+  .port { font-size: 14px; font-weight: 600; fill: #1d2433; }
+  .note { font-size: 12.5px; fill: #5b6577; }
+  .net { font-size: 11.5px; font-weight: 600; }
+</style>
+<defs>
+<marker id="arrow-data" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="3.33" markerHeight="3.33" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1c64d4"/></marker>
+<marker id="arrow-power" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="2.96" markerHeight="2.96" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f2620c"/></marker>
+<marker id="arrow-ctrl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.07" markerHeight="4.07" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6b46d6"/></marker>
+</defs>
+<rect width="944" height="704" fill="#ffffff"/>
+<rect x="282" y="44" width="380" height="312" rx="6" fill="#f7f8fb" stroke="#2b3445" stroke-width="2.5"/>
+<rect x="90" y="18" width="756" height="586" rx="14" fill="none" stroke="#2b3445" stroke-width="1.5" stroke-dasharray="7 5"/>
+<rect x="302" y="408" width="194" height="76" rx="14" fill="none" stroke="#2b3445" stroke-width="1.5" stroke-dasharray="7 5"/>
+<rect x="304.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="326.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="370.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="392.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="414.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="436.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="458.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="480.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="524.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="546.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="590.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="612.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="634.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="66.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="66.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="110.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="110.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="132.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="132.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="154.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="154.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="176.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="176.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="198.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="198.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="220.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="220.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="242.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="242.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="264.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="264.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="286.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="286.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="308.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="308.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="286.5" y="330.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="650.5" y="330.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
+<rect x="285" y="91" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="649" y="91" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="345" y="343" width="10" height="10" rx="1.5" fill="#6b46d6"/>
+<rect x="501" y="343" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="561" y="343" width="10" height="10" rx="1.5" fill="#1c64d4"/>
+<rect x="12" y="56" width="68" height="430" rx="4" fill="#ffffff" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="864" y="56" width="68" height="430" rx="4" fill="#ffffff" stroke="#1d2433" stroke-width="1.5"/>
+<text x="46" y="222" class="port" text-anchor="middle">Ethernet</text>
+<text x="46" y="239" class="port" text-anchor="middle">port A</text>
+<path d="M28 258 h36 v21 h-11 v7 h-14 v-7 h-11 z" fill="none" stroke="#1d2433" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="34" y1="261" x2="34" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="37.4" y1="261" x2="37.4" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="40.8" y1="261" x2="40.8" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="44.2" y1="261" x2="44.2" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="47.6" y1="261" x2="47.6" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="51" y1="261" x2="51" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="54.4" y1="261" x2="54.4" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="57.8" y1="261" x2="57.8" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<text x="46" y="314" class="note" text-anchor="middle">PoE in</text>
+<text x="46" y="330" class="note" text-anchor="middle">37–57 V</text>
+<text x="898" y="222" class="port" text-anchor="middle">Ethernet</text>
+<text x="898" y="239" class="port" text-anchor="middle">port B</text>
+<path d="M880 258 h36 v21 h-11 v7 h-14 v-7 h-11 z" fill="none" stroke="#1d2433" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="886" y1="261" x2="886" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="889.4" y1="261" x2="889.4" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="892.8" y1="261" x2="892.8" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="896.2" y1="261" x2="896.2" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="899.6" y1="261" x2="899.6" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="903" y1="261" x2="903" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="906.4" y1="261" x2="906.4" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<line x1="909.8" y1="261" x2="909.8" y2="267" stroke="#1d2433" stroke-width="1.2"/>
+<text x="898" y="314" class="note" text-anchor="middle">PoE out</text>
+<text x="898" y="330" class="note" text-anchor="middle">44–57 V</text>
+<rect x="300" y="628" width="300" height="56" rx="4" fill="#ffffff" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="315" y="650" width="34" height="12" rx="6" fill="none" stroke="#1d2433" stroke-width="1.5"/>
+<rect x="323" y="654.5" width="18" height="3" rx="1.5" fill="#1d2433"/>
+<text x="362" y="654" class="port" text-anchor="start">USB Type-C port</text>
+<text x="362" y="671" class="note" text-anchor="start">VBUS 5–20 V, up to 48 V with EPR</text>
+<rect x="132" y="67" width="136" height="58" rx="8" fill="#eaf1fd" stroke="#9dbcef" stroke-width="1.25"/>
+<text x="200" y="84.5" class="title" text-anchor="middle">Ethernet</text>
+<text x="200" y="100.5" class="title" text-anchor="middle">transceiver A</text>
+<text x="200" y="116.5" class="detail" text-anchor="middle">10, 100, 1000 Mbit/s</text>
+<rect x="388" y="67" width="168" height="58" rx="8" fill="#eaf1fd" stroke="#9dbcef" stroke-width="1.25"/>
+<text x="472" y="92.5" class="title" text-anchor="middle">Cut-through hub</text>
+<text x="472" y="108.5" class="detail" text-anchor="middle">same speed on both ports</text>
+<rect x="676" y="67" width="136" height="58" rx="8" fill="#eaf1fd" stroke="#9dbcef" stroke-width="1.25"/>
+<text x="744" y="84.5" class="title" text-anchor="middle">Ethernet</text>
+<text x="744" y="100.5" class="title" text-anchor="middle">transceiver B</text>
+<text x="744" y="116.5" class="detail" text-anchor="middle">10, 100, 1000 Mbit/s</text>
+<rect x="372" y="178" width="200" height="56" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="472" y="202.5" class="title" text-anchor="middle">RISC-V processor</text>
+<text x="472" y="218.5" class="detail" text-anchor="middle">runs the management software</text>
+<rect x="295" y="274" width="110" height="64" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="350" y="294.5" class="title" text-anchor="middle">Power</text>
+<text x="350" y="310.5" class="title" text-anchor="middle">control</text>
+<text x="350" y="326.5" class="detail" text-anchor="middle">measure, limit</text>
+<rect x="417" y="274" width="110" height="64" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="472" y="294.5" class="title" text-anchor="middle">USB 2.0</text>
+<text x="472" y="310.5" class="title" text-anchor="middle">serial port</text>
+<text x="472" y="326.5" class="detail" text-anchor="middle">12 Mbit/s</text>
+<rect x="539" y="274" width="110" height="64" rx="8" fill="#f2eefd" stroke="#c2b2f0" stroke-width="1.25"/>
+<text x="594" y="302.5" class="title" text-anchor="middle">USB-PD</text>
+<text x="594" y="318.5" class="detail" text-anchor="middle">BMC, 300 kbit/s</text>
+<rect x="102" y="416" width="90" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="147" y="434.5" class="title" text-anchor="middle">Powered</text>
+<text x="147" y="450.5" class="title" text-anchor="middle">device</text>
+<text x="147" y="466.5" class="detail" text-anchor="middle">PoE input</text>
+<rect x="214" y="416" width="74" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="251" y="442.5" class="title" text-anchor="middle">Buck</text>
+<text x="251" y="458.5" class="detail" text-anchor="middle">converter</text>
+<rect x="310" y="416" width="178" height="60" rx="8" fill="#fff2e8" stroke="#f2620c" stroke-width="2"/>
+<text x="399" y="444" class="title" text-anchor="middle">Power bus</text>
+<text x="399" y="460" class="detail" text-anchor="middle">on the board</text>
+<rect x="600" y="416" width="80" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="640" y="442.5" class="title" text-anchor="middle">Boost</text>
+<text x="640" y="458.5" class="detail" text-anchor="middle">converter</text>
+<rect x="704" y="416" width="122" height="60" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="765" y="434.5" class="title" text-anchor="middle">Power sourcing</text>
+<text x="765" y="450.5" class="title" text-anchor="middle">equipment</text>
+<text x="765" y="466.5" class="detail" text-anchor="middle">PoE output</text>
+<rect x="316" y="528" width="72" height="56" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="352" y="544.5" class="title" text-anchor="middle">VBUS</text>
+<text x="352" y="560.5" class="title" text-anchor="middle">sink</text>
+<text x="352" y="576.5" class="detail" text-anchor="middle">switch</text>
+<rect x="412" y="528" width="72" height="56" rx="8" fill="#fff2e8" stroke="#f8b48a" stroke-width="1.25"/>
+<text x="448" y="544.5" class="title" text-anchor="middle">VBUS</text>
+<text x="448" y="560.5" class="title" text-anchor="middle">source</text>
+<text x="448" y="576.5" class="detail" text-anchor="middle">buck-boost</text>
+<rect x="413.2" y="33" width="234.8" height="22" rx="11" fill="#2b3445" stroke="#2b3445" stroke-width="1.5"/>
+<text x="530.6" y="48.5" class="tag" text-anchor="middle" fill="#ffffff">evampire chip, first version</text>
+<rect x="104" y="7" width="402" height="22" rx="11" fill="#ffffff" stroke="#2b3445" stroke-width="1.5"/>
+<text x="305" y="22.5" class="tag" text-anchor="middle" fill="#2b3445">Full design adds the transceivers and power stages</text>
+<text x="106" y="550" class="note" text-anchor="start">Some high-voltage switches</text>
+<text x="106" y="566" class="note" text-anchor="start">may stay external parts</text>
+<path d="M80 96 L132 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M268 96 L388 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M556 96 L676 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M812 96 L864 96" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<text x="339" y="87" class="net" text-anchor="middle" fill="#1c64d4">RGMII</text>
+<text x="339" y="115" class="net" text-anchor="middle" fill="#1c64d4">up to 125 MHz</text>
+<text x="605" y="87" class="net" text-anchor="middle" fill="#1c64d4">RGMII</text>
+<text x="605" y="115" class="net" text-anchor="middle" fill="#1c64d4">up to 125 MHz</text>
+<path d="M472 125 L472 178" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<text x="480" y="155.5" class="net" text-anchor="start" fill="#1c64d4">frames, below 1 Mbit/s</text>
+<path d="M472 234 L472 274" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M556 234 L556 274" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M506 338 V436 A10 10 0 0 1 506 456 L506 628" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<path d="M566 338 V436 A10 10 0 0 1 566 456 L566 628" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-start="url(#arrow-data)" marker-end="url(#arrow-data)"/>
+<text x="500" y="620" class="net" text-anchor="end" fill="#1c64d4">D+, D−</text>
+<text x="560" y="620" class="net" text-anchor="end" fill="#1c64d4">CC</text>
+<path d="M80 446 L102 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M192 446 L214 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M288 446 L310 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M488 446 L600 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M680 446 L704 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M826 446 L864 446" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M352 628 L352 584" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M352 528 L352 476" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M448 476 L448 528" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M448 584 L448 628" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<path d="M386 234 L386 274" fill="none" stroke="#6b46d6" stroke-width="1.75" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#arrow-ctrl)"/>
+<path d="M350 338 L350 416" fill="none" stroke="#6b46d6" stroke-width="1.75" stroke-dasharray="5 4" stroke-linejoin="round" marker-start="url(#arrow-ctrl)" marker-end="url(#arrow-ctrl)"/>
+<path d="M672 636 L716 636" fill="none" stroke="#1c64d4" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-data)"/>
+<text x="728" y="640" class="note" text-anchor="start">Data</text>
+<path d="M672 658 L716 658" fill="none" stroke="#f2620c" stroke-width="4.5" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+<text x="728" y="662" class="note" text-anchor="start">Power</text>
+<path d="M672 680 L716 680" fill="none" stroke="#6b46d6" stroke-width="1.75" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#arrow-ctrl)"/>
+<text x="728" y="684" class="note" text-anchor="start">Control</text>
+</svg>

@@ -201,7 +201,7 @@ RGMII allows at most 0.75 ns from 20 % to 80 % of each edge (see
 0.53 ns to 1.89 ns. At the SS corner the edges take a large part of the
 4 ns half period. 10 and 100 Mbit/s are not affected.
 
-evampire runs its RGMII ports at 1000 Mbit/s (see :ref:`req-transceivers`).
+evampire runs its RGMII ports at up to 1000 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
 These limits belong to the standard gf180mcu_fd_io cells, which are
 general-purpose 5 V pads, not to the gf180mcu process.
 

@@ -175,7 +175,7 @@ transmit templates assume (:clause:`40.6.1.2.3`, note 1).
 100BASE-TX sets a phase limit
 -----------------------------
 
-If 100BASE-TX is supported, its transmitter must look resistive within a
+The 100BASE-TX transmitter must look resistive within a
 phase angle of 3° from 2 MHz to 80 MHz (:std:`ANSI X3.263 <X3.263>`, as
 quoted in [MAG-SNLA088]_, appendix A). The reactance must then be below
 :math:`Z_0 \tan 3^\circ`:
@@ -229,7 +229,7 @@ The results give a working range
      - 24
      - :clause:`25.4.5.1`
 
-The last two rows apply only if 100BASE-TX is supported. A value from
+The last two rows come from 100BASE-TX. A value from
 33 nF to 100 nF in each wire is a reasonable estimate of the working range:
 above the droop limit with margin, and near the behaviour of standard
 magnetics. :doc:`gigabit-risk` shows what each value means for the
@@ -338,7 +338,7 @@ Open questions
 
 * Does a capacitor-coupled 100BASE-TX transmitter in a Power over Ethernet
   port satisfy :clause:`25.4.5` through the 2.4 µs time constant, in place
-  of the 350 µH inductance? This matters only if 100BASE-TX is supported.
+  of the 350 µH inductance?
 * Which value in the 33 nF to 100 nF range gives the best balance between
   link margin, part count and detection capacitance? :doc:`gigabit-risk`
   describes the measurements that answer it.

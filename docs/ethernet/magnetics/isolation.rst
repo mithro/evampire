@@ -153,7 +153,7 @@ into one of the dies, or a small transformer.
 What crosses the barrier depends on how the transceiver is split. If the
 whole transceiver is on the cable-side die, the barrier carries the
 one-byte-per-clock interface: eight bits each way at 125 MHz, 1 Gbit/s in
-each direction (:ref:`req-transceivers`). For reference, the TI ISO7741
+each direction (:ref:`the transceiver requirements <req-transceivers>`). For reference, the TI ISO7741
 digital isolator carries 100 Mbit/s per channel across a barrier rated
 5000 V rms, and the ISO644x family 150 Mbit/s per channel
 ([MAG-ISO7741]_, features). If only the line driver and receiver are on

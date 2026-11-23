@@ -10,8 +10,8 @@ They build on :doc:`../index`, which explains how a transceiver works.
 
 The transceiver is integrated in the board configurations of
 :numref:`tab-power-board-configs` that do not use an external one. Every
-port runs 1000BASE-T; 100 Mbit/s and 10 Mbit/s are optional
-(:ref:`req-transceivers`, :ref:`requirements-open-questions`). The cable
+port runs 1000BASE-T, 100BASE-TX and 10BASE-T
+(:ref:`the transceiver requirements <req-transceivers>`). The cable
 reach of the integrated transceiver is a parameter: results that depend on
 it are given as functions of reach.
 

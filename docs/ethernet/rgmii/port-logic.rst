@@ -234,10 +234,8 @@ over MDIO, so the transceiver's power-up pin settings need not be right.
 At 10 and 100 Mbit/s the logic uses a clock enable
 --------------------------------------------------
 
-The clock enable is needed only if evampire supports 10 and 100 Mbit/s as
-well as 1000 Mbit/s, which is an open question (see
-:ref:`rgmii-logic-open-questions`).
-The logic always runs from the 125 MHz transmit clock, and uses a clock
+evampire supports 10 and 100 Mbit/s as well as 1000 Mbit/s (see
+:ref:`the transceiver requirements <req-transceivers>`). The logic always runs from the 125 MHz transmit clock, and uses a clock
 enable at the lower speeds.
 
 On transmit, one nibble goes out every 5 cycles of 125 MHz at 100 Mbit/s
@@ -353,8 +351,6 @@ shorter one arrived (see :doc:`frames`).
 Open questions
 --------------
 
-* Whether evampire supports 10 and 100 Mbit/s on its RGMII ports, in
-  addition to 1000 Mbit/s.
 * Whether evampire adds its own clock delay, with a software-calibrated
   delay line or a delay-locked loop, so that transceivers without a full
   internal delay fit without board changes.
