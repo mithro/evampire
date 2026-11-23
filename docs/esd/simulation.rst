@@ -261,10 +261,15 @@ and I/O cell repositories. Run it in a
 
    git clone https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr.git
    git clone https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io.git
+   git -C globalfoundries-pdk-libs-gf180mcu_fd_pr checkout 9f992d5a9186d1f7820c58f039c484ad35b2edea
+   git -C globalfoundries-pdk-libs-gf180mcu_fd_io checkout 2aeec51ea2824b6cc0b396acfc39f4535f40b23a
    GF180_PR=$PWD/globalfoundries-pdk-libs-gf180mcu_fd_pr \
    GF180_IO=$PWD/globalfoundries-pdk-libs-gf180mcu_fd_io \
    systemd-run --user --scope -p MemoryMax=8G -p MemorySwapMax=0 \
        uv run docs/esd/sim/esd_sim.py
 
 It writes the figures to ``docs/esd/figures/`` and the tables to
-``docs/esd/sim/results/``.
+``docs/esd/sim/results/``. The results on these pages were made with
+ngspice 44.2 and the two repositories at the commits above.
+:download:`sim/schematic.py <sim/schematic.py>` draws the pad's
+schematic, :numref:`fig-esd-io-cell`.
