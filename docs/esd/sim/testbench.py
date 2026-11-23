@@ -5,26 +5,33 @@ SPDX-License-Identifier: Apache-2.0
 
 from calibrate import diode_model
 from cdl2spice import convert
-from spice import (GGNMOS_VT1, IO, TLP_DIODE_AREA, TLP_DIODE_PJ,
-                   TLP_DIODE_WIDTH_UM, NgspiceFailed, header, ngspice)
+from spice import (GGNMOS_VT1, IO, SNAP_FILTER_S, TLP_DIODE_AREA,
+                   TLP_DIODE_PJ, TLP_DIODE_WIDTH_UM, NgspiceFailed, header,
+                   ngspice)
 
 
 # The chip under test: one bi_t pad, one DVDD pad and one DVSS pad, sharing
 # the DVDD and DVSS rings.
 
-def chip_netlist(rs_n, rs_p, ggnmos, clamps=True, r_ring=0.0,
+def chip_netlist(rs_n, rs_p, ggnmos, ggpmos, clamps=True, r_ring=0.0,
                  drain_r_scale=1.0, diode_scale=1, supply_pads=1):
     """The test chip. diode_scale widens the pad's diodes, as if dedicated
     diodes (diode_scale - 1) times the drivers' width were added beside
     them. supply_pads is the number of DVDD pads and of DVSS pads, each
     with its rail clamp. ggnmos is the snapback's (holding voltage in V,
-    on-resistance in ohm um), from calibrate.fit_ggnmos()."""
+    on-resistance in ohm um), from calibrate.fit_ggnmos(); ggpmos the PMOS
+    avalanche's (V0 in V, resistance in ohm um), from fit_ggpmos()."""
     ggnmos_vh, ggnmos_ron_ohm_um = ggnmos
+    ggpmos_v0, ggpmos_r_ohm_um = ggpmos
     bi_t, sab = convert((IO / "bi_t/gf180mcu_fd_io__bi_t.cdl").read_text())
     dvdd, _ = convert((IO / "dvdd/gf180mcu_fd_io__dvdd.cdl").read_text())
     dvss, _ = convert((IO / "dvss/gf180mcu_fd_io__dvss.cdl").read_text())
-    lines = [diode_model("np_esd", "np_6p0", rs_n * drain_r_scale),
-             diode_model("pn_esd", "pn_6p0", rs_p * drain_r_scale),
+    # The drain diodes' reverse breakdown is left out: the snapback and
+    # avalanche branches below model the same junctions in breakdown.
+    lines = [diode_model("np_esd", "np_6p0", rs_n * drain_r_scale,
+                         breakdown=False),
+             diode_model("pn_esd", "pn_6p0", rs_p * drain_r_scale,
+                         breakdown=False),
              # Closes when the pad passes the trigger voltage and, once
              # closed, stays closed for the rest of the event (it would
              # open only below -2 V). A switch that reopened near the
@@ -36,6 +43,7 @@ def chip_netlist(rs_n, rs_p, ggnmos, clamps=True, r_ring=0.0,
     w_n = sum(d.width_um for d in sab if d.kind == "n")
     w_p = sum(d.width_um for d in sab if d.kind == "p")
     w_snap = w_n
+    w_aval = w_p
     w_n *= diode_scale
     w_p *= diode_scale
     scale_n = w_n / TLP_DIODE_WIDTH_UM
@@ -48,10 +56,18 @@ Dpdrain PAD DVDDI pn_esd area={TLP_DIODE_AREA * scale_p:.4g} pj={TLP_DIODE_PJ * 
 * Snapback of the grounded-gate output NMOS ({w_snap:.0f} um), fitted to TLP data.
 * Once triggered, the branch conducts (V - Vh) / Ron above the holding
 * voltage Vh and nothing below it, with the corner rounded over 50 mV.
-Sgg PAD ggx PAD DVSSI ggsw
+* The switch reads the pad voltage through a {SNAP_FILTER_S * 1e12:.0f} ps filter.
+Egg ggc 0 PAD DVSSI 1
+Rggf ggc ggf 1k
+Cggf ggf 0 {SNAP_FILTER_S / 1e3:.4g}
+Sgg PAD ggx ggf 0 ggsw
 Bgg ggx ggz I = {0.05 / (ggnmos_ron_ohm_um / w_snap):.6g} * ln(1 + exp(min((V(ggx,ggz) - {ggnmos_vh:.4f}) / 0.05, 500)))
 Rggleak ggx ggz 1e9
 Vigg ggz DVSSI 0
+* Avalanche of the output PMOS drains ({w_aval:.0f} um) when DVDD is above the
+* pad, fitted to TLP data: (V - V0) / R above V0, rounded over 50 mV.
+Bgp gpx PAD I = {0.05 / (ggpmos_r_ohm_um / w_aval):.6g} * ln(1 + exp(min((V(gpx,PAD) - {ggpmos_v0:.4f}) / 0.05, 500)))
+Vigp DVDDI gpx 0
 """)
     lines.append("""
 * Pad under test. Core-side inputs are tied low (unpowered core).
@@ -80,7 +96,7 @@ Xpad A0 CS0 DVDDI DVSSI IE0 OE0 PAD PD0 PDRV00 PDRV10 PU0 SL0 VDDC VSSC Y
     lines.append("Vdvss DVSS 0 0")
     lines.append("Rvssc VSSC DVSS 1\nRvddc VDDC 0 1e9\nRdvddleak DVDD 0 1e9")
     lines.append("Ry Y 0 1e9")
-    return "\n".join(lines), w_n, w_p, w_snap
+    return "\n".join(lines), w_n, w_p, w_snap, w_aval
 
 
 HBM = {"C": 100e-12, "R": 1500.0, "L": 5e-6}
@@ -131,7 +147,8 @@ PMOS_GATE = "v(Xpad.n43)"
 CHANNEL_VECS = ([f"@m.xpad.x{m.lower()}.m0[id]" for m in PMOS_DRIVERS]
                 + [f"@m.xpad.x{m.lower()}.m0[id]" for m in NMOS_DRIVERS])
 VECS = ["v(PAD)", "v(DVDD)", "v(Xpad.n20)", "i(Vzap)", "@Dndrain[id]",
-        "@Dpdrain[id]", "i(Vigg)", PMOS_GATE] + CHANNEL_VECS + ["v(Xvdd.n4)"]
+        "@Dpdrain[id]", "i(Vigg)", "i(Vigp)", "v(ggf)", PMOS_GATE
+        ] + CHANNEL_VECS + ["v(Xvdd.n4)"]
 
 
 # Solver settings to try in turn: (label, integration method and extra
@@ -147,10 +164,11 @@ SOLVERS = (
 SHORT_STOP = 4e-9
 
 
-def zap(kind, volts, rs_n, rs_p, tstop, ggnmos, **chip):
+def zap(kind, volts, rs_n, rs_p, tstop, ggnmos, ggpmos, **chip):
     print(f"  {kind} {volts:+.0f} V {chip}", flush=True)
     tstep = "0.1n" if kind == "hbm" else "0.02n"
-    body, w_n, w_p, w_snap = chip_netlist(rs_n, rs_p, ggnmos, **chip)
+    body, w_n, w_p, w_snap, w_aval = chip_netlist(rs_n, rs_p, ggnmos,
+                                                  ggpmos, **chip)
     net = header() + body + source(kind, volts) + f"""
 Vzap zap PAD 0
 .options method=@METHOD@ reltol=1e-3 itl4=200 gmin=1e-10 abstol=1e-9
@@ -178,6 +196,10 @@ wrdata @OUT@ @VECS@
                         .replace(f".tran {tstep} {tstop}",
                                  f".tran {step or tstep} {stop}"),
                         vecs, timeout)
+            # A run that ends early without saying so is a failure too.
+            if d["time"][-1] < stop * (1 - 1e-6):
+                raise NgspiceFailed(
+                    f"stopped at {d['time'][-1] * 1e9:.3g} ns")
             break
         except NgspiceFailed as exc:
             print(f"    {label} to {stop * 1e9:g} ns failed ({exc})",
@@ -191,13 +213,13 @@ wrdata @OUT@ @VECS@
         "t": d["time"], "pad": d["v(PAD)"], "dvdd": d["v(DVDD)"],
         "inner": d["v(Xpad.n20)"], "i": d["i(Vzap)"],
         "ndiode": d["@Dndrain[id]"], "pdiode": d["@Dpdrain[id]"],
-        "snap": d["i(Vigg)"],
+        "snap": d["i(Vigg)"], "aval": d["i(Vigp)"], "snap_ctl": d["v(ggf)"],
         "clamp_gate": d["v(Xvdd.n4)"] if clamps else None,
         "pmos_gate": d[PMOS_GATE],
         # Drain current of each driver, positive into the drain (the pad).
         "pchannel": sum(d[v] for v in CHANNEL_VECS[:len(PMOS_DRIVERS)]),
         "nchannel": sum(d[v] for v in CHANNEL_VECS[len(PMOS_DRIVERS):]),
-        "w_n": w_n, "w_p": w_p, "w_snap": w_snap,
+        "w_n": w_n, "w_p": w_p, "w_snap": w_snap, "w_aval": w_aval,
     }
 
 
