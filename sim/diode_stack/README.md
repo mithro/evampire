@@ -171,20 +171,24 @@ agreement is by construction, not a check. A design has to work at 8.5 V. Neithe
 The ESD simulations (`docs/esd/`, on the `docs/esd` branch, PR 15, not yet
 merged) show the standard gf180mcu I/O cell holding its pad below about
 5.6 V for a +2 kV HBM discharge. A +8 kV IEC contact discharge takes the
-pad to a 15.3 V peak, and +15 kV to 21.0 V. Those IEC figures rest partly on
-the same model artefact as variant A here. At the +8 kV peak, 91 % of the
-rail clamps' current is the nfet model's impact-ionisation term, far outside
-its fitted range. The HBM figure is not affected. If this stack sat on such a
-pin:
+pad to a 15.6 V peak, and +15 kV to 21.8 V. Those IEC figures rest partly on
+the same model artefact as variant A here. At the +8 kV peak, 60 % of the
+rail clamps' terminal current is the nfet model's impact-ionisation term,
+far outside its fitted range. The HBM figure is not affected. If this stack
+sat on such a pin:
 
-* **Isolated stack (B):** 15.3 V puts 1.5 V on each transistor and 15.3 V
-  on the top deep N-well, below its 31 V. The stack draws 0.5 mA, while the
-  protection carries amps, so the stack is not the weak point. At 21.0 V
-  each transistor has 2.1 V, still below the deep N-well's breakdown.
+* **Isolated stack (B):** 15.6 V puts 1.56 V on each transistor and 15.6 V
+  on the top deep N-well, below its 31 V. The stack draws 0.54 mA, while the
+  protection carries amps, so the stack is not the weak point. At 21.8 V
+  each transistor has 2.18 V, still below the deep N-well's breakdown.
 * **Shared-substrate stack (A):** its top junction to the substrate avalanches
   at about 11.7 V (8.5 V minimum), so it becomes an extra ESD path into the
-  substrate: 32 mA in the model at 15.3 V. It was never designed to carry
+  substrate: 35 mA in the model at 15.6 V. It was never designed to carry
   ESD current.
+
+Every junction in the three variants stays reverse-biased over the whole
+sweep. BSIM4's forward-current limit on its own junctions (`ijthsfwd`),
+which distorts the ESD simulations, therefore plays no part here.
 
 A pin that is *meant* to carry high voltage can't use the standard cell
 at all. Its positive path is a diode from the pad to the I/O supply, which
