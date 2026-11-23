@@ -74,13 +74,21 @@ The two polarities respond differently:
 * In the negative discharge the NMOS drain diode alone carries the
   current, so only the diode width matters: the rows with one and with four
   supply pads agree. Four times the standard width brings the diode to
-  0.80 of its failure current.
+  0.80 of its failure current. The rows with one supply pad and two or four
+  times the diode width were simulated for their first 4 ns only
+  (:numref:`tab-esd-solver`), which covers the first peak.
 * In the positive discharge the current crosses the PMOS drain diode and
   the rail clamps, and the clamps need several volts to carry their share
-  of it. In every case simulated the pad still passes the output NMOS's
-  10.7 V trigger during the first peak, and the snapped-back NMOS remains
-  the most stressed device. With four times the diode width and four DVDD
-  and four DVSS pads, the NMOS carries 2.06 times its failure current.
+  of it. In every case simulated the pad passes the output NMOS's 10.7 V
+  trigger during the first peak, and the snapped-back NMOS is the most
+  stressed device.
+* With four times the diode width and four DVDD and four DVSS pads, the
+  pad reaches 10.9 V, only 0.2 V past the trigger, for about half a
+  nanosecond. The NMOS snaps back and carries 2.07 times its failure
+  current. In a check run in which the NMOS took 500 ps rather than 100 ps
+  to trigger, it did not snap back. The PMOS drain diode was then the most
+  stressed device, at 0.48 of its limit. Which happens depends on how fast
+  the real NMOS triggers, which the foundry does not publish.
 
 A pad for a positive level 4 discharge therefore needs either clamps that
 hold the pad below 10.7 V at 30 A, or a snapback device wide enough to
@@ -117,8 +125,8 @@ How the circuit behind the pin is built sets that weakest point. Take a
 stack of transistors in series that shares a high voltage between them:
 
 * If every transistor sits in its own isolating well, the stack divides
-  the pad voltage evenly. The 13.7 V peak of a +8 kV discharge then puts
-  about 1.4 V on each of ten transistors. The full 13.7 V lands on the
+  the pad voltage evenly. The 15.3 V peak of a +8 kV discharge then puts
+  about 1.5 V on each of ten transistors. The full 15.3 V lands on the
   junction that isolates the top well from the substrate. That junction
   must withstand it.
 * If the transistors share the substrate, the top transistor's N-type
