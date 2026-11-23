@@ -102,7 +102,9 @@ Output selectors A and B
    time the output port spends sending processor frames. All three are
    fractions with no unit. For example, a link at half load (:math:`U = 0.5`)
    and processor traffic of 1 Mbit/s on a 1000 Mbit/s port
-   (:math:`T = 0.001`) give :math:`D \approx 0.0005`.
+   (:math:`T = 0.001`) give :math:`D \approx 0.0005`. On a 10 Mbit/s port
+   the same processor traffic gives :math:`T = 0.1` and
+   :math:`D \approx 0.05`, a hundred times more.
 
    Ethernet does not guarantee delivery. Higher-level protocols such as
    :wikipedia:`TCP <Transmission_Control_Protocol>` resend lost data;

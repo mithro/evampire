@@ -8,8 +8,8 @@ written for integrated circuit designers who have not worked on Ethernet.
 
 Each board configuration either uses an external transceiver or integrates
 it on evampire (:numref:`tab-power-board-configs`). Every port runs
-1000BASE-T, gigabit Ethernet over four pairs, in both configurations
-(:ref:`req-transceivers`).
+1000BASE-T, gigabit Ethernet over four pairs, as well as 100BASE-TX and
+10BASE-T, in both configurations (:ref:`the transceiver requirements <req-transceivers>`).
 
 .. toctree::
    :maxdepth: 1

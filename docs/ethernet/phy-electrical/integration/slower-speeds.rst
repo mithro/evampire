@@ -4,8 +4,8 @@ What 100BASE-TX and 10BASE-T add
 ================================
 
 This page lists what the integrated gigabit transceiver needs in addition
-to support 100BASE-TX and 10BASE-T, which are optional
-(:ref:`requirements-open-questions`). Their limits are in
+to support 100BASE-TX and 10BASE-T, which every port supports
+(:ref:`the transceiver requirements <req-transceivers>`). Their limits are in
 :numref:`tab-phy-100base-tx` and :numref:`tab-phy-10base-t`.
 
 .. _phy-int-100:
@@ -101,7 +101,6 @@ The link pulses that autonegotiation needs do not need this driver
 Open questions
 --------------
 
-* Whether 100 Mbit/s and 10 Mbit/s are supported, and if so how their
-  bytes cross the byte interface: a byte-enable flag on the 8 ns byte
-  clock, or a slower clock.
-* Which 10BASE-T driver option is used, if 10BASE-T is supported.
+* How 100 Mbit/s and 10 Mbit/s bytes cross the byte interface: a
+  byte-enable flag on the 8 ns byte clock, or a slower clock.
+* Which 10BASE-T driver option is used.

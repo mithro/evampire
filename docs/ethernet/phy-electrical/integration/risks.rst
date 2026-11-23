@@ -101,5 +101,5 @@ The blocks can be built and checked in this order
 #. Byte interface to the forwarding logic, the same interface as the
    :ref:`RGMII block <arch-rgmii>`, checked with the forwarding logic.
 
-The optional 100BASE-TX and 10BASE-T blocks of :doc:`slower-speeds` reuse
+The 100BASE-TX and 10BASE-T blocks of :doc:`slower-speeds` reuse
 steps 3, 5 and 6.

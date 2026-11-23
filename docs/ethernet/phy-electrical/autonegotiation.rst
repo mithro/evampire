@@ -172,6 +172,8 @@ For 1000BASE-T the master is chosen by these rules
    seeds both ends draw new seeds and negotiate again; after seven failed
    attempts a configuration fault is declared.
 
+.. _phy-autoneg-parallel:
+
 A partner that does not autonegotiate sends 10BASE-T link pulses or the
 100BASE-TX idle signal instead of bursts. The transceiver recognises that
 speed from the signal itself, which is called *parallel detection*
