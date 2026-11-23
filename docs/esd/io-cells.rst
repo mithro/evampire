@@ -87,7 +87,7 @@ The resistor limits the current that reaches the small diodes, so the
 gates stay below the pad by the voltage across it. The difference grows
 with the current: in the simulated +2 kV human body model discharge the pad
 reaches 5.6 V and the gates 5.4 V, and in the +8 kV IEC discharge the pad
-reaches 15.3 V and the gates 12.4 V (:numref:`tab-esd-events-voltage`).
+reaches 15.6 V and the gates 12.4 V (:numref:`tab-esd-events-voltage`).
 
 The rail clamp shorts DVDD to DVSS during a fast event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

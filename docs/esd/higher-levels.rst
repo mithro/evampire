@@ -76,21 +76,34 @@ The two polarities respond differently:
 * In the negative discharge the NMOS drain diode alone carries the
   current, so only the diode width matters: the rows with one and with four
   supply pads agree. Four times the standard width brings the diode to
-  0.80 of its failure current. The rows with one supply pad and two or four
-  times the diode width were simulated for their first 4 ns only
-  (:numref:`tab-esd-solver`), which covers the first peak.
+  0.80 of its failure current. The row with one supply pad and four times
+  the diode width was simulated for its first 4 ns only
+  (:numref:`tab-esd-solver`), which covers the first peak. The row with
+  one supply pad and twice the diode width stalled the solver with every
+  setting, so it has no result.
 * In the positive discharge the current crosses the PMOS drain diode and
   the rail clamps, and the clamps need several volts to carry their share
   of it. In every case simulated the pad passes the output NMOS's 10.7 V
   trigger during the first peak, and the snapped-back NMOS is the most
-  stressed device.
+  stressed device. With one supply pad, the dedicated diodes beside the
+  output NMOS also break down in reverse and carry several amperes
+  (:numref:`tab-esd-dedicated`). The foundry gives no failure current for
+  a diode in reverse breakdown.
+
 * With four times the diode width and four DVDD and four DVSS pads, the
   pad reaches 10.9 V, only 0.2 V past the trigger, for about half a
-  nanosecond. The NMOS snaps back and carries 2.07 times its failure
-  current. In a check run in which the NMOS took 500 ps rather than 100 ps
-  to trigger, it did not snap back. The PMOS drain diode was then the most
-  stressed device, at 0.48 of its limit. Which happens depends on how fast
-  the real NMOS triggers, which the foundry does not publish.
+  nanosecond. The NMOS snaps back and carries 2.01 times its failure
+  current. If the NMOS takes 500 ps rather than 100 ps to trigger, it does
+  not snap back, and the PMOS drain diode is the most stressed device, at
+  0.49 of its limit (:numref:`tab-esd-trigger-time`). Which happens depends
+  on how fast the real NMOS triggers, which the foundry does not
+  publish.
+
+.. csv-table:: Reverse current of the dedicated diodes in the positive
+               8 kV discharges with wider diodes
+   :name: tab-esd-dedicated
+   :file: sim/results/dedicated.csv
+   :header-rows: 1
 
 A pad for a positive level 4 discharge therefore needs either clamps that
 hold the pad below 10.7 V at 30 A, or a snapback device wide enough to
@@ -127,8 +140,8 @@ How the circuit behind the pin is built sets that weakest point. Take a
 stack of transistors in series that shares a high voltage between them:
 
 * If every transistor sits in its own isolating well, the stack divides
-  the pad voltage evenly. The 15.3 V peak of a +8 kV discharge then puts
-  about 1.5 V on each of ten transistors. The full 15.3 V lands on the
+  the pad voltage evenly. The 15.6 V peak of a +8 kV discharge then puts
+  about 1.6 V on each of ten transistors. The full 15.6 V lands on the
   junction that isolates the top well from the substrate. That junction
   must withstand it.
 * If the transistors share the substrate, the top transistor's N-type
