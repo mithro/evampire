@@ -7,19 +7,28 @@ in the text gives the section, equation, table or slide used.
 gf180mcu process data
 ---------------------
 
+.. [HV-GF180-EP-1] GlobalFoundries, `gf180mcu electrical parameters,
+   section 1.0, Low Voltage Devices (3.3V)
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_1.html>`__.
+
+.. [HV-GF180-EP-2] GlobalFoundries, `gf180mcu electrical parameters,
+   section 2.0, Medium Voltage Devices (6V)
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_2.html>`__.
+
 .. [HV-GF180-EP-5] GlobalFoundries, `gf180mcu electrical parameters,
    section 5.5, Junction Breakdown Voltage
    <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_5.html>`__.
 
 .. [HV-GF180-MODELS] GlobalFoundries and Google, `gf180mcu_fd_pr SPICE
-   models, sm141064.ngspice, model nwp_6p0
-   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr/blob/9f992d5a9186d1f7820c58f039c484ad35b2edea/models/ngspice/sm141064.ngspice#L38194-L38197>`__,
-   commit 9f992d5.
+   models, sm141064.ngspice, models nwp_3p3, nwp_6p0 and dnwps
+   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr/blob/9f992d5a9186d1f7820c58f039c484ad35b2edea/models/ngspice/sm141064.ngspice#L38162-L38220>`__,
+   commit 9f992d5, lines 38162–38220.
 
 .. [HV-OPENPDKS-EXTRACT] R. T. Edwards and contributors, `open_pdks,
    gf180mcu/magic/gf180mcu-extract.tech
    <https://github.com/RTimothyEdwards/open_pdks/blob/bb8c82ecc7a9750faabeea98d5ca13e76e4ae744/gf180mcu/magic/gf180mcu-extract.tech#L464-L616>`__,
-   commit bb8c82e, nominal capacitances, lines 464–616; the file gives
+   commit bb8c82e, nominal capacitances, lines 464–616 (polysilicon at
+   line 489, Metal2 over Metal1 at line 529); the file gives
    GlobalFoundries document PDS_035_03 as their source.
 
 .. [HV-SIM-STACK] evampire, `Ten 5 V transistors in series as diodes, swept

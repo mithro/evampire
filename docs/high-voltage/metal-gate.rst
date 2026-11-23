@@ -28,13 +28,14 @@ source and drain stay at low voltage.
 .. figure:: metal-gate.svg
    :name: fig-hv-metal-gate
    :alt: Cross-section of a P-type substrate with two N+ regions, source and
-         drain, separated by field oxide. Five dashed lines in the
-         insulator above mark the metal levels. A plate on Metal5 above the
-         field oxide is at 57 V, and an arrow marks 57 V across the
-         insulator. A thin inversion layer under the field oxide joins
-         source and drain. P+ taps sit outside the device.
+         drain, separated by field oxide that reaches deeper into the
+         silicon than the N+. Five dashed lines in the insulator above mark
+         the metal levels. A plate on Metal3 above the field oxide is at
+         57 V, and an arrow marks 57 V across the insulator. A thin
+         inversion layer runs along the bottom of the field oxide and up its
+         sidewalls to the source and drain. P+ taps sit outside the device.
 
-   A transistor with its gate on Metal5. The insulator holds the whole
+   A transistor with its gate on Metal3. The insulator holds the whole
    voltage of the sensed node, and the silicon stays near the source
    voltage.
 
@@ -54,14 +55,16 @@ At 57 V the field in the insulator is 0.48 MV/cm under Metal1 and
 (`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
 section 7), far below the fields on :doc:`dielectric`. The breakdown of the
 gf180mcu dielectrics is not published, but these fields leave a wide
-margin. The tighter limit is likely sideways, to low-voltage metal on the
-same layer, which the spacing sets.
+margin. Low-voltage metal near the plate is closer. Metal1 under a Metal2
+plate has 59.0 aF/µm² to it [HV-OPENPDKS-EXTRACT]_, the capacitance of
+0.58 µm of oxide, which holds 0.97 MV/cm at 57 V. Low-voltage metal beside
+the plate on the same layer is closer still, set by the spacing.
 
 The plate inverts any P-type surface it covers, not only the channel. The
 inversion layer would then join every N region under the plate. Heavily
 doped P+ taps around the device stop it spreading
 (:numref:`fig-hv-metal-gate`), because heavier doping raises the threshold
-far above the sensed voltage, as the next section shows.
+far above the sensed voltage, as the threshold equation below shows.
 
 Each metal layer is a different gate insulator
 ----------------------------------------------
@@ -138,12 +141,15 @@ voltage across the insulator needed to hold the depletion charge
    * - :math:`V_\text{FB}`
      - Flat-band voltage: the gate voltage that leaves the silicon surface
        uncharged, set by the gate material and charge in the insulator.
-       Taken as −0.9 V for an aluminium gate as an illustration
+       Taken as −0.9 V as an illustration. A titanium nitride barrier, usual
+       at the bottom of aluminium lines, would give nearer −0.3 V, which
+       changes little against tens of volts
      - V
    * - :math:`\phi_\text{F}`
      - :math:`(kT/q) \ln(N/n_\text{i})`, the depth of the Fermi level below
-       the middle of the band gap, with :math:`n_\text{i} = 10^{10}`
-       cm\ :sup:`-3` [HV-MIT-6012-L7]_ (slide 7-12)
+       the middle of the band gap. :math:`n_\text{i} = 10^{10}`
+       cm\ :sup:`-3` gives 417 mV at :math:`10^{17}` cm\ :sup:`-3`, close
+       to the 420 mV of [HV-MIT-6012-L7]_ (slide 7-12)
      - V
    * - :math:`Q_\text{dep}`
      - Charge per area in the depleted silicon at threshold
@@ -162,93 +168,141 @@ voltage across the insulator needed to hold the depletion charge
        :numref:`tab-hv-metal-stack`
      - F/cm\ :sup:`2`
 
-For Metal5 over field oxide, :math:`C_\text{ox} = 5.80 \times 10^{-10}`
-F/cm², on substrate doped at :math:`1.2 \times 10^{15}` cm\ :sup:`-3`
-(:doc:`junctions`):
+For Metal5 over field oxide, :math:`C_\text{ox} = 5.798 \times 10^{-10}`
+F/cm², on substrate doped at the lightest estimate on :doc:`junctions`,
+:math:`1.2 \times 10^{15}` cm\ :sup:`-3`:
 
 .. math::
 
    \phi_\text{F} &= 0.02585 \times \ln(1.2 \times 10^{5}) \\
      &= 0.302\ \text{V} \\
-   Q_\text{dep} &= 1.55 \times 10^{-8}\ \text{C/cm}^2 \\
+   Q_\text{dep} &= 1.553 \times 10^{-8}\ \text{C/cm}^2 \\
    V_\text{T} &= -0.9 + 0.60
-     + \frac{1.55 \times 10^{-8}}{5.80 \times 10^{-10}} \\
+     + \frac{1.553 \times 10^{-8}}{5.798 \times 10^{-10}} \\
      &= -0.9 + 0.60 + 26.8 \\
      &= 26.5\ \text{V}
 
 The last term dominates for every metal layer, so the threshold rises
-almost in proportion to the insulator thickness
-(:numref:`tab-hv-metal-vt`). It also rises with the doping, and steeply.
-The substrate estimates on :doc:`junctions` give the first two columns. The
-third is an illustration of a more heavily doped P-type well under the
-channel, whose doping in gf180mcu is not published.
+almost in proportion to the insulator thickness. It also rises with the
+doping, and steeply.
 
-.. list-table:: Threshold of a metal-gate transistor over field oxide,
-               against doping under the gate
+A measured threshold calibrates the layers
+------------------------------------------
+
+The foundry publishes the threshold of this very device with its gate on
+Metal1: a field transistor in the 6 V area, NMOS, :math:`W/L = 200/0.36`,
+8.5 V minimum and 11 V typical [HV-GF180-EP-2]_ (row 7). That is well above
+the 5.0 V the lightest doping estimate gives for Metal1. The equation above
+reaches 8.5 V with :math:`3.0 \times 10^{15}` cm\ :sup:`-3` under the
+field oxide, and 11 V with :math:`4.8 \times 10^{15}` cm\ :sup:`-3`
+(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+section 7). Applying the same doping under the other layers gives
+:numref:`tab-hv-metal-vt`.
+
+.. list-table:: Threshold of a metal-gate transistor over field oxide in
+               the 6 V area
    :name: tab-hv-metal-vt
    :header-rows: 1
    :widths: 25 25 25 25
 
    * - Gate layer
-     - 1.2 × 10\ :sup:`15` cm\ :sup:`-3` (V)
-     - 5.3 × 10\ :sup:`15` cm\ :sup:`-3` (V)
-     - 10\ :sup:`17` cm\ :sup:`-3` (V)
+     - Lightest doping estimate (V)
+     - From the Metal1 minimum (V)
+     - From the Metal1 typical (V)
    * - Metal1
      - 5.0
-     - 11.6
-     - 57
+     - 8.5
+     - 11.0
    * - Metal2
      - 10.0
-     - 22.8
-     - 111
+     - 16.8
+     - 21.7
    * - Metal3
      - 15.1
-     - 34.1
-     - 165
+     - 25.1
+     - 32.4
    * - Metal4
      - 20.1
-     - 45.3
-     - 219
+     - 33.5
+     - 43.0
    * - Metal5
      - 26.5
-     - 59.5
-     - 287
+     - 44.0
+     - 56.5
 
 The values come from
 `calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
-section 7.
+section 7. The first column is a lower bound. The other two are an
+extrapolation from one measured layer, and four things limit it:
+
+* The calibration lumps the doping and any charge at the silicon surface
+  together. Both scale with :math:`1/C_\text{ox}`, so the extrapolation
+  holds for them. Charge trapped between two metal levels acts only on the
+  layers above it, and the extrapolation misses it.
+* The published device is short, with a channel 0.36 µm long, and its
+  threshold is measured in saturation. A drain that close lowers the
+  threshold, so a long channel is likely to need a little more.
+* The doping under the field oxide is not one value for the whole die. In
+  the 3.3 V area the foundry gives a polysilicon-gated field threshold of
+  6.5 V minimum and 8.5 V typical [HV-GF180-EP-1]_ (row 7). The doping
+  that fits Metal1 in the 6 V area gives only 2.1 V to 2.8 V there
+  (section 8), so the two areas differ.
+* The equation treats the channel as flat. The next section explains why it
+  is not.
+
+Each layer and each area therefore needs its own test device before a
+design relies on its threshold.
+
+The channel runs round the field oxide
+--------------------------------------
+
+The field oxide is recessed into the silicon, and it can reach deeper than
+the N+ source and drain (:numref:`fig-hv-metal-gate`). The inversion layer
+then forms along the bottom of the oxide and has to climb its sidewalls to
+reach the N+. The plate couples to the sidewalls more weakly than to the
+bottom, so the sidewalls may need more gate voltage than the flat channel
+does. The silicon under the field oxide also carries any implant that stops
+inversion between ordinary transistors, whose doping is not published. The
+published Metal1 threshold already includes both effects for that layer.
 
 Charge in the insulator moves the threshold
 -------------------------------------------
 
 Fixed charge trapped in the insulator adds to the gate's charge. By
-:math:`Q = CV`, a charge per area :math:`Q_\text{ox}` shifts the threshold
-by :math:`Q_\text{ox}/C_\text{ox}`
-[HV-MIT-6012-L8]_ (slide 8-16). A charge of :math:`10^{11}` electron
-charges per cm² shifts it by 5.5 V under Metal1 and by 27.6 V under Metal5
+:math:`Q = CV`, a charge per area :math:`Q_\text{ox}` next to the silicon
+shifts the threshold by :math:`Q_\text{ox}/C_\text{ox}`. A charge of
+:math:`10^{11}` electron charges per cm² shifts it by 5.5 V under Metal1 and
+by 27.6 V under Metal5
 (`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
 section 7). The charge in the gf180mcu dielectrics is not published, and
-deposited dielectrics may hold more than grown oxide. The threshold
-of each layer is therefore known only once measured, and it may drift with
-temperature and time.
+deposited dielectrics may hold more than grown oxide.
 
-Two plates on the same layer, side by side, share the same charge per area
-to the extent the dielectric is uniform. A circuit that compares two such
-transistors cancels most of the shift, as the level shifter below does.
+The charge can also change while the device is in use. A steady field of
+0.1 MV/cm to 0.5 MV/cm across a deposited dielectric moves mobile ions in
+it, faster when hot, so the threshold drifts with the voltage the plate has
+held and for how long. Metal5 sits just under the passivation, so moisture
+and charge on the passivation or the package moulding also act on it.
+
+Two plates on the same layer, side by side, share the charge that was there
+when the wafer was made, to the extent the dielectric is uniform. A circuit
+that compares two such transistors cancels that common part, as the level
+shifter below does. It does not cancel drift that differs between the
+plates. In the level shifter the two plates hold opposite logic states, so
+if one state lasts longer the plates drift apart.
 
 Turning on is gradual
 ---------------------
 
-Below threshold the current does not stop. It falls tenfold for every
-:math:`(kT/q) \ln 10`, 60 mV at room temperature, of change in the surface
-potential, because the electron concentration at the surface is
-exponential in that potential [HV-MIT-6012-L8]_ (slide 8-10). The gate
-reaches the surface through a divider of two capacitances in series: the
-insulator, and the depletion region below it. The thick insulator has the
-smaller capacitance, so the gate controls the surface weakly, and the gate
-voltage needed per tenfold change is much larger: about 320 mV with Metal1
-and 1.4 V with Metal5 on substrate at :math:`1.2 \times 10^{15}`
-cm\ :sup:`-3`
+Below threshold the current does not stop. The electron concentration at
+the surface is exponential in the surface potential
+[HV-MIT-6012-L8]_ (slide 8-10), so the current falls tenfold for every
+:math:`(kT/q) \ln 10`, 60 mV at room temperature, of change in that
+potential. The gate reaches the surface through two capacitances in
+series: the insulator, and the depletion region below it. The thick
+insulator has the smaller capacitance, so the gate controls the surface
+weakly. The gate voltage needed per tenfold change is therefore much
+larger: 550 mV with Metal1 and 2.6 V with Metal5 at the doping that fits
+the typical Metal1 threshold
 (`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
 section 7). A sensor whose output is a current above threshold is not
 affected. A sensor that has to switch hard on and off within a small
@@ -290,15 +344,18 @@ linear region [HV-MIT-6012-L10]_ (slide 10-3):
      - Drain voltage above the source
      - V
 
-For Metal5, with :math:`W/L = 10`, the gate at 57 V and the drain at 1 V:
+For Metal3, with the typical threshold of 32.4 V, :math:`W/L = 10`, the
+gate at 57 V and the drain at 1 V:
 
 .. math::
 
-   I_\text{D} &= 10 \times 400 \times 5.80 \times 10^{-10} \\
-     &\quad \times (57 - 0.5 - 26.5) \times 1 \\
-     &= 70\ \mu\text{A}
+   I_\text{D} &= 10 \times 400 \times 1.009 \times 10^{-9} \\
+     &\quad \times (57 - 0.5 - 32.4) \times 1 \\
+     &= 97\ \mu\text{A}
 
-The same transistor with its gate on Metal1 carries 604 µA
+The same transistor carries 533 µA with its gate on Metal1. On Metal5 it is
+just at threshold at 57 V, and carries 29 µA only if the threshold is at
+its minimum
 (`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
 section 7). The thick insulator weakens the gate, but the large gate
 voltage makes up much of it, so currents of tens to hundreds of microamps
@@ -307,36 +364,40 @@ with the insulator thickness, so that the gate rather than the drain
 controls it. How long is a question for measurement.
 
 The sensed node carries no DC current, since the gate is an insulator. It
-carries only the charge of the plate's capacitance: 58 fF for a plate
-100 µm square on Metal5, and 293 fF on Metal1.
+carries only the charge of the plate's capacitance: 101 fF for a plate
+100 µm square on Metal3, 293 fF on Metal1 and 58 fF on Metal5.
 
 What it can be used for
 -----------------------
 
 Detecting a voltage
    The transistor turns on when the sensed node crosses its threshold, with
-   no divider drawing current. Five layers give five thresholds from one
-   doping, about 5 V to 27 V on the lightest substrate estimate
+   no divider drawing current. Five layers give five thresholds, about
+   8.5 V to 11 V on Metal1 up to 44 V to 57 V on Metal5
    (:numref:`tab-hv-metal-vt`), so a set of transistors forms a coarse
    ladder of trip points. Since the thresholds are known only once
    measured, each needs calibration.
 Measuring a voltage
-   Above threshold the current rises in proportion to the gate voltage, so
-   the transistor is a voltmeter that draws no current from the node. A
-   calibration at two known voltages fixes the slope and the threshold.
+   Above threshold the current rises linearly with :math:`V_\text{G} -
+   V_\text{T}`, so the transistor is a voltmeter that draws no current from
+   the node. A calibration at two known voltages fixes the slope and the
+   threshold. Mobility falls as the field across the channel rises, so a
+   wide range needs more calibration points.
 Shifting a signal down
    A circuit sitting tens of volts above the substrate can pass a logic
    signal down to ground-referenced circuits through two metal-gate
-   transistors. One gate follows the signal and the other its complement.
-   Because the current in the linear region is linear in the gate voltage,
-   the difference between the two currents is
+   transistors. One gate follows the signal and the other its complement,
+   so the two gates differ by the signal's swing :math:`\Delta V`. Because
+   the current in the linear region is linear in the gate voltage, the
+   difference between the two currents is
    :math:`(W/L)\,\mu_\text{n} C_\text{ox}\,\Delta V\,V_\text{DS}`,
    whatever the floating circuit's voltage. With Metal1, a 5 V swing,
    :math:`W/L = 10` and 1 V on the drains, it is 58.6 µA at every floating
-   voltage from 10 V to 40 V
+   voltage from 15 V to 40 V
    (`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
-   section 7). Matched plates also cancel most of the charge in the
-   insulator. The floating circuit must stay above both thresholds.
+   section 7). Matched plates also cancel the charge they share. The
+   floating circuit must stay above both thresholds, 11 V typical on
+   Metal1.
 
 A signal travelling up, from ground to a floating circuit such as the
 high-side gate driver on :ref:`conv-gate-drive`, needs the mirror image:

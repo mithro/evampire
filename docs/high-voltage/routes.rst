@@ -81,6 +81,9 @@ structures on a gf180mcu run would measure directly:
   against voltage, which give the substrate's doping profile.
 * Polysilicon strips over the field oxide, and metal plates over each
   dielectric, swept to breakdown against the substrate.
+* Field transistors gated by polysilicon and by each metal layer, in both
+  the 3.3 V and the 6 V areas, which give the doping under the field
+  oxide.
 * Metal-gate transistors with the gate on each metal layer, over field
   oxide and over active silicon, at several channel lengths, measured for
   threshold, current and drift over temperature and time.
@@ -102,8 +105,15 @@ Open questions
   substrate, continuously and as a short pulse?
 * Does an available N layer have a charge per area close enough to the
   RESURF value? (:doc:`grading`)
-* What threshold does a transistor gated by each metal layer have, how much
-  charge do the dielectrics hold, and how far does it drift?
+* What threshold does a transistor gated by each metal layer have, in the
+  3.3 V and the 6 V areas? Only the Metal1 value in the 6 V area is
+  published, and the extrapolation to the other layers is untested
+  (:doc:`metal-gate`).
+* How much charge do the dielectrics hold, and how far does it drift with
+  bias, temperature and time, and with moisture on the passivation?
+  (:doc:`metal-gate`)
+* How much gate voltage does the inversion layer need to climb the
+  sidewalls of the field oxide to the source and drain?
   (:doc:`metal-gate`)
 * How long must the channel of a metal-gate transistor be for the gate to
   control it, and how close may low-voltage metal sit beside a plate at

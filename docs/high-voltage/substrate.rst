@@ -71,8 +71,8 @@ The simulation shows the substrate junction failing first
 ---------------------------------------------------------
 
 With the PDK's junction models added to the stack, current starts to flow
-into the substrate at about 11.5 V across the stack, while each transistor
-in the stack has about 1 V across it [HV-SIM-STACK]_. The junction under
+into the substrate at about 11.7 V across the stack, while each transistor
+in the stack has about 1.3 V to 1.5 V across it [HV-SIM-STACK]_. The junction under
 the top node has reached avalanche breakdown, described on
 :doc:`junctions`.
 

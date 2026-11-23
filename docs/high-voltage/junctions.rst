@@ -136,15 +136,51 @@ heavily doped on one side, the capacitance per area at zero bias is
                    {1.602 \times 10^{-19} \times 1.035 \times 10^{-12}} \\
      &= 1.2 \times 10^{15}\ \text{cm}^{-3}
 
-The equation assumes an abrupt junction with uniform doping. The model's
-capacitance falls more slowly with voltage than that. The same relation
-says that :math:`1/C^2` rises in a straight line with reverse voltage, with a
-slope of :math:`2/(q \varepsilon_\text{Si} N)`, so the slope of the model's
-:math:`1/C^2` gives the doping at the depth the depletion region reaches.
-Between 2 V and 10 V it gives :math:`5.3 \times 10^{15}\ \text{cm}^{-3}`
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
-section 2). Both are estimates. A capacitance measurement on a large N-well
-test structure would give the doping profile directly.
+The equation assumes an abrupt junction with uniform doping, whose
+capacitance falls as the inverse square root of the voltage. The model's
+capacitance falls more slowly: its grading coefficient is 0.31, close to
+the 1/3 of a junction whose doping changes linearly across it, not the 1/2
+of an abrupt one. The model values are fits to measured capacitance, not a
+doping profile, so the equation gives a rough figure only.
+
+For an abrupt junction, :math:`1/C^2` rises in a straight line with reverse
+voltage, with a slope of :math:`2/(q \varepsilon_\text{Si} N)`. Applied to
+the model between 2 V and 10 V, that slope gives
+:math:`5.3 \times 10^{15}\ \text{cm}^{-3}`. The models of other junctions
+to the same substrate give other values (:numref:`tab-hv-doping-estimates`).
+
+.. list-table:: Substrate doping estimated from the junction models
+               [HV-GF180-MODELS]_
+   :name: tab-hv-doping-estimates
+   :header-rows: 1
+   :widths: 34 16 25 25
+
+   * - Junction model
+     - Grading
+     - At zero bias (cm\ :sup:`-3`)
+     - From 1/C² slope (cm\ :sup:`-3`)
+   * - 6 V N-well, ``nwp_6p0``
+     - 0.31
+     - 1.2 × 10\ :sup:`15`
+     - 5.3 × 10\ :sup:`15`
+   * - 3.3 V N-well, ``nwp_3p3``
+     - 0.34
+     - 1.5 × 10\ :sup:`15`
+     - 4.8 × 10\ :sup:`15`
+   * - Deep N-well, ``dnwps``
+     - 0.15
+     - 2.2 × 10\ :sup:`15`
+     - 5.3 × 10\ :sup:`16`
+
+The values come from
+`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+section 2. The deep N-well's grading of 0.15 is far from either simple
+junction, so its slope value means little. The lowest value,
+:math:`1.2 \times 10^{15}\ \text{cm}^{-3}`, is best read as a lower bound.
+A measured threshold under the field oxide points to about
+:math:`3 \times 10^{15}` to :math:`5 \times 10^{15}\ \text{cm}^{-3}` at the
+surface in the 6 V area (:doc:`metal-gate`). A capacitance measurement on a
+large N-well test structure would give the doping profile directly.
 
 At :math:`1.2 \times 10^{15}` to :math:`5.3 \times 10^{15}\ \text{cm}^{-3}`,
 a flat junction to the substrate would hold about 90 V to 270 V. The

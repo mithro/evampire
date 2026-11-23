@@ -13,7 +13,7 @@ Oxide holds far more voltage per micrometre than silicon
 Thin thermal silicon dioxide breaks down at fields of about 9 MV/cm to
 11 MV/cm [HV-US4954189]_, and Park takes about 6 MV/cm for the thicker
 buried oxide of a silicon-on-insulator wafer [HV-PARK]_ (Section 2.3.3).
-Both are 20 to 30 times the critical field of silicon at the doping of the
+Both are 20 to 33 times the critical field of silicon at the doping of the
 gf180mcu substrate (:doc:`junctions`). An insulator therefore holds a given voltage
 in a far thinner layer, and it has no depletion region that needs room to
 spread. Its limit is long-term wear: a design keeps the continuous field in
@@ -53,6 +53,19 @@ side in one polysilicon strip. A stack of them can therefore share a high
 voltage evenly along the strip, as the discrete diodes on
 :doc:`substrate` do, with only the field oxide facing the substrate.
 Published charge pumps built this way are listed on :ref:`poe-limits`.
+
+The polysilicon is also a gate over the field oxide. The open extraction
+rules give polysilicon 110.67 aF/µm² to the substrate
+[HV-OPENPDKS-EXTRACT]_, the capacitance of 0.31 µm of oxide. At 57 V that
+oxide holds 1.83 MV/cm, and at 100 V 3.2 MV/cm
+(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+section 8), close to the derated field in :numref:`tab-hv-oxide-thickness`.
+The foundry publishes the threshold of a field transistor gated by
+polysilicon in the 3.3 V area as 6.5 V minimum and 8.5 V typical
+[HV-GF180-EP-1]_ (row 7). Polysilicon at tens of volts therefore inverts
+the silicon under it and joins any N regions there, as a metal plate does
+on :doc:`metal-gate`. N regions at different voltages must stay out from
+under it, or a heavily doped P+ region must cut the surface between them.
 
 Polysilicon devices conduct less well than devices in the silicon crystal,
 because polysilicon is made of small crystal grains whose boundaries

@@ -12,13 +12,16 @@ A gradual fall keeps the field low
 
 The field at a point is how steeply the voltage changes there. A voltage
 that falls evenly over a length :math:`L` has a field of :math:`V/L`
-everywhere along it. Breakdown happens where the field first reaches its
-critical value, so the shortest length over which a voltage can fall is set
-by the field the silicon can hold on average:
+everywhere along it. A carrier crossing a field frees new carriers at a
+rate per centimetre :math:`\alpha`, which Fulop's fit gives as
+:math:`a_\alpha E^7` [HV-PARK]_ (Equation 3.25). Avalanche runs away when
+each carrier crossing the field frees one more, that is, when
+:math:`\alpha L = 1` for a uniform field. Setting :math:`E = V/L` gives the
+shortest length over which a voltage can fall:
 
 .. math::
 
-   L_\text{min} = \frac{V}{E_\text{avg}}
+   L_\text{min} = \left(a_\alpha V^7\right)^{1/6}
 
 .. list-table::
    :header-rows: 1
@@ -33,24 +36,29 @@ by the field the silicon can hold on average:
    * - :math:`V`
      - Voltage between the high-voltage region and the substrate
      - V
-   * - :math:`E_\text{avg}`
-     - Average field across a flat junction at breakdown,
-       :math:`V_\text{B}/W_\text{B}` from :doc:`junctions`:
-       :math:`1.5 \times 10^{5}` at :math:`10^{15}\ \text{cm}^{-3}`
-     - V/cm
+   * - :math:`a_\alpha`
+     - Fulop's coefficient for silicon, :math:`1.8 \times 10^{-35}`
+       [HV-PARK]_ (Section 3.1.5)
+     - cm\ :sup:`6` V\ :sup:`-7`
 
-For 57 V at :math:`10^{15}\ \text{cm}^{-3}`:
+For 57 V:
 
 .. math::
 
-   L_\text{min} &= \frac{57\ \text{V}}{1.5 \times 10^{5}\ \text{V/cm}} \\
-     &= 3.8 \times 10^{-4}\ \text{cm} = 3.8\ \text{µm}
+   L_\text{min} &= \left(1.8 \times 10^{-35} \times 57^7\right)^{1/6} \\
+     &= 1.8 \times 10^{-4}\ \text{cm} = 1.8\ \text{µm}
+
+The field is then 3.2 × 10\ :sup:`5` V/cm, and holding 100 V takes 3.5 µm
+(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+section 4). The flat-junction fit on :doc:`junctions` comes from the same
+coefficient: its triangular field gives an ionisation integral of 0.98.
+The length does not depend on the doping, because a uniform field needs
+the charge that would bend it to be absent or balanced.
 
 That is the ideal of a perfectly even fall. Real structures leave the field
-peaked at their edges, so they need several times this length
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
-section 4). The structures below are ways of getting closer to the ideal
-(:numref:`fig-hv-grading`).
+peaked at their edges, so they need more length than this, by an amount
+found by device simulation of each structure. The structures below are
+ways of getting closer to the ideal (:numref:`fig-hv-grading`).
 
 .. figure:: grading.svg
    :name: fig-hv-grading
@@ -109,11 +117,10 @@ value, and the voltage then falls almost evenly along the surface. This is
 [HV-PARK]_ (Section 2.3).
 
 RESURF works only when the layer's dopant charge per area is close to a
-value set by silicon's critical field, about
-:math:`1.4 \times 10^{12}\ \text{cm}^{-2}` at most from the formula in
-[HV-PARK]_ (Equation 2.10) with a critical field of
-:math:`3 \times 10^5` V/cm, and about
-:math:`2 \times 10^{12}\ \text{cm}^{-2}` in [HV-US5223919]_. Whether a gf180mcu N-well,
+value set by silicon's critical field. With a critical field of
+:math:`3 \times 10^5` V/cm, the formula in [HV-PARK]_ (Equation 2.10)
+gives at most about :math:`1.4 \times 10^{12}\ \text{cm}^{-2}`.
+[HV-US5223919]_ gives about :math:`2 \times 10^{12}\ \text{cm}^{-2}`. Whether a gf180mcu N-well,
 or an N-well with part of its area blocked from the implant, comes near
 that value is a question for measurement on test structures.
 
