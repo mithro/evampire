@@ -160,13 +160,15 @@ def summarise(r):
         if ctl < GGNMOS_VT1 - 0.01:
             raise RuntimeError(
                 f"snapback latched with its control at {ctl:.3f} V")
-    # Share of the rail clamps' drain current that is the transistor
-    # model's impact-ionisation current into the substrate, at the clamps'
-    # peak current.
+    # Share of the rail clamps' current that is the transistor model's
+    # impact-ionisation current into the substrate, at the clamps' peak
+    # current. ngspice's [id] leaves that current out, so the clamps'
+    # terminal current is [id] + [isub].
     clamp = None
     if r.get("clamp_id") is not None:
-        kc = int(np.argmax(abs(r["clamp_id"])))
-        clamp = {"id_A": abs(r["clamp_id"][kc]),
+        total = r["clamp_id"] + r["clamp_isub"]
+        kc = int(np.argmax(abs(total)))
+        clamp = {"id_A": abs(total[kc]),
                  "isub_A": abs(r["clamp_isub"][kc]),
                  "t_ns": r["t"][kc] * 1e9}
     # Reverse current of any dedicated diodes in breakdown.

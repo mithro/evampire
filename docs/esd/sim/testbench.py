@@ -59,19 +59,21 @@ Dpded PAD DVDDI pn_ded area={TLP_DIODE_AREA * scale_p * max(ded, 1e-9):.4g} pj={
 * Once triggered, the branch conducts (V - Vh) / Ron above the holding
 * voltage Vh and nothing below it, with the corner rounded over 50 mV.
 * Trigger: the pad voltage, filtered over {snap_filter * 1e12:.0f} ps, charges a latch
-* node ggq towards 1 V, at up to 0.1 V/ps, while it is above {GGNMOS_VT1} V (a step
-* a few mV wide). Nothing discharges ggq. The branch conducts only with ggq
-* past about 0.5 V, so it is off or fully on. Every element is continuous
+* node ggq towards 1 V, at up to 0.02 V/ps, while it is above {GGNMOS_VT1} V (a
+* step a few mV wide). Nothing discharges ggq. The branch turns on as ggq
+* passes 0.4 V to 0.6 V, over about 10 ps; switching on faster discharges
+* the pad's capacitance in a spike of a few picoseconds that no real NMOS
+* shows. Every element is continuous
 * and nothing feeds back into ggq, so only solved voltages can trigger it.
 * (A self-charging latch is bistable: the implicit integrator can jump to
 * its latched state in one step.)
 Egg ggc 0 PAD DVSSI 1
 Rggf ggc ggf 1k
 Cggf ggf 0 {snap_filter / 1e3:.4g}
-Bggq 0 ggq I = 0.1 * 0.5 * (1 + tanh((V(ggf) - {GGNMOS_VT1}) / 1e-3)) * max(1 - V(ggq), 0)
+Bggq 0 ggq I = 0.02 * 0.5 * (1 + tanh((V(ggf) - {GGNMOS_VT1}) / 1e-3)) * max(1 - V(ggq), 0)
 Cggq ggq 0 1p
 Rggq ggq 0 1e15
-Bgg PAD ggz I = 0.5 * (1 + tanh((V(ggq) - 0.5) / 0.01)) * {0.05 / (ggnmos_ron_ohm_um / w_snap):.6g} * ln(1 + exp(min((V(PAD,ggz) - {ggnmos_vh:.4f}) / 0.05, 500)))
+Bgg PAD ggz I = 0.5 * (1 + tanh((V(ggq) - 0.5) / 0.05)) * {0.05 / (ggnmos_ron_ohm_um / w_snap):.6g} * ln(1 + exp(min((V(PAD,ggz) - {ggnmos_vh:.4f}) / 0.05, 500)))
 Rggleak PAD ggz 1e9
 Vigg ggz DVSSI 0
 * Avalanche of the output PMOS drains ({w_aval:.0f} um) when DVDD is above the
