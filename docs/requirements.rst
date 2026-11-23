@@ -35,8 +35,6 @@ Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
   pairs, :clause:`40`), 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) and
   10 Mbit/s Ethernet (10BASE-T, :clause:`14`) in both board configurations.
   An integrated transceiver therefore implements all three.
-* Both ports run at the same speed, because forwarding is cut-through (see
-  :ref:`the forwarding requirements <req-forwarding>`).
 
 .. _req-cable:
 
@@ -343,5 +341,6 @@ Open questions
   arrangement. The input and output voltage ranges of USB Power Delivery and
   Power over Ethernet overlap, which makes sharing possible.
 * Which high-voltage switches, if any, the full design keeps as external
-  parts. It builds the rest of the power stages on evampire, including the
-  converters' gate drivers and power transistors.
+  parts. It builds the rest of the power stages on chip, including the
+  converters' gate drivers and power transistors, on evampire or on a
+  second cable-side die where isolation needs one.

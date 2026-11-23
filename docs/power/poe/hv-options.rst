@@ -10,9 +10,8 @@ them.
 The full design builds each function on chip where it can
 ---------------------------------------------------------
 
-The full design builds most of these functions on evampire, and may keep
-some high-voltage switches as external parts
-(:numref:`tab-power-board-configs`). The choice is made per function. An
+The full design builds most of these functions on chip, on evampire or on
+a second cable-side die (:numref:`tab-power-board-configs`). The choice is made per function. An
 on-chip option is a custom design
 using the structures in :ref:`req-process`: custom transistor layouts,
 drain-extended or stacked transistors, parasitic bipolar transistors and
