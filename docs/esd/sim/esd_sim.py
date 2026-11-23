@@ -134,15 +134,14 @@ def main():
              if isinstance(k, tuple) and k[0] != "scaled"}
     def scaled_row(k, m, sign):
         s_ = summarise(waves[("scaled", k, m, sign)])
-        row = {"Diode width (×)": k,
-               "Supply pads": m,
-               "Sign": "+" if sign > 0 else "−"}
+        row = {"Diodes (×)": k,
+               "Pads": m}
         if s_ is None:
-            return {**row, "Highest PAD (V)": "no result",
-                    "Fraction of limit": "no result",
+            return {**row, "PAD (V)": "no result",
+                    "Fraction": "no result",
                     "Most stressed": "no result"}
-        return {**row, "Highest PAD (V)": f"{s_['pad_max_V']:.1f}",
-                "Fraction of limit": f"{s_['frac']:.2f}",
+        return {**row, "PAD (V)": f"{s_['pad_max_V']:.1f}",
+                "Fraction": f"{s_['frac']:.2f}",
                 "Most stressed": SHORT_NAMES[s_["limit"]]}
     write_csv("scaled.csv", [scaled_row(k, m, sign)
                              for k, m in scaled for sign in (1, -1)])
@@ -215,12 +214,15 @@ def main():
                  "PAD above 12 V (ns)"]
     cur_cols = ["Event", "PMOS diode (mA/µm)",
                 "NMOS diode (mA/µm)", "NMOS snapback (mA/µm)",
-                "PMOS avalanche (mA/µm)",
+                # PMOS avalanche is left out to fit 400 px; only -15 kV has any.
                 "Fraction of limit"]
     write_csv("events-voltage.csv",
               [{c: row[c] for c in volt_cols} for row in rows])
+    # The caption gives the unit, mA/um, so the headings stay short.
     write_csv("events-current.csv",
-              [{c: row[c] for c in cur_cols} for row in rows])
+              [{c.replace(" (mA/µm)", "").replace("Fraction of limit",
+                                                   "Fraction"): row[c]
+                for c in cur_cols} for row in rows])
 
     # Sensitivity of the +2 kV HBM result to the two least-known inputs.
     sens = [event_row("as simulated", sweep[("hbm", 1, 2)])]

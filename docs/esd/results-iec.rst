@@ -82,8 +82,9 @@ PMOS drain does not reach its avalanche voltage.
    :file: sim/results/events-voltage.csv
    :header-rows: 1
 
-.. csv-table:: Peak current density in each device, and the largest as a
-               fraction of that device's measured failure current
+.. csv-table:: Peak current density in each device in mA/µm, and the
+               largest as a fraction of that device's measured failure
+               current
    :name: tab-esd-events-current
    :file: sim/results/events-current.csv
    :header-rows: 1

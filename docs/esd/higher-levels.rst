@@ -64,7 +64,9 @@ drivers, and with more DVDD and DVSS pads, each with its rail clamp. The
 output NMOS and its snapback stay as they are.
 
 .. csv-table:: ±8 kV contact discharge with wider diodes and more supply
-               pads
+               pads: the diode width as a multiple of the standard pad's,
+               the number of DVDD and of DVSS pads, and the highest pad
+               voltage, whose sign gives the discharge's polarity
    :name: tab-esd-scaled
    :file: sim/results/scaled.csv
    :header-rows: 1

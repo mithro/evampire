@@ -1,13 +1,13 @@
-Diode width (×),Supply pads,Sign,Highest PAD (V),Fraction of limit,Most stressed
-1,1,+,15.3,4.38,NMOS snapback
-1,1,−,-8.9,3.20,NMOS diode
-1,4,+,12.3,2.96,NMOS snapback
-1,4,−,-8.9,3.20,NMOS diode
-2,1,+,14.2,3.88,NMOS snapback
-2,1,−,-5.1,1.61,NMOS diode
-2,4,+,11.4,2.39,NMOS snapback
-2,4,−,-5.1,1.61,NMOS diode
-4,1,+,13.6,3.57,NMOS snapback
-4,1,−,-3.2,0.80,NMOS diode
-4,4,+,10.9,2.07,NMOS snapback
-4,4,−,-3.2,0.80,NMOS diode
+Diodes (×),Pads,PAD (V),Fraction,Most stressed
+1,1,15.3,4.38,NMOS snapback
+1,1,-8.9,3.20,NMOS diode
+1,4,12.3,2.96,NMOS snapback
+1,4,-8.9,3.20,NMOS diode
+2,1,14.2,3.88,NMOS snapback
+2,1,-5.1,1.61,NMOS diode
+2,4,11.4,2.39,NMOS snapback
+2,4,-5.1,1.61,NMOS diode
+4,1,13.6,3.57,NMOS snapback
+4,1,-3.2,0.80,NMOS diode
+4,4,10.9,2.07,NMOS snapback
+4,4,-3.2,0.80,NMOS diode
