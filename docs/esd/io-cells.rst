@@ -160,8 +160,16 @@ The oxide capacitance is
 so :math:`C_\text{clamp} = 2.27\ \text{fF/µm}^2 \times 2000\ \text{µm}^2 =
 4.5\ \text{pF}` and
 :math:`\tau_\text{clamp} = 360\ \text{k}\Omega \times 4.5\ \text{pF} =
-1.6\ \text{µs}`. This is a hand estimate. The simulations on
-:doc:`results-hbm` use the transistor models instead.
+1.6\ \text{µs}`. The foundry's capacitor model gives 2.18 fF/µm² in
+inversion, 4.35 pF in all, which agrees ([ESD-GF180-MODELS]_). This is a
+hand estimate. The simulations on :doc:`results-hbm` use the transistor
+models instead.
+
+The estimate holds once the capacitors are in inversion. The timer node
+starts at DVSS, where the capacitors are depleted and the model gives only
+0.075 pF. The node therefore rises to about 0.7 V within some tens of
+nanoseconds, and only then charges at the 1.6 µs rate. 0.7 V is below the
+first inverter's switching voltage, so the clamp still turns on.
 
 A human body model discharge decays with a time constant of 150 ns, ten
 times shorter than 1.6 µs, so the clamp stays on for the whole event. A
@@ -182,17 +190,21 @@ DVSS as the grounded pin, the paths are as in :numref:`tab-esd-paths`.
    * - Discharge
      - Path
    * - Positive, PAD to DVSS
-     - PMOS drain diode onto DVDD, then the rail clamp to DVSS
+     - PMOS drain diode onto DVDD, then the rail clamp to DVSS. Above
+       10.7 V the output NMOS also snaps back, from the pad to DVSS
    * - Negative, PAD to DVSS
      - NMOS drain diode, forward biased, from DVSS to the pad
    * - Positive, PAD to DVDD
      - PMOS drain diode, forward biased, onto DVDD
    * - Negative, PAD to DVDD
-     - NMOS drain diode from DVSS, then the rail clamp's body diode and
-       the diode in each supply pad, from DVSS to DVDD
+     - The rail clamp from DVDD to DVSS, switched on as DVDD rises above
+       DVSS, then the NMOS drain diode, forward biased, from DVSS to the
+       pad. Above about 9.7 V the PMOS drain also conducts in avalanche,
+       from DVDD to the pad
 
 The analogue pad ``asig_5p0`` has the same two diode paths, with larger
-dedicated diodes of 4 × 150 µm² each and no series resistor
+dedicated diodes, each four 150 µm² parts (600 µm² in all), and no
+series resistor
 ([ESD-ASIG-CDL]_). Its signal reaches the core directly, so the core
 circuit connected to it sees the full pad voltage.
 
