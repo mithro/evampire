@@ -23,52 +23,59 @@ nanosecond.
 .. figure:: figures/iec-8kv.svg
    :name: fig-esd-iec-8kv
    :alt: Two graphs against time from 0 to 150 ns. Top, PAD jumps to
-         13.7 V within a nanosecond, dips, then stays above the 12 V gate
-         oxide line from about 8 ns to 33 ns before decaying; DVDD and the
-         clamp gate reach about 10 V; the input gates peak near 11.5 V.
-         Bottom, the total current peaks at 29.4 A near 1 ns, dips to 11 A,
-         rises again to 20 A near 15 ns and decays. The PMOS drain diode
-         carries up to 12.5 A, the NMOS snapback about 7.5 A and the NMOS
-         drain diode up to 7 A.
+         15.3 V within a nanosecond, dips to 10 V, rises to 13 V near 15 ns
+         and stays above the 12 V gate oxide line until about 30 ns before
+         decaying; DVDD and the clamp gate reach about 11 V, then about
+         10 V; the input gates peak at 12.4 V. Bottom, the total current
+         peaks at 29.4 A near 1 ns, dips to 11 A, rises again to 20 A near
+         15 ns and decays. The PMOS drain diode carries up to 17.5 A and
+         the NMOS snapback up to 9.3 A.
    :width: 100%
 
    Voltages and currents of a +8 kV :std:`IEC 61000-4-2` contact discharge
    into PAD.
 
-The rail clamp turns on: its gate follows DVDD. The current divides
-between three paths from the pad (:numref:`tab-esd-events-current`):
+The rail clamp turns on: its gate follows DVDD. At the first peak the
+current divides between two paths from the pad
+(:numref:`tab-esd-events-current`):
 
-* through the PMOS drain diode to DVDD and the rail clamps, about 12.7 A
-  (26.4 mA/µm over 480 µm);
-* through the snapped-back output NMOS to DVSS, 25.2 mA/µm, 3.6 times its
-  measured limit;
-* through the NMOS drain diode in reverse breakdown, which the foundry
-  diode model places at 11 V, 23.9 mA/µm.
+* through the PMOS drain diode to DVDD and the rail clamps, 17.5 A
+  (36.6 mA/µm over 480 µm, 1.2 times its measured limit);
+* through the snapped-back output NMOS to DVSS, 9.3 A (30.7 mA/µm over
+  304 µm), 4.4 times its measured limit.
 
-To carry their 12.7 A, the two 4000 µm clamp transistors need about 10 V
-across them, so DVDD rises to about 10 V. The PMOS drain diode adds about
-3.7 V more, so the pad reaches 13.7 V (:numref:`tab-esd-events-voltage`),
-passes the output NMOS's 10.7 V trigger, and the NMOS snaps back.
+The two 4000 µm clamp transistors need about 10 V to 11 V across them to
+carry their share, so DVDD rises that far. The pad rises past the output
+NMOS's 10.7 V trigger within 0.3 ns, and the NMOS snaps back
+(:numref:`tab-esd-trigger`). The snapped-back NMOS and the PMOS drain diode
+then hold the pad at 15.3 V at the peak current
+(:numref:`tab-esd-events-voltage`).
 
-The pad stays above 12 V for 22 ns. The 110 Ω secondary resistor and
-diodes hold the input gates to 11.5 V, just below the minimum oxide
-breakdown.
+The pad stays above 12 V for 26 ns. The 110 Ω secondary resistor and
+diodes do not hold the input gates below the 12 V minimum oxide breakdown:
+they reach 12.4 V, and stay above 12 V for about 1 ns in all.
 
-Three parts of this result rest on devices outside what their models
-cover:
+Two parts of this result rest on devices outside what their models cover:
 
-* DVDD at about 10 V is above the 8.5 V minimum junction breakdown of a 6 V
-  NMOS (:numref:`tab-esd-breakdown`). The clamp transistor is an ordinary
-  6 V NMOS without silicide blocking, and the simulation gives it no
-  snapback branch.
-* The foundry measured the diodes' failure current forward biased. The
-  NMOS drain diode's reverse-breakdown current is compared with that
-  forward limit.
-* The snapback branch latches on at 10.7 V for the rest of the event
-  (:doc:`simulation`).
+* DVDD at 10 V to 11 V is above the 8.5 V minimum junction breakdown of a
+  6 V NMOS (:numref:`tab-esd-breakdown`). The clamp transistor is an
+  ordinary 6 V NMOS without silicide blocking, and the simulation gives it
+  no snapback branch.
+* Until the snapback closes, the simulated NMOS drain carries no avalanche
+  current, so the pad's first rise is an upper estimate. The snapback
+  closes once the pad has stayed above 10.7 V for about 100 ps
+  (:doc:`simulation`). The foundry does not publish how fast its NMOS
+  triggers.
+
+.. csv-table:: When the output NMOS snapped back in each event, and the
+               highest pad voltage before then
+   :name: tab-esd-trigger
+   :file: sim/results/trigger.csv
+   :header-rows: 1
 
 The negative 8 kV discharge flows through the NMOS drain diode alone, at
-96 mA/µm, 3.2 times its limit.
+96 mA/µm, 3.2 times its limit. DVDD stays within 0.5 V of DVSS, so the
+PMOS drain does not reach its avalanche voltage.
 
 .. csv-table:: Peak voltages in each simulated event
    :name: tab-esd-events-voltage
@@ -84,10 +91,14 @@ The negative 8 kV discharge flows through the NMOS drain diode alone, at
 The IEC rows at 15 kV apply the contact-discharge waveform at 15 kV. They
 are not the air-discharge test: 15 kV air is level 4, counted as the same
 severity as 8 kV contact (:ref:`esd-events`), while the contact waveform at
-15 kV carries nearly twice the current of 8 kV contact.
+15 kV carries nearly twice the current of 8 kV contact. At −15 kV the
+PMOS drain also avalanches, carrying 4.7 mA/µm.
+
 :numref:`tab-esd-solver` lists the events that needed another solver
-setting (:doc:`simulation`). Every event was simulated over the whole
-pulse.
+setting or a shorter run (:doc:`simulation`). Three negative discharges,
+including −15 kV, were simulated for their first 4 ns only. That covers
+the first peak, which sets their stress; the later, lower hump is not
+simulated.
 
 .. csv-table:: Events not solved with Gear integration over the whole pulse
    :name: tab-esd-solver
@@ -105,11 +116,11 @@ current.
 .. figure:: figures/sweep.svg
    :name: fig-esd-sweep
    :alt: Graph of peak current density divided by failure current, from 0
-         to 5, against test voltage from 0 to 15 kV. The human body model
+         to 6, against test voltage from 0 to 15 kV. The human body model
          lines, positive and negative, rise slowly to 0.3 and 0.54 at
          8 kV, below the failure line at 1. The IEC contact lines start
-         above 1 at 2 kV positive and 0.8 at 2 kV negative, and rise to
-         about 5 at 15 kV.
+         at 1.65 at 2 kV positive and 0.8 at 2 kV negative, and rise to
+         about 5.3 and 5.7 at 15 kV.
    :width: 100%
 
    Stress on the most stressed protection device against test voltage.
