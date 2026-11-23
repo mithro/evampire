@@ -60,7 +60,13 @@ Two parts of this result rest on devices outside what their models cover:
 * DVDD at 10 V to 11 V is above the 8.5 V minimum junction breakdown of a
   6 V NMOS (:numref:`tab-esd-breakdown`). The clamp transistor is an
   ordinary 6 V NMOS without silicide blocking, and the simulation gives it
-  no snapback branch.
+  no snapback branch. At this voltage most of the clamps' simulated current
+  is the transistor model's impact-ionisation current into the substrate:
+  8.1 A of 8.9 A at 1.7 ns. The model was fitted for normal operating
+  voltages, not this. A real clamp might carry more, by snapping back, or
+  less, so the share of the current left to the output NMOS is uncertain.
+  In the human body model discharges up to 8 kV that current is 2 % of the
+  clamps' current or less.
 * Until the snapback closes, the simulated NMOS drain carries no avalanche
   current, so the pad's first rise is an upper estimate. The snapback
   closes once the pad has stayed above 10.7 V for about 100 ps
