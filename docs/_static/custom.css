@@ -5,10 +5,11 @@
  */
 
 /* Use the full width of the window. Furo centres a fixed 46em column by
- * widening the left sidebar to calc(50% - 26em) and leaving the space right
- * of the column empty. Instead, keep the sidebar at the width of its
- * contents and let the column take all the remaining width. A reader who
- * wants shorter lines can make the window narrower. */
+ * widening the left sidebar to calc(50% - 26em), which leaves blank space
+ * on both sides of the page. Instead, keep the sidebar at the width of its
+ * contents and let the column take all the remaining width, with 2em of
+ * padding instead of Furo's 3em. A reader who wants shorter lines can make
+ * the window narrower. */
 .sidebar-drawer {
   width: 15em;
   flex: none;
@@ -18,11 +19,13 @@
   width: auto;
   flex: 1 1 0;
   min-width: 0;
+  padding: 0 2em;
 }
 
-@media (min-width: 67.0625em) {
+/* Keep Furo's narrower padding on narrow screens. */
+@media (max-width: 67em) {
   .content {
-    padding: 0 2em;
+    padding: 0 1em;
   }
 }
 

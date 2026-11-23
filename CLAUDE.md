@@ -99,8 +99,9 @@ comes from the gf180mcu PDK and is not in this repository.
   (`render_using_wavedrompy`).
 - `docs/_static/custom.css` makes the page use the full window width (Furo
   centres a fixed 46em column by default), puts a white panel behind
-  diagrams in dark mode and limits diagrams to the column width. `diagram-links.js` adds an "Open
-  diagram at full size" link that shows on narrow screens only.
+  diagrams in dark mode and limits diagrams to the column width.
+  `diagram-links.js` adds an "Open diagram at full size" link that shows on
+  narrow screens only.
 
 ## Roles defined in `docs/conf.py`
 
