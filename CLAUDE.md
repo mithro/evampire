@@ -100,9 +100,11 @@ comes from the gf180mcu PDK and is not in this repository.
   exception: `docs/index/overview.py` draws it directly as SVG, for the die
   outline, pads and wire hops that Graphviz can't draw. WaveDrom is rendered to SVG at build time
   (`render_using_wavedrompy`).
-- `docs/_static/custom.css` puts a white panel behind diagrams in dark mode
-  and limits diagrams to the column width. `diagram-links.js` adds an "Open
-  diagram at full size" link that shows on narrow screens only.
+- `docs/_static/custom.css` makes the page use the full window width (Furo
+  centres a fixed 46em column by default), puts a white panel behind
+  diagrams in dark mode and limits diagrams to the column width.
+  `diagram-links.js` adds an "Open diagram at full size" link that shows on
+  narrow screens only.
 
 ## Roles defined in `docs/conf.py`
 

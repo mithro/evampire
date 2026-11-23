@@ -1,8 +1,33 @@
 /*
- * Site-wide styling for diagrams.
+ * Site-wide styling: page width and diagrams.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* Use the full width of the window. Furo centres a fixed 46em column by
+ * widening the left sidebar to calc(50% - 26em), which leaves blank space
+ * on both sides of the page. Instead, keep the sidebar at the width of its
+ * contents and let the column take all the remaining width, with 2em of
+ * padding instead of Furo's 3em. A reader who wants shorter lines can make
+ * the window narrower. */
+.sidebar-drawer {
+  width: 15em;
+  flex: none;
+}
+
+.content {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 2em;
+}
+
+/* Keep Furo's narrower padding on narrow screens. */
+@media (max-width: 67em) {
+  .content {
+    padding: 0 1em;
+  }
+}
 
 /* Diagrams are drawn with dark lines and text. Graphviz output has a white
  * background; WaveDrom output is transparent. Give both a light panel so they
