@@ -132,6 +132,9 @@ def convert(cdl_text):
                     if key in p:
                         p[key] = f"{_num(p[key]) / k:.6g}"
             if model.endswith("_dss"):
+                # The core transistor uses a copy of the model whose own
+                # junctions carry nothing (calibrate.driver_models()).
+                new_model += "_esd"
                 # Drain and source resistors of the unsalicided regions.
                 pol = model[0]
                 w_eff = width - 2 * SAB_DW[pol]
@@ -147,8 +150,11 @@ def convert(cdl_text):
                 # Given no junction areas, BSIM4 computes them from the
                 # geometry and adds drain and source diodes with no series
                 # resistance. ngspice treats an area of 0 as not given, so
-                # the core transistor gets areas too small to matter. The
-                # test bench adds the drain diode fitted to measurement.
+                # the core transistor gets tiny areas. Tiny areas alone are
+                # not enough: above the model's forward current limit the
+                # junction conducts amperes whatever its area, so the _esd
+                # model copy lowers that limit. The test bench adds the
+                # drain diode fitted to measurement.
                 p.update({"as": "1e-18", "ad": "1e-18",
                           "ps": "1e-12", "pd": "1e-12"})
             args = " ".join(f"{k_}={v}" for k_, v in p.items()

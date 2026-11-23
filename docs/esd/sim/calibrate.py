@@ -26,6 +26,60 @@ def foundry_card(base):
     raise KeyError(base)
 
 
+def _block(lines, start, is_end):
+    """Lines from index start until is_end(line) is true (inclusive)."""
+    out = []
+    for line in lines[start:]:
+        out.append(line)
+        if len(out) > 1 and is_end(line):
+            break
+    return out
+
+
+def driver_models(suffix="_esd"):
+    """Copies of the foundry 6 V transistor models for the output drivers,
+    renamed with suffix, with the drain and source junctions' forward
+    current limit (ijthsfwd, ijthdfwd) lowered to 1 fA.
+
+    BSIM4 extends each junction's exponential with a straight line above
+    that limit; at the foundry's 0.1 A the line carries amperes even for a
+    junction of almost no area. The test bench models the drivers' drain
+    junctions with diodes fitted to measurement instead, so the
+    transistors' own junctions must carry nothing."""
+    lines = (PR / "sm141064.ngspice").read_text().splitlines()
+    name_re = re.compile(r"\b([np]mos_6p0)(\.\d+)?\b(?!_)", re.I)
+    out = []
+    seen = set()
+    for i, line in enumerate(lines):
+        low = line.strip().lower()
+        # The typical-corner sections come first in the file; later copies
+        # (statistical corners) are skipped.
+        key = " ".join(low.split()[:2])
+        if key in seen:
+            continue
+        if re.match(r"\.model\s+[np]mos_6p0\.\d+\s", low):
+            seen.add(key)
+            card = [line]
+            for more in lines[i + 1:]:
+                s = more.strip()
+                if s.startswith("+") or s.startswith("*") or not s:
+                    card.append(more)
+                else:
+                    break
+            out += card
+        elif re.match(r"\.subckt\s+[np]mos_6p0\s", low):
+            seen.add(key)
+            out += _block(lines, i,
+                          lambda l: l.strip().lower().startswith(".ends"))
+    text = "\n".join(out)
+    text = name_re.sub(lambda m: m.group(1) + suffix + (m.group(2) or ""),
+                       text)
+    text, n = re.subn(r"\b(ijth[sd]fwd)\s*=\s*[\d.eE+-]+", r"\1 = 1e-15",
+                      text)
+    assert n >= 3, n
+    return text
+
+
 def diode_model(name, base, rs, breakdown=True):
     """The foundry diode model with another series resistance.
 
