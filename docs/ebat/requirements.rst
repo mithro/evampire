@@ -35,9 +35,12 @@ ebat has the same power ports as evampire
 * Each USB Type-C port is a :term:`dual-role port` that negotiates power
   with :term:`USB Power Delivery`, as on evampire (:doc:`../power/usb-pd/index`).
 * A board fits the ports it needs. :doc:`boards` lists the combinations.
-* The number of USB Type-C ports, and whether an Ethernet port can take
-  either role (:doc:`../power/poe/dual-role`), are open questions
-  (:ref:`ebat-requirements-open-questions`).
+* evampire's board configurations (:numref:`tab-power-board-configs`)
+  differ in the port roles, the number of USB Type-C ports and where the
+  converter power stages are. The transceiver and cable rows of that table
+  do not apply to ebat. Which configuration ebat follows in each of the
+  other rows is an open question (:ref:`ebat-requirements-open-questions`).
+  Either-role Ethernet ports are described on :doc:`../power/poe/dual-role`.
 
 .. _req-ebat-power-bridging:
 
@@ -57,7 +60,7 @@ ports. These differences follow from having no data path:
 * As power sourcing equipment, port B assigns a class by Physical Layer
   classification alone, up to class 8 (:doc:`../power/poe/power-sourcing`).
   Support for LLDP is optional for power sourcing equipment
-  (:clause:`145.5`).
+  (:clause:`145.2.8`, :clause:`145.5`).
 * On a board without data pass-through, the allocation on port B changes
   only by removing the power and classifying the powered device again
   (:doc:`../power/poe/sharing`). With data pass-through, LLDP frames pass
@@ -80,7 +83,11 @@ ebat includes the functions of three voltage converters
 -------------------------------------------------------
 
 ebat keeps :ref:`req-converters` unchanged. Its converters are those of
-:doc:`../power/converters/index`.
+:doc:`../power/converters/index`. Their gate drivers and power transistors
+are external parts in evampire's first version and on the chip in its full
+design (:numref:`tab-power-board-configs`,
+:doc:`../power/converters/integration`). Which of these ebat follows is an
+open question.
 
 .. _req-ebat-usb-serial:
 
@@ -119,9 +126,12 @@ Open questions
   the Ethernet data pins unused. A separate die is smaller. An evampire die
   keeps the option of LLDP on a board that fits transceivers.
 * Whether port A presents one powered-device signature or two, one on each
-  pair set (:ref:`ebat-dual-signature`).
+  pair set (:ref:`ebat-dual-signature`), and which powered-device Type it
+  is (:ref:`ebat-power-without-lldp`).
 * The number of USB Type-C ports, one or two.
 * Whether an Ethernet port can take either role.
+* Whether the converters' gate drivers and power transistors are external
+  parts or on the chip (:ref:`req-ebat-converters`).
 * Whether boards pass Ethernet data through, and how they handle the LLDP
   frames that then pass between the far ends (:ref:`ebat-pass-through-lldp`).
 * The questions on power, converters, the processor and isolation that

@@ -12,7 +12,7 @@ ebat is evampire's power and control blocks
 :numref:`fig-ebat-block-diagram` shows the blocks inside ebat. The
 connectors and per-port circuits run along the top, the processor sits in
 the middle, and the power monitoring and converter control connect it to
-the voltage converters below.
+the converters' power stages below.
 
 .. graphviz:: block-diagram.dot
    :name: fig-ebat-block-diagram
@@ -27,14 +27,20 @@ the voltage converters below.
          switch connects to the detection and classification sequencing
          block. All four blocks connect to the RISC-V processor and
          memory, which connects to power monitoring and limiting and to
-         converter control. Converter control drives the external voltage
-         converters, and power monitoring reads them.
+         converter control. Converter control drives the power stages of
+         the voltage converters, drawn outside the chip as in evampire's
+         first version, and power monitoring reads them.
    :align: center
 
 The fill colour of each block shows its group. White blocks with a dashed
 outline are outside the chip. Yellow blocks are Power over Ethernet
 circuits, blue blocks USB Type-C circuits, green blocks power monitoring
 and converter control, and the orange block the processor.
+
+The converters' power stages are drawn outside the chip, as in evampire's
+first version. In the full design most of them are on the chip
+(:numref:`tab-power-board-configs`), and which of the two ebat follows is
+an open question (:ref:`req-ebat-converters`).
 
 Every block is an evampire block
 --------------------------------
@@ -63,11 +69,13 @@ describes it.
    * - Power monitoring and limiting
      - :doc:`../power/poe/monitoring` and :doc:`../power/usb-pd/monitoring`
    * - Converter control
-     - :doc:`../power/converters/first-version`
+     - :doc:`../power/converters/first-version` and
+       :doc:`../power/converters/integration`
 
 The evampire block diagram (:numref:`fig-block-diagram`) draws the power
-blocks as one "Power negotiation, monitoring and limiting" block. ebat
-draws them separately, because they are all that is left. The power flow
+blocks as one "Power negotiation, monitoring and limiting" block
+(:ref:`arch-power-negotiation`). ebat draws them separately, because they
+are all that is left. The power flow
 on a board is the same as on an evampire board
 (:numref:`fig-power-flow`), without the transceivers among the board
 supplies.
@@ -120,4 +128,4 @@ Open questions
   dedicated crystal.
 * The number of power-side pins, which depends on the number of USB Type-C
   ports and on how much of each converter is on the chip
-  (:doc:`../power/converters/integration`).
+  (:ref:`req-ebat-converters`, :doc:`../power/converters/integration`).

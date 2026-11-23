@@ -334,12 +334,12 @@ Glossary
       A powered device that presents its own detection signature and class
       signature on each pair set, so that power sourcing equipment detects,
       classifies and powers each pair set separately (:clause:`145.3.5`,
-      :clause:`Table 145-27 <145>`, see :ref:`ebat-dual-signature`).
+      :clause:`Table 145-27 <145>`, see :doc:`power/poe/power-sourcing`).
 
    Single-signature powered device
       A powered device that presents one detection signature and one class
       signature for both pair sets together (:clause:`145.3.5`, see
-      :doc:`ebat/power-without-lldp`).
+      :doc:`power/poe/power-sourcing`).
 
    Midspan
    Injector

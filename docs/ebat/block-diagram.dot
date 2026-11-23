@@ -13,7 +13,8 @@
 //   row 2 (y=5.9)  per-port circuits inside the chip
 //   row 3 (y=4.3)  processor
 //   row 4 (y=2.7)  monitoring and converter control
-//   row 5 (y=1.0)  voltage converters outside the chip
+//   row 5 (y=1.0)  converter power stages, outside the chip as in
+//                  evampire's first version
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -41,7 +42,7 @@ digraph ebat {
             label="Port B: RJ45,\npower sourcing\nswitch",
             style="rounded,filled,dashed", fillcolor="#ffffff"];
     conv   [pos="4.0,1.0!", width=3.0, height=0.7,
-            label="Voltage converters\n(input, USB, high-voltage)",
+            label="Converter power stages\n(input, USB, high-voltage)",
             style="rounded,filled,dashed", fillcolor="#ffffff"];
 
     // Per-port circuits.

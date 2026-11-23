@@ -43,9 +43,9 @@ some powered devices and optional for others, as
 
 :clause:`33`, which defines Types 1 and 2, says the same for Type 2
 powered devices. These request class 4 and implement both two-event
-classification and LLDP (:clause:`33.3.5`). LLDP frames are Ethernet frames, so a powered
-device with no data path cannot take part. ebat therefore requests class 1,
-2 or 3 on each pair set.
+classification and LLDP (:clause:`33.3.5`). LLDP frames are Ethernet
+frames, so a powered device with no data path cannot take part. ebat
+therefore requests class 1, 2 or 3 on each pair set.
 
 Three other routes give a powered device more than class 3, and ebat
 takes none of them:
@@ -53,14 +53,16 @@ takes none of them:
 Request class 4 or higher without LLDP
    This does not meet :clause:`145.3.6`, which uses "shall".
 Add an Ethernet link that carries only LLDP
-   A transceiver on port A, at any speed, with the processor sending and
-   receiving the LLDP frames. It needs an external transceiver chip and its
-   interface pins, or an integrated transceiver of unknown area, and its
-   data path must cross the isolation barrier
-   (:doc:`../power/poe/isolation`). ebat leaves it out to have no data
-   circuits at all (:ref:`req-ebat-no-data`).
+   A transceiver on port A, with the processor sending and receiving the
+   LLDP frames. The simplest is a 10BASE-T transceiver, which evampire
+   also supports (:ref:`req-transceivers`). It needs Manchester coding, a
+   comparator receiver and a higher-swing driver, with no ADC
+   (:ref:`phy-int-10`). Its area is unknown, it needs the frame logic and
+   memory for the LLDP frames, and its data path must cross the isolation
+   barrier (:doc:`../power/poe/isolation`). ebat leaves it out to have no
+   data circuits at all (:ref:`req-ebat-no-data`).
 Use evampire
-   evampire forwards gigabit traffic between its ports and handles LLDP in
+   evampire forwards Ethernet traffic between its ports and handles LLDP in
    its processor (:ref:`req-forwarding`). Whether an ebat board uses an
    evampire die, with its data pins unused, is an open question
    (:ref:`ebat-requirements-open-questions`).
@@ -104,7 +106,8 @@ detection and classification on both.
 While a pair set is below its
 turn-off voltage, no more than 10 µA may flow between the negative
 conductors of the two pair sets (:clause:`145.4.1`). A dual-signature
-powered device is Type 3 (:clause:`Table 145-19 <145>`), and only power
+powered device that requests class 3 or lower on both pair sets is Type 3
+(:clause:`Table 145-19 <145>`), and only power
 sourcing equipment of Type 3 or 4 powers both pair sets
 (:numref:`tab-poe-types`). Whether port A presents a
 single or a dual signature is an open question.
@@ -203,8 +206,8 @@ Ethernet in, Ethernet out
 
 USB in, Ethernet out
    This mode does not involve port A, so it is the same as on evampire
-   (:numref:`tab-poe-usb-in`). Port B can offer up to class 8 from a large
-   enough USB contract.
+   (:numref:`tab-poe-usb-in`). Port B can offer up to class 8 from a USB
+   contract of 100 W or more.
 
 Port B changes its allocation only by classifying again
 -------------------------------------------------------
@@ -216,7 +219,8 @@ the allocation (:ref:`ebat-pass-through-lldp`).
 As :term:`power sourcing equipment`, port B assigns a class by Physical
 Layer classification, up to class 8 with 4-pair power
 (:doc:`../power/poe/power-sourcing`). LLDP is optional for power sourcing
-equipment (:clause:`145.5`), so ebat meets the standard without it. A
+equipment (:clause:`145.2.8`, :clause:`145.5`), so ebat meets the standard
+without it. A
 powered device on port B that requested class 4 or higher keeps the class
 it was assigned, because no LLDP exchange changes it (:clause:`145.3.6`).
 
@@ -233,7 +237,9 @@ can use it to allocate less than the full class power
 Open questions
 --------------
 
-* Whether port A presents a single signature or a dual signature, and so
-  whether it is a Type 1 or Type 3 powered device.
+* Whether port A presents a single signature or a dual signature.
+* Which powered-device Type port A is. With a single signature it can be
+  Type 1 (:clause:`33`) or Type 3 (:clause:`145`). With a dual signature at
+  class 3 or lower it is Type 3 (:clause:`Table 145-19 <145>`).
 * Which class, 1, 2 or 3, the start-up sequencer requests on each pair set.
 * Whether port B uses autoclass when the powered device supports it.
