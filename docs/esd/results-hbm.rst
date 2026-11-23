@@ -77,7 +77,7 @@ carries the whole discharge at about 7 V.
 .. figure:: figures/hbm-noclamp.svg
    :name: fig-esd-hbm-noclamp
    :alt: Two graphs against time from 0 to 600 ns. Top, PAD, DVDD and the
-         input gates jump to about 10.5 V for an instant, then sit near 7 V
+         input gates spike to about 13 V for an instant, then sit near 7 V
          and fall slowly to 6 V. Bottom, the total current peaks at 1.24 A
          and the NMOS snapback branch carries all of it.
    :width: 100%
@@ -85,10 +85,16 @@ carries the whole discharge at about 7 V.
    The same +2 kV discharge with the rail clamps removed.
 
 The grounded-gate NMOS fails at 7 mA/µm, a quarter of the diodes' limit.
-Without the clamp, the same 2 kV discharge uses 58 % of the NMOS limit,
-against 8 % of the diode limit with it, and the input gates reach 10.2 V
-instead of 5.4 V. The clamp moves the current onto the device that can
-carry more of it, at a lower voltage.
+Without the clamp, the same 2 kV discharge uses 61 % of the NMOS limit,
+against 8 % of the diode limit with it. The clamp moves the current onto
+the device that can carry more of it, at a lower voltage.
+
+Before the NMOS snaps back, the pad and the input gates spike to 13 V, for
+about 50 ps above 12 V (:numref:`tab-esd-events-voltage`). The spike lasts
+as long as the NMOS takes to trigger. The simulation sets that at about
+100 ps, and it carries no avalanche current before then
+(:doc:`simulation`), so the spike's height is an upper estimate. With the
+clamp, the input gates stay at 5.4 V.
 
 The least-known inputs change the 2 kV result little
 ----------------------------------------------------
