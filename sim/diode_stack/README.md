@@ -168,18 +168,19 @@ agreement is by construction, not a check. A design has to work at 8.5 V. Neithe
 
 ### On a pin with ESD protection
 
-The ESD simulations (`docs/esd/`, on the `docs/esd` branch, not yet merged)
-show the standard
-gf180mcu I/O cell holding its pad below about 5.6 V for a +2 kV HBM
-discharge, and at up to 13.7 V for a +8 kV IEC contact discharge. If this
-stack sat on such a pin:
+The ESD simulations (`docs/esd/`, on the `docs/esd` branch, PR 15, not yet
+merged) show the standard gf180mcu I/O cell holding its pad below about
+5.6 V for a +2 kV HBM discharge. A +8 kV IEC contact discharge takes the
+pad to a 15.3 V peak, and +15 kV to 21.0 V. If this stack sat on such a pin:
 
-* **Isolated stack (B):** 13.7 V puts about 1.4 V on each transistor and
-  13.7 V on the top deep N-well, far below its 31 V. The stack draws under
-  1 mA, while the protection carries amps, so the stack is not the weak point.
+* **Isolated stack (B):** 15.3 V puts 1.5 V on each transistor and 15.3 V
+  on the top deep N-well, below its 31 V. The stack draws 0.5 mA, while the
+  protection carries amps, so the stack is not the weak point. At 21.0 V
+  each transistor has 2.1 V, still below the deep N-well's breakdown.
 * **Shared-substrate stack (A):** its top junction to the substrate avalanches
   at about 11.7 V (8.5 V minimum), so it becomes an extra ESD path into the
-  substrate. It was never designed to carry ESD current.
+  substrate: 32 mA in the model at 15.3 V. It was never designed to carry
+  ESD current.
 
 A pin that is *meant* to carry high voltage can't use the standard cell
 at all. Its positive path is a diode from the pad to the I/O supply, which
