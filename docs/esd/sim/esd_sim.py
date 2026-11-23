@@ -113,6 +113,16 @@ def main():
     jobs["noclamp"] = ("hbm", 2000, 600e-9, {"clamps": False})
     jobs["drain_r"] = ("hbm", 2000, 600e-9, {"drain_r_scale": 2.0})
     jobs["ring_r"] = ("hbm", 2000, 600e-9, {"r_ring": 1.0})
+    # The events whose pad passes the snapback trigger only briefly, with
+    # the NMOS taking 10 ps and 500 ps rather than 100 ps to trigger.
+    marginal = {"iec+2": ("iec", 2000, 150e-9, {}),
+                "noclamp": ("hbm", 2000, 600e-9, {"clamps": False}),
+                "4x4": ("iec", 8000, 150e-9,
+                        {"diode_scale": 4, "supply_pads": 4})}
+    for name, (kind, volts, stop, chip) in marginal.items():
+        for tau in (10e-12, 500e-12):
+            jobs[("trig", name, tau)] = (kind, volts, stop,
+                                         {**chip, "snap_filter": tau})
     # The same pad with wider diodes and more supply pads, at level 4.
     scaled = [(k, m) for k in (1, 2, 4) for m in (1, 4)]
     for k, m in scaled:
@@ -131,7 +141,7 @@ def main():
         with CACHE.open("wb") as f:
             pickle.dump(waves, f)
     sweep = {k: summarise(waves[k]) for k in jobs
-             if isinstance(k, tuple) and k[0] != "scaled"}
+             if isinstance(k, tuple) and k[0] not in ("scaled", "trig")}
     def scaled_row(k, m, sign):
         s_ = summarise(waves[("scaled", k, m, sign)])
         row = {"Diodes (×)": k,
@@ -163,6 +173,9 @@ def main():
     # Every event that needed another solver setting or a shorter run,
     # with the time it was solved to.
     def event_name(key):
+        if key[0] == "trig":
+            return {"iec+2": "IEC +2 kV", "noclamp": "HBM +2 kV, no clamp",
+                    "4x4": "IEC +8 kV, 4× diodes, 4 pads"}[key[1]]
         if key[0] == "scaled":
             _, k, m, sign = key
             return (f"IEC {sign * 8:+d} kV, {k}× diodes, {m} pad"
@@ -181,16 +194,57 @@ def main():
                                        or waves[key]["stop"] < job[2])],
         fieldnames=["Event", "Solver", "Simulated to (ns)"])
     # When each snapback closed, and the filtered pad voltage by then.
+    # Every positive event: when its snapback latched, if it did.
+    def positive(key, job):
+        return (job[1] > 0 and not (isinstance(key, tuple)
+                                    and key[0] == "trig"))
+    def snapped(s_):
+        return ("yes" if s_["latch"] > 0.6 else
+                "partly" if s_["latch"] > 0.4 else "no")
+    def trig_row(key, s_):
+        row = {"Event": event_name(key), "Snapback": snapped(s_)}
+        if s_["trigger"] is None:
+            return {**row, "Highest PAD before (V)":
+                    f"{s_['pad_max_V']:.1f}", "Latched at (ns)": "never"}
+        return {**row,
+                "Highest PAD before (V)": f"{s_['trigger']['pad_V']:.1f}",
+                "Latched at (ns)": f"{s_['trigger']['t_ns']:.2f}"}
     write_csv("trigger.csv", [
+        trig_row(key, s_) for key, job in jobs.items() if positive(key, job)
+        for s_ in [summarise(waves[key])] if s_ is not None],
+        fieldnames=["Event", "Snapback", "Highest PAD before (V)",
+                    "Latched at (ns)"])
+    # The marginal events with a faster and a slower trigger.
+    trig_rows = []
+    for name, (kind, volts, stop, chip) in marginal.items():
+        for tau, key in ((10e-12, ("trig", name, 10e-12)),
+                         (100e-12, None), (500e-12, ("trig", name, 500e-12))):
+            if key is None:
+                key = {"iec+2": ("iec", 1, 2), "noclamp": "noclamp",
+                       "4x4": ("scaled", 4, 4, 1)}[name]
+            s_ = summarise(waves[key])
+            trig_rows.append({
+                "Event": event_name(("trig", name, tau)),
+                "Trigger time (ps)": f"{tau * 1e12:.0f}",
+                "Snapback": "no result" if s_ is None else snapped(s_),
+                "Fraction": "no result" if s_ is None else f"{s_['frac']:.2f}",
+                "Most stressed": "no result" if s_ is None else
+                                 SHORT_NAMES[s_["limit"]]})
+    write_csv("trigger-time.csv", trig_rows)
+    # The rail clamps' substrate current in the positive events.
+    write_csv("clamp-substrate.csv", [
         {"Event": event_name(key),
-         "Highest PAD before (V)": f"{s_['trigger']['pad_V']:.1f}",
-         "Filtered PAD (V)": f"{s_['trigger']['ctl_V']:.1f}",
-         "Closed at (ns)": f"{s_['trigger']['t_ns']:.2f}"}
-        for key in jobs
-        for s_ in [summarise(waves[key])]
-        if s_ is not None and s_["trigger"] is not None],
-        fieldnames=["Event", "Highest PAD before (V)", "Filtered PAD (V)",
-                    "Closed at (ns)"])
+         "Clamp peak (A)": f"{s_['clamp']['id_A']:.2f}",
+         "Substrate part (A)": f"{s_['clamp']['isub_A']:.2f}",
+         "Share (%)": f"{100 * s_['clamp']['isub_A'] / s_['clamp']['id_A']:.0f}"}
+        for key in [("hbm", 1, 2), ("hbm", 1, 8), ("iec", 1, 2),
+                    ("iec", 1, 8), ("iec", 1, 15)]
+        for s_ in [summarise(waves[key])] if s_ is not None])
+    # Reverse current of the dedicated diodes in the scaled events.
+    print("dedicated diode reverse current, scaled events:",
+          {event_name(k): round(summarise(waves[k])["ded_rev_A"], 3)
+           for k in jobs if isinstance(k, tuple) and k[0] == "scaled"
+           and waves[k] is not None}, flush=True)
     write_csv("sweep.csv", [sweep_row(k, v) for k, v in sweep.items()])
 
     fig_zap(waves[("hbm", 1, 2)], "hbm-pos.svg",

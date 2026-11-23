@@ -132,8 +132,10 @@ def summarise(r):
         return None
     w_n, w_p = r["w_n"], r["w_p"]
     k = int(np.argmax(abs(r["i"])))
-    jp = abs(r["pdiode"]).max() / w_p * 1e3
-    jn = abs(r["ndiode"]).max() / w_n * 1e3
+    # Forward current only: the diodes' failure currents were measured
+    # forward biased, and a reverse spike is charging current.
+    jp = max(r["pdiode"].max(), 0) / w_p * 1e3
+    jn = max(r["ndiode"].max(), 0) / w_n * 1e3
     js = abs(r["snap"]).max() / r["w_snap"] * 1e3
     ja = abs(r["aval"]).max() / r["w_aval"] * 1e3
     fracs = {"PMOS drain diode": jp / IT2_MA_PER_UM["P+/N-well diode"],
@@ -144,19 +146,37 @@ def summarise(r):
     frac = fracs[limit]
     above = r["pad"] > GATE_OXIDE_BV_MIN
     dt = np.diff(r["t"], append=r["t"][-1])
-    # When the snapback closed, and whether the filtered pad voltage had
-    # reached the trigger voltage by then (at a solved time point).
-    on = np.flatnonzero(abs(r["snap"]) > 1e-3)
+    # When the snapback latched (its latch node past half way), and the
+    # filtered pad voltage by then. The latch charges only above the
+    # trigger voltage, within a few millivolts, so a latch with its
+    # control clearly below it means the model is wrong: stop.
+    on = np.flatnonzero(r["snap_q"] > 0.5)
     trig = None
     if on.size:
         k_on = on[0]
         ctl = r["snap_ctl"][:k_on + 1].max()
         trig = {"t_ns": r["t"][k_on] * 1e9, "ctl_V": ctl,
                 "pad_V": r["pad"][:k_on + 1].max()}
-        if ctl < GGNMOS_VT1 * 0.99:
-            print(f"WARNING: snapback closed with its control at {ctl:.2f} V",
-                  flush=True)
-    return {"trigger": trig,
+        if ctl < GGNMOS_VT1 - 0.01:
+            raise RuntimeError(
+                f"snapback latched with its control at {ctl:.3f} V")
+    # Share of the rail clamps' drain current that is the transistor
+    # model's impact-ionisation current into the substrate, at the clamps'
+    # peak current.
+    clamp = None
+    if r.get("clamp_id") is not None:
+        kc = int(np.argmax(abs(r["clamp_id"])))
+        clamp = {"id_A": abs(r["clamp_id"][kc]),
+                 "isub_A": abs(r["clamp_isub"][kc]),
+                 "t_ns": r["t"][kc] * 1e9}
+    # Reverse current of any dedicated diodes in breakdown.
+    ded_rev = max(-min(r["nded"].min(), 0), -min(r["pded"].min(), 0))
+    # Highest level of the latch: 0 never triggered, 1 fully on. Between
+    # 0.4 and 0.6 the pad sat at the trigger voltage and the snapback
+    # conducted only in part.
+    latch = float(r["snap_q"].max())
+    return {"trigger": trig, "clamp": clamp, "ded_rev_A": ded_rev,
+        "latch": latch,
         "above_ns": float(np.sum(dt[above]) * 1e9),
         "pmos_gate_V": r["pmos_gate"][k] if r["pmos_gate"] is not None else 0,
         "peak_A": abs(r["i"][k]),
