@@ -1,8 +1,8 @@
-Event,PMOS diode (mA/µm),NMOS diode (mA/µm),Snapback (mA/µm),Fraction of limit
-HBM +2 kV,2.5,0.0,0.0,0.08
-HBM −2 kV,0.0,4.1,0.0,0.14
-"HBM +2 kV, no clamp",0.6,0.7,4.1,0.58
-IEC +8 kV,26.4,23.9,25.2,3.61
-IEC −8 kV,0.1,95.9,0.0,3.20
-IEC +15 kV,46.2,63.0,35.0,5.00
-IEC −15 kV,15.2,156.1,0.0,5.20
+Event,PMOS diode (mA/µm),NMOS diode (mA/µm),NMOS snapback (mA/µm),PMOS avalanche (mA/µm),Fraction of limit
+HBM +2 kV,2.5,0.0,0.0,0.0,0.08
+HBM −2 kV,0.0,4.1,0.0,0.0,0.14
+"HBM +2 kV, no clamp",0.7,1.0,4.2,0.0,0.61
+IEC +8 kV,36.6,0.3,30.7,0.0,4.38
+IEC −8 kV,0.1,95.9,0.0,0.0,3.20
+IEC +15 kV,79.9,0.2,36.7,0.0,5.25
+IEC −15 kV,0.1,172.2,0.0,4.7,5.74
