@@ -166,7 +166,8 @@ def main():
     def event_name(key):
         if key[0] == "scaled":
             _, k, m, sign = key
-            return f"IEC {sign * 8:+d} kV, {k}× diodes, {m} pads"
+            return (f"IEC {sign * 8:+d} kV, {k}× diodes, {m} pad"
+                    + ("s" if m > 1 else ""))
         if not isinstance(key, tuple):
             return {"noclamp": "HBM +2 kV, no clamp",
                     "drain_r": "HBM +2 kV, diode R × 2",
