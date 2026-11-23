@@ -158,8 +158,8 @@ def convert(cdl_text):
                 out.append(
                     f"X{name}{suffix} {d} {g} {s} {b} {new_model} {args}")
             if model.endswith("_dss"):
-                width_um = _num(p["w"]) * 1e6
-                sab.append(SabDevice(name, model[0], d, s, width_um))
+                # The total width, before any split into copies.
+                sab.append(SabDevice(name, model[0], d, s, width * 1e6))
         elif kind == "D":
             anode, cathode, model = tokens[1:4]
             p = _params(tokens[4:])
