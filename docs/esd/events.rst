@@ -77,8 +77,11 @@ level 4 is 8 kV contact or 15 kV air ([ESD-TND410]_, page 3 and Table 2).
      - 8
      - 15
 
-The ±15 kV figure often quoted for a product is therefore level 4 air
-discharge, the same severity as 8 kV contact discharge.
+A ±15 kV figure on a datasheet can name either of two tests. In
+IEC 61000-4-2 it is level 4 air discharge, the same severity as 8 kV
+contact discharge. Some parts also quote ±15 kV human body model, such as
+the bus pins of the TRS3232E ([ESD-TRS3232E]_, section 5.2). The name of
+the test, not the voltage, says how severe it is.
 
 The test voltage appears across the resistor, not the pin
 ---------------------------------------------------------
@@ -126,7 +129,7 @@ The approximation holds while :math:`V_\text{pin}` is much smaller than
 The 10 V on the pin changes the current by 0.5 %. The ESD Association gives
 the same peak, 0.67 A per kilovolt of test voltage ([ESD-ESDA-P5]_).
 
-The IEC network has a quarter of the resistance, and its fast first peak
+The IEC network has about a fifth of the resistance, and its fast first peak
 is higher still: 3.75 A per kilovolt, 30 A at 8 kV ([ESD-TB505]_,
 Figure 2). An IEC contact discharge at 2 kV gives a higher peak current
 than a human body model test at 8 kV ([ESD-TND410]_, Table 3).

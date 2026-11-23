@@ -105,8 +105,9 @@ or stopping the simulator (:numref:`tab-esd-sim-faults`).
      - The model bins stop at 100 µm. The 4000 µm clamp transistor becomes
        40 transistors of 100 µm in parallel
 
-Without the resistor change, the rail clamp's 360 kΩ timer resistor
-simulates as about 160 Ω, the two contact resistances alone. The clamp
+Without the resistor change, each 30 kΩ resistor of the rail clamp's
+timer simulates as about 160 Ω, its two contact resistances alone, so the
+360 kΩ chain becomes about 1.9 kΩ. The clamp
 then turns off within 30 ns of a discharge. Without the transistor
 changes, unintended junctions carry a fifth of a human body model
 discharge, and the solver stalls in negative IEC discharges.
