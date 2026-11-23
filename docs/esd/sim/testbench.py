@@ -3,7 +3,7 @@
 SPDX-License-Identifier: Apache-2.0
 """
 
-from calibrate import diode_model
+from calibrate import diode_model, driver_models
 from cdl2spice import convert
 from spice import (GGNMOS_VT1, IO, SNAP_FILTER_S, TLP_DIODE_AREA,
                    TLP_DIODE_PJ, TLP_DIODE_WIDTH_UM, NgspiceFailed, header,
@@ -14,11 +14,13 @@ from spice import (GGNMOS_VT1, IO, SNAP_FILTER_S, TLP_DIODE_AREA,
 # the DVDD and DVSS rings.
 
 def chip_netlist(rs_n, rs_p, ggnmos, ggpmos, clamps=True, r_ring=0.0,
-                 drain_r_scale=1.0, diode_scale=1, supply_pads=1):
+                 drain_r_scale=1.0, diode_scale=1, supply_pads=1,
+                 snap_filter=SNAP_FILTER_S):
     """The test chip. diode_scale widens the pad's diodes, as if dedicated
     diodes (diode_scale - 1) times the drivers' width were added beside
     them. supply_pads is the number of DVDD pads and of DVSS pads, each
-    with its rail clamp. ggnmos is the snapback's (holding voltage in V,
+    with its rail clamp. snap_filter is the time constant through which
+    the snapback reads the pad voltage, in s. ggnmos is the snapback's (holding voltage in V,
     on-resistance in ohm um), from calibrate.fit_ggnmos(); ggpmos the PMOS
     avalanche's (V0 in V, resistance in ohm um), from fit_ggpmos()."""
     ggnmos_vh, ggnmos_ron_ohm_um = ggnmos
@@ -26,43 +28,51 @@ def chip_netlist(rs_n, rs_p, ggnmos, ggpmos, clamps=True, r_ring=0.0,
     bi_t, sab = convert((IO / "bi_t/gf180mcu_fd_io__bi_t.cdl").read_text())
     dvdd, _ = convert((IO / "dvdd/gf180mcu_fd_io__dvdd.cdl").read_text())
     dvss, _ = convert((IO / "dvss/gf180mcu_fd_io__dvss.cdl").read_text())
-    # The drain diodes' reverse breakdown is left out: the snapback and
-    # avalanche branches below model the same junctions in breakdown.
+    # The drivers' drain diodes have no reverse breakdown: the snapback
+    # and avalanche branches below model those junctions in breakdown.
+    # Dedicated diodes added beside them keep the foundry's breakdown.
     lines = [diode_model("np_esd", "np_6p0", rs_n * drain_r_scale,
                          breakdown=False),
              diode_model("pn_esd", "pn_6p0", rs_p * drain_r_scale,
                          breakdown=False),
-             # Closes when the pad passes the trigger voltage and, once
-             # closed, stays closed for the rest of the event (it would
-             # open only below -2 V). A switch that reopened near the
-             # holding voltage would toggle on and off as the pulse
-             # decays, and stall the simulation.
-             f".model ggsw sw vt={(GGNMOS_VT1 - 2) / 2} "
-             f"vh={(GGNMOS_VT1 + 2) / 2} ron=1e-3 roff=1e12",
-             bi_t, dvdd, dvss]
+             diode_model("np_ded", "np_6p0", rs_n * drain_r_scale),
+             diode_model("pn_ded", "pn_6p0", rs_p * drain_r_scale),
+             driver_models(), bi_t, dvdd, dvss]
     w_n = sum(d.width_um for d in sab if d.kind == "n")
     w_p = sum(d.width_um for d in sab if d.kind == "p")
     w_snap = w_n
     w_aval = w_p
-    w_n *= diode_scale
-    w_p *= diode_scale
     scale_n = w_n / TLP_DIODE_WIDTH_UM
     scale_p = w_p / TLP_DIODE_WIDTH_UM
+    ded = diode_scale - 1
+    w_n *= diode_scale
+    w_p *= diode_scale
     lines.append(f"""
 * Drain diodes of the output transistors (absent from the foundry sab
 * models), sized by total width from the TLP test structure.
 Dndrain DVSSI PAD np_esd area={TLP_DIODE_AREA * scale_n:.4g} pj={TLP_DIODE_PJ * scale_n:.4g}
 Dpdrain PAD DVDDI pn_esd area={TLP_DIODE_AREA * scale_p:.4g} pj={TLP_DIODE_PJ * scale_p:.4g}
+* Dedicated diodes, {ded} times the drivers' width (none if 0).
+Dnded DVSSI PAD np_ded area={TLP_DIODE_AREA * scale_n * max(ded, 1e-9):.4g} pj={TLP_DIODE_PJ * scale_n * max(ded, 1e-9):.4g}
+Dpded PAD DVDDI pn_ded area={TLP_DIODE_AREA * scale_p * max(ded, 1e-9):.4g} pj={TLP_DIODE_PJ * scale_p * max(ded, 1e-9):.4g}
 * Snapback of the grounded-gate output NMOS ({w_snap:.0f} um), fitted to TLP data.
 * Once triggered, the branch conducts (V - Vh) / Ron above the holding
 * voltage Vh and nothing below it, with the corner rounded over 50 mV.
-* The switch reads the pad voltage through a {SNAP_FILTER_S * 1e12:.0f} ps filter.
+* Trigger: the pad voltage, filtered over {snap_filter * 1e12:.0f} ps, charges a latch
+* node ggq towards 1 V, at up to 0.1 V/ps, while it is above {GGNMOS_VT1} V (a step
+* a few mV wide). Nothing discharges ggq. The branch conducts only with ggq
+* past about 0.5 V, so it is off or fully on. Every element is continuous
+* and nothing feeds back into ggq, so only solved voltages can trigger it.
+* (A self-charging latch is bistable: the implicit integrator can jump to
+* its latched state in one step.)
 Egg ggc 0 PAD DVSSI 1
 Rggf ggc ggf 1k
-Cggf ggf 0 {SNAP_FILTER_S / 1e3:.4g}
-Sgg PAD ggx ggf 0 ggsw
-Bgg ggx ggz I = {0.05 / (ggnmos_ron_ohm_um / w_snap):.6g} * ln(1 + exp(min((V(ggx,ggz) - {ggnmos_vh:.4f}) / 0.05, 500)))
-Rggleak ggx ggz 1e9
+Cggf ggf 0 {snap_filter / 1e3:.4g}
+Bggq 0 ggq I = 0.1 * 0.5 * (1 + tanh((V(ggf) - {GGNMOS_VT1}) / 1e-3)) * max(1 - V(ggq), 0)
+Cggq ggq 0 1p
+Rggq ggq 0 1e15
+Bgg PAD ggz I = 0.5 * (1 + tanh((V(ggq) - 0.5) / 0.01)) * {0.05 / (ggnmos_ron_ohm_um / w_snap):.6g} * ln(1 + exp(min((V(PAD,ggz) - {ggnmos_vh:.4f}) / 0.05, 500)))
+Rggleak PAD ggz 1e9
 Vigg ggz DVSSI 0
 * Avalanche of the output PMOS drains ({w_aval:.0f} um) when DVDD is above the
 * pad, fitted to TLP data: (V - V0) / R above V0, rounded over 50 mV.
@@ -147,8 +157,12 @@ PMOS_GATE = "v(Xpad.n43)"
 CHANNEL_VECS = ([f"@m.xpad.x{m.lower()}.m0[id]" for m in PMOS_DRIVERS]
                 + [f"@m.xpad.x{m.lower()}.m0[id]" for m in NMOS_DRIVERS])
 VECS = ["v(PAD)", "v(DVDD)", "v(Xpad.n20)", "i(Vzap)", "@Dndrain[id]",
-        "@Dpdrain[id]", "i(Vigg)", "i(Vigp)", "v(ggf)", PMOS_GATE
-        ] + CHANNEL_VECS + ["v(Xvdd.n4)"]
+        "@Dpdrain[id]", "@Dnded[id]", "@Dpded[id]", "i(Vigg)", "i(Vigp)",
+        "v(ggf)", "v(ggq)", PMOS_GATE] + CHANNEL_VECS + ["v(Xvdd.n4)"]
+# Drain and impact-ionisation substrate current of the 40 copies of the
+# clamp transistor M17 in the DVDD and the DVSS pad.
+CLAMP_VECS = [f"@m.{pad}.xm17_{i}.m0[{q}]" for pad in ("xvdd", "xvss")
+              for i in range(40) for q in ("id", "isub")]
 
 
 # Solver settings to try in turn: (label, integration method and extra
@@ -165,6 +179,7 @@ SHORT_STOP = 4e-9
 
 
 def zap(kind, volts, rs_n, rs_p, tstop, ggnmos, ggpmos, **chip):
+    """Simulate one event; return its waveforms."""
     print(f"  {kind} {volts:+.0f} V {chip}", flush=True)
     tstep = "0.1n" if kind == "hbm" else "0.02n"
     body, w_n, w_p, w_snap, w_aval = chip_netlist(rs_n, rs_p, ggnmos,
@@ -184,7 +199,7 @@ wrdata @OUT@ @VECS@
 .end
 """
     clamps = chip.get("clamps", True)
-    vecs = VECS if clamps else VECS[:-1]
+    vecs = VECS + CLAMP_VECS if clamps else VECS[:-1]
     # Each solver setting in turn. If none finishes, the event is simulated
     # only to SHORT_STOP: every peak of an IEC pulse falls within its first
     # few nanoseconds.
@@ -212,7 +227,15 @@ wrdata @OUT@ @VECS@
         "method": method, "stop": stop,
         "t": d["time"], "pad": d["v(PAD)"], "dvdd": d["v(DVDD)"],
         "inner": d["v(Xpad.n20)"], "i": d["i(Vzap)"],
-        "ndiode": d["@Dndrain[id]"], "pdiode": d["@Dpdrain[id]"],
+        # Driver and dedicated diodes together.
+        "ndiode": d["@Dndrain[id]"] + d["@Dnded[id]"],
+        "pdiode": d["@Dpdrain[id]"] + d["@Dpded[id]"],
+        "nded": d["@Dnded[id]"], "pded": d["@Dpded[id]"],
+        "snap_q": d["v(ggq)"],
+        "clamp_id": (sum(d[v] for v in CLAMP_VECS if v.endswith("[id]"))
+                     if clamps else None),
+        "clamp_isub": (sum(d[v] for v in CLAMP_VECS
+                           if v.endswith("[isub]")) if clamps else None),
         "snap": d["i(Vigg)"], "aval": d["i(Vigp)"], "snap_ctl": d["v(ggf)"],
         "clamp_gate": d["v(Xvdd.n4)"] if clamps else None,
         "pmos_gate": d[PMOS_GATE],
