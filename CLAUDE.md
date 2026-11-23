@@ -62,7 +62,14 @@ uv run python docs/index/overview.py docs/index/overview.svg
 uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline.svg
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
+uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
 ```
+
+The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
+the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
+model and I/O cell repositories at pinned commits, and takes about twenty
+minutes; `docs/esd/simulation.rst` gives the command. With `--reuse` it
+rebuilds the tables and figures from the waveforms of its last run.
 
 Three scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
