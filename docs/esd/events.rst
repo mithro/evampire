@@ -78,7 +78,7 @@ level 4 is 8 kV contact or 15 kV air ([ESD-TND410]_, page 3 and Table 2).
      - 15
 
 A ±15 kV figure on a datasheet can name either of two tests. In
-IEC 61000-4-2 it is level 4 air discharge, the same severity as 8 kV
+:std:`IEC 61000-4-2` it is level 4 air discharge, the same severity as 8 kV
 contact discharge. Some parts also quote ±15 kV human body model, such as
 the bus pins of the TRS3232E ([ESD-TRS3232E]_, section 5.2). The name of
 the test, not the voltage, says how severe it is.
