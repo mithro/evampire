@@ -23,13 +23,13 @@ nanosecond.
 .. figure:: figures/iec-8kv.svg
    :name: fig-esd-iec-8kv
    :alt: Two graphs against time from 0 to 150 ns. Top, PAD jumps to
-         15.3 V within a nanosecond, dips to 10 V, rises to 13 V near 15 ns
-         and stays above the 12 V gate oxide line until about 30 ns before
-         decaying; DVDD and the clamp gate reach about 11 V, then about
-         10 V; the input gates peak at 12.4 V. Bottom, the total current
-         peaks at 29.4 A near 1 ns, dips to 11 A, rises again to 20 A near
-         15 ns and decays. The PMOS drain diode carries up to 17.5 A and
-         the NMOS snapback up to 9.3 A.
+         15.6 V within a nanosecond, dips to 10 V, rises to 13.3 V near
+         15 ns and stays above the 12 V gate oxide line until about 31 ns
+         before decaying; DVDD and the clamp gate reach about 11 V, then
+         about 10 V; the input gates peak at 12.4 V. Bottom, the total
+         current peaks at 29.4 A near 1 ns, dips to 11 A, rises again to
+         20 A near 15 ns and decays. The PMOS drain diode carries up to
+         19.5 A and the NMOS snapback up to 9.6 A.
    :width: 100%
 
    Voltages and currents of a +8 kV :std:`IEC 61000-4-2` contact discharge
@@ -39,42 +39,24 @@ The rail clamp turns on: its gate follows DVDD. At the first peak the
 current divides between two paths from the pad
 (:numref:`tab-esd-events-current`):
 
-* through the PMOS drain diode to DVDD and the rail clamps, 17.5 A
-  (36.6 mA/µm over 480 µm, 1.2 times its measured limit);
-* through the snapped-back output NMOS to DVSS, 9.3 A (30.7 mA/µm over
-  304 µm), 4.4 times its measured limit.
+* through the PMOS drain diode to DVDD and the rail clamps, 19.5 A
+  (40.7 mA/µm over 480 µm, 1.3 times its measured limit);
+* through the snapped-back output NMOS to DVSS, 9.6 A (31.6 mA/µm over
+  304 µm), 4.5 times its measured limit.
 
 The two 4000 µm clamp transistors need about 10 V to 11 V across them to
-carry their share, so DVDD rises that far. The pad rises past the output
-NMOS's 10.7 V trigger within 0.3 ns, and the NMOS snaps back
+carry their share, so DVDD rises that far. The pad passes the output
+NMOS's 10.7 V trigger, and the NMOS snaps back 0.28 ns into the discharge
 (:numref:`tab-esd-trigger`). The snapped-back NMOS and the PMOS drain diode
-then hold the pad at 15.3 V at the peak current
+then hold the pad at 15.6 V at the peak current
 (:numref:`tab-esd-events-voltage`).
 
-The pad stays above 12 V for 26 ns. The 110 Ω secondary resistor and
+The pad stays above 12 V for 27 ns. The 110 Ω secondary resistor and
 diodes do not hold the input gates below the 12 V minimum oxide breakdown:
 they reach 12.4 V, and stay above 12 V for about 1 ns in all.
 
-Two parts of this result rest on devices outside what their models cover:
-
-* DVDD at 10 V to 11 V is above the 8.5 V minimum junction breakdown of a
-  6 V NMOS (:numref:`tab-esd-breakdown`). The clamp transistor is an
-  ordinary 6 V NMOS without silicide blocking, and the simulation gives it
-  no snapback branch. At this voltage most of the clamps' simulated current
-  is the transistor model's impact-ionisation current into the substrate:
-  8.1 A of 8.9 A at 1.7 ns. The model was fitted for normal operating
-  voltages, not this. A real clamp might carry more, by snapping back, or
-  less, so the share of the current left to the output NMOS is uncertain.
-  In the human body model discharges up to 8 kV that current is 2 % of the
-  clamps' current or less.
-* Until the snapback closes, the simulated NMOS drain carries no avalanche
-  current, so the pad's first rise is an upper estimate. The snapback
-  closes once the pad has stayed above 10.7 V for about 100 ps
-  (:doc:`simulation`). The foundry does not publish how fast its NMOS
-  triggers.
-
-.. csv-table:: When the output NMOS snapped back in each event, and the
-               highest pad voltage before then
+.. csv-table:: Whether and when the output NMOS snapped back in each
+               positive event, and the highest pad voltage before then
    :name: tab-esd-trigger
    :file: sim/results/trigger.csv
    :header-rows: 1
@@ -102,15 +84,55 @@ severity as 8 kV contact (:ref:`esd-events`), while the contact waveform at
 PMOS drain also avalanches, carrying 4.7 mA/µm.
 
 :numref:`tab-esd-solver` lists the events that needed another solver
-setting or a shorter run (:doc:`simulation`). Three negative discharges,
-including −15 kV, were simulated for their first 4 ns only. That covers
-the first peak, which sets their stress; the later, lower hump is not
-simulated.
+setting or a shorter run (:doc:`simulation`). The −15 kV discharge was
+simulated for its first 4 ns only. That covers the first peak, which sets
+its stress; the later, lower hump is not simulated.
 
 .. csv-table:: Events not solved with Gear integration over the whole pulse
    :name: tab-esd-solver
    :file: sim/results/solver.csv
    :header-rows: 1
+
+Two parts of the IEC results rest on models used outside their range
+--------------------------------------------------------------------
+
+DVDD at 10 V to 11 V is above the 8.5 V minimum junction breakdown of a
+6 V NMOS (:numref:`tab-esd-breakdown`). The clamp transistor is an
+ordinary 6 V NMOS without silicide blocking, and the simulation gives it no
+snapback branch. At this voltage much of the clamps' simulated current is
+the transistor model's impact-ionisation current into the substrate
+(:numref:`tab-esd-clamp-sub`). The model was fitted for normal operating
+voltages, not these.
+
+.. csv-table:: The rail clamps' peak current and the part of it that is
+               the transistor model's substrate current
+   :name: tab-esd-clamp-sub
+   :file: sim/results/clamp-substrate.csv
+   :header-rows: 1
+
+A real clamp might carry more current, by snapping back, or less. So the
+share of the current left to the output NMOS in positive IEC discharges is
+uncertain. In the human body model discharges the substrate current is 2 %
+of the clamps' current or less, and those results do not depend on it.
+
+The output NMOS's trigger time is the second. Before the NMOS snaps back,
+the simulation gives it no avalanche current, so the pad's first rise is
+an upper estimate. It snaps back once the pad has stayed above 10.7 V for
+about 100 ps (:doc:`simulation`); the foundry does not publish how fast
+its NMOS triggers. :numref:`tab-esd-trigger-time` repeats the three events
+whose pad passes 10.7 V only briefly, with 10 ps and 500 ps instead.
+
+.. csv-table:: The three marginal events with three trigger times
+   :name: tab-esd-trigger-time
+   :file: sim/results/trigger-time.csv
+   :header-rows: 1
+
+"Partly" means the latch that triggers the snapback reached only half
+charge, so the NMOS conducted with somewhat more than its fitted
+resistance. In the +2 kV discharge the result depends on the trigger time:
+the most stressed device reaches between 0.48 and 0.91 of its limit. With
+a 500 ps trigger the NMOS does not snap back at all, and the PMOS drain
+diode carries the current.
 
 How the stress grows with the test voltage
 ------------------------------------------
@@ -124,10 +146,10 @@ current.
    :name: fig-esd-sweep
    :alt: Graph of peak current density divided by failure current, from 0
          to 6, against test voltage from 0 to 15 kV. The human body model
-         lines, positive and negative, rise slowly to 0.3 and 0.54 at
+         lines, positive and negative, rise slowly to 0.33 and 0.54 at
          8 kV, below the failure line at 1. The IEC contact lines start
-         at 1.65 at 2 kV positive and 0.8 at 2 kV negative, and rise to
-         about 5.3 and 5.7 at 15 kV.
+         at 0.91 at 2 kV positive and 0.8 at 2 kV negative, cross 1
+         before 4 kV, and rise to about 5.3 and 5.7 at 15 kV.
    :width: 100%
 
    Stress on the most stressed protection device against test voltage.
@@ -146,13 +168,12 @@ What the results show, read with the limits on :doc:`simulation`:
   and no measured limit for the output transistors themselves
   (:doc:`simulation`), so this is a comparison of current densities, not a
   rating.
-* Every positive IEC level from 2 kV contact upward exceeds a measured
-  limit, and so does the negative discharge from 4 kV upward. In positive
-  discharges the snapped-back output NMOS is the most stressed device; in
-  negative discharges, the NMOS drain diode. At −2 kV the NMOS drain diode
-  reaches 0.80 of its limit.
+* Every IEC contact discharge from 4 kV upward, of either polarity,
+  exceeds a measured limit. In positive discharges the snapped-back output
+  NMOS is the most stressed device; in negative discharges, the NMOS drain
+  diode. At 2 kV the most stressed device reaches 0.91 (positive, with the
+  trigger-time uncertainty above) and 0.80 (negative) of its limit.
 * The foundry measured its limits with 100 ns pulses. The IEC first peak
   rises in under 1 ns ([ESD-TB505]_) and is over within a few nanoseconds
   (:numref:`fig-esd-sources`). How the limits apply to so short a pulse is
   listed under :ref:`esd-open`.
-
