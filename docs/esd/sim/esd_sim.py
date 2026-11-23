@@ -35,7 +35,8 @@ import pickle
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from calibrate import fit_diode, fit_ggnmos, load_tlp  # noqa: E402
+from calibrate import (fit_diode, fit_ggnmos, fit_ggpmos,  # noqa: E402
+                       load_tlp)
 from report import (SHORT_NAMES, event_row, fig_diode_fit,  # noqa: E402
                     fig_sources, fig_sweep, fig_zap, summarise, write_csv)
 from spice import FOUNDRY_RS, HERE, TLP_DIODE_AREA  # noqa: E402
@@ -49,20 +50,20 @@ WORKERS = 12
 
 
 def _run_job(args):
-    kind, volts, tstop, chip, rs_n, rs_p, ggnmos = args
+    kind, volts, tstop, chip, rs_n, rs_p, ggnmos, ggpmos = args
     try:
-        return zap(kind, volts, rs_n, rs_p, tstop, ggnmos, **chip)
+        return zap(kind, volts, rs_n, rs_p, tstop, ggnmos, ggpmos, **chip)
     except NgspiceFailed as exc:
         print(f"  NO RESULT: {kind} {volts:+.0f} V {chip}: {exc}",
               flush=True)
         return None
 
 
-def run_parallel(jobs, rs_n, rs_p, ggnmos):
+def run_parallel(jobs, rs_n, rs_p, ggnmos, ggpmos):
     """Run every zap() in jobs ({key: (kind, volts, tstop, chip)}) in
     parallel; return {key: result}."""
     with concurrent.futures.ProcessPoolExecutor(WORKERS) as pool:
-        futures = {key: pool.submit(_run_job, (*job, rs_n, rs_p, ggnmos))
+        futures = {key: pool.submit(_run_job, (*job, rs_n, rs_p, ggnmos, ggpmos))
                    for key, job in jobs.items()}
         return {key: f.result() for key, f in futures.items()}
 
@@ -74,6 +75,11 @@ def main():
         "Holding voltage (V)": f"{GGNMOS_VH:.2f}",
         "On-resistance (Ω·µm)": f"{GGNMOS_RON_OHM_UM:.0f}",
         "On-resistance of 200 µm (Ω)": f"{GGNMOS_RON_OHM_UM / 200:.2f}"}])
+    GGPMOS_V0, GGPMOS_R_OHM_UM = ggpmos = fit_ggpmos(tlp)
+    write_csv("ggpmos-fit.csv", [{
+        "Avalanche onset, fitted (V)": f"{GGPMOS_V0:.2f}",
+        "Resistance (Ω·µm)": f"{GGPMOS_R_OHM_UM:.0f}",
+        "Resistance of 300 µm (Ω)": f"{GGPMOS_R_OHM_UM / 300:.2f}"}])
     fits = {
         "N+/P-well diode": fit_diode(tlp, "np_6p0", "N+/P-well diode"),
         "P+/N-well diode": fit_diode(tlp, "pn_6p0", "P+/N-well diode"),
@@ -120,7 +126,7 @@ def main():
         with CACHE.open("rb") as f:
             waves = pickle.load(f)
     else:
-        waves = run_parallel(jobs, rs_n, rs_p, ggnmos)
+        waves = run_parallel(jobs, rs_n, rs_p, ggnmos, ggpmos)
         CACHE.parent.mkdir(exist_ok=True)
         with CACHE.open("wb") as f:
             pickle.dump(waves, f)
@@ -133,9 +139,11 @@ def main():
                "Sign": "+" if sign > 0 else "−"}
         if s_ is None:
             return {**row, "Highest PAD (V)": "no result",
-                    "Fraction of limit": "no result"}
+                    "Fraction of limit": "no result",
+                    "Most stressed": "no result"}
         return {**row, "Highest PAD (V)": f"{s_['pad_max_V']:.1f}",
-                "Fraction of limit": f"{s_['frac']:.2f}"}
+                "Fraction of limit": f"{s_['frac']:.2f}",
+                "Most stressed": SHORT_NAMES[s_["limit"]]}
     write_csv("scaled.csv", [scaled_row(k, m, sign)
                              for k, m in scaled for sign in (1, -1)])
     fig_sweep(sweep)
@@ -153,15 +161,36 @@ def main():
                 "Highest PAD (V)": f"{s_['pad_max_V']:.1f}",
                 "Fraction of limit": f"{s_['frac']:.2f}",
                 "Most stressed": SHORT_NAMES[s_["limit"]]}
-    # The events that needed the trapezoidal method or a shorter run.
+    # Every event that needed another solver setting or a shorter run,
+    # with the time it was solved to.
+    def event_name(key):
+        if key[0] == "scaled":
+            _, k, m, sign = key
+            return f"IEC {sign * 8:+d} kV, {k}× diodes, {m} pads"
+        if not isinstance(key, tuple):
+            return {"noclamp": "HBM +2 kV, no clamp",
+                    "drain_r": "HBM +2 kV, diode R × 2",
+                    "ring_r": "HBM +2 kV, ring 1 Ω"}[key]
+        return ("HBM" if key[0] == "hbm" else "IEC") + f" {key[1] * key[2]:+g} kV"
     write_csv("solver.csv", [
-        {"Event": ("HBM" if key[0] == "hbm" else "IEC contact")
-                  + f" {key[1] * key[2]:+g} kV",
-         "Integration method": waves[key]["method"],
-         "Simulated to (ns)": f"{waves[key]['stop'] * 1e9:g}"}
-        for key in sweep
+        {"Event": event_name(key),
+         "Solver": waves[key]["method"],
+         "Simulated to (ns)": f"{waves[key]['t'][-1] * 1e9:.0f}"}
+        for key, job in jobs.items()
         if waves[key] is not None and (waves[key]["method"] != "gear"
-                                       or waves[key]["stop"] < tstop[key[0]])])
+                                       or waves[key]["stop"] < job[2])],
+        fieldnames=["Event", "Solver", "Simulated to (ns)"])
+    # When each snapback closed, and the filtered pad voltage by then.
+    write_csv("trigger.csv", [
+        {"Event": event_name(key),
+         "Highest PAD before (V)": f"{s_['trigger']['pad_V']:.1f}",
+         "Filtered PAD (V)": f"{s_['trigger']['ctl_V']:.1f}",
+         "Closed at (ns)": f"{s_['trigger']['t_ns']:.2f}"}
+        for key in jobs
+        for s_ in [summarise(waves[key])]
+        if s_ is not None and s_["trigger"] is not None],
+        fieldnames=["Event", "Highest PAD before (V)", "Filtered PAD (V)",
+                    "Closed at (ns)"])
     write_csv("sweep.csv", [sweep_row(k, v) for k, v in sweep.items()])
 
     fig_zap(waves[("hbm", 1, 2)], "hbm-pos.svg",
@@ -184,7 +213,8 @@ def main():
                  "Highest PAD (V)", "Highest gate (V)",
                  "PAD above 12 V (ns)"]
     cur_cols = ["Event", "PMOS diode (mA/µm)",
-                "NMOS diode (mA/µm)", "Snapback (mA/µm)",
+                "NMOS diode (mA/µm)", "NMOS snapback (mA/µm)",
+                "PMOS avalanche (mA/µm)",
                 "Fraction of limit"]
     write_csv("events-voltage.csv",
               [{c: row[c] for c in volt_cols} for row in rows])

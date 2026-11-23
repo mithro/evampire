@@ -12,8 +12,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 from calibrate import diode_iv, diode_model  # noqa: E402
-from spice import (FOUNDRY_RS, GATE_OXIDE_BV_MIN, HERE,  # noqa: E402
-                   IT2_MA_PER_UM)
+from spice import (FOUNDRY_RS, GATE_OXIDE_BV_MIN,  # noqa: E402
+                   GGNMOS_VT1, HERE, IT2_MA_PER_UM)
 from testbench import short_circuit  # noqa: E402
 
 FIG = HERE.parent / "figures"
@@ -30,7 +30,7 @@ STYLE = {
 plt.rcParams.update(STYLE)
 COL = {"pad": "#1f4e9c", "dvdd": "#c0392b", "inner": "#2e8b57",
        "src": "#7f7f7f", "pdiode": "#c0392b", "ndiode": "#1f4e9c",
-       "clamp": "#e08a00", "snap": "#8e44ad"}
+       "clamp": "#e08a00", "snap": "#8e44ad", "aval": "#8c564b"}
 
 
 def save(fig, name):
@@ -113,6 +113,9 @@ def fig_zap(r, name, title, tmax_ns, show_snap=True):
     if show_snap:
         a2.plot(t, r["snap"], color=COL["snap"], lw=1.4,
                 label="NMOS snapback")
+    if abs(r["aval"]).max() > 0.01:
+        a2.plot(t, -r["aval"], color=COL["aval"], lw=1.4,
+                label="PMOS avalanche")
     a2.set_xlabel("Time (ns)")
     a2.set_ylabel("Current (A)")
     a2.set_xlim(0, tmax_ns)
@@ -132,21 +135,36 @@ def summarise(r):
     jp = abs(r["pdiode"]).max() / w_p * 1e3
     jn = abs(r["ndiode"]).max() / w_n * 1e3
     js = abs(r["snap"]).max() / r["w_snap"] * 1e3
+    ja = abs(r["aval"]).max() / r["w_aval"] * 1e3
     fracs = {"PMOS drain diode": jp / IT2_MA_PER_UM["P+/N-well diode"],
              "NMOS drain diode": jn / IT2_MA_PER_UM["N+/P-well diode"],
-             "NMOS snapback": js / IT2_MA_PER_UM["grounded-gate NMOS"]}
+             "NMOS snapback": js / IT2_MA_PER_UM["grounded-gate NMOS"],
+             "PMOS avalanche": ja / IT2_MA_PER_UM["grounded-gate PMOS"]}
     limit = max(fracs, key=fracs.get)
     frac = fracs[limit]
     above = r["pad"] > GATE_OXIDE_BV_MIN
     dt = np.diff(r["t"], append=r["t"][-1])
-    return {
+    # When the snapback closed, and whether the filtered pad voltage had
+    # reached the trigger voltage by then (at a solved time point).
+    on = np.flatnonzero(abs(r["snap"]) > 1e-3)
+    trig = None
+    if on.size:
+        k_on = on[0]
+        ctl = r["snap_ctl"][:k_on + 1].max()
+        trig = {"t_ns": r["t"][k_on] * 1e9, "ctl_V": ctl,
+                "pad_V": r["pad"][:k_on + 1].max()}
+        if ctl < GGNMOS_VT1 * 0.99:
+            print(f"WARNING: snapback closed with its control at {ctl:.2f} V",
+                  flush=True)
+    return {"trigger": trig,
         "above_ns": float(np.sum(dt[above]) * 1e9),
         "pmos_gate_V": r["pmos_gate"][k] if r["pmos_gate"] is not None else 0,
         "peak_A": abs(r["i"][k]),
         "pad_at_peak_V": r["pad"][k],
         "pad_max_V": r["pad"][np.argmax(abs(r["pad"]))],
         "gate_max_V": r["inner"][np.argmax(abs(r["inner"]))],
-        "jp": jp, "jn": jn, "js": js, "frac": frac, "limit": limit,
+        "jp": jp, "jn": jn, "js": js, "ja": ja, "frac": frac,
+        "limit": limit,
     }
 
 
@@ -159,7 +177,8 @@ EVENT_COLUMNS = [
     ("PAD above 12 V (ns)", lambda s: f"{s['above_ns']:.0f}"),
     ("PMOS diode (mA/µm)", lambda s: f"{s['jp']:.1f}"),
     ("NMOS diode (mA/µm)", lambda s: f"{s['jn']:.1f}"),
-    ("Snapback (mA/µm)", lambda s: f"{s['js']:.1f}"),
+    ("NMOS snapback (mA/µm)", lambda s: f"{s['js']:.1f}"),
+    ("PMOS avalanche (mA/µm)", lambda s: f"{s['ja']:.1f}"),
     ("Fraction of limit", lambda s: f"{s['frac']:.2f}"),
 ]
 
@@ -192,10 +211,10 @@ def fig_sweep(sweep):
     save(fig, "sweep.svg")
 
 
-def write_csv(name, rows):
+def write_csv(name, rows, fieldnames=None):
     RES.mkdir(exist_ok=True)
     with (RES / name).open("w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w = csv.DictWriter(f, fieldnames=fieldnames or list(rows[0]))
         w.writeheader()
         w.writerows(rows)
 
@@ -203,4 +222,5 @@ def write_csv(name, rows):
 # Short device names for narrow tables.
 SHORT_NAMES = {"PMOS drain diode": "PMOS diode",
                "NMOS drain diode": "NMOS diode",
-               "NMOS snapback": "NMOS snapback"}
+               "NMOS snapback": "NMOS snapback",
+               "PMOS avalanche": "PMOS avalanche"}
