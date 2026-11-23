@@ -70,8 +70,8 @@ Ports A and B forward every frame to each other, except LLDP frames
 * Forwarding is :term:`cut-through <cut-through forwarding>`. The delay
   through the chip is a small fixed number of clock cycles, not a whole
   frame.
-* Cut-through forwarding needs both ports to run at the same link speed.
-  When they link at different speeds, forwarding stays off until the faster
+* Cut-through forwarding needs both ports to run at the same link speed,
+  in full duplex. When they link at different speeds, forwarding stays off until the faster
   port has renegotiated down to the slower speed.
   :doc:`ethernet/rgmii/speed-policy` explains why and how.
 * Forwarded frames are passed on unchanged.

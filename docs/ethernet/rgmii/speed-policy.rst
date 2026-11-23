@@ -34,10 +34,18 @@ The processor sets up the transceivers as follows:
    half-duplex mode. Half duplex needs the media access
    controller to detect collisions and send frames again (:clause:`4`),
    which a cut-through path without frame storage cannot do.
-#. When both links are up, it reads the speed of each port. If both run at
-   the same speed, it turns on forwarding between them.
-#. When a link goes down, it turns forwarding off, and that port's
-   transceiver advertises every speed that evampire supports again.
+#. When both links are up, it reads the speed and duplex mode of each port
+   (:doc:`mdio`). If both run at the same speed in full duplex, it turns on
+   forwarding between them.
+#. When a link goes down, it turns forwarding off, and both transceivers
+   advertise every speed that evampire supports again.
+
+A partner that does not autonegotiate still gets a link at 10 or
+100 Mbit/s, through parallel detection (see
+:ref:`autonegotiation <phy-autoneg-parallel>`).
+Parallel detection finds only the speed, not the duplex mode, so
+transceivers bring such a link up in half duplex. Forwarding stays off
+while either link is in half duplex.
 
 While forwarding is off, frames to and from the processor are still
 received and sent on any port whose link is up.
@@ -56,15 +64,23 @@ slower speed, and forwarding resumes. A partner that offers only 10 or
 .. graphviz:: speed-policy.dot
    :name: fig-rgmii-speed-policy
    :caption: States of the two links and of forwarding.
-   :alt: Three states. From "one or both links down", the second link
-         coming up at the same speed leads to "both links up at the same
-         speed, forwarding on". Coming up at a different speed leads to
+   :alt: Four states. From "one or both links down", the second link
+         coming up at the same speed in full duplex leads to "same speed,
+         full duplex, forwarding on". A link coming up in half duplex leads
+         to "a link in half duplex, forwarding off". Coming up at a different
+         speed leads to
          "different speeds, forwarding off", where the faster port is
          restricted and renegotiates, and then to the same-speed state. A
          link going down returns to the first state.
    :align: center
 
 :numref:`fig-rgmii-speed-policy` shows these states.
+
+A restricted port keeps its lower speed only while the slower partner is
+connected. When the other link goes down, step 3 restores the full
+advertisement on both transceivers. If the other link then comes back up
+faster than the restricted port, the processor restarts autonegotiation on
+the restricted port, so both ports reach the highest speed they now share.
 
 .. _rgmii-error-forwarding:
 
@@ -77,3 +93,10 @@ with TX_CTL showing an error on the same byte, that is high then low
 transceiver then sends an error on the cable, and the far end discards the
 frame. The frame is already being sent when the error arrives, so it cannot
 be dropped instead.
+
+Open questions
+--------------
+
+* Whether the processor sends and receives frames on a half-duplex link,
+  which needs its media access controller to detect collisions and send
+  frames again (:clause:`4`).
