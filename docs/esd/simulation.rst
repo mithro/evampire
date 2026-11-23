@@ -43,7 +43,7 @@ circuit. It uses four modules in the same folder:
 :download:`sim/spice.py <sim/spice.py>` holds the paths, the foundry
 figures and the code that runs ngspice.
 
-Three changes add the behaviour of an ESD event
+Four changes add the behaviour of an ESD event
 -----------------------------------------------
 
 The foundry netlists and models are written for normal operation. An ESD
@@ -60,7 +60,9 @@ simulation adds.
      - Reason
    * - Adds a drain diode to each output transistor, scaled by width
      - The netlist gives the silicide-blocked output transistors no drain
-       area. The real drain forms a diode with its well, the main ESD path
+       area. The real drain forms a diode with its well, the main ESD path.
+       The added diode conducts forward only: its breakdown is the snapback
+       and avalanche branches below
    * - Fits the drain diodes' series resistance to the TLP measurements
      - The foundry diode model has about three times the resistance the
        foundry measured at ESD currents (:numref:`fig-esd-diode-fit`)
@@ -68,6 +70,10 @@ simulation adds.
      - Compact transistor models do not include the parasitic bipolar
        transistor. A switched branch fitted to the TLP measurement stands
        in for it
+   * - Adds the avalanche of the output PMOS drains
+     - The transistor model does not avalanche its drain junction. A
+       branch fitted to the TLP measurement of the grounded-gate PMOS
+       stands in for it
 
 Five changes work around faults in the models under ngspice
 -----------------------------------------------------------
@@ -116,9 +122,11 @@ The solver uses Gear integration. An event that stalls it is rerun with
 the trapezoidal method, then the trapezoidal method with a tighter limit on
 the error of each time step (``trtol=1``), then Gear integration with a
 0.1 ns maximum step. These settings change only how the solver chooses its
-time steps. An event that stalls all of them would be simulated to 4 ns
-only, past the IEC pulse's first peak. :numref:`tab-esd-solver` lists the
-events that needed another setting.
+time steps. An event that stalls all of them is simulated to 4 ns only,
+past the IEC pulse's first peak. :numref:`tab-esd-solver` lists the events
+that needed another setting or a shorter run, with the time each reached.
+A run that ends before its stop time without an error message counts as
+stalled.
 
 The diodes are fitted to the foundry's measurements
 ---------------------------------------------------
@@ -170,7 +178,8 @@ The design manual's 6 V grounded-gate NMOS triggers at 10.7 V
 ([ESD-GF180-DRM-14-5-5]_). The caption of its figure gives eight fingers
 (NF=8) of 25 µm (GW), so 200 µm of width. A straight line through its measured
 points after snapback gives the holding voltage and on-resistance
-(:numref:`tab-esd-gg-fit`).
+(:numref:`tab-esd-gg-fit`). The fit stops before 1.42 A, the pulse after
+which the figure's leakage current jumps: the device had failed.
 
 .. csv-table:: Straight-line fit to the snapped-back grounded-gate NMOS
    :name: tab-esd-gg-fit
@@ -179,11 +188,32 @@ points after snapback gives the holding voltage and on-resistance
 
 The simulation puts a switch and a current source in series from the pad
 to DVSS. The switch closes when the pad passes 10.7 V and stays closed for
-the rest of the event. A switch that opened again near the holding voltage
-would toggle on and off as the pulse decays, and stall the solver. The
-current source carries the pad's excess over the holding voltage divided by
+the rest of the event. It reads the pad voltage through a 100 ps filter,
+so the pad must stay above 10.7 V for about 100 ps. Without the filter, a
+trial step of the solver that overshot 10.7 V closed the switch while the
+solved pad voltage stayed below it. The script checks every event, and
+:numref:`tab-esd-trigger` gives when each snapback closed.
+
+A switch that opened again near the holding voltage would toggle on and
+off as the pulse decays, and stall the solver. The current source carries the pad's excess over the holding voltage divided by
 the on-resistance, and nothing below the holding voltage. The on-resistance
 is the fitted value divided by the 304 µm width of the output NMOS.
+
+The PMOS avalanche branch follows the TLP measurement
+------------------------------------------------------
+
+The design manual's 6 V grounded-gate PMOS avalanches at 9.7 V and has no
+snapback ([ESD-GF180-DRM-14-5-6]_). The caption of its figure gives twelve
+fingers (NF=12) of 25 µm, so 300 µm of width. A straight line through its
+measured points from 0.2 A to before 1.61 A, where its leakage jumps, gives
+:numref:`tab-esd-gp-fit`. The simulation puts a current source with this
+characteristic from DVDD to the pad, scaled to the 480 µm of the output
+PMOS, for discharges that pull the pad below DVDD.
+
+.. csv-table:: Straight-line fit to the grounded-gate PMOS in avalanche
+   :name: tab-esd-gp-fit
+   :file: sim/results/ggpmos-fit.csv
+   :header-rows: 1
 
 The test generators are checked against their standards
 -------------------------------------------------------
