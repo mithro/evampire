@@ -62,21 +62,22 @@ simulation adds.
      - The netlist gives the silicide-blocked output transistors no drain
        area. The real drain forms a diode with its well, the main ESD path.
        The added diode conducts forward only: its breakdown is the snapback
-       and avalanche branches below
+       and avalanche branches below. Dedicated diodes added beside it, in
+       the wider-diode runs, keep the foundry model's breakdown
    * - Fits the drain diodes' series resistance to the TLP measurements
      - The foundry diode model has about three times the resistance the
        foundry measured at ESD currents (:numref:`fig-esd-diode-fit`)
    * - Adds the snapback of the output NMOS
      - Compact transistor models do not include the parasitic bipolar
-       transistor. A switched branch fitted to the TLP measurement stands
-       in for it
+       transistor. A branch fitted to the TLP measurement, turned on by a
+       latch, stands in for it
    * - Adds the avalanche of the output PMOS drains
      - The transistor model does not avalanche its drain junction. A
        branch fitted to the TLP measurement of the grounded-gate PMOS
        stands in for it
 
-Five changes work around faults in the models under ngspice
------------------------------------------------------------
+Six changes work around faults in the models under ngspice
+----------------------------------------------------------
 
 The rest of the changes keep the foundry models from giving wrong results
 or stopping the simulator (:numref:`tab-esd-sim-faults`).
@@ -103,6 +104,12 @@ or stopping the simulator (:numref:`tab-esd-sim-faults`).
      - ngspice treats a junction area of 0 as not given and computes one
        from the geometry. A 38 µm NMOS then passes 0.78 A at 1 V forward,
        with no series resistance
+   * - Gives those core transistors a copy of the 6 V models with a lower
+       junction current limit
+     - Above 0.1 A the foundry model extends each junction's current with
+       a straight line, whatever its area. An 80 µm PMOS driver's drain
+       then passes 6.3 A at 3 V forward. With the limit at 1 fA it passes
+       5 mA, and the channel current is unchanged
    * - Simulates each MOS capacitor as its transistor
      - The foundry's ``nmoscap_6p0`` expression model stops ngspice at the
        first time step. The 6 V NMOS model, gate to one plate and source,
@@ -113,20 +120,21 @@ or stopping the simulator (:numref:`tab-esd-sim-faults`).
 
 Without the resistor change, each 30 kΩ resistor of the rail clamp's
 timer simulates as about 160 Ω, its two contact resistances alone, so the
-360 kΩ chain becomes about 1.9 kΩ. The clamp
-then turns off within 30 ns of a discharge. Without the transistor
-changes, unintended junctions carry a fifth of a human body model
-discharge, and the solver stalls in negative IEC discharges.
+360 kΩ chain becomes about 1.9 kΩ. The clamp then turns off within 30 ns
+of a discharge. Without the transistor changes, unintended junctions carry
+a fifth of a human body model discharge, and the solver stalls in negative
+IEC discharges.
 
 The solver uses Gear integration. An event that stalls it is rerun with
 the trapezoidal method, then the trapezoidal method with a tighter limit on
 the error of each time step (``trtol=1``), then Gear integration with a
 0.1 ns maximum step. These settings change only how the solver chooses its
-time steps. An event that stalls all of them is simulated to 4 ns only,
-past the IEC pulse's first peak. :numref:`tab-esd-solver` lists the events
-that needed another setting or a shorter run, with the time each reached.
-A run that ends before its stop time without an error message counts as
-stalled.
+time steps.
+
+An event that stalls all of them is simulated to 4 ns only, past the IEC
+pulse's first peak. :numref:`tab-esd-solver` lists the events that needed
+another setting or a shorter run, with the time each reached. A run that
+ends before its stop time without an error message counts as stalled.
 
 The diodes are fitted to the foundry's measurements
 ---------------------------------------------------
@@ -186,18 +194,23 @@ which the figure's leakage current jumps: the device had failed.
    :file: sim/results/ggnmos-fit.csv
    :header-rows: 1
 
-The simulation puts a switch and a current source in series from the pad
-to DVSS. The switch closes when the pad passes 10.7 V and stays closed for
-the rest of the event. It reads the pad voltage through a 100 ps filter,
-so the pad must stay above 10.7 V for about 100 ps. Without the filter, a
-trial step of the solver that overshot 10.7 V closed the switch while the
-solved pad voltage stayed below it. The script checks every event, and
-:numref:`tab-esd-trigger` gives when each snapback closed.
+The simulation puts a current source from the pad to DVSS. It carries the
+pad's excess over the holding voltage divided by the on-resistance, and
+nothing below the holding voltage. The on-resistance is the fitted value
+divided by the 304 µm width of the output NMOS.
 
-A switch that opened again near the holding voltage would toggle on and
-off as the pulse decays, and stall the solver. The current source carries the pad's excess over the holding voltage divided by
-the on-resistance, and nothing below the holding voltage. The on-resistance
-is the fitted value divided by the 304 µm width of the output NMOS.
+A latch turns the source on. The pad voltage, through a 100 ps filter,
+charges the latch while it is above 10.7 V, so the pad must stay above
+10.7 V for about 100 ps. Nothing discharges the latch, so the source stays
+on for the rest of the event. The source turns on as the latch passes half
+charge, over about 10 ps. A faster turn-on discharges the pad's
+capacitance in a spike of a few picoseconds that no real NMOS shows.
+
+Every part of the latch is continuous, so only a solved pad voltage can
+charge it. An earlier switch could be closed by a trial step of the solver
+that overshot 10.7 V. The script stops if a latch fires with its filtered
+voltage more than 10 mV below 10.7 V. :numref:`tab-esd-trigger` gives when
+each snapback latched.
 
 The PMOS avalanche branch follows the TLP measurement
 ------------------------------------------------------
