@@ -87,7 +87,7 @@ The resistor limits the current that reaches the small diodes, so the
 gates stay below the pad by the voltage across it. The difference grows
 with the current: in the simulated +2 kV human body model discharge the pad
 reaches 5.6 V and the gates 5.4 V, and in the +8 kV IEC discharge the pad
-reaches 13.7 V and the gates 11.5 V (:numref:`tab-esd-events-voltage`).
+reaches 15.3 V and the gates 12.4 V (:numref:`tab-esd-events-voltage`).
 
 The rail clamp shorts DVDD to DVSS during a fast event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -244,9 +244,15 @@ the device's width, so the manual gives it per micrometre
      - 7
      - 8
    * - Grounded-gate PMOS [ESD-GF180-DRM-14-5-6]_
-     - 9.7
+     - 9.7, does not snap back
      - 5.3
      - 14.1
+
+The 6.2 V holding voltage is the manual's table value. A straight line
+through the measured points after snapback meets zero current at 5.8 V,
+and the simulation uses that fit (:doc:`simulation`). The PMOS has no
+snapback: its current rises steadily above its avalanche voltage, to
+failure at about 14 V.
 
 The voltage that the protection reaches must stay below the limits of the
 circuits it protects (:numref:`tab-esd-breakdown`).
