@@ -171,7 +171,11 @@ agreement is by construction, not a check. A design has to work at 8.5 V. Neithe
 The ESD simulations (`docs/esd/`, on the `docs/esd` branch, PR 15, not yet
 merged) show the standard gf180mcu I/O cell holding its pad below about
 5.6 V for a +2 kV HBM discharge. A +8 kV IEC contact discharge takes the
-pad to a 15.3 V peak, and +15 kV to 21.0 V. If this stack sat on such a pin:
+pad to a 15.3 V peak, and +15 kV to 21.0 V. Those IEC figures rest partly on
+the same model artefact as variant A here. At the +8 kV peak, 91 % of the
+rail clamps' current is the nfet model's impact-ionisation term, far outside
+its fitted range. The HBM figure is not affected. If this stack sat on such a
+pin:
 
 * **Isolated stack (B):** 15.3 V puts 1.5 V on each transistor and 15.3 V
   on the top deep N-well, below its 31 V. The stack draws 0.5 mA, while the
