@@ -13,6 +13,7 @@ Run with:  uv run sim/diode_stack/run.py
 
 from __future__ import annotations
 
+import functools
 import os
 import re
 import subprocess
@@ -74,19 +75,27 @@ def netlist(variant: str) -> str:
         "VSUB sub 0 0",          # ammeter: current flowing into the P-substrate
         "",
     ]
+    shared = variant.startswith("A")
     for k in range(1, N + 1):
         d, s = f"n{k-1}", f"n{k}"
-        bulk = "sub" if variant.startswith("A") else s
+        # In A each bulk reaches the substrate through its own 0 V ammeter
+        # VB<k>, so the transistor's own bulk current (impact ionisation in
+        # the BSIM4 model) is measured apart from the junction diodes.
+        bulk = f"b{k}" if shared else s
         lines.append(f"XM{k} {d} {d} {s} {bulk} nfet_05v0 w={W:g} l={L:g} "
                      f"ad={ad:g} as={ad:g} pd={pd:g} ps={pd:g}")
-        if variant.startswith("A"):
-            # The BSIM4 nfet model in this PDK does NOT break down its own
-            # drain/source-to-body junctions (checked: 2 nA at 40 V), so add
-            # the PDK's N+ to P-substrate junction diode (bv = 11 V) for each
-            # transistor's drain and source diffusion explicitly.
+        if shared:
+            lines.append(f"VB{k} b{k} sub 0")
+            # The nfet model uses diomod=1, BSIM4's junction model without
+            # breakdown (checked: 2 nA at 40 V), so add the PDK's N+ to
+            # P-substrate junction diode (bv = 11 V) for each transistor's
+            # drain and source diffusion explicitly.
             lines.append(f"DJD{k} sub {d} diode_nd2ps_06v0 area={ad:g} pj={pd:g}")
             lines.append(f"DJS{k} sub {s} diode_nd2ps_06v0 area={ad:g} pj={pd:g}")
         if variant.startswith("B"):
+            # N+ drain (cathode) to its own P-well (anode = source node). The
+            # N+ to P-substrate model stands in for N+ to P-well.
+            lines.append(f"DND{k} {s} {d} diode_nd2ps_06v0 area={ad:g} pj={pd:g}")
             # P-well (anode = source node) to deep N-well (cathode = drain node)
             lines.append(f"DPW{k} {s} {d} diode_pw2dw area={PW_SIDE**2:g} pj={4*PW_SIDE:g}")
             # P-substrate (anode) to deep N-well (cathode = drain node)
@@ -94,6 +103,8 @@ def netlist(variant: str) -> str:
     # n0 is the sweep itself and n10 is held at 0 V by VBOT, so only the
     # internal nodes are written (the loader rebuilds n0 and n10).
     vecs = " ".join(f"v(n{k})" for k in range(1, N))
+    if shared:
+        vecs += " " + " ".join(f"i(VB{k})" for k in range(1, N + 1))
     lines += [
         "",
         ".option gmin=1e-15 reltol=1e-4",
@@ -117,6 +128,26 @@ def size_bytes(size: str) -> int:
     return int(float(s[:-1]) * mult[s[-1]]) if s[-1] in mult else int(s)
 
 
+@functools.cache
+def image_id() -> str:
+    """Resolve IMAGE to an image ID once, pulling it if it isn't local.
+
+    Every container then runs by this ID, so all runs in one invocation use
+    the same image even if the tag moves meanwhile.
+    """
+    def inspect() -> subprocess.CompletedProcess:
+        return subprocess.run(
+            ["docker", "image", "inspect", "--format", "{{.Id}}", IMAGE],
+            capture_output=True, text=True)
+    found = inspect()
+    if found.returncode != 0:
+        subprocess.run(["docker", "pull", IMAGE], check=True)
+        found = inspect()
+    if found.returncode != 0 or not found.stdout.strip():
+        sys.exit(f"cannot resolve image {IMAGE}: {found.stderr.strip()}")
+    return found.stdout.strip()
+
+
 def ngspice_in_cgroup(cir: Path) -> Path:
     """Run `ngspice -b <cir>` in a memory-capped container; return the log.
 
@@ -134,13 +165,17 @@ def ngspice_in_cgroup(cir: Path) -> Path:
         "--memory", SIM_MEMORY, "--memory-swap", SIM_MEMORY,
         "--pids-limit", str(SIM_PIDS),
         "-e", f"HOME={cir.parent}", "-v", f"{HERE}:{HERE}", "-w", str(cir.parent),
-        "--entrypoint", "/bin/bash", IMAGE, "-c", script, cir.name,
+        "--entrypoint", "/bin/bash", image_id(), "-c", script, cir.name,
     ]
     with log.open("w") as fh:
         rc = subprocess.run(cmd, stdout=fh, stderr=subprocess.STDOUT).returncode
     first = log.read_text().splitlines()[:1]
-    want = f"cgroup memory.max={size_bytes(SIM_MEMORY)} memory.swap.max=0"
-    if not first or not first[0].startswith(want):
+    want = (f"cgroup memory.max={size_bytes(SIM_MEMORY)} memory.swap.max=0 "
+            f"pids.max={SIM_PIDS}")
+    if first and first[0].startswith("docker:"):
+        sys.exit(f"{cir.name}: docker could not start the container "
+                 f"(rc={rc}): {first[0]}")
+    if not first or first[0].strip() != want:
         sys.exit(f"{cir.name}: cgroup limits not applied (expected '{want}', "
                  f"log starts {first!r}); see {log}")
     if rc == 137:
@@ -151,19 +186,40 @@ def ngspice_in_cgroup(cir: Path) -> Path:
     return log
 
 
+N_ROWS = round(V_MAX / V_STEP) + 1
+
+
+def checked_run(cir: Path, dat: Path, rows: int) -> Path:
+    """Run `cir`, and fail unless it wrote a fresh `dat` with `rows` rows.
+
+    The old data file is deleted first, so a run that writes nothing can
+    never be summarised from a previous run's results.
+    """
+    dat.unlink(missing_ok=True)
+    log = ngspice_in_cgroup(cir)
+    text = log.read_text()
+    errors = [s for s in text.splitlines() if re.match(r"\s*error", s, re.I)]
+    if errors:
+        sys.exit(f"{cir.name}: ngspice reported {errors[:3]}; see {log}")
+    if f"No. of Data Rows : {rows}" not in text:
+        sys.exit(f"{cir.name}: expected {rows} data rows; see {log}")
+    if not dat.exists():
+        sys.exit(f"{cir.name}: ngspice wrote no {dat.name}; see {log}")
+    return dat
+
+
 def run_ngspice(variant: str) -> Path:
     cir = RESULTS / f"{variant}.cir"
     cir.write_text(netlist(variant))
-    ngspice_in_cgroup(cir)
-    return RESULTS / f"{variant}.dat"
+    return checked_run(cir, RESULTS / f"{variant}.dat", N_ROWS)
 
 
 def run_junction_check() -> str:
     """Run junction_check.cir (same cgroup limits) and report its result."""
     cir = RESULTS / "junction_check.cir"
     cir.write_text((HERE / "junction_check.cir").read_text())
-    ngspice_in_cgroup(cir)
-    d = np.loadtxt(RESULTS / "junction_check.dat", skiprows=1)
+    d = np.loadtxt(checked_run(cir, RESULTS / "junction_check.dat", 41),
+                   skiprows=1)
     at = {v: d[np.argmin(abs(d[:, 0] - v))] for v in (12, 40)}
     return ("\n## Junction breakdown check (junction_check.cir)\n\n"
             "| V | nfet_05v0 own drain junction | diode_nd2ps_06v0 |\n"
@@ -178,14 +234,20 @@ def load(dat: Path) -> dict[str, np.ndarray]:
     data = np.loadtxt(dat, skiprows=1)
     if data.shape[1] != len(names):
         sys.exit(f"{dat}: {len(names)} header names but {data.shape[1]} columns")
-    cols = dict(zip(names, data.T))
     vin = data[:, 0]
+    if len(vin) != N_ROWS or not np.isclose(vin[-1], V_MAX):
+        sys.exit(f"{dat}: {len(vin)} rows ending at {vin[-1]} V, expected "
+                 f"{N_ROWS} rows ending at {V_MAX} V")
+    cols = dict(zip(names, data.T))
     out = {"vin": vin}
     out["v"] = np.stack([vin] + [cols[f"v(n{k})"] for k in range(1, N)]
                         + [np.zeros_like(vin)])
     out["i_in"] = -cols["i(vin)"]      # current delivered by the source
     out["i_bot"] = cols["i(vbot)"]
     out["i_sub"] = cols["i(vsub)"]
+    # Variant A only: current from each transistor's bulk into the substrate.
+    if "i(vb1)" in cols:
+        out["i_bulk"] = np.stack([cols[f"i(vb{k})"] for k in range(1, N + 1)])
     return out
 
 
@@ -193,17 +255,22 @@ def summarise(results: dict[str, dict]) -> str:
     probe = [2, 5, 8, 10, 12, 15, 20, 30, 40, 50, 75, 100]
     rows = []
     for name, r in results.items():
+        bulk = "i_bulk" in r
         rows.append(f"\n## {name}\n{VARIANTS[name]}\n")
         rows.append("| V_in (V) | I_in | I via chain bottom | I into substrate "
-                    "| max V across one device (which) | V(top node) |")
-        rows.append("|---:|---:|---:|---:|---:|---:|")
+                    + ("| of which transistor bulk (M1) " if bulk else "")
+                    + "| max V across one device (which) | V(n1) |")
+        rows.append("|---:|---:|---:|---:|" + ("---:|" if bulk else "")
+                    + "---:|---:|")
         for vp in probe:
             i = int(np.argmin(np.abs(r["vin"] - vp)))
             vdev = r["v"][:-1, i] - r["v"][1:, i]
             k = int(np.argmax(vdev))
+            extra = (f"{eng(r['i_bulk'][:, i].sum())}A "
+                     f"({eng(r['i_bulk'][0, i])}A) | ") if bulk else ""
             rows.append(f"| {r['vin'][i]:.0f} | {eng(r['i_in'][i])}A | "
                         f"{eng(r['i_bot'][i])}A | {eng(r['i_sub'][i])}A | "
-                        f"{vdev[k]:.2f} V (M{k+1}) | {r['v'][0, i]:.1f} V |")
+                        f"{extra}{vdev[k]:.2f} V (M{k+1}) | {r['v'][1, i]:.1f} V |")
     return "\n".join(rows) + "\n"
 
 
@@ -314,14 +381,23 @@ def plot(results: dict[str, dict]) -> None:
 
 
 def tool_versions() -> str:
-    """Image ID and ngspice version, so a result can be traced to its tools."""
-    image_id = subprocess.run(
-        ["docker", "image", "inspect", "--format", "{{.Id}}", IMAGE],
-        capture_output=True, text=True, check=True).stdout.strip()
-    log = (RESULTS / "A_shared_substrate.log").read_text().splitlines()
-    found = (re.search(r"ngspice-\d+\S*", s) for s in log)
-    ngspice = next((m.group(0) for m in found if m), "unknown")
-    return (f"Image `{IMAGE}`, ID `{image_id}`. ngspice: {ngspice}.\n")
+    """Image ID, ngspice version and cgroup limits, read from every run's log.
+
+    Fails if any run's log lacks the ngspice version or the runs disagree.
+    """
+    versions, limits = set(), set()
+    for v in VARIANTS:
+        log = (RESULTS / f"{v}.log").read_text().splitlines()
+        limits.add(log[0].strip())
+        found = [m.group(0) for s in log
+                 if (m := re.search(r"ngspice-\d+\S*", s))]
+        if not found:
+            sys.exit(f"{v}.log: no ngspice version line")
+        versions.update(found)
+    if len(versions) != 1 or len(limits) != 1:
+        sys.exit(f"runs disagree: ngspice {versions}, limits {limits}")
+    return (f"Image `{IMAGE}`, ID `{image_id()}`. ngspice: {versions.pop()}. "
+            f"Each run's {limits.pop()}.\n")
 
 
 def main() -> None:
