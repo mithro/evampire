@@ -64,11 +64,16 @@ for n in (1e14, 1e15, 2e15, 1e16, 1e17):
 # ---------------------------------------------------------------------------
 section("2. Substrate doping estimated from model junction capacitance")
 # gf180mcu_fd_pr 9f992d5 models/ngspice/sm141064.ngspice: zero-bias area
-# capacitance cjo (F/m^2), built-in potential pb (V), grading mj.
+# capacitance cj (F/m^2), built-in potential pb (V) and grading mj of the
+# junctions to the substrate. An abrupt one-sided junction has mj = 0.5; a
+# linearly graded one has mj = 1/3. The abrupt formula is a rough estimate.
 models = {
-    "N-well to substrate, 6 V (diode_nw2ps_06v0)": (1.4914e-4, 0.43905, 0.30525),
-    "deep N-well to substrate (diode_dw2ps)": (2.2998e-4, 0.35175, 0.14716),
+    "nwp_6p0, 6 V N-well (line 38193)": (1.4914e-4, 0.43905, 0.30525),
+    "nwp_3p3, 3.3 V N-well (line 38162)": (1.4917e-4, 0.5755, 0.33979),
+    "dnwps, deep N-well (line 38213)": (2.2998e-4, 0.35175, 0.14716),
 }
+print("  model                                 mj    N zero bias  "
+      "N 1/C^2 slope 2-10 V  flat BV at zero-bias N")
 for name, (cjo, pb, mj) in models.items():
     c0 = cjo * 1e-4                                # F/cm^2
     n0 = 2 * pb * c0 ** 2 / (Q * EPS_SI)           # abrupt, zero bias
@@ -77,9 +82,8 @@ for name, (cjo, pb, mj) in models.items():
     c = [c0 * (1 + v / pb) ** -mj for v in (2.0, 10.0)]
     slope = (1 / c[1] ** 2 - 1 / c[0] ** 2) / 8.0
     n_slope = 2 / (Q * EPS_SI * slope)
-    show(name + ": N, zero bias", n0, "cm^-3")
-    show(name + ": N, 1/C^2 slope 2-10 V", n_slope, "cm^-3")
-    show("  flat-junction breakdown at the zero-bias N", bv_planar(n0), "V")
+    print(f"  {name:<36} {mj:5.3f}  {n0:11.2e}  {n_slope:20.2e}  "
+          f"{bv_planar(n0):8.0f} V")
 
 # ---------------------------------------------------------------------------
 section("3. Curved junction edges break down early")
@@ -93,12 +97,24 @@ for n in (1e15, 2e15):
               f"{bv * ratio_sph(x):10.0f}")
 
 # ---------------------------------------------------------------------------
-section("4. Shortest grading length for a uniform field (illustration)")
-for n in (1e15, 5e15):
-    e_avg = bv_planar(n) / w_planar(n)          # average field at breakdown
-    for v in (57.0, 100.0):
-        show(f"N = {n:.0e}: E_avg {e_avg:.3g} V/cm, length for {v:g} V",
-             v / e_avg * 1e4, "um")
+section("4. Shortest length for a voltage to fall over in a uniform field")
+# Effective ionisation coefficient alpha = A_ALPHA * E^7 (Fulop), Park
+# Section 3.1.5, Eq. 3.25. Avalanche runs away when the integral of alpha
+# across the field reaches 1. For a uniform field E = V/L over a length L
+# that is A_ALPHA (V/L)^7 L = 1, so L = (A_ALPHA V^7)^(1/6).
+A_ALPHA = 1.8e-35      # cm^6 V^-7
+n = 1e15
+w, vb = w_planar(n), bv_planar(n)
+e_pk = 2 * vb / w                               # triangle: peak = 2 x average
+show("check: ionisation integral of Baliga's flat junction at 1e15",
+     A_ALPHA * e_pk ** 7 * w / 8)
+show("  (its average field, V_B / W_B)", vb / w, "V/cm")
+for v in (57.0, 100.0):
+    length = (A_ALPHA * v ** 7) ** (1 / 6)
+    show(f"uniform field holding {v:g} V: length", length * 1e4, "um")
+    show(f"  field", v / length, "V/cm")
+    show(f"  length at the flat junction's average field instead",
+         v / (vb / w) * 1e4, "um")
 
 # ---------------------------------------------------------------------------
 section("5. Oxide thickness needed per volt (illustration)")
@@ -142,15 +158,20 @@ STACK = {
 }
 EPS_OX = 3.9 * 8.854e-14   # F/cm, MIT 6.012 slide 7-3
 KT = 0.02585               # V at 300 K
-NI = 1e10                  # cm^-3; gives 417 mV at 1e17, MIT 6.012 slide 7-12
-V_FB = -0.9                # V, illustration: an aluminium gate on P-type Si
+NI = 1e10                  # cm^-3, illustration; gives 417 mV at 1e17, close
+                           # to the 420 mV of MIT 6.012 slide 7-12
+V_FB = -0.9                # V, illustration (an aluminium gate on P-type Si);
+                           # anything from -0.3 V to -0.9 V changes little
 MU_N = 400.0               # cm^2/(V s), illustration: electrons at the surface
-DOPINGS = (1.2e15, 5.3e15, 1e17)   # substrate estimates (section 2), and a
-                                   # P-well as an illustration
+N_LOW = 1.2e15             # lightest substrate estimate (section 2)
+# Published threshold of a field transistor gated by Metal1 over field
+# oxide, 6 V area, NCH, W/L = 200/0.36: "Vtsat FN-M1", 8.5 V minimum,
+# 11 V typical (gf180mcu electrical specification, section 2.0, row 7).
+VT_M1 = {"minimum": 8.5, "typical": 11.0}
 
 
 def mos(n, c_ox):
-    """Threshold (V), max depletion width (cm) and slope (mV/decade)."""
+    """Threshold (V), phi_F (V), Q_dep (C/cm^2), slope (mV/decade)."""
     phi_f = KT * math.log(n / NI)
     q_dep = math.sqrt(2 * Q * EPS_SI * n * 2 * phi_f)
     x_dmax = math.sqrt(2 * EPS_SI * 2 * phi_f / (Q * n))
@@ -159,14 +180,29 @@ def mos(n, c_ox):
     return vt, phi_f, q_dep, slope
 
 
-print("  Worked example, Metal5 over field oxide, N = 1.2e15 cm^-3:")
-c5 = STACK["Metal5"][0][0] * 1e-10            # aF/um^2 -> F/cm^2
-vt, phi_f, q_dep, slope = mos(1.2e15, c5)
-show("C_ox", c5, "F/cm^2")
-show("phi_F", phi_f, "V")
-show("Q_dep (charge per area at threshold)", q_dep, "C/cm^2")
-show("Q_dep / C_ox", q_dep / c5, "V")
-show("V_T", vt, "V")
+def doping_for(vt, c_ox):
+    """Doping that gives threshold `vt` under `c_ox` (bisection in log N)."""
+    lo, hi = 1e13, 1e19
+    for _ in range(200):
+        mid = math.sqrt(lo * hi)
+        lo, hi = (mid, hi) if mos(mid, c_ox)[0] < vt else (lo, mid)
+    return math.sqrt(lo * hi)
+
+
+def cap(name, corner=0):
+    """Area capacitance over field oxide (F/cm^2); corner 0 nominal."""
+    return STACK[name][0][corner] * 1e-10
+
+
+print("  Worked example, lightest substrate estimate, Metal1 and Metal5:")
+for name in ("Metal1", "Metal5"):
+    c = cap(name)
+    vt, phi_f, q_dep, slope = mos(N_LOW, c)
+    show(f"{name}: C_ox", c, "F/cm^2")
+    show(f"{name}: phi_F", phi_f, "V")
+    show(f"{name}: Q_dep", q_dep, "C/cm^2")
+    show(f"{name}: Q_dep / C_ox", q_dep / c, "V")
+    show(f"{name}: V_T", vt, "V")
 print()
 print("  layer   C field  t_eq field  t_eq active  C spread  "
       "E_ox at 57 V (MV/cm)")
@@ -178,36 +214,75 @@ for name, (field, active) in STACK.items():
           f"{(cmin / c - 1) * 100:+.0f}/{(cmax / c - 1) * 100:+.0f} %  "
           f"{57 / (t_f * 1e-4) / 1e6:8.2f}")
 print()
-print("  layer   V_T at N = 1.2e15, 5.3e15, 1e17 (V)   "
-      "slope at 1.2e15 (mV/dec)  dV_T per 1e11 cm^-2 (V)")
-for name, (field, _) in STACK.items():
-    c = field[0] * 1e-10
-    vts = [mos(n, c)[0] for n in DOPINGS]
-    s = mos(DOPINGS[0], c)[3]
-    print(f"  {name}  " + "  ".join(f"{v:7.1f}" for v in vts)
-          + f"   {s:8.0f}   {Q * 1e11 / c:6.2f}")
+# Calibration: find the doping that reproduces the published Metal1
+# threshold, then apply it under every layer. This lumps doping and any
+# charge at the silicon surface together; both scale as 1/C_ox.
+N_CAL = {k: doping_for(v, cap("Metal1")) for k, v in VT_M1.items()}
+for k, n in N_CAL.items():
+    show(f"doping that gives the {k} Metal1 threshold {VT_M1[k]:g} V", n,
+         "cm^-3")
+print()
+print("  layer   V_T: lightest estimate, calibrated minimum, calibrated "
+      "typical (V)   slope at the same three (mV/dec)   dV_T per 1e11 cm^-2 (V)")
+for name in STACK:
+    c = cap(name)
+    ns = (N_LOW, N_CAL["minimum"], N_CAL["typical"])
+    vts = [mos(n, c)[0] for n in ns]
+    slopes = [mos(n, c)[3] for n in ns]
+    print(f"  {name}  " + "  ".join(f"{v:6.1f}" for v in vts) + "     "
+          + "  ".join(f"{s:6.0f}" for s in slopes)
+          + f"     {Q * 1e11 / c:6.2f}")
 print()
 V_DS = 1.0     # V, illustration: a low-voltage drain
 
 
 def i_lin(w_over_l, c, v_g, vt):
-    """Linear-region drain current (A), MIT 6.012 slide 10-3."""
-    return w_over_l * MU_N * c * (v_g - V_DS / 2 - vt) * V_DS
+    """Linear-region drain current (A), MIT 6.012 slide 10-3; 0 if off."""
+    return max(0.0, w_over_l * MU_N * c * (v_g - V_DS / 2 - vt) * V_DS)
 
 
-print("  layer   mu*C_ox (uA/V^2)  I_D at V_G = 57 V, V_DS = 1 V, W/L = 10, "
-      "N = 1.2e15 (uA)   gate C of 100 um x 100 um (fF)")
+print("  layer   mu*C_ox (uA/V^2)   I_D at V_G = 57 V, V_DS = 1 V, W/L = 10 "
+      "(uA): calibrated minimum, typical   gate C of 100 um x 100 um (fF)")
 for name, (field, _) in STACK.items():
-    c = field[0] * 1e-10
-    vt = mos(DOPINGS[0], c)[0]
-    print(f"  {name}  {MU_N * c * 1e6:8.2f}  "
-          f"{i_lin(10, c, 57, vt) * 1e6:10.0f}  {field[0] * 10:8.1f}")
+    c = cap(name)
+    i_min = i_lin(10, c, 57, mos(N_CAL["minimum"], c)[0])
+    i_typ = i_lin(10, c, 57, mos(N_CAL["typical"], c)[0])
+    print(f"  {name}  {MU_N * c * 1e6:8.2f}   {i_min * 1e6:8.0f}  "
+          f"{i_typ * 1e6:8.0f}   {field[0] * 10:8.1f}")
 print()
-print("  Level shift: two Metal1 gates at V_f and V_f + 5 V, N = 1.2e15, "
-      "V_DS = 1 V, W/L = 10")
-c1 = STACK["Metal1"][0][0] * 1e-10
-vt1 = mos(DOPINGS[0], c1)[0]
-for vf in (10.0, 20.0, 40.0):
+c3 = cap("Metal3")
+vt3 = mos(N_CAL["typical"], c3)[0]
+print("  Worked example, Metal3, typical calibration, V_G = 57 V, W/L = 10:")
+show("V_T", vt3, "V")
+show("I_D", i_lin(10, c3, 57, vt3) * 1e6, "uA")
+print()
+print("  Level shift: two Metal1 gates at V_f and V_f + 5 V, typical "
+      "calibration, V_DS = 1 V, W/L = 10")
+c1 = cap("Metal1")
+vt1 = mos(N_CAL["typical"], c1)[0]
+show("Metal1 V_T, typical calibration", vt1, "V")
+for vf in (15.0, 20.0, 40.0):
     lo, hi = i_lin(10, c1, vf, vt1), i_lin(10, c1, vf + 5, vt1)
     print(f"  V_f = {vf:4.0f} V: {lo * 1e6:6.1f} uA and {hi * 1e6:6.1f} uA, "
           f"difference {(hi - lo) * 1e6:5.1f} uA")
+print()
+# A plate also faces low-voltage metal under it. Metal2 over Metal1:
+# open_pdks bb8c82e gf180mcu-extract.tech line 529, 59.027 aF/um^2.
+t21 = EPS_OX / 59.027e-10
+show("Metal2 over Metal1: equivalent thickness", t21 * 1e4, "um")
+show("  field at 57 V between them", 57 / t21 / 1e6, "MV/cm")
+
+# ---------------------------------------------------------------------------
+section("8. Polysilicon over field oxide as a gate")
+# open_pdks bb8c82e gf180mcu-extract.tech line 489: poly to substrate,
+# 110.670 aF/um^2. Published field threshold with a polysilicon gate in
+# the 3.3 V area: "Vtsat FN-Poly", 6.5 V minimum, 8.5 V typical
+# (gf180mcu electrical specification, section 1.0, row 7).
+c_poly = 110.670e-10
+t_poly = EPS_OX / c_poly
+show("equivalent thickness of the field oxide under polysilicon",
+     t_poly * 1e4, "um")
+for v in (57.0, 100.0):
+    show(f"field in that oxide at {v:g} V", v / t_poly / 1e6, "MV/cm")
+for n in (N_LOW, N_CAL["minimum"], N_CAL["typical"]):
+    show(f"threshold under polysilicon at N = {n:.2g}", mos(n, c_poly)[0], "V")
