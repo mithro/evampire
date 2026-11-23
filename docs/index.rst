@@ -34,11 +34,11 @@ power flow between them.
          (BMC, 300 kbit/s). The serial port connects straight down to the USB
          Type-C port over the D+ and D− wires, and USB-PD over the CC wire;
          both hop over the power row. Power control connects to the power
-         bus. Power runs in a straight line along the bottom: from
+         bus. Power runs in a straight line along the bottom, from
          Ethernet port A (PoE in, 37–57 V) through the powered device and
-         buck converter to the power bus on the board, then through the boost
-         converter and power sourcing equipment to Ethernet port B (PoE out,
-         44–57 V). Below the bus, power comes up from the USB Type-C port
+         buck converter to the power bus on the board. From the bus it runs
+         through the boost converter and power sourcing equipment to
+         Ethernet port B (PoE out, 44–57 V). Below the bus, power comes up from the USB Type-C port
          through the VBUS sink switch, and goes down to it through the VBUS
          source buck-boost converter. The USB Type-C port is labelled VBUS
          5–20 V, up to 48 V with EPR. The first-version chip is drawn as a
@@ -47,13 +47,15 @@ power flow between them.
          the USB wires and the power control signals that leave it. A dashed
          outline that also includes both Ethernet transceivers and all the
          power stages marks the chip in the full design, with a note that
-         some high-voltage switches may stay external parts.
+         some high-voltage switches may stay external parts. The outline has
+         a hole around the power bus, which stays on the board.
    :align: center
 
    The main blocks of evampire. Data flows along the top row and power along
    the bottom row, each from Ethernet port A to port B. The first-version
    chip is drawn as a die, where a coloured pad marks each signal that leaves
-   it, and the dashed outline is the chip in the full design.
+   it, and the dashed outline is the chip in the full design. The power bus
+   stays on the board.
 
 The two chip outlines are the two board configurations of
 :numref:`tab-power-board-configs`. The first version connects to separate
@@ -63,8 +65,8 @@ except possibly some high-voltage switches
 (:ref:`requirements-open-questions`). Both ports run at the same speed, 10,
 100 or 1000 Mbit/s, because forwarding is cut-through (see
 :ref:`the forwarding requirements <req-forwarding>`).
-The figure shows the power roles of the first version: port A receives power
-and port B supplies it.
+The figure shows the power roles and the single USB Type-C port of the
+first version: port A receives power and port B supplies it.
 
 The labels use two abbreviations. USB Power Delivery messages on the :term:`CC` wire use
 :term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the

@@ -6,7 +6,8 @@ the bottom row, each in a straight line from Ethernet port A to port B. The
 first-version chip is drawn as a die with a ring of bond pads; a pad filled in
 a signal's colour marks where that signal leaves the chip. A dashed outline
 marks the chip in the full design, which also holds the transceivers and the
-power stages, except possibly some high-voltage switches.
+power stages, except possibly some high-voltage switches. The power bus stays
+on the board, so the dashed outline has a hole around it.
 
 The speeds, protocols and voltages written on the figure come from these
 pages, which are the place to change them:
@@ -52,6 +53,8 @@ Y_POWER, Y_USB, Y_USBC = 446, 556, 656
 # Outlines: (left, top, right, bottom).
 DIE = (282, 44, 662, 356)
 FULL = (90, 18, 846, 604)
+BUS = (310, Y_POWER - 30, 488, Y_POWER + 30)   # the power bus, on the board
+BUS_HOLE = (BUS[0] - 8, BUS[1] - 8, BUS[2] + 8, BUS[3] + 8)
 
 # Board connectors: (left, top, right, bottom).
 PORT_A = (12, 56, 80, 486)
@@ -159,8 +162,10 @@ def line(points, kind, both=False, hop_at=None):
     for (x0, y0), (x1, y1) in zip(points, points[1:]):
         if hop_at is not None and x0 == x1 and min(y0, y1) < hop_at < max(
                 y0, y1):
-            r = 10
-            d += f" V{hop_at - r:g} A{r} {r} 0 0 1 {x0:g} {hop_at + r:g}"
+            r = 10 if y1 > y0 else -10
+            sweep = 1 if y1 > y0 else 0   # the half circle bulges right
+            d += (f" V{hop_at - r:g} A10 10 0 0 {sweep} {x0:g} "
+                  f"{hop_at + r:g}")
         d += f" L{x1:g} {y1:g}"
     start = f' marker-start="url(#arrow-{kind})"' if both else ""
     out.append(f'<path d="{d}" fill="none" stroke="{colour}" '
@@ -180,15 +185,19 @@ def pads(box, signals):
         out.append(f'<rect x="{cx - s / 2:g}" y="{cy - s / 2:g}" width="{s:g}" '
                    f'height="{s:g}" rx="1.5" fill="{colour or PAD}"/>')
 
-    taken = {pos for (_, pos) in signals}
+    def free(pos, side):
+        return all(abs(pos - p) > gap / 2
+                   for (s, p) in signals if s == side)
+
     xs = [x for x in range(int(x0) + 26, int(x1) - 18, gap)]
     ys = [y for y in range(int(y0) + 26, int(y1) - 18, gap)]
     for x in xs:
-        if all(abs(x - t) > gap / 2 for t in taken):
+        if free(x, "bottom"):
             pad(x, y1 - inset)
     for y in ys:
-        if all(abs(y - t) > gap / 2 for t in taken):
+        if free(y, "left"):
             pad(x0 + inset, y)
+        if free(y, "right"):
             pad(x1 - inset, y)
     for (side, pos), colour in signals.items():
         cx, cy = {"left": (x0 + inset, pos), "right": (x1 - inset, pos),
@@ -225,6 +234,7 @@ def main(out_path):
                f'rx="6" fill="{DIE_FILL}" stroke="{SILICON}" '
                f'stroke-width="2.5"/>')
     outline(FULL, "dashed", SILICON, 1.5)
+    outline(BUS_HOLE, "dashed", SILICON, 1.5)
     pads(DIE, {("left", Y_DATA): DATA, ("right", Y_DATA): DATA,
                ("bottom", X_PCTRL): CTRL, ("bottom", X_DPDM): DATA,
                ("bottom", X_CC): DATA})
@@ -267,7 +277,7 @@ def main(out_path):
     pdev = card(147, Y_POWER, 90, 60, ["Powered", "device"], "PoE input",
                 "power")
     buck = card(251, Y_POWER, 74, 60, ["Buck"], "converter", "power")
-    bus = (310, Y_POWER - 30, 488, Y_POWER + 30)
+    bus = BUS
     out.append(f'<rect x="{bus[0]}" y="{bus[1]}" width="{bus[2] - bus[0]}" '
                f'height="{bus[3] - bus[1]}" rx="8" fill="{POWER_TINT}" '
                f'stroke="{POWER}" stroke-width="2"/>')

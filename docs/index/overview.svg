@@ -15,6 +15,7 @@
 <rect width="944" height="704" fill="#ffffff"/>
 <rect x="282" y="44" width="380" height="312" rx="6" fill="#f7f8fb" stroke="#2b3445" stroke-width="2.5"/>
 <rect x="90" y="18" width="756" height="586" rx="14" fill="none" stroke="#2b3445" stroke-width="1.5" stroke-dasharray="7 5"/>
+<rect x="302" y="408" width="194" height="76" rx="14" fill="none" stroke="#2b3445" stroke-width="1.5" stroke-dasharray="7 5"/>
 <rect x="304.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
 <rect x="326.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>
 <rect x="370.5" y="344.5" width="7" height="7" rx="1.5" fill="#cfd5df"/>

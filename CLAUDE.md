@@ -96,7 +96,9 @@ comes from the gf180mcu PDK and is not in this repository.
   link to.
 - Diagrams are Graphviz `.dot` files next to the page, rendered as SVG.
   Prefer `layout=neato` with pinned `pos` and `splines=false`. Free layouts
-  come out too wide to read. WaveDrom is rendered to SVG at build time
+  come out too wide to read. The front-page block diagram is the one
+  exception: `docs/index/overview.py` draws it directly as SVG, for the die
+  outline, pads and wire hops that Graphviz can't draw. WaveDrom is rendered to SVG at build time
   (`render_using_wavedrompy`).
 - `docs/_static/custom.css` puts a white panel behind diagrams in dark mode
   and limits diagrams to the column width. `diagram-links.js` adds an "Open
