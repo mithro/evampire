@@ -3,8 +3,8 @@ pages as SVG files.
 
 Usage: python figures.py OUTPUT-DIRECTORY
 
-Writes stack-section.svg, grading.svg and metal-gate.svg. The drawings are schematic: shapes
-and spacings are not to scale.
+Writes stack-section.svg, grading.svg and metal-gate.svg. The drawings are
+schematic: shapes and spacings are not to scale.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -170,37 +170,41 @@ def metal_gate():
                          width=1))
         body.append(text(570, y + 4, f"Metal{k + 1}", anchor="start",
                          size=12))
-    # Gate plate on Metal5 at the high voltage.
-    body.append(rect(210, 44, 220, 14, METAL))
-    body.append(text(320, 32, "gate on Metal5, at the sensed node (57 V)",
+    # Gate plate on Metal3 at the high voltage.
+    body.append(rect(210, 133, 220, 14, METAL))
+    body.append(text(320, 32, "gate on Metal3, at the sensed node (57 V)",
                      size=13, weight="bold"))
     # Silicon.
     body.append(rect(20, 260, 600, 120, SUB))
     body.append(text(320, 370, "P substrate, 0 V", size=13))
-    # Source and drain, with field oxide between them.
+    # Source and drain. The field oxide between them is recessed into the
+    # silicon, deeper than the N+, so the channel climbs its sidewalls.
     body.append(rect(150, 260, 70, 26, NWELL))
     body.append(rect(420, 260, 70, 26, NWELL))
     body.append(text(185, 278, "N+", size=12))
     body.append(text(455, 278, "N+", size=12))
-    body.append(rect(220, 260, 200, 22, "#cfcfcf"))
-    body.append(text(320, 276, "field oxide", size=12))
-    # Inversion layer under the field oxide.
-    body.append(rect(220, 282, 200, 5, "#2e86de", stroke="#2e86de"))
-    body.append(text(320, 304, "inversion layer, near 0 V", size=12))
-    # Source and drain wires down through the stack.
-    body.append(rect(176, 140, 6, 120, METAL))
-    body.append(rect(458, 140, 6, 120, METAL))
-    body.append(text(170, 134, "source, 0 V", anchor="end", size=12))
-    body.append(text(470, 134, "drain, 1 V", anchor="start", size=12))
+    body.append(rect(220, 252, 200, 42, "#cfcfcf"))
+    body.append(text(320, 278, "field oxide", size=12))
+    # Inversion layer along the bottom and sidewalls of the field oxide.
+    body.append('<path d="M221,284 L221,297 L419,297 L419,284" '
+                'stroke="#2e86de" stroke-width="4" fill="none"/>')
+    body.append(text(320, 318, "inversion layer, near 0 V", size=12))
+    # Source and drain wires up to Metal1.
+    body.append(rect(176, 230, 6, 30, METAL))
+    body.append(rect(458, 230, 6, 30, METAL))
+    body.append(rect(130, 226, 52, 6, METAL))
+    body.append(rect(458, 226, 52, 6, METAL))
+    body.append(text(125, 214, "source, 0 V", anchor="end", size=12))
+    body.append(text(515, 214, "drain, 1 V", anchor="start", size=12))
     # P+ taps that stop inversion spreading beyond the device.
     for x in (60, 540):
         body.append(rect(x, 260, 40, 16, "#7fa7d6"))
     body.append(text(80, 252, "P+ tap", size=11))
     body.append(text(560, 252, "P+ tap", size=11))
     # Voltage across the insulator.
-    body.append(line(320, 62, 320, 255, marker=True))
-    body.append(text(330, 160, "57 V across", anchor="start", size=12))
-    body.append(text(330, 176, "the insulator", anchor="start", size=12))
+    body.append(line(320, 151, 320, 249, marker=True))
+    body.append(text(330, 205, "57 V across", anchor="start", size=12))
+    body.append(text(330, 221, "the insulator", anchor="start", size=12))
     return svg(w, h, body)
 
 
