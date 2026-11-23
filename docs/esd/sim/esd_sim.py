@@ -225,11 +225,9 @@ def main():
             s_ = summarise(waves[key])
             trig_rows.append({
                 "Event": event_name(("trig", name, tau)),
-                "Trigger time (ps)": f"{tau * 1e12:.0f}",
+                "Trigger (ps)": f"{tau * 1e12:.0f}",
                 "Snapback": "no result" if s_ is None else snapped(s_),
-                "Fraction": "no result" if s_ is None else f"{s_['frac']:.2f}",
-                "Most stressed": "no result" if s_ is None else
-                                 SHORT_NAMES[s_["limit"]]})
+                "Fraction": "no result" if s_ is None else f"{s_['frac']:.2f}"})
     write_csv("trigger-time.csv", trig_rows)
     # The rail clamps' substrate current in the positive events.
     write_csv("clamp-substrate.csv", [
@@ -240,11 +238,13 @@ def main():
         for key in [("hbm", 1, 2), ("hbm", 1, 8), ("iec", 1, 2),
                     ("iec", 1, 8), ("iec", 1, 15)]
         for s_ in [summarise(waves[key])] if s_ is not None])
-    # Reverse current of the dedicated diodes in the scaled events.
-    print("dedicated diode reverse current, scaled events:",
-          {event_name(k): round(summarise(waves[k])["ded_rev_A"], 3)
-           for k in jobs if isinstance(k, tuple) and k[0] == "scaled"
-           and waves[k] is not None}, flush=True)
+    # Reverse (breakdown) current of the dedicated diodes in the scaled
+    # positive events that have them.
+    write_csv("dedicated.csv", [
+        {"Event": event_name(k),
+         "Reverse current (A)": f"{summarise(waves[k])['ded_rev_A']:.1f}"}
+        for k in jobs if isinstance(k, tuple) and k[0] == "scaled"
+        and k[1] > 1 and k[3] > 0 and waves[k] is not None])
     write_csv("sweep.csv", [sweep_row(k, v) for k, v in sweep.items()])
 
     fig_zap(waves[("hbm", 1, 2)], "hbm-pos.svg",
