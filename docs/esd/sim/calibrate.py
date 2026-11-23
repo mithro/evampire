@@ -4,22 +4,43 @@ SPDX-License-Identifier: Apache-2.0
 """
 
 import csv
+import re
 
 import numpy as np
 
-from spice import (GGNMOS_WIDTH_UM, TLP_CSV, TLP_DIODE_AREA,
-                   TLP_DIODE_PJ, header, ngspice)
+from spice import (GGNMOS_WIDTH_UM, GGPMOS_WIDTH_UM, PR, TLP_CSV,
+                   TLP_DIODE_AREA, TLP_DIODE_PJ, TLP_FAIL_A, header, ngspice)
 
 
-def diode_model(name, base, rs):
-    """A copy of the foundry diode model with another series resistance."""
-    if base == "np_6p0":
-        return (f".model {name} d level=3 is=6.88e-7 jsw=4.88e-13 ik=229000 "
-                f"n=1.0541 rs={rs:.4g} cj=0.00095 cjp=1.33e-10 pb=0.606 "
-                f"php=0.48 mj=0.296 mjsw=0.01 bv=11 ibv=0.001")
-    return (f".model {name} d level=3 is=2.0867e-7 jsw=1.6088e-13 ik=253800 "
-            f"n=1.0058 rs={rs:.4g} cj=0.000912 cjsw=1.4649e-10 pb=0.76836 "
-            f"php=0.5 mj=0.32713 mjsw=0.056777 bv=10.5 ibv=0.001")
+def foundry_card(base):
+    """The foundry's .model card for a diode, on one line."""
+    lines = (PR / "sm141064.ngspice").read_text().splitlines()
+    for i, line in enumerate(lines):
+        if re.match(rf"\.model\s+{base}\s", line, re.I):
+            card = [line]
+            for more in lines[i + 1:]:
+                if not more.startswith("+"):
+                    break
+                card.append(more[1:])
+            return " ".join(card)
+    raise KeyError(base)
+
+
+def diode_model(name, base, rs, breakdown=True):
+    """The foundry diode model with another series resistance.
+
+    With breakdown=False the reverse breakdown is removed, for a junction
+    whose avalanche another branch of the circuit already models.
+    """
+    card = foundry_card(base)
+    card = re.sub(rf"^\.model\s+{base}\s", f".model {name} ", card, flags=re.I)
+    card, n = re.subn(r"\brs\s*=\s*'[^']*'", f"rs={rs:.4g}", card)
+    assert n == 1, base
+    if not breakdown:
+        card, n = re.subn(r"\bbv\s*=\s*[\d.eE+-]+", "", card)
+        assert n == 1, base
+        card = re.sub(r"\bibv\s*=\s*[\d.eE+-]+", "", card)
+    return card
 
 
 def diode_iv(model_text, model_name, currents):
@@ -46,11 +67,27 @@ def load_tlp():
     return {k: np.array(v) for k, v in out.items()}
 
 
+def fit_line(tlp, device, width_um, i_min=0.0):
+    """Straight-line fit V = V0 + I * R to a device's conducting branch,
+    from i_min up to the pulse after which its leakage jumps (the device
+    has failed). Returns V0 in V and R times width in ohm um."""
+    pts = tlp[device]
+    pts = pts[(pts[:, 1] >= i_min) & (pts[:, 1] < TLP_FAIL_A[device])]
+    slope, v0 = np.polyfit(pts[:, 1], pts[:, 0], 1)
+    return v0, slope * width_um
+
+
 def fit_ggnmos(tlp):
-    """Straight-line fit V = Vh + I * R to the snapped-back branch."""
-    pts = tlp["grounded-gate NMOS"]
-    slope, vh = np.polyfit(pts[:, 1], pts[:, 0], 1)
-    return vh, slope * GGNMOS_WIDTH_UM
+    """The grounded-gate NMOS after snapback: holding voltage and
+    on-resistance."""
+    return fit_line(tlp, "grounded-gate NMOS", GGNMOS_WIDTH_UM)
+
+
+def fit_ggpmos(tlp):
+    """The grounded-gate PMOS, which does not snap back: the voltage its
+    avalanche current extrapolates to at zero, and its resistance. Points
+    below 0.2 A, at the knee of the avalanche, are left out."""
+    return fit_line(tlp, "grounded-gate PMOS", GGPMOS_WIDTH_UM, i_min=0.2)
 
 
 def fit_diode(tlp, base, device):

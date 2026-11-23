@@ -20,8 +20,9 @@ IO = pathlib.Path(os.environ["GF180_IO"]) / "cells"
 # ---------------------------------------------------------------------------
 # Measured TLP data from the gf180mcu design manual, section 14.5. Points read
 # from the figures of sections 14.5.5 (6 V grounded-gate NMOS, 200 um wide),
-# 14.5.7 (6 V N+/P-well diode) and 14.5.8 (6 V P+/N-well diode, both 100 um
-# wide). See tlp_gf180mcu.csv.
+# 14.5.6 (6 V grounded-gate PMOS, 300 um wide), 14.5.7 (6 V N+/P-well
+# diode) and 14.5.8 (6 V P+/N-well diode, both 100 um wide). See
+# tlp_gf180mcu.csv.
 TLP_CSV = HERE / "tlp_gf180mcu.csv"
 TLP_DIODE_WIDTH_UM = 100.0   # 4 fingers of 25 um
 TLP_DIODE_AREA = 90e-12      # 4 x 25 um x 0.9 um, m^2
@@ -37,12 +38,24 @@ IT2_MA_PER_UM = {
     "N+/P-well diode": 30.0,
     "P+/N-well diode": 31.0,
     "grounded-gate NMOS": 7.0,
+    "grounded-gate PMOS": 5.3,
 }
+# TLP current of the pulse after which each transistor's leakage jumps, read
+# from the figures: the device has failed, so the fits stop below it.
+TLP_FAIL_A = {"grounded-gate NMOS": 1.42, "grounded-gate PMOS": 1.61}
 # Grounded-gate NMOS snapback, design manual section 14.5.5: it triggers at
 # 10.7 V (table). The holding voltage and on-resistance are fitted to the
 # measured points by fit_ggnmos().
 GGNMOS_VT1 = 10.7
 GGNMOS_WIDTH_UM = 200.0      # 8 fingers of 25 um
+# Time constant through which the snapback switch reads its voltage. The
+# pad must stay above the trigger voltage for about this long before the
+# switch closes, so a trial step of the solver that overshoots cannot
+# close it.
+SNAP_FILTER_S = 100e-12
+# Grounded-gate PMOS, design manual section 14.5.6: it avalanches at 9.7 V
+# (table) and does not snap back. fit_ggpmos() fits its avalanche branch.
+GGPMOS_WIDTH_UM = 300.0      # 12 fingers of 25 um
 # Breakdown limits, gf180mcu electrical parameters sections 5.4 and 5.5.
 GATE_OXIDE_BV_MIN = 12.0     # 6 V gate oxide, minimum
 JUNCTION_BV_MIN = 8.5        # N+ to P-well of a 6 V NMOS, minimum
@@ -80,9 +93,10 @@ def ngspice(netlist, vectors, timeout=180):
                                timeout=timeout)
         except subprocess.TimeoutExpired as exc:
             raise NgspiceFailed(f"timed out after {timeout} s") from exc
-        if not out.exists() or "aborted" in r.stdout + r.stderr:
+        if (r.returncode != 0 or not out.exists()
+                or "aborted" in r.stdout + r.stderr):
             sys.stderr.write(r.stdout[-2000:] + r.stderr[-2000:])
-            raise NgspiceFailed("ngspice stopped")
+            raise NgspiceFailed(f"ngspice stopped (exit {r.returncode})")
         data = np.loadtxt(out, skiprows=1, ndmin=2)
     names = ["time"] + list(vectors)
     return {n: data[:, i] for i, n in enumerate(names)}
