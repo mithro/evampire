@@ -140,12 +140,14 @@ Other chips reach level 4 on chip
 For reference, the Texas Instruments TRS3232E, an RS-232 transceiver,
 specifies ±8 kV contact and ±15 kV air discharge on its four bus pins
 ([ESD-TRS3232E]_, section 5.3). Its other pins are rated ±2 kV human body
-model, its bus pins ±15 kV ([ESD-TRS3232E]_, section 5.2). In its RGT, D,
-DB and PW packages the IEC rating needs a capacitor of at least 1 µF from
-its supply to ground, and for its DYY package the datasheet recommends a
-series resistor of at least 50 Ω on logic inputs tied to a supply
-([ESD-TRS3232E]_, section 5.3, notes 1 and 2). The TRS3232E is made in another process, so its
-rating says nothing about gf180mcu.
+model, its bus pins ±15 kV ([ESD-TRS3232E]_, section 5.2).
+
+The IEC rating has conditions ([ESD-TRS3232E]_, section 5.3, notes 1 and
+2). In the RGT, D, DB and PW packages it needs a capacitor of at least
+1 µF from the supply to ground. For the DYY package the datasheet
+recommends a series resistor of at least 50 Ω on logic inputs tied to a
+supply. The TRS3232E is made in another process, so its rating says
+nothing about gf180mcu.
 
 A board protection part takes the current off the chip
 ------------------------------------------------------
@@ -198,10 +200,17 @@ protection. While both conduct, the chip pin's current is approximately:
 It neglects the inductance of the board traces. As an example, take the
 TPD1E10B06 at its 14 V maximum for 5 A, the standard pad holding about 4 V
 at a current near 1 A (:doc:`results-hbm`), and 10 Ω in series:
-:math:`(14\ \text{V} - 4\ \text{V}) / 10\ \Omega = 1\ \text{A}`. The
-30 A of a level 4 discharge is six times the datasheet's 5 A clamping
-figure, so the current that reaches the pin at level 4 follows from the
-suppressor's measured characteristic at that current.
+:math:`(14\ \text{V} - 4\ \text{V}) / 10\ \Omega = 1\ \text{A}`.
+
+The 30 A of a level 4 discharge is six times the datasheet's 5 A clamping
+figure. The datasheet fits its dynamic resistance to TLP measurements
+between 10 A and 20 A ([ESD-TPD1E10B06]_, section 5.6, note 1). If that
+0.38 Ω slope held from 14 V at 5 A up to 30 A, the suppressor would sit
+near :math:`14\ \text{V} + 25\ \text{A} \times 0.38\ \Omega = 23.5\ \text{V}`.
+10 Ω would then pass about
+:math:`(23.5\ \text{V} - 4\ \text{V}) / 10\ \Omega = 2\ \text{A}` to the
+pin. 30 A lies beyond the fitted range, so this is an extrapolation, and a
+TLP measurement of the suppressor at 30 A would replace it.
 
 .. _esd-open:
 

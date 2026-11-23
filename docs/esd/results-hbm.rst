@@ -45,11 +45,9 @@ and the clamp carries it on to DVSS.
   breakdown of their oxide.
 
 Near 415 ns, with DVDD fallen to about 1 V, close to the threshold voltage
-of the 6 V transistors, the outputs of the clamp's first two inverters
-change state: the first rises and the second falls. DVDD jumps by about
-0.5 V for a few nanoseconds. With the second inverter's output low, the
-third inverter keeps the clamp gate at DVDD, so the clamp stays on while
-the remaining current, about 80 mA, flows.
+of the 6 V transistors, DVDD jumps by about 0.5 V for a few nanoseconds.
+The clamp gate follows DVDD throughout, so the clamp stays on while the
+remaining current, about 80 mA, flows.
 
 A negative discharge takes the other path. The NMOS drain diode conducts
 forward from DVSS to the pad, and the pad goes to −1.5 V
