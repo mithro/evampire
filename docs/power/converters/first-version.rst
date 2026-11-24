@@ -340,8 +340,8 @@ one feeds.
          current, an inductor current sense resistor, an output divider,
          and a port current sense resistor after the output capacitor.
          Inside evampire, the inductor current and output divider feed
-         comparators with DAC thresholds for peak current and current
-         limit; the bus, output and port sense points feed an ADC with
+         comparators with DAC thresholds for peak current, current
+         limit and output voltage; the bus, output and port sense points feed an ADC with
          averaging for monitoring at 1 kHz or less; the port sense resistor
          also feeds a port short comparator that acts within microseconds.
    :align: center

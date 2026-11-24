@@ -17,7 +17,7 @@ digraph sensing {
            fixedsize=true];
     edge  [arrowsize=0.7, penwidth=1.5];
 
-    chip  [pos="3.85,0.75!", width=7.4, height=1.15, label="evampire",
+    chip  [pos="3.85,0.7!", width=7.4, height=1.3, label="evampire",
            labelloc=b, style="rounded,bold", color="#1f4e79",
            fontcolor="#1f4e79", fillcolor="none", fontsize=12];
 
@@ -29,7 +29,7 @@ digraph sensing {
     port  [pos="7.0,3.4!", width=1.1, label="Ethernet\nport B", fillcolor="#ffffff",
            style="rounded,filled,dashed"];
 
-    s_bus [pos="0.75,2.2!", width=1.1, label="Bus voltage\nand current",
+    s_bus [pos="0.95,2.2!", width=1.1, label="Bus voltage\nand current",
            fillcolor="#ffffff"];
     s_il  [pos="2.35,2.2!", width=1.4, label="Inductor current\nsense resistor",
            fillcolor="#ffffff"];
@@ -38,12 +38,18 @@ digraph sensing {
            fillcolor="#ffffff"];
 
     cmp   [pos="1.55,0.85!", width=2.2, height=0.65,
-           label="Comparators with DAC\nthresholds: peak current,\ncurrent limit",
+           label="Comparators with DAC\nthresholds: peak current,\ncurrent limit, output voltage",
            fillcolor="#fbe5d6"];
     adc   [pos="3.95,0.85!", width=1.6, height=0.65,
            label="ADC with averaging:\nmonitoring, 1 kHz\nor less", fillcolor="#dbe8f5"];
     pcmp  [pos="6.2,0.85!", width=1.9, height=0.65,
            label="Port short comparator\n(µs)", fillcolor="#f4cccc"];
+
+    node  [shape=point, width=0.01, height=0.01, label=""];
+    kb1 [pos="0.3,2.2!"];
+    kb2 [pos="0.3,0.3!"];
+    kb3 [pos="3.4,0.3!"];
+    kb4 [pos="3.4,0.525!"];
 
     edge  [arrowhead=none, penwidth=2.5];
     bus -> stage;  stage -> cap;  cap -> pse;  pse -> port;
@@ -53,14 +59,19 @@ digraph sensing {
     edge  [arrowhead=normal, style=solid, penwidth=1.6];
     s_il  -> cmp  [color="#c55a11"];
     s_out -> cmp  [color="#c55a11"];
-    s_bus -> adc  [color="#1f4e79"];
+    s_bus -> kb1  [color="#1f4e79", arrowhead=none];
+    kb1 -> kb2    [color="#1f4e79", arrowhead=none];
+    kb2 -> kb3    [color="#1f4e79", arrowhead=none];
+    kb3 -> kb4    [color="#1f4e79"];
     s_out -> adc  [color="#1f4e79"];
     s_pt  -> adc  [color="#1f4e79"];
     s_pt  -> pcmp [color="#c0392b"];
 
     // Legend.
     node  [shape=plaintext, style="", fontsize=10, width=1.2, height=0.2];
-    k1 [pos="1.0,4.0!", fontcolor="#c55a11", label="control and limit"];
-    k2 [pos="3.3,4.0!", fontcolor="#1f4e79", label="monitoring"];
-    k3 [pos="5.5,4.0!", fontcolor="#c0392b", label="port protection"];
+    k0 [pos="0.6,-0.25!", width=0.9, label="arrows:"];
+    k1 [pos="2.0,-0.25!", width=2.0, fontcolor="#c55a11", label="control and current limit"];
+    k2 [pos="3.95,-0.25!", fontcolor="#1f4e79", label="monitoring"];
+    k3 [pos="5.5,-0.25!", fontcolor="#c0392b", label="port protection"];
+
 }
