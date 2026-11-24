@@ -82,10 +82,10 @@ the next rising edge (:clause:`22.3.4`).
 
    { "signal": [
        { "name": "MDC", "wave": "l.h.l.h.l.h." },
-       { "name": "MDIO, evampire drives", "wave": "x=...=...=..", "data": ["bit", "bit", "bit"] },
-       { "name": "MDIO, transceiver drives", "wave": "x..=...=...=", "data": ["bit", "bit", "bit"] }
+       { "name": "MDIO from evampire", "wave": "x=...=...=..", "data": ["bit", "bit", "bit"] },
+       { "name": "MDIO from transceiver", "wave": "x..=...=...=", "data": ["bit", "bit", "bit"] }
      ],
-     "config": { "hscale": 2 }
+     "config": { "hscale": 1 }
    }
 
 Many transceivers accept a faster MDC. The DP83867 accepts up to 25 MHz

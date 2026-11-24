@@ -266,11 +266,11 @@ reference, the same guidelines recommend RGMII traces shorter than 51 mm
    :alt: Top view of evampire on the left and the Ethernet transceiver on the
          right. Three data traces run straight between them. The clock
          trace runs in a zig-zag meander that adds about 280 mm of
-         extra length, 2 ns at 7.2 ps/mm. A note gives the recommended
-         total length of under 51 mm and at most 152 mm.
+         extra length, 2 ns at 7.2 ps/mm, more than the 152 mm maximum
+         trace length.
 
-   A board delay as a meander on the clock trace (schematic, not to
-   scale).
+   A board delay as a meander on the clock trace; 280 mm is more than the
+   152 mm maximum (schematic, not to scale).
 
 .. _rgmii-transceiver-delays:
 

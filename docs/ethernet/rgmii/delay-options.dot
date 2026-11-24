@@ -17,7 +17,7 @@ digraph delay_options {
 
     node [shape=plaintext, style="", width=3.6, height=0.25, fontsize=10];
     h1 [pos="2.5,2.85!", label="Delay line calibrated by software"];
-    h2 [pos="2.5,1.05!", label="Delay-locked loop"];
+    h2 [pos="2.5,1.17!", label="Delay-locked loop"];
 
     node [shape=box, style=filled, fillcolor="#fff2cc", width=0.45];
     d1 [pos="1.0,2.3!", label="d"]; d2 [pos="1.6,2.3!", label="d"];
@@ -44,6 +44,13 @@ digraph delay_options {
     out2 [pos="1.6,-0.15!", shape=plaintext, style="", width=0.7,
           label="clock out"];
     in2 -> line2 -> pd;
+    k1 [pos="0.55,0.5!", shape=point, width=0.06, height=0.06,
+        fillcolor="#000000"];
+    k2 [pos="0.55,0.84!", shape=point, width=0.01, height=0.01, style=invis];
+    k3 [pos="3.9,0.84!", shape=point, width=0.01, height=0.01, style=invis];
+    k1 -> k2 [dir=none]; k2 -> k3 [dir=none]; k3 -> pd;
+    lref [pos="2.2,0.93!", shape=plaintext, style="", width=1.6, height=0.2,
+          fontsize=8, label="input clock as the reference"];
     pd -> line2 [label="", constraint=false];
     line2 -> out2;
 }

@@ -51,16 +51,17 @@ come from an oscillator or from a transceiver. The DP83867 has a 25 MHz or
 KSZ9031RNX has a 125 MHz reference clock output, CLK125_NDO
 [RGMII-KSZ9031]_ section 3.9.
 
-:numref:`fig-rgmii-pinout` shows the connections.
+:numref:`fig-rgmii-pinout` shows the connections; the MDIO pull-up is
+drawn in :numref:`fig-rgmii-mdio-bus`.
 
 .. graphviz:: pinout.dot
    :name: fig-rgmii-pinout
    :caption: evampire's RGMII and management pins and what they connect to.
    :alt: evampire on the left with 27 pins. To transceiver A run 6 transmit
          pins, TXC, TX_CTL and TXD[3:0], and 6 receive pins, RXC,
-         RX_CTL and RXD[3:0]; the same 12 run to transceiver B. MDC
-         and MDIO, 2 pins, are shared by both transceivers, with the
-         MDIO pull-up. The 125 MHz clock, 1 pin, comes from an
+         RX_CTL and RXD[3:0]; the same 12 run to transceiver B. MDC,
+         driven by evampire, and MDIO, in both directions, 1 pin each,
+         are shared by both transceivers. The 125 MHz clock, 1 pin, comes from an
          oscillator or from CLK_OUT or CLK125_NDO of a transceiver.
    :align: center
 
@@ -175,11 +176,13 @@ cancels.
 .. figure:: pad-delay.svg
    :name: fig-rgmii-pad-delay
    :alt: Timing diagram from 0 to 12 ns. Inside evampire, TXC and TXD change
-         together. At the pins, both are delayed by the same 3.04 ns,
-         the TT rising delay, so they still change together.
+         together. At the pins, both are delayed by the same amounts at
+         TT, 3.04 ns on rising edges and 3.20 ns on falling edges, so
+         they still change together.
 
-   TXC and TXD through identical pads at the TT corner: the delay is the
-   same for both.
+   TXC and TXD through identical pads at the TT corner, 3.04 ns on rising
+   and 3.20 ns on falling edges, with each data edge drawn in the
+   direction of the clock edge: the delay is the same for both.
 
 .. _rgmii-pad-duty:
 

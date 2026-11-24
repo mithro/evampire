@@ -167,8 +167,8 @@ IDELAYCTRL block against a reference clock [RGMII-UG953]_.
          stages, a multiplexer picks the output of one stage, and its
          setting comes from software, found by a loopback test.
          Bottom, a delay-locked loop: an adjustable delay line whose
-         output is compared with a fraction of the clock period, and
-         the result adjusts the line.
+         output is compared with the input clock, as a fraction of the
+         clock period, and the result adjusts the line.
    :align: center
 
 The uncalibrated chain needs enough stages for 2 ns at the TT corner:
@@ -321,10 +321,10 @@ start of each TXC cycle and is the same at both edges.
              TXC high for 5 half cycles and low for 5.
 
    { "signal": [
-       { "name": "125 MHz clock", "wave": "p.........", "period": 2 },
-       { "name": "clock enable", "wave": "1.0.......1.0......." },
-       { "name": "TXC, 25 MHz", "wave": "1....0....1....0...." },
-       { "name": "TXD[3:0]", "wave": "=.........=.........", "data": ["nibble 0", "nibble 1"] }
+       { "name": "125 MHz clock", "wave": "p......", "period": 2 },
+       { "name": "clock enable", "wave": "1.0.......1.0." },
+       { "name": "TXC, 25 MHz", "wave": "1....0....1..." },
+       { "name": "TXD[3:0]", "wave": "=.........=...", "data": ["nibble 0", "nibble 1"] }
      ],
      "config": { "hscale": 1 }
    }
@@ -345,11 +345,11 @@ high nibble of the SFD.
    :caption: Receive at 100 Mbit/s: the byte boundary found from the D of the SFD.
 
    { "signal": [
-       { "name": "RXC, 25 MHz", "wave": "p.......", "period": 1 },
+       { "name": "RXC, 25 MHz", "wave": "p.......", "period": 1, "phase": -0.5 },
        { "name": "RXD[3:0]", "wave": "========", "data": ["5", "5", "5", "5", "D", "1", "0", "3"] },
        { "name": "byte", "wave": "x....=.=", "data": ["0xD5", "0x01"] }
      ],
-     "config": { "hscale": 2 }
+     "config": { "hscale": 1 }
    }
 
 .. _rgmii-byte-interface:

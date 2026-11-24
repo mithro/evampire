@@ -162,12 +162,13 @@ preamble.
          With a shortened preamble, RX_CTL rises later and RXD carries 5, 5,
          then 5 and D. With no preamble, RXD carries only 5 and D.
    :caption: The start of a frame with a full, a shortened and no preamble; the
-             receiver finds the frame from the D that follows a 5.
+             receiver finds the frame from the D that follows a 5. The cell
+             marked "more" stands for the preamble nibbles 5 not drawn.
 
    { "signal": [
        ["full",
          { "name": "RX_CTL", "wave": "01........" },
-         { "name": "RXD[3:0]", "wave": "x=====2==x", "data": ["5", "5", "5", "5", "5", "more 5", "5", "D"] }
+         { "name": "RXD[3:0]", "wave": "x=====2==x", "data": ["5", "5", "5", "5", "5", "more", "5", "D"] }
        ],
        {},
        ["shorter",
@@ -212,9 +213,9 @@ gap as 9.6 µs [RGMII-ENC28J60]_ register MABBIPG.
              96 ns, at 1000 Mbit/s (the break shortens the drawing).
 
    { "signal": [
-       { "name": "TX_CTL", "wave": "1..0..|....1..." },
-       { "name": "TXD[3:0]", "wave": "===x..|....===.", "data": ["FCS", "FCS", "FCS", "5", "5", "5"] },
-       { "name": "field", "wave": "4..2..|2...3...", "data": ["frame N", "gap", "12 byte times or more", "frame N+1"] }
+       { "name": "TX_CTL", "wave": "1..0...|...1.." },
+       { "name": "TXD[3:0]", "wave": "x==x...|...==.", "data": ["FCS", "FCS", "5", "5"] },
+       { "name": "field", "wave": "x4.2...|...3..", "data": ["frame N", "gap", "frame N+1"] }
      ],
      "config": { "hscale": 1 }
    }

@@ -190,10 +190,13 @@ the same counts ([RGMII-DP83867]_ section 7.4.1.1).
    :name: fig-rgmii-gmii-rgmii
    :alt: Timing diagram in two groups. GMII: GTX_CLK at 125 MHz, TXD[7:0]
          carrying 0x01, 0x23 and 0x45 one per clock cycle, and TX_EN high.
-         RGMII: TXC at the same frequency, TXD[3:0] carrying the nibbles 1, 0,
-         3, 2, 5 and 4 one per clock edge, and TX_CTL high.
+         RGMII: TXC at the same frequency, drawn after the 2 ns clock
+         delay so that each edge falls in the middle of a nibble, TXD[3:0]
+         carrying the nibbles 1, 0, 3, 2, 5 and 4 one per clock edge, and
+         TX_CTL high.
    :caption: The bytes 0x01, 0x23 and 0x45 sent over GMII, eight bits per rising
-             edge, and over RGMII, four bits per edge.
+             edge, and over RGMII, four bits per edge, with TXC drawn after
+             the 2 ns delay.
 
    { "signal": [
        ["GMII",
@@ -203,7 +206,7 @@ the same counts ([RGMII-DP83867]_ section 7.4.1.1).
        ],
        {},
        ["RGMII",
-         { "name": "TXC", "wave": "p....", "period": 2, "phase": -0.5 },
+         { "name": "TXC + 2 ns", "wave": "p....", "period": 2, "phase": -0.5 },
          { "name": "TXD[3:0]", "wave": "x.======x.", "data": ["1", "0", "3", "2", "5", "4"] },
          { "name": "TX_CTL", "wave": "0.1.....0." }
        ]
