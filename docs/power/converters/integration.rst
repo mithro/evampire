@@ -7,7 +7,18 @@ evampire, and what each step needs from the
 version keeps the gate drivers and power transistors external
 (:ref:`requirements`, :doc:`first-version`). The full design moves the
 gate drivers on chip, and then the power transistors
-(:numref:`tab-power-board-configs`).
+(:numref:`tab-power-board-configs`). :numref:`fig-conv-integration-steps`
+shows the three steps.
+
+.. graphviz:: integration-steps.dot
+   :name: fig-conv-integration-steps
+   :caption: The three integration steps, with the evampire die outlined.
+   :alt: Three rows of the same chain: PWM and sensing, gate driver, power
+         transistors and inductor. In row (a) the die outline encloses only
+         the PWM and sensing, and the other three blocks are external. In
+         row (b) it encloses the PWM and sensing and the gate driver. In row
+         (c) it encloses everything except the inductor.
+   :align: center
 
 The steps are explored by building and measuring them: a design simulated
 with the gf180mcu models, then test structures on a wafer.space run, then a
