@@ -338,3 +338,5 @@ the repositories.
 :download:`sim/circuits.py <sim/circuits.py>` and
 :download:`sim/paths.py <sim/paths.py>` draw the circuit diagrams, such as
 :numref:`fig-esd-testbench` and :numref:`fig-esd-paths`.
+:download:`sim/sections.py <sim/sections.py>` draws the cross-section,
+:numref:`fig-esd-driver-section`.

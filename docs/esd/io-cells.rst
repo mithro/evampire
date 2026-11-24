@@ -58,7 +58,8 @@ Primary protection
 
 The pad has no separate primary diodes. The output transistors are the
 primary protection. Their drains connect to the pad, and each drain is a
-diffusion in a well, so it forms a diode with that well:
+diffusion in a well, so it forms a diode with that well
+(:numref:`fig-esd-driver-section`):
 
 * The PMOS drains (P+ in an N-well tied to DVDD) form a diode from the pad
   to DVDD. Four transistors of 80 µm and four of 40 µm give 480 µm of
@@ -78,6 +79,21 @@ The NMOS output transistors, with their gates held low, also act as a
 grounded-gate NMOS. Above about 10.7 V the parasitic NPN transistor inside
 each one turns on and :term:`snaps back <Snapback>` to about 6 V
 (:ref:`esd-limits`).
+
+.. figure:: figures/driver-section.svg
+   :name: fig-esd-driver-section
+   :alt: Cross-section of the two output transistors. Left, a PMOS in an
+         N-well tied to DVDD: its P+ drain, connected to PAD and without
+         silicide for 2.78 µm beside the gate, forms a diode from PAD to
+         DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well tied
+         to DVSS: its N+ drain, connected to PAD and without silicide for
+         3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
+         all; its gate is 1.15 µm long. A parasitic NPN transistor inside
+         the NMOS, with the drain as collector, the P-well as base and the
+         source as emitter, triggers at 10.7 V and snaps back to about 6 V.
+
+   The output transistors in cross-section: their drains are the pad's
+   primary protection. Schematic, not to scale.
 
 Secondary protection
 ~~~~~~~~~~~~~~~~~~~~

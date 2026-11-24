@@ -123,7 +123,7 @@ Pins above the supply
 
 The standard pad cannot serve a pin that must carry more than DVDD in
 normal use. Its PMOS drain is P-type silicon inside an N-type well tied to
-DVDD (:numref:`fig-esd-io-cell`). Once the pad rises about 0.7 V above
+DVDD (:numref:`fig-esd-driver-section`). Once the pad rises about 0.7 V above
 DVDD, that P-N junction is forward biased and conducts. The pad also snaps back at 10.7 V. Either
 path would load a high-voltage signal.
 
