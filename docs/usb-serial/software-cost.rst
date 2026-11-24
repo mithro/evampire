@@ -317,7 +317,25 @@ ValentyUSB and the ulixxe ``usb_cdc`` core do ([USBSER-TINYFPGA]_,
 ``usb_fs_rx.v``; [USBSER-VALENTYUSB]_, ``rx/clock.py``;
 [USBSER-ULIXXE]_). The alternative is one sample per bit at a phase set
 from the SYNC and corrected at each edge, from a clock that is a multiple
-of 12 MHz; it needs fewer fast flip-flops but a finer phase adjustment.
+of 12 MHz; it needs fewer fast flip-flops but a finer phase adjustment. :numref:`fig-usbser-sampling` compares the two.
+
+.. wavedrom::
+   :caption: Oversampling at four times the bit rate against one sample per
+             bit (not to scale).
+   :name: fig-usbser-sampling
+   :alt: Timing diagram over four bits. A 48 MHz clock has four periods per
+         bit; the oversampling receiver samples on every one and follows
+         the edges with a state machine. The other receiver takes one
+         sample per bit in the middle of each bit, at a phase set from the
+         SYNC pattern and corrected at each edge.
+
+   {"signal": [
+     {"name": "line", "wave": "3...4...4...3...",
+      "data": ["bit: J", "K", "K", "J"]},
+     {"name": "48 MHz, 4 samples per bit", "wave": "pppppppppppppppp"},
+     {"name": "one sample per bit", "wave": "0.10..10..10..10"}
+   ],
+   "config": {"hscale": 1}}
 
 The sampling logic runs at 48 MHz or more in the oversampling case. On
 gf180mcu, a D flip-flop of the 7-track standard cell library has a
