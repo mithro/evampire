@@ -47,7 +47,20 @@ the 2250 V direct-voltage test of :std:`Annex J.1 <802.3>` if each
 capacitor withstands it (:doc:`functions`). In the alternating-voltage test,
 1500 V rms at 50 Hz, the capacitors conduct. The test is applied between
 all the MDI wires together and the equipment, so all eight capacitors carry
-current in parallel:
+current in parallel (:numref:`fig-magnetics-hipot`).
+
+.. graphviz:: hipot.dot
+   :name: fig-magnetics-hipot
+   :caption: The alternating-voltage isolation test on a capacitor-coupled
+             port.
+   :alt: A test source of 1500 V rms at 50 Hz drives the eight MDI wires,
+         tied together. Each wire passes through its coupling capacitor
+         C_w to the equipment, evampire and the rest of the board, and the
+         source returns to the equipment. The current is 2π f times 8 C_w
+         times V, for example 75 mA at 20 nF.
+   :align: center
+
+The current is:
 
 .. math::
 
