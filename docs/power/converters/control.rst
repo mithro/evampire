@@ -514,9 +514,9 @@ with the symbols in :numref:`tab-conv-sym-loss`.
      - Body diode voltage and one dead time
      - V, s
 
-For the buck worked example (48 V to 12 V, 2.125 A, 250 kHz) with
-illustrative part values, the switching loss with 40 ns of rise plus fall
-time is
+For the buck worked example (48 V to 12 V, 2.125 A, 250 kHz) with
+illustrative part values, the switching loss with 40 ns of rise plus fall
+time (:numref:`fig-conv-transition`) is
 
 .. math::
 
@@ -529,6 +529,19 @@ and the gate loss for a 10 nC gate at 5 V is
 (:doc:`buck`). These are illustrations of the method; the losses of
 evampire's converters depend on parts and frequencies that are open
 choices.
+
+.. figure:: transition.svg
+   :name: fig-conv-transition
+   :alt: Schematic of a hard-switched transition: while the switch turns on
+         over the rise time, its current rises from 0 to 2.125 A as its
+         voltage falls from 48 V to 0; at turn-off the reverse happens over
+         the fall time. Shaded triangles mark the energy lost in each
+         overlap. The result is ½ × 48 V × 2.125 A × 40 ns × 250 kHz =
+         0.51 W.
+   :align: center
+
+   Switch voltage and current during the transitions of the buck
+   example (schematic).
 
 Two techniques remove most of the switching loss. A *resonant* or
 *soft-switched* converter shapes the current or voltage with an added
