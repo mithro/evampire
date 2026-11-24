@@ -166,41 +166,51 @@ A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
 48 V at up to 5 A, in the :term:`extended power range <EPR>` (EPR)
 (:pd:`Section 3.2.5.3`, :pd:`Table 3.6`). Three conditions apply:
 
-#. The sink asks to enter EPR mode with an EPR_Mode message
-   (:pd:`Section 6.4.9`, :pd:`Section 7.30.1`).
+#. The sink asks to enter EPR mode with an EPR_Mode message (Enter), and
+   the source answers EPR_Mode (Enter Acknowledged) and, once its checks
+   pass, EPR_Mode (Enter Succeeded) (:pd:`Section 6.4.9`,
+   :pd:`Section 7.30.1`).
 #. The source checks that the cable is rated for EPR, with Discover
    Identity (:pd:`Section 8.6.1.2.3`; :ref:`usbpd-discover-identity`).
 #. In EPR mode, the two ends exchange a message at least every
-   *tSinkEPRKeepAlive* (250 ms to 500 ms); the sink sends an EPR_Keep_Alive
-   message when there is no other traffic. A source that sees no message for
+   *tSinkEPRKeepAlive* (250 ms to 500 ms); the sink sends an EPR_KeepAlive
+   message when there is no other traffic, and the source answers it with
+   EPR_KeepAlive_Ack. A source that sees no message for
    *tSourceEPRKeepAlive* (750 ms to 1000 ms) restarts the port with a
    :term:`Hard Reset` (:pd:`PD Sections 7.31.18.2 and 7.31.18.3 <7.31.18.2>`,
    :pd:`Table 7.10`; :ref:`usbpd-hard-reset`).
 
-:numref:`fig-usbpd-epr-keepalive` shows entry and the keep-alive timing.
+:numref:`fig-usbpd-epr-entry` shows the entry, and
+:numref:`fig-usbpd-epr-keepalive` the keep-alive timing.
+
+.. graphviz:: epr-entry.dot
+   :name: fig-usbpd-epr-entry
+   :caption: Entering EPR mode; GoodCRC replies are left out, and time runs
+             downwards, not to scale.
+   :alt: Sequence diagram between a sink, a source and a cable plug. The
+         sink sends EPR_Mode (Enter) and the source answers EPR_Mode (Enter
+         Acknowledged). The source sends Discover Identity with SOP′ to the
+         cable plug, which answers with an ACK carrying a Cable VDO that
+         shows the cable is rated for EPR. The source then sends EPR_Mode
+         (Enter Succeeded).
 
 .. wavedrom::
-   :caption: Entering EPR mode and keeping it alive, ending in a Hard Reset
-             when the messages stop, schematic and not to scale.
+   :caption: The EPR keep-alive, ending in a Hard Reset when the messages
+            stop, schematic and not to scale; tSinkEPRKeepAlive is 250 ms
+            to 500 ms and tSourceEPRKeepAlive 750 ms to 1000 ms.
    :name: fig-usbpd-epr-keepalive
-   :alt: Timing diagram. The sink sends EPR_Mode; the source checks the
-         cable with Discover Identity, and the port enters EPR mode. The
-         sink sends EPR_Keep_Alive at least every tSinkEPRKeepAlive, 250 to
-         500 ms. When messages stop, the source waits tSourceEPRKeepAlive,
-         750 to 1000 ms, and then sends Hard Reset, which returns the port
-         to its defaults.
+   :alt: Timing diagram. The sink sends EPR_KeepAlive and the source answers
+         EPR_KeepAlive_Ack. The sink must send its next message within
+         tSinkEPRKeepAlive, 250 to 500 ms. When messages stop, the source
+         waits tSourceEPRKeepAlive, 750 to 1000 ms, from the last message,
+         and then sends Hard Reset, which returns the port to its defaults.
 
    {"signal": [
-     {"name": "sink", "wave": "=..z......=..z...=..z.............",
-      "data": ["EPR_Mode", "EPR_Keep_Alive", "EPR_Keep_Alive"]},
-     {"name": "source", "wave": "z..=..z.......................=...",
-      "data": ["Discover Identity", "Hard Reset"]},
-     {"name": "mode", "wave": "=.....=.......................=...",
-      "data": ["SPR", "EPR mode", "defaults"]},
-     {"name": "sink timer", "wave": "x............=...x................",
-      "data": ["tSinkEPRKeepAlive"]},
-     {"name": "source timer", "wave": "x...................=.........x...",
-      "data": ["tSourceEPRKeepAlive 750–1000 ms, no message"]}
+     {"name": "sink", "wave": "=...z..........", "data": ["EPR_KeepAlive"]},
+     {"name": "source", "wave": "z...=...z...=..", "data": ["EPR_KeepAlive_Ack", "Hard Reset"]},
+     {"name": "sink timer", "wave": "x...=...x......", "data": ["tSinkEPRKeepAlive"]},
+     {"name": "source timer", "wave": "x.......=...x..", "data": ["tSourceEPRKeepAlive"]},
+     {"name": "mode", "wave": "=...........=..", "data": ["EPR mode", "defaults"]}
    ],
    "config": {"hscale": 1}}
 
@@ -232,7 +242,7 @@ Data messages
    Source_Capabilities and Request are data messages.
 Extended messages
    The header, a 16-bit extended header and 1 to 260 bytes of data. They
-   are used only by optional features, such as EPR_Keep_Alive.
+   are used only by optional features, such as EPR_KeepAlive.
 
 .. wavedrom::
    :caption: The 16-bit message header (:pd:`Table 6.2`), drawn as two rows

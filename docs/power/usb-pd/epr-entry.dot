@@ -1,0 +1,42 @@
+// Entering EPR mode (power-levels.rst; PD Sections 6.4.9 and 8.6.1.2.3).
+// GoodCRC replies are left out. Time runs from top to bottom, not to
+// scale.
+//
+// Fixed grid (positions in inches): sink at x=0.8, source at x=3.4, cable
+// plug at x=5.9; one row per message from y=2.9 down to y=0.5.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph epr_entry {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=point, width=0.05, color="#555555", label=""];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    node [shape=box, style="rounded,filled", fontname="Helvetica",
+          fontsize=10, width=1.1, height=0.4, color="#555555"];
+    snk [pos="0.8,3.5!", fillcolor="#e2f0d9", label="Sink"];
+    src [pos="3.4,3.5!", fillcolor="#fbe5d6", label="Source"];
+    cbl [pos="5.9,3.5!", fillcolor="#dbe8f5", label="Cable plug"];
+
+    node [shape=point, width=0.05, label=""];
+    k0 [pos="0.8,0.2!", width=0.01]; s0 [pos="3.4,0.2!", width=0.01];
+    c0 [pos="5.9,0.2!", width=0.01];
+    k1 [pos="0.8,2.9!"]; s1 [pos="3.4,2.9!"];
+    k2 [pos="0.8,2.35!"]; s2 [pos="3.4,2.35!"];
+    s3 [pos="3.4,1.8!"]; c3 [pos="5.9,1.8!"];
+    s4 [pos="3.4,1.3!"]; c4 [pos="5.9,1.3!"];
+    k5 [pos="0.8,0.7!"]; s5 [pos="3.4,0.7!"];
+
+    node [shape=plaintext, height=0.2, width=2.2, fontsize=9, style=""];
+    l1 [pos="2.1,3.02!", label="EPR_Mode (Enter)"];
+    l2 [pos="2.1,2.47!", label="EPR_Mode (Enter Acknowledged)"];
+    l3 [pos="4.65,1.92!", label="Discover Identity (SOP′)"];
+    l4 [pos="4.65,1.42!", label="ACK: Cable VDO, EPR rated"];
+    l5 [pos="2.1,0.82!", label="EPR_Mode (Enter Succeeded)"];
+
+    edge [arrowhead=none, style=dashed, color="#999999"];
+    snk -> k0; src -> s0; cbl -> c0;
+
+    edge [arrowhead=normal, style=solid, color="#000000"];
+    k1 -> s1; s2 -> k2; s3 -> c3; c4 -> s4; s5 -> k5;
+}
