@@ -114,8 +114,22 @@ edge of:
 
 At 28 Ω, :math:`t_{10\text{–}90} = 2.197 \times 28\ \Omega \times
 50\ \text{pF} = 3.08\ \text{ns}`, below the 4 ns minimum; at 44 Ω it is
-4.83 ns. A driver at the low end of the impedance range therefore needs its
-own slew-rate control, which the specification requires in any case.
+4.83 ns (:numref:`fig-usbser-driver-waveform`). A driver at the low end of
+the impedance range therefore needs its own slew-rate control, which the
+specification requires in any case.
+
+.. figure:: analogue/driver-waveform.svg
+   :name: fig-usbser-driver-waveform
+   :alt: Graph of voltage from 0 V to 3.6 V against time from 0 ns to
+         60 ns. D+ rises and D− falls as RC edges into 50 pF, for a 28 Ω
+         driver, 3.08 ns from 10 % to 90 %, and a 44 Ω driver, 4.83 ns.
+         They cross in the shaded crossover band of 1.3 V to 2.0 V. Shaded
+         bands mark VOH of 2.8 V to 3.6 V and VOL of at most 0.3 V. A note
+         gives the required 4 ns to 20 ns edge and the assumed 3.3 V swing.
+   :align: center
+
+   Edges of a purely resistive driver into the 50 pF test load, against
+   the driver's voltage limits.
 
 Receivers
 ---------
