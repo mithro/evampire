@@ -1,0 +1,49 @@
+// The alternating-voltage isolation test on a capacitor-coupled port: all
+// eight MDI wires are tied together, so the eight coupling capacitors are
+// in parallel between the test source and the equipment.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph hipot {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.4];
+
+    src [pos="0.5,1.05!", width=0.85, height=0.8, fillcolor="#fbe5d6",
+         label="test source\n1500 V rms,\n50 Hz"];
+    eq [pos="4.3,1.05!", width=1.0, height=2.0, fillcolor="#dbe8f5",
+        label="equipment:\nevampire and\nthe rest of\nthe board"];
+    note [pos="2.4,-0.4!", shape=plaintext, style="", width=3.6,
+          height=0.3, label="I = 2π f × 8 C_w × V, for example 75 mA at 20 nF"];
+    lab [pos="1.45,2.25!", shape=plaintext, style="", width=1.5,
+         height=0.3, label="eight MDI wires\ntied together"];
+
+    node [width=0.5, height=0.2, fillcolor="#fff2cc", fontsize=8,
+          label="C_w"];
+    c0 [pos="2.6,1.93!"]; c1 [pos="2.6,1.68!"]; c2 [pos="2.6,1.43!"];
+    c3 [pos="2.6,1.18!"]; c4 [pos="2.6,0.93!"]; c5 [pos="2.6,0.68!"];
+    c6 [pos="2.6,0.43!"]; c7 [pos="2.6,0.18!"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    s1 [pos="0.93,1.05!"]; bus [pos="1.6,1.05!"];
+    t0 [pos="1.6,1.93!"]; t7 [pos="1.6,0.18!"];
+    e0 [pos="3.8,1.93!"]; e7 [pos="3.8,0.18!"];
+    a0 [pos="1.6,1.93!"]; a1 [pos="1.6,1.68!"]; a2 [pos="1.6,1.43!"];
+    a3 [pos="1.6,1.18!"]; a4 [pos="1.6,0.93!"]; a5 [pos="1.6,0.68!"];
+    a6 [pos="1.6,0.43!"]; a7 [pos="1.6,0.18!"];
+    b0 [pos="3.8,1.93!"]; b1 [pos="3.8,1.68!"]; b2 [pos="3.8,1.43!"];
+    b3 [pos="3.8,1.18!"]; b4 [pos="3.8,0.93!"]; b5 [pos="3.8,0.68!"];
+    b6 [pos="3.8,0.43!"]; b7 [pos="3.8,0.18!"];
+
+    s1 -- bus [color="#c00000", penwidth=2];
+    t0 -- t7 [color="#c00000", penwidth=2];
+    a0 -- c0 -- b0; a1 -- c1 -- b1; a2 -- c2 -- b2; a3 -- c3 -- b3;
+    a4 -- c4 -- b4; a5 -- c5 -- b5; a6 -- c6 -- b6; a7 -- c7 -- b7;
+    r0 [pos="0.5,0.65!"]; r1 [pos="0.5,-0.1!"]; r2 [pos="4.3,-0.1!"];
+    r3 [pos="4.3,0.05!"];
+    r0 -- r1 -- r2 -- r3 [color="#7f7f7f", penwidth=2];
+}

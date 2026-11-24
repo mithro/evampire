@@ -1,0 +1,34 @@
+// One RGMII signal on the board: the driver's output resistance and a
+// series resistor next to the driving pin match a 50 ohm trace to the
+// receiver. Layout rules of the DP83867 guidelines are noted.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph board_trace {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true, height=0.6];
+    edge  [penwidth=1.6];
+
+    drv [pos="0.5,1.0!", width=0.9, fillcolor="#dbe8f5",
+         label="driver\noutput\nresistance"];
+    rs [pos="1.55,1.0!", width=0.75, height=0.4, fillcolor="#ffffff",
+        label="series\nresistor"];
+    tr [pos="3.3,1.0!", width=2.1, height=0.35, fillcolor="#fff2cc",
+        label="50 Ω trace"];
+    rx [pos="5.0,1.0!", width=0.9, fillcolor="#ffffff", label="receiver"];
+    drv -- rs -- tr -- rx;
+
+    node [shape=plaintext, style="", height=0.2, fontsize=9];
+    n1 [pos="1.05,0.45!", width=2.2, height=0.35,
+        label="together they match 50 Ω;\nthe resistor sits next to the pin"];
+    n2 [pos="3.3,1.45!", width=3.0,
+        label="under 51 mm where possible, at most 152 mm"];
+    n3 [pos="3.3,0.45!", width=2.6, height=0.35,
+        label="no vias, no stubs; lengths matched\nwithin 11 ps, about 1.5 mm"];
+    n4 [pos="0.9,1.6!", width=1.9, height=0.35, fontcolor="#7f7f7f",
+        label="DP83867: trimmed to about\n50 Ω, from 35 Ω to 70 Ω"];
+}

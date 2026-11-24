@@ -7,8 +7,11 @@ signals are listed on :doc:`signals`.
 
 .. _rgmii-speeds:
 
-The clock runs at 125, 25 or 2.5 MHz
-------------------------------------
+Clock frequency
+---------------
+
+The RGMII clock runs at 125 MHz, 25 MHz or 2.5 MHz, one frequency for
+each link speed.
 
 .. list-table:: RGMII clock at each link speed
    :name: tab-rgmii-speeds
@@ -34,8 +37,8 @@ clock period and on the duty cycle are on :doc:`timing`.
 
 .. _rgmii-1000:
 
-At 1000 Mbit/s each clock cycle carries one byte
-------------------------------------------------
+Data at 1000 Mbit/s
+-------------------
 
 At 1000 Mbit/s each clock cycle carries one byte. The low four bits, the
 low :wikipedia:`nibble <Nibble>`, are sampled at the rising edge of the
@@ -75,8 +78,8 @@ LAN91C111 datasheet shows the same order [RGMII-LAN91C111]_ section 7.5.4.
 
 .. _rgmii-control:
 
-The control signal carries "valid" and "error" in each cycle
-------------------------------------------------------------
+Control signal encoding
+-----------------------
 
 The control signal carries two GMII signals (:clause:`35`) in each clock
 cycle (:std:`RGMII 2.0 <rgmii-2-0>` section 3.4):
@@ -185,8 +188,8 @@ and :math:`c_\text{f} = 0` give :math:`v = 1` and :math:`e = 1`.
 
 .. _rgmii-10-100:
 
-At 10 and 100 Mbit/s each clock cycle carries one nibble
---------------------------------------------------------
+Data at 10 and 100 Mbit/s
+-------------------------
 
 At 100 Mbit/s and 10 Mbit/s the clock slows to 25 MHz or 2.5 MHz, and each
 clock cycle carries one nibble instead of one byte. A byte takes two clock
@@ -220,8 +223,8 @@ In :numref:`fig-rgmii-100-nibble` each clock cycle lasts 40 ns. At
 
 .. _rgmii-speed-change:
 
-The clocks may stretch but must not glitch when the speed changes
------------------------------------------------------------------
+Clock behaviour at a speed change
+---------------------------------
 
 The transceiver generates RXC at every speed, and evampire generates TXC.
 The high or low phase of a clock may be stretched or shrunk when the
@@ -235,10 +238,23 @@ speeds, and must keep the minimum duty cycle. The clocks must not glitch
 holds TX_CTL low until it runs at the same speed as the transceiver, so
 evampire sends TXC at the new speed before it starts a frame.
 
+:numref:`fig-rgmii-speed-change` shows an allowed change and a glitch.
+
+.. figure:: speed-change.svg
+   :name: fig-rgmii-speed-change
+   :alt: Timing diagram with time from 0 to 120 ns. The allowed TXC runs
+         at 125 MHz, then holds high for a stretched phase, then runs at
+         25 MHz. The second TXC is the same but has a very short low pulse
+         inside the stretched phase, circled and marked as a glitch. TX_CTL
+         stays low throughout.
+
+   TXC changing from 125 MHz to 25 MHz with a stretched high phase, and the
+   glitch that is not allowed (stretch length schematic).
+
 .. _rgmii-in-band:
 
-Between frames RXD can carry the link status
---------------------------------------------
+In-band link status
+-------------------
 
 When RX_CTL is low at both edges, no :term:`frame` is being received. The
 RGMII specification defines an optional :term:`in-band status`: during
@@ -264,7 +280,8 @@ both edges (:std:`RGMII 2.0 <rgmii-2-0>` section 3.4.1 and Table 4).
      - 0 for half duplex, 1 for full duplex
 
 With :numref:`tab-rgmii-in-band`, a gigabit full-duplex link that is up
-shows the nibble 1101 (0xD) between frames. While the link is down, the
+shows the nibble 1101 (0xD) between frames, as at the start of
+:numref:`fig-rgmii-frame-start`. While the link is down, the
 speed and duplex bits give the transceiver's own settings
 (:std:`RGMII 2.0 <rgmii-2-0>` section 3.4.1).
 

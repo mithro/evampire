@@ -1,0 +1,62 @@
+// MDC and MDIO shared by evampire's two Ethernet transceivers, with the
+// pull-up resistor on MDIO.
+//
+// Fixed grid, positions in inches. Wires are drawn as straight segments
+// between invisible corner points.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph mdio_bus {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=10, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.4];
+
+    evampire [pos="0.7,1.35!", width=1.2, height=2.3, fillcolor="#dbe8f5",
+              color="#1f4e79", label="evampire\n\n\n\n\n\nMDC: output\nMDIO: three-\nstate driver"];
+    phya [pos="4.75,2.0!", width=1.9, height=1.0, fillcolor="#ffffff",
+          color="#555555",
+          label="Transceiver A, port A\naddress a,\nfrom strap pins\nMDIO: three-state"];
+    phyb [pos="4.75,0.45!", width=1.9, height=1.0, fillcolor="#ffffff",
+          color="#555555",
+          label="Transceiver B, port B\naddress b,\nfrom strap pins\nMDIO: three-state"];
+
+    rpu [pos="1.75,2.85!", width=0.85, height=0.5, fillcolor="#fff2cc",
+         fontsize=9, label="pull-up\nresistor"];
+    vdd [pos="1.75,3.35!", shape=plaintext, style="", width=0.8,
+         height=0.2, fontsize=9, label="VDDIO"];
+    rnote [pos="3.0,2.95!", shape=plaintext, style="", width=1.6,
+           height=0.5, fontsize=9,
+           label="DP83867: 2.2 kΩ\nKSZ9031RNX:\n1.0 kΩ to 4.7 kΩ"];
+
+    // Pin labels on the wires.
+    node [shape=plaintext, style="", width=0.5, height=0.2, fontsize=9];
+    lmdio [pos="1.55,2.4!", label="MDIO"];
+    lmdc  [pos="1.55,1.9!", label="MDC"];
+    note [pos="2.55,-0.35!", width=4.0, height=0.2,
+          label="up to 32 transceivers on one pair, one 5-bit address each"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    e_mdio [pos="1.3,2.25!"];  e_mdc [pos="1.3,1.75!"];
+    j_pu   [pos="1.75,2.25!"];
+    a_mdio [pos="3.8,2.25!"];  a_mdc [pos="3.8,1.75!"];
+    b_mdc  [pos="3.8,0.7!"];   b_mdio [pos="3.8,0.2!"];
+    k_mdio1 [pos="2.25,2.25!"]; k_mdio2 [pos="2.25,0.2!"];
+    k_mdc1  [pos="2.75,1.75!"]; k_mdc2  [pos="2.75,0.7!"];
+
+    // MDIO, three-state in both directions.
+    e_mdio -- j_pu -- k_mdio1 -- a_mdio [color="#c00000"];
+    k_mdio1 -- k_mdio2 -- b_mdio [color="#c00000"];
+    j_pu -- rpu [color="#c00000"];
+    rpu -- vdd;
+
+    // MDC, driven by evampire.
+    e_mdc -- k_mdc1 -- a_mdc [color="#1f4e79"];
+    k_mdc1 -- k_mdc2 -- b_mdc [color="#1f4e79"];
+
+    // Junction dots.
+    node [shape=point, width=0.07, height=0.07, style=filled,
+          fillcolor="#000000", color="#000000"];
+    d1 [pos="1.75,2.25!"]; d2 [pos="2.25,2.25!"]; d3 [pos="2.75,1.75!"];
+}

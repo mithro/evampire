@@ -1,5 +1,5 @@
-Capacitor-coupled gigabit Ethernet over long cables
-===================================================
+Capacitor-coupled gigabit over long cables
+==========================================
 
 This page works through what can limit gigabit Ethernet, 1000BASE-T,
 running through coupling capacitors over a long cable, and gives the
@@ -9,8 +9,8 @@ for short links and backplanes, and in one vendor test for cables up to
 parameter (:ref:`requirements-open-questions`), so the effects that
 depend on it are given as a function of reach.
 
-The signal has energy down to DC
---------------------------------
+Low-frequency content
+---------------------
 
 1000BASE-T scrambles its data so that the transmitted symbols are
 uncorrelated, and shapes them with the filter
@@ -22,8 +22,8 @@ signal has energy right down to zero frequency. Any high-pass filter in the
 path, transformer or capacitor, removes some of it. The receiver corrects
 the resulting baseline wander digitally ([MAG-AB-TUTORIAL]_, slide 51).
 
-Very little of the power is below the corner
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Power below the corner frequency
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Model the symbol stream as uncorrelated symbols with square pulses, one
 every :math:`T`. Its power spectrum is then proportional to
@@ -66,8 +66,24 @@ left out. For :math:`C_\text{w} = 16\ \text{nF}`, the time constant is
 
 That is 0.16 % of the power.
 
-The baseline wander is a small fraction of a decision step
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+:numref:`fig-magnetics-psd` shows how little of the spectrum lies below
+the corners.
+
+.. figure:: psd.svg
+   :name: fig-magnetics-psd
+   :alt: Graph of the power spectrum relative to DC in decibels against
+         frequency from 10 kHz to 250 MHz on a log scale. The
+         spectrum T sinc²(fT) with T = 8 ns is flat to beyond 10
+         MHz and falls to a null at 125 MHz. The region below the
+         99.5 kHz corner is shaded and holds 0.16 % of the power.
+         Dashed lines mark the corners at 15.9, 22.7, 48.2 and
+         99.5 kHz.
+
+   The power spectrum of the symbol stream, and the high-pass corners
+   of the coupling capacitors.
+
+Baseline wander
+~~~~~~~~~~~~~~~
 
 The part of the signal that a high-pass filter removes is the signal passed
 through the matching low-pass filter. For uncorrelated symbols and a time
@@ -126,6 +142,21 @@ For :math:`C_\text{w} = 16\ \text{nF}`:
 That is 14 % of half a step. :numref:`tbl-magnetics-lowfreq` applies the
 formulas to four capacitor values.
 
+:numref:`fig-magnetics-wander` shows that size against the decision thresholds.
+
+.. figure:: wander.svg
+   :name: fig-magnetics-wander
+   :alt: Graph of received level in level steps against symbol number from 0 to
+         120. Random symbols sit on the five PAM-5 levels from −2 to
+         +2, shifted by a slowly drifting baseline. A blue band of
+         ±0.071 steps around each level shows the size of the wander
+         for 16 nF; red dashed lines at the half steps mark the
+         decision thresholds, far outside the bands.
+
+   PAM-5 symbols with baseline wander of 0.071 level steps r.m.s., for
+   C_w = 16 nF, against the decision thresholds (drift shape schematic,
+   size to scale).
+
 .. list-table:: Low-frequency effect of the coupling capacitors at one end
                 of the link (estimates)
    :name: tbl-magnetics-lowfreq
@@ -176,8 +207,8 @@ mailing list, states that the scrambler makes baseline wander too small to
 cause a measurable bit error rate ([MAG-DOVE]_). That was written about
 links with transformers.
 
-The echo gets a long tail
--------------------------
+Echo tail
+---------
 
 Each end transmits and receives on the same pair at the same time. A
 :wikipedia:`hybrid <Hybrid_coil>` subtracts most of the transmitted signal
@@ -195,14 +226,43 @@ symbols ([MAG-AB-TUTORIAL]_, slide 51). The tail is therefore left to the
 baseline-wander correction, as it already is for transformer tails
 ([MAG-US6775529]_).
 
+:numref:`fig-magnetics-echo-tail` compares the tails with the canceller span.
+
+.. figure:: echo-tail.svg
+   :name: fig-magnetics-echo-tail
+   :alt: Graph of the tail of the echo per symbol, in thousandths, against
+         symbols after the transmitted symbol from 0 to 1500. The
+         first 120 symbols are shaded as the echo canceller span. Four
+         decaying exponentials start at 5.0 for 16 nF with τ/T = 200,
+         2.4 for 33 nF with 412, 1.1 for 70 nF with 875 and 0.8 for
+         100 nF with 1250, and all reach far beyond the canceller
+         span.
+
+   The low-frequency tail of the echo for four capacitor values, against
+   the span of the echo canceller.
+
 The echo can be up to 10 dB stronger than the far-end
 signal, so its baseline wander matters more ([MAG-US7738567]_). With
 capacitors at the near end and a transformer at the far end, the echo
 passes through one high-pass filter and the far-end signal through two;
 the correction must handle both.
 
-Common-mode noise reaches the receiver
---------------------------------------
+:numref:`fig-magnetics-echo-paths` shows the two paths.
+
+.. graphviz:: echo-paths.dot
+   :name: fig-magnetics-echo-paths
+   :caption: The high-pass filters that the echo and the far-end signal pass, with
+             capacitors at the near end and a transformer at the far
+             end.
+   :alt: A row: near-end transceiver, coupling capacitors as high-pass filter
+         1, the cable, the far-end transformer as high-pass filter 2,
+         and the far-end transceiver. An arrow shows the far-end
+         signal passing high-pass 2 and then high-pass 1; a second
+         arrow shows the echo passing high-pass 1 only.
+   :align: center
+
+Common-mode noise
+-----------------
 
 The receiver of :clause:`40.6.1.3.3` must keep receiving while a
 common-mode signal of 1.0 V rms, swept from 1 MHz to 250 MHz, is coupled
@@ -210,6 +270,20 @@ onto all four pairs of a 100 m cable by a clamp 20 cm from the receiver. A
 transformer and choke reject this signal before the transceiver. Coupling
 capacitors pass it almost completely: 33 nF is 4.8 Ω at 1 MHz. The
 receiver itself, with any external choke, must reject it.
+
+:numref:`fig-magnetics-cm-noise-test` shows the set-up.
+
+.. graphviz:: cm-noise-test.dot
+   :name: fig-magnetics-cm-noise-test
+   :caption: The common-mode noise test of :clause:`40.6.1.3.3`.
+   :alt: A link partner joins a 100 m cable of four pairs. A clamp 20 cm from
+         the receiver couples a 1.0 V rms signal, swept from 1 MHz to
+         250 MHz, onto all four pairs. Between the clamp and the
+         receiver, magnetics reject the signal, while coupling
+         capacitors pass it: 33 nF is 4.8 Ω at 1 MHz. The target is
+         under 30 mV peak to peak of differential noise, a CMRR of
+         39.5 dB or more.
+   :align: center
 
 The IEEE 802.3ab task force ([MAG-8023AB]_), which wrote :clause:`40`,
 chose the 1.0 V rms level to keep the differential noise it produces below
@@ -251,8 +325,8 @@ magnetics give (:doc:`functions`). For reference, Analog Devices
 recommends an external choke for capacitor-coupled cables longer than
 about 1 m for this reason ([MAG-ADIWIKI]_).
 
-Parasitic capacitance uses up the return loss
----------------------------------------------
+Parasitic capacitance
+---------------------
 
 Everything on the chip side of the capacitors adds capacitance across the
 line: pads, on-chip protection, external protection diodes and board
@@ -298,12 +372,25 @@ two in series. At 100 MHz, where the limit is 8.1 dB, the budget is
 transceiver's own termination. It limits how large the protection on the
 chip side can be.
 
+:numref:`fig-magnetics-rl-parasitic` shows the 12.8 pF case against the
+limit.
+
+.. figure:: rl-parasitic.svg
+   :name: fig-magnetics-rl-parasitic
+   :alt: Graph of return loss in decibels against frequency from 1 MHz to
+         100 MHz, with the 1000BASE-T limit shaded. The return
+         loss of a 100 Ω port with 12.8 pF across it falls from
+         about 48 dB at 1 MHz and touches the 16 dB limit at 40
+         MHz.
+
+   Return loss of a matched port with 12.8 pF across the pair.
+
 Surges and discharges pass the capacitors as fast edges, which the
 protection on the chip side must clamp. The options are on
 :doc:`without-transformer`.
 
-Longer cables leave less margin
--------------------------------
+Margin against cable reach
+--------------------------
 
 The cable attenuates the far-end signal, while the echo, the common-mode
 noise injected near the receiver, and any residue from the coupling

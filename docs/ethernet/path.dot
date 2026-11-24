@@ -1,0 +1,32 @@
+// The path of the data from evampire to the Ethernet cable, with the page
+// that covers each link. Whether the transceiver is external or on
+// evampire depends on the board configuration.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph ethernet_path {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true, width=0.95, height=0.6];
+    edge  [penwidth=1.6];
+
+    chip [pos="0.5,0.8!", fillcolor="#dbe8f5", label="evampire"];
+    phy [pos="2.0,0.8!", fillcolor="#ffffff", width=1.1,
+         label="Ethernet\ntransceiver,\nexternal or\nintegrated"];
+    mag [pos="3.5,0.8!", fillcolor="#fff2cc", label="magnetics"];
+    rj [pos="4.75,0.8!", fillcolor="#f2f2f2", width=0.7, label="RJ45\nsocket"];
+    cab [pos="5.8,0.8!", fillcolor="#fbe5d6", width=0.7, label="cable"];
+
+    chip -- phy -- mag -- rj -- cab;
+
+    node [shape=plaintext, style="", width=1.2, height=0.35, fontsize=9];
+    l1 [pos="1.2,1.25!", fontcolor="#1f4e79", label="RGMII\n(digital)"];
+    l2 [pos="2.0,0.25!", width=1.6, fontcolor="#1f4e79",
+        label="transceiver pages\n(analogue signals)"];
+    l3 [pos="3.5,0.25!", width=1.4, fontcolor="#1f4e79",
+        label="magnetics pages"];
+    l4 [pos="2.75,1.25!", width=0.9, label="analogue"];
+}

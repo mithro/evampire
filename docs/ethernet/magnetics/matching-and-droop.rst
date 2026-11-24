@@ -1,5 +1,5 @@
-Matching the cable and passing low frequencies
-==============================================
+Matching and droop
+==================
 
 This page works out two requirements that the :term:`magnetics` of a
 gigabit port help to meet: how closely the port must match the 100 Ω cable
@@ -9,8 +9,8 @@ replace the transformer on :doc:`coupling-capacitors`.
 
 .. _magnetics-return-loss:
 
-The port must match 100 Ω to within a return loss
--------------------------------------------------
+Return loss
+-----------
 
 Ethernet transceivers drive and terminate a 100 Ω differential load
 directly ([MAG-KSZ9031]_, section 12; [MAG-DP83867]_, section 9.2),
@@ -94,6 +94,18 @@ From 40 MHz to 100 MHz the limit falls with frequency (:clause:`40.8.3.1`):
 At 100 MHz the limit is
 :math:`10 - 20 \times \log_{10} 1.25 = 10 - 1.9 = 8.1\ \text{dB}`.
 
+:numref:`fig-magnetics-rl-mask` plots the whole limit.
+
+.. figure:: rl-mask.svg
+   :name: fig-magnetics-rl-mask
+   :alt: Graph of return loss in decibels against frequency on a log scale
+         from 1 MHz to 100 MHz. The limit is flat at 16 dB from 1
+         MHz to 40 MHz, then falls to 8.1 dB at 100 MHz along 10 −
+         20 log10(f / 80 MHz). The region below the line is shaded
+         as not allowed.
+
+   The 1000BASE-T return-loss limit of :clause:`40.8.3.1`.
+
 The :wikipedia:`insertion loss <Insertion_loss>` of the magnetics is the
 signal lost in passing through them. Gigabit magnetics state at most 1 dB
 from 1 MHz to 100 MHz ([MAG-PULSE]_, electrical table; [MAG-WURTH]_,
@@ -102,8 +114,8 @@ electrical table). An insertion loss of 1 dB is an amplitude ratio of
 
 .. _magnetics-droop:
 
-The transformer's inductance sets the droop
--------------------------------------------
+Droop
+-----
 
 A transformer cannot pass direct current, and passes low frequencies
 poorly. The reason is its
@@ -118,14 +130,30 @@ whose average is not zero make the received signal's average level drift,
 which is called :term:`baseline wander` (see
 :doc:`../phy-electrical/index`).
 
-A first-order model gives the droop
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+First-order droop model
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Treat the transformer as an ideal 1:1 transformer with its magnetising
 inductance across it. Seen from that inductance, the transceiver's 100 Ω
 source and the 100 Ω cable are in parallel. The circuit is a first-order
 :wikipedia:`high-pass filter <High-pass_filter>`, and droop is an
-exponential decay with a :wikipedia:`time constant <Time_constant>`:
+exponential decay with a :wikipedia:`time constant <Time_constant>`.
+
+:numref:`fig-magnetics-droop-model` shows the circuit.
+
+.. graphviz:: droop-model.dot
+   :name: fig-magnetics-droop-model
+   :caption: The first-order droop model: a 100 Ω source, the
+             magnetising inductance L across an ideal 1:1 transformer, and
+             a 100 Ω cable.
+   :alt: The transceiver, a 100 ohm source, drives wires plus and minus.
+         An inductor L is connected across the two wires, then an ideal
+         1:1 transformer, then the cable as a 100 ohm load. A note says
+         that seen from L the source and load are in parallel, 50 ohm.
+   :align: center
+
+The capacitor-coupled counterpart is :numref:`fig-magnetics-cap-model`.
+The time constant is:
 
 .. math::
 
@@ -177,8 +205,8 @@ With :math:`R_\text{p} = 50\ \Omega` and the usual data-sheet value
 
    f_\text{c} = \frac{1}{2\pi \times 7.0\ \mu\text{s}} = 23\ \text{kHz}
 
-1000BASE-T needs at least 80 µH
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1000BASE-T inductance minimum
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 500 ns after the start of a constant level in the transmitter test pattern,
 more than 73.1 % of the voltage must remain, into a 100 Ω test load
@@ -220,13 +248,28 @@ An IEEE 802.3 maintenance proposal reaches the same 80 µH ([MAG-TRACY]_,
 slide 5). With 350 µH, :math:`e^{-0.5/7.0} = 0.93`: 93 % of the voltage
 remains, a large margin over 73.1 %.
 
+:numref:`fig-magnetics-droop` plots the remaining fraction for both time
+constants. Each curve is also the droop waveform: the cable-side voltage
+while the transmitter holds a constant level.
+
+.. figure:: droop.svg
+   :name: fig-magnetics-droop
+   :alt: Graph of the voltage remaining in percent against time from 0 to
+         2 µs after the start of a constant level. The curve for τ = 1.6 µs,
+         80 µH, falls to 73.1 % at 500 ns, exactly on the limit, and to
+         about 29 % at 2 µs. The curve for τ = 7.0 µs, 350 µH, is at 93 %
+         at 500 ns. Dashed lines mark 500 ns and 73.1 %.
+
+   Droop for the 1000BASE-T minimum time constant and for standard
+   magnetics, against the limit of :clause:`40.6.1.2.2`.
+
 The transmit waveform templates of :clause:`40.6.1.2.3` were drawn for a
 transformer high-pass pole anywhere from 1 Hz to 100 kHz
 (:clause:`40.6.1.2.3`, note 1). A 1.6 µs time constant puts the pole at
 99.5 kHz, at the edge of that range.
 
-Gigabit magnetics are specified at 350 µH for 100BASE-TX
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inductance for 100BASE-TX
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Gigabit magnetics are specified at 350 µH because the same parts serve
 100BASE-TX. 100BASE-TX takes its electrical specification from the FDDI
@@ -241,8 +284,8 @@ equipment a second way to comply. A transmitter in a Type 2 port above
 13 W, or in any Type 3 or Type 4 port, can instead show an equivalent time
 constant above 2.4 µs (:clause:`25.4.5`, :clause:`25.4.5.1`).
 
-Two time constants are the targets for a port without a transformer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Targets for a transformer-free port
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whatever replaces the transformer must give a time constant of at least the
 1000BASE-T minimum, :math:`\tau_\text{min} = 1.6\ \mu\text{s}`. Standard

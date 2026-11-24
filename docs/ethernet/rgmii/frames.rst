@@ -7,14 +7,30 @@ byte is split into nibbles is described on :doc:`data`.
 
 .. _rgmii-frame-fields:
 
-A frame starts with a preamble and a start frame delimiter
-----------------------------------------------------------
+Frame fields
+------------
 
 A :term:`frame` is one Ethernet message
 (:wikipedia:`Ethernet frame <Ethernet_frame>`). On RXD and TXD it is sent as
 a sequence of bytes, each byte as two nibbles, low nibble first.
 :numref:`tab-rgmii-frame-fields` lists its fields in the order they are
-sent.
+sent, and :numref:`fig-rgmii-frame` draws them.
+
+.. figure:: frame.svg
+   :name: fig-rgmii-frame
+   :alt: A row of fields in the order sent, with their lengths in bytes:
+         preamble 7, SFD 1, destination address 6, source address 6, an
+         optional VLAN tag 4, length or type 2, payload 46 to 1500, or 42
+         to 1500 with a tag, and FCS
+         4. A bracket over the preamble and SFD reads "lets the receiver
+         lock on". A bracket from the destination address to the FCS reads
+         "frame: 64 to 1518 bytes, 1522 with one VLAN tag, at most 2000". A
+         bracket from the destination address to the payload reads
+         "covered by the FCS".
+
+   The fields of a frame, with the optional VLAN tag; with a tag the
+   payload can be as short as 42 bytes (:clause:`3.2.8`; field widths not
+   to scale).
 
 .. list-table:: Fields of a frame in the order they are sent
    :name: tab-rgmii-frame-fields
@@ -61,8 +77,8 @@ are sent most significant byte first.
 
 .. _rgmii-frame-lengths:
 
-A frame is 64 to 1518 bytes long, or longer with tags
------------------------------------------------------
+Frame length
+------------
 
 From the destination address to the checksum, a basic frame is 64 to
 1518 bytes long (:clause:`Table 4-2 <4>`, minFrameSize and
@@ -79,8 +95,8 @@ deliver them to the processor (see :ref:`req-memory`).
 
 .. _rgmii-preamble-nibbles:
 
-On RGMII the preamble is the nibble 5 repeated, and the SFD is 5 then D
------------------------------------------------------------------------
+Preamble and SFD nibbles
+------------------------
 
 The preamble is seven bytes of the bit pattern 10101010, and the SFD is the
 bit pattern 10101011, each written in the order the bits are sent
@@ -123,8 +139,8 @@ In :numref:`fig-rgmii-frame-start`, RXD carries the
 
 .. _rgmii-preamble-shrink:
 
-The receiver looks for the SFD, because the preamble can arrive shorter
------------------------------------------------------------------------
+Shortened preamble
+------------------
 
 A gigabit transceiver may pass on fewer than seven preamble bytes. IEEE
 802.3 allows the preamble to shrink between the sending and the receiving
@@ -138,6 +154,38 @@ with the SFD [RGMII-KSZ9031]_ section 3.1.5. The UNH-IOL MAC test suite
 checks that a receiver accepts frames with a varied amount of preamble
 [RGMII-IOL-MAC]_ test 4.2.4.
 
+:numref:`fig-rgmii-preamble-shrink` shows a full, a shorter and a missing
+preamble.
+
+.. wavedrom::
+   :name: fig-rgmii-preamble-shrink
+   :alt: Three timing diagrams of RX_CTL and RXD at 1000 Mbit/s. With the full
+         preamble, RX_CTL rises and RXD carries many nibbles 5, then 5 and D.
+         With a shortened preamble, RX_CTL rises later and RXD carries 5, 5,
+         then 5 and D. With no preamble, RXD carries only 5 and D.
+   :caption: The start of a frame with a full, a shortened and no preamble; the
+             receiver finds the frame from the D that follows a 5. The cell
+             marked "more" stands for the preamble nibbles 5 not drawn.
+
+   { "signal": [
+       ["full",
+         { "name": "RX_CTL", "wave": "01........" },
+         { "name": "RXD[3:0]", "wave": "x=====2==x", "data": ["5", "5", "5", "5", "5", "more", "5", "D"] }
+       ],
+       {},
+       ["shorter",
+         { "name": "RX_CTL", "wave": "0....1...." },
+         { "name": "RXD[3:0]", "wave": "x....====x", "data": ["5", "5", "5", "D"] }
+       ],
+       {},
+       ["none",
+         { "name": "RX_CTL", "wave": "0......1.." },
+         { "name": "RXD[3:0]", "wave": "x......==x", "data": ["5", "D"] }
+       ]
+     ],
+     "config": { "hscale": 1 }
+   }
+
 The receiving logic therefore finds the start of a frame from the SFD, not
 by counting preamble bytes. A device that forwards frames sends a full
 preamble of seven bytes itself (:clause:`35.2.3.2.1`), whatever arrived.
@@ -145,8 +193,8 @@ How evampire does this is on :doc:`port-logic`.
 
 .. _rgmii-gap:
 
-Frames are at least 96 bit times apart
---------------------------------------
+Gap between frames
+------------------
 
 A transmitter leaves a gap of at least 96 bit times between the end of one
 frame and the start of the next preamble, at every speed up to
@@ -154,6 +202,25 @@ frame and the start of the next preamble, at every speed up to
 :wikipedia:`interpacket gap <Interpacket_gap>`). At 1000 Mbit/s that is
 12 byte times, 96 ns. At 10 Mbit/s the ENC28J60 datasheet gives the same
 gap as 9.6 µs [RGMII-ENC28J60]_ register MABBIPG.
+
+:numref:`fig-rgmii-gap` shows the gap on the transmit signals.
+
+.. wavedrom::
+   :name: fig-rgmii-gap
+   :alt: Timing diagram: TXD carries the last FCS nibbles of frame N while
+         TX_CTL is high, then TX_CTL is low for the gap of 12 byte times or
+         more, drawn with a break, then TX_CTL rises and TXD carries the
+         preamble nibbles 5 of frame N+1.
+   :caption: The gap between two frames on TX_CTL and TXD, at least 12 byte times,
+             96 ns, at 1000 Mbit/s (the break shortens the drawing).
+
+   { "signal": [
+       { "name": "TX_CTL", "wave": "1..0...|...1.." },
+       { "name": "TXD[3:0]", "wave": "x==x...|...==.", "data": ["FCS", "FCS", "5", "5"] },
+       { "name": "field", "wave": "x4.2...|...3..", "data": ["frame N", "gap", "frame N+1"] }
+     ],
+     "config": { "hscale": 1 }
+   }
 
 The gap seen by a receiver can be shorter. At 1000 Mbit/s it can shrink to
 64 bit times, measured at the GMII, because of network delays, added

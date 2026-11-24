@@ -1,0 +1,54 @@
+// First-order model of droop through a transformer: the transceiver as a
+// 100 ohm source, the magnetising inductance L across an ideal 1:1
+// transformer, and the cable as a 100 ohm load. Seen from L, source and
+// load are in parallel, 50 ohm. Counterpart of cap-model.dot.
+//
+// Fixed grid, positions in inches. Top row: the "+" wire. Bottom row: the
+// "-" wire.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph droop_model {
+    graph [layout=neato, splines=line, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fillcolor="#ffffff"];
+    edge  [fontname="Helvetica", fontsize=9, penwidth=1.3];
+
+    src [pos="0.4,0.5!", width=1.0, height=1.2, fixedsize=true,
+         fillcolor="#dbe8f5",
+         label="Transceiver\n\nsource\nR_s = 100 Ω"];
+
+    lm [pos="1.85,0.5!", width=0.7, height=0.45, fixedsize=true,
+        fillcolor="#fff2cc", label="L"];
+
+    xf [pos="3.0,0.5!", width=0.95, height=1.2, fixedsize=true,
+        fillcolor="#fff2cc", label="ideal\n1:1\ntrans-\nformer"];
+
+    load [pos="4.6,0.5!", width=1.0, height=1.2, fixedsize=true,
+          fillcolor="#f2f2f2", label="Cable\n\nload\nZ_0 = 100 Ω"];
+
+    note [pos="1.85,-0.35!", shape=plaintext, style="", width=3.0,
+          height=0.2, fixedsize=true,
+          label="seen from L: R_p = 100 Ω ∥ 100 Ω = 50 Ω"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis, fixedsize=true];
+    sp [pos="0.9,1.0!"];  sn [pos="0.9,0.0!"];
+    jp [pos="1.85,1.0!"]; jn [pos="1.85,0.0!"];
+    xp [pos="2.52,1.0!"]; xn [pos="2.52,0.0!"];
+    yp [pos="3.48,1.0!"]; yn [pos="3.48,0.0!"];
+    lp [pos="4.1,1.0!"];  ln [pos="4.1,0.0!"];
+
+    sp -- jp [label="wire +"];
+    jp -- xp;
+    sn -- jn [label="wire −"];
+    jn -- xn;
+    jp -- lm;
+    lm -- jn;
+    yp -- lp;
+    yn -- ln;
+
+    node [shape=point, width=0.07, height=0.07, style=filled,
+          fillcolor="#000000"];
+    dp [pos="1.85,1.0!"]; dn [pos="1.85,0.0!"];
+}

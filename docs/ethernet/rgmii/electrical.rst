@@ -7,10 +7,11 @@ traces. evampire's own pins are described on :doc:`io-cells`.
 
 .. _rgmii-spec-levels:
 
-The specifications use 2.5 V or 1.5 V levels
---------------------------------------------
+Levels in the specifications
+----------------------------
 
-Version 1.3 of the RGMII specification uses 2.5 V
+The two versions of the RGMII specification use different levels.
+Version 1.3 uses 2.5 V
 :wikipedia:`CMOS <CMOS>` levels (:std:`JESD8-5`), for the data signals and
 also for MDC and MDIO (:std:`RGMII 1.3 <rgmii-1-3>` section 4.0 and
 Table 5). :numref:`tab-rgmii-levels-1-3` gives them.
@@ -43,11 +44,12 @@ An empty cell means no limit. Version 2.0 specifies 1.5 V
 
 .. _rgmii-phy-levels:
 
-Transceivers run their RGMII pins at 3.3 V, 2.5 V or 1.8 V
-----------------------------------------------------------
+Levels in transceivers
+----------------------
 
 Transceivers use neither level exclusively. Their RGMII pins run from a
-separate I/O supply that the board designer chooses.
+separate I/O supply that the board designer chooses, at 3.3 V, 2.5 V or
+1.8 V.
 
 .. list-table:: RGMII I/O supply options of two transceivers
    :name: tab-rgmii-phy-io
@@ -92,10 +94,26 @@ KSZ9031RNX values from [RGMII-KSZ9031]_ section 6. An empty cell means the
 value is not used here. Both devices accept 3.3 V, the level evampire uses
 (see :doc:`io-cells`).
 
+:numref:`fig-rgmii-levels` compares the levels of the specification and
+of the two transceivers.
+
+.. figure:: levels.svg
+   :name: fig-rgmii-levels
+   :alt: Bars on a voltage axis from 0 to 3.5 V. RGMII 1.3 with 2.5 V
+         levels: outputs at least 2.0 V high and at most 0.40 V low; inputs
+         high above 1.7 V and low below 0.70 V. DP83867 with a 3.3 V
+         supply: outputs at least 2.0 V high and at most 0.6 V low; inputs
+         1.7 V and 0.7 V. KSZ9031RNX with a 3.3 V supply: inputs 2.0 V and
+         1.3 V; outputs not used here. The region between each pair of
+         levels is undefined.
+
+   The logic levels of :numref:`tab-rgmii-levels-1-3` and
+   :numref:`tab-rgmii-phy-levels`.
+
 .. _rgmii-board:
 
-The board carries the signals on short, matched 50 Ω traces
------------------------------------------------------------
+Board traces
+------------
 
 The traces between evampire and the transceiver are a few centimetres long.
 That is long compared with edges of under a nanosecond, so each trace
@@ -128,3 +146,18 @@ Vias and stubs
 
 The series resistor on evampire's outputs depends on the output resistance
 of evampire's pad cell, discussed on :doc:`io-cells`.
+
+:numref:`fig-rgmii-board-trace` summarises the rules for one signal.
+
+.. graphviz:: board-trace.dot
+   :name: fig-rgmii-board-trace
+   :caption: One RGMII signal on the board, with the layout rules of the DP83867
+             guidelines.
+   :alt: One signal from left to right: the driver's output resistance, a
+         series resistor next to the driving pin, a 50 Ω trace and the
+         receiver. Notes say the resistance and resistor together
+         match 50 Ω; the trace is under 51 mm where possible and at
+         most 152 mm, with no vias or stubs and lengths matched within
+         11 ps, about 1.5 mm; and the DP83867 trims its own output to
+         about 50 Ω, from 35 Ω to 70 Ω.
+   :align: center

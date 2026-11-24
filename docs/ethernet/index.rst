@@ -16,6 +16,21 @@ transceiver talks to evampire over a digital interface,
 magnetics explain how these parts work and what evampire needs to do the
 same jobs itself.
 
+:numref:`fig-ethernet-path` shows the path and the pages that cover each
+part.
+
+.. graphviz:: path.dot
+   :name: fig-ethernet-path
+   :caption: The path of the data from evampire to the cable, and the pages
+             that cover each part.
+   :alt: A row of blocks joined by lines: evampire, the Ethernet
+         transceiver (external or integrated), the magnetics, the RJ45
+         socket and the cable. The link from evampire to an external
+         transceiver is RGMII, digital; the link from the transceiver to
+         the magnetics is analogue. Labels below name the transceiver pages
+         and the magnetics pages.
+   :align: center
+
 :doc:`rgmii/index`
    The digital interface between evampire and an external Ethernet
    transceiver: signals, clocking, timing and electrical levels.

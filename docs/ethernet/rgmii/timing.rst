@@ -7,8 +7,8 @@ added, and the timing limits of the interface. The signals are described on
 
 .. _rgmii-why-delay:
 
-The clock must arrive a quarter period after the data
------------------------------------------------------
+Need for a clock delay
+----------------------
 
 The transmitting chip launches its clock and its data at the same moment,
 so the data changes at every clock edge (:std:`RGMII 2.0 <rgmii-2-0>`
@@ -62,8 +62,8 @@ and the duty cycle is 50 %. For :math:`T = 8` ns it gives
 
 .. _rgmii-versions:
 
-The two versions of the specification add the delay in different places
------------------------------------------------------------------------
+Specification versions
+----------------------
 
 .. list-table:: Where each version of the RGMII specification adds the delay
    :name: tab-rgmii-versions
@@ -130,6 +130,27 @@ Table 2. The DP83867 datasheet repeats them [RGMII-DP83867]_ section 6.9.
 An empty cell means no limit. Timing is measured at half the I/O supply
 voltage (:std:`RGMII 2.0 <rgmii-2-0>` section 3.3).
 
+:numref:`fig-rgmii-timing-params` shows what each parameter measures. Without
+an internal delay, TskewT is the spread of the data changes around the clock
+edge at the transmitter, and TskewR is how far after a data change the
+clock edge must arrive at the receiver. With an internal delay, the setup
+and hold times bound a window around the clock edge in which the data must
+not change.
+
+.. figure:: timing-params.svg
+   :name: fig-rgmii-timing-params
+   :alt: Four timing rows with time in nanoseconds from −4 to 5. Without
+         internal delay, at the transmitter the data changes within −0.5 to
+         +0.5 ns of each clock edge (TskewT); at the receiver the clock edge
+         falls 1.0 to 2.6 ns after the data change (TskewR). With internal
+         delay, at the transmitter the data is stable from at least 1.2 ns
+         before to 1.2 ns after the clock edge (TsetupT, TholdT); at the
+         receiver at least 1.0 ns each side is required (TsetupR, TholdR).
+
+   The RGMII skew, setup and hold parameters of
+   :numref:`tab-rgmii-timing`, as intervals between data changes and clock
+   edges at 1000 Mbit/s.
+
 The skew numbers are defined only for 1000 Mbit/s. At 10 and 100 Mbit/s the
 clock period is 50 or 5 times longer. The KSZ9031RNX datasheet relaxes the
 largest TskewR to 16 ns at 100 Mbit/s and 160 ns at 10 Mbit/s
@@ -137,12 +158,47 @@ largest TskewR to 16 ns at 100 Mbit/s and 160 ns at 10 Mbit/s
 
 .. _rgmii-delay-once:
 
-The delay is added exactly once in each direction
--------------------------------------------------
+Delay placement
+---------------
 
 The board, the transmitting chip or the receiving chip adds the delay, as
-listed in :numref:`tab-rgmii-delay-places`. Adding it twice moves the clock
-edge onto the next data change, which fails as badly as not adding it.
+listed in :numref:`tab-rgmii-delay-places` and drawn in
+:numref:`fig-rgmii-delay-places`. Adding it twice moves the clock edge onto
+the next data change, which fails as badly as not adding it
+(:numref:`fig-rgmii-delay-count`).
+
+.. graphviz:: delay-places.dot
+   :name: fig-rgmii-delay-places
+   :caption: The three places where the 2 ns clock delay can be added in
+             each direction, of which exactly one is used.
+   :alt: evampire on the left and the Ethernet transceiver on the right, on
+         a circuit board. In the transmit direction TXC and TXD pass from
+         evampire through three dashed candidate boxes: transmitter delays
+         TXC, board longer TXC trace, and receiver delays TXC. In the
+         receive direction RXC and RXD pass the other way through:
+         transmitter delays RXC, board longer RXC trace, and receiver
+         delays RXC.
+   :align: center
+
+.. wavedrom::
+   :name: fig-rgmii-delay-count
+   :alt: Timing diagram with data changing every 4 ns and three copies of
+         the clock. With no delay, every clock edge falls on a data change.
+         With 2 ns of delay, every edge falls in the middle of the data.
+         With 4 ns of delay, the delay added twice, every edge falls on the
+         next data change.
+   :caption: The clock edge at the receiver with the delay added never,
+             once and twice, at 1000 Mbit/s.
+
+   { "signal": [
+       { "name": "data", "wave": "x====x",
+         "data": ["n0", "n1", "n2", "n3"] },
+       { "name": "no delay", "wave": "p..", "period": 2 },
+       { "name": "+ 2 ns, once", "wave": "p..", "period": 2, "phase": -1 },
+       { "name": "+ 4 ns, twice", "wave": "p..", "period": 2, "phase": -2 }
+     ],
+     "config": { "hscale": 2 }
+   }
 
 .. list-table:: Where the 2 ns delay can be added in each direction
    :name: tab-rgmii-delay-places
@@ -164,8 +220,8 @@ edge onto the next data change, which fails as badly as not adding it.
 
 .. _rgmii-board-delay:
 
-A board delay needs about 280 mm of extra trace
------------------------------------------------
+Board trace delay
+-----------------
 
 A delay added on the board is a longer clock trace:
 
@@ -203,10 +259,23 @@ The extra trace is usually folded into a meander, a zig-zag path. For
 reference, the same guidelines recommend RGMII traces shorter than 51 mm
 (2 inches), and at most 152 mm (6 inches) (see :doc:`electrical`).
 
+:numref:`fig-rgmii-meander-280` shows how such a trace looks beside the straight data traces.
+
+.. figure:: meander-280.svg
+   :name: fig-rgmii-meander-280
+   :alt: Top view of evampire on the left and the Ethernet transceiver on the
+         right. Three data traces run straight between them. The clock
+         trace runs in a zig-zag meander that adds about 280 mm of
+         extra length, 2 ns at 7.2 ps/mm, more than the 152 mm maximum
+         trace length.
+
+   A board delay as a meander on the clock trace; 280 mm is more than the
+   152 mm maximum (schematic, not to scale).
+
 .. _rgmii-transceiver-delays:
 
-Transceivers offer different internal delays
---------------------------------------------
+Transceiver internal delays
+---------------------------
 
 .. list-table:: Internal clock delay of two gigabit transceivers
    :name: tab-rgmii-phy-delays
@@ -235,8 +304,8 @@ access controller to delay TXC. Its pad-skew registers can add at most
 
 .. _rgmii-budget:
 
-A worked timing budget leaves less than 0.4 ns of margin
---------------------------------------------------------
+Worked timing budget
+--------------------
 
 TI's application note SNLA243 works out the transmit timing into a DP83867
 that delays the clock [RGMII-SNLA243]_ sections 3.2 and 3.3. The setup
@@ -301,12 +370,24 @@ margin. SNLA243 uses :math:`t_\text{d} = 2.0` ns,
    &= 0.2\ \text{ns}
 
 Both margins are positive but small, with a transmitter that meets
-TskewT.
+TskewT. :numref:`fig-rgmii-timing-budget` shows how each error uses up part
+of the delay and of the clock high time.
+
+.. figure:: timing-budget.svg
+   :name: fig-rgmii-timing-budget
+   :alt: Two stacked bars on a time axis from 0 to 3.5 ns. The setup bar
+         divides td of 2.0 ns into Δtd 0.2, tT 0.5, tIO 0.35, tB 0.1 and tsu
+         0.5 ns, leaving a margin of 0.35 ns. The hold bar divides thi of
+         3.6 ns into td 2.0, Δtd 0.2, tT 0.5, tIO 0.35, tB 0.1 and th
+         0.25 ns, leaving a margin of 0.2 ns.
+
+   The worked setup and hold budgets, with each error as one segment and the
+   margin left at the end.
 
 .. _rgmii-clock-limits:
 
-The clock has limits on frequency, period, duty cycle and edges
----------------------------------------------------------------
+Clock limits
+------------
 
 .. list-table:: RGMII clock limits at 1000 Mbit/s
    :name: tab-rgmii-clock
@@ -334,6 +415,20 @@ The clock has limits on frequency, period, duty cycle and edges
 Table 2. At 10 and 100 Mbit/s the period scales to 400 ns and 40 ns, each
 ±10 %, and the duty cycle may be 40 % to 60 %. The period limit applies to
 each cycle, not to the average frequency.
+
+:numref:`fig-rgmii-clock-cycle` marks what each limit measures.
+
+.. figure:: clock-cycle.svg
+   :name: fig-rgmii-clock-cycle
+   :alt: One clock cycle on a time axis from 0 to 10 ns. An arrow spans the
+         period, 7.2 ns to 8.8 ns and 8.0 ns typical. A second arrow
+         spans the high time, 45 % to 55 % of the period, 3.6 ns to
+         4.4 ns at 8.0 ns, and a shaded band marks where the falling
+         edge may lie. Dashed lines at 20 % and 80 % of the swing mark
+         the rise and fall time, at most 0.75 ns.
+
+   One RGMII clock cycle with the limits of :numref:`tab-rgmii-clock`
+   (edge slope schematic).
 
 The RGMII specification gives TXC and RXC as ±50
 :wikipedia:`parts per million (ppm) <Parts-per_notation>` from nominal

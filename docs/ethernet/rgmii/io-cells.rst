@@ -1,5 +1,5 @@
-evampire's RGMII pins and I/O cells
-===================================
+RGMII pins and I/O cells
+========================
 
 The pins evampire uses for its two RGMII ports, the I/O supply they run
 from, the timing of the standard gf180mcu pad cells, and the choice between
@@ -8,8 +8,8 @@ standard and custom I/O cells. The logic in front of the pads is on
 
 .. _rgmii-pins:
 
-Each port uses 12 pins, and the two ports 27 pins in all
---------------------------------------------------------
+Pin count
+---------
 
 .. list-table:: RGMII and management pins of evampire
    :name: tab-rgmii-pins
@@ -41,7 +41,8 @@ Each port uses 12 pins, and the two ports 27 pins in all
      - 1
      - Input
 
-:numref:`tab-rgmii-pins` adds up to 27 pins. MDIO needs an external
+:numref:`tab-rgmii-pins` gives 12 pins for each port, and 27 pins in all
+with the shared management pins and the reference clock. MDIO needs an external
 pull-up resistor (see :doc:`mdio`).
 
 The 125 MHz reference clock (see :ref:`clock and reset <arch-clock>`) can
@@ -50,10 +51,24 @@ come from an oscillator or from a transceiver. The DP83867 has a 25 MHz or
 KSZ9031RNX has a 125 MHz reference clock output, CLK125_NDO
 [RGMII-KSZ9031]_ section 3.9.
 
+:numref:`fig-rgmii-pinout` shows the connections; the MDIO pull-up is
+drawn in :numref:`fig-rgmii-mdio-bus`.
+
+.. graphviz:: pinout.dot
+   :name: fig-rgmii-pinout
+   :caption: evampire's RGMII and management pins and what they connect to.
+   :alt: evampire on the left with 27 pins. To transceiver A run 6 transmit
+         pins, TXC, TX_CTL and TXD[3:0], and 6 receive pins, RXC,
+         RX_CTL and RXD[3:0]; the same 12 run to transceiver B. MDC,
+         driven by evampire, and MDIO, in both directions, 1 pin each,
+         are shared by both transceivers. The 125 MHz clock, 1 pin, comes from an
+         oscillator or from CLK_OUT or CLK125_NDO of a transceiver.
+   :align: center
+
 .. _rgmii-io-voltage:
 
-The pins run at 3.3 V
----------------------
+I/O supply voltage
+------------------
 
 evampire runs its RGMII and MDIO pins at 3.3 V, which both example
 transceivers accept (see :doc:`electrical`). 5 V signalling is outside
@@ -77,6 +92,18 @@ gf180mcu_ocd_io, a community library
 A custom I/O cell
    Can use any supply within the device ratings, as described below.
 
+:numref:`fig-rgmii-io-supplies` compares the three.
+
+.. graphviz:: io-supplies.dot
+   :name: fig-rgmii-io-supplies
+   :caption: How each choice of I/O cell relates the I/O supply to the core supply.
+   :alt: Three columns. gf180mcu_fd_io: the I/O supply, 5 V or 3.3 V, connected
+         to the core supply. gf180mcu_ocd_io: the I/O supply separate
+         from the core supply and at least as high. A custom I/O cell:
+         the I/O supply separate, at any voltage within the device
+         ratings.
+   :align: center
+
 The gf180mcu_fd_io datasheet gives input thresholds of 0.8 V low and
 2.0 V high, and output currents, for a 4.5 V to 5.5 V supply
 ([RGMII-GF180IO]_ "Electrical Characteristics"). The thresholds at 3.3 V
@@ -84,8 +111,8 @@ are listed under :ref:`rgmii-io-open-questions`.
 
 .. _rgmii-pad-speed:
 
-The standard pad cell takes 2 ns to 6 ns, depending on the corner
------------------------------------------------------------------
+Standard pad cell delay
+-----------------------
 
 Cell timing comes from *Liberty* files: text tables, in the format read by
 synthesis and timing tools, that give each cell's delay and edge time for a
@@ -128,7 +155,9 @@ voltage, hot).
      - 1.39
      - 2.73
 
-:numref:`tab-gf180-pad-speed` is taken from the Liberty files of the I/O
+The output delay of the standard pad cell is about 2 ns at the FF corner
+and about 6 ns at the SS corner. :numref:`tab-gf180-pad-speed` is taken
+from the Liberty files of the I/O
 library [RGMII-GF180IO]_. The corners are FF at −40 °C and 3.63 V, TT at
 25 °C and 3.30 V, and SS at 125 °C and 2.97 V. The drive setting is 16 mA
 (PDRV1 = PDRV0 = 1) with fast slew (SL = 0), and the input edge is 0.08 ns.
@@ -142,10 +171,23 @@ TXC goes through the same type of pad as TXD, and RXC through the same type
 as RXD. The pad delay is common to clock and data, so the absolute delay
 cancels.
 
+:numref:`fig-rgmii-pad-delay` shows the delay cancelling.
+
+.. figure:: pad-delay.svg
+   :name: fig-rgmii-pad-delay
+   :alt: Timing diagram from 0 to 12 ns. Inside evampire, TXC and TXD change
+         together. At the pins, both are delayed by the same amounts at
+         TT, 3.04 ns on rising edges and 3.20 ns on falling edges, so
+         they still change together.
+
+   TXC and TXD through identical pads at the TT corner, 3.04 ns on rising
+   and 3.20 ns on falling edges, with each data edge drawn in the
+   direction of the clock edge: the delay is the same for both.
+
 .. _rgmii-pad-duty:
 
-Unequal rising and falling delays change the TXC duty cycle
------------------------------------------------------------
+TXC duty cycle
+--------------
 
 When the falling edge of a pad is delayed more than its rising edge, the
 high time of TXC grows:
@@ -191,24 +233,50 @@ The equations assume a 50 % duty cycle inside evampire. At the SS corner,
 A 53 % duty cycle is inside the 45 % to 55 % limit (see :doc:`timing`), but
 uses most of it before any imbalance of evampire's internal clock is added.
 
+:numref:`fig-rgmii-pad-duty` shows the two edges moving by different amounts.
+
+.. figure:: pad-duty.svg
+   :name: fig-rgmii-pad-duty
+   :alt: Timing diagram from 0 to 16 ns. The internal clock has a 50 % duty
+         cycle with an 8.00 ns period. At the pin the rising edge is
+         delayed by 5.74 ns and the falling edge by 6.01 ns, so the
+         high time is 4.27 ns, 53 % of the period, inside the 45 % to
+         55 % limit.
+
+   The TXC duty cycle at the pin at the SS corner.
+
 .. _rgmii-pad-edges:
 
-The standard pad's edges are slower than RGMII's 0.75 ns limit
---------------------------------------------------------------
+Standard pad cell edge times
+----------------------------
 
 RGMII allows at most 0.75 ns from 20 % to 80 % of each edge (see
 :doc:`timing`). The Liberty edge times in :numref:`tab-gf180-pad-speed` are
 0.53 ns to 1.89 ns. At the SS corner the edges take a large part of the
-4 ns half period. 10 and 100 Mbit/s are not affected.
+4 ns half period. Only the FF corner is within the 0.75 ns limit. 10 and
+100 Mbit/s are not affected.
 
 evampire runs its RGMII ports at up to 1000 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
 These limits belong to the standard gf180mcu_fd_io cells, which are
 general-purpose 5 V pads, not to the gf180mcu process.
 
+:numref:`fig-rgmii-pad-edges` compares the edges with the limit.
+
+.. figure:: pad-edges.svg
+   :name: fig-rgmii-pad-edges
+   :alt: Graph of voltage in percent of VDD against time from 0 to 4 ns, one
+         half period at 1000 Mbit/s. Ramps with 20 % to 80 % times of
+         0.53 ns and 0.63 ns at FF lie inside the dashed RGMII limit
+         of 0.75 ns; ramps of 1.67 ns and 1.89 ns at SS take most of
+         the half period.
+
+   Standard pad edge times against the RGMII limit, all drawn as rising
+   ramps starting at 0.2 ns.
+
 .. _rgmii-custom-io:
 
-Standard or custom I/O cells are chosen by 1000 Mbit/s timing
---------------------------------------------------------------
+Choice of standard or custom I/O cells
+--------------------------------------
 
 Whether the RGMII pins use the standard pad cells or a custom I/O cell is
 chosen by which one meets 1000 Mbit/s RGMII timing at every process,
@@ -252,8 +320,8 @@ all corners. Open designs that a custom cell can start from:
 
 .. _rgmii-gmii-alternative:
 
-GMII is an alternative with a wider data window and more pins
--------------------------------------------------------------
+GMII as an alternative
+----------------------
 
 GMII (:clause:`35`) sends 8 bits at the rising edge of a 125 MHz clock, so
 each bit is valid for a whole 8 ns period instead of 4 ns. Its receiver
