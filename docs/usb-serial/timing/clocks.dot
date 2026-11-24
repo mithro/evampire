@@ -1,0 +1,43 @@
+// Three sources for the USB bit clock, and the start-of-frame trim loop of
+// the second.
+//
+// Fixed grid (positions in inches): one row per source; the 48 MHz USB
+// clock on the right (x=6.3).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph clocks {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.55,
+           fixedsize=true];
+    edge  [arrowsize=0.7, penwidth=1.4, fontname="Helvetica"];
+
+    t1 [pos="3.5,3.6!", shape=plaintext, style="", width=6.5, height=0.2,
+        fontsize=11, label="(a) From the Ethernet reference: within 100 ppm"];
+    r1 [pos="0.9,3.1!", label="125 MHz Ethernet\nreference", fillcolor="#dbe8f5"];
+    p1 [pos="3.5,3.1!", label="phase-locked loop", fillcolor="#fbe5d6"];
+    o1 [pos="6.3,3.1!", label="48 MHz USB clock", fillcolor="#e2f0d9"];
+
+    t2 [pos="3.5,2.35!", shape=plaintext, style="", width=6.5, height=0.2,
+        fontsize=11, label="(b) A local oscillator trimmed against the host's frames"];
+    r2 [pos="0.9,1.85!", label="trimmable local\noscillator", fillcolor="#dbe8f5"];
+    o2 [pos="6.3,1.85!", label="48 MHz USB clock", fillcolor="#e2f0d9"];
+    c2 [pos="3.5,1.05!", width=2.4, height=0.65,
+        label="count cycles between SOF\ntokens: 48 000 per 1 ms frame,\n20.8 ppm per count", fillcolor="#fbe5d6"];
+
+    t3 [pos="3.5,0.45!", shape=plaintext, style="", width=6.5, height=0.2,
+        fontsize=11, label="(c) A dedicated crystal (a board part)"];
+    r3 [pos="0.9,-0.05!", label="crystal", fillcolor="#dbe8f5"];
+    o3 [pos="6.3,-0.05!", label="48 MHz USB clock", fillcolor="#e2f0d9"];
+
+    node [shape=point, width=0.01, height=0.01, label=""];
+    k1 [pos="6.3,1.05!"];  k2 [pos="0.9,1.05!"];
+
+    r1 -> p1 -> o1;
+    r2 -> o2;
+    o2 -> k1 [arrowhead=none];  k1 -> c2;  c2 -> k2 [arrowhead=none];
+    k2 -> r2 [label=" trim", fontsize=9];
+    r3 -> o3;
+}

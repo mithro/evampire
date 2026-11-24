@@ -1,0 +1,57 @@
+// The three integration steps of a converter: the same chain from control
+// to inductor, with the evampire die outline enclosing more of it at each
+// step.
+//
+// Fixed grid (positions in inches): rows at y=3.0, 1.7 and 0.4, one per
+// step; columns at x=1.0 (PWM and sensing), 2.9 (gate driver), 4.8 (power
+// transistors) and 6.6 (inductor). The bold blue outline is the die.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph integration_steps {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4.5", outputorder=nodesfirst];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.45, height=0.55,
+           fixedsize=true];
+    edge  [arrowsize=0.7, penwidth=1.5];
+
+    // Die outlines.
+    node  [style="rounded,bold", color="#1f4e79", fillcolor="none",
+           label="", height=0.8];
+    die1  [pos="1.0,3.0!", width=1.75];
+    die2  [pos="1.95,1.7!", width=3.65];
+    die3  [pos="2.9,0.4!", width=5.55];
+
+    // Step titles.
+    node  [shape=plaintext, style="", fontsize=11, height=0.25, color=black,
+           fontcolor="#1f4e79"];
+    t1    [pos="1.95,3.62!", width=3.8, label="(a) Control only (evampire outlined)"];
+    t2    [pos="1.95,2.32!", width=3.8, label="(b) Control and gate drivers"];
+    t3    [pos="2.3,1.02!", width=4.6, label="(c) Control, gate drivers and power transistors"];
+
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontcolor=black, height=0.55, width=1.45];
+    a1 [pos="1.0,3.0!", label="PWM and\nsensing"];
+    a2 [pos="2.9,3.0!", label="Gate driver", fillcolor="#ffffff",
+        style="rounded,filled,dashed"];
+    a3 [pos="4.8,3.0!", label="Power\ntransistors", fillcolor="#ffffff",
+        style="rounded,filled,dashed"];
+    a4 [pos="6.6,3.0!", label="Inductor", fillcolor="#ffffff",
+        style="rounded,filled,dashed"];
+    b1 [pos="1.0,1.7!", label="PWM and\nsensing"];
+    b2 [pos="2.9,1.7!", label="Gate driver"];
+    b3 [pos="4.8,1.7!", label="Power\ntransistors", fillcolor="#ffffff",
+        style="rounded,filled,dashed"];
+    b4 [pos="6.6,1.7!", label="Inductor", fillcolor="#ffffff",
+        style="rounded,filled,dashed"];
+    c1 [pos="1.0,0.4!", label="PWM and\nsensing"];
+    c2 [pos="2.9,0.4!", label="Gate driver"];
+    c3 [pos="4.8,0.4!", label="Power\ntransistors"];
+    c4 [pos="6.6,0.4!", label="Inductor", fillcolor="#ffffff",
+        style="rounded,filled,dashed"];
+
+    a1 -> a2 -> a3 -> a4;
+    b1 -> b2 -> b3 -> b4;
+    c1 -> c2 -> c3 -> c4;
+}

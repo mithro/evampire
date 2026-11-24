@@ -1,5 +1,5 @@
-The buck converter
-==================
+Buck converter
+==============
 
 This page explains the step-down converter, called a
 :wikipedia:`buck converter <Buck_converter>`: its parts, how the ratio of
@@ -70,8 +70,8 @@ Between the two switches turning on there is a short gap, the *dead time*,
 when both are off. It prevents both switches being on at once, which would
 short the input to ground (:ref:`conv-dead-time`).
 
-The duty cycle sets the output voltage
---------------------------------------
+Duty cycle and output voltage
+-----------------------------
 
 In steady state the inductor current must end each period where it began,
 otherwise it would grow or shrink without limit. The current changes at a
@@ -91,7 +91,8 @@ This is called *volt-second balance*. For the buck converter it gives
 with the symbols in :numref:`tab-conv-sym-buck`. This holds when the
 switches and the inductor have no resistance and the inductor current never
 falls to zero (continuous conduction, below). Losses make the real duty
-cycle slightly larger.
+cycle slightly larger. :numref:`fig-conv-buck-balance` shows the balance
+for the worked example below: the two shaded areas are equal.
 
 .. list-table:: Symbols for the buck converter
    :name: tab-conv-sym-buck
@@ -167,14 +168,29 @@ current is :math:`I_\text{out} = 25.5 / 12 = 2.125` A and
 
 The ripple is 36 % of the load current; designers commonly choose 20 % to
 40 % [CONV-SLVA477]_ (Equation 6). The inductor current swings between
-:math:`2.125 - 0.383 = 1.742` A and :math:`2.125 + 0.383 = 2.508` A. The
+:math:`2.125 - 0.383 = 1.742` A and :math:`2.125 + 0.383 = 2.508` A
+(:numref:`fig-conv-buck-balance`). The
 peak, 2.508 A, is the current the switches, the inductor and the current
 limit must handle.
+
+.. figure:: buck-balance.svg
+   :name: fig-conv-buck-balance
+   :alt: Two traces over two 4 µs periods. The inductor voltage is +36 V for
+         the first 1 µs of each period and −12 V for the remaining 3 µs; the
+         shaded areas above and below zero are each 36 V·µs. The inductor
+         current rises from 1.742 A to 2.508 A while the voltage is positive
+         and falls back while it is negative, averaging 2.125 A, a ripple of
+         0.766 A.
+   :align: center
+
+   Inductor voltage and current of the buck worked example: 48 V to 12 V,
+   250 kHz, 47 µH and 2.125 A.
 
 The ripple is inversely proportional to :math:`L \, f_\text{sw}`, so a higher
 switching frequency allows a smaller inductor for the same ripple: 117.5 µH
 at 100 kHz, 47 µH at 250 kHz, 19.6 µH at 600 kHz and 5.3 µH at 2.2 MHz in
-this example. The cost is higher switching loss (:ref:`conv-losses`).
+this example (:numref:`fig-conv-fsw-tradeoff`). The cost is higher
+switching loss (:ref:`conv-losses`).
 
 The output capacitor absorbs the ripple current. With an ideal capacitor
 the output voltage ripple is
@@ -186,9 +202,22 @@ the output voltage ripple is
      &= 17.4 \ \text{mV}
 
 for an illustrative 22 µF capacitor; this is [CONV-SLVA477]_ (Equation 12)
-solved for the ripple. A real
-capacitor adds the ripple current times its
+solved for the ripple. A real capacitor adds the ripple current times its
 :wikipedia:`equivalent series resistance <Equivalent_series_resistance>`.
+:numref:`fig-conv-cap-ripple` shows the capacitor current and the output
+ripple of the example.
+
+.. figure:: cap-ripple.svg
+   :name: fig-conv-cap-ripple
+   :alt: Two traces over two 4 µs periods. The capacitor current, the
+         inductor current less the load current, is a triangle between
+         −0.383 A and +0.383 A. The output voltage ripple rises while the
+         current is positive and falls while it is negative, 17.4 mV peak
+         to peak with 22 µF.
+   :align: center
+
+   Output capacitor current and voltage ripple of the buck example
+   with an ideal 22 µF capacitor.
 
 Continuous and discontinuous conduction
 ---------------------------------------
@@ -199,6 +228,22 @@ falls below half the ripple, :math:`I_\text{out} < \Delta I_L / 2`
 (0.383 A in the example), the current would fall below zero at the end of
 each period. With a diode as S2, the diode stops it at zero and the current
 stays at zero for part of the period: *discontinuous conduction mode*.
+:numref:`fig-conv-conduction-modes` compares the cases.
+
+.. figure:: conduction-modes.svg
+   :name: fig-conv-conduction-modes
+   :alt: Four panels of inductor current against time over 8 µs on the same
+         scale. (a) Continuous conduction at 2.125 A: a triangle wave
+         between 1.742 A and 2.508 A. (b) The boundary at 0.383 A: the
+         triangle just touches zero at the end of each period. (c)
+         Discontinuous conduction with a diode: the current rises, falls to
+         zero and stays at zero, with zero inductor voltage, until the next
+         period. (d) A synchronous S2 left on at light load: the triangle
+         dips below zero, and the negative part is shaded.
+   :align: center
+
+   Inductor current of the buck example at four loads and switch choices,
+   with the average dashed; panels (c) and (d) are schematic.
 
 The
 volt-second balance then has a third interval with no voltage across the
@@ -217,7 +262,8 @@ synchronous converter carry power in both directions, which
 Diode or synchronous switch
 ---------------------------
 
-During the off time the load current flows through S2. A diode drops a
+During the off time the load current flows through S2, a diode or a
+transistor (:numref:`fig-conv-buck`). A diode drops a
 roughly fixed forward voltage, a transistor drops its current times its
 on-resistance. For the example, with an illustrative 0.5 V diode drop and
 an illustrative 20 mΩ transistor:

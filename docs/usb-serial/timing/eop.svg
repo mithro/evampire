@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="330" viewBox="0 0 600 330" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="600" height="330" fill="#ffffff"/>
+<polyline points="110.0,117.5 244.3,117.5 244.3,117.5 378.6,117.5 378.6,77.0 580.0,77.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<text x="102.0" y="97.2" font-size="13" text-anchor="end" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">D+</text>
+<polyline points="110.0,144.5 244.3,144.5 244.3,185.0 378.6,185.0 378.6,185.0 580.0,185.0" fill="none" stroke="#c55a11" stroke-width="2.0" stroke-linejoin="round"/>
+<text x="102.0" y="164.8" font-size="13" text-anchor="end" font-weight="normal" fill="#c55a11" dominant-baseline="middle">D−</text>
+<line x1="445.7" y1="203.0" x2="445.7" y2="40.0" stroke="#777777" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="110.0" y="8.0" width="134.3" height="30.0" rx="0" fill="#ececec" stroke="#777777" stroke-width="1.0"/>
+<text x="177.1" y="23.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">last bit (K)</text>
+<rect x="244.3" y="8.0" width="134.3" height="30.0" rx="0" fill="#fbe5d6" stroke="#777777" stroke-width="1.0"/>
+<text x="311.4" y="16.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">SE0: 160–175 ns sent</text>
+<text x="311.4" y="29.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">(TFEOPT)</text>
+<rect x="378.6" y="8.0" width="67.1" height="30.0" rx="0" fill="#dbe8f5" stroke="#777777" stroke-width="1.0"/>
+<text x="412.1" y="23.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">J, one bit</text>
+<rect x="445.7" y="8.0" width="134.3" height="30.0" rx="0" fill="#ffffff" stroke="#777777" stroke-width="1.0"/>
+<text x="512.9" y="23.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">released: idle</text>
+<text x="177.1" y="212.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">may be stretched by hubs:</text>
+<text x="177.1" y="225.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">up to 6 bit times without a change</text>
+<line x1="244.3" y1="262.0" x2="310.1" y2="262.0" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<text x="317.4" y="262.0" font-size="11" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">receiver accepts SE0 from 82 ns (TFEOPR)</text>
+<text x="110.0" y="292.0" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">During a normal J/K change both lines may be low for up to 14 ns (TFST),</text>
+<text x="110.0" y="310.0" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">so the SE0 filter must be longer than 14 ns and shorter than 82 ns.</text>
+<line x1="110.0" y1="234.0" x2="580.0" y2="234.0" stroke="#222222" stroke-width="1"/>
+<text x="345.0" y="246.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">time (bit times of 83.33 ns, schematic)</text>
+</svg>

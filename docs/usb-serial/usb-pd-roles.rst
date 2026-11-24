@@ -1,5 +1,5 @@
-Interaction with USB Power Delivery roles
-=========================================
+USB Power Delivery roles
+========================
 
 This page describes how the USB serial port fits with the power roles of a
 USB Type-C port, the data role swap, boards with two ports, and the other
@@ -8,8 +8,8 @@ work the processor does. The USB Power Delivery negotiation itself is on
 USB Power Delivery specifications on the :doc:`standards page
 </standards>`.
 
-Power role and data role
-------------------------
+Power and data roles
+--------------------
 
 A USB Type-C port has a *power role*, source or sink (:ref:`power-roles`),
 and, when it carries USB data, a separate *data role*: DFP, the host side,
@@ -21,7 +21,7 @@ swap either role without changing the other (:typec:`Section 4.5.1.4`,
 
 evampire's serial port works only when the port's data role is UFP, so that
 the computer at the other end is the host. :numref:`tab-usbser-roles` lists
-the cases.
+the cases and :numref:`fig-usbser-roles` draws them.
 
 .. list-table:: Initial roles and what the serial port needs
    :name: tab-usbser-roles
@@ -45,14 +45,40 @@ the cases.
      - UFP
      - No host to talk to; nothing happens
 
-The data role swap
-------------------
+.. graphviz:: usb-pd-roles/roles.dot
+   :name: fig-usbser-roles
+   :caption: Power direction and initial data roles in the three situations
+             of :numref:`tab-usbser-roles`.
+   :alt: Three rows. A computer, source and DFP, powers evampire, sink and
+         UFP: the serial port works as attached. evampire, source and DFP,
+         powers a laptop, sink and UFP: a data role swap is needed. A
+         charger, source with no USB data, powers evampire, sink and UFP:
+         there is no host and nothing happens.
+   :align: center
+
+Data role swap
+--------------
 
 A data role swap is a USB Power Delivery message exchange, DR_Swap, that
 exchanges DFP and UFP and nothing else: VBUS, the CC resistors and VCONN
 stay as they are (:pd:`Section 6.3.9`; :typec:`Table 4-13`).
-:ref:`Data roles and DR_Swap <usbpd-data-roles>` describes the message
-sequence.
+:numref:`fig-usbser-dr-swap` shows the exchange with evampire as source,
+and :ref:`Data roles and DR_Swap <usbpd-data-roles>` describes the
+message rules.
+
+.. graphviz:: usb-pd-roles/dr-swap.dot
+   :name: fig-usbser-dr-swap
+   :caption: A data role swap with evampire as source: the data roles
+             change and the power roles do not.
+   :alt: Sequence diagram between evampire, the source and DFP, and a
+         laptop, the sink and UFP. Before the swap evampire has its pull-up
+         off and D+ and D− undriven. evampire sends DR_Swap, the laptop
+         answers GoodCRC and then Accept (or Reject or Wait), and evampire
+         answers GoodCRC. evampire is then UFP and turns its pull-up on when
+         VBUS is present; the laptop is DFP, the USB host. VBUS, Rp and Rd,
+         and VCONN are unchanged. On Reject, evampire stays DFP with D+ and
+         D− undriven and its pull-up off.
+   :align: center
 
 The USB Type-C specification names a port that supplies power but cannot be
 a USB host a *sourcing device*. Such a port must support USB Power Delivery
@@ -73,14 +99,17 @@ serial port is enabled.
 If the other end refuses the swap, evampire stays DFP. It then leaves D+
 and D− undriven and its pull-up off, because there is no host to answer.
 
-When to connect the pull-up
----------------------------
+Pull-up control
+---------------
 
 The device connects its D+ pull-up to announce itself and must not drive
 current into D+ while VBUS is absent ([USBSER-USB2]_ section 7.1.5.1). On
-evampire the pull-up is switched by software when three conditions hold:
+evampire the pull-up is switched by software when three conditions hold
+(:numref:`fig-usbser-pullup`):
 the port is attached, its data role is UFP, and VBUS is present, whether
-the other end or evampire supplies it.
+the other end or evampire supplies it. The one exception is a power role
+swap, during which VBUS is briefly absent but the pull-up stays connected,
+as described below.
 
 Two USB Power Delivery events change VBUS while the cable stays attached:
 
@@ -96,7 +125,35 @@ Two USB Power Delivery events change VBUS while the cable stays attached:
 A Hard Reset is different: VBUS goes to 0 V and the data roles return to
 DFP for the port with Rp, the source, and UFP for the port with Rd, the
 sink (:pd:`Section 7.1.3`). The USB connection ends and, after the reset, a sourcing evampire
-swaps to UFP again.
+swaps to UFP again. :numref:`fig-usbser-pullup` follows the pull-up
+through these events.
+
+.. wavedrom::
+   :caption: VBUS, the roles and the pull-up of a sourcing evampire through
+             a data role swap, a voltage change, a Hard Reset and a power
+             role swap (not to scale).
+   :name: fig-usbser-pullup
+   :alt: Timing diagram. evampire attaches as source with VBUS at 5 V, as
+         DFP and with its pull-up off. After DR_Swap it is UFP and turns
+         the pull-up on. VBUS changes from 5 V to 20 V and the pull-up stays
+         on. A Hard Reset takes VBUS to 0 V, returns evampire to DFP and
+         turns the pull-up off. VBUS returns to 5 V, a new DR_Swap makes
+         evampire UFP, and the pull-up turns on again. A power role swap
+         dips VBUS and makes evampire the sink, and the pull-up stays on.
+
+   {"signal": [
+     {"name": "event", "wave": "3.4.5.6.4.7.",
+      "data": ["attach", "DR_Swap", "5 V to 20 V", "Hard Reset",
+               "DR_Swap", "PR_Swap"]},
+     {"name": "VBUS", "wave": "=....==.=.==",
+      "data": ["5 V", "20 V", "0 V", "5 V", "dip", "5 V"]},
+     {"name": "power role", "wave": "=..........=",
+      "data": ["source", "sink"]},
+     {"name": "data role", "wave": "=..=..=..=..",
+      "data": ["DFP", "UFP", "DFP", "UFP"]},
+     {"name": "pull-up", "wave": "0...1.0...1."}
+   ],
+   "config": {"hscale": 1}}
 
 Two USB Type-C ports
 --------------------
@@ -111,13 +168,25 @@ computers may be attached at once, one on each port. The options are:
   block;
 * a serial port on one designated port only.
 
+:numref:`fig-usbser-two-ports` shows the three.
+
+.. graphviz:: usb-pd-roles/two-ports.dot
+   :name: fig-usbser-two-ports
+   :caption: Three ways to provide a serial port with two USB Type-C ports.
+   :alt: Three diagrams. (a) Each port has its own front end and USB
+         device, giving two serial ports. (b) Both ports connect through an
+         analogue switch on D+ and D−, or two front ends and a selector, to
+         one USB device. (c) Only port 1 has a front end and USB device;
+         port 2 has no USB data.
+   :align: center
+
 With the hardware split of :doc:`software-cost`, two USB devices double the
 buffers and the per-byte work but add no packet-level deadline. With a
 smaller split, each port's deadlines apply independently, and packets on
 the two ports can arrive at the same time.
 
-Sharing the processor
----------------------
+Processor sharing
+-----------------
 
 The processor also runs the USB Power Delivery negotiation on each USB
 Type-C port, the Power over Ethernet negotiation, the power budget and the
@@ -138,6 +207,30 @@ as an error and gives up the transfer after three in a row
 ([USBSER-USB2]_ section 10.2.6). The worst case is then a USB Power
 Delivery message on each port and a USB packet arriving together, and
 whether that is acceptable depends on how often it happens.
+:numref:`fig-usbser-sharing` compares the two cases.
+
+.. wavedrom::
+   :caption: A USB token that arrives while the processor handles a USB
+             Power Delivery message, without and with automatic handshakes
+             (not to scale).
+   :name: fig-usbser-sharing
+   :alt: Timing diagram: the processor is busy with a USB Power Delivery
+         message, with interrupts off. A USB IN token arrives during it.
+         Without automatic handshakes there is no reply, which the host
+         counts as an error. With automatic handshakes the hardware answers
+         NAK and the host retries later.
+
+   {"signal": [
+     {"name": "processor", "wave": "2.7.........2..",
+      "data": ["free", "USB Power Delivery message, interrupts off", "free"]},
+     {"name": "USB token", "wave": "x...3.x........",
+      "data": ["IN"]},
+     {"name": "without", "wave": "x.....9...x....",
+      "data": ["no reply: an error"]},
+     {"name": "with", "wave": "x.....5...x....",
+      "data": ["NAK; host retries"]}
+   ],
+   "config": {"hscale": 1}}
 
 Open questions
 --------------

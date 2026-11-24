@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="600" height="300" fill="#ffffff"/>
+<line x1="65.0" y1="250.0" x2="70.0" y2="250.0" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="250.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="65.0" y1="201.1" x2="70.0" y2="201.1" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="201.1" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0.8</text>
+<line x1="65.0" y1="127.8" x2="70.0" y2="127.8" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="127.8" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="65.0" y1="97.2" x2="70.0" y2="97.2" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="97.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">2.5</text>
+<line x1="65.0" y1="30.0" x2="70.0" y2="30.0" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="30.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">3.6</text>
+<line x1="70.0" y1="250.0" x2="580.0" y2="250.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="70.0" y1="30.0" x2="70.0" y2="250.0" stroke="#222222" stroke-width="1.2"/>
+<text x="22.0" y="140.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 22.0 140.0)">input voltage (V)</text>
+<rect x="108.2" y="97.2" width="165.8" height="103.9" rx="0" fill="#dbe8f5" stroke="#1f4e79" stroke-width="1.0"/>
+<text x="191.1" y="69.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">both inputs within</text>
+<text x="191.1" y="82.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">0.8 V to 2.5 V (VCM)</text>
+<line x1="173.1" y1="143.1" x2="209.1" y2="143.1" stroke="#222222" stroke-width="1.6"/>
+<line x1="173.1" y1="155.3" x2="209.1" y2="155.3" stroke="#222222" stroke-width="1.6"/>
+<line x1="217.1" y1="143.1" x2="217.1" y2="155.3" stroke="#222222" stroke-width="1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<text x="223.1" y="142.7" font-size="11" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">200 mV</text>
+<text x="223.1" y="155.7" font-size="11" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">(VDI)</text>
+<text x="191.1" y="225.6" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">resolves J or K</text>
+<rect x="350.5" y="127.8" width="165.8" height="73.3" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<text x="433.4" y="151.4" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">switching threshold</text>
+<text x="433.4" y="164.4" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">between 0.8 V</text>
+<text x="433.4" y="177.4" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">and 2.0 V</text>
+<text x="433.4" y="103.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">above: high</text>
+<text x="433.4" y="219.1" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">below: low; both low = SE0,</text>
+<text x="433.4" y="232.1" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">after a 14 ns to 82 ns filter</text>
+<text x="191.1" y="272.0" font-size="12" text-anchor="middle" font-weight="bold" fill="#222222" dominant-baseline="middle">Differential receiver</text>
+<text x="433.4" y="272.0" font-size="12" text-anchor="middle" font-weight="bold" fill="#222222" dominant-baseline="middle">Single-ended receivers</text>
+</svg>

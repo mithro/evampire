@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="560" height="360" fill="#ffffff"/>
+<rect x="75.0" y="30.8" width="455.0" height="16.2" rx="0" fill="#e2f0d9" stroke="none" stroke-width="1.0"/>
+<line x1="75.0" y1="20.0" x2="75.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="290.0" x2="75.0" y2="295.0" stroke="#222222" stroke-width="1.2"/>
+<text x="75.0" y="306.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">37</text>
+<line x1="166.0" y1="20.0" x2="166.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="166.0" y1="290.0" x2="166.0" y2="295.0" stroke="#222222" stroke-width="1.2"/>
+<text x="166.0" y="306.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">41</text>
+<line x1="257.0" y1="20.0" x2="257.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="257.0" y1="290.0" x2="257.0" y2="295.0" stroke="#222222" stroke-width="1.2"/>
+<text x="257.0" y="306.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">45</text>
+<line x1="348.0" y1="20.0" x2="348.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="348.0" y1="290.0" x2="348.0" y2="295.0" stroke="#222222" stroke-width="1.2"/>
+<text x="348.0" y="306.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">49</text>
+<line x1="439.0" y1="20.0" x2="439.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="439.0" y1="290.0" x2="439.0" y2="295.0" stroke="#222222" stroke-width="1.2"/>
+<text x="439.0" y="306.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">53</text>
+<line x1="530.0" y1="20.0" x2="530.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="530.0" y1="290.0" x2="530.0" y2="295.0" stroke="#222222" stroke-width="1.2"/>
+<text x="530.0" y="306.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">57</text>
+<line x1="75.0" y1="290.0" x2="530.0" y2="290.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="70.0" y1="290.0" x2="75.0" y2="290.0" stroke="#222222" stroke-width="1.2"/>
+<text x="67.0" y="290.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="75.0" y1="236.0" x2="530.0" y2="236.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="70.0" y1="236.0" x2="75.0" y2="236.0" stroke="#222222" stroke-width="1.2"/>
+<text x="67.0" y="236.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
+<line x1="75.0" y1="182.0" x2="530.0" y2="182.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="70.0" y1="182.0" x2="75.0" y2="182.0" stroke="#222222" stroke-width="1.2"/>
+<text x="67.0" y="182.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">40</text>
+<line x1="75.0" y1="128.0" x2="530.0" y2="128.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="70.0" y1="128.0" x2="75.0" y2="128.0" stroke="#222222" stroke-width="1.2"/>
+<text x="67.0" y="128.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">60</text>
+<line x1="75.0" y1="74.0" x2="530.0" y2="74.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="70.0" y1="74.0" x2="75.0" y2="74.0" stroke="#222222" stroke-width="1.2"/>
+<text x="67.0" y="74.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">80</text>
+<line x1="75.0" y1="20.0" x2="530.0" y2="20.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="70.0" y1="20.0" x2="75.0" y2="20.0" stroke="#222222" stroke-width="1.2"/>
+<text x="67.0" y="20.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">100</text>
+<line x1="75.0" y1="290.0" x2="530.0" y2="290.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="75.0" y1="20.0" x2="75.0" y2="290.0" stroke="#222222" stroke-width="1.2"/>
+<text x="302.5" y="328.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">input voltage (V)</text>
+<text x="27.0" y="155.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 27.0 155.0)">efficiency (%)</text>
+<text x="302.5" y="38.9" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">switching converters in other designs: 90 % to 96 %</text>
+<polyline points="75.0,144.1 86.4,146.0 97.8,147.9 109.1,149.7 120.5,151.5 131.9,153.3 143.2,155.0 154.6,156.7 166.0,158.3 177.4,159.9 188.8,161.4 200.1,162.9 211.5,164.4 222.9,165.9 234.2,167.3 245.6,168.7 257.0,170.0 268.4,171.3 279.8,172.6 291.1,173.9 302.5,175.1 313.9,176.3 325.2,177.5 336.6,178.7 348.0,179.8 359.4,180.9 370.8,182.0 382.1,183.1 393.5,184.1 404.9,185.1 416.2,186.2 427.6,187.1 439.0,188.1 450.4,189.1 461.8,190.0 473.1,190.9 484.5,191.8 495.9,192.7 507.2,193.6 518.6,194.4 530.0,195.3" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<circle cx="75.0" cy="144.1" r="4" fill="#1f4e79"/>
+<text x="83.0" y="132.1" font-size="11" text-anchor="start" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">54.1 %</text>
+<circle cx="530.0" cy="195.3" r="4" fill="#1f4e79"/>
+<text x="522.0" y="183.3" font-size="11" text-anchor="end" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">35.1 %</text>
+<text x="302.5" y="189.1" font-size="12" text-anchor="middle" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">linear, 20 V out</text>
+<polyline points="75.0,253.5 86.4,254.0 97.8,254.5 109.1,254.9 120.5,255.4 131.9,255.8 143.2,256.2 154.6,256.7 166.0,257.1 177.4,257.5 188.8,257.9 200.1,258.2 211.5,258.6 222.9,259.0 234.2,259.3 245.6,259.7 257.0,260.0 268.4,260.3 279.8,260.7 291.1,261.0 302.5,261.3 313.9,261.6 325.2,261.9 336.6,262.2 348.0,262.4 359.4,262.7 370.8,263.0 382.1,263.3 393.5,263.5 404.9,263.8 416.2,264.0 427.6,264.3 439.0,264.5 450.4,264.8 461.8,265.0 473.1,265.2 484.5,265.5 495.9,265.7 507.2,265.9 518.6,266.1 530.0,266.3" fill="none" stroke="#c55a11" stroke-width="2.0" stroke-linejoin="round"/>
+<circle cx="75.0" cy="253.5" r="4" fill="#c55a11"/>
+<text x="83.0" y="241.5" font-size="11" text-anchor="start" font-weight="normal" fill="#c55a11" dominant-baseline="middle">13.5 %</text>
+<circle cx="530.0" cy="266.3" r="4" fill="#c55a11"/>
+<text x="522.0" y="254.3" font-size="11" text-anchor="end" font-weight="normal" fill="#c55a11" dominant-baseline="middle">8.8 %</text>
+<text x="302.5" y="275.3" font-size="12" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">linear, 5 V out</text>
+</svg>

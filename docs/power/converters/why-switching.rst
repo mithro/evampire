@@ -1,20 +1,32 @@
-Why switching converters
-========================
+Linear and switching converters
+===============================
 
 This page compares the two ways of changing a DC voltage, the linear
 regulator and the switching converter, at the voltages and powers of
 evampire's power path. The converters themselves are described on
 :doc:`buck`, :doc:`boost` and :doc:`buck-boost`.
 
-Linear regulators turn the voltage difference into heat
--------------------------------------------------------
+Linear regulator losses
+-----------------------
 
 A :wikipedia:`linear regulator <Linear_regulator>` puts a transistor in
 series between the input and the output and adjusts how hard it conducts so
 that the output stays at the set voltage. The transistor carries the full
 load current and drops the whole difference between the input and output
-voltages, so it turns that difference times the current into heat. A
-linear regulator can only make a voltage lower than its input.
+voltages, so it turns that difference times the current into heat. A linear
+regulator can only make a voltage lower than its input.
+:numref:`fig-conv-linear` shows its parts.
+
+.. graphviz:: linear.dot
+   :name: fig-conv-linear
+   :caption: A linear regulator: a series pass transistor set by an
+             error amplifier.
+   :alt: Schematic: the input connects through a pass transistor to the
+         output and the load. A divider on the output feeds an error
+         amplifier with a reference, which drives the pass transistor's
+         gate. The pass transistor drops Vin − Vout and carries the load
+         current, so it turns (Vin − Vout) × Iout into heat.
+   :align: center
 
 The power lost in the transistor and the resulting efficiency, the fraction
 of the input power that reaches the load, are
@@ -103,8 +115,8 @@ Power over Ethernet type. In the other direction, "USB in, Ethernet out",
 the output (44 V to 57 V) is above most USB input voltages, which a linear
 regulator cannot produce at all.
 
-Switching converters move energy in packets
--------------------------------------------
+Switching converter operation
+-----------------------------
 
 A :wikipedia:`switching converter <Switched-mode_power_supply>` uses
 transistors only as switches, fully on or fully off, and stores energy for
@@ -182,9 +194,21 @@ efficiency of evampire's own
 converters sets how much of the input power is left for the output ports;
 :ref:`power-translation` uses it as :math:`\eta`, and
 :doc:`arrangement` gives ranges for each way of arranging the converters.
+:numref:`fig-conv-linear-efficiency` compares the two.
 
-Where a linear regulator still fits
------------------------------------
+.. figure:: linear-efficiency.svg
+   :name: fig-conv-linear-efficiency
+   :alt: Graph of efficiency against input voltage from 37 V to 57 V. A
+         linear regulator to 20 V falls from 54.1 % at 37 V to 35.1 % at
+         57 V; to 5 V it falls from 13.5 % to 8.8 %. A shaded band from 90 %
+         to 96 % marks the switching converters of other designs.
+   :align: center
+
+   Efficiency of a linear regulator from the powered device input
+   to 5 V and 20 V, against the switching converters cited above.
+
+Uses for linear regulators
+--------------------------
 
 The efficiency of a linear regulator, :math:`V_\text{out} / V_\text{in}`, is
 high when the two voltages are close. Two places in evampire's power path

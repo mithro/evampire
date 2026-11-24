@@ -1,0 +1,53 @@
+// Inverting buck-boost converter power stage: one switch, one inductor to
+// ground and one diode, giving a negative output.
+//
+// Fixed grid (positions in inches): the top row (y=2.0) carries the input,
+// the switch node and the output, the bottom row (y=0.2) is ground.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph inverting {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.0, height=0.5,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    vin   [pos="0.5,1.1!", shape=circle, width=0.75, label="Input\nVin",
+           fillcolor="#ffffff"];
+    s1    [pos="1.8,2.0!", width=1.55, label="Switch, blocks\nVin + |Vout|",
+           fillcolor="#fbe5d6"];
+    l     [pos="3.1,1.1!", width=0.9, label="L\ninductor", fillcolor="#dbe8f5"];
+    d     [pos="4.4,2.0!", width=1.6, label="Diode: conducts\nfrom output to node",
+           fillcolor="#fbe5d6"];
+    c     [pos="5.7,1.1!", width=0.9, label="C output\ncapacitor",
+           fillcolor="#dbe8f5"];
+    load  [pos="6.8,1.1!", width=0.8, label="Load", fillcolor="#ffffff"];
+
+    // Text labels.
+    node  [shape=plaintext, style="", fontsize=10, width=0.9, height=0.2];
+    sw_l  [pos="3.1,2.22!", label="switch node"];
+    out_l [pos="6.25,2.24!", width=1.2, label="Vout, negative"];
+    cm    [pos="5.98,1.45!", width=0.2, fontsize=13, label="−"];
+    cp    [pos="5.98,0.72!", width=0.2, fontsize=13, label="+"];
+    ex    [pos="3.6,-0.12!", width=6.0, fontsize=10,
+           label="Example: 57 V in and 48 V out (as −48 V) put 105 V across the switch while it is off"];
+
+    // Junctions and corners.
+    node  [shape=point, width=0.06, height=0.06, label="", style=filled,
+           fillcolor=black];
+    in_t  [pos="0.5,2.0!"];
+    sw    [pos="3.1,2.0!", width=0.09, height=0.09];
+    out   [pos="5.7,2.0!", width=0.09, height=0.09];
+    out_t [pos="6.8,2.0!"];
+    g0    [pos="0.5,0.2!"];
+    g1    [pos="3.1,0.2!", width=0.09, height=0.09];
+    g2    [pos="5.7,0.2!", width=0.09, height=0.09];
+    g3    [pos="6.8,0.2!"];
+
+    vin -- in_t;  in_t -- s1;  s1 -- sw;  sw -- d;  d -- out;
+    out -- out_t;  out_t -- load;  out -- c;  sw -- l;
+    vin -- g0;  l -- g1;  c -- g2;  load -- g3;
+    g0 -- g1 -- g2 -- g3;
+}

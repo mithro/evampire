@@ -1,5 +1,5 @@
-Controlling external power stages
-=================================
+External power stage control
+============================
 
 This page sets out what evampire provides to control converters whose gate
 drivers and power transistors are external parts, as in the first version
@@ -9,8 +9,8 @@ rates the control needs, how the converter sensing also serves power
 monitoring and limiting, the fault response times, and how the board starts
 before any software runs.
 
-What evampire provides
-----------------------
+Functions on evampire
+---------------------
 
 .. graphviz:: control-split.dot
    :name: fig-conv-control-split
@@ -60,8 +60,8 @@ parts bring them within evampire's input range: resistor dividers for
 voltages, and a sense resistor in the ground return (low-side sensing) or
 an external amplifier for currents.
 
-Software and hardware
----------------------
+Software and hardware division
+------------------------------
 
 Software on the processor makes every power decision once it is running
 (:ref:`requirements`). For the converters this means software:
@@ -158,9 +158,24 @@ often combined:
 * a counter clocked faster;
 * a *delay line*: a chain of gates whose taps divide one counter clock into
   smaller steps (a 125 MHz counter with an 8-tap delay line has 1 ns steps);
-* *dithering*: alternating between two neighbouring duty cycles from one
-  period to the next, so that the average falls between them, at the cost
-  of a small ripple at a lower frequency.
+* *dithering*: mixing two neighbouring duty cycles from one period to the
+  next, in a pattern whose average falls between them, at the cost of a
+  small ripple at a lower frequency.
+
+:numref:`fig-conv-pwm-resolution` shows the three on a 125 MHz counter.
+
+.. figure:: pwm-resolution.svg
+   :name: fig-conv-pwm-resolution
+   :alt: Timing diagram against a 125 MHz clock with 8 ns periods. An ideal
+         PWM edge at 37.4 ns; a counter alone can only end the pulse at
+         40 ns, 2.6 ns late; a counter with an 8-tap delay line, taps 1 ns
+         apart, ends it at 37 ns, 0.4 ns early; with dithering, two periods
+         ending at 40 ns and one at 32 ns repeat, giving 37.33 ns on
+         average, 0.07 ns early.
+   :align: center
+
+   Placing a PWM edge with a 125 MHz counter, a delay line and dithering
+   (illustrative edge position).
 
 In peak current-mode control the duty cycle comes from a comparator, not
 from a counter, so the voltage step is set by the reference DAC instead:
@@ -191,7 +206,8 @@ Control loop rates
 ------------------
 
 :numref:`tab-conv-loop-needs` states what each part of the control needs in
-rate and latency. The figures follow from the switching frequency and the
+rate and latency; :numref:`fig-conv-control-modes` shows the inner and
+outer loops. The figures follow from the switching frequency and the
 crossover frequencies on :doc:`control`, with an illustrative 250 kHz
 switching frequency.
 
@@ -282,8 +298,8 @@ simulation only [CONV-GF180-BUCK]_, and a three-level flying-capacitor
 buck converter has been designed in SkyWater 130 nm with open-source tools
 [CONV-MARIN2024]_ (Title).
 
-Sensing for control, protection and monitoring
-----------------------------------------------
+Sensing
+-------
 
 evampire measures the voltage and current of every power port and of the
 power bus, and enforces software-set current and power limits in hardware
@@ -310,7 +326,25 @@ circuits after them (:numref:`tab-conv-sense-uses`).
      - Fine; sets the budget margin
 
 Control and protection use comparators, each with its own threshold from a
-DAC; monitoring uses an ADC with averaging.
+DAC; monitoring uses an ADC with averaging. :numref:`fig-conv-sensing`
+shows the sense points of a power sourcing equipment output and what each
+one feeds.
+
+.. graphviz:: sensing.dot
+   :name: fig-conv-sensing
+   :caption: Sense points of a boost converter feeding a power sourcing
+             equipment port, and the circuits on evampire that use them.
+   :alt: Block diagram: the power path runs from the power bus through the
+         boost power stage, the output capacitor and the port switch to
+         Ethernet port B. Below it are four sense points: bus voltage and
+         current, an inductor current sense resistor, an output divider,
+         and a port current sense resistor after the output capacitor.
+         Inside evampire, the inductor current and output divider feed
+         comparators with DAC thresholds for peak current, current
+         limit and output voltage; the bus, output and port sense points feed an ADC with
+         averaging for monitoring at 1 kHz or less; the port sense resistor
+         also feeds a port short comparator that acts within microseconds.
+   :align: center
 
 Two differences limit the sharing:
 
@@ -341,7 +375,8 @@ Fault response times
 --------------------
 
 :numref:`tab-conv-fault-times` gives the response time each fault needs and
-where it comes from.
+where it comes from, and :numref:`fig-conv-pse-template` draws the times
+of a power sourcing equipment port in current limit.
 
 .. list-table:: Fault response times
    :name: tab-conv-fault-times
@@ -391,7 +426,17 @@ needed is
 where :math:`\Delta I_\text{margin}` is the margin between the current limit
 and the current at which the inductor saturates or a switch is damaged, in
 A, and :math:`V_L` the voltage across the inductor in V. A 1 A margin in the
-example allows 0.82 µs.
+example allows 0.82 µs. :numref:`fig-conv-runaway` plots the rise.
+
+.. figure:: runaway.svg
+   :name: fig-conv-runaway
+   :alt: Log-log graph of current rise against time: a straight line at
+         1.21 A/µs, for 57 V across 47 µH, through 0.12 A at 100 ns,
+         1.21 A at 1 µs and 12.1 A at 10 µs. Dashed lines mark a 1 A margin
+         reached at 0.82 µs.
+   :align: center
+
+   Inductor current rise of the buck example once nothing stops it.
 
 The USB Power Delivery specification gives no response time for the source's
 over-current protection; it requires that the protection does not trip
@@ -406,17 +451,33 @@ switch off within 0.9 µs of its short-circuit threshold, 205 mV to 245 mV
 across a 0.2 Ω sense resistor, about 1.0 A to 1.2 A [CONV-TPS23881]_
 (Section 7.5, tD_off_SEN and Vshort).
 
+.. figure:: pse-template.svg
+   :name: fig-conv-pse-template
+   :alt: Graph of current against time, both on log scales from 1 µs to
+         1 s and 0.5 A to 100 A. The upper bound for the port current is
+         50 A up to 10 µs and 1.75 A from 8.2 ms; a dashed line joins the
+         two points, whose exact shape is in the cited source. A shaded
+         band from 50 ms to 75 ms marks overload removal. Below, bars show
+         that in current limit a Type 3 port holds power for at least
+         10 ms and a Type 4 port for at least 6 ms, and both remove it by
+         75 ms.
+   :align: center
+
+   Current and time limits of a power sourcing equipment port in a fault,
+   from :numref:`tab-conv-fault-times`; the shape between 10 µs and 8.2 ms
+   is drawn as a straight line.
+
 .. _conv-start-up:
 
-Starting before software runs
+Start-up before software runs
 -----------------------------
 
 A board powered only from one port starts from nothing
 (:ref:`requirements`). Until software runs, the hardware alone must bring
 up the input converter and the supply that powers evampire.
 
-Power over Ethernet start
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Power over Ethernet start-up
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The steps before power is applied (detection, classification and the
 inrush period) are described on :doc:`../poe/index`; a built-in sequencer
@@ -484,6 +545,21 @@ For reference, in the TPS23753A [CONV-TPS23753A]_ (Section 8.4.6.1):
    winding takes over, and must not fall by more than the 3.3 V to 3.7 V
    hysteresis before then (Section 7.5, UVLO_1 and UVLO_H).
 
+:numref:`fig-conv-start-path` shows this start-up path and
+:numref:`fig-conv-start-timeline` the capacitor voltage through it.
+
+.. graphviz:: start-path.dot
+   :name: fig-conv-start-path
+   :caption: Start-up path of a powered-device input converter.
+   :alt: Block diagram: the 37 V to 57 V input feeds a current source of
+         2.5 mA to 6 mA, or a 28 kΩ resistor, which charges a hold
+         capacitor of at least 0.70 µF. The capacitor supplies a controller
+         with under-voltage lockout, which drives the gate of the input
+         converter power stage and turns the current source off at 8.65 V
+         to 9.3 V. An auxiliary winding or the converter output feeds back
+         to the hold capacitor and takes over after start-up.
+   :align: center
+
 The capacitor must hold the controller's load through the start-up:
 
 .. math::
@@ -524,6 +600,20 @@ and :math:`C_\text{hold} \ge 3.06 \times 10^{-3} \times 800 \times 10^{-6} / 3.5
      - Start-up resistor, when a resistor replaces the current source
      - Ω
 
+.. figure:: start-timeline.svg
+   :name: fig-conv-start-timeline
+   :alt: Hold capacitor voltage against time, schematic. During the inrush
+         period the converter is held off and the voltage is zero. The
+         current source then charges the capacitor up to the turn-on
+         threshold band of 8.65 V to 9.3 V. The source turns off and the
+         converter starts with an 800 µs soft start, while the voltage
+         droops by less than the 3.3 V to 3.7 V hysteresis. A winding or
+         the output then takes over and the voltage rises again.
+   :align: center
+
+   Hold capacitor voltage through a powered-device start-up, with the
+   TPS23753A thresholds (schematic, not to scale).
+
 A plain resistor in place of the current source keeps dissipating after
 start-up. Sized for 1 mA at 37 V into a 9 V capacitor,
 :math:`R_\text{start} = (37 - 9) / 1 \times 10^{-3} = 28` kΩ, and at 57 V it
@@ -546,8 +636,8 @@ For evampire the same structure needs, without software:
 Software then reads the measurements, may change the bus voltage, and
 negotiates more power where needed.
 
-USB start
-~~~~~~~~~
+USB start-up
+~~~~~~~~~~~~
 
 A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any USB Power
 Delivery negotiation, at the current its pull-up resistor advertises
@@ -581,6 +671,19 @@ separate converters, the bus follows VBUS, so the board supplies run from
 converter must first raise the bus from 5 V, so it too needs a default
 operating point and protection that work without software, or the board
 supplies take their start-up power from VBUS directly.
+:numref:`fig-conv-usb-start` shows both cases.
+
+.. graphviz:: usb-start.dot
+   :name: fig-conv-usb-start
+   :caption: Start-up power paths from vSafe5V for two arrangements.
+   :alt: Two diagrams. (a) Three separate converters: VBUS at vSafe5V,
+         4.75 V to 5.5 V, passes a VBUS switch onto the power bus at about
+         5 V, which feeds the board supplies and evampire. (b) High bus: the
+         USB converter, with a hardware default, raises the bus to 37 V to
+         57 V, which feeds the board supplies; a dashed path shows VBUS
+         feeding the supplies directly instead. Before negotiation the
+         source offers 2.375 W to 14.25 W.
+   :align: center
 
 Open questions
 --------------

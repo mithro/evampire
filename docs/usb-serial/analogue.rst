@@ -1,5 +1,5 @@
-The analogue front end on gf180mcu
-==================================
+Analogue front end
+==================
 
 This page lists the electrical requirements of a full-speed device's D+ and
 D− connection from the :std:`USB 2.0 specification <usb2>` [USBSER-USB2]_, and compares
@@ -21,8 +21,8 @@ port.
          reports whether VBUS is present.
    :align: center
 
-The full-speed driver
----------------------
+Full-speed driver
+-----------------
 
 :numref:`tab-usbser-driver` lists the driver requirements.
 
@@ -68,11 +68,25 @@ The driver also has to:
 * never drive both lines high at once (SE1);
 * change monotonically, with its edge rate controlled to limit radio
   emissions ([USBSER-USB2]_ section 7.1.1, section 7.1.2.1);
-* survive the stresses of :ref:`usbser-protection`.
+* survive the stresses described in
+  :ref:`Short-circuit and electrostatic discharge protection <usbser-protection>`.
 
-The specification shows the impedance made of a CMOS output stage with a
+The specification makes the impedance from a CMOS output stage with a
 lower impedance plus an external series resistor *RS*
-([USBSER-USB2]_ section 7.1.1.1, Figure 7‑3).
+([USBSER-USB2]_ section 7.1.1.1), as in :numref:`fig-usbser-driver`.
+
+.. graphviz:: analogue/driver.dot
+   :name: fig-usbser-driver
+   :caption: The full-speed driver of one line, with its series resistor
+             and the 50 pF test load.
+   :alt: Block diagram: inside evampire, the data and output enable drive
+         a pre-driver with edge-rate control, which drives an output stage
+         with a PMOS to 3.3 V and an NMOS to ground that turns both off for
+         tri-state. The output passes a series resistor RS, on chip or on
+         the board, to the D+ pin, which is loaded by a 50 pF test load to
+         ground. A bracket marks ZDRV, 28 Ω to 44 Ω, as the output stage
+         and RS together. D− has the same driver with opposite data.
+   :align: center
 
 A driver that is only a resistance charging the 50 pF test load gives an
 edge of:
@@ -100,14 +114,29 @@ edge of:
 
 At 28 Ω, :math:`t_{10\text{–}90} = 2.197 \times 28\ \Omega \times
 50\ \text{pF} = 3.08\ \text{ns}`, below the 4 ns minimum; at 44 Ω it is
-4.83 ns. A driver at the low end of the impedance range therefore needs its
-own slew-rate control, which the specification requires in any case.
+4.83 ns (:numref:`fig-usbser-driver-waveform`). A driver at the low end of
+the impedance range therefore needs its own slew-rate control, which the
+specification requires in any case.
 
-The receivers
--------------
+.. figure:: analogue/driver-waveform.svg
+   :name: fig-usbser-driver-waveform
+   :alt: Graph of voltage from 0 V to 3.6 V against time from 0 ns to
+         60 ns. D+ rises and D− falls as RC edges into 50 pF, for a 28 Ω
+         driver, 3.08 ns from 10 % to 90 %, and a 44 Ω driver, 4.83 ns.
+         They cross in the shaded crossover band of 1.3 V to 2.0 V. Shaded
+         bands mark VOH of 2.8 V to 3.6 V and VOL of at most 0.3 V. A note
+         gives the required 4 ns to 20 ns edge and the assumed 3.3 V swing.
+   :align: center
 
-A full-speed device has three receivers ([USBSER-USB2]_ section 7.1.4.1,
-Figure 7‑24):
+   Edges of a purely resistive driver into the 50 pF test load, against
+   the driver's voltage limits.
+
+Receivers
+---------
+
+A full-speed device has three receivers ([USBSER-USB2]_ section 7.1.4.1),
+shown in :numref:`fig-usbser-frontend`; :numref:`fig-usbser-receiver-levels`
+shows their input ranges:
 
 * A *differential receiver*, which decides J or K. It must resolve a
   difference of 200 mV (*VDI*) with both inputs anywhere from 0.8 V to
@@ -118,16 +147,29 @@ Figure 7‑24):
 * The SE0 decision needs a filter: both lines can be low together for up to
   14 ns during a normal transition (:doc:`timing`).
 
+.. figure:: analogue/receiver-levels.svg
+   :name: fig-usbser-receiver-levels
+   :alt: Input voltage from 0 V to 3.6 V. For the differential receiver, a
+         box from 0.8 V to 2.5 V marks the common-mode range VCM, within
+         which a 200 mV difference, VDI, must be resolved as J or K. For the
+         single-ended receivers, a box from 0.8 V to 2.0 V marks where the
+         switching threshold lies; above it is high, below it low, and both
+         lines low after a 14 ns to 82 ns filter is SE0.
+   :align: center
+
+   Input voltage ranges of the differential and single-ended receivers.
+
 Each line, without its pull-up or pull-down, must present more than
 300 kΩ (*ZINP*). An upstream port with a detachable cable may have at most
 100 pF on D+ or D−, of which up to 75 pF at the transceiver and connector,
 and D+ and D− must match within 10 % ([USBSER-USB2]_ section 7.1.6.1,
 Table 7‑7).
 
-The pull-up resistor
---------------------
+Pull-up resistor
+----------------
 
-The device announces itself with 1.5 kΩ ± 5 % from D+ to a supply of
+The device announces itself (:numref:`fig-usbser-connect`) with
+1.5 kΩ ± 5 % from D+ to a supply of
 3.0 V to 3.6 V (*RPU*, *VTERM*). It must be able to pull D+ from 0 V to
 2.0 V within 2.5 µs, and it must not supply current when VBUS is absent
 ([USBSER-USB2]_ section 7.1.5.1, Table 7‑7). With the host's 15 kΩ ± 5 %
@@ -180,11 +222,10 @@ happens when VBUS changes or when evampire itself supplies VBUS.
 
 .. _usbser-protection:
 
-Protection: short circuits and electrostatic discharge
-------------------------------------------------------
+Short-circuit and electrostatic discharge protection
+----------------------------------------------------
 
-USB 2.0 asks a transceiver to withstand ([USBSER-USB2]_ section 7.1.1,
-Figure 7‑2):
+USB 2.0 asks a transceiver to withstand ([USBSER-USB2]_ section 7.1.1):
 
 * a continuous short of D+ or D− to VBUS, ground, the other data line or the
   cable shield, for at least 24 hours, while transmitting half the time, at
@@ -201,9 +242,12 @@ analysis of such shorts for the CC pins in
 :ref:`CC pin protection <usbpd-cc-protection>` applies to the data pins in
 the same way.
 
-If the pad's output stage is supplied from 3.3 V, a short to 5.25 V
-forward-biases the diode from the pad to its supply. The current is then
-limited only by the series resistance:
+A short to VBUS loads the pad in three ways, depending on what the driver
+is doing at the time. With the driver off and the output stage supplied
+from 3.3 V, a short to 5.25 V forward-biases the diode from the pad to
+its supply (:numref:`fig-usbser-short`). If the series resistor *RS* sits
+outside the pad, between the connector and the pad diode, it alone limits
+the current:
 
 .. math::
 
@@ -229,14 +273,72 @@ limited only by the series resistance:
      - Diode forward voltage, 0.6 V (assumption)
      - V
    * - :math:`R_\text{S}`
-     - Total series resistance, 28 Ω to 44 Ω (*ZDRV*)
+     - Series resistor between the connector and the pad diode, at most
+       *ZDRV*
      - Ω
 
-This gives :math:`(5.25 - 3.3 - 0.6)\ \text{V} / 44\ \Omega = 31\ \text{mA}`
-to :math:`1.35\ \text{V} / 28\ \Omega = 48\ \text{mA}`, continuously for
-24 hours. The pad, its diode and the 3.3 V supply all have to accept this
-current, or the pad has to block it, for example with an output stage whose
-wells follow the higher of the pad and supply voltages.
+With all of *ZDRV* in *RS*, 28 Ω to 44 Ω, this gives
+:math:`(5.25 - 3.3 - 0.6)\ \text{V} / 44\ \Omega = 31\ \text{mA}` to
+:math:`1.35\ \text{V} / 28\ \Omega = 48\ \text{mA}`, continuously for
+24 hours. Any part of *ZDRV* that sits in the output stage makes *RS*
+smaller and the current larger. A resistor on chip between the pad diode
+and the output stage does not limit this current at all; only the
+resistance of the pad, its connection and the diode does.
+
+While the device transmits, which the requirement includes for half the
+time, the output stage is on and the current flows through *ZDRV*:
+
+.. math::
+
+   I_\text{H} = \frac{V_\text{BUS} - V_\text{DD}}{Z_\text{DRV}},
+   \qquad
+   I_\text{L} = \frac{V_\text{BUS}}{Z_\text{DRV}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`I_\text{H}`
+     - Current while driving high: through the PMOS into the 3.3 V supply
+     - mA
+   * - :math:`I_\text{L}`
+     - Current while driving low: through the NMOS to ground
+     - mA
+   * - :math:`Z_\text{DRV}`
+     - Driver output impedance with *RS*, 28 Ω to 44 Ω
+     - Ω
+
+Driving high gives :math:`1.95\ \text{V} / 44\ \Omega = 44\ \text{mA}` to
+:math:`1.95\ \text{V} / 28\ \Omega = 70\ \text{mA}`. Driving low gives
+:math:`5.25\ \text{V} / 44\ \Omega = 119\ \text{mA}` to
+:math:`5.25\ \text{V} / 28\ \Omega = 188\ \text{mA}`, and at 28 Ω the
+driver and *RS* together dissipate
+:math:`5.25^2 / 28 = 0.98\ \text{W}`. The output stage and *RS* therefore
+have to carry up to 188 mA, the largest of the three cases.
+
+.. graphviz:: analogue/short.dot
+   :name: fig-usbser-short
+   :caption: Current path of a short from VBUS to D+ into a pad supplied
+             from 3.3 V, with the driver off and RS outside the pad diode.
+   :alt: Diagram: VBUS at 5.25 V, shorted to D+, drives current through a
+         series resistor RS outside the chip to the pad on evampire, then
+         through the forward-biased pad diode into the 3.3 V pad supply.
+         The output stage, off, and the receivers also connect to the pad.
+         The current is (5.25 − 3.3 − 0.6) V divided by RS: 31 mA to
+         48 mA for RS of 28 Ω to 44 Ω.
+   :align: center
+
+The pad, its diode and the 3.3 V supply all have to accept the current
+with the driver off, or the pad has to block it. An output stage blocks it
+if the PMOS pull-up's n-well and its gate both follow the higher of the pad
+and supply voltages (:numref:`fig-usbser-custom-stage`). The gate needs its
+own tracking path, a pass gate that lifts it to the pad voltage, because
+the 3.3 V pre-driver cannot drive it above 3.3 V. This blocks the short
+only while the driver is off; while it transmits, the currents above
+apply.
 
 Electrostatic discharge reaches the connector pins from people and cables.
 The gf180mcu I/O library targets 2000 V human body model, 200 V machine
@@ -245,8 +347,8 @@ page). These are ratings for handling a chip; a connector pin of a finished
 product also faces the stronger system-level discharge test, which
 :ref:`the CC pin protection page <usbpd-esd>` compares for the CC pins.
 
-What the gf180mcu standard I/O cells provide
---------------------------------------------
+gf180mcu standard I/O cells
+---------------------------
 
 The ``gf180mcu_fd_io`` library has a bidirectional pad ``bi_t`` with 4, 8,
 12 or 16 mA drive and fast or slow slew, and a 24 mA version ``bi_24t``. It
@@ -288,7 +390,8 @@ pad ``asig_5p0`` with two protection diodes rated for 10 mA DC
        switch
    * - Short to 5.25 V for 24 hours
      - ``asig_5p0`` diodes: 10 mA DC
-     - 31 mA to 48 mA at 3.3 V DVDD (see above)
+     - 31 mA to 48 mA with the driver off; up to 188 mA while
+       transmitting (see above)
 
 The library's control pins forbid enabling input and output together on
 ``bi_t`` ([USBSER-GF180-IO]_, control pins page), which suits USB, where a
@@ -363,15 +466,17 @@ recommends 68 Ω
 series resistors and an external 1.5 kΩ pull-up driven from a chip output
 ([USBSER-TT04-USBCDC]_).
 
-Custom options
---------------
+Custom circuits
+---------------
 
 Where the standard cells fall short, the process allows custom circuits:
 
 * *A custom full-speed I/O cell.* An output stage of 6 V devices, sized for
   the 28 Ω to 44 Ω range with an on-chip polysilicon resistor or an
   external series resistor. A pre-driver shapes matched rise and fall
-  edges, and the wells are arranged to block a 5.25 V short.
+  edges, and the PMOS n-well and gate track the higher of the pad and
+  supply voltages, so that a 5.25 V short is blocked while the driver is
+  off.
 * *A custom differential receiver* on analogue pads, with single-ended
   comparators and the SE0 filter beside it.
 * *Custom transistors* drawn from the existing layers, as on
@@ -381,6 +486,23 @@ Where the standard cells fall short, the process allows custom circuits:
   clamps or as the input pair of a fast comparator.
 * *External parts* for the series resistors, the pull-up and the protection,
   in any combination with the on-chip blocks.
+
+:numref:`fig-usbser-custom-stage` shows such an output stage, which blocks a
+5.25 V short while the driver is off.
+
+.. graphviz:: analogue/custom-stage.dot
+   :name: fig-usbser-custom-stage
+   :caption: A custom output stage whose PMOS n-well and gate follow the
+             higher of the pad and supply voltages while the driver is off.
+   :alt: Schematic: a PMOS pull-up from the 3.3 V supply and an NMOS
+         pull-down to ground, both 6 V devices, drive the pad. A short can
+         bring VBUS at 5.25 V onto the pad. A well and gate tracking block,
+         connected to the supply and the pad, puts the PMOS n-well at the
+         higher of the two, and a pass gate lifts the off PMOS's gate to the
+         pad voltage, which the 3.3 V pre-driver cannot. With the n-well and gate fixed at 3.3 V,
+         the drain-to-well diode and the channel would conduct from the pad
+         into the supply.
+   :align: center
 
 Open questions
 --------------

@@ -1,5 +1,5 @@
-Transactions, enumeration and the serial port class
-===================================================
+Transactions and enumeration
+============================
 
 This page describes how the packets of :doc:`signalling` combine into
 transactions and transfers, how the host recognises and configures a newly
@@ -14,7 +14,8 @@ Transactions
 A *transaction* is one exchange of up to three packets: a token from the
 host, then a data packet from whichever side sends data, then a handshake
 from the side that received it ([USBSER-USB2]_ section 8.5).
-:numref:`tab-usbser-transactions` lists the three kinds a serial port uses.
+:numref:`tab-usbser-transactions` lists the three kinds a serial port uses,
+and :numref:`fig-usbser-transactions` draws them.
 
 .. list-table:: Transactions of a full-speed device ([USBSER-USB2]_
    section 8.4.6, section 8.5)
@@ -39,6 +40,20 @@ from the side that received it ([USBSER-USB2]_ section 8.5).
      - DATA0 or DATA1 from the device, or NAK or STALL in its place
      - ACK from the host
 
+.. graphviz:: transactions/transactions.dot
+   :name: fig-usbser-transactions
+   :caption: The packets of SETUP, OUT and IN transactions between the host
+             and the device.
+   :alt: Sequence diagram with host and device lanes. SETUP transaction:
+         the host sends a SETUP token and DATA0 with an 8-byte request; the
+         device always answers ACK. OUT transaction: the host sends an OUT
+         token and DATA0 or DATA1; the device answers ACK when it took the
+         data, NAK when it has no room yet, or STALL when the endpoint is
+         halted. IN transaction: the host sends an IN token; the device
+         answers DATA0 or DATA1, or NAK when no data is ready, or STALL;
+         after a data packet the host answers ACK.
+   :align: center
+
 The device's replies follow fixed rules ([USBSER-USB2]_ section 8.4.6):
 
 * To a SETUP token it must accept the following data packet and answer ACK.
@@ -61,6 +76,20 @@ Data packets alternate between DATA0 and DATA1 on each endpoint. The
 receiver compares the PID with the one it expects, so that a data packet
 resent after a lost ACK is recognised as a copy and not stored twice. A
 SETUP transaction resets the sequence to DATA0 ([USBSER-USB2]_ section 8.6).
+:numref:`fig-usbser-retry` shows a lost ACK and a packet with an error.
+
+.. graphviz:: transactions/retry.dot
+   :name: fig-usbser-retry
+   :caption: A lost ACK, recovered with the DATA0/DATA1 sequence bit, and a
+             packet with an error, which gets no reply.
+   :alt: Sequence diagram. The host sends an OUT token and DATA1; the
+         device, expecting DATA1, stores the data and now expects DATA0. Its
+         ACK is lost. The host repeats the OUT token and DATA1; the device
+         sees DATA1 again, recognises a copy, does not store it twice, and
+         answers ACK. Below, the host sends an IN token with a bad CRC; the
+         device sends nothing, the host counts an error and retries, and
+         after three errors in a row it gives up the transfer.
+   :align: center
 
 Transfer types and packet sizes
 -------------------------------
@@ -71,9 +100,9 @@ Transactions are grouped into *transfers* of one of four types
 * *Control* transfers on endpoint 0, which every device has. A control
   transfer is a SETUP transaction with a request, optional IN or OUT data
   transactions, and a final status transaction in the opposite direction
-  ([USBSER-USB2]_ section 8.5.3). The maximum data packet size on
-  endpoint 0 at full speed is 8, 16, 32 or 64 bytes
-  ([USBSER-USB2]_ section 5.5.3).
+  ([USBSER-USB2]_ section 8.5.3, :numref:`fig-usbser-control-transfer`). The
+  maximum data packet size on endpoint 0 at full speed is 8, 16, 32 or
+  64 bytes ([USBSER-USB2]_ section 5.5.3).
 * *Bulk* transfers, for data that may wait for free bus time. The maximum
   packet size at full speed is 8, 16, 32 or 64 bytes
   ([USBSER-USB2]_ section 5.8.3). With 64-byte packets a single device can
@@ -82,17 +111,49 @@ Transactions are grouped into *transfers* of one of four types
 * *Interrupt* transfers, polled by the host at an interval the device
   chooses.
 
+.. graphviz:: transactions/control-transfer.dot
+   :name: fig-usbser-control-transfer
+   :caption: The setup, data and status stages of a control transfer that
+             reads data.
+   :alt: Sequence diagram. Setup stage: the host sends SETUP and DATA0 with
+         the 8-byte request; the device answers ACK. Data stage: the host
+         sends IN, the device DATA1, the host ACK, repeated with DATA0 and
+         DATA1 alternating until all is sent. Status stage, in the opposite
+         direction: the host sends OUT with a zero-length DATA1 and the
+         device answers ACK. A request that writes data ends with an IN
+         status stage instead.
+   :align: center
+
 Frames
 ------
 
 The host divides time into 1 ms *frames*. It starts each one with a
-start-of-frame (SOF) token that carries an 11-bit frame number; the interval
-is 1.000 ms ± 500 ns ([USBSER-USB2]_ section 7.1.12, section 8.4.3,
+start-of-frame (SOF) token that carries an 11-bit frame number
+(:numref:`fig-usbser-frames`); the interval is 1.000 ms ± 500 ns
+([USBSER-USB2]_ section 7.1.12, section 8.4.3,
 Table 7‑9). A device does not reply to SOF. A full-speed device that has no
 use for timing may ignore the content, but the SOF traffic keeps it out of
 suspend ([USBSER-USB2]_ section 7.1.7.6). Because the frame interval comes
 from the host's accurate clock, a device can measure it to correct its own
 clock (see :doc:`timing`).
+
+.. wavedrom::
+   :caption: Frames of 1 ms, each started by a start-of-frame token, with
+             transactions in between (not to scale).
+   :name: fig-usbser-frames
+   :alt: Timing diagram: the bus carries an SOF token with frame number n,
+         an IN transaction and idle time, then an SOF with frame number
+         n+1, an OUT transaction and idle, then an SOF with frame number
+         n+2. A second row marks each frame as 1.000 ms ± 500 ns long.
+
+   {"signal": [
+     {"name": "bus", "wave": "5.32.5.32.5.32.",
+      "data": ["SOF n", "IN", "idle", "SOF n+1", "OUT", "idle", "SOF n+2",
+               "IN", "idle"]},
+     {"name": "frame", "wave": "4....4....4....",
+      "data": ["frame n: 1.000 ms ± 500 ns", "frame n+1", "frame n+2"]}
+   ],
+   "config": {"hscale": 1}}
 
 Enumeration
 -----------
@@ -118,19 +179,38 @@ section 9.2.6, section 7.1.7.3):
 6. The host selects the configuration with SET_CONFIGURATION
    ([USBSER-USB2]_ section 9.4.7). The device's other endpoints then work.
 
+:numref:`fig-usbser-enumeration` shows the sequence with its time limits.
+
+.. graphviz:: transactions/enumeration.dot
+   :name: fig-usbser-enumeration
+   :caption: Enumeration of a full-speed device, with the time limits of
+             each step (not to scale).
+   :alt: Sequence diagram with host and device lanes. VBUS becomes valid;
+         the device turns its D+ pull-up on within 100 ms (TSIGATT). The
+         host waits at least 100 ms (TATTDB), then sends a reset of SE0 for
+         at least 10 ms (TDRST) and waits a 10 ms recovery (TRSTRCY). It
+         asks for the device descriptor at address 0 and the device returns
+         the first bytes with the endpoint 0 packet size. The host sends
+         SET_ADDRESS, which completes within 50 ms, with the new address
+         used 2 ms later. The host reads the device, configuration and
+         string descriptors, each data packet within 500 ms, then sends
+         SET_CONFIGURATION, after which the other endpoints work.
+   :align: center
+
 A request without a data stage must complete within 50 ms. For a request
 that returns data, each data packet must follow within 500 ms
 ([USBSER-USB2]_ section 9.2.6.4). These limits are far longer than the
 packet-level deadlines of :doc:`timing`, so the request handling itself is
 ordinary software.
 
-Descriptors of a serial port
-----------------------------
+Serial port descriptors
+-----------------------
 
 A USB serial port uses the communications device class with the abstract
 control model subclass (CDC-ACM, see :doc:`what-it-is`).
 :numref:`tab-usbser-cdc` lists what the device reports in its
-configuration descriptor.
+configuration descriptor, and :numref:`fig-usbser-descriptors` shows how
+the descriptors nest.
 
 .. list-table:: Descriptors and endpoints of a CDC-ACM serial port
    :name: tab-usbser-cdc
@@ -161,6 +241,22 @@ configuration descriptor.
    * - Data endpoints
      - One bulk IN and one bulk OUT endpoint
      - [USBSER-CDC]_ section 3.4.2
+
+.. graphviz:: transactions/descriptors.dot
+   :name: fig-usbser-descriptors
+   :caption: The descriptors of a CDC-ACM serial port as a tree, with
+             endpoint 0 and the ACM requests it carries.
+   :alt: Tree: the device descriptor, class 02h, contains the configuration
+         descriptor. The configuration contains a communications interface,
+         class 02h, subclass 02h for the abstract control model and protocol
+         00h, with the Header, Call Management, Abstract Control Management
+         and Union functional descriptors and an interrupt IN endpoint for
+         notifications; and a data interface, class 0Ah, with a bulk IN
+         endpoint for data to the host and a bulk OUT endpoint for data from
+         the host. Beside the tree, endpoint 0, the control endpoint of every
+         device, carries SET_LINE_CODING, GET_LINE_CODING and
+         SET_CONTROL_LINE_STATE.
+   :align: center
 
 With endpoint 0, the device has four endpoints: control, interrupt IN, bulk
 IN and bulk OUT. Through endpoint 0 the host also sends three ACM requests

@@ -1,0 +1,68 @@
+// Connect detection on a full-speed link: the host's pull-down resistors
+// on D+ and D-, and the device's switched pull-up on D+.
+//
+// Fixed grid (positions in inches): D+ runs along y=2.4 and D- along
+// y=1.0; the host is on the left (x < 2.3), the cable in the middle and
+// the device on the right (x > 4.3).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph connect {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica", size="7.4,5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.2, height=0.45,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    host [pos="1.2,2.17!", width=2.1, height=4.6, label="Host (DFP)",
+          labelloc=t, style="rounded,dashed", fillcolor="none",
+          color="#555555", fontsize=12];
+    dev  [pos="5.75,2.17!", width=2.9, height=4.6, label="Device (evampire)",
+          labelloc=t, style="rounded,bold", fillcolor="none",
+          color="#1f4e79", fontcolor="#1f4e79", fontsize=12];
+
+    rpd_p [pos="1.4,1.85!", width=1.0, label="15 kΩ", fillcolor="#dbe8f5"];
+    rpd_n [pos="1.4,0.5!", width=1.0, label="15 kΩ", fillcolor="#dbe8f5"];
+    rpu   [pos="5.1,3.0!", width=1.3, label="1.5 kΩ ± 5 %", fillcolor="#e2f0d9"];
+    sw    [pos="5.1,3.55!", width=0.8, height=0.35, label="switch",
+           fillcolor="#e2f0d9"];
+    vbus  [pos="6.5,3.55!", width=1.0, height=0.45, label="VBUS\npresent",
+           fillcolor="#ffffff"];
+    trx   [pos="6.7,1.7!", width=0.95, height=1.2, label="driver\nand\nreceivers",
+           fillcolor="#fbe5d6"];
+
+    // Text labels.
+    node  [shape=plaintext, style="", fontsize=10, width=1.0, height=0.2];
+    vt_l  [pos="5.1,3.88!", width=1.6, label="3.0 V to 3.6 V supply"];
+    g1_l  [pos="1.4,1.32!", width=0.7, label="ground"];
+    g2_l  [pos="1.4,0.0!", width=0.7, label="ground"];
+    dp_l  [pos="3.3,2.55!", width=0.5, fontsize=11, label="D+"];
+    dn_l  [pos="3.3,1.15!", width=0.5, fontsize=11, label="D−"];
+    cab_l [pos="3.3,0.55!", width=1.4, label="cable"];
+    st_l  [pos="3.3,3.0!", width=2.0, height=0.5, fontcolor="#1f4e79",
+           label="D+ near 0 V with no device;\nat least 2.7 V (idle J) once\nthe pull-up is on"];
+    ls_l  [pos="5.6,0.45!", width=2.4, height=0.35,
+           label="a low-speed device puts the\npull-up on D− instead"];
+
+    // Junctions and corners.
+    node  [shape=point, width=0.07, height=0.07, label="", style=filled,
+           fillcolor=black];
+    jp_h  [pos="1.4,2.4!"];
+    jn_h  [pos="1.4,1.0!"];
+    jp_d  [pos="5.1,2.4!"];
+    gp    [pos="1.4,1.45!", width=0.01];
+    gn    [pos="1.4,0.1!", width=0.01];
+    hp    [pos="0.4,2.4!", width=0.01];
+    hn    [pos="0.4,1.0!", width=0.01];
+    tp    [pos="6.22,2.4!", width=0.01];
+    tn    [pos="6.22,1.0!", width=0.01];
+    vt    [pos="5.1,3.75!", width=0.01];
+
+    hp -- jp_h -- jp_d -- tp [penwidth=2.2];
+    hn -- jn_h -- tn [penwidth=2.2, style=dashed];
+    jp_h -- rpd_p -- gp;
+    jn_h -- rpd_n -- gn;
+    jp_d -- rpu -- sw -- vt;
+    vbus -- sw [style=dashed, label=""];
+}

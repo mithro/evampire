@@ -1,5 +1,5 @@
-The converters in evampire and how to arrange them
-==================================================
+Converter arrangement
+=====================
 
 This page sets out the voltages and currents that evampire's three converter
 functions must handle in each operating mode (:ref:`power-modes`), where
@@ -140,10 +140,11 @@ Source: :pd:`Table 3.1`, :pd:`Table 4.2`, :pd:`Table 4.7` and
 be 5 % above its nominal voltage and VBUS may rise another 0.5 V during
 changes, giving 21.5 V and 50.9 V.
 
-Where the ranges overlap
-------------------------
+Overlapping voltage ranges
+--------------------------
 
-:numref:`tab-conv-overlap` places the ranges side by side.
+:numref:`tab-conv-overlap` lists the ranges and :numref:`fig-conv-ranges`
+draws them on one voltage axis.
 
 .. list-table:: Voltage ranges at each kind of port
    :name: tab-conv-overlap
@@ -175,7 +176,22 @@ Where the ranges overlap
      - 15
      - 50.9
 
-Four overlaps follow from it:
+.. figure:: ranges.svg
+   :name: fig-conv-ranges
+   :alt: Horizontal bars on a 0 V to 60 V axis: powered device input 37 V
+         to 57 V; power sourcing equipment output 44 V to 57 V for Type 1,
+         50 V to 57 V for Types 2 and 3, and 52 V to 57 V for Type 4; USB
+         standard power range 5 V to 21.5 V; USB extended power range 48 V
+         fixed supply 45.6 V to 50.9 V; USB extended power range adjustable
+         15 V to 50.9 V. A grey band from 44 V to 57 V marks the shared
+         band. Circled numbers 1 to 4 mark the four overlaps listed in the
+         text.
+   :align: center
+
+   Voltage ranges at each kind of port, with the four overlaps numbered as
+   in the list below.
+
+Four overlaps follow from them:
 
 #. The powered device input and every power sourcing equipment output share
    the band from 44 V (Type 1) or 52 V (Type 4) up to 57 V. An input above
@@ -195,8 +211,8 @@ A converter that goes from the Power over Ethernet input to a 48 V USB
 output has to step up at some inputs and down at others
 (:numref:`tab-conv-four-switch-modes`).
 
-Ways of arranging the converters
---------------------------------
+Arrangements
+------------
 
 Three separate converters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -206,7 +222,19 @@ isolated flyback) from the Power over Ethernet input to the bus; a
 four-switch buck-boost from the bus to the USB port; a boost from the bus to
 the power sourcing equipment port. When the USB port is a sink, a switch
 connects VBUS to the bus, so the bus then follows the negotiated USB
-voltage.
+voltage (:numref:`fig-conv-separate`).
+
+.. graphviz:: separate.dot
+   :name: fig-conv-separate
+   :caption: Three separate converters around a power bus.
+   :alt: Block diagram: Ethernet port A feeds an input converter, a buck or
+         flyback, which feeds the power bus, whose voltage is open. The bus
+         feeds the board supplies, a boost converter to Ethernet port B's
+         power sourcing equipment switch, and a four-switch buck-boost to
+         the USB Type-C port of 5 V to 48 V. A dashed path from the USB port
+         through a VBUS switch, on when the USB port is a sink, feeds the
+         bus.
+   :align: center
 
 * Each converter is designed for one job and one direction.
 * "Ethernet in, USB out" passes through two converters (input, then USB),
@@ -255,8 +283,8 @@ LM5177 is a bidirectional four-switch controller from 3.5 V to 60 V that
 lists Power over Ethernet routers among its applications
 [CONV-LM5177]_ (Features, Applications).
 
-A power bus near the Power over Ethernet voltage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+High-voltage power bus
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. graphviz:: high-bus.dot
    :name: fig-conv-high-bus
@@ -291,8 +319,8 @@ The bus can be chosen so that some conversions disappear
 
 .. _conv-pass-through:
 
-Passing Power over Ethernet through
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Power over Ethernet pass-through
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A switch from the powered device input to the power sourcing equipment
 output loses only its resistance: an illustrative 0.1 Ω switch at the Type 4
@@ -326,6 +354,21 @@ input of the same type, for an illustrative 0.2 V drop.
      - 52
      - 52.2
      - 41.2
+
+:numref:`fig-conv-pass-through` shows, for each type, the part of the
+input range in which a pass-through meets the output window.
+
+.. figure:: pass-through.svg
+   :name: fig-conv-pass-through
+   :alt: Horizontal bars of powered device input voltage for each output
+         type. Type 1: regulated path from 37 V to 44.2 V, pass-through from
+         44.2 V to 57 V. Types 2 and 3: regulated from 42.5 V to 50.2 V,
+         pass-through above 50.2 V. Type 4: regulated from 41.2 V to
+         52.2 V, pass-through above 52.2 V.
+   :align: center
+
+   Input voltages at which a pass-through meets each output type, for a
+   0.2 V drop.
 
 The input can be anywhere in its range, so a pass-through meets the output
 window only when the measured input is high enough. evampire measures the
@@ -528,10 +571,33 @@ switched-capacitor stage and a 10 MHz buck stage in 180 nm CMOS reaches 81 %
 peak efficiency from 5 V to 1 V [CONV-PILAWA2012]_ (Abstract), and a charge
 pump in nanometre-scale bulk CMOS reaches 36 V [CONV-ISMAIL2017]_ (Title).
 
+:numref:`fig-conv-sc-stage` shows one way to make the 4:1 division.
+
+.. graphviz:: sc-stage.dot
+   :name: fig-conv-sc-stage
+   :caption: A 4:1 switched-capacitor stage in series-parallel form; the
+             switches are not drawn.
+   :alt: Two phases. In phase 1 four capacitors in series sit across the
+         37 V to 57 V input, each charging to Vin/4. In phase 2 the same
+         four capacitors are in parallel across the output, which is Vin/4,
+         9.25 V to 14.25 V. Switches change the connections every period,
+         and a regulator follows for a fixed output.
+   :align: center
+
 A single-inductor multiple-output converter shares one inductor between
 outputs by switching it to each in turn. Whether the outputs' interaction
 is acceptable for two USB Power Delivery ports, each with its own voltage
-tolerance, is an open question.
+tolerance, is an open question. :numref:`fig-conv-simo` shows the idea.
+
+.. graphviz:: simo.dot
+   :name: fig-conv-simo
+   :caption: A single-inductor converter with two outputs.
+   :alt: Schematic: the input feeds a half bridge of S1 and S2, whose node
+         drives the inductor L. The far end of the inductor connects through
+         output switch A to output 1 and through output switch B to output
+         2. The inductor's energy goes to output 1 in one part of the
+         period and to output 2 in another.
+   :align: center
 
 Open questions
 --------------

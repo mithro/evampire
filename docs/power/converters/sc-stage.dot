@@ -1,0 +1,51 @@
+// A 4:1 switched-capacitor stage in series-parallel form: in one phase the
+// four capacitors are charged in series across the input, in the other
+// they are connected in parallel across the output.
+//
+// Fixed grid (positions in inches): phase 1 on the left (x < 3), phase 2
+// on the right (x > 4); capacitors stacked vertically.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph sc_stage {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+           fontname="Helvetica", fontsize=11, width=0.9, height=0.4,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    t1 [pos="1.6,3.75!", shape=plaintext, style="", width=3.0, height=0.2,
+        fontsize=12, label="Phase 1: in series across the input"];
+    t2 [pos="5.6,3.75!", shape=plaintext, style="", width=3.4, height=0.2,
+        fontsize=12, label="Phase 2: in parallel across the output"];
+
+    vin [pos="0.5,1.8!", shape=circle, width=0.85, label="Vin\n37–57 V", fillcolor="#ffffff"];
+    a1 [pos="2.0,3.0!", label="C, Vin/4"];
+    a2 [pos="2.0,2.3!", label="C, Vin/4"];
+    a3 [pos="2.0,1.6!", label="C, Vin/4"];
+    a4 [pos="2.0,0.9!", label="C, Vin/4"];
+
+    b1 [pos="4.2,1.8!", width=0.55, label="C"];
+    b2 [pos="4.95,1.8!", width=0.55, label="C"];
+    b3 [pos="5.7,1.8!", width=0.55, label="C"];
+    b4 [pos="6.45,1.8!", width=0.55, label="C"];
+    out [pos="7.45,1.8!", shape=box, width=0.9, height=0.85,
+         label="Vin/4:\n9.25 V to\n14.25 V", fillcolor="#e2f0d9"];
+
+    note [pos="3.9,0.15!", shape=plaintext, style="", width=7.0, height=0.2,
+          fontsize=10, label="switches (not drawn) change the connections every period; a regulator follows for a fixed output"];
+
+    node [shape=point, width=0.01, height=0.01, label=""];
+    k0 [pos="0.5,3.4!"]; k1 [pos="2.0,3.4!"];
+    k2 [pos="2.0,0.5!"]; k3 [pos="0.5,0.5!"];
+    t_ [pos="4.2,2.4!"]; tb [pos="7.45,2.4!"];
+    u_ [pos="4.2,1.2!"]; ub [pos="7.45,1.2!"];
+    p2 [pos="4.95,2.4!"]; p3 [pos="5.7,2.4!"]; p4 [pos="6.45,2.4!"];
+    q2 [pos="4.95,1.2!"]; q3 [pos="5.7,1.2!"]; q4 [pos="6.45,1.2!"];
+
+    vin -- k0 -- k1 -- a1 -- a2 -- a3 -- a4 -- k2 -- k3 -- vin;
+    t_ -- p2 -- p3 -- p4 -- tb;  u_ -- q2 -- q3 -- q4 -- ub;
+    t_ -- b1 -- u_;  p2 -- b2 -- q2;  p3 -- b3 -- q3;  p4 -- b4 -- q4;
+    tb -- out;  out -- ub;
+}

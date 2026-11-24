@@ -1,5 +1,5 @@
-Controlling a converter
-=======================
+Converter control
+=================
 
 This page explains how a converter's switches are timed so that its output
 stays at the set voltage or current, and the circuits around the power
@@ -19,12 +19,44 @@ by turning the switch on and ends the on time when a ramp crosses a control
 voltage; a higher control voltage gives a longer on time. A digital
 controller does the same with a counter that restarts every period and a
 compare register that ends the on time (:doc:`first-version` works out the
-timing resolution this needs).
+timing resolution this needs). :numref:`fig-conv-pwm` shows both.
+
+.. figure:: pwm.svg
+   :name: fig-conv-pwm
+   :alt: Two timing diagrams over three switching periods. (a) A sawtooth
+         ramp rises through each period and restarts; two dashed control
+         voltages, low and high, cross it early and late. The gate for the
+         low control voltage is on for a short time from the start of each
+         period, the gate for the high control voltage for a long time.
+         (b) A counter steps from 0 to 7 in each period and restarts; the
+         gate is on while the counter is below a compare register value
+         of 3.
+   :align: center
+
+   Pulse-width modulation with an analogue ramp and comparator, and with a
+   digital counter and compare register (schematic).
 
 Voltage-mode and current-mode control
 -------------------------------------
 
-Two ways of choosing the duty cycle are in common use.
+Two ways of choosing the duty cycle are in common use
+(:numref:`fig-conv-control-modes`).
+
+.. graphviz:: control-modes.dot
+   :name: fig-conv-control-modes
+   :caption: Voltage-mode and peak current-mode control loops.
+   :alt: Two block diagrams. (a) Voltage mode: a reference and the output
+         voltage, scaled by a divider, feed an error amplifier; its output,
+         the control voltage, goes to a PWM comparator with a sawtooth
+         ramp; the PWM drives a gate driver and the power stage, whose
+         output returns through the divider: one loop. (b) Peak current
+         mode: the error amplifier sets a current level for a current
+         comparator, which also takes slope compensation and the inductor
+         current from a sense resistor; the comparator resets a latch that
+         a clock sets, and the latch drives the power stage. The sense path
+         forms an inner current loop every period, and the divider path an
+         outer voltage loop.
+   :align: center
 
 Voltage-mode control
    An *error amplifier* compares the output voltage, scaled down by a
@@ -51,7 +83,23 @@ compensation*, prevents it; the added slope must be at least half the
 inductor current's down-slope [CONV-SLUA101]_ (Sections 2.1 to 2.3,
 Equations 3 and 4) [CONV-LM5122]_ (Section 7.3.4). The boost duty cycles in
 :numref:`tab-conv-boost-duty` are mostly above 0.5, so a peak current-mode
-high-voltage converter needs it.
+high-voltage converter needs it. :numref:`fig-conv-subharmonic` shows a
+disturbance growing without the ramp and decaying with it.
+
+.. figure:: subharmonic.svg
+   :name: fig-conv-subharmonic
+   :alt: Two traces of inductor current over six switching periods at a
+         duty cycle of 0.6. (a) Without slope compensation, the current
+         rises to a fixed turn-off level each period; a small disturbance
+         alternates in sign and grows, giving long and short pulses
+         compared with the dashed steady state. (b) With a compensation
+         ramp of half the down-slope, the turn-off level falls during each
+         period, and the disturbed current returns to the steady state
+         within a period or two.
+   :align: center
+
+   Peak current-mode control at a duty cycle of 0.6, without and with
+   slope compensation (schematic units).
 
 Other schemes exist. *Average current-mode control* regulates the average
 rather than the peak inductor current, as in the TPS55289
@@ -74,14 +122,28 @@ Pulse-frequency modulation
    pulse-frequency mode at light load [CONV-LM5177]_ (Features)
    [CONV-TPS55289]_ (Features).
 
+:numref:`fig-conv-hysteretic` shows both.
+
+.. figure:: hysteretic.svg
+   :name: fig-conv-hysteretic
+   :alt: Two timing diagrams. (a) Hysteretic control: the output voltage
+         rises to an upper threshold while the switch is on and falls to a
+         lower threshold while it is off; at light load it falls slowly and
+         the switch turns on rarely, at heavy load it falls fast and the
+         switch turns on often. (b) Pulse-frequency modulation: bursts of
+         three fixed pulses separated by long gaps with no switching.
+   :align: center
+
+   Hysteretic control and pulse-frequency modulation (schematic).
+
 A changing frequency spreads switching noise across a band that is harder
 to filter. That is
 why fixed-frequency PWM is the usual choice at medium and high load. For
 evampire this is a trade-off to measure, not a fixed rule; the open
 questions on :doc:`arrangement` list it.
 
-The feedback loop and its compensation
---------------------------------------
+Feedback loop compensation
+--------------------------
 
 The output voltage is held by :wikipedia:`negative feedback
 <Negative_feedback>`: the controller measures the output, compares it with
@@ -101,19 +163,34 @@ Crossover frequency
 Phase margin
    How far the loop is from oscillating at the crossover frequency
    (see :wikipedia:`phase margin <Phase_margin>`), read from a
-   :wikipedia:`Bode plot <Bode_plot>`.
+   :wikipedia:`Bode plot <Bode_plot>` such as :numref:`fig-conv-bode`.
 
 The crossover frequency must be well below the switching frequency, because
 the duty cycle changes only once per period. The LM5122 data sheet places
 it between one twentieth and one fifth of the switching frequency
-[CONV-LM5122]_ (Section 8.1.1).
+[CONV-LM5122]_ (Section 8.1.1), 12.5 kHz to 50 kHz at 250 kHz.
 
-The boost converter's wrong-way response
-----------------------------------------
+.. figure:: bode.svg
+   :name: fig-conv-bode
+   :alt: Bode plot from 100 Hz to 1 MHz. The loop gain falls at 20 dB per
+         decade from about 50 dB at 100 Hz and crosses 0 dB at 25 kHz,
+         inside a shaded band from 12.5 kHz to 50 kHz, one twentieth to one
+         fifth of the 250 kHz switching frequency. The phase starts at −90°
+         and falls towards −180°; at the crossover it is −125°, a phase
+         margin of 55° above −180°.
+   :align: center
+
+   Loop gain and phase of an illustrative compensated loop with a 25 kHz
+   crossover and a 55° phase margin; not a design of evampire's
+   converters.
+
+Right-half-plane zero of the boost converter
+--------------------------------------------
 
 When a boost converter's duty cycle increases, S2 conducts for less of each
-period, so less current reaches the output and the output first falls. In
-control terms this is a *right-half-plane zero*, at
+period, so less current reaches the output and the output first falls
+(:numref:`fig-conv-rhp-step`). In control terms this is a *right-half-plane
+zero*, at
 
 .. math::
 
@@ -165,6 +242,32 @@ the 250 kHz switching frequency. The high-voltage converter therefore
 corrects its output more slowly than a buck converter switching at the same
 frequency.
 
+:numref:`fig-conv-rhp-freq` shows how the zero moves down as the duty
+cycle rises, for the same load and inductor.
+
+.. figure:: rhp-freq.svg
+   :name: fig-conv-rhp-freq
+   :alt: Graph of the right-half-plane zero frequency, log scale from
+         1 kHz to 200 kHz, against boost duty cycle from 0 to 0.95. It falls
+         from about 155 kHz at D = 0 to 21.2 kHz at D = 0.630 and below
+         2 kHz near D = 0.9. A shaded band marks the 4 kHz to 5 kHz
+         crossover for D = 0.630.
+   :align: center
+
+   Right-half-plane zero of the boost example against duty cycle, with
+   the load and inductor held at 97.2 Ω and 100 µH.
+
+.. figure:: rhp-step.svg
+   :name: fig-conv-rhp-step
+   :alt: Three traces against time. The boost duty cycle steps up at time
+         t0. The inductor current then rises gradually towards a new level.
+         The output voltage first dips below its starting value and then
+         rises as the inductor current grows.
+   :align: center
+
+   Response of a boost converter to a step increase of duty cycle
+   (schematic, with the dip enlarged).
+
 .. _conv-soft-start:
 
 Soft start
@@ -173,12 +276,24 @@ Soft start
 At turn-on the output capacitor is empty. If the controller aimed straight
 at the final voltage, the inductor current would rise to the current limit
 and the output could overshoot. A *soft start* raises the reference
-gradually over a set time so that the output follows it. The TPS23753A,
-for example, has a soft-start period of 400 µs to 800 µs
-[CONV-TPS23753A]_ (Section 7.5), and the LM5177 sets it with a capacitor
-[CONV-LM5177]_ (Section 8.2.2.9). Soft start also limits the current
-drawn from the input during start-up, which matters on a Power over
-Ethernet input with its inrush limit (:doc:`../poe/index`).
+gradually over a set time so that the output follows it. The TPS23753A, for
+example, has a soft-start period of 400 µs to 800 µs [CONV-TPS23753A]_
+(Section 7.5), and the LM5177 sets it with a capacitor [CONV-LM5177]_
+(Section 8.2.2.9). Soft start also limits the current drawn from the input
+during start-up, which matters on a Power over Ethernet input with its
+inrush limit (:doc:`../poe/index`). :numref:`fig-conv-soft-start` compares a
+start without and with soft start.
+
+.. figure:: soft-start.svg
+   :name: fig-conv-soft-start
+   :alt: Two pairs of traces. Without soft start the inductor current runs
+         at the current limit until the output is charged, and the output
+         voltage overshoots its final value and rings. With soft start the
+         output voltage rises along a ramp to its final value and the
+         inductor current stays below the limit.
+   :align: center
+
+   Start-up without and with soft start (schematic).
 
 .. _conv-protection:
 
@@ -194,6 +309,18 @@ switching for a while and then retry, called *hiccup* mode: the LM5176,
 LM5177 and TPS55289 all offer it [CONV-LM5176]_ (Features)
 [CONV-LM5177]_ (Features) [CONV-TPS55289]_ (Features). The response times
 these protections need for evampire are worked out on :doc:`first-version`.
+:numref:`fig-conv-current-limit` shows both behaviours.
+
+.. figure:: current-limit.svg
+   :name: fig-conv-current-limit
+   :alt: Two timing diagrams. (a) Cycle-by-cycle limit: the inductor
+         current ramps up and down; during an overload its rise is steeper
+         and each on time ends when the current reaches the dashed limit.
+         (b) Hiccup: short bursts of switching separated by long off
+         intervals, each burst a retry.
+   :align: center
+
+   Cycle-by-cycle current limit and hiccup mode (schematic).
 
 .. _conv-dead-time:
 
@@ -204,15 +331,29 @@ In a synchronous converter the two switches of a half bridge must never be
 on together, or they short the input to ground (*shoot-through*). A
 transistor takes a few nanoseconds to turn off, so the controller leaves a
 gap, the :wikipedia:`dead time <Dead_time>`, between one switch turning off
-and the other turning on. During the gap the inductor current flows through
-the off switch's body diode, which has a larger voltage drop, so the gap
-should be as short as is safe.
+and the other turning on (:numref:`fig-conv-dead-time`). During the gap the
+inductor current flows through the off switch's body diode, which has a
+larger voltage drop, so the gap should be as short as is safe.
 
 For reference, the LM5176 has a fixed 45 ns
 dead time [CONV-LM5176]_ (Section 6.5, tDT1 and tDT2), and the LM5177
 measures about 20 ns to 23 ns with a 3.3 nF load [CONV-LM5177]_ (Section
 5.5). The LM5122 adapts the dead time to the measured switching
 [CONV-LM5122]_ (Features).
+
+.. figure:: dead-time.svg
+   :name: fig-conv-dead-time
+   :alt: Timing diagram: the high-side gate turns off, and after a shaded
+         gap the low-side gate turns on. The switch node falls from Vin
+         when the high-side switch turns off, goes one diode drop below
+         ground while the low-side switch's body diode carries the inductor
+         current during the gap, and returns to ground when the low-side
+         switch turns on. A note says that both gates high together would
+         short the input to ground.
+   :align: center
+
+   Gate signals and switch node of a buck half bridge around one dead
+   time (schematic).
 
 .. _conv-gate-drive:
 
@@ -232,8 +373,25 @@ supply. A capacitor sits between the switch node and the high-side driver's
 supply pin, and a diode charges it from the low-side supply whenever the
 switch node is at ground. When the switch node rises, the capacitor rises
 with it and powers the driver, so the driver only ever sees the gate drive
-voltage across itself [CONV-SLUA618]_ (Section 5.2.2). The capacitor must
-supply the gate charge without drooping too far
+voltage across itself [CONV-SLUA618]_ (Section 5.2.2).
+:numref:`fig-conv-bootstrap` shows the circuit.
+
+.. graphviz:: bootstrap.dot
+   :name: fig-conv-bootstrap
+   :caption: High-side gate drive with a bootstrap capacitor and a level
+             shifter, on a Power over Ethernet input.
+   :alt: Schematic: a 5 V supply charges the bootstrap capacitor Cboot
+         through a diode; Cboot sits between the BOOT node, up to 57 V plus
+         the gate drive voltage, and the switch node SW, which swings
+         between 0 V and 57 V. The high-side driver takes its supply from
+         BOOT and its reference from SW, and drives the gate of S1, which
+         connects Vin to SW. S2 connects SW to ground and the inductor L connects
+         SW to the output. Ground-referenced PWM logic drives the high-side
+         driver through a level shifter. Cboot is at least 22 nF for 10 nC
+         plus 1 nC at 0.5 V droop.
+   :align: center
+
+The capacitor must supply the gate charge without drooping too far
 [CONV-SLUA618]_ (Section 5.2.2.4, Equation 30):
 
 .. math::
@@ -292,6 +450,21 @@ The switching frequency trades size against loss:
   the switching frequency;
 * the timing resolution needed for a given duty-cycle step gets finer
   (:doc:`first-version`).
+
+:numref:`fig-conv-fsw-tradeoff` plots the first two for the buck example.
+
+.. figure:: fsw-tradeoff.svg
+   :name: fig-conv-fsw-tradeoff
+   :alt: Log-log graph against switching frequency from 100 kHz to beyond
+         2.2 MHz. The inductance for 0.766 A ripple in the buck example
+         falls as one over the frequency: 117.5 µH at 100 kHz, 47 µH at
+         250 kHz, 19.6 µH at 600 kHz and 5.3 µH at 2.2 MHz. On a second
+         axis, the switching loss rises in proportion to the frequency
+         through 0.51 W at 250 kHz.
+   :align: center
+
+   Inductance and switching loss of the buck worked example against
+   switching frequency.
 
 For reference, the controllers in :numref:`tab-conv-four-switch-parts` run
 between 100 kHz and 2.2 MHz. Several allow the frequency to be spread over
@@ -359,7 +532,7 @@ with the symbols in :numref:`tab-conv-sym-loss`.
 
 For the buck worked example (48 V to 12 V, 2.125 A, 250 kHz) with
 illustrative part values, the switching loss with 40 ns of rise plus fall
-time is
+time (:numref:`fig-conv-transition`) is
 
 .. math::
 
@@ -372,6 +545,19 @@ and the gate loss for a 10 nC gate at 5 V is
 (:doc:`buck`). These are illustrations of the method; the losses of
 evampire's converters depend on parts and frequencies that are open
 choices.
+
+.. figure:: transition.svg
+   :name: fig-conv-transition
+   :alt: Schematic of a hard-switched transition: while the switch turns on
+         over the rise time, its current rises from 0 to 2.125 A as its
+         voltage falls from 48 V to 0; at turn-off the reverse happens over
+         the fall time. Shaded triangles mark the energy lost in each
+         overlap. The result is ½ × 48 V × 2.125 A × 40 ns × 250 kHz =
+         0.51 W.
+   :align: center
+
+   Switch voltage and current during the transitions of the buck
+   example (schematic).
 
 Two techniques remove most of the switching loss. A *resonant* or
 *soft-switched* converter shapes the current or voltage with an added
