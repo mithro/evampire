@@ -79,7 +79,19 @@ the port must then offer the smaller of its Port Present PDP and what the
 sink can take (:pd:`Section 3.2.3`, item 5). It must also provide at least
 its *Port Guaranteed PDP* when a sink asks for it this way, and while a
 contract for the Port Guaranteed PDP is in place it must not reduce its
-offer (:pd:`Section 7.26.2.3`).
+offer (:pd:`Section 7.26.2.3`). :numref:`fig-usbpd-pdp-nesting` shows how
+the powers relate.
+
+.. figure:: pdp-nesting.svg
+   :name: fig-usbpd-pdp-nesting
+   :alt: Three bars from a common start, schematic: Port Maximum PDP, the
+         most the port will ever provide, is the longest; Port Present PDP,
+         what it can provide now, is shorter; the present offer, the power
+         in Source_Capabilities, is shorter again. A dashed line marks the
+         Port Guaranteed PDP, which the port provides on request.
+
+   The powers that describe a Managed Capability Port, schematic and not to
+   scale.
 
 Lowering an offer
 ^^^^^^^^^^^^^^^^^
@@ -163,7 +175,42 @@ its maximum or the sink's need within 3 s of such a request
 When a device is unplugged, the source sees the detach on CC and removes
 VBUS, reaching vSafe0V within *tSafe0V* (650 ms) (:pd:`Section 4.1.5.5`).
 Its share is free once VBUS is off. The software can then raise the offer
-on the other port as above.
+on the other port as above. :numref:`fig-usbpd-raise-offer` shows both
+cases.
+
+.. wavedrom::
+   :caption: Raising an offer after a Capability Mismatch, and freeing a
+             port's share when its device is unplugged, schematic and not to
+             scale; the break marks a wait.
+   :name: fig-usbpd-raise-offer
+   :alt: Timing diagram in two parts. Raising: the sink sends a Request with
+         Capability Mismatch set; the source sends a larger
+         Source_Capabilities, and Request, Accept and PS_RDY follow, within
+         3 s in a group of shared ports. Unplugging: port B's CC goes open
+         when its device is unplugged; port B's VBUS falls to vSafe0V within
+         tSafe0V, 650 ms; port A's offer can then be raised.
+
+   {"signal": [
+     ["raise",
+      {"name": "messages", "wave": "=.....z|.=.....=..=..=..z...",
+       "data": ["Request, Capability Mismatch", "Source_Capabilities",
+                "Request", "Accept", "PS_RDY"]},
+      {"name": "limit", "wave": "x.....=................x....",
+       "data": ["within 3 s in a group of shared ports"]}
+     ],
+     {},
+     ["unplug",
+      {"name": "port B CC", "wave": "=..=........................",
+       "data": ["Rd", "open: device unplugged"]},
+      {"name": "port B VBUS", "wave": "1..=......0.................",
+       "data": ["falling"]},
+      {"name": "port B timer", "wave": "x..=......x.................",
+       "data": ["tSafe0V ≤ 650 ms"]},
+      {"name": "port A share", "wave": "=..........=................",
+       "data": ["old share", "can be raised"]}
+     ]
+   ],
+   "config": {"hscale": 1}}
 
 The USB Type-C specification gives two example sharing policies for groups
 of shared ports: *highest-to-lowest*, which serves the first-connected port
@@ -180,7 +227,20 @@ terminations and detect attach at the same time, and messages on the two
 ports arrive independently (see :ref:`usbpd-analogue`). Slow measurements,
 such as attach levels and the VBUS voltage, can share one converter through a
 multiplexer. Each port also needs its own power path and its own current
-limit (see :ref:`usbpd-monitoring`).
+limit (see :ref:`usbpd-monitoring`). :numref:`fig-usbpd-two-port-blocks`
+shows which circuits are per port and which are shared.
+
+.. graphviz:: two-port-blocks.dot
+   :name: fig-usbpd-two-port-blocks
+   :caption: The circuits of a two-port board: per-port power paths and CC
+             circuits, a shared ADC and one processor; bold arrows carry
+             power.
+   :alt: Block diagram. The board power bus connects in both directions to
+         a power path and current limit for port A and another for port B,
+         each joined to its port connector. Each connector has its own CC
+         circuits, linked to the processor. Both connectors also feed slow
+         levels to a shared ADC through a multiplexer, which reports to the
+         processor, which runs both negotiations.
 
 The processor runs the negotiations on both ports, which can overlap. The
 cost of that is worked out in :ref:`usbpd-software-two-ports`.
