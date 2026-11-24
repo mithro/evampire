@@ -157,6 +157,23 @@ powered device input range to three USB output voltages.
      - buck
      - 0.842
 
+:numref:`fig-conv-regions` places these cases on the duty-cycle curves of
+the two regions.
+
+.. figure:: regions.svg
+   :name: fig-conv-regions
+   :alt: Graph of duty cycle against conversion ratio M from 0 to 1.4. In
+         the buck region, below M = 0.98, the duty cycle equals M; points
+         mark 57 V to 5 V at 0.088, 37 V to 5 V at 0.135, 57 V to 20 V at
+         0.351, 37 V to 20 V at 0.541 and 57 V to 48 V at 0.842. A grey
+         band from 0.98 to 1.02 marks where both half bridges switch. In
+         the boost region the duty cycle is 1 − 1/M; 37 V to 48 V, M =
+         1.297, needs 0.229.
+   :align: center
+
+   Duty cycle of the four-switch buck-boost converter in its buck and
+   boost regions, with the cases of :numref:`tab-conv-four-switch-modes`.
+
 A 48 V USB output from a Power over Ethernet input can need either region,
 so a single step-down converter cannot cover it.
 
