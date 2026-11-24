@@ -435,6 +435,21 @@ The switching frequency trades size against loss:
 * the timing resolution needed for a given duty-cycle step gets finer
   (:doc:`first-version`).
 
+:numref:`fig-conv-fsw-tradeoff` plots the first two for the buck example.
+
+.. figure:: fsw-tradeoff.svg
+   :name: fig-conv-fsw-tradeoff
+   :alt: Log-log graph against switching frequency from 100 kHz to beyond
+         2.2 MHz. The inductance for 0.766 A ripple in the buck example
+         falls as one over the frequency: 117.5 µH at 100 kHz, 47 µH at
+         250 kHz, 19.6 µH at 600 kHz and 5.3 µH at 2.2 MHz. On a second
+         axis, the switching loss rises in proportion to the frequency
+         through 0.51 W at 250 kHz.
+   :align: center
+
+   Inductance and switching loss of the buck worked example against
+   switching frequency.
+
 For reference, the controllers in :numref:`tab-conv-four-switch-parts` run
 between 100 kHz and 2.2 MHz. Several allow the frequency to be spread over
 a band (spread spectrum) to lower the peak of the
