@@ -1,0 +1,44 @@
+// DR_Swap message exchange: only the data roles change (role-changes.rst).
+// Time runs from top to bottom, not to scale.
+//
+// Fixed grid (positions in inches): port A at x=0.9, port B at x=3.9,
+// notes at x=5.9.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph dr_swap {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=point, width=0.05, color="#555555", label=""];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    a  [pos="0.9,3.3!", shape=box, style="rounded,filled",
+        fillcolor="#fbe5d6", fontname="Helvetica", fontsize=10, width=1.3,
+        height=0.45, label="Port A: source,\nDFP"];
+    b  [pos="3.9,3.3!", shape=box, style="rounded,filled",
+        fillcolor="#e2f0d9", fontname="Helvetica", fontsize=10, width=1.3,
+        height=0.45, label="Port B: sink,\nUFP"];
+    a5 [pos="0.9,0.25!", shape=box, style="rounded,filled",
+        fillcolor="#fbe5d6", fontname="Helvetica", fontsize=10, width=1.3,
+        height=0.45, label="Port A: source,\nUFP"];
+    b5 [pos="3.9,0.25!", shape=box, style="rounded,filled",
+        fillcolor="#e2f0d9", fontname="Helvetica", fontsize=10, width=1.3,
+        height=0.45, label="Port B: sink,\nDFP"];
+
+    a1 [pos="0.9,2.6!"]; b1 [pos="3.9,2.6!"];
+    a2 [pos="0.9,2.0!"]; b2 [pos="3.9,2.0!"];
+    a3 [pos="0.9,1.4!"]; b3 [pos="3.9,1.4!"];
+    a4 [pos="0.9,0.8!"]; b4 [pos="3.9,0.8!"];
+
+    note [pos="5.9,1.7!", shape=plaintext, fontname="Helvetica", fontsize=9,
+          width=1.9, height=0.9, fontcolor="#333333",
+          label="unchanged: VBUS,\nthe source's Rp and\nthe sink's Rd, and VCONN"];
+
+    edge [arrowhead=none, style=dashed, color="#999999"];
+    a -> a5; b -> b5;
+
+    edge [arrowhead=normal, style=solid, color="#000000"];
+    a1 -> b1 [label="DR_Swap"];
+    b2 -> a2 [label="GoodCRC"];
+    b3 -> a3 [label="Accept"];
+    a4 -> b4 [label="GoodCRC"];
+}

@@ -74,7 +74,8 @@ same whichever port asked (:pd:`Section 4.3.3`).
          changes Rd to Rp, turns VBUS on to 5 V, and starts its own PS_RDY
          within 280 ms; the new sink waits up to 390 to 480 ms. The new sink
          answers GoodCRC, and at least 20 ms later the new source sends
-         Source_Capabilities.
+         Source_Capabilities. A port whose wait for PS_RDY runs out goes to
+         ErrorRecovery.
    :align: center
 
 .. list-table:: Power role swap time limits (:pd:`PD Tables 4.7 <x>`,
@@ -144,13 +145,26 @@ From tSnkSwapStdby until the new source has VBUS up, the initial sink may
 draw at most 2.5 mA. A board built around evampire can therefore swap from
 sink to source only while it is powered from another input, such as
 :term:`Power over Ethernet`. That input is also what it then supplies VBUS
-from.
+from (:numref:`fig-usbpd-swap-power`).
+
+.. graphviz:: swap-power.dot
+   :name: fig-usbpd-swap-power
+   :caption: Power on the board before, during and after a swap from sink
+             to source; bold arrows show power.
+   :alt: Three panels, each with a Power over Ethernet input, the board
+         power bus and the USB port. Before: power flows into the bus from
+         both the Ethernet input and the USB port, which is a sink with the
+         partner supplying VBUS. During the swap: the bus runs from the
+         Ethernet input, and the USB port draws at most 2.5 mA from VBUS.
+         After: the Ethernet input feeds the bus, which feeds the USB port
+         as a source, with evampire supplying VBUS.
 
 Failed swaps
 ^^^^^^^^^^^^
 
 If the expected PS_RDY does not arrive within tPSSourceOff or tPSSourceOn,
 the waiting port goes to the Type-C ErrorRecovery state
+(:numref:`fig-usbpd-prswap`, right-hand notes)
 (:pd:`PD Sections 7.31.5.2 <x>` and :pd:`7.31.5.3 <x>`). It removes its
 terminations, both ports see a detach, and attach starts again (see
 :ref:`usbpd-error-recovery`). A board that was running from VBUS at that
@@ -186,10 +200,20 @@ message whose bit claims the same role as its own goes to ErrorRecovery
 A DR_Swap message exchange swaps DFP and UFP and nothing else: VBUS, the CC
 resistors and VCONN stay as they are (:pd:`PD Sections 6.3.9 <x>` and
 :pd:`7.12.1 <x>`; :typec:`Table 4-13 <x>`). Either port may send DR_Swap,
-and the other answers Accept, Reject or Wait. The swap counts as a detach
+and the other answers Accept, Reject or Wait
+(:numref:`fig-usbpd-dr-swap`). The swap counts as a detach
 and re-attach for any USB data connection between the two ports
 (:pd:`Section 7.12.1`). A Hard Reset returns the data roles to DFP for the
 port with Rp and UFP for the port with Rd (:pd:`Section 7.1.3`).
+
+.. graphviz:: dr-swap.dot
+   :name: fig-usbpd-dr-swap
+   :caption: DR_Swap exchanges the data roles and nothing else.
+   :alt: Sequence diagram. Port A is the source and DFP, port B the sink and
+         UFP. Port A sends DR_Swap, port B answers GoodCRC, then Accept, and
+         port A answers GoodCRC. Afterwards port A is the source and UFP,
+         and port B the sink and DFP. VBUS, the source's Rp, the sink's Rd
+         and VCONN are unchanged.
 
 evampire's USB serial port works only as UFP, so a board that supplies power
 as source may need DR_Swap to become UFP. :doc:`/usb-serial/usb-pd-roles`
@@ -344,6 +368,20 @@ As the port that responds (initial sink):
    a CC comparator at 490 mV to 550 mV; a timer that measures a low of
    30 µs to 50 µs; and a source converter that delivers 5 V within 150 µs,
    which means it is already running.
+
+:numref:`fig-usbpd-frs-blocks` shows the blocks for each role.
+
+.. graphviz:: frs-blocks.dot
+   :name: fig-usbpd-frs-blocks
+   :caption: The blocks fast role swap would need on evampire, as the port
+             that signals and as the port that responds.
+   :alt: Two panels. As the initial source: a detector for the loss of the
+         Ethernet supply drives a CC pull-down of at most 5 Ω and turns the
+         VBUS path off, after which the board draws at most 500 mA until
+         tSnkFRSwap; stored energy runs the board until VBUS returns. As the
+         initial sink: a CC comparator at 490 to 550 mV feeds a timer for a
+         low of 30 to 50 µs, which starts a source converter that is already
+         running, giving VBUS at 5 V within 150 µs of vSafe5V.
 
 For reference, the TPS65987D turns its VBUS path on within 150 µs for a
 fast role swap and has a 5 Ω pull-down and a 490 mV to 550 mV detection
