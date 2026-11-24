@@ -19,7 +19,22 @@ by turning the switch on and ends the on time when a ramp crosses a control
 voltage; a higher control voltage gives a longer on time. A digital
 controller does the same with a counter that restarts every period and a
 compare register that ends the on time (:doc:`first-version` works out the
-timing resolution this needs).
+timing resolution this needs). :numref:`fig-conv-pwm` shows both.
+
+.. figure:: pwm.svg
+   :name: fig-conv-pwm
+   :alt: Two timing diagrams over three switching periods. (a) A sawtooth
+         ramp rises through each period and restarts; two dashed control
+         voltages, low and high, cross it early and late. The gate for the
+         low control voltage is on for a short time from the start of each
+         period, the gate for the high control voltage for a long time.
+         (b) A counter steps from 0 to 7 in each period and restarts; the
+         gate is on while the counter is below a compare register value
+         of 3.
+   :align: center
+
+   Pulse-width modulation with an analogue ramp and comparator, and with a
+   digital counter and compare register (schematic).
 
 Voltage-mode and current-mode control
 -------------------------------------

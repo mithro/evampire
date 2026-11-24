@@ -147,9 +147,174 @@ def conduction_modes():
     s.save(HERE / "conduction-modes.svg")
 
 
+def square(s, a, highs, lo, hi, stroke=BLUE):
+    """Draw a logic trace on axes a: highs is a list of (t0, t1)."""
+    pts = [(a.xr[0], lo)]
+    for t0, t1 in highs:
+        pts += [(t0, lo), (t0, hi), (t1, hi), (t1, lo)]
+    pts.append((a.xr[1], lo))
+    s.poly(a.P(pts), stroke=stroke)
+
+
+def pwm():
+    """Analogue PWM (ramp and control voltage) and digital PWM (counter)."""
+    s = Svg(560, 560)
+    n = 3
+    s.text(280, 14, "(a) Analogue: a ramp compared with a control voltage",
+           size=13, weight="bold")
+    a = Axes(s, (110, 35, 540, 165), (0, n), (0, 1.1))
+    a.frame(yticks=[], grid=False)
+    pts = []
+    for k in range(n):
+        pts += [(k, 0.05), (k + 1, 1.0), (k + 1, 0.05)]
+    s.poly(a.P(pts[:-1]), stroke=GREY, width=1.6)
+    for vc, col, name in ((0.35, ORANGE, "Vc low"), (0.75, GREEN, "Vc high")):
+        s.line(a.X(0), a.Y(vc), a.X(n), a.Y(vc), stroke=col, dash="6 4",
+               width=1.6)
+        s.text(a.X(0) - 8, a.Y(vc), name, size=12, anchor="end", fill=col)
+    s.text(a.X(0) - 8, a.Y(0.98), "ramp", size=12, anchor="end", fill=GREY)
+    for i, (vc, col, name) in enumerate(((0.35, ORANGE, "gate, Vc low"),
+                                          (0.75, GREEN, "gate, Vc high"))):
+        g = Axes(s, (110, 185 + i * 45, 540, 215 + i * 45), (0, n), (0, 1))
+        d = (vc - 0.05) / 0.95
+        square(s, g, [(k, k + d) for k in range(n)], 0, 1, stroke=col)
+        s.text(102, (g.y0 + g.y1) / 2, name, size=12, anchor="end", fill=col)
+    s.text(325, 290, "on at the start of each period, off where the ramp "
+           "crosses Vc", size=12, fill=GREY)
+
+    s.text(280, 325, "(b) Digital: a counter compared with a register",
+           size=13, weight="bold")
+    steps = 8
+    cmp_v = 3
+    c = Axes(s, (110, 345, 540, 465), (0, n), (0, steps))
+    c.frame(yticks=[0, 4, 8], ylabel="", grid=False)
+    pts = []
+    for k in range(n):
+        for j in range(steps):
+            t0 = k + j / steps
+            pts += [(t0, j), (t0 + 1 / steps, j)]
+    s.poly(c.P(pts), stroke=GREY, width=1.6)
+    s.line(c.X(0), c.Y(cmp_v), c.X(n), c.Y(cmp_v), stroke=ORANGE, dash="6 4",
+           width=1.6)
+    s.text(c.X(0) - 30, c.Y(cmp_v), "compare\nregister", size=12,
+           anchor="end", fill=ORANGE)
+    s.text(c.X(0) - 30, c.Y(6.5), "counter", size=12, anchor="end",
+           fill=GREY)
+    g = Axes(s, (110, 485, 540, 515), (0, n), (0, 1))
+    square(s, g, [(k, k + cmp_v / steps) for k in range(n)], 0, 1)
+    s.text(102, 500, "gate", size=12, anchor="end", fill=BLUE)
+    for k in range(n + 1):
+        s.line(c.X(k), 30, c.X(k), 520, stroke="#cccccc", width=1, dash="2 3")
+    s.text(325, 540, "time: three switching periods; gate on while "
+           "counter < register", size=12, fill=GREY)
+    s.save(HERE / "pwm.svg")
+
+
+def peak_current(m1, m2, ma, ic, i0, periods):
+    """Event simulation of peak current-mode control over whole periods.
+
+    The current rises at m1 from the clock edge until it reaches the
+    control level ic less the compensation ramp ma*t, then falls at m2.
+    Times and currents are in units of the period and of the ramp.
+    Returns the polyline points and the list of on times.
+    """
+    pts = [(0.0, i0)]
+    i = i0
+    ons = []
+    for k in range(periods):
+        # i + m1*t = ic - ma*t  ->  t = (ic - i) / (m1 + ma)
+        t_on = min(max((ic - i) / (m1 + ma), 0.0), 1.0)
+        i_pk = i + m1 * t_on
+        i_end = i_pk - m2 * (1 - t_on)
+        pts += [(k + t_on, i_pk), (k + 1, i_end)]
+        ons.append(t_on)
+        i = i_end
+    return pts, ons
+
+
+def subharmonic():
+    """Peak current-mode control above D = 0.5, without and with slope
+    compensation (schematic units)."""
+    s = Svg(560, 450)
+    m1, m2 = 1.0, 1.5          # rising and falling slopes, D = 0.6
+    d = m2 / (m1 + m2)
+    periods = 6
+    for row, (ma, title) in enumerate(((0.0, "(a) No slope compensation: "
+                                        "the disturbance grows"),
+                                       (0.75, "(b) Compensation ramp of half "
+                                        "the down-slope: it decays"))):
+        top = 20 + row * 205
+        a = Axes(s, (60, top + 15, 540, top + 150), (0, periods),
+                 (0.2, 1.6))
+        a.frame(xticks=range(periods + 1), yticks=[], grid=True,
+                xlabel="time (switching periods)" if row else "",
+                ylabel="iL", size=13)
+        s.text(300, top, title, size=13, weight="bold")
+        ic = 1.0 + ma * d       # level that gives the same steady state
+        i_ss = 1.0 - m1 * d     # steady valley current
+        pts, _ = peak_current(m1, m2, ma, ic, i_ss + 0.03, periods)
+        ref, _ = peak_current(m1, m2, ma, ic, i_ss, periods)
+        s.poly(a.P(ref), stroke=GREY, width=1.2, dash="4 3")
+        s.poly(a.P(pts), stroke=BLUE)
+        # Control level, falling with the compensation ramp.
+        lvl = []
+        for k in range(periods):
+            lvl += [(k, ic), (k + 1, ic - ma), (k + 1, ic)]
+        s.poly(a.P(lvl[:-1]), stroke=ORANGE, width=1.4, dash="6 4")
+    s.text(300, 438, "blue: disturbed current; grey dashed: steady state; "
+           "orange: turn-off level", size=12, fill=GREY)
+    s.save(HERE / "subharmonic.svg")
+
+
+def rhp_step():
+    """Boost response to a step increase of duty cycle: the output first
+    falls, then rises as the inductor current grows. Schematic shapes; the
+    dip is exaggerated so that it is visible."""
+    import math
+    t_step, t_end = 1.0, 10.0
+    ts = [t_step + k * 0.02 for k in range(int((t_end - t_step) / 0.02) + 1)]
+
+    def cur(t):
+        return 1 - math.exp(-(t - t_step) / 2.5)
+
+    def vout(t):
+        x = t - t_step
+        return 0.9 * (1 - math.exp(-x / 2.5)) ** 2 - 0.25 * (x / 0.6) * \
+            math.exp(1 - x / 0.6)
+
+    s = Svg(560, 400)
+    s.text(300, 14, "Step increase of the boost duty cycle at time t0",
+           size=13, weight="bold")
+    g = Axes(s, (90, 40, 540, 80), (0, t_end), (0, 1))
+    s.poly(g.P([(0, 0.1), (t_step, 0.1), (t_step, 0.9), (t_end, 0.9)]))
+    s.text(82, 60, "duty\ncycle D", size=12, anchor="end")
+    a = Axes(s, (90, 105, 540, 215), (0, t_end), (-0.1, 1.1))
+    a.frame(yticks=[], grid=False)
+    s.poly(a.P([(0, 0)] + [(t, cur(t)) for t in ts]), stroke=GREEN)
+    s.text(82, 160, "inductor\ncurrent", size=12, anchor="end", fill=GREEN)
+    b = Axes(s, (90, 240, 540, 350), (0, t_end), (-0.4, 1.0))
+    b.frame(yticks=[], grid=False, xlabel="time (schematic)")
+    s.poly(b.P([(0, 0)] + [(t, vout(t)) for t in ts]), stroke=BLUE)
+    s.line(b.X(0), b.Y(0), b.X(t_end), b.Y(0), stroke=GREY, dash="3 3",
+           width=1)
+    s.text(82, 295, "output\nvoltage", size=12, anchor="end", fill=BLUE)
+    s.text(b.X(2.0) + 8, b.Y(-0.25), "first falls", size=12, anchor="start",
+           fill=RED)
+    s.text(b.X(6.8), b.Y(0.45), "then rises as the\ncurrent grows",
+           size=12, fill=BLUE)
+    for ax in (g, a, b):
+        s.line(ax.X(t_step), ax.y0, ax.X(t_step), ax.y1, stroke=GREY,
+               dash="3 3", width=1)
+    s.text(g.X(t_step), 375, "t0", size=12, fill=GREY)
+    s.save(HERE / "rhp-step.svg")
+
+
 FIGURES = {
     "buck-balance": buck_balance,
     "conduction-modes": conduction_modes,
+    "pwm": pwm,
+    "subharmonic": subharmonic,
+    "rhp-step": rhp_step,
 }
 
 if __name__ == "__main__":
