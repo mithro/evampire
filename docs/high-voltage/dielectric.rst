@@ -53,6 +53,23 @@ side in one polysilicon strip. A stack of them can therefore share a high
 voltage evenly along the strip, as the discrete diodes on
 :doc:`substrate` do, with only the field oxide facing the substrate.
 Published charge pumps built this way are listed on :ref:`poe-limits`.
+:numref:`fig-hv-poly-on-fox` shows such a strip, and the effect of the
+polysilicon on the silicon below it, described next.
+
+.. figure:: poly-on-fox.svg
+   :name: fig-hv-poly-on-fox
+   :alt: (a) A polysilicon strip of alternating P and N segments on the
+         field oxide over a P substrate at 0 V, at 57 V at one end and 0 V
+         at the other. The field oxide holds the whole voltage to the
+         substrate: 0.31 µm equivalent, 1.83 MV/cm at 57 V. (b) Two
+         cross-sections with polysilicon at 40 V over field oxide between
+         an N region at 0 V and one at 5 V. On the left an inversion layer
+         under the polysilicon joins the two N regions. On the right a P+
+         region between them cuts the inversion layer.
+
+   Polysilicon diodes on the field oxide, and the inversion that
+   polysilicon at a high voltage causes below it. The voltages in (b) are
+   examples.
 
 The polysilicon is also a gate over the field oxide. The open extraction
 rules give polysilicon 110.67 aF/µm² to the substrate
@@ -102,6 +119,21 @@ bulk die can still be turned into islands after it is made, by removing the
 substrate from behind the circuits down to the oxide and supporting the die
 on an insulating carrier. That is wafer processing outside the foundry's
 flow, and its cost and yield are open questions.
+:numref:`fig-hv-oxide-isolation` compares the three structures.
+
+.. figure:: oxide-isolation.svg
+   :name: fig-hv-oxide-isolation
+   :alt: Three cross-sections side by side. Bulk silicon: two N-wells at
+         0 V and 50 V in one shared P substrate at 0 V, so junctions hold the
+         voltage. Silicon on insulator: three silicon islands at 0 V, 25 V
+         and 50 V, separated by oxide-filled trenches, on a buried oxide over
+         a handle wafer; the oxide holds the voltage. Bulk die with its
+         substrate removed: the same islands on oxide, on an insulating
+         carrier where the substrate was; the oxide holds the voltage.
+
+   Junction isolation in bulk silicon against oxide isolation, in silicon
+   on insulator and in a bulk die with its substrate removed. The voltages
+   are examples.
 
 Two dies in one package
 -----------------------

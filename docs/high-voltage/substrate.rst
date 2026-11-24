@@ -80,7 +80,20 @@ Putting each transistor in its own :term:`deep N-well` moves the weak point
 but does not remove it. Every deep N-well sits in the same substrate, so the
 deep N-well of the top transistor holds the full voltage to the substrate.
 In the simulation it breaks down at about 31 V, a value that comes only from
-the model's fitted breakdown parameter [HV-SIM-STACK]_.
+the model's fitted breakdown parameter [HV-SIM-STACK]_
+(:numref:`fig-hv-dnw-stack`).
+
+.. figure:: dnw-stack.svg
+   :name: fig-hv-dnw-stack
+   :alt: The same ten-device stack as the previous figure, with each
+         transistor in a P-well inside its own deep N-well, in a P-type
+         substrate at 0 V. The deep N-wells are at 50 V, 45 V and so on
+         down to 5 V, 5 V apart. The junction of the top deep N-well with
+         the substrate is outlined: it holds 50 V, and the model breaks
+         down at about 31 V.
+
+   The stack with each transistor in its own deep N-well: the top deep
+   N-well still holds the full voltage to the substrate.
 
 Routes to a higher voltage
 --------------------------
