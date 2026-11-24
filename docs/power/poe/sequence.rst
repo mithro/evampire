@@ -145,9 +145,10 @@ device. It shows a different signature from the third event on
 :doc:`power-sourcing` give the details.
 
 Type 3 and Type 4 power sourcing equipment must issue the class events the
-assigned class needs. Type 2 equipment may instead issue one class event
-and complete the classification over LLDP, giving 13 W at the powered
-device until then (:doc:`classification`).
+assigned class needs (:clause:`145.2.8`). Type 2 equipment may instead
+issue one class event and complete the classification over LLDP, giving
+13 W at the powered device until then (:clause:`33.2.6.2`,
+:doc:`classification`).
 
 The power sourcing equipment issues no more class events than it needs for
 the class it can afford. :numref:`tab-poe-events` gives the highest class

@@ -302,7 +302,7 @@ As :term:`power sourcing equipment`, evampire:
   (:clause:`145.2.8`). A powered device without LLDP then receives the full
   power of its assigned class;
 * never relies on one class event and LLDP to grant class 4, although
-  :clause:`33.2.6` allows it for Type 2;
+  :clause:`33.2.6.2` allows it for Type 2;
 * answers LLDP power requests, allocating power in steps of 0.1 W within
   the power budget (:clause:`145.5`), which the standard leaves optional
   for power sourcing equipment;
