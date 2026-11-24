@@ -23,6 +23,22 @@ board's power bus, and enforces current and power limits that software sets
   board itself uses (the :math:`P_\text{board}` of the
   :ref:`power budget <power-budget>`).
 
+:numref:`fig-usbpd-measure-points` shows where each quantity is measured
+and how the limits act.
+
+.. graphviz:: measure-points.dot
+   :name: fig-usbpd-measure-points
+   :caption: The measurements and limits on one USB Type-C port and on the
+             board's power bus; bold arrows carry power.
+   :alt: Block diagram. Power flows in both directions from the board power
+         bus through a VBUS current sense, which measures both directions,
+         and the power switch or converter to the USB Type-C connector. A
+         VBUS voltage sense at the connector and the current sense feed
+         limit comparators whose thresholds software sets; the comparators
+         switch the power switch off and send an interrupt and its cause to
+         the processor, which writes the limits. The bus voltage and current
+         are measured and read by the processor.
+
 The converter pages already sense the same quantities for control and
 protection; :ref:`conv-protection` and :ref:`conv-fault-times` cover the
 converter side. This page covers what USB Power Delivery adds.
@@ -321,6 +337,19 @@ Delivery asks of a source whose protection has acted (:pd:`Section 4.1.5.1`):
 
 If the Hard Reset does not clear the fault, the port goes to ErrorRecovery
 (:pd:`Section 7.1.3`; see :ref:`usbpd-error-recovery`).
+:numref:`fig-usbpd-fault-flow` shows the whole response.
+
+.. graphviz:: fault-flow.dot
+   :name: fig-usbpd-fault-flow
+   :caption: The response to a fault on a source port: hardware first, then
+             software.
+   :alt: Flow chart. A fault, a short, an overload or an over-voltage,
+         makes the hardware switch the port off, record the cause and
+         interrupt the processor. Software sends Hard Reset, then an Alert
+         if a contract was in place. VBUS falls to vSafe5V within 275 ms and
+         to vSafe0V within 650 ms, and the port resumes 5 V and negotiates
+         again. If the fault is not cleared, the port goes to
+         ErrorRecovery.
 
 The Alert message carries one bit for each kind of event (:pd:`Table 6.25`):
 
@@ -342,6 +371,21 @@ The needs above can be met in several ways, and the choice is open:
   compared in digital logic;
 * a combination: comparators for the fast limits, an ADC for monitoring and
   the slow limits.
+
+:numref:`fig-usbpd-limit-options` shows the three options side by side,
+with the two ways to sense the current described below.
+
+.. graphviz:: limit-options.dot
+   :name: fig-usbpd-limit-options
+   :caption: The three ways to build the limits, and the two ways to sense
+             the current.
+   :alt: Three panels. Comparator per limit: a DAC sets the threshold of a
+         comparator, which acts within one comparator delay. ADC and digital
+         compare: an ADC sampled at a rate set by the fault times, with the
+         limits compared in digital logic. Combination: comparators for the
+         fast limits and an ADC for monitoring and the slow limits. Below,
+         current sensing by either a series shunt resistor or the drop
+         across the power switch.
 
 The current can be sensed with a series resistor, a
 :wikipedia:`shunt <Shunt_(electrical)>`, or across the power switch itself. For reference, the TPS65987D senses the forward voltage drop of its

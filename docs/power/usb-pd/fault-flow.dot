@@ -1,0 +1,28 @@
+// The response to a fault on a source port: hardware first, then software
+// (monitoring.rst; PD Section 4.1.5.1).
+//
+// Fixed grid (positions in inches): main flow down x=1.6, branch at x=4.6.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph fault_flow {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=2.4, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    f   [pos="1.6,4.0!", label="fault: short, overload\nor over-voltage",
+         fillcolor="#fbe5d6"];
+    hw  [pos="1.6,3.1!", label="hardware switches the port off,\nrecords the cause, interrupts",
+         fillcolor="#dbe8f5"];
+    hr  [pos="1.6,2.2!", label="software sends Hard Reset,\nthen Alert if in a contract"];
+    vb  [pos="1.6,1.3!", label="VBUS to vSafe5V within 275 ms,\nto vSafe0V within 650 ms"];
+    ok  [pos="1.6,0.4!", label="resume 5 V and\nnegotiate again", fillcolor="#e2f0d9"];
+    er  [pos="4.7,1.3!", label="ErrorRecovery", width=1.4];
+
+    f -> hw -> hr -> vb -> ok;
+    hr -> er;
+    fl [pos="3.9,2.05!", shape=plaintext, style="", width=1.2, height=0.3,
+        fontsize=9, label="fault not cleared"];
+}

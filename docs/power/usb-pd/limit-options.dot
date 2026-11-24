@@ -1,0 +1,35 @@
+// The open choice of circuits for the limits, and the two ways to sense
+// current (monitoring.rst).
+//
+// Fixed grid (positions in inches): three options at x=1.1, 3.5 and 5.9;
+// current sensing on the bottom row.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph limit_options {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    node [shape=plaintext, style="", height=0.3, fontsize=11, width=2.2];
+    t1 [pos="1.1,3.3!", label="Comparator per limit"];
+    t2 [pos="3.5,3.3!", label="ADC and digital compare"];
+    t3 [pos="5.9,3.3!", label="Combination"];
+    t4 [pos="3.5,0.95!", label="Current sensing: either"];
+
+    node [shape=box, style="rounded,filled", fontsize=10, width=1.6,
+          height=0.5];
+    d1 [pos="1.1,2.6!", label="DAC sets the\nthreshold"];
+    c1 [pos="1.1,1.8!", label="comparator: acts\nwithin one delay", fillcolor="#ffffff"];
+    a2 [pos="3.5,2.6!", label="ADC, sampled at a rate\nset by the fault times",
+        width=1.9];
+    o2 [pos="3.5,1.8!", label="limits compared\nin digital logic", fillcolor="#ffffff"];
+    c3 [pos="5.9,2.6!", label="comparators:\nfast limits", width=1.4];
+    a3 [pos="5.9,1.8!", label="ADC: monitoring\nand slow limits", width=1.4];
+    s1 [pos="2.4,0.35!", label="series shunt resistor", width=1.7];
+    s2 [pos="4.6,0.35!", label="drop across the\npower switch", width=1.7];
+
+    d1 -> c1; a2 -> o2;
+}
