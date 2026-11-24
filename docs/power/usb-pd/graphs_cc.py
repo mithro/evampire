@@ -12,6 +12,8 @@ cc-thresholds.svg
     The CC voltage ranges and threshold windows at a sink (Type-C
     Tables 4-35 and 4-36) and at a source with a current-source Rp
     (Type-C Table 4-37), as quoted on resistor-advertisement.rst.
+dc-level.svg
+    The BMC signal starting and ending at the Rp/Rd level (cc-signalling.rst).
 packet.svg
     The parts of a packet, a Hard Reset, and the order in which the
     nibbles and symbols are sent (packets.rst).
@@ -21,7 +23,8 @@ Every number comes from the page that shows the figure.
 SPDX-License-Identifier: Apache-2.0
 """
 
-from svgfig import (CABLE, FILL, GREY, INK, SNK, Plot, line, rect, svg,
+from svgfig import (CABLE, FILL, GREY, INK, SNK, Plot, line, polyline, rect,
+                    svg,
                     text, write)
 
 
@@ -173,6 +176,90 @@ def packet_layout():
     return svg(680, 400, body, "USB PD packet layout")
 
 
+UI = 1e6 / 300e3          # unit interval at 300 kbit/s, in µs
+V_SWING = 1.125           # nominal vSwing (V)
+T_EDGE = 0.3              # edge time drawn (µs), the 300 ns minimum
+
+
+def bmc(t0, bits, level):
+    """Points of a BMC waveform from t0 (µs), starting at level (0 or 1),
+    with an edge at the start of every bit and in the middle of each 1."""
+    pts, t, lv = [(t0, level)], t0, level
+    for b in bits:
+        for half in ((0, 1) if b else (0,)):
+            th = t + half * UI / 2
+            if not (th == t0):
+                pts += [(th, lv), (th + T_EDGE, 1 - lv)]
+                lv = 1 - lv
+        t += UI
+    return pts, t, lv
+
+
+def dc_level():
+    body = []
+    yr = (-0.4, 2.1)
+    ps = Plot(60, 40, 280, 240, (0, 20), yr)
+    pe = Plot(380, 40, 280, 240, (0, 36), yr)
+    idle = 1.7
+    for p, title in ((ps, "Start of a packet"), (pe, "End of a packet")):
+        body.append(text(p.left, p.top - 10, title, 13, weight="bold"))
+        for v in (0.4, 0.9):
+            body.append(line(p.left, p.y(v), p.right, p.y(v), GREY, 1.0,
+                             "6,3"))
+        body.append(line(p.left, p.y(V_SWING), p.right, p.y(V_SWING), GREY,
+                         0.6, "2,2"))
+        body.append(p.frame())
+    body += ps.yticks([0, 0.4, 0.9, V_SWING, 1.7], "CC voltage (V)",
+                      fmt="{:g}", grid=False)
+    # Start: idle at the Rp/Rd level, then the preamble from a low level.
+    t0 = 4.0
+    pts, _, _ = bmc(t0, [0, 1, 0, 1, 0, 1], 0)
+    wave = [(0, idle), (t0, idle), (t0 + T_EDGE, 0)] + [
+        (t, V_SWING * lv) for t, lv in pts[1:] if t <= 20]
+    wave.append((20, wave[-1][1]))
+    body.append(polyline(ps.pts(wave), INK, 2.0))
+    body.append(text(ps.x(0.3), ps.y(idle) - 8, "idle, 3.0 A level", 11))
+    body.append(text(ps.x(t0) + 4, ps.y(-0.2) + 4, "driven low: preamble",
+                     11))
+    # End: last bits, final edge low, hold low, release.
+    pts, t_end, lv = bmc(0, [1, 0, 1], 1)
+    wave = [(t, V_SWING * v) for t, v in pts]
+    wave += [(t_end, V_SWING * lv), (t_end + T_EDGE, 0)]
+    t_rel = t_end + 4.0
+    wave += [(t_rel, 0)]
+    for k in range(1, 31):
+        dt = k * 0.25
+        wave.append((t_rel + dt, idle * (1 - 2.718281828 ** (-dt / 1.2))))
+    wave.append((36, idle))
+    body.append(polyline(pe.pts(wave), INK, 2.0))
+    body.append(line(pe.x(t_end), pe.y(-0.3), pe.x(t_end + 23), pe.y(-0.3),
+                     arrow="both"))
+    body.append(text(pe.x(t_end + 11.5), pe.y(-0.3) - 5,
+                     "release by 23 µs (tEndDriveBMC)", 11, "middle"))
+    body.append(line(pe.x(t_end), pe.top, pe.x(t_end), pe.bottom, INK, 0.8,
+                     "4,3"))
+    body.append(text(pe.x(t_end) + 4, pe.y(0.6), "low ≥ 1 µs", 11))
+    body.append(text(pe.x(t_end) + 4, pe.y(0.6) + 14, "(tHoldLowBMC),", 11))
+    body.append(text(pe.x(t_end) + 4, pe.y(0.6) + 28, "then released", 11))
+    body.append(text(pe.x(t_end) - 4, pe.top + 14, "end of", 11, "end"))
+    body.append(text(pe.x(t_end) - 4, pe.top + 28, "last bit", 11, "end"))
+    body += ps.xticks([0, 5, 10, 15, 20], "time (µs)", grid=False)
+    body += pe.xticks([0, 10, 20, 30], "time (µs)", grid=False)
+    for v, lab in ((0.9, "1.5 A idle level"), (0.4, "default idle level")):
+        body.append(text(pe.right - 4, pe.y(v) - 4, lab, 10, "end",
+                         fill=GREY))
+    body.append(text(pe.right - 4, pe.y(V_SWING) - 4, "vSwing 1.125 V", 10,
+                     "end", fill=GREY))
+    y = ps.bottom + 62
+    body.append(text(ps.left, y, "Shown at the 3.0 A level, idle 1.7 V. "
+                     "The ground offset moves the received signal by up "
+                     "to 250 mV:", 12))
+    body.append(text(ps.left, y + 18, "down at the sink, up at the source. "
+                     "The release slope is schematic.", 12))
+    return svg(680, int(y + 30), body, "CC signal on its DC level")
+
+
 if __name__ == "__main__":
     write("cc-thresholds.svg", cc_thresholds())
     write("packet.svg", packet_layout())
+    write("dc-level.svg", dc_level())
