@@ -80,7 +80,8 @@ to nothing, are called :term:`floating field rings <floating field ring>`.
 As the voltage rises, the depletion region around the well spreads outward
 until it reaches the first ring. The ring then rises with it, a fixed step
 below the well, and the depletion region spreads on from the ring to the
-next one [HV-KAO-WOLLEY]_ [HV-US4573066]_. Each ring holds part of the
+next one [HV-KAO-WOLLEY]_ [HV-US4573066]_ (upper left of
+:numref:`fig-hv-grading`). Each ring holds part of the
 voltage, and the spacing between rings sets how large each step is. Four or
 five rings are usual [HV-SPIRITO]_ (slide 26).
 
@@ -97,7 +98,8 @@ Field plates
 A :term:`field plate` is a conductor, metal or polysilicon, connected to the
 well and extending over the insulator beyond the well's edge. Its voltage
 pulls the depletion region in the substrate below it further out, which
-lowers the field at the curved edge [HV-SPIRITO]_ (slide 27)
+lowers the field at the curved edge (upper right of :numref:`fig-hv-grading`)
+[HV-SPIRITO]_ (slide 27)
 [HV-PARK]_ (Section 2.3.1). A thin insulator under the plate moves the
 breakdown to the end of the plate, and a thick one leaves it at the
 junction [HV-SPIRITO]_ (slide 28). A plate built in steps over different
@@ -114,7 +116,7 @@ the substrate below it. When the total charge in the layer is small
 enough, it is fully depleted before the surface field reaches its critical
 value, and the voltage then falls almost evenly along the surface. This is
 :term:`RESURF`, for reduced surface field [HV-APPELS-VAES]_
-[HV-PARK]_ (Section 2.3).
+[HV-PARK]_ (Section 2.3) (lower left of :numref:`fig-hv-grading`).
 
 RESURF works only when the layer's dopant charge per area is close to a
 value set by silicon's critical field. With a critical field of
@@ -132,7 +134,8 @@ them instead. A long polysilicon resistor, often drawn as a spiral, runs
 over the field oxide from the high-voltage well to the substrate contact.
 The current through it makes its voltage fall evenly along its length, and
 through the oxide its voltage pulls the surface below it into the same
-even gradient [HV-EP2779225]_ [HV-US10217861]_. Taps along the chain can also drive a set of rings
+even gradient [HV-EP2779225]_ [HV-US10217861]_ (lower right of
+:numref:`fig-hv-grading`). Taps along the chain can also drive a set of rings
 directly, so that each ring sits at a chosen fraction of the voltage.
 
 The cost is the current that flows down the chain all the time. A chain

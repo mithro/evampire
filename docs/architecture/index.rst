@@ -214,6 +214,7 @@ Data paths
        generator, output selector A or B or both, RGMII interface A or B or
        both
 
-:numref:`tab-data-paths` lists the blocks on each path. The delay from one
+:numref:`tab-data-paths` lists the blocks of :numref:`fig-block-diagram`
+on each path. The delay from one
 external port to the other is a fixed small number of clock cycles. A frame
 copied to the processor is also forwarded to the other port as usual.

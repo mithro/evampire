@@ -84,7 +84,9 @@ Lighter doping spreads the same charge over a wider layer, so the field
 reaches its critical value only at a higher voltage. The price is width:
 the depletion region needs room to spread
 (:numref:`tab-hv-flat-breakdown`). A junction meant to hold a high voltage
-needs that much lightly doped silicon on one side of it.
+needs that much lightly doped silicon on one side of it. In
+:numref:`fig-hv-depletion`, lighter doping makes the field triangle
+shallower and wider.
 
 .. list-table:: Breakdown of a flat silicon junction against doping
    :name: tab-hv-flat-breakdown
