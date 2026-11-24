@@ -249,7 +249,8 @@ synchronous converter carry power in both directions, which
 Diode or synchronous switch
 ---------------------------
 
-During the off time the load current flows through S2. A diode drops a
+During the off time the load current flows through S2, a diode or a
+transistor (:numref:`fig-conv-buck`). A diode drops a
 roughly fixed forward voltage, a transistor drops its current times its
 on-resistance. For the example, with an illustrative 0.5 V diode drop and
 an illustrative 20 mΩ transistor:
