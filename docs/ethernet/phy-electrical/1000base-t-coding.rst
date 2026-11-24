@@ -228,8 +228,20 @@ generator polynomials:
 
 In this notation (:numref:`tab-phy-scramblers`), :math:`x^{k}` marks a tap
 after :math:`k` stages of the shift register, and the new bit is the
-exclusive-OR of the taps. Master and slave are explained in
-:doc:`1000base-t-receiver`.
+exclusive-OR of the taps (:numref:`fig-phy-1000-scrambler`). Master and
+slave are explained in :doc:`1000base-t-receiver`.
+
+.. figure:: scrambler-1000base-t.svg
+   :name: fig-phy-1000-scrambler
+   :alt: Two shift registers of 33 stages, drawn with some stages left out.
+         In the master's, stages 13 and 33 are shaded as taps; in the
+         slave's, stages 20 and 33. In each, the exclusive-OR of the two
+         taps feeds back into stage 1 and is combined by a second
+         exclusive-OR with the incoming bits.
+   :align: center
+
+   The master and slave side-stream scramblers, simplified: the standard
+   derives several scrambling bits from the register at each step.
 
 Scrambling makes the transmitted symbols uncorrelated over time, between
 the four pairs and between the two directions on each pair

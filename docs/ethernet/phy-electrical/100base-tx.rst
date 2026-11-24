@@ -85,7 +85,20 @@ section 3.1.3). The scrambler makes the transmitted power look like noise,
 spread across the band. Without it, a repeating pattern such as the idle
 code would put its energy into a few frequencies and radiate more. The
 receiver's descrambler locks to the scrambled idle code between frames
-(:clause:`25.4.12`).
+(:clause:`25.4.12`). :numref:`fig-phy-100base-tx-scrambler` shows the
+shift register.
+
+.. figure:: scrambler-100base-tx.svg
+   :name: fig-phy-100base-tx-scrambler
+   :alt: A shift register of 11 stages, numbered 1 to 11, with stages 9 and
+         11 shaded as taps. The outputs of stages 9 and 11 meet in an
+         exclusive-OR whose output, the new bit, feeds back into stage 1
+         and also goes to a second exclusive-OR with the incoming bits,
+         whose output is the scrambled bits.
+   :align: center
+
+   The 100BASE-TX scrambler, :math:`1 + x^9 + x^{11}`: the exclusive-OR
+   of stages 9 and 11 feeds stage 1 and scrambles the bits.
 
 .. _phy-mlt3:
 
