@@ -80,9 +80,11 @@
 <text x="360.0" y="196.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">= termination</text>
 <line x1="290.0" y1="220.0" x2="290.0" y2="246.0" stroke="#222222" stroke-width="1.2"/>
 <line x1="430.0" y1="220.0" x2="430.0" y2="246.0" stroke="#222222" stroke-width="1.2"/>
-<polygon points="276.0,246.0 444.0,246.0 360.0,300.0" fill="#fbe5d6" stroke="#222222" stroke-width="1.4" stroke-linejoin="round"/>
-<text x="360.0" y="264.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">amplifier</text>
-<line x1="360.0" y1="300.0" x2="360.0" y2="320.0" stroke="#222222" stroke-width="1.2"/>
+<rect x="276.0" y="246.0" width="168.0" height="46.0" rx="4" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="360.0" y="262.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">differential amplifier</text>
+<text x="360.0" y="278.0" font-size="10" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">input below, outputs above</text>
+<line x1="360.0" y1="320.0" x2="360.0" y2="292.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="360.0,292.0 356.9,299.4 363.1,299.4" fill="#222222"/>
 <rect x="326.0" y="320.0" width="68.0" height="26.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
 <text x="360.0" y="333.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">DAC</text>
 <text x="360.0" y="359.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">linear amplifier with a low output</text>

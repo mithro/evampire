@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640" font-family="Helvetica, Arial, sans-serif">
-<rect width="480" height="640" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="600" viewBox="0 0 480 600" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="600" fill="#ffffff"/>
 <text x="10.0" y="14.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">(a) Insertion loss</text>
 <line x1="112.5" y1="34.0" x2="112.5" y2="184.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="163.0" y1="34.0" x2="163.0" y2="184.0" stroke="#e4e4e4" stroke-width="1"/>
@@ -76,5 +76,4 @@
 <polygon points="70.0,510.0 77.4,513.1 77.4,506.9" fill="#c0392b"/>
 <text x="164.0" y="531.0" font-size="12" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">weaker: it crosses the whole cable</text>
 <text x="441.0" y="572.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">far end</text>
-<text x="240.0" y="612.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Losses are in dB: 6 dB halves a voltage, and 20 dB divides it by 10.</text>
 </svg>

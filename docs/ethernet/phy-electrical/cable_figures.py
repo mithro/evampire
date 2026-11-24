@@ -88,7 +88,7 @@ def pulse(t, t0, tau, amp):
 
 
 def impairments():
-    fig = Fig(480, 640)
+    fig = Fig(480, 600)
     # (a) Insertion loss and inter-symbol interference.
     fig.text(10, 14, "(a) Insertion loss", size=14, anchor="start",
              weight="bold")
@@ -159,8 +159,6 @@ def impairments():
         if near:
             fig.text(xr - 4, yb + 18, "to the far end", size=12, fill=GREY,
                      anchor="end")
-    fig.text(240, 612, "Losses are in dB: 6 dB halves a voltage, and "
-             "20 dB divides it by 10.", size=12)
     fig.save(HERE / "impairments.svg")
 
 

@@ -130,10 +130,10 @@ def voltage_mode(f, x0):
     # Differential amplifier fed from a DAC.
     f.line(xl, 220, xl, 246)
     f.line(xr, 220, xr, 246)
-    f.poly([(xl - 14, 246), (xr + 14, 246), (xm, 300)], stroke=INK, width=1.4,
-           fill=FILL_ORANGE, closed=True)
-    f.text(xm, 264, "amplifier", size=11)
-    f.line(xm, 300, xm, 320)
+    f.rect(xl - 14, 246, xr - xl + 28, 46, fill=FILL_ORANGE, rx=4)
+    f.text(xm, 262, "differential amplifier", size=11)
+    f.text(xm, 278, "input below, outputs above", size=10, fill=GREY)
+    f.line(xm, 320, xm, 292, arrow=True)
     f.rect(xm - 34, 320, 68, 26, fill=FILL_GREY, rx=4)
     f.text(xm, 333, "DAC", size=12)
     f.text(x0 + 120, 372, "linear amplifier with a low output\n"

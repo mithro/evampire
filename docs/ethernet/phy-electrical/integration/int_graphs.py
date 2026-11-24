@@ -71,7 +71,7 @@ def phase_steps():
 
 def jitter():
     sigma, q = 4.9, 7.03
-    fig = Fig(480, 340)
+    fig = Fig(480, 380)
     ax = Axes(fig, 72, 20, 462, 262, (-45, 45), (1e-14, 1), ylog=True)
     jpp = q * sigma
     ax.band(1e-14, 1, "#f6f6f6", -jpp, jpp)
@@ -93,7 +93,9 @@ def jitter():
     fig.text(ax.X(0), y - 14, "Jpp = 2 × 7.03 × 4.9 ps = 69 ps", size=12,
              fill=RED)
     fig.text(ax.X(0), ax.Y(1e-6), "σ = 4.9 ps", size=12, fill=BLUE)
-    fig.text(267, 326, "The 1.4 ns limit is about 20 times Jpp.",
+    fig.text(267, 336, "Dashed: ±7.03σ; each tail beyond holds 10⁻¹².\n"
+             "Limits: 1.4 ns unfiltered, about 20 × Jpp;\n"
+             "0.3 ns after a 5 kHz high-pass filter, about 4 × Jpp",
              size=12, fill=GREY)
     fig.save(HERE / "jitter.svg")
 
@@ -133,7 +135,8 @@ def reach():
              anchor="start", weight="bold")
     line = [(L, 7 - 18.7 * (1 - L / 100) / 6.02) for L in range(0, 101)]
     a.plot(line, stroke=BLUE)
-    a.plot([(L, v - 1) for L, v in line], stroke=BLUE, dash="6 4", width=1.6)
+    a.plot([(L, v - 1) for L, v in line if v - 1 >= 3], stroke=BLUE,
+           dash="6 4", width=1.6)
     for L, b in pts_bits:
         fig.circle(a.X(L), a.Y(b), 4, fill=BLUE)
         fig.text(a.X(L) - 6, a.Y(b) - 12, fmt(b), size=12, anchor="end")
@@ -226,21 +229,22 @@ PARTS = [  # part, area lo, hi (mm2), power lo, hi (W)
     ("PLL and interpolator", 0.065, 0.065, 0.004, 0.004),
     ("Signal processing, 3.3 V", 3.9, 8.1, 0.48, 1.5),
     ("Total at 3.3 V", 6.6, 12.8, 0.67, 2.2),
+    ("Total, DSP at 1.8 V", 6.6, 12.8, 0.32, 1.1),
 ]
 
 
 def area_power():
-    fig = Fig(480, 440)
+    fig = Fig(480, 480)
     for k, (title, lim, ticks, lo_i, hi_i, unit) in enumerate((
             ("Area (mm²)", (0, 18), range(0, 19, 3), 1, 2, "mm²"),
             ("Power (W)", (0, 3), [0, 0.5, 1, 1.5, 2, 2.5, 3], 3, 4, "W"))):
-        y0 = 30 + k * 200
-        ax = Axes(fig, 170, y0, 462, y0 + 140, lim, (0, len(PARTS)))
+        y0 = 30 + k * 220
+        ax = Axes(fig, 170, y0, 462, y0 + 160, lim, (0, len(PARTS)))
         ax.frame(ticks, [], title, None, xfmt=fmt, grid=True)
         for i, row in enumerate(PARTS):
             yc = ax.Y(len(PARTS) - i - 0.5)
             lo, hi = row[lo_i], row[hi_i]
-            colour = RED if i == len(PARTS) - 1 else BLUE
+            colour = RED if row[0].startswith("Total") else BLUE
             if hi > lo:
                 fig.rect(ax.X(lo), yc - 7, ax.X(hi) - ax.X(lo), 14,
                          fill=colour, stroke="none")
@@ -249,7 +253,7 @@ def area_power():
             fig.text(164, yc, row[0], size=12, anchor="end")
             fig.text(ax.X(hi) + 6, yc, f"{fmt(lo)} to {fmt(hi)}"
                      if hi > lo else fmt(lo), size=11, anchor="start")
-    fig.text(240, 430, "Bars span the range of the reference examples "
+    fig.text(240, 470, "Bars span the range of the reference examples "
              "and assumptions", size=12, fill=GREY)
     fig.save(HERE / "area-power.svg")
 
@@ -270,7 +274,7 @@ def ten_base_t_swing():
         else:
             fig.circle(ax.X(lo), yc, 5, fill=BLUE)
     ax.vline(3.3, stroke=RED, width=2, dash="6 4")
-    fig.text(ax.X(3.3) - 4, 12, "±3.3 V from a 3.3 V supply", size=12,
+    fig.text(ax.X(3.3) - 4, 12, "±3.3 V: a 3.3 V supply, no headroom", size=12,
              anchor="end", fill=RED)
     fig.save(HERE / "ten-base-t-swing.svg")
 
