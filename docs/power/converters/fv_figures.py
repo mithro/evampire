@@ -122,7 +122,7 @@ def start_timeline():
            stroke="none")
     a.frame(yticks=[0, 3, 6, 9], ylabel="hold capacitor voltage (V)",
             xlabel="time (schematic, not to scale)", grid=False)
-    s.text(a.x0 + 6, a.Y(9.3) - 9, "turn-on threshold 8.65 V to 9.3 V",
+    s.text(a.X(4.15), a.Y(10.3), "turn-on threshold\n8.65 V to 9.3 V",
            size=11, anchor="start", fill=ORANGE)
     pts = [(0, 0), (1.5, 0), (4.0, 9.0), (7.5, 6.0), (8.0, 6.2),
            (8.4, 10.0), (10, 10.0)]
