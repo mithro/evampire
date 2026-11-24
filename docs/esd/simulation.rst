@@ -365,3 +365,7 @@ the repositories.
 :numref:`fig-esd-testbench` and :numref:`fig-esd-paths`.
 :download:`sim/sections.py <sim/sections.py>` draws the cross-section,
 :numref:`fig-esd-driver-section`.
+:download:`sim/plots.py <sim/plots.py>` and
+:download:`sim/model_figs.py <sim/model_figs.py>` draw the remaining
+graphs and diagrams, such as :numref:`fig-esd-clamp-timing` and
+:numref:`fig-esd-added`.
