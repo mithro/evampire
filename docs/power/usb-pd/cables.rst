@@ -35,6 +35,19 @@ the source puts on the :term:`CC` pin not connected to the cable's CC wire
 :term:`Ra`, on that pin. The source supplies VCONN on the pin that shows Ra,
 or on the unused pin whatever it shows, within *tVCONNON* (2 ms) of VBUS
 reaching 5 V (:typec:`Section 4.5.2.2.9.1`; :typec:`Table 4-32 <x>`).
+:numref:`fig-usbpd-vconn-cable` shows the two paths.
+
+.. graphviz:: vconn-cable.dot
+   :name: fig-usbpd-vconn-cable
+   :caption: A source supplying VCONN to the e-marker in the near cable plug,
+             through the CC pin that does not meet the CC wire.
+   :alt: Schematic. In the source port, Rp connects to the CC1 pin, which
+         meets the plug's CC contact and the CC wire to the far plug and the
+         sink's Rd. A VCONN supply of 3.0 to 5.5 V connects through a switch
+         to the CC2 pin, with a discharge resistor Rdch of 30 to 6120 Ω to
+         ground used after detach. CC2 meets the plug's VCONN contact, which
+         holds Ra, 0.8 to 1.2 kΩ to ground, and the e-marker. VCONN turns on
+         within tVCONNON, 2 ms, of VBUS reaching 5 V.
 
 The port that supplies VCONN is the *VCONN Source*. After attach it is the
 source; the two ports can exchange the job with a VCONN_Swap (see
