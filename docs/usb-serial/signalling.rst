@@ -278,6 +278,21 @@ kinds:
 * *Handshake* packets are only a PID. They report whether data was accepted
   ([USBSER-USB2]_ section 8.4.5).
 
+:numref:`fig-usbser-packets` shows the fields of each kind, with the
+start-of-frame token, in the order they are sent.
+
+.. figure:: signalling/packets.svg
+   :name: fig-usbser-packets
+   :alt: Four rows of fields, sent from left to right. Token (OUT, IN,
+         SETUP): SYNC 8 bits, PID 8 bits, ADDR 7 bits, ENDP 4 bits, CRC5 5
+         bits, EOP. Start of frame: SYNC, PID, an 11-bit frame number,
+         CRC5, EOP. Data (DATA0, DATA1): SYNC, PID, 0 to 1023 bytes of data,
+         CRC16 16 bits, EOP. Handshake (ACK, NAK, STALL): SYNC, PID, EOP.
+   :align: center
+
+   Fields of the full-speed packet kinds, in the order sent; widths are
+   proportional to the bits except for the data field.
+
 .. list-table:: Packet identifiers used by a full-speed device
    ([USBSER-USB2]_ section 8.3.1, Table 8‑1)
    :name: tab-usbser-pid
