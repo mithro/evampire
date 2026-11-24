@@ -70,7 +70,9 @@ def pwm():
     square(s, g, [(k, k + cmp_v / steps) for k in range(n)], 0, 1)
     s.text(102, 500, "gate", size=12, anchor="end", fill=BLUE)
     for k in range(n + 1):
-        s.line(c.X(k), 30, c.X(k), 520, stroke="#cccccc", width=1, dash="2 3")
+        for y0, y1 in ((30, 305), (340, 520)):
+            s.line(c.X(k), y0, c.X(k), y1, stroke="#cccccc", width=1,
+                   dash="2 3")
     s.text(325, 540, "time: three switching periods; gate on while "
            "counter < register", size=12, fill=GREY)
     s.save(HERE / "pwm.svg")
@@ -111,7 +113,7 @@ def subharmonic():
                                         "the down-slope: it decays"))):
         top = 20 + row * 205
         a = Axes(s, (60, top + 15, 540, top + 150), (0, periods),
-                 (0.2, 1.6))
+                 (-0.05, 1.6))
         a.frame(xticks=range(periods + 1), yticks=[], grid=True,
                 xlabel="time (switching periods)" if row else "",
                 ylabel="iL", size=13)
@@ -320,9 +322,9 @@ def dead_time():
     for ax, name in ((g1, "high-side\ngate"), (g2, "low-side\ngate"),
                      (sw, "switch\nnode")):
         s.text(112, (ax.y0 + ax.y1) / 2, name, size=11, anchor="end")
-    s.text(sw.X(4.5), sw.Y(-0.12) + 18, "dead time: the body diode\nof the "
+    s.text(sw.X(5.4), sw.Y(0.35), "dead time: the body diode\nof the "
            "low-side switch conducts,\nnode one diode drop below ground",
-           size=10, fill=ORANGE)
+           size=10, fill=ORANGE, anchor="start")
     s.text(sw.X(2), sw.Y(1) - 8, "Vin", size=11)
     s.text(345, 290, "both gates high together would short the input to "
            "ground (shoot-through)", size=11, fill=RED)

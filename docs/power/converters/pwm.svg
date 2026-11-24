@@ -31,9 +31,13 @@
 <text x="80.0" y="367.5" font-size="12" text-anchor="end" font-weight="normal" fill="#777777" dominant-baseline="middle">counter</text>
 <polyline points="110.0,515.0 110.0,515.0 110.0,485.0 163.8,485.0 163.8,515.0 253.3,515.0 253.3,485.0 307.1,485.0 307.1,515.0 396.7,515.0 396.7,485.0 450.4,485.0 450.4,515.0 540.0,515.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
 <text x="102.0" y="500.0" font-size="12" text-anchor="end" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">gate</text>
-<line x1="110.0" y1="30.0" x2="110.0" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
-<line x1="253.3" y1="30.0" x2="253.3" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
-<line x1="396.7" y1="30.0" x2="396.7" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
-<line x1="540.0" y1="30.0" x2="540.0" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="110.0" y1="30.0" x2="110.0" y2="305.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="110.0" y1="340.0" x2="110.0" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="253.3" y1="30.0" x2="253.3" y2="305.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="253.3" y1="340.0" x2="253.3" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="396.7" y1="30.0" x2="396.7" y2="305.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="396.7" y1="340.0" x2="396.7" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="540.0" y1="30.0" x2="540.0" y2="305.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="540.0" y1="340.0" x2="540.0" y2="520.0" stroke="#cccccc" stroke-width="1" stroke-dasharray="2 3"/>
 <text x="325.0" y="540.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">time: three switching periods; gate on while counter &lt; register</text>
 </svg>
