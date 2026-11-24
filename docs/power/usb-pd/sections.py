@@ -15,6 +15,8 @@ deep-nwell.svg
     (on-chip-or-external.rst).
 custom-structures.svg
     Four custom high-voltage structures (on-chip-or-external.rst).
+breakdown-sites.svg
+    Where each documented breakdown occurs (on-chip-or-external.rst).
 
 The drawings are schematic: shapes and spacings are not to scale. The
 colours follow docs/high-voltage/figures.py: blue for P-type, orange for
@@ -172,7 +174,53 @@ def custom_structures():
     return svg(650, 470, body, "Custom high-voltage structures")
 
 
+def breakdown_sites():
+    """Where each documented breakdown occurs (on-chip-or-external.rst)."""
+    body = []
+    body += region(10, 170, 660, 110, SUB, "P substrate, 0 V", 12, ly=268)
+    # NMOS in a P-well.
+    body += region(20, 170, 220, 70, PWELL)
+    body += region(40, 170, 40, 18, NPLUS, "N+", 10)
+    body += region(170, 170, 40, 18, NPLUS, "N+", 10)
+    body += region(80, 162, 90, 8, OXIDE)
+    body += region(80, 150, 90, 12, POLY, "gate", 10, ly=160)
+    body.append(text(130, 232, "6 V NMOS in a P-well", 10, "middle"))
+    # N-well.
+    body += region(265, 170, 80, 60, NWELL, "N-well", 10, ly=206)
+    # Field-oxide parasitic transistor.
+    body += region(370, 170, 30, 18, NPLUS, "N+", 10)
+    body += region(480, 170, 30, 18, NPLUS, "N+", 10)
+    body += region(400, 155, 80, 15, OXIDE)
+    body += region(395, 143, 90, 12, METAL)
+    body.append(text(440, 210, "field oxide, metal 1 above", 10, "middle"))
+    # MIM capacitor on the insulator.
+    body += region(535, 150, 125, 20, OXIDE)
+    body += region(550, 140, 95, 10, METAL)
+    body += region(550, 134, 95, 6, "#ffffff")
+    body += region(560, 124, 75, 10, METAL)
+    body.append(text(597, 210, "MIM capacitor", 10, "middle"))
+    marks = [(125, 166, 40, "1"), (190, 188, 70, "2"), (150, 179, 100, "3"),
+             (330, 230, 130, "4"), (440, 162, 40, "5"), (597, 137, 70, "6")]
+    for x, y, ytop, n in marks:
+        body.append(line(x, y, x, ytop + 6, INK, 0.8))
+        body.append(f'<circle cx="{x}" cy="{ytop}" r="8" fill="#ffffff" '
+                    f'stroke="{INK}"/>')
+        body.append(text(x, ytop + 4, n, 10, "middle"))
+    notes = ["1 gate oxide: 7 V (3.3 V devices), 12 V (6 V devices)",
+             "2 N+ to P-well: 8.5 V",
+             "3 BVDSS of the 6 V NMOS: 8.5 V",
+             "4 N-well to P substrate: 10 V",
+             "5 metal over field oxide turns on N+ to N+: 8.5 V",
+             "6 MIM dielectric: 10 V, or 20 V for 1 fF/µm²"]
+    for k, s in enumerate(notes):
+        body.append(text(10 + 340 * (k // 3), 300 + 16 * (k % 3), s, 11))
+    body.append(text(10, 352, "All values are documented minimums.", 11,
+                     fill=GREY))
+    return svg(680, 362, body, "Where each breakdown occurs")
+
+
 if __name__ == "__main__":
     write("vertical-pnp.svg", vertical_pnp())
     write("deep-nwell.svg", deep_nwell())
     write("custom-structures.svg", custom_structures())
+    write("breakdown-sites.svg", breakdown_sites())
