@@ -75,8 +75,30 @@ Base page
 ---------
 
 The 16 bits of a burst form a *page*. The first, the *base page*, has the
-fields of :numref:`tab-phy-base-page` (:clause:`28.2.1.2`,
-:clause:`Figure 28-7 <28>`).
+fields of :numref:`tab-phy-base-page` and :numref:`fig-phy-base-page`
+(:clause:`28.2.1.2`, :clause:`Figure 28-7 <28>`).
+
+.. wavedrom::
+   :caption: The 16 bits of the base page, drawn as two rows of 8 bits
+             with D0 at the right of the lower row.
+   :name: fig-phy-base-page
+   :alt: Bit-field diagram of the base page: bits D0 to D4 the selector,
+         00001 for Ethernet; D5 to D11 the technology abilities A0 to A6;
+         D12 extended next page; D13 remote fault; D14 acknowledge; D15
+         next page.
+
+   {"reg": [
+     {"name": "Selector", "bits": 5, "attr": "00001"},
+     {"name": "Abilities A0 to A6", "bits": 7},
+     {"name": "XNP", "bits": 1},
+     {"name": "RF", "bits": 1},
+     {"name": "Ack", "bits": 1},
+     {"name": "NP", "bits": 1}
+   ],
+   "config": {"hspace": 380, "bits": 16, "lanes": 2}}
+
+In :numref:`fig-phy-base-page`, XNP is extended next page, RF remote
+fault, Ack acknowledge and NP next page.
 
 .. list-table:: Fields of the base page
    :name: tab-phy-base-page
@@ -130,7 +152,23 @@ fields of :numref:`tab-phy-base-page` (:clause:`28.2.1.2`,
 
 Each end repeats its page. Once it has received at least three
 consecutive matching bursts from its partner, it sets the acknowledge bit
-(:clause:`28.2.1.2.5`).
+(:clause:`28.2.1.2.5`). :numref:`fig-phy-autoneg-sequence` shows the whole
+exchange.
+
+.. graphviz:: autoneg-sequence.dot
+   :name: fig-phy-autoneg-sequence
+   :caption: Two 1000BASE-T transceivers exchange the base page and then
+             the 1000BASE-T next pages; both ends send at the same time,
+             drawn here one after the other.
+   :alt: Sequence diagram between end 1 and end 2, time running down.
+         Each sends its base page with the next page bit set, repeated in
+         bursts 8 ms to 24 ms apart. After at least 3 matching bursts each
+         sends the base page with acknowledge set. Each then sends a
+         message page with code 8 and unformatted pages 1 and 2, carrying
+         1000BASE-T half and full duplex, port type, manual master or
+         slave, and an 11-bit seed. Finally both ends pick the highest
+         common mode and the master and start link_fail_inhibit_timer.
+   :align: center
 
 .. _phy-next-pages:
 
@@ -147,6 +185,8 @@ next page bit and sends three more pages: a message page with message code
   interface or a multiport device such as a switch;
 * whether the end is configured by hand as master or as slave;
 * an 11-bit random number, the *seed*.
+
+The lower half of :numref:`fig-phy-autoneg-sequence` shows these pages.
 
 .. _phy-resolution:
 

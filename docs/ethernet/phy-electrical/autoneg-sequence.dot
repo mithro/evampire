@@ -1,0 +1,59 @@
+// Message sequence for two 1000BASE-T transceivers autonegotiating: the
+// base page, then the 1000BASE-T next pages, then the resolution. Each
+// page is sent as repeated fast link pulse bursts. Time runs from top to
+// bottom. Not to scale.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph autoneg {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.8,
+           ranksep=0.28, newrank=true, splines=false];
+    node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    e1 [shape=box, style="rounded,filled", fillcolor="#fbe5d6", label="End 1", width=1.0];
+    e2 [shape=box, style="rounded,filled", fillcolor="#e2f0d9", label="End 2", width=1.0];
+    note_h [shape=plaintext, label="What happens", fontsize=10, fontname="Helvetica-Bold"];
+
+    a1; a2; a3; a4; a5; a6; a7; a8; a9;
+    b1; b2; b3; b4; b5; b6; b7; b8; b9;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    n1 [label="Each end repeats its base page\nin bursts 8 ms to 24 ms apart"];
+    n2 [label=""];
+    n3 [label="After at least 3 matching bursts,\neach end sets Acknowledge"];
+    n4 [label=""];
+    n5 [label="Next page bit was set, so\nnext pages follow, each\nrepeated until acknowledged"];
+    n6 [label=""];
+    n7 [label="1000BASE-T half and full duplex,\nport type, manual master or slave,\n11-bit seed"];
+    n8 [label=""];
+    n9 [label="Both ends pick the highest common\nmode and the master, then start\nlink_fail_inhibit_timer"];
+
+    { rank=same; e1; e2; note_h; }
+    { rank=same; a1; b1; n1; }
+    { rank=same; a2; b2; n2; }
+    { rank=same; a3; b3; n3; }
+    { rank=same; a4; b4; n4; }
+    { rank=same; a5; b5; n5; }
+    { rank=same; a6; b6; n6; }
+    { rank=same; a7; b7; n7; }
+    { rank=same; a8; b8; n8; }
+    { rank=same; a9; b9; n9; }
+
+    edge [arrowhead=none, style=dashed, color="#999999", weight=100];
+    e1 -> a1 -> a2 -> a3 -> a4 -> a5 -> a6 -> a7 -> a8 -> a9;
+    e2 -> b1 -> b2 -> b3 -> b4 -> b5 -> b6 -> b7 -> b8 -> b9;
+    note_h -> n1 -> n2 -> n3 -> n4 -> n5 -> n6 -> n7 -> n8 -> n9 [style=invis];
+
+    edge [arrowhead=normal, style=solid, color="#000000", weight=0];
+    a1 -> b1 [label="Base page, next page = 1"];
+    b2 -> a2 [label="Base page, next page = 1"];
+    a3 -> b3 [label="Base page, acknowledge = 1"];
+    b4 -> a4 [label="Base page, acknowledge = 1"];
+    a5 -> b5 [label="Message page, code 8"];
+    b6 -> a6 [label="Message page, code 8"];
+    a7 -> b7 [label="Unformatted pages 1 and 2"];
+    b8 -> a8 [label="Unformatted pages 1 and 2"];
+    a9 -> b9 [style=invis];
+}
