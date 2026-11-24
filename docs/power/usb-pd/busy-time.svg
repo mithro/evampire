@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="186" viewBox="0 0 680 186">
+<title>Processor busy time</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="186" fill="#ffffff"/>
+<rect x="30.0" y="60.0" width="410.5" height="50.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
+<text x="235.2" y="90.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">received message, 1589 µs</text>
+<rect x="440.5" y="60.0" width="50.4" height="50.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
+<rect x="490.9" y="60.0" width="142.6" height="50.0" rx="0" fill="#fbe5d6" stroke="#000000" stroke-width="1.0"/>
+<text x="562.2" y="90.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">GoodCRC, 552 µs</text>
+<text x="465.6" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">gap</text>
+<text x="465.6" y="46.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">≤ 195 µs</text>
+<line x1="30.0" y1="20.0" x2="633.5" y2="20.0" stroke="#000000" stroke-width="1.0" marker-end="url(#arr)" marker-start="url(#arr)"/>
+<text x="236.7" y="14.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">interrupts off: 2336 µs</text>
+<text x="30.0" y="134.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">Ethernet traffic arriving meanwhile at 1 Mbit/s: about 292 bytes</text>
+<text x="30.0" y="154.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#7f7f7f">Decoding a stored message only in the gap needs 69 × 10⁶ instructions/s instead.</text>
+<text x="650.0" y="174.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="end" font-weight="normal" fill="#7f7f7f">worst case: seven data objects at 270 kbit/s</text>
+</svg>
