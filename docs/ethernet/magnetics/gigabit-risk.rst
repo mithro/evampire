@@ -66,6 +66,22 @@ left out. For :math:`C_\text{w} = 16\ \text{nF}`, the time constant is
 
 That is 0.16 % of the power.
 
+:numref:`fig-magnetics-psd` shows how little of the spectrum lies below
+the corners.
+
+.. figure:: psd.svg
+   :name: fig-magnetics-psd
+   :alt: Graph of the power spectrum relative to DC in decibels against
+         frequency from 10 kHz to 250 MHz on a log scale. The
+         spectrum T sinc²(fT) with T = 8 ns is flat to beyond 10
+         MHz and falls to a null at 125 MHz. The region below the
+         99.5 kHz corner is shaded and holds 0.16 % of the power.
+         Dashed lines mark the corners at 15.9, 22.7, 48.2 and
+         99.5 kHz.
+
+   The power spectrum of the symbol stream, and the high-pass corners
+   of the coupling capacitors.
+
 Baseline wander
 ~~~~~~~~~~~~~~~
 
@@ -297,6 +313,19 @@ two in series. At 100 MHz, where the limit is 8.1 dB, the budget is
 13.7 pF. This is the whole budget, shared with the error of the
 transceiver's own termination. It limits how large the protection on the
 chip side can be.
+
+:numref:`fig-magnetics-rl-parasitic` shows the 12.8 pF case against the
+limit.
+
+.. figure:: rl-parasitic.svg
+   :name: fig-magnetics-rl-parasitic
+   :alt: Graph of return loss in decibels against frequency from 1 MHz to
+         100 MHz, with the 1000BASE-T limit shaded. The return
+         loss of a 100 Ω port with 12.8 pF across it falls from
+         about 48 dB at 1 MHz and touches the 16 dB limit at 40
+         MHz.
+
+   Return loss of a matched port with 12.8 pF across the pair.
 
 Surges and discharges pass the capacitors as fast edges, which the
 protection on the chip side must clamp. The options are on

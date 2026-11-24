@@ -94,6 +94,18 @@ From 40 MHz to 100 MHz the limit falls with frequency (:clause:`40.8.3.1`):
 At 100 MHz the limit is
 :math:`10 - 20 \times \log_{10} 1.25 = 10 - 1.9 = 8.1\ \text{dB}`.
 
+:numref:`fig-magnetics-rl-mask` plots the whole limit.
+
+.. figure:: rl-mask.svg
+   :name: fig-magnetics-rl-mask
+   :alt: Graph of return loss in decibels against frequency on a log scale
+         from 1 MHz to 100 MHz. The limit is flat at 16 dB from 1
+         MHz to 40 MHz, then falls to 8.1 dB at 100 MHz along 10 −
+         20 log10(f / 80 MHz). The region below the line is shaded
+         as not allowed.
+
+   The 1000BASE-T return-loss limit of :clause:`40.8.3.1`.
+
 The :wikipedia:`insertion loss <Insertion_loss>` of the magnetics is the
 signal lost in passing through them. Gigabit magnetics state at most 1 dB
 from 1 MHz to 100 MHz ([MAG-PULSE]_, electrical table; [MAG-WURTH]_,

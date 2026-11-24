@@ -160,6 +160,22 @@ With :math:`Z_0 = 100\ \Omega`:
 The capacitors alone then use the whole 16 dB budget, so real
 capacitors must be larger.
 
+:numref:`fig-magnetics-rl-caps` shows the return loss of the port for
+several capacitor values against the limit.
+
+.. figure:: rl-caps.svg
+   :name: fig-magnetics-rl-caps
+   :alt: Graph of return loss in decibels against frequency from 1 MHz to
+         100 MHz, with the 1000BASE-T limit shaded below 16 dB.
+         Each capacitor value gives a straight line rising with
+         frequency. At 1 MHz, 9.9 nF gives 16 dB, exactly on the
+         limit; 16 nF about 20 dB; 33 nF about 26 dB; 70 nF about
+         33 dB; and 100 nF about 36 dB.
+
+   Return loss of a capacitor-coupled port with an otherwise perfect
+   100 Ω termination, for several values of the capacitor in each
+   wire.
+
 Droop limit
 -----------
 
@@ -251,6 +267,20 @@ The last two rows come from 100BASE-TX. A value from
 above the droop limit with margin, and near the behaviour of standard
 magnetics. :doc:`gigabit-risk` shows what each value means for the
 received signal, and :doc:`isolation` how many high-voltage parts it takes.
+
+:numref:`fig-magnetics-cw-range` places the limits on one axis.
+
+.. figure:: cw-range.svg
+   :name: fig-magnetics-cw-range
+   :alt: A log axis of the capacitor in each wire from 5 nF to 150 nF, with
+         lower limits marked at 9.9 nF for return loss, 16 nF for
+         droop, 24 nF for the 100BASE-TX time constant with Power
+         over Ethernet, 30.4 nF for the 100BASE-TX phase angle,
+         and 70 nF for the same corner as standard magnetics. The
+         working range from 33 nF to 100 nF is shaded.
+
+   The limits of :numref:`tbl-magnetics-cap-size` and the working
+   range.
 
 On-chip capacitor area
 ----------------------

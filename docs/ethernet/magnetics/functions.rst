@@ -290,6 +290,17 @@ capacitor is nearly an open circuit and keeps the isolation. It sits across
 the isolation barrier, so it must withstand the test voltage
 (:ref:`magnetics-isolation`).
 
+:numref:`fig-magnetics-zc` plots the impedance against frequency.
+
+.. figure:: zc.svg
+   :name: fig-magnetics-zc
+   :alt: Graph of the impedance magnitude of a 1000 pF capacitor in ohms
+         against frequency, both on log scales, from 10 Hz to 100
+         MHz. The straight line falls from 3.2 MΩ at 50 Hz to 5.3
+         Ω at 30 MHz.
+
+   Impedance of the 1000 pF termination capacitor.
+
 .. _magnetics-choke:
 
 Common-mode choke
