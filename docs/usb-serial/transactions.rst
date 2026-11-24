@@ -128,13 +128,30 @@ Frames
 ------
 
 The host divides time into 1 ms *frames*. It starts each one with a
-start-of-frame (SOF) token that carries an 11-bit frame number; the interval
-is 1.000 ms ± 500 ns ([USBSER-USB2]_ section 7.1.12, section 8.4.3,
+start-of-frame (SOF) token that carries an 11-bit frame number
+(:numref:`fig-usbser-frames`); the interval is 1.000 ms ± 500 ns ([USBSER-USB2]_ section 7.1.12, section 8.4.3,
 Table 7‑9). A device does not reply to SOF. A full-speed device that has no
 use for timing may ignore the content, but the SOF traffic keeps it out of
 suspend ([USBSER-USB2]_ section 7.1.7.6). Because the frame interval comes
 from the host's accurate clock, a device can measure it to correct its own
 clock (see :doc:`timing`).
+
+.. wavedrom::
+   :caption: Frames of 1 ms, each started by a start-of-frame token, with
+             transactions in between (not to scale).
+   :name: fig-usbser-frames
+   :alt: Timing diagram: the bus carries an SOF token with frame number n,
+         an IN transaction and idle time, then an SOF with frame number
+         n+1, an OUT transaction and idle, then an SOF with frame number
+         n+2. A second row marks each frame as 1.000 ms ± 500 ns long.
+
+   {"signal": [
+     {"name": "bus", "wave": "5.3.2...5.3.2...5.",
+      "data": ["SOF n", "IN", "idle", "SOF n+1", "OUT", "idle", "SOF n+2"]},
+     {"name": "frame", "wave": "4.......4.......4.",
+      "data": ["frame n: 1.000 ms ± 500 ns", "frame n+1", "n+2"]}
+   ],
+   "config": {"hscale": 1.6}}
 
 Enumeration
 -----------
