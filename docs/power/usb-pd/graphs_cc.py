@@ -29,8 +29,8 @@ Every number comes from the page that shows the figure.
 SPDX-License-Identifier: Apache-2.0
 """
 
-from svgfig import (CABLE, FILL, GREY, INK, SNK, SNK_INK, Plot, line,
-                    polyline, rect, svg, text, write)
+from svgfig import (CABLE, CABLE_INK, FILL, GREY, INK, SNK, SNK_INK, Plot,
+                    line, polyline, rect, svg, text, write)
 
 
 def bar(p, xc, w, lo, hi, fill, labels=True, size=10, side="right"):
@@ -304,48 +304,49 @@ def rx_margin():
 
 def dead_battery():
     """CC voltage of the dead-battery Rd path against the source's pull-up
-    current, V_CC = I_Rp x R_s + V_GS with the overdrive neglected
-    (analogue.rst)."""
-    p = Plot(60, 30, 590, 280, (0, 380), (0, 2.6))
-    r_s = 2.0e3
+    current, V_CC = I_Rp x R_s + V_GS with the overdrive neglected, against
+    the source's thresholds (analogue.rst; Type-C Table 4-37)."""
+    p = Plot(60, 30, 590, 300, (0, 380), (0, 2.6))
     body = []
-    levels = [(64, 96, "default"), (165.6, 194.4, "1.5 A"),
-              (303.6, 356.4, "3.0 A")]
-    for lo, hi, name in levels:
-        body.append(rect(p.x(lo), p.top, p.x(hi) - p.x(lo), p.h, CABLE,
-                         "none"))
+    # (current range, lower threshold, upper threshold, margin, name)
+    levels = [(64, 96, 0.260, 1.321, 1.32, "default"),
+              (165.6, 194.4, 0.675, 1.441, 1.32, "1.5 A"),
+              (303.6, 356.4, 0.879, 2.432, 2.181, "3.0 A")]
+    for lo, hi, vlo, vhi, vm, name in levels:
+        body.append(rect(p.x(lo), p.y(vhi), p.x(hi) - p.x(lo),
+                         p.y(vlo) - p.y(vhi), SNK, "none"))
+        body.append(line(p.x(lo), p.y(vm), p.x(hi), p.y(vm), SNK_INK, 1.2,
+                         "4,2"))
         body.append(text(p.x((lo + hi) / 2), p.top + 14, name, 11,
                          "middle"))
     body.append(p.frame())
-    body += p.yticks([0, 0.5, 1.0, 1.32, 2.0, 2.181], "CC voltage (V)",
+    body += p.yticks([0, 0.5, 1.0, 1.5, 2.0, 2.5], "CC voltage (V)",
                      fmt="{:g}", grid=False)
-    # Limits: 1.32 V up to the 1.5 A level, 2.181 V at the 3.0 A level.
-    body.append(line(p.x(0), p.y(1.32), p.x(194.4), p.y(1.32), INK, 2.0))
-    body.append(line(p.x(303.6), p.y(2.181), p.x(356.4), p.y(2.181), INK,
-                     2.0))
-    body.append(text(p.x(4), p.y(1.32) - 6, "limit 1.32 V", 11))
-    body.append(text(p.x(300), p.y(2.181) - 6, "limit 2.181 V", 11))
-    for vt, dash, lab in ((0.85, None, "standard NMOS, Vt 0.85 V"),
-                          (0.61, None, "standard NMOS, Vt 0.61 V"),
-                          (0.08, "6,3", "native NMOS, Vt 0.08 V")):
-        pts = [(i, i * 1e-6 * r_s + vt) for i in (0, 380)]
-        body.append(polyline(p.pts(pts), SNK_INK, 1.8, dash))
-        body.append(text(p.x(200), p.y(200e-6 * r_s + vt) - 9, lab, 10,
-                         rotate=-9.5))
-    for i in (194.4, 356.4):
-        v = i * 1e-6 * r_s + 0.85
-        body.append(f'<circle cx="{p.x(i):.1f}" cy="{p.y(v):.1f}" r="3.5" '
-                    f'fill="{INK}"/>')
-        body.append(text(p.x(i) - 6, p.y(v) - 24, f"{i:g} µA: {v:.1f} V", 11,
-                         "end"))
+    lines = [(2.0e3, 0.85, INK, None, "standard, Vt 0.85 V, 2.0 kΩ"),
+             (2.0e3, 0.61, INK, "8,3,2,3", "standard, Vt 0.61 V, 2.0 kΩ"),
+             (5.0e3, 0.0, CABLE_INK, "6,3", "native, 5.0 kΩ"),
+             (2.0e3, 0.0, GREY, "2,3", "native, 2.0 kΩ: too low")]
+    for r_s, vgs, col, dash, lab in lines:
+        pts = [(i, i * 1e-6 * r_s + vgs) for i in (0, 380)]
+        pts = [(i, v) for i, v in pts]
+        if pts[-1][1] > 2.6:
+            pts[-1] = ((2.6 - vgs) / (r_s * 1e-6), 2.6)
+        body.append(polyline(p.pts(pts), col, 1.8, dash))
     body += p.xticks([0, 50, 100, 150, 200, 250, 300, 350],
                      "pull-up current I_Rp (µA)", grid=False)
-    y = p.bottom + 60
-    body.append(text(p.left, y, "R_s = 2.0 kΩ; overdrive neglected. Shaded: "
-                     "the pull-up current range of each level.", 12,
-                     fill=GREY))
-    return svg(680, int(y + 14), body, "Dead-battery Rd voltage")
-
+    y = p.bottom + 58
+    for k, (r_s, vgs, col, dash, lab) in enumerate(lines):
+        x0 = p.left + 300 * (k % 2)
+        yy = y + 18 * (k // 2)
+        body.append(line(x0, yy - 4, x0 + 30, yy - 4, col, 1.8, dash))
+        body.append(text(x0 + 36, yy, lab, 12))
+    y += 40
+    body.append(text(p.left, y, "Green: the window between the source's "
+                     "Ra and open thresholds; dashed: the margin targets.",
+                     12, fill=GREY))
+    body.append(text(p.left, y + 18, "Native lines drawn with V_GS = 0; "
+                     "overdrive neglected.", 12, fill=GREY))
+    return svg(680, int(y + 30), body, "Dead-battery Rd voltage")
 
 if __name__ == "__main__":
     write("cc-thresholds.svg", cc_thresholds())
