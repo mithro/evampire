@@ -224,11 +224,13 @@ correction.
 
 .. figure:: baseline-wander.svg
    :name: fig-phy-baseline-wander
-   :alt: Two graphs of level against time from 0 to 384 ns. Top, after the
-         coupling: three-level symbols whose dashed zero level drifts
-         down to about minus 0.7 during a shaded run of mostly plus 1
-         symbols, then recovers. Bottom, after baseline restoration: the
-         same symbols around a fixed zero level.
+   :alt: Two graphs of level against time from 0 to 384 ns. Bottom, after
+         baseline restoration: MLT-3 symbols stepping through 0, +1, 0
+         and −1 around a fixed zero level, with a shaded run in which zero
+         bits hold the line at +1 for 20 symbols. Top, the same symbols
+         after the coupling: during the run the dashed zero level drifts
+         down to about −0.9, and the signal sags towards it, then the
+         zero level recovers.
    :align: center
 
    Baseline wander: a coupling that blocks DC shifts the zero level during
