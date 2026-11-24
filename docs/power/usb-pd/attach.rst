@@ -362,8 +362,48 @@ Try.SNK, for a port that prefers to be the sink
      - 1100
      - Longest time in Try.SRC
 
-:numref:`tab-usbpd-try-timing` gives the limits. Both mechanisms act only
-during attach. After attach, two ports that support
+:numref:`tab-usbpd-try-timing` gives the limits, and
+:numref:`fig-usbpd-try` shows each mechanism when it succeeds. Both
+mechanisms act only during attach.
+
+.. wavedrom::
+   :caption: Try.SRC and Try.SNK when the partner, a dual-role port, gives
+             way, schematic and not to scale.
+   :name: fig-usbpd-try
+   :alt: Timing diagram in two parts. Try.SRC: the port leaves
+         AttachWait.SNK for Try.SRC and changes its CC from Rd to Rp; the
+         partner changes from Rp to Rd; after Rd has been stable for
+         tTryCCDebounce, 10 to 20 ms, the port enters Attached.SRC. Try.SNK:
+         the port leaves AttachWait.SRC for Try.SNK and changes from Rp to
+         Rd; the partner changes from Rd to Rp; after tDRPTry, 75 to 150 ms,
+         the port looks for Rp, and after tTryCCDebounce with VBUS present
+         it enters Attached.SNK.
+
+   {"signal": [
+     ["Try.SRC",
+      {"name": "port state", "wave": "=...=.......=.......",
+       "data": ["AttachWait.SNK", "Try.SRC", "Attached.SRC"]},
+      {"name": "port CC", "wave": "=...=...............", "data": ["Rd", "Rp"]},
+      {"name": "partner CC", "wave": "=....=..............",
+       "data": ["Rp", "Rd"]},
+      {"name": "timer", "wave": "x....=......x.......",
+       "data": ["tTryCCDebounce 10–20 ms"]}
+     ],
+     {},
+     ["Try.SNK",
+      {"name": "port state", "wave": "=...=..........=....",
+       "data": ["AttachWait.SRC", "Try.SNK", "Attached.SNK"]},
+      {"name": "port CC", "wave": "=...=...............", "data": ["Rp", "Rd"]},
+      {"name": "partner CC", "wave": "=.....=.............",
+       "data": ["Rd", "Rp"]},
+      {"name": "timer", "wave": "x...=.....=....x....",
+       "data": ["tDRPTry 75–150 ms", "tTryCCDebounce 10–20 ms"]},
+      {"name": "VBUS", "wave": "0.............1....."}
+     ]
+   ],
+   "config": {"hscale": 1.2}}
+
+After attach, two ports that support
 :term:`USB Power Delivery` can swap the power role with messages
 (:ref:`usbpd-power-role-swap`).
 
