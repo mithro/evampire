@@ -35,6 +35,22 @@ pins sampled at power-up [RGMII-DP83867]_ section 7.4.2,
 [RGMII-KSZ9031]_ section 3.10. evampire drives both of its transceivers from
 one pair of pins, with the two transceivers set to different addresses.
 
+:numref:`fig-rgmii-mdio-bus` shows the two wires shared by evampire's two
+transceivers.
+
+.. graphviz:: mdio-bus.dot
+   :name: fig-rgmii-mdio-bus
+   :caption: MDC and MDIO shared by the transceivers of ports A and B, with
+             the pull-up resistor on MDIO.
+   :alt: evampire on the left drives MDC, in blue, to transceiver A and
+         transceiver B on the right. MDIO, in red, joins evampire's
+         three-state driver to the three-state MDIO pin of each
+         transceiver, and a pull-up resistor connects it to VDDIO: 2.2 kΩ
+         for the DP83867, 1.0 kΩ to 4.7 kΩ for the KSZ9031RNX. Each
+         transceiver takes its address from strap pins; one pair of wires
+         reaches up to 32 transceivers.
+   :align: center
+
 .. _rgmii-mdc-rate:
 
 MDC clock rate
