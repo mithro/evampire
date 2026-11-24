@@ -225,8 +225,7 @@ happens when VBUS changes or when evampire itself supplies VBUS.
 Short-circuit and electrostatic discharge protection
 ----------------------------------------------------
 
-USB 2.0 asks a transceiver to withstand ([USBSER-USB2]_ section 7.1.1,
-Figure 7‑2):
+USB 2.0 asks a transceiver to withstand ([USBSER-USB2]_ section 7.1.1):
 
 * a continuous short of D+ or D− to VBUS, ground, the other data line or the
   cable shield, for at least 24 hours, while transmitting half the time, at
@@ -243,8 +242,9 @@ analysis of such shorts for the CC pins in
 :ref:`CC pin protection <usbpd-cc-protection>` applies to the data pins in
 the same way.
 
-If the pad's output stage is supplied from 3.3 V, a short to 5.25 V
-forward-biases the diode from the pad to its supply. The current is then
+If the pad's output stage is supplied from 3.3 V, a short to 5.25 V
+forward-biases the diode from the pad to its supply
+(:numref:`fig-usbser-short`). The current is then
 limited only by the series resistance:
 
 .. math::
@@ -276,7 +276,21 @@ limited only by the series resistance:
 
 This gives :math:`(5.25 - 3.3 - 0.6)\ \text{V} / 44\ \Omega = 31\ \text{mA}`
 to :math:`1.35\ \text{V} / 28\ \Omega = 48\ \text{mA}`, continuously for
-24 hours. The pad, its diode and the 3.3 V supply all have to accept this
+24 hours.
+
+.. graphviz:: analogue/short.dot
+   :name: fig-usbser-short
+   :caption: Current path of a short from VBUS to D+ into a pad supplied
+             from 3.3 V.
+   :alt: Diagram: VBUS at 5.25 V, shorted to D+, drives current through a
+         series resistance of 28 Ω to 44 Ω to the pad on evampire, then
+         through the forward-biased pad diode into the 3.3 V pad supply.
+         The output stage and receivers also connect to the pad. The
+         current is (5.25 − 3.3 − 0.6) V divided by 28 Ω to 44 Ω, 31 mA to
+         48 mA, continuously for 24 hours.
+   :align: center
+
+The pad, its diode and the 3.3 V supply all have to accept this
 current, or the pad has to block it, for example with an output stage whose
 wells follow the higher of the pad and supply voltages.
 
