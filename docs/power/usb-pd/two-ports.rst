@@ -1,15 +1,15 @@
 .. _usbpd-two-ports:
 
-Two ports and sharing the budget
-================================
+Two ports and budget sharing
+============================
 
 How a board with two USB Type-C ports uses them together, and how the
 software moves power between them while devices stay connected. The number
 of USB Type-C ports in each configuration is given in
 :ref:`board configurations <tab-power-board-configs>`.
 
-Two ports let the board bridge USB to USB
------------------------------------------
+Port role combinations
+----------------------
 
 Each USB Type-C port is a :term:`dual-role port`, so with two ports the
 board can work in more ways than with one:
@@ -28,8 +28,8 @@ Delivery allows when the software changes a USB port's share.
 
 .. _usbpd-sharing:
 
-The software moves power by changing a source's offer
-------------------------------------------------------
+Moving power between ports
+--------------------------
 
 A source can change what it offers while a device is attached, by sending a
 new Source_Capabilities message. The sink must then answer with a new
@@ -37,8 +37,8 @@ Request, because a Request always refers to the most recent offer
 (:pd:`Section 7.9.2`). The new contract is set up with the same exchange as
 the first one (see :ref:`usbpd-negotiation`).
 
-A port whose offer can change is a Managed Capability Port
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Managed Capability Port
+^^^^^^^^^^^^^^^^^^^^^^^
 
 USB Power Delivery describes every source port by three powers
 (:pd:`Section 3.2`; :pd:`Table 6.29 <x>`):
@@ -67,8 +67,8 @@ its *Port Guaranteed PDP* when a sink asks for it this way, and while a
 contract for the Port Guaranteed PDP is in place it must not reduce its
 offer (:pd:`Section 7.26.2.3`).
 
-Lowering an offer while a device is attached
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Lowering an offer
+^^^^^^^^^^^^^^^^^
 
 When the software must take power from a port to give it to the other, the
 steps on the port that gives it up are:
@@ -101,8 +101,8 @@ multi-port charger section of the USB Type-C specification still lists
 GotoMin as a way to reclaim power (:typec:`Section 4.8.6.2`), but a source
 cannot rely on a sink that follows R3.3 acting on it.
 
-Raising an offer, and moving power when a device is unplugged
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Raising an offer or unplugging
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Raising an offer needs no Alert: the source sends the larger
 Source_Capabilities and the sink requests again. A sink that wants more
@@ -123,8 +123,8 @@ ports (:typec:`Table 4-23`). It also requires that a shared port reclaiming
 power for a newly attached device uses offers and renegotiation, not a Hard
 Reset, ErrorRecovery or the Disabled state (:typec:`Section 4.8.6.1`).
 
-Each port has its own circuits; the software is shared
--------------------------------------------------------
+Per-port circuits and shared software
+-------------------------------------
 
 Each port needs its own CC circuits, because both ports must present their
 terminations and detect attach at the same time, and messages on the two

@@ -1,7 +1,7 @@
 .. _usbpd-power-translation:
 
-Turning Power over Ethernet power into USB offers
-=================================================
+USB offers from Power over Ethernet
+===================================
 
 How evampire's software turns the power granted by
 :term:`Power over Ethernet` into valid :term:`USB Power Delivery` source
@@ -13,8 +13,8 @@ page covers the "Ethernet in, USB out" mode first
 (:ref:`power-modes`). :doc:`../poe/index` explains how a class is detected
 and granted.
 
-The class sets the power at the input
--------------------------------------
+Input power from the class
+--------------------------
 
 A :term:`powered device` of a given class may draw up to a fixed average
 power at its input (:numref:`tab-usbpd-class-power`). That power,
@@ -129,8 +129,8 @@ down to 1 W. With two output ports, :math:`P_\text{out}` is shared first
 
 .. _usbpd-pd-power-rules:
 
-The power rules fix the offers for each power
----------------------------------------------
+Power rules
+-----------
 
 The USB Power Delivery specification sets which fixed voltages a source
 offers, and at what current, from its power
@@ -318,8 +318,8 @@ When the Power over Ethernet grant changes, for example after a Data Link
 Layer reallocation (:clause:`145.5`), the software recomputes the offers
 and sends new Source_Capabilities (:ref:`usbpd-building-offer`).
 
-A USB contract sets the highest Power over Ethernet class
----------------------------------------------------------
+Class from a USB contract
+-------------------------
 
 In the "USB in, Ethernet out" mode the translation runs the other way. The
 input power is the power of the USB contract, its voltage times its

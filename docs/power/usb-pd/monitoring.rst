@@ -1,14 +1,14 @@
 .. _usbpd-monitoring:
 
-Monitoring and limiting the power on each port
-==============================================
+Port power monitoring and limits
+================================
 
 What evampire must measure and limit on each USB Type-C port and on the
 board's power bus, derived from the USB Power Delivery rules. The circuits
 that do it are an open choice.
 
-The requirement
----------------
+Requirement
+-----------
 
 evampire measures the voltage and current of every power port and of the
 board's power bus, and enforces current and power limits that software sets
@@ -27,8 +27,8 @@ The converter pages already sense the same quantities for control and
 protection; :ref:`conv-protection` and :ref:`conv-fault-times` cover the
 converter side. This page covers what USB Power Delivery adds.
 
-What USB Power Delivery asks of the measurements
-------------------------------------------------
+Measurement ranges and steps
+----------------------------
 
 The ranges come from the largest voltages and currents a port can see; the
 steps from the finest limits it must check (:numref:`tab-usbpd-meas`).
@@ -87,11 +87,14 @@ measuring them.
 
 .. _usbpd-limiting:
 
-Hardware enforces the limits that software sets
------------------------------------------------
+Hardware limits
+---------------
 
-A source's over-current limit must not trip below the contract
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Software sets each limit, and hardware enforces it without waiting for the
+processor.
+
+Over-current limit
+^^^^^^^^^^^^^^^^^^
 
 A source must have over-current protection, a
 :wikipedia:`current limit <Current_limiting>` that switches the port off.
@@ -140,8 +143,8 @@ the sink must reach the new current before the shortest *tSrcTransition*
 current as soon as it has the PS_RDY, so the source raises its limit before
 it sends PS_RDY.
 
-A PPS source limits the current instead of switching off
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PPS current limit
+^^^^^^^^^^^^^^^^^
 
 A source with a :term:`programmable power supply <PPS>` offer has a
 current-limit mode. If the sink draws more than the operating current in
@@ -158,8 +161,8 @@ send a Hard Reset and must discharge VBUS to vSafe0V. A PPS source's current
 limit is therefore a regulation loop, part of the converter control, with a
 measurement accurate to ±150 mA.
 
-Over-voltage limits sit above the allowed tolerance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Over-voltage limit
+^^^^^^^^^^^^^^^^^^
 
 A sink must have over-voltage protection that does not act on any voltage
 the contract allows, *vSrcNew* plus *vSrcValid* (:pd:`Section 4.2.9.3`).
@@ -224,10 +227,11 @@ the time available is
 
 A faulty source can make VBUS rise faster, so this is an upper bound.
 
-Faults switch the port off in hardware and are then reported
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fault response
+^^^^^^^^^^^^^^
 
-:numref:`tab-usbpd-fault-times` lists the events, the response each needs
+A fault switches the port off in hardware, and the processor then reports
+it. :numref:`tab-usbpd-fault-times` lists the events, the response each needs
 and where the limit comes from.
 
 .. list-table:: Response needed for each event
@@ -287,8 +291,8 @@ The Alert message carries one bit for each kind of event (:pd:`Table 6.25`):
 * *Operating Condition Change*: a temperature warning, or a PPS source
   moving between constant-voltage and current-limit operation.
 
-The circuits are an open choice
--------------------------------
+Circuit options
+---------------
 
 The needs above can be met in several ways, and the choice is open:
 
