@@ -359,7 +359,8 @@ Fault response times
 --------------------
 
 :numref:`tab-conv-fault-times` gives the response time each fault needs and
-where it comes from.
+where it comes from, and :numref:`fig-conv-pse-template` draws the times
+of a power sourcing equipment port in current limit.
 
 .. list-table:: Fault response times
    :name: tab-conv-fault-times
@@ -423,6 +424,22 @@ For reference, the TPS23881 power sourcing equipment controller turns its
 switch off within 0.9 µs of its short-circuit threshold, 205 mV to 245 mV
 across a 0.2 Ω sense resistor, about 1.0 A to 1.2 A [CONV-TPS23881]_
 (Section 7.5, tD_off_SEN and Vshort).
+
+.. figure:: pse-template.svg
+   :name: fig-conv-pse-template
+   :alt: Graph of current against time, both on log scales from 1 µs to
+         1 s and 0.5 A to 100 A. The upper bound for the port current is
+         50 A up to 10 µs and 1.75 A from 8.2 ms; a dashed line joins the
+         two points, whose exact shape is in the cited source. A shaded
+         band from 50 ms to 75 ms marks overload removal. Below, bars show
+         that in current limit a Type 3 port holds power for at least
+         10 ms and a Type 4 port for at least 6 ms, and both remove it by
+         75 ms.
+   :align: center
+
+   Current and time limits of a power sourcing equipment port in a fault,
+   from :numref:`tab-conv-fault-times`; the shape between 10 µs and 8.2 ms
+   is drawn as a straight line.
 
 .. _conv-start-up:
 
