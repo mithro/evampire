@@ -315,7 +315,7 @@ In a synchronous converter the two switches of a half bridge must never be
 on together, or they short the input to ground (*shoot-through*). A
 transistor takes a few nanoseconds to turn off, so the controller leaves a
 gap, the :wikipedia:`dead time <Dead_time>`, between one switch turning off
-and the other turning on. During the gap the inductor current flows through
+and the other turning on (:numref:`fig-conv-dead-time`). During the gap the inductor current flows through
 the off switch's body diode, which has a larger voltage drop, so the gap
 should be as short as is safe.
 
@@ -324,6 +324,20 @@ dead time [CONV-LM5176]_ (Section 6.5, tDT1 and tDT2), and the LM5177
 measures about 20 ns to 23 ns with a 3.3 nF load [CONV-LM5177]_ (Section
 5.5). The LM5122 adapts the dead time to the measured switching
 [CONV-LM5122]_ (Features).
+
+.. figure:: dead-time.svg
+   :name: fig-conv-dead-time
+   :alt: Timing diagram: the high-side gate turns off, and after a shaded
+         gap the low-side gate turns on. The switch node falls from Vin
+         when the high-side switch turns off, goes one diode drop below
+         ground while the low-side switch's body diode carries the inductor
+         current during the gap, and returns to ground when the low-side
+         switch turns on. A note says that both gates high together would
+         short the input to ground.
+   :align: center
+
+   Gate signals and switch node of a buck half bridge around one dead
+   time (schematic).
 
 .. _conv-gate-drive:
 
