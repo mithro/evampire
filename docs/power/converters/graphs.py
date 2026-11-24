@@ -30,7 +30,7 @@ def boost_gain():
     for lo, hi, label in ((0.80, 0.90, "80–90 %"), (0.90, 0.96, "90–96 %")):
         s.rect(a.X(lo), a.Y(12), a.X(hi) - a.X(lo), a.Y(0) - a.Y(12),
                fill=FILL_ORANGE if lo < 0.85 else FILL_GREY, stroke="none")
-        s.text((a.X(lo) + a.X(hi)) / 2, a.Y(0.6), label, size=11,
+        s.text((a.X(lo) + a.X(hi)) / 2, a.Y(2.2), label, size=11,
                fill=ORANGE if lo < 0.85 else GREY, rotate=-90)
     s.text(a.X(0.79), a.Y(8.6), "LM5155 maximum\nduty-cycle settings",
            size=12, anchor="end", fill=ORANGE)
@@ -205,8 +205,12 @@ def fsw_tradeoff():
     for f, l in lpts:
         s.add(f'<circle cx="{a.X(f):.1f}" cy="{a.Y(l):.1f}" r="4" '
               f'fill="{BLUE}"/>')
-        s.text(a.X(f) + 6, a.Y(l) - 10, f"{l:g} µH", size=11, fill=BLUE,
-               anchor="start")
+        if f > 1e6:
+            s.text(a.X(f) - 8, a.Y(l) + 14, f"{l:g} µH", size=11, fill=BLUE,
+                   anchor="end")
+        else:
+            s.text(a.X(f) + 10, a.Y(l) - 14, f"{l:g} µH", size=11,
+                   fill=BLUE, anchor="start")
     ppts = [(f, 10 * 0.51 * f / 2.5e5) for f in (1e5, 2.2e6)]
     s.poly(a.P(ppts), stroke=ORANGE, dash="6 4")
     s.add(f'<circle cx="{a.X(2.5e5):.1f}" cy="{a.Y(5.1):.1f}" r="4" '
@@ -270,16 +274,17 @@ def regions():
         s.text(a.X(m) + 8, a.Y(m) + 8, lab, size=11, anchor="start")
     s.add(f'<circle cx="{a.X(1.297):.1f}" cy="{a.Y(0.229):.1f}" r="4" '
           f'fill="{ORANGE}"/>')
-    s.text(a.X(1.297), a.Y(0.229) + 16, "37→48: D = 0.229", size=11)
+    s.text(a.X(1.297) - 8, a.Y(0.229) - 12, "37→48: D = 0.229", size=11,
+           anchor="end")
     s.save(HERE / "regions.svg")
 
 
 def transition():
     """Hard-switched transition: voltage and current overlap."""
     s = Svg(560, 300)
-    a = Axes(s, (75, 30, 530, 230), (0, 100), (0, 60))
+    a = Axes(s, (110, 30, 530, 230), (0, 100), (0, 60))
     a.frame(xticks=[], yticks=[0, 2.125 * 10, 48], xlabel="time (schematic)",
-            ylabel="voltage, current",
+            ylabel="",
             yfmt=lambda v: {0: "0", 21.25: "2.125 A", 48: "48 V"}[v],
             grid=False)
     # Turn-on at 20..40 (tr) and turn-off at 60..80 (tf): current rises
@@ -292,12 +297,14 @@ def transition():
                fill=FILL_ORANGE, close=True)
     s.poly(a.P(v), stroke=BLUE)
     s.poly(a.P(i), stroke=GREEN)
-    s.text(a.X(8), a.Y(52), "switch voltage", size=11, fill=BLUE)
+    s.text(a.x0 + 6, a.Y(52), "switch voltage", size=11, fill=BLUE,
+           anchor="start")
     s.text(a.X(50), a.Y(25), "switch current", size=11, fill=GREEN)
     s.text(a.X(30), a.Y(14), "tr", size=11)
     s.text(a.X(70), a.Y(14), "tf", size=11)
     s.text(a.X(50), a.Y(34), "shaded: energy\nlost in each\ntransition",
            size=11, fill=ORANGE)
+    s.text(24, (a.y0 + a.y1) / 2, "voltage, current", size=13, rotate=-90)
     s.text(300, 282, "Psw = ½ × 48 V × 2.125 A × 40 ns × 250 kHz = 0.51 W",
            size=12)
     s.save(HERE / "transition.svg")

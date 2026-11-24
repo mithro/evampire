@@ -2,9 +2,9 @@
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
 <rect width="560" height="400" fill="#ffffff"/>
 <rect x="439.0" y="20.0" width="45.5" height="320.0" rx="0" fill="#fbe5d6" stroke="none" stroke-width="1.0"/>
-<text x="461.8" y="324.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle" transform="rotate(-90 461.8 324.0)">80–90 %</text>
+<text x="461.8" y="281.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle" transform="rotate(-90 461.8 281.3)">80–90 %</text>
 <rect x="484.5" y="20.0" width="27.3" height="320.0" rx="0" fill="#ececec" stroke="none" stroke-width="1.0"/>
-<text x="498.1" y="324.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle" transform="rotate(-90 498.1 324.0)">90–96 %</text>
+<text x="498.1" y="281.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle" transform="rotate(-90 498.1 281.3)">90–96 %</text>
 <text x="434.4" y="103.7" font-size="12" text-anchor="end" font-weight="normal" fill="#c55a11" dominant-baseline="middle">LM5155 maximum</text>
 <text x="434.4" y="117.7" font-size="12" text-anchor="end" font-weight="normal" fill="#c55a11" dominant-baseline="middle">duty-cycle settings</text>
 <line x1="75.0" y1="20.0" x2="75.0" y2="340.0" stroke="#e4e4e4" stroke-width="1"/>
