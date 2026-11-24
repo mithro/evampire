@@ -148,6 +148,23 @@ each fixed USB Power Delivery voltage.
      - 0.111
      - 1.12
 
+:numref:`fig-conv-boost-gain` plots these points on the gain curve, which
+steepens as :math:`D` approaches 1.
+
+.. figure:: boost-gain.svg
+   :name: fig-conv-boost-gain
+   :alt: Graph of voltage gain against duty cycle from 0 to 1. The curve
+         1 over (1 minus D) starts at 1, passes 2 at D = 0.5 and rises
+         steeply above D = 0.8. Points mark 48 V in at D = 0.111 (gain
+         1.12), 36 V at 0.333 (1.50), 28 V at 0.481 (1.93), 20 V at 0.630
+         (2.70), 15 V at 0.722 (3.60), 9 V at 0.833 (6.00) and 5 V at 0.907
+         (10.80). Shaded bands mark the LM5155 maximum duty-cycle ranges of
+         80 % to 90 % and 90 % to 96 %.
+   :align: center
+
+   Boost voltage gain against duty cycle, with the fixed USB voltages of
+   :numref:`tab-conv-boost-duty` raised to 54 V.
+
 At high duty cycles the off time, during which all the energy is passed to
 the output, becomes short. The current in S2 and the output capacitor then
 comes in short, high pulses, and the losses in the parts' resistances rise.
