@@ -313,7 +313,8 @@ gives a short description and a link to the full explanation.
       issuing fewer class events, when power sourcing equipment cannot
       supply the requested class. The name comes from the Ethernet
       Alliance; the standard describes it without naming it
-      (:clause:`Table 145-11 <145>`, see :ref:`poe-demotion`).
+      (:clause:`145.2.8.1`, :clause:`Table 145-11 <145>`, see
+      :ref:`poe-demotion`).
 
    Power over Ethernet
    PoE

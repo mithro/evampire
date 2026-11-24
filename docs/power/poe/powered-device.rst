@@ -280,10 +280,10 @@ highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
 :clause:`Table 145-28 <145>`). Autoclass only lets the power sourcing
 equipment allocate less than the assigned class: the measured power plus a
-margin, up to the power of the assigned class (:clause:`145.2.8`). The
-powered device then draws no more than it drew during the measurement,
-unless it negotiates more over LLDP, up to its requested class
-(:clause:`145.3.8.2`).
+margin, up to the power of the assigned class (:clause:`145.2.8`). If the
+powered device drew more than class 1 power during the measurement, it then
+draws no more than the measured power, unless it negotiates more over
+LLDP, up to its requested class (:clause:`145.3.8.2`).
 
 Turn on with hysteresis
 -----------------------
@@ -335,11 +335,11 @@ its class power from 50 ms. Only from 80 ms may a powered device of
 class 4 to 8 draw the power of its assigned class.
 
 Under the :clause:`33` rules, a Type 2 powered device likewise draws less
-than the inrush current limit from 50 ms until 80 ms after turn-on, and no
-more than the class 3 peak power, 14.4 W (:clause:`33.3.7.3`,
-:clause:`Table 33-18 <33>`). Until 2-event Physical Layer classification
-or Data Link Layer classification has completed, it keeps to the Type 1
-limits, 13 W (:clause:`33.3.5.2`).
+than the inrush current limit from 50 ms until 80 ms after turn-on. When
+it has learned that the power sourcing equipment is Type 2, it draws no
+more than the class 3 peak power, 14.4 W, in that window; otherwise it
+keeps to the Type 1 limits from 50 ms (:clause:`33.3.7.3`,
+:clause:`Table 33-18 <33>`, :ref:`poe-classification`).
 
 Charging the capacitor at a constant current takes:
 

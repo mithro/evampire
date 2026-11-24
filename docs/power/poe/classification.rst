@@ -51,7 +51,8 @@ Type 3 and Type 4 rows from :clause:`145.2.8`, :clause:`145.3.6` and
      - As many class events as the assigned class needs, up to 4 or 5
      - Optional
    * - Type 1 powered device
-     - Class signature optional, class 0 without one
+     - Class signature 0 to 3 in 1 or 2 class events; class 0 is the
+       default
      - Optional
    * - Type 2 powered device
      - Class signature 4 in each of 2 class events
@@ -72,9 +73,11 @@ Type 3 and Type 4 rows from :clause:`145.2.8`, :clause:`145.3.6` and
 The rules for power sourcing equipment differ by type:
 
 * Type 2 power sourcing equipment implements 2-event Physical Layer
-  classification, Data Link Layer classification, or both; one class event
-  without Data Link Layer classification is not allowed
-  (:clause:`Table 33-8 <33>`, :clause:`33.2.6`).
+  classification, with or without Data Link Layer classification, or
+  1-event Physical Layer classification with Data Link Layer
+  classification. Data Link Layer classification alone, or one class event
+  without it, is not allowed (:clause:`Table 33-8 <33>`,
+  :clause:`33.2.6`).
 * When the first class event shows class signature 4, Type 2 equipment may
   skip the second only if it implements Data Link Layer classification. It
   may then give class 0 power, 15.4 W at its output, until mutual
@@ -84,9 +87,10 @@ The rules for power sourcing equipment differ by type:
 * Type 3 and Type 4 power sourcing equipment must perform multiple-event
   Physical Layer classification, and must be able to assign the highest
   class it can support that way (:clause:`145.2.8`). It therefore gives
-  full class power without LLDP. It issues one class event when the
-  powered device requests class 1 to 3, or when it can support no more
-  than class 3 (:clause:`Table 145-11 <145>`).
+  full class power without LLDP. It issues no more class events than the
+  class it can support needs (:clause:`145.2.8.1`): one when the powered
+  device requests class 0 to 3, or when it can support no more than
+  class 3 (:clause:`Table 145-11 <145>`).
 * Data Link Layer classification is optional for Type 3 and Type 4 power
   sourcing equipment (:clause:`145.2.8`, :clause:`145.5`).
 
@@ -167,10 +171,9 @@ class 5 to 8 shows class signature 4 in the first two class events
 (:numref:`tab-poe-request`), so Type 1 and Type 2 power sourcing equipment
 sees a class 4 powered device.
 
-Type 1 power sourcing equipment never gives more than 13 W, and Type 2
-equipment that issues one class event gives no more until LLDP raises the
-allocation. Only Type 2 equipment that issues two class events, and Types 3
-and 4, give full class power from Physical Layer classification alone.
+For a powered device that requests class 4 or higher, only Type 2
+equipment that issues two class events, and Types 3 and 4, give the power
+of class 4 or higher without LLDP.
 
 .. _poe-demotion:
 
@@ -180,8 +183,8 @@ Fewer class events demote the powered device
 The assigned class is the lower of the requested class and the class that
 the number of class events allows (:numref:`tab-poe-events`). A power
 sourcing equipment that cannot supply the requested class, because of its
-type or its power budget, issues fewer class events
-(:clause:`Table 145-11 <145>`). The standard has no name for this; the
+type or its power budget, issues fewer class events (:clause:`145.2.8.1`,
+:clause:`Table 145-11 <145>`). The standard has no name for this; the
 Ethernet Alliance overview calls it :term:`power demotion` [POE-EA-BT]_
 (Section 5).
 
@@ -192,9 +195,10 @@ underpowered (:clause:`145.3.6`, :ref:`poe-pd-dll`).
 
 Over LLDP a demoted powered device can ask again for up to its requested
 class, and the power sourcing equipment grants it if its budget allows. It
-cannot ask for more than its requested class: its request is limited to
-the power of that class (:clause:`145.5.3.3.1`, variable
-``pd_dllmax_value``).
+cannot ask for more than its requested class: the variable
+``pd_dllmax_value`` limits its request to the power of that class for
+classes 1 to 7, and to 99.9 W for class 8 (:clause:`145.5.3.3.1`,
+:clause:`145.3.8.2.1`).
 Autoclass only lowers the allocation (:ref:`autoclass <poe-autoclass>`).
 
 Before classification is complete, and in the first 80 ms after turn-on,
@@ -209,13 +213,14 @@ following are reference examples of products, not evidence of what the
 standard requires:
 
 * Cisco Catalyst 9300 switches in 802.3at mode first allocate 15.4 W to
-  class 0, 3 and 4 powered devices. A class 4 device gets up to 30 W only
-  by asking over CDP or LLDP [POE-CISCO-9300]_ (PoE Switch Models).
-  Cisco's protocol, CDP, is not part of the standard.
+  class 0, 3 and 4 powered devices. A class 4 device gets up to 30 W by
+  asking over CDP or LLDP, unless the port is set to issue two class
+  events [POE-CISCO-9300]_ (IEEE 802.3at). Cisco's protocol, CDP, is not
+  part of the standard.
 * On Catalyst 9200 and 9300 switches the per-port command
   ``power inline port 2-event`` makes the switch allocate 30 W to class 4
-  from Physical Layer classification [POE-CISCO-9200]_ (Third-party
-  Powered Device Scenarios).
+  from Physical Layer classification [POE-CISCO-9300]_ (IEEE 802.3at)
+  [POE-CISCO-9200]_ (Third-party Powered Device Scenarios).
 * Cisco switches that support Type 3 can be in 802.3at mode by default. In
   802.3bt mode they allocate the full class power from Physical Layer
   classification [POE-CISCO-9300]_ [POE-CISCO-9200]_.
@@ -226,13 +231,13 @@ standard requires:
 * Juniper EX switches in class mode allocate by class, and LLDP refines
   the allocation [POE-JUNIPER-POE]_ (Power Management Modes).
 * Midspan injectors such as the Microchip PD-9001GR use 2-event
-  classification and guarantee 30 W without LLDP [POE-PD-9001GR]_.
+  classification and supply 30 W [POE-PD-9001GR]_.
 
 A powered device that shows class signatures but does not answer LLDP
-therefore gets 13 W from the first kind of switch. One that relies on LLDP
-gets only class power from equipment without Data Link Layer
-classification, such as a midspan injector. Full power from both needs
-both methods.
+therefore gets 13 W from the first kind of switch. One that shows a lower
+class signature and relies on LLDP to raise it gets only the power of that
+class from equipment without Data Link Layer classification, such as a
+midspan injector. Full power from both needs both methods.
 
 Summaries of the standard can hide this. The power management row of the
 comparison table in :wikipedia:`Power over Ethernet <Power_over_Ethernet>`
@@ -243,24 +248,16 @@ power sourcing equipment may rely on one class event and LLDP.
 evampire uses both methods in both roles
 ----------------------------------------
 
-:ref:`req-poe-classification` sets the requirement. It is carried out as
-follows.
+:ref:`req-poe-classification` sets what evampire does in each role. These
+pages describe how:
 
 As a powered device
-   The start-up sequencer shows the class signatures of the requested
-   class in every class event, two for Type 2 power sourcing equipment and
-   up to five for Type 4 (:doc:`startup`). The software then takes part in
-   Data Link Layer classification over LLDP (:doc:`lldp`). Until LLDP
-   raises the allocation, the board stays within the assigned class, or
-   within 13 W when Type 2 power sourcing equipment issued one class event
-   (:numref:`tab-poe-class-outcome`).
+   The start-up sequencer shows the class signatures (:doc:`startup`), and
+   the software takes part in the LLDP exchange (:doc:`lldp`).
 As power sourcing equipment
-   The software issues as many class events as the requested class needs
-   and the power budget allows (:doc:`power-sourcing`). A powered device
-   without LLDP therefore receives the full power of its assigned class. It
-   also answers LLDP requests in steps of 0.1 W, and raises a demoted
-   powered device up to its requested class when the budget allows
-   (:doc:`sharing`).
+   The software runs the class events (:doc:`power-sourcing`), answers
+   LLDP requests (:doc:`lldp`) and decides each allocation from the power
+   budget (:doc:`sharing`).
 
 Open questions
 --------------

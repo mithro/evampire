@@ -285,10 +285,9 @@ As a :term:`powered device`, evampire:
 * takes part in Data Link Layer classification over LLDP once the link is
   up (:clause:`145.5`), which Type 2 powered devices and powered devices
   requesting class 4 or higher must do;
-* keeps the board within its assigned class, set by the number of class
-  events, until LLDP raises the allocation. That includes 13 W when Type 2
-  power sourcing equipment issues one class event, and a demoted class
-  when it issues fewer events than the requested class needs;
+* keeps the board within the power it has been given until LLDP raises
+  the allocation, including after one class event from Type 2 power
+  sourcing equipment and after demotion (:ref:`poe-class-outcome`);
 * keeps within the start-up limits before classification is complete and
   in the first 80 ms after turn-on (:ref:`poe-pd-inrush`);
 * asks over LLDP for up to its requested class when it has been given
@@ -299,8 +298,8 @@ As :term:`power sourcing equipment`, evampire:
 * runs multiple-event Physical Layer classification, issuing as many class
   events as the requested class needs and the power budget allows: up to
   two as Type 2, and up to four or five as Type 3 or Type 4
-  (:clause:`145.2.8`). A powered device without LLDP then receives the full
-  power of its assigned class;
+  (:clause:`33.2.6.2`, :clause:`145.2.8`). A powered device without LLDP
+  then receives the full power of its assigned class;
 * never relies on one class event and LLDP to grant class 4, although
   :clause:`33.2.6.2` allows it for Type 2;
 * answers LLDP power requests, allocating power in steps of 0.1 W within
