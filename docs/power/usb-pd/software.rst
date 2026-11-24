@@ -515,8 +515,34 @@ The third option is to serve one port at a time and let the other port's
 partner retry. A sender that receives no GoodCRC within tReceive, 0.9 ms to
 1.1 ms, sends the message again, up to nRetryCount = 2 times
 (:pd:`Table 7.10`, :pd:`Table 7.12`, :pd:`Section 7.31.1`). Each collision
-then costs about 1 ms. Cable plugs do not retry, so a lost message from a
+then costs about 1 ms (:numref:`fig-usbpd-two-port-retry`). Cable plugs do
+not retry, so a lost message from a
 cable is not sent again (:pd:`Section 7.31.1`).
+
+.. wavedrom::
+   :caption: Serving one port at a time: a message on port B that arrives
+             while port A is served goes unanswered and is retried,
+             schematic and not to scale.
+   :name: fig-usbpd-two-port-retry
+   :alt: Timing diagram. A message arrives on port A and the processor
+         answers it with GoodCRC. A message on port B arrives during port
+         A's message and is not answered. After tReceive, 0.9 to 1.1 ms,
+         port B's partner sends it again, and the processor answers the
+         retry with GoodCRC.
+
+   {"signal": [
+     {"name": "port A in", "wave": "z=......z.................",
+      "data": ["message"]},
+     {"name": "port A out", "wave": "z........=.z..............",
+      "data": ["GoodCRC"]},
+     {"name": "port B in", "wave": "z...=.....z.....=.....z...",
+      "data": ["message, not answered", "retry"]},
+     {"name": "port B timer", "wave": "x.........=.....x.........",
+      "data": ["tReceive 0.9–1.1 ms"]},
+     {"name": "port B out", "wave": "z.....................=.z.",
+      "data": ["GoodCRC"]}
+   ],
+   "config": {"hscale": 1.1}}
 
 .. _usbpd-helpers:
 
