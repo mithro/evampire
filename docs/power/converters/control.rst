@@ -265,7 +265,19 @@ for example, has a soft-start period of 400 µs to 800 µs
 [CONV-TPS23753A]_ (Section 7.5), and the LM5177 sets it with a capacitor
 [CONV-LM5177]_ (Section 8.2.2.9). Soft start also limits the current
 drawn from the input during start-up, which matters on a Power over
-Ethernet input with its inrush limit (:doc:`../poe/index`).
+Ethernet input with its inrush limit (:doc:`../poe/index`). :numref:`fig-conv-soft-start` compares
+a start without and with soft start.
+
+.. figure:: soft-start.svg
+   :name: fig-conv-soft-start
+   :alt: Two pairs of traces. Without soft start the inductor current runs
+         at the current limit until the output is charged, and the output
+         voltage overshoots its final value and rings. With soft start the
+         output voltage rises along a ramp to its final value and the
+         inductor current stays below the limit.
+   :align: center
+
+   Start-up without and with soft start (schematic).
 
 .. _conv-protection:
 
