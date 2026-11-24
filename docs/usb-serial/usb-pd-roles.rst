@@ -51,8 +51,23 @@ Data role swap
 A data role swap is a USB Power Delivery message exchange, DR_Swap, that
 exchanges DFP and UFP and nothing else: VBUS, the CC resistors and VCONN
 stay as they are (:pd:`Section 6.3.9`; :typec:`Table 4-13`).
-:ref:`Data roles and DR_Swap <usbpd-data-roles>` describes the message
-sequence.
+:numref:`fig-usbser-dr-swap` shows the exchange with evampire as source,
+and :ref:`Data roles and DR_Swap <usbpd-data-roles>` describes the
+message rules.
+
+.. graphviz:: usb-pd-roles/dr-swap.dot
+   :name: fig-usbser-dr-swap
+   :caption: A data role swap with evampire as source: the data roles
+             change and the power roles do not.
+   :alt: Sequence diagram between evampire, the source and DFP, and a
+         laptop, the sink and UFP. Before the swap evampire has its pull-up
+         off and D+ and D− undriven. evampire sends DR_Swap, the laptop
+         answers GoodCRC and then Accept (or Reject or Wait), and evampire
+         answers GoodCRC. evampire is then UFP and turns its pull-up on when
+         VBUS is present; the laptop is DFP, the USB host. VBUS, Rp and Rd,
+         and VCONN are unchanged. On Reject, evampire stays DFP with D+ and
+         D− undriven and its pull-up off.
+   :align: center
 
 The USB Type-C specification names a port that supplies power but cannot be
 a USB host a *sourcing device*. Such a port must support USB Power Delivery
