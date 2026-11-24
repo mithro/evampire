@@ -1,0 +1,44 @@
+// A custom output stage that survives a 5.25 V short on the pad: the
+// PMOS pull-up's n-well, and its gate when off, follow the higher of the
+// pad and the 3.3 V supply, so neither its drain diode nor its channel
+// can conduct from the pad into the supply.
+//
+// Fixed grid (positions in inches): supply at the top (y=3.0), pad on the
+// right (x=5.8), ground at the bottom (y=0.2).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph custom_stage {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.5,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    vdd  [pos="3.0,3.0!", width=1.4, label="3.3 V supply", fillcolor="#dbe8f5"];
+    pmos [pos="3.0,2.0!", width=1.9, height=0.6,
+          label="PMOS pull-up, 6 V device,\nn-well and gate follow\nthe higher voltage", fillcolor="#fbe5d6"];
+    nmos [pos="3.0,0.95!", width=1.9, label="NMOS pull-down,\n6 V device", fillcolor="#fbe5d6"];
+    sel  [pos="0.9,2.0!", width=1.55, height=0.6,
+          label="well selector:\nhigher of pad\nand supply", fillcolor="#e2f0d9"];
+    pad  [pos="5.8,1.5!", width=0.9, label="pad\n(D+ or D−)", fillcolor="#ffffff"];
+    vb   [pos="5.8,2.7!", width=1.2, label="short to VBUS,\n5.25 V", fillcolor="#f4cccc"];
+
+    node [shape=plaintext, style="", fontsize=10, width=1.6, height=0.2];
+    g   [pos="3.0,0.05!", width=0.8, label="ground"];
+    nt  [pos="3.0,-0.45!", width=6.0, height=0.35,
+         label="with the n-well and gate fixed at 3.3 V, the drain-to-well diode\nand the channel would conduct from the pad into the supply"];
+
+    node [shape=point, width=0.07, height=0.07, label="", style=filled, fillcolor=black];
+    n   [pos="4.5,1.5!"];
+    k1  [pos="3.0,1.5!", width=0.01];
+    gb  [pos="3.0,0.2!", width=0.01];
+    k2  [pos="0.9,1.5!", width=0.01];
+    k3  [pos="0.9,3.0!", width=0.01];
+
+    vdd -- pmos -- k1 -- nmos -- gb;
+    k1 -- n -- pad;  pad -- vb [style=dashed, color="#c0392b"];
+    sel -- pmos [style=dashed];  k2 -- sel [style=dashed];  k2 -- k1 [style=dashed];
+    vdd -- k3 [style=dashed];  k3 -- sel [style=dashed];
+}

@@ -438,6 +438,22 @@ Where the standard cells fall short, the process allows custom circuits:
 * *External parts* for the series resistors, the pull-up and the protection,
   in any combination with the on-chip blocks.
 
+:numref:`fig-usbser-custom-stage` shows one way to arrange the wells of a
+custom output stage so that a 5.25 V short is blocked.
+
+.. graphviz:: analogue/custom-stage.dot
+   :name: fig-usbser-custom-stage
+   :caption: A custom output stage whose PMOS n-well and gate follow the
+             higher of the pad and supply voltages.
+   :alt: Schematic: a PMOS pull-up from the 3.3 V supply and an NMOS
+         pull-down to ground, both 6 V devices, drive the pad. A short can
+         bring VBUS at 5.25 V onto the pad. A well selector, connected to the
+         supply and the pad, puts the PMOS n-well and its off-state gate at
+         the higher of the two. With the n-well and gate fixed at 3.3 V,
+         the drain-to-well diode and the channel would conduct from the pad
+         into the supply.
+   :align: center
+
 Open questions
 --------------
 
