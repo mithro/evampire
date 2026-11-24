@@ -519,7 +519,8 @@ For reference, in the TPS23753A [CONV-TPS23753A]_ (Section 8.4.6.1):
    winding takes over, and must not fall by more than the 3.3 V to 3.7 V
    hysteresis before then (Section 7.5, UVLO_1 and UVLO_H).
 
-:numref:`fig-conv-start-path` shows this start-up path.
+:numref:`fig-conv-start-path` shows this start-up path and
+:numref:`fig-conv-start-timeline` the capacitor voltage through it.
 
 .. graphviz:: start-path.dot
    :name: fig-conv-start-path
@@ -545,6 +546,20 @@ with the symbols in :numref:`tab-conv-sym-start`. With the TPS23753A's
 800 µs soft start and 3.5 V hysteresis, :math:`I = 0.58 + 2.48 = 3.06` mA
 and :math:`C_\text{hold} \ge 3.06 \times 10^{-3} \times 800 \times 10^{-6} / 3.5
 = 0.70` µF.
+
+.. figure:: start-timeline.svg
+   :name: fig-conv-start-timeline
+   :alt: Hold capacitor voltage against time, schematic. During the inrush
+         period the converter is held off and the voltage is zero. The
+         current source then charges the capacitor up to the turn-on
+         threshold band of 8.65 V to 9.3 V. The source turns off and the
+         converter starts with an 800 µs soft start, while the voltage
+         droops by less than the 3.3 V to 3.7 V hysteresis. A winding or
+         the output then takes over and the voltage rises again.
+   :align: center
+
+   Hold capacitor voltage through a powered-device start-up, with the
+   TPS23753A thresholds (schematic, not to scale).
 
 .. list-table:: Symbols for the start-up supply
    :name: tab-conv-sym-start
