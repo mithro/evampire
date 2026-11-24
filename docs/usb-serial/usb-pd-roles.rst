@@ -93,7 +93,8 @@ Pull-up control
 
 The device connects its D+ pull-up to announce itself and must not drive
 current into D+ while VBUS is absent ([USBSER-USB2]_ section 7.1.5.1). On
-evampire the pull-up is switched by software when three conditions hold:
+evampire the pull-up is switched by software when three conditions hold
+(:numref:`fig-usbser-pullup`):
 the port is attached, its data role is UFP, and VBUS is present, whether
 the other end or evampire supplies it.
 
@@ -111,7 +112,35 @@ Two USB Power Delivery events change VBUS while the cable stays attached:
 A Hard Reset is different: VBUS goes to 0 V and the data roles return to
 DFP for the port with Rp, the source, and UFP for the port with Rd, the
 sink (:pd:`Section 7.1.3`). The USB connection ends and, after the reset, a sourcing evampire
-swaps to UFP again.
+swaps to UFP again. :numref:`fig-usbser-pullup` follows the pull-up
+through these events.
+
+.. wavedrom::
+   :caption: VBUS, the roles and the pull-up of a sourcing evampire through
+             a data role swap, a voltage change, a Hard Reset and a power
+             role swap (not to scale).
+   :name: fig-usbser-pullup
+   :alt: Timing diagram. evampire attaches as source with VBUS at 5 V, as
+         DFP and with its pull-up off. After DR_Swap it is UFP and turns
+         the pull-up on. VBUS changes from 5 V to 20 V and the pull-up stays
+         on. A Hard Reset takes VBUS to 0 V, returns evampire to DFP and
+         turns the pull-up off. VBUS returns to 5 V, a new DR_Swap makes
+         evampire UFP, and the pull-up turns on again. A power role swap
+         dips VBUS and makes evampire the sink, and the pull-up stays on.
+
+   {"signal": [
+     {"name": "event", "wave": "3.4.x.5.6.x.4.x.7.",
+      "data": ["attach", "DR_Swap", "5 V to 20 V", "Hard Reset",
+               "DR_Swap", "PR_Swap"]},
+     {"name": "VBUS", "wave": "=......==.=.....==",
+      "data": ["5 V", "20 V", "0 V", "5 V", "dip", "5 V"]},
+     {"name": "power role", "wave": "=................=",
+      "data": ["source", "sink"]},
+     {"name": "data role", "wave": "=..=....=....=....",
+      "data": ["DFP", "UFP", "DFP", "UFP"]},
+     {"name": "pull-up", "wave": "0...1...0.....1..."}
+   ],
+   "config": {"hscale": 1.3}}
 
 Two USB Type-C ports
 --------------------
