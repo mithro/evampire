@@ -52,7 +52,7 @@ def vline(p, x, label, y_text, anchor="start", dash="4,3"):
 
 
 def vbus_transition():
-    t_step, t_psrdy = 40, 140        # example event times (ms)
+    t_step, t_psrdy = 40, 210        # example event times (ms)
     pv = Plot(60, 40, 600, 220, (-100, 600), (0, 11))
     pi = Plot(60, 320, 600, 130, (-100, 600), (0, 2.5))
     body = []
@@ -71,20 +71,13 @@ def vbus_transition():
     body += vline(pv, 25, "", 0)
     body += vline(pv, t_psrdy, "PS_RDY", pv.top - 6, "middle", dash=None)
     body += vline(pv, 325, "", 0)
-    body.append(text(pv.x(25) + 4, pv.y(2.2), "tSrcTransition ≥ 25 ms:",
-                     11))
-    body.append(text(pv.x(25) + 4, pv.y(2.2) + 14,
-                     "no change before this", 11))
-    body.append(text(pv.x(325) + 4, pv.y(2.2), "tSrcTransReq:", 11))
-    body.append(text(pv.x(325) + 4, pv.y(2.2) + 14, "PS_RDY by 325 ms", 11))
-    body.append(text(pv.x(500), pv.y(2.2), "tPSTransition", 11, "middle"))
-    body.append(text(pv.x(500), pv.y(2.2) + 14, "450–550 ms:", 11,
-                     "middle"))
-    body.append(text(pv.x(500), pv.y(2.2) + 28, "sink sends Hard Reset", 11,
-                     "middle"))
+    for k, s in enumerate(("tSrcTransition", "≥ 25 ms: no", "change before")):
+        body.append(text(pv.x(25) + 4, pv.y(3.2) + 16 * k, s, 11))
+    for k, s in enumerate(("tSrcTransReq:", "PS_RDY by", "325 ms")):
+        body.append(text(pv.x(325) + 4, pv.y(3.2) + 16 * k, s, 11))
+    for k, s in enumerate(("tPSTransition", "450–550 ms:", "sink sends", "Hard Reset")):
+        body.append(text(pv.x(500), pv.y(7.0) + 16 * k, s, 11, "middle"))
     body.append(text(pv.x(t_step) + 6, pv.y(7.0), "≤ 30 mV/µs", 11))
-    body.append(text(pv.x(160), pv.y(10.4),
-                     "9 V ± 5 %, and a further 0.5 V while settling", 11))
     # Sink current.
     body.append(pi.frame())
     body += pi.yticks([0, 0.5], "sink current (A)")
@@ -97,9 +90,9 @@ def vbus_transition():
     body += vline(pi, 15, "", 0)
     body += vline(pi, t_psrdy, "", 0, dash=None)
     body.append(text(pi.x(-96), pi.y(1.5) - 6, "old contract", 11))
-    body.append(text(pi.x(20), pi.y(0.5) - 20,
-                     "iSnkStdby ≤ 0.5 A, recommended within", 11))
-    body.append(text(pi.x(20), pi.y(0.5) - 6, "tSnkStdby, 15 ms", 11))
+    for k, s in enumerate(("iSnkStdby ≤ 0.5 A,", "recommended within",
+                           "tSnkStdby, 15 ms")):
+        body.append(text(pi.x(20), pi.y(0.5) - 38 + 16 * k, s, 11))
     body.append(text(pi.x(t_psrdy) + 14, pi.y(2.0) - 6, "new contract", 11))
     body += pi.xticks([0, 100, 200, 300, 400, 500, 600],
                       "time after Accept (ms)", grid=False)
@@ -116,7 +109,7 @@ def vbus_transition():
 
 def current_limit():
     """Sink current and the source's limit over a fall and a rise."""
-    p = Plot(60, 30, 600, 250, (-50, 400), (0, 4.0))
+    p = Plot(60, 30, 590, 250, (-50, 400), (0, 4.6))
     body = []
     i_set = {3.0: 3.0 / 0.9, 1.5: 1.5 / 0.9}
     # Limit setting with its +-10 % tolerance band, piecewise in time.
@@ -140,8 +133,10 @@ def current_limit():
     body.append(text(p.x(-45), p.y(3.67) - 6, "3.3 A", 11))
     body.append(text(p.x(35), p.y(1.83) - 6, "I_set = 1.7 A, after "
                      "tSrcTransition (25 ms)", 11))
-    body.append(text(p.x(262), p.y(3.67) - 6,
-                     "I_set = 3.3 A, raised before PS_RDY", 11))
+    body.append(text(p.right - 4, p.y(3.67) - 22, "I_set = 3.3 A,", 11,
+                     "end"))
+    body.append(text(p.right - 4, p.y(3.67) - 6, "raised before PS_RDY", 11,
+                     "end"))
     body.append(text(p.x(65), p.y(0.8), "contract lowered", 11))
     body.append(text(p.x(65), p.y(0.8) + 14, "from 3 A to 1.5 A", 11))
     body.append(text(p.x(260), p.y(0.8), "contract raised", 11))
@@ -224,11 +219,13 @@ def ovp_ramp():
     p = Plot(60, 20, 590, 240, (-60, 120), (19.5, 25))
     body = [p.frame()]
     body += p.yticks([20, 21, 21.5, 24], "VBUS (V)", fmt="{:g}")
-    for v, lab in ((21.0, "21.0 V: 20 V + 5 % (vSrcNew)"),
-                   (21.5, "21.5 V: the threshold must lie above"),
-                   (24.0, "24 V: what an SPR sink tolerates")):
+    for v, lab, x, anc in ((21.0, "21.0 V: 20 V + 5 % (vSrcNew)", 116, "end"),
+                           (21.5, "21.5 V: the threshold must lie above",
+                            116, "end"),
+                           (24.0, "24 V: what an SPR sink tolerates", -56,
+                            "start")):
         body.append(line(p.left, p.y(v), p.right, p.y(v), GREY, 1.0, "6,3"))
-        body.append(text(p.x(-56), p.y(v) - 5, lab, 11))
+        body.append(text(p.x(x), p.y(v) - 5, lab, 11, anc))
     ramp = [(-60, 20 + 0.03 * 0), (-50, 20.0), (0, 21.5), (83.3, 24.0),
             (100, 24.5)]
     body.append(polyline(p.pts(ramp[1:]), SRC_INK, 2.2))
@@ -261,13 +258,14 @@ def vconn_inrush():
                          SRC_INK, 2.2))
     for p in (pv, pi):
         body.append(line(p.x(2), p.top, p.x(2), p.bottom, INK, 0.8, "4,3"))
-    body.append(text(pv.x(2) + 6, pv.y(3.0) + 16, "3.0 V, lowest valid "
-                     "VCONN, by tVCONNON = 2 ms", 11))
+    body.append(text(pv.x(2) + 6, pv.y(3.0) + 18, "3.0 V, the lowest "
+                     "valid VCONN,", 11))
+    body.append(text(pv.x(2) + 6, pv.y(3.0) + 34, "by tVCONNON = 2 ms", 11))
     body.append(text(pi.x(0.1), pi.y(15) - 6, "15 mA charges 10 µF", 11))
-    body.append(text(pi.x(2.05), pi.y(33) - 5, "33 mA: the 100 mW the source "
-                     "must be able to supply", 11))
-    body.append(text(pi.x(2.05), pi.y(25) + 14, "cable load: at most 75 mW", 11))
-    body.append(text(pi.x(3.05), pi.y(6.7) - 6, "then at most 20 mW", 11))
+    body.append(text(pi.x(-0.45), pi.y(33) - 5, "33 mA: the 100 mW the "
+                     "source must be able to supply", 11))
+    body.append(text(pi.x(2.05), pi.y(25) - 6, "cable: at most 75 mW", 11))
+    body.append(text(pi.right - 4, pi.y(6.7) - 6, "then 20 mW", 11, "end"))
     body += pi.xticks([0, 1, 2, 3, 4], "time after VCONN is switched on (ms)",
                       grid=False)
     return svg(680, int(pi.bottom + 48), body, "VCONN switch current")

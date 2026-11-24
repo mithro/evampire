@@ -56,7 +56,7 @@ def vertical_pnp():
     body += region(20, 90, 600, 140, SUB, "P substrate: collector", 13,
                    ly=215)
     body += region(130, 90, 310, 90, NWELL)
-    body.append(text(380, 165, "N-well: base", 13, "middle"))
+    body.append(text(395, 172, "N-well: base", 13, "middle"))
     body += region(190, 90, 90, 24, PPLUS, "P+ emitter", 11)
     body += region(360, 90, 60, 24, NPLUS, "N+", 11)
     body += region(520, 90, 70, 24, PPLUS, "P+", 11)
@@ -75,27 +75,32 @@ def vertical_pnp():
 
 def deep_nwell():
     body = []
-    body += region(20, 110, 600, 170, SUB, "P substrate, 0 V", 13, ly=268)
+    body += region(20, 110, 640, 190, SUB)
+    body.append(text(30, 292, "P substrate, 0 V", 13))
     body += region(80, 110, 410, 120, NWELL)
     body.append(text(285, 222, "deep N-well", 12, "middle"))
     body += region(150, 110, 270, 75, PWELL, "P-well", 12, ly=170)
     body += region(95, 110, 40, 20, NPLUS, "N+", 11)
     body += region(190, 110, 40, 20, PPLUS, "P+", 11)
     body += region(290, 110, 40, 20, NPLUS, "N+", 11)
-    body += region(355, 110, 40, 20, NPLUS, "N+", 11)
-    body.append(text(342, 102, "NMOS in the P-well", 11, "middle"))
-    body += region(530, 110, 70, 60, NWELL, "N-well", 11, ly=158)
-    body += leader(115, 110, 115, 70, "N+ contact of the deep N-well: "
-                   "the design rules tie it to the 6 V supply")
-    body += leader(420, 160, 470, 160 - 120, "")
-    body.append(text(474, 44, "P-well to deep N-well:", 11))
-    body.append(text(474, 58, "14.732 V in the models", 11))
-    body += leader(300, 230, 360, 250, "deep N-well to P substrate: 30.48 V "
-                   "in the models")
-    body += leader(600, 150, 625, 90, "", "end")
-    body.append(text(626, 72, "N-well to P substrate:", 11, "end"))
-    body.append(text(626, 86, "10 V min, 14 V typical", 11, "end"))
-    return svg(640, 290, body, "Deep N-well cross-section")
+    body += region(375, 110, 40, 20, NPLUS, "N+", 11)
+    body += region(330, 104, 45, 6, OXIDE)
+    body += region(330, 92, 45, 12, POLY)
+    body.append(text(352, 84, "NMOS in the P-well", 11, "middle"))
+    body += region(540, 110, 70, 60, NWELL, "N-well", 11, ly=145)
+    body += leader(115, 110, 115, 46, "")
+    body.append(text(120, 26, "N+ contact of the deep N-well:", 11))
+    body.append(text(120, 42, "tied to the 6 V supply by the design rules",
+                     11))
+    body += leader(420, 160, 470, 76, "")
+    body.append(text(474, 62, "P-well to deep N-well:", 11))
+    body.append(text(474, 78, "14.732 V in the models", 11))
+    body += leader(300, 230, 330, 262, "deep N-well to P substrate:", "start")
+    body.append(text(334, 282, "30.48 V in the models", 11))
+    body += leader(575, 170, 575, 196, "")
+    body.append(text(575, 214, "N-well to P substrate:", 11, "middle"))
+    body.append(text(575, 230, "10 V min, 14 V typical", 11, "middle"))
+    return svg(680, 310, body, "Deep N-well cross-section")
 
 
 def panel(ox, oy, title):
@@ -109,7 +114,12 @@ def stacked(ox, oy):
     for k, v in enumerate(("V/3", "2V/3", "V")):
         x = ox + 15 + k * 95
         b += region(x, oy + 100, 80, 60, NWELL)
-        b += region(x + 12, oy + 100, 56, 32, PWELL, "NMOS", 10)
+        b += region(x + 12, oy + 100, 56, 32, PWELL)
+        b += region(x + 14, oy + 100, 12, 9, NPLUS)
+        b += region(x + 54, oy + 100, 12, 9, NPLUS)
+        b += region(x + 26, oy + 96, 28, 4, OXIDE)
+        b += region(x + 26, oy + 87, 28, 9, POLY)
+        b.append(text(x + 40, oy + 124, "NMOS", 10, "middle"))
         b.append(text(x + 40, oy + 150, f"well at {v}", 10, "middle"))
     b.append(text(ox + 150, oy + 48, "each transistor holds V/3", 11,
                   "middle"))
@@ -183,7 +193,7 @@ def breakdown_sites():
     body += region(40, 170, 40, 18, NPLUS, "N+", 10)
     body += region(170, 170, 40, 18, NPLUS, "N+", 10)
     body += region(80, 162, 90, 8, OXIDE)
-    body += region(80, 150, 90, 12, POLY, "gate", 10, ly=160)
+    body += region(80, 150, 90, 12, POLY)
     body.append(text(130, 232, "6 V NMOS in a P-well", 10, "middle"))
     # N-well.
     body += region(265, 170, 80, 60, NWELL, "N-well", 10, ly=206)
@@ -206,7 +216,7 @@ def breakdown_sites():
         body.append(f'<circle cx="{x}" cy="{ytop}" r="8" fill="#ffffff" '
                     f'stroke="{INK}"/>')
         body.append(text(x, ytop + 4, n, 10, "middle"))
-    notes = ["1 gate oxide: 7 V (3.3 V devices), 12 V (6 V devices)",
+    notes = ["1 gate oxide, under the gate: 7 V (3.3 V), 12 V (6 V)",
              "2 N+ to P-well: 8.5 V",
              "3 BVDSS of the 6 V NMOS: 8.5 V",
              "4 N-well to P substrate: 10 V",

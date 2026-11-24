@@ -39,21 +39,22 @@ def rx_thresholds():
             ("sourcing power", 0.4825, 0.6875, 0.8925, SRC)]
     for k, (name, lo, mid, hi, fill) in enumerate(eyes):
         xc = p.x(k + 0.5)
-        body.append(rect(xc - 40, p.y(hi), 80, p.y(lo) - p.y(hi), fill))
-        body.append(line(xc - 40, p.y(mid), xc + 40, p.y(mid), INK, 0.8,
+        body.append(rect(xc - 30, p.y(hi), 60, p.y(lo) - p.y(hi), fill))
+        body.append(line(xc - 30, p.y(mid), xc + 30, p.y(mid), INK, 0.8,
                          "3,3"))
         body.append(text(xc, p.bottom + 18, name, 12, "middle"))
     body.append(text(p.left + p.w / 2, p.bottom + 36, "port's power role",
                      13, "middle"))
-    for k, rise, fall, col in ((0, 0.525, 0.250, SNK_INK),
-                               (2, 0.875, 0.600, SRC_INK)):
-        xc = p.x(k + 0.5) + 55
+    for k, rise, fall, col, side in ((0, 0.525, 0.250, SNK_INK, 1),
+                                     (2, 0.875, 0.600, SRC_INK, -1)):
+        xc = p.x(k + 0.5) + side * 45
         body.append(line(xc, p.y(fall), xc, p.y(rise), col, 1.2,
                          arrow="both"))
-        body.append(text(xc + 6, p.y(rise) + 4, f"rising {rise * 1000:g} mV",
-                         11, fill=col))
-        body.append(text(xc + 6, p.y(fall) + 4, f"falling {fall * 1000:g} mV",
-                         11, fill=col))
+        anc = "start" if side > 0 else "end"
+        body.append(text(xc + side * 6, p.y(rise) + 4,
+                         f"rising {rise * 1000:g} mV", 11, anc, fill=col))
+        body.append(text(xc + side * 6, p.y(fall) + 4,
+                         f"falling {fall * 1000:g} mV", 11, anc, fill=col))
     body.append(text(p.left - 60, p.bottom + 58, "Bars: the inner receive "
                      "mask (the eye). Grey band: 0.4825 to 0.6425 V, inside "
                      "every eye.", 12, fill=GREY))
@@ -81,8 +82,10 @@ def tx_edge():
     body.append(text(p.x(0) + 4, p.y(0.4), "ideal edge", 11))
     body.append(line(p.x(-50), p.y(0.75), p.x(50), p.y(0.75), SRC_INK, 2.0,
                      arrow="both"))
-    body.append(text(p.x(52), p.y(0.75) + 4, "edge lands up to one "
-                     "iteration late", 11, fill=SRC_INK))
+    body.append(text(p.x(54), p.y(0.75) - 4, "the edge lands up", 11,
+                     fill=SRC_INK))
+    body.append(text(p.x(54), p.y(0.75) + 12, "to one iteration late", 11,
+                     fill=SRC_INK))
     body += p.xticks([-150, -100, -50, 0, 50, 100, 150],
                      "time from the ideal edge (ns)", grid=False)
     return svg(680, int(p.bottom + 48), body, "Transmit edge placement")

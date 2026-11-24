@@ -24,6 +24,9 @@ SNK_INK = "#548235"
 CABLE = "#dbe8f5"      # cable and neutral blue
 CABLE_INK = "#2e75b6"
 FONT = 'font-family="Helvetica, Arial, sans-serif"'
+# Text is drawn this much larger than the size passed, so that a 680 px
+# figure stays readable when the page scales it down on a narrow screen.
+FONT_SCALE = 1.25
 
 
 def esc(s):
@@ -34,7 +37,8 @@ def text(x, y, s, size=13, anchor="start", weight="normal", fill=INK,
          italic=False, rotate=None):
     st = ' font-style="italic"' if italic else ""
     rot = f' transform="rotate({rotate} {x:.1f} {y:.1f})"' if rotate else ""
-    return (f'<text x="{x:.1f}" y="{y:.1f}" {FONT} font-size="{size}" '
+    return (f'<text x="{x:.1f}" y="{y:.1f}" {FONT} '
+            f'font-size="{size * FONT_SCALE:.1f}" '
             f'text-anchor="{anchor}" font-weight="{weight}" '
             f'fill="{fill}"{st}{rot}>{esc(s)}</text>')
 

@@ -84,7 +84,7 @@ def cc_thresholds():
     x = cols[1]
     body += bar(p, x, w, 0, 0.248, FILL, labels=False)
     body += bar(p, x, w, 0.249, 2.181, SNK)
-    body.append(text(x - w / 2 - 4, p.y(1.2) + 4, "attached", 10, "end"))
+    body.append(text(x + w / 2 + 4, p.y(1.2) + 4, "attached", 10))
     body.append(text(x - w / 2 - 4, p.y(0.124) + 4, "detach ≤ 0.248", 10,
                          "end"))
 
@@ -203,7 +203,7 @@ def bmc(t0, bits, level):
 def dc_level():
     body = []
     yr = (-0.4, 2.1)
-    ps = Plot(60, 40, 280, 240, (0, 20), yr)
+    ps = Plot(75, 40, 270, 240, (0, 20), yr)
     pe = Plot(380, 40, 280, 240, (0, 36), yr)
     idle = 1.7
     for p, title in ((ps, "Start of a packet"), (pe, "End of a packet")):
@@ -250,17 +250,17 @@ def dc_level():
     body.append(text(pe.x(t_end) - 4, pe.top + 28, "last bit", 11, "end"))
     body += ps.xticks([0, 5, 10, 15, 20], "time (µs)", grid=False)
     body += pe.xticks([0, 10, 20, 30], "time (µs)", grid=False)
-    for v, lab in ((0.9, "1.5 A idle level"), (0.4, "default idle level")):
-        body.append(text(pe.right - 4, pe.y(v) - 4, lab, 10, "end",
-                         fill=GREY))
     body.append(text(pe.right - 4, pe.y(V_SWING) - 4, "vSwing 1.125 V", 10,
                      "end", fill=GREY))
     y = ps.bottom + 62
-    body.append(text(ps.left, y, "Shown at the 3.0 A level, idle 1.7 V. "
-                     "The ground offset moves the received signal by up "
-                     "to 250 mV:", 12))
-    body.append(text(ps.left, y + 18, "down at the sink, up at the source. "
-                     "The release slope is schematic.", 12))
+    for k, s in enumerate((
+            "Shown at the 3.0 A level, idle 1.7 V; dashed: the 0.4 V and "
+            "0.9 V idle levels.",
+            "Ground offset moves the received signal by up to 250 mV: down "
+            "at the sink,",
+            "up at the source. The release slope is schematic.")):
+        body.append(text(ps.left - 50, y + 18 * k, s, 12))
+    y += 36
     return svg(680, int(y + 30), body, "CC signal on its DC level")
 
 
@@ -342,10 +342,10 @@ def dead_battery():
         body.append(text(x0 + 36, yy, lab, 12))
     y += 40
     body.append(text(p.left, y, "Green: the window between the source's "
-                     "Ra and open thresholds; dashed: the margin targets.",
-                     12, fill=GREY))
-    body.append(text(p.left, y + 18, "Native lines drawn with V_GS = 0; "
-                     "overdrive neglected.", 12, fill=GREY))
+                     "Ra and open thresholds.", 12, fill=GREY))
+    body.append(text(p.left, y + 18, "Dashed: the margin targets. Native "
+                     "lines with V_GS = 0; overdrive neglected.", 12,
+                     fill=GREY))
     return svg(680, int(y + 30), body, "Dead-battery Rd voltage")
 
 if __name__ == "__main__":

@@ -100,7 +100,7 @@ def esd_short():
     body.append(polyline(p.pts(hbm), CABLE_INK, 2.2))
     body.append(polyline(p.pts(iec), INK, 2.2, "6,3"))
     body.append(polyline(p.pts(short), SRC_INK, 2.6))
-    body.append(text(p.x(2e-9), p.y(0.04), "HBM 2 kV: 1.33 A, τ 150 ns",
+    body.append(text(p.x(1.5e-6), p.y(0.3), "HBM 2 kV: 1.33 A, τ 150 ns",
                      11, fill=CABLE_INK))
     body.append(text(p.x(2e-9), p.y(30) - 8, "IEC 8 kV: 30 A, τ 50 ns", 11))
     body.append(text(p.x(1e-5), p.y(3) - 8, "VBUS short: 3 A until the "
