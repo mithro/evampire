@@ -89,7 +89,7 @@ def offer_currents():
     five = [(x, min(5.0, x / 20)) for x in range(60, 101)]
     body.append(polyline(p.pts(five), INK, 2.2, "6,3"))
     body.append(text(p.x(62), p.y(4.6), "20 V with a 5 A cable", 11))
-    body.append(text(p.x(62), p.y(2.7), "all offers are capped at 3 A; a 3 A", 11))
+    body.append(text(p.x(62), p.y(2.7), "5, 9 and 15 V stop at 3 A; a 3 A", 11))
     body.append(text(p.x(62), p.y(2.7) + 14, "cable caps the PDP at 60 W", 11))
     for x, lab in ((8, "8"), (19, "19"), (42, "42"), (61, "61")):
         body.append(line(p.x(x), p.top, p.x(x), p.bottom, GREY, 1.0, "3,3"))
