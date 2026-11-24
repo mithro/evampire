@@ -35,8 +35,8 @@ block are collected at the end of the page, in
 
 .. _usbpd-rp-sources:
 
-Rp current sources switch between three currents
-------------------------------------------------
+Rp current sources
+------------------
 
 As a source, each CC pin needs a pull-up that advertises one of three current
 levels, and that can be switched off when the port presents Rd. The values
@@ -53,13 +53,26 @@ On chip
    the rating of the standard 5 V and 6 V transistors
    (:ref:`usbpd-process-limits`).
 External
-   Resistors to 3.3 V or 5 V, each switched by a transistor that evampire
+   Resistors to 3.3 V or 5 V, each switched by a transistor that evampire
    controls.
+
+:numref:`fig-usbpd-rp-sources` shows the two options side by side.
+
+.. graphviz:: rp-sources.dot
+   :name: fig-usbpd-rp-sources
+   :caption: The switched Rp of one CC pin, built on chip from current
+             mirrors or on the board from switched resistors.
+   :alt: Two panels. On chip: a 3.3 V supply and a voltage reference feed
+         switched current-mirror outputs of 80, 180 or 330 µA, which drive
+         the CC pin; with the pin open, 3.3 V minus the 2.432 V threshold
+         leaves 0.87 V of headroom. External, on the board: a 3.3 V or 5 V
+         supply feeds resistors of 36, 12 or 4.7 kΩ, or 56, 22 or 10 kΩ,
+         through switch transistors set by evampire to the CC pin.
 
 .. _usbpd-rd-circuit:
 
-Rd needs a trimmed path and a path that works with no supply
-------------------------------------------------------------
+Rd circuit
+----------
 
 As a sink, each CC pin needs :term:`Rd`, 5.1 kΩ to ground. A ± 10 % Rd lets
 the sink read the source's current level, and a ± 20 % Rd only lets the source
@@ -72,7 +85,8 @@ The Type-C specification gives an example for the unpowered case: a ± 20 %
 resistor in series with a transistor whose gate is weakly pulled up to the CC
 pin, with a threshold below the 1.32 V maximum of the voltage-clamp Rd
 (:typec:`Section 4.8.5`). Once powered, the chip switches this path off and
-uses the trimmed Rd. The voltage on the CC pin is then:
+uses the trimmed Rd (:numref:`fig-usbpd-rd-paths`). The voltage on the CC
+pin is then:
 
 .. math::
 
@@ -100,25 +114,76 @@ uses the trimmed Rd. The voltage on the CC pin is then:
      - V
 
 The equation holds while the transistor conducts, with its gate at the CC
-voltage through a pull-up that carries no current. :math:`V_\text{CC}` must
-stay inside the source's Rd window at every pull-up current: at most 1.32 V
-for the default and 1.5 A levels, and at most 2.181 V for the 3.0 A level
-(:typec:`Table 4-37`).
+voltage through a pull-up that carries no current. The gate and the drain
+then sit at the same voltage, so :math:`V_\text{GS}` equals the drain-source
+voltage, which is positive while current flows: :math:`V_\text{GS}` is never
+below zero, even for a transistor whose threshold is.
+
+:math:`V_\text{CC}` must lie between the source's two thresholds at every
+pull-up current of its level, or the source reads Ra or an open pin and does
+not turn VBUS on. With a current-source Rp the window is above 0.260 V and
+below 1.321 V at the default level, above 0.675 V and below 1.441 V at
+1.5 A, and above 0.879 V and below 2.432 V at 3.0 A
+(:numref:`tab-usbpd-src-thresholds`, :typec:`Table 4-37`). This page
+keeps a margin below the upper thresholds: at most 1.32 V, the top of the
+voltage-clamp Rd (:typec:`Section 4.8.5`), at the default and 1.5 A levels,
+and at most 2.181 V, the top of the range for an Rd within ± 20 %
+(:typec:`Table 4-35`), at 3.0 A.
 
 For example, take a standard 6 V NMOS at its highest documented threshold,
 0.85 V ([USBPD-GF180-ELEC]_, Section 2.0), and :math:`R_\text{s}` =
 2.0 kΩ. At the highest 1.5 A pull-up current, 194.4 µA, the path gives
 :math:`194.4\ \mu\text{A} \times 2.0\ \text{k}\Omega + 0.85\ \text{V} = 1.2\ \text{V}`,
-with the overdrive neglected. At the 3.0 A level, 356.4 µA, it gives 1.6 V,
-inside the 2.181 V limit.
+with the overdrive neglected. At the 3.0 A level, 356.4 µA, it gives 1.6 V,
+inside the 2.181 V limit. At the lowest threshold, 0.61 V, and the lowest
+current of each level, 64 µA, 165.6 µA and 303.6 µA, it gives 0.74 V,
+0.94 V and 1.2 V, above the lower thresholds. :numref:`fig-usbpd-dead-battery` plots the
+equation over the range of pull-up currents.
+
+.. graphviz:: rd-paths.dot
+   :name: fig-usbpd-rd-paths
+   :caption: The two Rd paths on one CC pin: the trimmed Rd for a powered
+             chip, and the dead-battery path that needs no supply.
+   :alt: Schematic. The source's Rp drives a current I_Rp of 80, 180 or
+         330 µA into the CC pin. One path is the trimmed Rd of 5.1 kΩ
+         within 10 % in series with a switch to ground that is on once the
+         chip is powered. The other is an NMOS, standard or native, above a
+         series resistor R_s, to ground: 2.0 kΩ for a standard NMOS or 4.1 to
+         5.9 kΩ for a native one; the
+         NMOS gate is weakly pulled up from CC. Once powered, the path is
+         turned off, by a gate at 0 V for a standard NMOS, and by a gate
+         below its source or a series switch for a native one; the pin then
+         presents at least 126 kΩ.
+
+.. figure:: dead-battery.svg
+   :name: fig-usbpd-dead-battery
+   :alt: Graph of CC voltage from 0 to 2.6 V against pull-up current from
+         0 to 380 µA. Green boxes mark, for each level's current range, the
+         window between the source's thresholds: 0.260 to 1.321 V at 64 to
+         96 µA, 0.675 to 1.441 V at 165.6 to 194.4 µA, and 0.879 to
+         2.432 V at 303.6 to 356.4 µA, with dashed margin targets at 1.32 V,
+         1.32 V and 2.181 V. Lines for a standard NMOS with R_s of 2.0 kΩ
+         and threshold 0.61 V or 0.85 V pass through every window. A native
+         NMOS with 2.0 kΩ falls below every window; with 5.0 kΩ it passes
+         through all three.
+
+   CC voltage of the dead-battery path against the source's pull-up current,
+   against the source's thresholds, with the overdrive neglected.
 
 On chip, native transistor
    The PDK's 6 V :term:`native transistor` *nfet_06v0_nvt* has a
    :wikipedia:`threshold <Threshold_voltage>` of −0.32 V to 0.08 V
-   ([USBPD-GF180-ELEC]_, Section 4.0), which leaves the most room for
-   :math:`I_\text{Rp} \times R_\text{s}` in the Rd window. Its threshold can
-   be below zero, so turning it off needs its gate about 0.5 V below its
-   source. Off in this way, it :wikipedia:`leaks <Leakage_(electronics)>`
+   ([USBPD-GF180-ELEC]_, Section 4.0). With :math:`V_\text{GS}` between
+   0 V and 0.08 V, the resistor alone must lift the CC voltage above the
+   lower thresholds: :math:`R_\text{s}` above
+   :math:`0.675\ \text{V} / 165.6\ \mu\text{A} = 4.1\ \text{k}\Omega`.
+   The upper limits need :math:`R_\text{s}` below
+   :math:`(2.181\ \text{V} - 0.08\ \text{V}) / 356.4\ \mu\text{A}
+   = 5.9\ \text{k}\Omega`. A native transistor therefore needs about
+   4.1 kΩ to 5.9 kΩ; the 2.0 kΩ of the example is too small. Its threshold
+   can be below zero, so turning it off needs its gate about 0.5 V below its
+   source, or a switch in series: with its gate at 0 V, its source rises to
+   the threshold magnitude and the path still conducts. Off in this way, it :wikipedia:`leaks <Leakage_(electronics)>`
    up to 50 µA/µm at 6.6 V ([USBPD-GF180-ELEC]_, Section 4.0). Any leakage
    adds to the Rp current when the port presents Rp (:typec:`Table 4-27`,
    Note 2).
@@ -134,12 +199,13 @@ External
 
 .. _usbpd-vconn-switch:
 
-The VCONN switch connects a 3.0 V to 5.5 V supply to the unused CC pin
------------------------------------------------------------------------
+VCONN switch
+------------
 
-A port that powers a marked cable connects :term:`VCONN` to the CC pin that
-does not carry messages, and discharges that pin after detach. The voltage,
-timing and discharge requirements are on :ref:`usbpd-vconn`. The power a
+A port that powers a marked cable connects :term:`VCONN`, a 3.0 V to 5.5 V
+supply, to the CC pin that does not carry messages, and discharges that
+pin after detach (:numref:`fig-usbpd-vconn-cable`). The voltage, timing and
+discharge requirements are on :ref:`usbpd-vconn`. The power a
 source must supply depends on what the port carries (:typec:`Table 4-4` and
 :typec:`Table 4-5`). A port without SuperSpeed signals need not supply VCONN
 unless it offers more than 3 A, and then it must supply 100 mW. The current
@@ -184,8 +250,8 @@ External
 
 .. _usbpd-comparators:
 
-Comparators read the CC voltage for attach, current level, messages and fast role swap
---------------------------------------------------------------------------------------
+CC comparators
+--------------
 
 Each CC pin needs :term:`comparators <comparator>` at several thresholds:
 
@@ -194,10 +260,10 @@ Each CC pin needs :term:`comparators <comparator>` at several thresholds:
 * as a source, the thresholds that tell Ra, Rd and an open pin apart at each
   current level (:ref:`usbpd-source-thresholds`);
 * for receiving messages, the thresholds with
-  :wikipedia:`hysteresis <Hysteresis>` and the filtering on
-  :ref:`usbpd-receiver`;
-* for fast role swap, if supported, the detection threshold on
-  :ref:`usbpd-fast-role-swap`.
+  :wikipedia:`hysteresis <Hysteresis>` and the filtering of the
+  :ref:`receiver <usbpd-receiver>`;
+* for fast role swap, if supported, the detection threshold of
+  :ref:`fast role swap <usbpd-fast-role-swap>`.
 
 On chip
    One fast comparator on each CC pin, behind a
@@ -211,14 +277,31 @@ On chip
 External
    A CC interface such as the FUSB302B, which brings its own comparators.
 
+:numref:`fig-usbpd-cc-frontend` shows the on-chip receive path, and the
+transmit path described below.
+
+.. graphviz:: cc-frontend.dot
+   :name: fig-usbpd-cc-frontend
+   :caption: The on-chip receive and transmit paths of one CC pin; dashed
+             blocks are optional.
+   :alt: Block diagram. The CC pin feeds a low-pass filter with a time
+         constant of at least 100 ns and then a fast comparator, whose
+         threshold comes from a DAC or resistor ladder; its output goes to
+         the processor's input and output bits. Optionally, a multiplexer
+         takes the CC pin to a shared ADC. For transmitting, a regulator
+         makes the 1.125 V rail for a slew-limited three-state output of
+         33 to 75 Ω, which drives the CC pin from the processor's data and
+         enable bits.
+
 .. _usbpd-bmc-driver:
 
-The BMC driver sends edges at a controlled rate from a 1.125 V rail
--------------------------------------------------------------------
+BMC driver
+----------
 
 The transmitter drives 0 V and a level near 1.125 V through a limited output
 impedance, with rise and fall times inside a window, and is high-impedance
-when not sending. These values are on :ref:`usbpd-transmitter`. The
+when not sending. These values are in the
+:ref:`transmitter limits <usbpd-transmitter>`. The
 transmitter must also tolerate its output being shorted to ground for
 tFRSwapTx, at most 120 µs (:pd:`Section 5.3.4.10`).
 
@@ -227,7 +310,8 @@ On chip
    1.125 V rail, and a :wikipedia:`three-state <Three-state_logic>` output
    stage with a controlled :wikipedia:`slew rate <Slew_rate>`. Either CC
    pin can carry VCONN, up to 5.5 V, depending on the plug orientation, so
-   the output transistors are 5 V or 6 V devices.
+   the output transistors are 5 V or 6 V devices
+   (:numref:`fig-usbpd-cc-frontend`).
 External
    A CC interface or controller with its own driver, such as the FUSB302B,
    or the STUSB1602, which drives the line from bits sent by an external
@@ -235,8 +319,8 @@ External
 
 .. _usbpd-reference:
 
-One voltage reference sets the driver level, the Rp currents and the thresholds
--------------------------------------------------------------------------------
+Voltage reference
+-----------------
 
 The driver level must stay within ± 6.7 % of 1.125 V (1.05 V to 1.2 V,
 :ref:`usbpd-transmitter`), the 1.5 A and 3.0 A pull-up currents within ± 8 %
@@ -260,10 +344,34 @@ On chip, shared
 External
    A reference IC on the board.
 
+:numref:`fig-usbpd-reference` shows what the reference sets, and
+:numref:`fig-usbpd-vertical-pnp` the vertical PNP it can be built from.
+
+.. graphviz:: reference.dot
+   :name: fig-usbpd-reference
+   :caption: One voltage reference sets the three CC quantities whose
+             accuracy the specifications fix.
+   :alt: Block diagram. A voltage reference, a bandgap built from the
+         vertical PNP, feeds the BMC driver level of 1.125 V within 6.7 %,
+         the Rp currents of the 1.5 A and 3.0 A levels within 8 %, and the
+         comparator thresholds, which must lie inside their windows.
+
+.. figure:: vertical-pnp.svg
+   :name: fig-usbpd-vertical-pnp
+   :alt: Cross-section, not to scale. A P substrate is the collector, with
+         a P+ contact at 0 V. An N-well in it is the base, contacted
+         through N+. A P+ region in the N-well is the emitter. An arrow
+         shows holes crossing the base from the emitter to the substrate.
+         The base-emitter voltage is 0.63 to 0.83 V and the current gain
+         0.8 to 2.4.
+
+   The vertical PNP transistor of the process, schematic and not to scale:
+   its collector is always the substrate.
+
 .. _usbpd-vbus-sensing:
 
-VBUS sensing and discharge face the full VBUS voltage
------------------------------------------------------
+VBUS sensing and discharge
+--------------------------
 
 The port measures VBUS to detect attach and detach, to check that VBUS is
 near 0 V before it switches VBUS on, and to check the voltage after each
@@ -322,15 +430,40 @@ External
    A top resistor on the board, as with the TUSB320, so the chip sees only
    the divided voltage, and a discharge transistor on the board.
 
+:numref:`fig-usbpd-vbus-sense` shows the two options. The cross-section of
+the polysilicon divider is in :numref:`fig-usbpd-custom-structures`.
+
+.. graphviz:: vbus-sense.dot
+   :name: fig-usbpd-vbus-sense
+   :caption: VBUS sensing and discharge on chip, and with the high-voltage
+             parts on the board.
+   :alt: Two panels. On chip: VBUS, up to 21.5 V or 22.15 V with PPS,
+         feeds a polysilicon divider of 333 squares, 1 MΩ, drawing 21.5 µA
+         at 21.5 V, whose output goes to an ADC or comparator; and a custom
+         discharge switch that holds VBUS, to ground. External: VBUS feeds
+         a board top resistor of 855 to 920 kΩ, as with the TUSB320, to a
+         sense pin rated at most 4 V; and a discharge transistor on the
+         board, to ground.
+
 .. _usbpd-power-path:
 
-The power path is a converter function, controlled by evampire
---------------------------------------------------------------
+Power path
+----------
 
 As a sink, a switch connects VBUS to the board's power bus. As a source, a
 converter makes the negotiated voltage from the bus, with a current limit. In
 both roles, power must not flow backwards, and a dual-role port presents at
 most 10 µF on VBUS when it is not sourcing (:typec:`Table 4-2`).
+:numref:`fig-usbpd-power-path` shows the two paths.
+
+.. graphviz:: power-path.dot
+   :name: fig-usbpd-power-path
+   :caption: The power path of one dual-role port; bold arrows carry power.
+   :alt: Block diagram. VBUS, with at most 10 µF on it when the port is not
+         sourcing, feeds the board power bus through a sink switch that
+         blocks reverse current. The bus feeds VBUS through a source
+         converter with a current limit, which also blocks reverse current.
+         evampire controls both paths and sets the limit.
 
 The converters are described on :doc:`../converters/index`, their gate drive
 on :ref:`conv-gate-drive`, their protection on :ref:`conv-protection`, and
@@ -343,8 +476,8 @@ P-channel MOSFETs on separate sink and source paths
 
 .. _usbpd-analogue-examples:
 
-Commercial controllers as reference examples
---------------------------------------------
+Commercial controllers
+----------------------
 
 :numref:`tab-usbpd-ref-parts` lists the commercial parts, and
 :numref:`tab-usbpd-ref-values` the values they reach for each block. They

@@ -1,0 +1,48 @@
+// The two ways to build the switched Rp pull-up on one CC pin, side by
+// side: on-chip current mirrors and external switched resistors. Values
+// from analogue.rst and resistor-advertisement.rst.
+//
+// Fixed grid (positions in inches): on-chip panel at x=0.6 to 2.9,
+// external panel at x=3.9 to 6.4; y=3.3 supply down to y=0.5 CC pin.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph rp_sources {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.4, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    chip [label="On chip", labelloc=t, fontsize=12, pos="1.75,2.05!",
+          width=3.2, height=3.3, style="rounded,dashed", fillcolor="none",
+          color="#1f4e79", fontcolor="#1f4e79"];
+    brd  [label="External, on the board", labelloc=t, fontsize=12,
+          pos="5.15,2.05!", width=3.0, height=3.3, style="rounded,dashed",
+          fillcolor="none", color="#555555", fontcolor="#555555"];
+
+    s1   [pos="2.35,3.15!", label="3.3 V supply", width=1.1,
+          fillcolor="#ffffff"];
+    ref  [pos="0.7,2.3!", label="voltage\nreference", width=0.9];
+    mir  [pos="2.35,2.3!", label="switched current\nmirror outputs:\n80, 180, 330 µA",
+          width=1.5, height=0.62, fillcolor="#fbe5d6"];
+    hd   [pos="1.25,1.35!", shape=plaintext, style="", width=1.5,
+          height=0.55, fontsize=9,
+          label="headroom: 3.3 V −\n2.432 V = 0.87 V\nwith the pin open"];
+    p1   [pos="2.35,0.7!", label="CC pin", width=0.9, fillcolor="#ffffff"];
+
+    s2   [pos="5.15,3.15!", label="3.3 V or 5 V supply", width=1.5,
+          fillcolor="#ffffff"];
+    res  [pos="5.15,2.3!", label="resistors: 36, 12, 4.7 kΩ\nor 56, 22, 10 kΩ",
+          width=1.9, fillcolor="#fbe5d6"];
+    sw   [pos="5.15,1.5!", label="switch transistors,\nset by evampire", width=1.6];
+    p2   [pos="5.15,0.7!", label="CC pin", width=0.9, fillcolor="#ffffff"];
+
+    s1 -> mir;
+    ref -> mir;
+    mir -> p1;
+    s2 -> res;
+    res -> sw;
+    sw -> p2;
+}

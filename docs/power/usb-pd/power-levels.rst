@@ -1,7 +1,7 @@
 .. _usbpd-power-levels:
 
-Power levels and the messages that carry them
-=============================================
+Power levels and messages
+=========================
 
 The voltages and currents that :term:`USB Power Delivery` offers, and the
 format of the messages that carry the offers and requests.
@@ -59,15 +59,28 @@ range. :term:`PPS` is a programmable and :term:`AVS` an adjustable supply. :numr
 gives the condition for using each range. Currents above 3 A need a cable
 rated for 5 A (:pd:`Section 8.6.1.2.2`), which the source finds out with
 :term:`Discover Identity` (:ref:`usbpd-cables`). The rows are explained
-below.
+below, and :numref:`fig-usbpd-power-levels` draws their voltages.
+
+.. figure:: power-levels.svg
+   :name: fig-usbpd-power-levels
+   :alt: Chart of voltage from 0 to 55 V for each kind of supply. SPR
+         fixed: points at 5, 9, 15 and 20 V. SPR PPS: bars from 5 V to
+         11, 16 and 21 V. SPR AVS: bars from 9 V to 15 and 20 V. EPR fixed:
+         points at 28, 36 and 48 V. EPR AVS: bars from 15 V to 28, 36 and
+         48 V. The SPR region, up to 100 W, ends at 24 V; the EPR region
+         allows up to 240 W. Dashed lines mark the worst-case VBUS of
+         21.5 V, 22.15 V, 24 V and 50.9 V.
+
+   The voltages of each kind of supply, with the worst-case VBUS values
+   that circuits on VBUS must withstand.
 
 .. _usbpd-spr:
 
-Fixed supplies from 5 V to 20 V give up to 100 W
--------------------------------------------------
+Fixed supplies
+--------------
 
 In the :term:`standard power range <SPR>` (SPR), a fixed supply is one of
-5 V, 9 V, 15 V and 20 V, at up to 3 A, or up to 5 A at 20 V
+5 V, 9 V, 15 V and 20 V, at up to 3 A, or up to 5 A at 20 V, which is 100 W
 (:pd:`Table 3.1`). Each offer is a :term:`power data object <PDO>` (PDO)
 holding a voltage and a maximum current (:ref:`usbpd-pdo`). Which voltages a
 source must offer, and at what current, depends on its power;
@@ -126,14 +139,15 @@ fixed-supply sum (:pd:`Table 6.45`); the parameter values in
 A sink must tolerate 24 V on VBUS without damage, as the specification
 recommends (*vSprMax*, :pd:`Table 4.8`).
 
-Programmable and adjustable supplies let the sink choose the voltage
---------------------------------------------------------------------
+Programmable and adjustable supplies
+------------------------------------
 
 A :term:`programmable power supply <PPS>` (PPS) is a supply whose voltage
 the sink sets in 20 mV steps (*vPpsStep*, :pd:`Table 4.7`) within 5 V to
 11 V, 5 V to 16 V or 5 V to 21 V (:pd:`Table 4.2`). The sink also sets a
 current limit in 50 mA steps (*iPpsCLStep*, :pd:`Table 4.7`), and the source
-holds that current by lowering its voltage. This lets a sink charge a
+holds that current by lowering its voltage (:numref:`fig-usbpd-pps-limit`).
+This lets a sink charge a
 battery directly. The sink repeats its request at least every *tPPSRequest*,
 10 s (:pd:`Section 7.31.16.1`, :pd:`Table 7.10`).
 
@@ -145,23 +159,60 @@ SPR AVS (:pd:`Section 3.2.5.2`). Both are optional.
 
 .. _usbpd-epr:
 
-The extended power range adds 28 V, 36 V and 48 V, up to 240 W
----------------------------------------------------------------
+Extended power range
+--------------------
 
 A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
 48 V at up to 5 A, in the :term:`extended power range <EPR>` (EPR)
 (:pd:`Section 3.2.5.3`, :pd:`Table 3.6`). Three conditions apply:
 
-#. The sink asks to enter EPR mode with an EPR_Mode message
-   (:pd:`Section 6.4.9`, :pd:`Section 7.30.1`).
+#. The sink asks to enter EPR mode with an EPR_Mode message (Enter), and
+   the source answers EPR_Mode (Enter Acknowledged) and, once its checks
+   pass, EPR_Mode (Enter Succeeded) (:pd:`Section 6.4.9`,
+   :pd:`Section 7.30.1`).
 #. The source checks that the cable is rated for EPR, with Discover
    Identity (:pd:`Section 8.6.1.2.3`; :ref:`usbpd-discover-identity`).
 #. In EPR mode, the two ends exchange a message at least every
-   *tSinkEPRKeepAlive* (250 ms to 500 ms); the sink sends an EPR_Keep_Alive
-   message when there is no other traffic. A source that sees no message for
+   *tSinkEPRKeepAlive* (250 ms to 500 ms); the sink sends an EPR_KeepAlive
+   message when there is no other traffic, and the source answers it with
+   EPR_KeepAlive_Ack. A source that sees no message for
    *tSourceEPRKeepAlive* (750 ms to 1000 ms) restarts the port with a
    :term:`Hard Reset` (:pd:`PD Sections 7.31.18.2 and 7.31.18.3 <7.31.18.2>`,
    :pd:`Table 7.10`; :ref:`usbpd-hard-reset`).
+
+:numref:`fig-usbpd-epr-entry` shows the entry, and
+:numref:`fig-usbpd-epr-keepalive` the keep-alive timing.
+
+.. graphviz:: epr-entry.dot
+   :name: fig-usbpd-epr-entry
+   :caption: Entering EPR mode; GoodCRC replies are left out, and time runs
+             downwards, not to scale.
+   :alt: Sequence diagram between a sink, a source and a cable plug. The
+         sink sends EPR_Mode (Enter) and the source answers EPR_Mode (Enter
+         Acknowledged). The source sends Discover Identity with SOP′ to the
+         cable plug, which answers with an ACK carrying a Cable VDO that
+         shows the cable is rated for EPR. The source then sends EPR_Mode
+         (Enter Succeeded).
+
+.. wavedrom::
+   :caption: The EPR keep-alive, ending in a Hard Reset when the messages
+            stop, schematic and not to scale; tSinkEPRKeepAlive is 250 ms
+            to 500 ms and tSourceEPRKeepAlive 750 ms to 1000 ms.
+   :name: fig-usbpd-epr-keepalive
+   :alt: Timing diagram. The sink sends EPR_KeepAlive and the source answers
+         EPR_KeepAlive_Ack. The sink must send its next message within
+         tSinkEPRKeepAlive, 250 to 500 ms. When messages stop, the source
+         waits tSourceEPRKeepAlive, 750 to 1000 ms, from the last message,
+         and then sends Hard Reset, which returns the port to its defaults.
+
+   {"signal": [
+     {"name": "sink", "wave": "=...z..........", "data": ["EPR_KeepAlive"]},
+     {"name": "source", "wave": "z...=...z...=..", "data": ["EPR_KeepAlive_Ack", "Hard Reset"]},
+     {"name": "sink timer", "wave": "x...=...x......", "data": ["tSinkEPRKeepAlive"]},
+     {"name": "source timer", "wave": "x.......=...x..", "data": ["tSourceEPRKeepAlive"]},
+     {"name": "mode", "wave": "=...........=..", "data": ["EPR mode", "defaults"]}
+   ],
+   "config": {"hscale": 1}}
 
 A power role swap is not allowed in EPR mode; the port leaves EPR mode
 first (:pd:`Section 7.10`; :ref:`usbpd-power-role-swap`).
@@ -177,8 +228,8 @@ Cable electronics powered from VBUS must tolerate this 50.9 V
 
 .. _usbpd-messages:
 
-Every message starts with a 16-bit header
------------------------------------------
+Message header
+--------------
 
 Each message starts with a 16-bit header (:numref:`fig-usbpd-header`;
 :pd:`Section 6.2.1`, :pd:`Table 6.2`). There are three kinds of message
@@ -191,7 +242,7 @@ Data messages
    Source_Capabilities and Request are data messages.
 Extended messages
    The header, a 16-bit extended header and 1 to 260 bytes of data. They
-   are used only by optional features, such as EPR_Keep_Alive.
+   are used only by optional features, such as EPR_KeepAlive.
 
 .. wavedrom::
    :caption: The 16-bit message header (:pd:`Table 6.2`), drawn as two rows
@@ -309,10 +360,10 @@ How long each message takes on the wire is given in
 
 .. _usbpd-pdo:
 
-Each offer is a 32-bit power data object
-----------------------------------------
+Power data objects
+------------------
 
-Source_Capabilities holds one to seven PDOs, with the 5 V fixed supply
+Each PDO is 32 bits long. Source_Capabilities holds one to seven PDOs, with the 5 V fixed supply
 first and the other fixed supplies in rising voltage order
 (:pd:`Section 6.4.1.1`). :numref:`fig-usbpd-pdo` shows a fixed-supply PDO.
 
@@ -349,8 +400,8 @@ For example, an offer of 9 V at 3 A has a voltage field of
 
 .. _usbpd-rdo:
 
-A request names one offer and a current
----------------------------------------
+Request data object
+-------------------
 
 The sink's Request holds one :term:`request data object <RDO>` (RDO)
 (:numref:`fig-usbpd-rdo`; :pd:`Section 6.4.2`).

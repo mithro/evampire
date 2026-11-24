@@ -1,7 +1,7 @@
 .. _usbpd-process-limits:
 
-gf180mcu voltage limits for the USB circuits
-============================================
+gf180mcu voltage limits
+=======================
 
 The voltage limits of the :term:`gf180mcu` process that decide which USB
 Type-C circuits can be built on evampire, and the on-chip and external option
@@ -15,8 +15,8 @@ above the ratings of the standard devices, up to the breakdowns of the layers
 it relies on. The converter pages use the same limits for the power
 converters (:doc:`../converters/index`).
 
-Standard devices are rated for 3.3 V, 5 V, 6 V and 10 V
--------------------------------------------------------
+Standard device ratings
+-----------------------
 
 The design manual describes the process as "0.18μm 3.3V/(5V)6V dual-gate
 MCU Technology" ([USBPD-GF180-DRM]_, Section 1.0), and its device list adds
@@ -71,8 +71,8 @@ The 5 V devices are the 6 V devices with a marker layer
 of the 1 kΩ, 2 kΩ and 3 kΩ per square polysilicon resistors
 ([USBPD-GF180-ELEC]_, Section 6.1C).
 
-Measured breakdowns are above the ratings
------------------------------------------
+Measured breakdown voltages
+---------------------------
 
 :numref:`tab-usbpd-pdk-breakdown` gives the documented
 :wikipedia:`breakdown voltages <Breakdown_voltage>`. The minimum is the
@@ -81,7 +81,23 @@ value. :term:`BVDSS` is the drain-to-source breakdown of a transistor that
 is switched off, and :term:`BVCEO` the collector-to-emitter breakdown of a
 bipolar transistor with its base open. The
 :wikipedia:`gate oxide <Gate_oxide>` is the insulator between a
-transistor's gate and its channel.
+transistor's gate and its channel. Each minimum breakdown is at or above the
+rating of the same device in :numref:`tab-usbpd-pdk-ratings`.
+:numref:`fig-usbpd-breakdown-sites` shows where each one occurs.
+
+.. figure:: breakdown-sites.svg
+   :name: fig-usbpd-breakdown-sites
+   :alt: Cross-section, not to scale, on a P substrate at 0 V, with six
+         numbered sites. A 6 V NMOS in a P-well: 1, the gate oxide, 7 V for
+         3.3 V devices and 12 V for 6 V devices; 2, the N+ to P-well
+         junction, 8.5 V; 3, the drain-to-source breakdown with the
+         transistor off, 8.5 V. 4, an N-well to the substrate, 10 V. 5, a
+         metal 1 track over field oxide between two N+ regions, which turns
+         on the path between them at 8.5 V. 6, the MIM capacitor dielectric,
+         10 V, or 20 V for the 1 fF/µm² type.
+
+   Where each documented breakdown occurs, with its minimum value,
+   schematic and not to scale.
 
 .. list-table:: Documented breakdown limits
    :name: tab-usbpd-pdk-breakdown
@@ -146,8 +162,8 @@ parasitic transistor between two N+ regions under it: at least 8.5 V,
 regions of different potential out from under a track or resistor that
 carries more than that voltage.
 
-The SPICE models put the deep N-well breakdown near 30 V
---------------------------------------------------------
+Deep N-well breakdown
+---------------------
 
 A :term:`deep N-well` is an N-type layer below a P-well, which isolates the
 transistors in that P-well from the P substrate. The process has the layer
@@ -188,12 +204,29 @@ The design manual also restricts the potential of a deep N-well. Rule DF.15a
 connects the N+ contact of a deep N-well in the 6 V area only to the 6 V
 supply ([USBPD-GF180-DRM]_, Appendix B, rules not coded in the checks). A
 deep N-well held at VBUS potential is outside that rule.
+:numref:`fig-usbpd-deep-nwell` shows where each junction of
+:numref:`tab-usbpd-model-bv` lies.
 
-Custom structures build on the breakdowns, not the ratings
-----------------------------------------------------------
+.. figure:: deep-nwell.svg
+   :name: fig-usbpd-deep-nwell
+   :alt: Cross-section, not to scale. In a P substrate at 0 V, a deep
+         N-well holds a P-well with an NMOS and a P+ contact. The deep
+         N-well is contacted through an N+ region, which the design rules
+         tie to the 6 V supply. The P-well to deep N-well junction breaks
+         down at 14.732 V in the models, and the deep N-well to substrate
+         junction at 30.48 V. A separate N-well to the substrate holds
+         10 V minimum, 14 V typical.
 
-The requirements allow custom devices wherever a function needs them
-(:ref:`req-process`). For the USB circuits these are:
+   A P-well isolated from the substrate by a deep N-well, with the
+   breakdown of each junction, schematic and not to scale.
+
+Custom structures
+-----------------
+
+Custom structures hold more than the ratings of the standard devices by
+working to the documented breakdown limits instead. The requirements allow
+custom devices wherever a function needs them (:ref:`req-process`). For the
+USB circuits these are:
 
 Stacked transistors in isolated wells
    Each transistor holds a share of the voltage within its own rating. The
@@ -216,13 +249,31 @@ Clamps, crowbars and references
    :wikipedia:`thyristor <Thyristor>` from the parasitic bipolar
    transistors, and a bandgap reference from the vertical PNP.
 
+:numref:`fig-usbpd-custom-structures` shows the first four.
+
+.. figure:: custom-structures.svg
+   :name: fig-usbpd-custom-structures
+   :alt: Four cross-sections, not to scale, each on a P substrate at 0 V.
+         Stacked transistors: three NMOS, each in a P-well inside its own
+         N-type well, at V/3, 2V/3 and V; each transistor holds V/3 and the
+         top well holds V to the substrate. Drain-extended transistor: an
+         N+ source in a P-well, a polysilicon gate, and an N+ drain inside
+         a lightly doped drift region that spreads the voltage. Series MIM
+         capacitor: top and bottom metal plates on the insulator above the
+         substrate, with no junction. Polysilicon resistor on field oxide:
+         its VBUS end and its tap sit on the oxide, which holds VBUS to the
+         substrate.
+
+   Four custom structures for voltages above the standard ratings,
+   schematic and not to scale.
+
 :ref:`conv-custom` gives reference examples of stacked and drain-extended
 devices in other CMOS processes.
 
 .. _usbpd-placement:
 
-Each function has an on-chip and an external option
----------------------------------------------------
+On-chip and external options
+----------------------------
 
 :numref:`tab-usbpd-placement` lists each function of
 :ref:`usbpd-analogue` and :ref:`usbpd-cc-protection` with the highest
@@ -267,7 +318,8 @@ voltage it sees on an :term:`SPR` port, and its options.
      - Transistors, inductor and gate drivers
 
 The highest voltages come from :typec:`Table 4-5` (VCONN),
-:typec:`Table 4-37` (the dead-battery Rd at the 3.0 A level) and
+:typec:`Table 4-35` (the top of the ± 20 % Rd range, the margin target for
+the dead-battery Rd at the 3.0 A level, :ref:`usbpd-rd-circuit`) and
 :ref:`usbpd-spr` (VBUS with a PPS supply).
 
 On an

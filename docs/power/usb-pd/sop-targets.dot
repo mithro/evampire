@@ -1,0 +1,25 @@
+// Which receiver each start-of-packet ordered set addresses, along the
+// cable from the VCONN Source (packets.rst, cables.rst).
+//
+// Fixed grid (positions in inches): the chain at y=1.0, x=0.7 to 6.3.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph sop_targets {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.15, height=0.55,
+           fixedsize=true];
+    edge  [penwidth=2, color="#2e75b6"];
+
+    src  [pos="0.6,1.0!", label="sending port\n(VCONN Source)", width=1.3,
+          fillcolor="#fbe5d6"];
+    near [pos="2.1,1.0!", label="near plug:\nSOP′", fillcolor="#dbe8f5"];
+    far  [pos="4.9,1.0!", label="far plug:\nSOP″", fillcolor="#dbe8f5"];
+    port [pos="6.3,1.0!", label="far port:\nSOP", fillcolor="#e2f0d9"];
+    mid  [pos="3.5,1.0!", shape=plaintext, style="", width=0.8,
+          height=0.3, label="cable"];
+
+    src -- near; near -- mid; mid -- far; far -- port;
+}

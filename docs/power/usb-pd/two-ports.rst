@@ -1,15 +1,15 @@
 .. _usbpd-two-ports:
 
-Two ports and sharing the budget
-================================
+Two ports and budget sharing
+============================
 
 How a board with two USB Type-C ports uses them together, and how the
 software moves power between them while devices stay connected. The number
 of USB Type-C ports in each configuration is given in
 :ref:`board configurations <tab-power-board-configs>`.
 
-Two ports let the board bridge USB to USB
------------------------------------------
+Port role combinations
+----------------------
 
 Each USB Type-C port is a :term:`dual-role port`, so with two ports the
 board can work in more ways than with one:
@@ -20,6 +20,20 @@ board can work in more ways than with one:
   :term:`Power over Ethernet` or from the other input;
 * both ports as sinks, for example two chargers feeding one Ethernet output.
 
+:numref:`fig-usbpd-two-port-roles` shows the three combinations.
+
+.. graphviz:: two-port-roles.dot
+   :name: fig-usbpd-two-port-roles
+   :caption: The three ways a board can use two dual-role USB Type-C ports;
+             bold arrows show the direction of power.
+   :alt: Three panels, each with USB port 1 and USB port 2 above the board
+         power bus and an Ethernet port below it. Sink and source: power
+         flows from USB port 1 into the bus and out of USB port 2, with an
+         optional Ethernet output. Both sources: power flows from the Power
+         over Ethernet input into the bus and out of both USB ports. Both
+         sinks: power flows from both USB ports into the bus and out of the
+         Ethernet output.
+
 Whenever two or more ports supply power at once, their offers together must
 stay within the :ref:`power budget <power-budget>`. The rule and how the
 software applies it on every kind of port are on
@@ -28,8 +42,8 @@ Delivery allows when the software changes a USB port's share.
 
 .. _usbpd-sharing:
 
-The software moves power by changing a source's offer
-------------------------------------------------------
+Moving power between ports
+--------------------------
 
 A source can change what it offers while a device is attached, by sending a
 new Source_Capabilities message. The sink must then answer with a new
@@ -37,8 +51,8 @@ Request, because a Request always refers to the most recent offer
 (:pd:`Section 7.9.2`). The new contract is set up with the same exchange as
 the first one (see :ref:`usbpd-negotiation`).
 
-A port whose offer can change is a Managed Capability Port
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Managed Capability Port
+^^^^^^^^^^^^^^^^^^^^^^^
 
 USB Power Delivery describes every source port by three powers
 (:pd:`Section 3.2`; :pd:`Table 6.29 <x>`):
@@ -65,10 +79,22 @@ the port must then offer the smaller of its Port Present PDP and what the
 sink can take (:pd:`Section 3.2.3`, item 5). It must also provide at least
 its *Port Guaranteed PDP* when a sink asks for it this way, and while a
 contract for the Port Guaranteed PDP is in place it must not reduce its
-offer (:pd:`Section 7.26.2.3`).
+offer (:pd:`Section 7.26.2.3`). :numref:`fig-usbpd-pdp-nesting` shows how
+the powers relate.
 
-Lowering an offer while a device is attached
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. figure:: pdp-nesting.svg
+   :name: fig-usbpd-pdp-nesting
+   :alt: Three bars from a common start, schematic: Port Maximum PDP, the
+         most the port will ever provide, is the longest; Port Present PDP,
+         what it can provide now, is shorter; the present offer, the power
+         in Source_Capabilities, is shorter again. A dashed line marks the
+         Port Guaranteed PDP, which the port provides on request.
+
+   The powers that describe a Managed Capability Port, schematic and not to
+   scale.
+
+Lowering an offer
+^^^^^^^^^^^^^^^^^
 
 When the software must take power from a port to give it to the other, the
 steps on the port that gives it up are:
@@ -87,6 +113,31 @@ steps on the port that gives it up are:
    (:pd:`Section 4.5.1.3`; see :ref:`usbpd-limiting`).
 #. Send PS_RDY. From here the port's share is the new, lower offer.
 
+:numref:`fig-usbpd-lower-offer` shows these steps in time, with the
+moment the freed power can go to the other port.
+
+.. wavedrom::
+   :caption: Lowering the offer on port A to free power for port B,
+             schematic and not to scale; the break marks the 2.0 s to 2.4 s
+             wait after the Alert.
+   :name: fig-usbpd-lower-offer
+   :alt: Timing diagram. Port A sends Alert, then after tReducePowerAlert,
+         2.0 to 2.4 s, sends Source_Capabilities. The sink answers Request
+         within 15 ms and the source answers Accept within 15 ms. The sink
+         lowers its current at once; the source lowers its current limit
+         only after tSrcTransition, 25 ms after Accept, and sends PS_RDY
+         within tSrcTransReq, 325 ms. From the end of tSrcTransition, the
+         power budget of port B can be raised.
+
+   {"signal": [
+     {"name": "port A", "wave": "=.z|=...=.=.z.=.", "data": ["Alert", "Source_Capabilities", "Request", "Accept", "PS_RDY"]},
+     {"name": "timers", "wave": "=...x.......=..x", "data": ["tReducePowerAlert", "tSrcTransition"]},
+     {"name": "A current", "wave": "1...........0..."},
+     {"name": "A limit", "wave": "1..............0"},
+     {"name": "B share", "wave": "0..............1"}
+   ],
+   "config": {"hscale": 1}}
+
 Without the Alert, the exchange takes at most about 355 ms: up to 15 ms each
 for the Request and the Accept (*tReceiverResponse*), then up to
 *tSrcTransReq* (325 ms) to the PS_RDY (:pd:`PD Tables 7.10 <x>` and
@@ -101,8 +152,8 @@ multi-port charger section of the USB Type-C specification still lists
 GotoMin as a way to reclaim power (:typec:`Section 4.8.6.2`), but a source
 cannot rely on a sink that follows R3.3 acting on it.
 
-Raising an offer, and moving power when a device is unplugged
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Raising an offer or unplugging
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Raising an offer needs no Alert: the source sends the larger
 Source_Capabilities and the sink requests again. A sink that wants more
@@ -114,7 +165,35 @@ its maximum or the sink's need within 3 s of such a request
 When a device is unplugged, the source sees the detach on CC and removes
 VBUS, reaching vSafe0V within *tSafe0V* (650 ms) (:pd:`Section 4.1.5.5`).
 Its share is free once VBUS is off. The software can then raise the offer
-on the other port as above.
+on the other port as above. :numref:`fig-usbpd-raise-offer` shows a raised
+offer and :numref:`fig-usbpd-unplug` an unplugged device.
+
+.. graphviz:: raise-offer.dot
+   :name: fig-usbpd-raise-offer
+   :caption: Raising an offer after a Capability Mismatch; GoodCRC replies
+             are left out, and time runs downwards, not to scale.
+   :alt: Sequence diagram between a source and a sink. The sink sends a
+         Request for an offered PDO with Capability Mismatch set. The source
+         answers Accept and then PS_RDY. It then sends a larger
+         Source_Capabilities, up to its Port Present PDP. The sink sends a
+         Request, and the source answers Accept and PS_RDY, setting up the
+         new contract, within 3 s in a group of shared ports.
+
+.. wavedrom::
+   :caption: Freeing a port's share when its device is unplugged,
+             schematic and not to scale.
+   :name: fig-usbpd-unplug
+   :alt: Timing diagram. Port B's CC goes open when its device is
+         unplugged. Port B's VBUS falls to vSafe0V within tSafe0V, 650 ms.
+         Port A's share can then be raised.
+
+   {"signal": [
+     {"name": "port B CC", "wave": "=.=.........", "data": ["Rd", "open: device unplugged"]},
+     {"name": "port B VBUS", "wave": "1.=..0......", "data": ["falling"]},
+     {"name": "tSafe0V", "wave": "x.=...x.....", "data": ["≤ 650 ms"]},
+     {"name": "port A share", "wave": "=.....=.....", "data": ["old share", "can be raised"]}
+   ],
+   "config": {"hscale": 1}}
 
 The USB Type-C specification gives two example sharing policies for groups
 of shared ports: *highest-to-lowest*, which serves the first-connected port
@@ -123,15 +202,28 @@ ports (:typec:`Table 4-23`). It also requires that a shared port reclaiming
 power for a newly attached device uses offers and renegotiation, not a Hard
 Reset, ErrorRecovery or the Disabled state (:typec:`Section 4.8.6.1`).
 
-Each port has its own circuits; the software is shared
--------------------------------------------------------
+Per-port circuits and shared software
+-------------------------------------
 
 Each port needs its own CC circuits, because both ports must present their
 terminations and detect attach at the same time, and messages on the two
 ports arrive independently (see :ref:`usbpd-analogue`). Slow measurements,
 such as attach levels and the VBUS voltage, can share one converter through a
 multiplexer. Each port also needs its own power path and its own current
-limit (see :ref:`usbpd-monitoring`).
+limit (see :ref:`usbpd-monitoring`). :numref:`fig-usbpd-two-port-blocks`
+shows which circuits are per port and which are shared.
+
+.. graphviz:: two-port-blocks.dot
+   :name: fig-usbpd-two-port-blocks
+   :caption: The circuits of a two-port board: per-port power paths and CC
+             circuits, a shared ADC and one processor; bold arrows carry
+             power.
+   :alt: Block diagram. The board power bus connects in both directions to
+         a power path and current limit for port A and another for port B,
+         each joined to its port connector. Each connector has its own CC
+         circuits, linked to the processor. Both connectors also feed slow
+         levels to a shared ADC through a multiplexer, which reports to the
+         processor, which runs both negotiations.
 
 The processor runs the negotiations on both ports, which can overlap. The
 cost of that is worked out in :ref:`usbpd-software-two-ports`.

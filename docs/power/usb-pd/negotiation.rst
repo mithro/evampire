@@ -1,14 +1,14 @@
 .. _usbpd-negotiation:
 
-Negotiating a power contract
-============================
+Contract negotiation
+====================
 
 The message exchange that sets up a power :term:`contract` between a
 :term:`source` and a :term:`sink`, the acknowledgement of each message, and
 the time limits on both ends.
 
-A contract takes four messages, each acknowledged
--------------------------------------------------
+Message sequence
+----------------
 
 :numref:`fig-usbpd-negotiation` shows a complete negotiation. After attach,
 the source turns :term:`VBUS` on at 5 V and the two ends exchange four
@@ -44,8 +44,8 @@ The voltages and currents a source can offer are on
 
 .. _usbpd-goodcrc:
 
-Every message is acknowledged within 195 µs
--------------------------------------------
+GoodCRC acknowledgement
+-----------------------
 
 Every correctly received message addressed to the port is answered with
 GoodCRC. The first preamble bit of the GoodCRC must start at least 25 µs
@@ -77,8 +77,8 @@ The 195 µs deadline is the tightest time limit in USB Power Delivery. The
 other pages link here for it. What it means for software on the processor is
 on :ref:`usbpd-goodcrc-deadline`.
 
-A lost acknowledgement is retried twice, then the protocol is reset
--------------------------------------------------------------------
+Retries and resets
+------------------
 
 The sender waits *tReceive* (0.9 ms to 1.1 ms) for the GoodCRC. If none
 arrives, it sends the same message again, with the same MessageID, starting
@@ -95,11 +95,25 @@ the two ends then negotiate the contract again (:pd:`Section 7.1.1`). If
 Soft_Reset also fails, the port sends a :term:`Hard Reset`, which does
 change VBUS (:pd:`Section 7.1.1`; :ref:`usbpd-hard-reset`). One missed
 GoodCRC therefore costs only a repeated message.
+:numref:`fig-usbpd-retries` shows the whole sequence.
+
+.. graphviz:: retries.dot
+   :name: fig-usbpd-retries
+   :caption: A message whose GoodCRC never arrives: two retries, then
+             Soft_Reset, then Hard Reset only if that fails too.
+   :alt: Sequence diagram between a sender and a receiver, time downwards.
+         The sender sends a message with MessageID n, which is lost; after
+         tReceive, 0.9 to 1.1 ms, with no GoodCRC, it sends the same message
+         with the same MessageID within tRetry, 195 µs. That is lost, and
+         so is a second retry, the last one since nRetryCount is 2. The
+         sender then sends Soft_Reset, which resets the protocol without
+         changing VBUS. Only if Soft_Reset fails does it send Hard Reset,
+         which changes VBUS.
 
 .. _usbpd-timing:
 
-Time limits for both roles
---------------------------
+Time limits
+-----------
 
 :numref:`tab-usbpd-timing-ack` lists the limits on acknowledging a message,
 :numref:`tab-usbpd-timing-msg` the limits on answering one, and

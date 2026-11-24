@@ -1,7 +1,7 @@
 .. _usbpd-attach:
 
-Two dual-role ports decide who supplies power
-=============================================
+Attach and detach
+=================
 
 How a :term:`dual-role port` finds the device at the other end of a USB
 Type-C cable, settles on the source or sink role, and starts again after an
@@ -16,8 +16,8 @@ while the port presents :term:`Rp`, and SNK.Rp or SNK.Open while it presents
 
 .. _usbpd-toggling:
 
-An unattached dual-role port toggles between Rp and Rd
-------------------------------------------------------
+Toggling between Rp and Rd
+--------------------------
 
 When nothing is attached, a dual-role port alternates between presenting Rd
 on both CC pins (state Unattached.SNK) and presenting Rp on both CC pins
@@ -94,8 +94,8 @@ The time to notice a connection depends on how many of the two ends toggle
 
 .. _usbpd-attach-sequence:
 
-The attach sequence waits for a stable CC pin before power flows
-----------------------------------------------------------------
+Attach sequence
+---------------
 
 :numref:`fig-usbpd-drp-states` shows the states a dual-role port passes
 through. It leaves out the accessory and debug states and the return to the
@@ -171,6 +171,29 @@ A source such as a charger finds the port while it presents Rd
    if it prefers the source role (:ref:`usbpd-try`).
 
 The CC pin that shows SNK.Rp is the one that meets the CC wire.
+:numref:`fig-usbpd-attach-to-source` shows the sequence in time.
+
+.. wavedrom::
+   :caption: evampire attaching as the sink to a charger, schematic and not
+            to scale; tCCDebounce is 100 ms to 200 ms and tVBUSON at most
+            275 ms.
+   :name: fig-usbpd-attach-to-source
+   :alt: Timing diagram. The charger presents Rp and evampire presents Rd
+         throughout. The charger goes from Unattached.SRC to AttachWait.SRC,
+         waits tCCDebounce of 100 to 200 ms, enters Attached.SRC and turns
+         VBUS on within tVBUSON, at most 275 ms. evampire goes from
+         Unattached.SNK to AttachWait.SNK and enters Attached.SNK once VBUS
+         is present.
+
+   {"signal": [
+     {"name": "charger CC", "wave": "=.............", "data": ["Rp"]},
+     {"name": "charger state", "wave": "=...=...=.....", "data": ["Unattached.SRC", "AttachWait.SRC", "Attached.SRC"]},
+     {"name": "charger timer", "wave": "x...=...=..x..", "data": ["tCCDebounce", "tVBUSON"]},
+     {"name": "VBUS", "wave": "0..........1.."},
+     {"name": "evampire CC", "wave": "=.............", "data": ["Rd"]},
+     {"name": "evampire state", "wave": "=...=......=..", "data": ["Unattached.SNK", "AttachWait.SNK", "Attached.SNK"]}
+   ],
+   "config": {"hscale": 1}}
 
 Attaching to a sink
 ^^^^^^^^^^^^^^^^^^^
@@ -185,15 +208,61 @@ A sink such as a phone finds the port while it presents Rp
    enters Attached.SRC.
 #. It turns VBUS on within tVBUSON.
 
+:numref:`fig-usbpd-attach-to-sink` shows the sequence in time.
+
+.. wavedrom::
+   :caption: evampire attaching as the source to a phone, schematic and not
+            to scale; tVsafe0V is at most 650 ms, tCCDebounce 100 ms to
+            200 ms and tVBUSON at most 275 ms.
+   :name: fig-usbpd-attach-to-sink
+   :alt: Timing diagram. evampire presents Rp and the phone presents Rd.
+         evampire goes from Unattached.SRC to AttachWait.SRC, where it
+         discharges any voltage left on VBUS to vSafe0V within tVsafe0V, at
+         most 650 ms, and waits tCCDebounce, 100 to 200 ms. It then enters
+         Attached.SRC and turns VBUS on within tVBUSON, at most 275 ms. The
+         phone enters Attached.SNK once VBUS is present.
+
+   {"signal": [
+     {"name": "evampire CC", "wave": "=..............", "data": ["Rp"]},
+     {"name": "evampire", "wave": "=...=.....=....", "data": ["Unattached.SRC", "AttachWait.SRC", "Attached.SRC"]},
+     {"name": "discharge", "wave": "x...=..x.......", "data": ["tVsafe0V"]},
+     {"name": "debounce", "wave": "x...=....=..x..", "data": ["tCCDebounce", "tVBUSON"]},
+     {"name": "VBUS", "wave": "=......0....1..", "data": ["left over"]},
+     {"name": "phone CC", "wave": "=..............", "data": ["Rd"]},
+     {"name": "phone", "wave": "=...=.......=..", "data": ["Unattached.SNK", "AttachWait.SNK", "Attached.SNK"]}
+   ],
+   "config": {"hscale": 1}}
+
 Attaching to another dual-role port
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When both ends toggle, the end that happens to present Rp while the other
 presents Rd becomes the source. Without a preference mechanism, the outcome
 is random (:typec:`Section 4.5.2.2.7.2`; :typec:`Section 2.3.3`).
+:numref:`fig-usbpd-drp-meet` shows two toggling ports meeting.
 
-Detach
-^^^^^^
+.. wavedrom::
+   :caption: Two toggling dual-role ports meeting, schematic and not to
+             scale: port A presents Rp while port B presents Rd, so A
+             becomes the source.
+   :name: fig-usbpd-drp-meet
+   :alt: Timing diagram. Port A toggles Rp, Rd, Rp; port B presents Rp and
+         then Rd. While both present Rp, or both Rd, neither sees the other.
+         When A presents Rp and B presents Rd, A sees SRC.Rd and B sees
+         SNK.Rp, and both stop toggling: A goes on as the source and B as
+         the sink. Each toggle period tDRP is 50 to 100 ms, with Rp for 30 to
+         70 % of it.
+
+   {"signal": [
+     {"name": "port A CC", "wave": "=.=.=........", "data": ["Rp", "Rd", "Rp, held"]},
+     {"name": "port B CC", "wave": "=.=..........", "data": ["Rp", "Rd, held"]},
+     {"name": "seen", "wave": "x...=........", "data": ["A sees SRC.Rd, B sees SNK.Rp: A is the source"]},
+     {"name": "A period", "wave": "=...x........", "data": ["tDRP 50–100 ms"]}
+   ],
+   "config": {"hscale": 1}}
+
+Detaching
+^^^^^^^^^
 
 A source detects that the sink has left when the CC pin it monitors reads
 SRC.Open, within tSRCDisconnect. It then removes VBUS within tVBUSOFF
@@ -202,11 +271,41 @@ role goes from Attached.SRC to TryWait.SNK rather than Unattached.SNK, so
 that two ports that both prefer the source role do not swap back and forth
 without end. A sink detects detach when VBUS falls below vSinkDisconnect,
 within tSinkDisconnect (:typec:`Section 4.5.2.2.5.2`).
+:numref:`fig-usbpd-detach` shows both cases.
+
+.. wavedrom::
+   :caption: Detach seen by evampire as the source and as the sink, schematic
+            and not to scale; tSRCDisconnect is at most 20 ms, tVBUSOFF at
+            most 650 ms and tSinkDisconnect at most 40 ms.
+   :name: fig-usbpd-detach
+   :alt: Timing diagram in two parts. As the source: the sink's Rd goes
+         open; within tSRCDisconnect, at most 20 ms, evampire sees SRC.Open
+         and leaves Attached.SRC; VBUS falls to vSafe0V, 0 to 0.8 V, within
+         tVBUSOFF, at most 650 ms. As the sink: the charger's VBUS falls;
+         once it is below vSinkDisconnect, at most 3.67 V, evampire leaves
+         Attached.SNK within tSinkDisconnect, at most 40 ms.
+
+   {"signal": [
+     ["as source",
+      {"name": "far-end CC", "wave": "=.=...........", "data": ["Rd", "open"]},
+      {"name": "state", "wave": "=.....=.......", "data": ["Attached.SRC", "Unattached.SNK or TryWait.SNK"]},
+      {"name": "detect", "wave": "x.=...x.......", "data": ["tSRCDisconnect"]},
+      {"name": "VBUS off", "wave": "x.=......x....", "data": ["tVBUSOFF"]},
+      {"name": "VBUS", "wave": "1........0...."}
+     ],
+     {},
+     ["as sink",
+      {"name": "VBUS", "wave": "1.=..=........", "data": ["falling", "below vSinkDisconnect"]},
+      {"name": "detect", "wave": "x....=...x....", "data": ["tSinkDisconnect"]},
+      {"name": "state", "wave": "=........=....", "data": ["Attached.SNK", "unattached"]}
+     ]
+   ],
+   "config": {"hscale": 1}}
 
 .. _usbpd-try:
 
-Try.SRC and Try.SNK bias the outcome once, at attach
-----------------------------------------------------
+Try.SRC and Try.SNK
+-------------------
 
 A dual-role port can bias the outcome with one of two optional mechanisms.
 Only one of them may be enabled at a time (:typec:`Section 4.5.1.4.1`,
@@ -248,15 +347,50 @@ Try.SNK, for a port that prefers to be the sink
      - 1100
      - Longest time in Try.SRC
 
-:numref:`tab-usbpd-try-timing` gives the limits. Both mechanisms act only
-during attach. After attach, two ports that support
+:numref:`tab-usbpd-try-timing` gives the limits, and
+:numref:`fig-usbpd-try` shows each mechanism when it succeeds. Both
+mechanisms act only during attach.
+
+.. wavedrom::
+   :caption: Try.SRC and Try.SNK when the partner, a dual-role port, gives
+            way, schematic and not to scale; tDRPTry is 75 ms to 150 ms
+            and tTryCCDebounce 10 ms to 20 ms.
+   :name: fig-usbpd-try
+   :alt: Timing diagram in two parts. Try.SRC: the port leaves
+         AttachWait.SNK for Try.SRC and changes its CC from Rd to Rp; the
+         partner changes from Rp to Rd; after Rd has been stable for
+         tTryCCDebounce, 10 to 20 ms, the port enters Attached.SRC. Try.SNK:
+         the port leaves AttachWait.SRC for Try.SNK and changes from Rp to
+         Rd; the partner changes from Rd to Rp; after tDRPTry, 75 to 150 ms,
+         the port looks for Rp, and after tTryCCDebounce with VBUS present
+         it enters Attached.SNK.
+
+   {"signal": [
+     ["Try.SRC",
+      {"name": "port state", "wave": "=...=....=....", "data": ["AttachWait.SNK", "Try.SRC", "Attached.SRC"]},
+      {"name": "port CC", "wave": "=...=.........", "data": ["Rd", "Rp"]},
+      {"name": "partner CC", "wave": "=....=........", "data": ["Rp", "Rd"]},
+      {"name": "timer", "wave": "x....=...x....", "data": ["tTryCCDebounce"]}
+     ],
+     {},
+     ["Try.SNK",
+      {"name": "port state", "wave": "=...=......=..", "data": ["AttachWait.SRC", "Try.SNK", "Attached.SNK"]},
+      {"name": "port CC", "wave": "=...=.........", "data": ["Rp", "Rd"]},
+      {"name": "partner CC", "wave": "=....=........", "data": ["Rd", "Rp"]},
+      {"name": "timer", "wave": "x...=..=...x..", "data": ["tDRPTry", "tTryCCDebounce"]},
+      {"name": "VBUS", "wave": "0..........1.."}
+     ]
+   ],
+   "config": {"hscale": 1}}
+
+After attach, two ports that support
 :term:`USB Power Delivery` can swap the power role with messages
 (:ref:`usbpd-power-role-swap`).
 
 .. _usbpd-initial-role:
 
-The power budget decides which role evampire prefers
-----------------------------------------------------
+Preferred initial role
+----------------------
 
 evampire's preferred role on a port follows from the input power it has and
 its :ref:`power budget <power-budget>`, as set out for each
@@ -298,8 +432,8 @@ that cannot swap data roles (:typec:`Section 4.5.1.4.1`).
 
 .. _usbpd-dead-battery:
 
-A board without power must still present Rd
--------------------------------------------
+Rd on an unpowered board
+------------------------
 
 A board with no power from Ethernet that is plugged into a USB charger has
 no supply at that moment. The charger turns VBUS on only after it sees Rd
@@ -315,7 +449,8 @@ The unpowered Rd needs to pull the CC voltage only into the range of the
 :typec:`Table 4-28`). The specification's example is a 5.1 kΩ ± 20 %
 resistor in series with a transistor whose gate is weakly pulled to CC. It
 turns on from the source's own pull-up and can be switched off once the
-board is powered. :ref:`usbpd-rd-circuit` describes evampire's circuit.
+board is powered. :ref:`usbpd-rd-circuit` describes evampire's circuit, and
+:numref:`fig-usbpd-rd-paths` draws it.
 
 Once the board has power from VBUS, the processor takes over the CC pins,
 keeps Rd present and continues as a sink in Attached.SNK. :doc:`start-up`
@@ -325,8 +460,8 @@ as for any two sink-only ports (:typec:`Table 4-9`).
 
 .. _usbpd-error-recovery:
 
-ErrorRecovery forces a detach and a fresh attach
-------------------------------------------------
+ErrorRecovery
+-------------
 
 Every port that supports USB Power Delivery must support the ErrorRecovery
 state, and must enter it from any state when its software directs it to
@@ -343,7 +478,29 @@ returns to Unattached.SRC, and any other dual-role port to Unattached.SNK
 (:typec:`Section 4.5.2.2.2`). USB Power Delivery uses it when a power role
 swap stalls, with no PS_RDY message within tPSSourceOn
 (:pd:`Section 7.31.5.3`), and when a :term:`Hard Reset` does not clear an
-error (:pd:`Section 7.1.3`).
+error (:pd:`Section 7.1.3`). :numref:`fig-usbpd-error-recovery` shows the
+sequence.
+
+.. wavedrom::
+   :caption: ErrorRecovery forcing a detach and a fresh attach, schematic and
+             not to scale; tErrorRecovery is at least 240 ms instead of 25 ms
+             if the port was supplying VCONN.
+   :name: fig-usbpd-error-recovery
+   :alt: Timing diagram. The port leaves its attached state for
+         ErrorRecovery: it stops driving VBUS and VCONN and its CC pins go
+         open, at least 126 kΩ. It stays there for tErrorRecovery, at least
+         25 ms, or 240 ms if it was supplying VCONN, while the partner sees
+         a detach. It then returns to Unattached.SRC or Unattached.SNK and
+         attach starts again.
+
+   {"signal": [
+     {"name": "port state", "wave": "=..=....=.....", "data": ["attached", "ErrorRecovery", "Unattached.SRC or .SNK"]},
+     {"name": "port CC", "wave": "=..=....=.....", "data": ["Rp or Rd", "open, ≥ 126 kΩ", "toggling"]},
+     {"name": "VBUS, VCONN", "wave": "=..0..........", "data": ["as before"]},
+     {"name": "timer", "wave": "x..=....x.....", "data": ["tErrorRecovery ≥ 25 ms"]},
+     {"name": "partner", "wave": "=...=.........", "data": ["attached", "sees a detach"]}
+   ],
+   "config": {"hscale": 1}}
 
 ErrorRecovery is why both the Rp and the Rd circuits must be able to turn
 off completely, including the unpowered Rd once the board has power.
