@@ -110,22 +110,28 @@ def meander(extra_mm, note):
 
 def pad_delay():
     """TXC and TXD through identical pads: the same delay, so the skew at
-    the pins is unchanged. TT corner, rising 3.04 ns."""
+    the pins is unchanged. TT corner: 3.04 ns rising, 3.20 ns falling;
+    each data edge is drawn with the direction of the clock edge."""
     w, h = 660, 250
     left, right, t0, t1 = 160, 640, -1.0, 12.0
 
     def xs(t):
         return left + (t - t0) / (t1 - t0) * (right - left)
 
+    def edges_of(d):
+        rise, fall = d
+        return [rise, 4 + fall, 8 + rise]
+
     def clk(y, d):
-        pts = [(xs(t0), y + 20), (xs(d), y + 20), (xs(d), y), (xs(4 + d), y),
-               (xs(4 + d), y + 20), (xs(8 + d), y + 20), (xs(8 + d), y),
-               (xs(t1), y)]
+        e = edges_of(d)
+        pts = [(xs(t0), y + 20), (xs(e[0]), y + 20), (xs(e[0]), y),
+               (xs(e[1]), y), (xs(e[1]), y + 20), (xs(e[2]), y + 20),
+               (xs(e[2]), y), (xs(t1), y)]
         return _poly(pts)
 
     def dat(y, d, names):
         out = []
-        edges = [t0, d, 4 + d, 8 + d, t1]
+        edges = [t0] + edges_of(d) + [t1]
         for k in range(4):
             a, c = edges[k], edges[k + 1]
             out.append(rect(xs(a) + 2, y, xs(c) - xs(a) - 4, 20, DATA_FILL,
@@ -136,15 +142,16 @@ def pad_delay():
         return out
 
     b = []
-    rows = (("TXC, inside", 30, 0, clk), ("TXD, inside", 60, 0, dat),
-            ("TXC at the pin", 120, 3.04, clk),
-            ("TXD at the pin", 150, 3.04, dat))
+    rows = (("TXC, inside", 30, (0, 0), clk),
+            ("TXD, inside", 60, (0, 0), dat),
+            ("TXC at the pin", 120, (3.04, 3.20), clk),
+            ("TXD at the pin", 150, (3.04, 3.20), dat))
     for lab, y, d, fn in rows:
         b.append(text(left - 10, y + 15, lab, anchor="end", size=12))
         b += [fn(y, d)] if fn is clk else fn(y, d, ["", "n0", "n1", ""])
     b.append(line(xs(0), 95, xs(3.04), 95, INK, 1.2, arrows=True))
-    b.append(text(xs(3.2), 99, "the same pad delay on both, 3.04 ns at TT",
-                  size=11))
+    b.append(text(xs(3.2), 99, "the same pad delay on both: 3.04 ns rising, "
+                  "3.20 ns falling, at TT", size=11))
     b += _axis(xs, 0, 12, 2, 200, "time (ns)")
     return svg(w, h, b)
 

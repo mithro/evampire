@@ -40,7 +40,6 @@ if __name__ == "__main__":
                      ("speed-buffer", speed_buffer)):
         (HERE / f"{name}.svg").write_text(fn())
     (HERE / "meander-280.svg").write_text(meander(
-        280, "2 ns at 7.2 ps/mm; recommended total under 51 mm, "
-        "at most 152 mm"))
+        280, "2 ns at 7.2 ps/mm: more than the 152 mm maximum trace length"))
     (HERE / "meander-86.svg").write_text(meander(
         86, "0.62 ns for the KSZ9031RNX, added to its 1.38 ns: 2.0 ns"))
