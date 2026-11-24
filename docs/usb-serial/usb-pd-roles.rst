@@ -193,6 +193,30 @@ as an error and gives up the transfer after three in a row
 ([USBSER-USB2]_ section 10.2.6). The worst case is then a USB Power
 Delivery message on each port and a USB packet arriving together, and
 whether that is acceptable depends on how often it happens.
+:numref:`fig-usbser-sharing` compares the two cases.
+
+.. wavedrom::
+   :caption: A USB token that arrives while the processor handles a USB
+             Power Delivery message, without and with automatic handshakes
+             (not to scale).
+   :name: fig-usbser-sharing
+   :alt: Timing diagram: the processor is busy with a USB Power Delivery
+         message, with interrupts off. A USB IN token arrives during it.
+         Without automatic handshakes there is no reply, which the host
+         counts as an error. With automatic handshakes the hardware answers
+         NAK and the host retries later.
+
+   {"signal": [
+     {"name": "processor", "wave": "2.7.......2...",
+      "data": ["free", "USB Power Delivery message, interrupts off", "free"]},
+     {"name": "USB token", "wave": "x...3.x.......",
+      "data": ["IN"]},
+     {"name": "without", "wave": "x......9.x....",
+      "data": ["no reply: an error"]},
+     {"name": "with", "wave": "x......5.x....",
+      "data": ["NAK; host retries"]}
+   ],
+   "config": {"hscale": 1.5}}
 
 Open questions
 --------------
