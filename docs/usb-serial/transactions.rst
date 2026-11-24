@@ -147,12 +147,13 @@ clock (see :doc:`timing`).
          n+2. A second row marks each frame as 1.000 ms ± 500 ns long.
 
    {"signal": [
-     {"name": "bus", "wave": "5.3.2...5.3.2...5.",
-      "data": ["SOF n", "IN", "idle", "SOF n+1", "OUT", "idle", "SOF n+2"]},
-     {"name": "frame", "wave": "4.......4.......4.",
-      "data": ["frame n: 1.000 ms ± 500 ns", "frame n+1", "n+2"]}
+     {"name": "bus", "wave": "5.32.5.32.5.32.",
+      "data": ["SOF n", "IN", "idle", "SOF n+1", "OUT", "idle", "SOF n+2",
+               "IN", "idle"]},
+     {"name": "frame", "wave": "4....4....4....",
+      "data": ["frame n: 1.000 ms ± 500 ns", "frame n+1", "frame n+2"]}
    ],
-   "config": {"hscale": 1.6}}
+   "config": {"hscale": 1}}
 
 Enumeration
 -----------

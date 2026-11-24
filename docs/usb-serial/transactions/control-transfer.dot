@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph control_transfer {
-    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica", outputorder=edgesfirst];
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica", outputorder=edgesfirst, size="7.4,30"];
     node  [shape=point, width=0.01, height=0.01, label="", fontname="Helvetica"];
     edge  [arrowsize=0.7, penwidth=1.3];
 

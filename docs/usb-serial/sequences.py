@@ -91,7 +91,7 @@ class Seq:
             f'    {t} [pos="{anchor_x:.2f},{self.y:.2f}!", shape=box, '
             f'style="rounded,filled", fillcolor="#f2f2f2", label="{text}", '
             f'width=1.5, height={0.18 * (text.count(chr(92) + "n") + 1) + 0.1:.2f}, '
-            f'fontsize=9];')
+            f'fontsize=10];')
 
     def write(self, path):
         bottom = self.y - STEP * 0.8
@@ -116,7 +116,7 @@ class Seq:
             "",
             f"digraph {self.name} {{",
             '    graph [layout=neato, splines=false, overlap=true, '
-            'fontname="Helvetica", outputorder=edgesfirst];',
+            'fontname="Helvetica", outputorder=edgesfirst, size="7.4,30"];',
             '    node  [shape=point, width=0.01, height=0.01, label="", '
             'fontname="Helvetica"];',
             '    edge  [arrowsize=0.7, penwidth=1.3];',
@@ -170,7 +170,8 @@ def retry():
 
 
 def enumeration():
-    s = Seq("enumeration", "Host", "Device", xn=6.9, comment="Enumeration "
+    s = Seq("enumeration", "Host", "Device", xl=1.0, xr=3.7, xn=5.85,
+            comment="Enumeration "
             "of a full-speed device, with the time limits of USB 2.0.")
     s.note("VBUS valid")
     s.action("r", "D+ pull-up on within\\n100 ms (TSIGATT)")

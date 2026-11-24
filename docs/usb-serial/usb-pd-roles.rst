@@ -142,18 +142,18 @@ through these events.
          dips VBUS and makes evampire the sink, and the pull-up stays on.
 
    {"signal": [
-     {"name": "event", "wave": "3.4.x.5.6.x.4.x.7.",
+     {"name": "event", "wave": "3.4.5.6.4.7.",
       "data": ["attach", "DR_Swap", "5 V to 20 V", "Hard Reset",
                "DR_Swap", "PR_Swap"]},
-     {"name": "VBUS", "wave": "=......==.=.....==",
+     {"name": "VBUS", "wave": "=....==.=.==",
       "data": ["5 V", "20 V", "0 V", "5 V", "dip", "5 V"]},
-     {"name": "power role", "wave": "=................=",
+     {"name": "power role", "wave": "=..........=",
       "data": ["source", "sink"]},
-     {"name": "data role", "wave": "=..=....=....=....",
+     {"name": "data role", "wave": "=..=..=..=..",
       "data": ["DFP", "UFP", "DFP", "UFP"]},
-     {"name": "pull-up", "wave": "0...1...0.....1..."}
+     {"name": "pull-up", "wave": "0...1.0...1."}
    ],
-   "config": {"hscale": 1.3}}
+   "config": {"hscale": 1}}
 
 Two USB Type-C ports
 --------------------
@@ -221,16 +221,16 @@ whether that is acceptable depends on how often it happens.
          NAK and the host retries later.
 
    {"signal": [
-     {"name": "processor", "wave": "2.7.......2...",
+     {"name": "processor", "wave": "2.7.........2..",
       "data": ["free", "USB Power Delivery message, interrupts off", "free"]},
-     {"name": "USB token", "wave": "x...3.x.......",
+     {"name": "USB token", "wave": "x...3.x........",
       "data": ["IN"]},
-     {"name": "without", "wave": "x......9.x....",
+     {"name": "without", "wave": "x.....9...x....",
       "data": ["no reply: an error"]},
-     {"name": "with", "wave": "x......5.x....",
+     {"name": "with", "wave": "x.....5...x....",
       "data": ["NAK; host retries"]}
    ],
-   "config": {"hscale": 1.5}}
+   "config": {"hscale": 1}}
 
 Open questions
 --------------

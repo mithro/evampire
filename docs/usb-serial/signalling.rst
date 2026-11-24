@@ -211,7 +211,7 @@ A device also recognises some states by how long they last
      {"name": "normal", "wave": "5.2..5.2..",
       "data": ["SOF", "idle, under 1 ms", "SOF", "idle"]}
    ],
-   "config": {"hscale": 2}}
+   "config": {"hscale": 1.4}}
 
 NRZI coding and bit stuffing
 ----------------------------

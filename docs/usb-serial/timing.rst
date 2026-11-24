@@ -252,18 +252,18 @@ answering the host.
          before it gives up.
 
    {"signal": [
-     {"name": "host", "wave": "3...5.x.........",
+     {"name": "host", "wave": "3...5.x.......",
       "data": ["DATA packet", "EOP"]},
-     {"name": "gap", "wave": "x.....4...x.....",
+     {"name": "gap", "wave": "x.....4...x...",
       "data": ["2 to 6.5 bit times"]},
-     {"name": "device", "wave": "x.........3.....",
+     {"name": "device", "wave": "x.........3...",
       "data": ["ACK"]},
-     {"name": "inside 6.5", "wave": "x.....567.x.....",
+     {"name": "inside 6.5", "wave": "x.....56.7x...",
       "data": ["t_rx", "t_reply", "t_tx"]},
-     {"name": "host timeout", "wave": "x.....8.........",
+     {"name": "host timeout", "wave": "x.....8.......",
       "data": ["host waits 16 to 18 bit times, 1.333 µs to 1.5 µs"]}
    ],
-   "config": {"hscale": 2.5}}
+   "config": {"hscale": 1}}
 
 The limits are ([USBSER-USB2]_ section 7.1.18.1, section 7.1.19.1,
 Table 7‑14):
