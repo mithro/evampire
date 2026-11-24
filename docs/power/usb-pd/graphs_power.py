@@ -225,7 +225,7 @@ def ovp_ramp():
     body = [p.frame()]
     body += p.yticks([20, 21, 21.5, 24], "VBUS (V)", fmt="{:g}")
     for v, lab in ((21.0, "21.0 V: 20 V + 5 % (vSrcNew)"),
-                   (21.5, "21.5 V: over-voltage threshold"),
+                   (21.5, "21.5 V: the threshold must lie above"),
                    (24.0, "24 V: what an SPR sink tolerates")):
         body.append(line(p.left, p.y(v), p.right, p.y(v), GREY, 1.0, "6,3"))
         body.append(text(p.x(-56), p.y(v) - 5, lab, 11))
@@ -248,20 +248,26 @@ def vconn_inrush():
     """VCONN charging the cable at constant current, then the cable load
     (cables.rst)."""
     pv = Plot(60, 20, 590, 150, (-0.5, 4), (0, 3.5))
-    pi = Plot(60, 210, 590, 110, (-0.5, 4), (0, 40))
+    pi = Plot(60, 210, 590, 130, (-0.5, 4), (0, 40))
     body = [pv.frame(), pi.frame()]
     body += pv.yticks([0, 1, 2, 3], "VCONN (V)")
-    body += pi.yticks([0, 15, 33], "current (mA)")
+    body += pi.yticks([0, 6.7, 15, 25, 33], "current (mA)", fmt="{:g}")
     body.append(polyline(pv.pts([(-0.5, 0), (0, 0), (2, 3.0), (4, 3.0)]),
                          SRC_INK, 2.2))
+    body.append(line(pi.left, pi.y(33), pi.right, pi.y(33), INK, 1.2,
+                     "6,3"))
     body.append(polyline(pi.pts([(-0.5, 0), (0, 0), (0, 15), (2, 15),
-                                 (2, 33), (4, 33)]), SRC_INK, 2.2))
+                                 (2, 25), (3, 25), (3, 6.7), (4, 6.7)]),
+                         SRC_INK, 2.2))
     for p in (pv, pi):
         body.append(line(p.x(2), p.top, p.x(2), p.bottom, INK, 0.8, "4,3"))
     body.append(text(pv.x(2) + 6, pv.y(3.0) + 16, "3.0 V, lowest valid "
                      "VCONN, by tVCONNON = 2 ms", 11))
     body.append(text(pi.x(0.1), pi.y(15) - 6, "15 mA charges 10 µF", 11))
-    body.append(text(pi.x(2.1), pi.y(33) - 6, "33 mA: 100 mW at 3.0 V", 11))
+    body.append(text(pi.x(2.05), pi.y(33) - 5, "33 mA: the 100 mW the source "
+                     "must be able to supply", 11))
+    body.append(text(pi.x(2.05), pi.y(25) + 14, "cable load: at most 75 mW", 11))
+    body.append(text(pi.x(3.05), pi.y(6.7) - 6, "then at most 20 mW", 11))
     body += pi.xticks([0, 1, 2, 3, 4], "time after VCONN is switched on (ms)",
                       grid=False)
     return svg(680, int(pi.bottom + 48), body, "VCONN switch current")
@@ -279,7 +285,8 @@ def class_steps():
         prev = c
     pts.append((100, prev))
     body = [p.frame()]
-    body += p.yticks(list(range(0, 9)), "highest class")
+    body += p.yticks(list(range(1, 9)), "highest class")
+    body.append(text(p.left - 8, p.y(0) + 4, "none", 12, "end"))
     body.append(polyline(p.pts(pts), SNK_INK, 2.2))
     for w, c in steps:
         body.append(text(p.x(w) + 3, p.y(c) - 5, f"{w:g} W", 10))
