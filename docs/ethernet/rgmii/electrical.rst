@@ -94,6 +94,22 @@ KSZ9031RNX values from [RGMII-KSZ9031]_ section 6. An empty cell means the
 value is not used here. Both devices accept 3.3 V, the level evampire uses
 (see :doc:`io-cells`).
 
+:numref:`fig-rgmii-levels` compares the levels of the specification and
+of the two transceivers.
+
+.. figure:: levels.svg
+   :name: fig-rgmii-levels
+   :alt: Bars on a voltage axis from 0 to 3.5 V. RGMII 1.3 with 2.5 V
+         levels: outputs at least 2.0 V high and at most 0.40 V low; inputs
+         high above 1.7 V and low below 0.70 V. DP83867 with a 3.3 V
+         supply: outputs at least 2.0 V high and at most 0.6 V low; inputs
+         1.7 V and 0.7 V. KSZ9031RNX with a 3.3 V supply: inputs 2.0 V and
+         1.3 V; outputs not used here. The region between each pair of
+         levels is undefined.
+
+   The logic levels of :numref:`tab-rgmii-levels-1-3` and
+   :numref:`tab-rgmii-phy-levels`.
+
 .. _rgmii-board:
 
 Board traces
