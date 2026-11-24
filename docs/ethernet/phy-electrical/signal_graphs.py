@@ -162,9 +162,26 @@ def baseline_wander():
     """Symbols through a coupling that blocks DC (a first-order high-pass),
     before and after a slow loop restores the zero level. Schematic."""
     rnd = random.Random(7)
-    sym = [rnd.choice((-1, 0, 1)) for _ in range(12)]
-    sym += [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1]
-    sym += [rnd.choice((-1, 0, 1)) for _ in range(16)]
+    # MLT-3: a 1 bit steps along the cycle 0, +1, 0, -1; a 0 bit holds.
+    bits = [rnd.choice((0, 1)) for _ in range(11)]
+    cycle = (0, 1, 0, -1)
+    pos, sym = 0, []
+
+    def send(b):
+        nonlocal pos
+        pos = (pos + b) % 4
+        sym.append(cycle[pos])
+
+    for b in bits:
+        send(b)
+    while sym[-1] != 1:
+        send(1)
+    run_start = len(sym)
+    for _ in range(20):         # zero bits hold the line at +1
+        send(0)
+    run_end = len(sym)
+    for _ in range(16):
+        send(rnd.choice((0, 1)))
     period, tau = 8.0, 60.0
     x, base, wander = [], 0.0, []
     for i, s in enumerate(sym):
@@ -182,18 +199,19 @@ def baseline_wander():
         ax.frame(range(0, int(t_end) + 1, 64), [-2, -1, 0, 1], "Time (ns)"
                  if row else None, "Level", yfmt=fmt)
         fig.text(62, y0, title, size=14, anchor="start", weight="bold")
-        ax.band(-2, 1.6, "#fbe5d6", 12 * period, 32 * period)
+        ax.band(-2, 1.6, "#fbe5d6", run_start * period, run_end * period)
         if row == 0:
             ax.plot([(t, v + w) for (t, v), (_, w) in zip(x, wander)],
                     stroke=BLUE, width=1.8)
             ax.plot(wander, stroke=RED, width=1.6, dash="6 4")
-            fig.text(ax.X(23 * period), ax.Y(-1.1), "zero level", size=12,
+            fig.text(ax.X((run_start + run_end) / 2 * period), ax.Y(-1.1),
+                     "zero level", size=12,
                      fill=RED)
         else:
             ax.plot(x, stroke=BLUE, width=1.8)
             ax.hline(0, stroke=RED, width=1.6, dash="6 4")
-    fig.text(240, 478, "Shaded: a run of symbols that does not average "
-             "to zero", size=12, fill=GREY)
+    fig.text(240, 478, "Shaded: zero bits hold the line at +1, so the "
+             "symbols do not average to zero", size=12, fill=GREY)
     fig.save(HERE / "baseline-wander.svg")
 
 

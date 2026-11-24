@@ -106,6 +106,7 @@ and the idle threshold.
    10BASE-T and 10BASE-Te peak levels at the transmitter, and the 300 mV
    threshold of the idle receiver; the edge shapes and the received
    amplitude are schematic.
+
 .. _phy-link-pulses:
 
 Link test pulses

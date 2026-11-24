@@ -186,6 +186,7 @@ single-pole edges against the peak band.
 
    The fastest and slowest allowed 100BASE-TX edges, drawn as single-pole
    responses, with dots at their 10 % and 90 % points.
+
 .. _phy-100base-tx-receiver:
 
 Receiver
