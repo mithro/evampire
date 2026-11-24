@@ -204,8 +204,21 @@ As an example, evampire's existing 125 MHz reference (see
 :ref:`arch-clock`) gives 10.42 clock periods per bit. Bits of 10 or 11
 periods last 80 ns or 88 ns, errors of −3.33 ns and +4.67 ns. The second
 is outside ± 3.5 ns, so edges timed from 125 MHz directly do not meet
-*TDJ1*. A clock that is a multiple of 12 MHz, such as 48 MHz, has no such
-error.
+*TDJ1*. A clock that is a multiple of 12 MHz, such as 48 MHz, has no such
+error (:numref:`fig-usbser-edge-placement`).
+
+.. figure:: timing/edge-placement.svg
+   :name: fig-usbser-edge-placement
+   :alt: Timing diagram from 0 ns to 250 ns. A 125 MHz clock ticks every
+         8 ns. Bits timed from it last 10 periods, 80 ns, ending 3.33 ns
+         early, inside the ± 3.5 ns window after the previous edge; or 11
+         periods, 88 ns, ending 4.67 ns late, outside the window. A 48 MHz
+         clock gives bits of exactly 4 periods, 83.33 ns, each ending in the
+         middle of its window.
+   :align: center
+
+   Transmitted bits timed from a 125 MHz clock and from a 48 MHz clock,
+   against the TDJ1 window.
 
 Inter-packet delay and reply deadline
 -------------------------------------
