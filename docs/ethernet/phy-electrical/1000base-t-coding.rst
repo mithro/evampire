@@ -98,8 +98,24 @@ groups for idle and control (:clause:`40.3.1.3.5`,
 Five levels cost noise tolerance. For the same peak voltage, three levels
 (−1, 0, +1, as in :doc:`100base-tx`) are spaced twice as far apart as five
 levels (−2 to +2). A receiver misreads a level when noise exceeds half the
-spacing, so five levels tolerate half the noise voltage. A voltage ratio
-of 2 is
+spacing, so five levels tolerate half the noise voltage
+(:numref:`fig-phy-level-spacing`).
+
+.. figure:: level-spacing.svg
+   :name: fig-phy-level-spacing
+   :alt: Two level ladders on one voltage scale from minus peak to plus
+         peak. Three levels, minus 1, 0 and plus 1, have decision
+         thresholds at minus and plus half the peak, so the margin from 0
+         to the next threshold is half the peak. Five levels, minus 2 to
+         plus 2, have thresholds at plus and minus a quarter and three
+         quarters of the peak, so their margin is half as large, 6.0 dB
+         less.
+   :align: center
+
+   Three and five levels at the same peak voltage: the five-level noise
+   margin is half as large.
+
+A voltage ratio of 2 is
 
 .. math::
 
@@ -153,7 +169,23 @@ takes 17 levels: the multiples of 0.25 from −2 to +2. The digital-to-analogue
 converter therefore needs at least 17 levels. The tutorial's design point
 lists a 17-level converter at 125 MHz ([PHY-TUT98]_ slide 51), and the
 DP83867 describes its output as 17-level shaped PAM-5 ([PHY-DP83867]_
-Figure 7‑1).
+Figure 7‑1). :numref:`fig-phy-shaping` shows the filter and an example
+sequence.
+
+.. figure:: shaping-filter.svg
+   :name: fig-phy-shaping
+   :alt: Top, a block diagram: the symbol a n goes through a multiplier of
+         0.75 to a sum, and through an 8 ns delay and a multiplier of 0.25
+         to the same sum, whose output y n goes to the DAC. Bottom, level
+         against time from 0 to 80 ns: ten PAM-5 symbols 0, +1, −1, +2, +2,
+         0, −2, −1, +1, 0 drawn dashed, and the shaped output 0, 0.75,
+         −0.5, 1.25, 2, 0.5, −1.5, −1.25, 0.5, 0.25 drawn solid, on faint
+         grid lines at every 0.25 from −2 to +2. The 1.25 point is marked:
+         +2 after −1.
+   :align: center
+
+   The example transmit shaping filter and its output for ten symbols;
+   every output lies on one of the 17 levels.
 
 .. _phy-1000-scrambler:
 
