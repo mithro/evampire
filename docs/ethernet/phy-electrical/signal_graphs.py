@@ -10,7 +10,10 @@
   link_loss time of 50 ms to 150 ms (14.2.1.7), and one pulse enlarged
   with its peak band of 585 mV to 3.1 V;
 * 100base-tx-edges.svg: single-pole edges with 10 % to 90 % rise times of
-  3 ns and 5 ns against the 0.95 V to 1.05 V peak band.
+  3 ns and 5 ns against the 0.95 V to 1.05 V peak band;
+* baseline-wander.svg: three-level symbols after a coupling that blocks
+  DC, whose zero level drifts during a run that does not average to zero,
+  and the same symbols after the zero level is restored.
 
 Edge shapes, noise and pulse shapes are schematic: the pages give limits,
 not shapes. Run with:
@@ -155,7 +158,47 @@ def edges_100base_tx():
     fig.save(HERE / "100base-tx-edges.svg")
 
 
+def baseline_wander():
+    """Symbols through a coupling that blocks DC (a first-order high-pass),
+    before and after a slow loop restores the zero level. Schematic."""
+    rnd = random.Random(7)
+    sym = [rnd.choice((-1, 0, 1)) for _ in range(12)]
+    sym += [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1]
+    sym += [rnd.choice((-1, 0, 1)) for _ in range(16)]
+    period, tau = 8.0, 60.0
+    x, base, wander = [], 0.0, []
+    for i, s in enumerate(sym):
+        for k in range(8):
+            t = i * period + k
+            base += (s - base) / tau
+            x.append((t, s))
+            wander.append((t, -base))
+    fig = Fig(480, 490)
+    t_end = len(sym) * period
+    for row, (title, y0) in enumerate((("(a) After the coupling: the zero "
+                                        "level drifts", 30),
+                                       ("(b) After baseline restoration", 260))):
+        ax = Axes(fig, 62, y0 + 20, 462, y0 + 160, (0, t_end), (-2, 1.6))
+        ax.frame(range(0, int(t_end) + 1, 64), [-2, -1, 0, 1], "Time (ns)"
+                 if row else None, "Level", yfmt=fmt)
+        fig.text(62, y0, title, size=14, anchor="start", weight="bold")
+        ax.band(-2, 1.6, "#fbe5d6", 12 * period, 32 * period)
+        if row == 0:
+            ax.plot([(t, v + w) for (t, v), (_, w) in zip(x, wander)],
+                    stroke=BLUE, width=1.8)
+            ax.plot(wander, stroke=RED, width=1.6, dash="6 4")
+            fig.text(ax.X(23 * period), ax.Y(-1.1), "zero level", size=12,
+                     fill=RED)
+        else:
+            ax.plot(x, stroke=BLUE, width=1.8)
+            ax.hline(0, stroke=RED, width=1.6, dash="6 4")
+    fig.text(240, 478, "Shaded: a run of symbols that does not average "
+             "to zero", size=12, fill=GREY)
+    fig.save(HERE / "baseline-wander.svg")
+
+
 if __name__ == "__main__":
     ten_base_t_levels()
     link_pulses()
     edges_100base_tx()
+    baseline_wander()
