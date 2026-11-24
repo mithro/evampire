@@ -66,8 +66,9 @@ cancels. The propagation delay of a link segment is at most 570 ns for
 For :math:`L = 100` m, :math:`N_\text{echo} \le 2 \times 5.7 \times 100 / 8
 = 143` taps; the tutorial's design point uses 120
 ([PHY-TUT98]_ slide 51), because reflections from the far end are weakened
-twice by the cable. :numref:`tab-phy-int-reach-taps` gives the upper bound
-at other reaches (estimate). The near-end crosstalk cancellers model
+twice by the cable. :numref:`tab-phy-int-reach-taps` and
+:numref:`fig-phy-int-reach` give the upper bound at other reaches
+(estimate). The near-end crosstalk cancellers model
 coupling close to the connector and do not scale with reach. The equalisers
 correct the cable's spreading, which grows with length, so their tap counts
 at 100 m are an upper bound for shorter reach.

@@ -195,6 +195,22 @@ is to be confirmed by simulation with channel models.
      - 1.9
      - 4.2
 
+:numref:`fig-phy-int-reach` plots the table, with the filter taps of
+:numref:`tab-phy-int-reach-taps`.
+
+.. figure:: reach.svg
+   :name: fig-phy-int-reach
+   :alt: Two graphs against cable reach from 0 to 100 m. Top, ADC effective
+         bits rise in a straight line through 4.2 at 10 m, 4.8 at 30 m,
+         5.4 at 50 m and 7 at 100 m, with a dashed line one bit lower for
+         an analogue echo canceller. Bottom, taps at most: total taps for
+         4 pairs rise through 456, 572, 684 and 972, and echo taps for one
+         pair through 14, 43, 71 and 143, at the same reaches.
+   :align: center
+
+   ADC effective bits and filter taps needed against cable reach
+   (estimate).
+
 .. _phy-int-adc-options:
 
 ADC architectures

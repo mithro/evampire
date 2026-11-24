@@ -82,7 +82,8 @@ Totals for one port
 
 One port comes to about 0.7 W to 2.2 W and 7 mm² to 13 mm² at 3.3 V
 (estimate). :numref:`tab-phy-int-area-power` adds the parts. Each range spans the
-reference examples or assumptions named in its source column.
+reference examples or assumptions named in its source column, and
+:numref:`fig-phy-int-area-power` draws the ranges.
 
 .. list-table:: Illustration of the area and power of one port (estimate)
    :name: tab-phy-int-area-power
@@ -118,6 +119,18 @@ reference examples or assumptions named in its source column.
      - same, with 0.13 W to 0.42 W for the signal processing
      - 6.6 to 12.8
      - 0.32 to 1.1
+
+.. figure:: area-power.svg
+   :name: fig-phy-int-area-power
+   :alt: Two sets of horizontal range bars for one port. Area in mm²: 4
+         ADCs 2.1 to 4.1, 4 DACs and drivers 0.52 to 0.64, PLL and
+         interpolator 0.065, signal processing at 3.3 V 3.9 to 8.1, total
+         at 3.3 V 6.6 to 12.8. Power in W: 0.088 to 0.48, 0.096 to 0.15,
+         0.004, 0.48 to 1.5, and a total of 0.67 to 2.2.
+   :align: center
+
+   The area and power ranges of :numref:`tab-phy-int-area-power` by part
+   (estimate).
 
 Not estimated, for want of a gigabit reference example in a comparable
 process: the receive amplifiers and filters, the hybrids, the protection,
