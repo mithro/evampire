@@ -1,0 +1,60 @@
+// Which pairs carry data in which direction: 1000BASE-T uses all four
+// pairs in both directions at once; 10BASE-T and 100BASE-TX use pair A to
+// transmit and pair B to receive, with the MDI assignment.
+//
+// Fixed grid, positions in inches. Left panel: 1000BASE-T. Right panel:
+// 10BASE-T and 100BASE-TX.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pair_usage {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, penwidth=1.6, arrowsize=0.7];
+
+    t1 [pos="1.3,2.35!", shape=plaintext, style="", width=2.4, height=0.25,
+        fontsize=10, label="1000BASE-T"];
+    t2 [pos="4.7,2.35!", shape=plaintext, style="", width=2.4, height=0.25,
+        fontsize=10, label="10BASE-T and 100BASE-TX"];
+
+    p1 [pos="0.35,1.05!", width=0.55, height=2.2, fillcolor="#dbe8f5",
+        label="port"];
+    f1 [pos="2.25,1.05!", width=0.55, height=2.2, fillcolor="#f2f2f2",
+        label="far\nend"];
+    p2 [pos="3.75,1.05!", width=0.55, height=2.2, fillcolor="#dbe8f5",
+        label="port"];
+    f2 [pos="5.65,1.05!", width=0.55, height=2.2, fillcolor="#f2f2f2",
+        label="far\nend"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a1l [pos="0.63,1.8!"];  a1r [pos="1.97,1.8!"];
+    b1l [pos="0.63,1.3!"];  b1r [pos="1.97,1.3!"];
+    c1l [pos="0.63,0.8!"];  c1r [pos="1.97,0.8!"];
+    d1l [pos="0.63,0.3!"];  d1r [pos="1.97,0.3!"];
+    a2l [pos="4.03,1.8!"];  a2r [pos="5.37,1.8!"];
+    b2l [pos="4.03,1.3!"];  b2r [pos="5.37,1.3!"];
+    c2l [pos="4.03,0.8!"];  c2r [pos="5.37,0.8!"];
+    d2l [pos="4.03,0.3!"];  d2r [pos="5.37,0.3!"];
+
+    node [shape=plaintext, style="", width=1.3, height=0.2, fontsize=9];
+    l0 [pos="1.3,1.93!", label="pair A"];
+    l1 [pos="1.3,1.43!", label="pair B"];
+    l2 [pos="1.3,0.93!", label="pair C"];
+    l3 [pos="1.3,0.43!", label="pair D"];
+    l4 [pos="4.7,1.93!", label="pair A: transmit"];
+    l5 [pos="4.7,1.43!", label="pair B: receive"];
+    l6 [pos="4.7,0.93!", label="pair C: not used"];
+    l7 [pos="4.7,0.43!", label="pair D: not used"];
+
+    a1l -> a1r [dir=both, color="#1f4e79"];
+    b1l -> b1r [dir=both, color="#c55a11"];
+    c1l -> c1r [dir=both, color="#548235"];
+    d1l -> d1r [dir=both, color="#bf9000"];
+
+    a2l -> a2r [color="#1f4e79"];
+    b2r -> b2l [color="#c55a11"];
+    c2l -> c2r [dir=none, style=dashed, color="#a6a6a6"];
+    d2l -> d2r [dir=none, style=dashed, color="#a6a6a6"];
+}
