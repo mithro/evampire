@@ -669,7 +669,20 @@ separate converters, the bus follows VBUS, so the board supplies run from
 5 V directly. With a bus near the Power over Ethernet voltage, the USB
 converter must first raise the bus from 5 V, so it too needs a default
 operating point and protection that work without software, or the board
-supplies take their start-up power from VBUS directly.
+supplies take their start-up power from VBUS directly. :numref:`fig-conv-usb-start` shows
+both cases.
+
+.. graphviz:: usb-start.dot
+   :name: fig-conv-usb-start
+   :caption: Start-up power paths from vSafe5V for two arrangements.
+   :alt: Two diagrams. (a) Three separate converters: VBUS at vSafe5V,
+         4.75 V to 5.5 V, passes a VBUS switch onto the power bus at about
+         5 V, which feeds the board supplies and evampire. (b) High bus: the
+         USB converter, with a hardware default, raises the bus to 37 V to
+         57 V, which feeds the board supplies; a dashed path shows VBUS
+         feeding the supplies directly instead. Before negotiation the
+         source offers 2.375 W to 14.25 W.
+   :align: center
 
 Open questions
 --------------
