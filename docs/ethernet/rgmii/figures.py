@@ -9,7 +9,8 @@ Writes timing-params.svg (what each skew, setup and hold parameter of
 tab-rgmii-timing measures) and timing-budget.svg (the setup and hold
 margins of the worked budget), from the values quoted on timing.rst, and
 speed-change.svg (TXC changing speed with a stretched phase, and a
-forbidden glitch), next to this script.
+forbidden glitch) and frame.svg (the fields of a frame), next to this
+script.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -290,7 +291,57 @@ def speed_change():
     return svg(w, h + 12, b)
 
 
+# ---------------------------------------------------------------------------
+# frame.svg
+# ---------------------------------------------------------------------------
+
+def frame():
+    """The fields of a frame in the order they are sent, with the optional
+    VLAN tag. Widths are schematic, not to scale."""
+    w, h = 660, 200
+    fields = [("preamble", "7", 70, "#f2f2f2"), ("SFD", "1", 40, "#f2f2f2"),
+              ("destination", "6", 80, "#dbe8f5"),
+              ("source", "6", 70, "#dbe8f5"),
+              ("VLAN tag", "4, optional", 80, "#ffffff"),
+              ("length or type", "2", 90, "#dbe8f5"),
+              ("payload", "46 to 1500", 120, "#e2f0d9"),
+              ("FCS", "4", 50, "#fbe5d6")]
+    x, y = 15, 75
+    pos = {}
+    b = []
+    for name, size, wd, col in fields:
+        dash = ' stroke-dasharray="4,3"' if "optional" in size else ""
+        b.append(f'<rect x="{x}" y="{y}" width="{wd}" height="40" '
+                 f'fill="{col}" stroke="{INK}"{dash}/>')
+        b.append(text(x + wd / 2, y + 17, name, anchor="middle", size=11))
+        b.append(text(x + wd / 2, y + 32, size, anchor="middle", size=10,
+                      fill=GREY))
+        pos[name] = (x, x + wd)
+        x += wd
+    b.append(text(15, y - 44, "bytes, in the order sent:", size=12,
+                  fill=GREY))
+
+    def bracket(x0, x1, yb, label, up):
+        d = -8 if up else 8
+        out = [line(x0, yb, x0, yb + d, INK, 1), line(x1, yb, x1, yb + d,
+                                                      INK, 1),
+               line(x0, yb + d, x1, yb + d, INK, 1)]
+        out.append(text((x0 + x1) / 2, yb + d + (-6 if up else 15), label,
+                        anchor="middle", size=11))
+        return out
+
+    b += bracket(pos["preamble"][0], pos["SFD"][1], y - 4,
+                 "lets the receiver lock on", True)
+    b += bracket(pos["destination"][0], pos["FCS"][1], y + 44,
+                 "frame: 64 to 1518 bytes, 1522 with one VLAN tag, "
+                 "at most 2000", False)
+    b += bracket(pos["destination"][0], pos["payload"][1], y + 84,
+                 "covered by the FCS", False)
+    return svg(w, h, b)
+
+
 if __name__ == "__main__":
     (HERE / "timing-params.svg").write_text(timing_params())
     (HERE / "timing-budget.svg").write_text(timing_budget())
     (HERE / "speed-change.svg").write_text(speed_change())
+    (HERE / "frame.svg").write_text(frame())
