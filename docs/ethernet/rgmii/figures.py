@@ -9,8 +9,8 @@ Writes timing-params.svg (what each skew, setup and hold parameter of
 tab-rgmii-timing measures) and timing-budget.svg (the setup and hold
 margins of the worked budget), from the values quoted on timing.rst, and
 speed-change.svg (TXC changing speed with a stretched phase, and a
-forbidden glitch) and frame.svg (the fields of a frame), next to this
-script.
+forbidden glitch), frame.svg (the fields of a frame) and levels.svg
+(logic levels, from electrical.rst), next to this script.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -340,8 +340,68 @@ def frame():
     return svg(w, h, b)
 
 
+# ---------------------------------------------------------------------------
+# levels.svg
+# ---------------------------------------------------------------------------
+
+def levels():
+    """Output and input levels of RGMII 1.3 and of two transceivers with a
+    3.3 V I/O supply, from electrical.rst."""
+    w, h = 660, 360
+    top, bot, vmax = 40, 300, 3.5
+
+    def yv(v):
+        return bot - v / vmax * (bot - top)
+
+    b = []
+    b.append(line(70, top, 70, bot))
+    for v in (0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5):
+        b.append(line(65, yv(v), 70, yv(v)))
+        b.append(text(60, yv(v) + 4, f"{v:g}", anchor="end", size=11))
+        b.append(line(70, yv(v), 640, yv(v), "#eeeeee", 0.8))
+    b.append(f'<text x="22" y="{(top + bot) / 2:.0f}" text-anchor="middle" '
+             f'font-size="12" fill="{INK}" transform="rotate(-90 22 '
+             f'{(top + bot) / 2:.0f})">voltage (V)</text>')
+    cols = (("RGMII 1.3", "2.5 V levels", 2.5, (0.40, 2.0), (0.70, 1.7)),
+            ("DP83867", "3.3 V supply", 3.3, (0.6, 2.0), (0.7, 1.7)),
+            ("KSZ9031RNX", "3.3 V supply", 3.3, None, (1.3, 2.0)))
+    x0 = 100
+    for name, sub, vdd, out, inp in cols:
+        b.append(text(x0 + 85, top - 20, name, anchor="middle", size=12,
+                      weight="bold"))
+        b.append(text(x0 + 85, top - 6, sub, anchor="middle", size=11,
+                      fill=GREY))
+        for k, (lab, pair) in enumerate((("outputs", out), ("inputs", inp))):
+            xb = x0 + 20 + 90 * k
+            b.append(text(xb + 30, bot + 16, lab, anchor="middle", size=11))
+            if pair is None:
+                b.append(text(xb + 30, yv(1.5), "not", anchor="middle",
+                              size=11, fill=GREY))
+                b.append(text(xb + 30, yv(1.5) + 14, "used here",
+                              anchor="middle", size=11, fill=GREY))
+                continue
+            lo, hi = pair
+            hi_col, lo_col = ("#a9d18e", "#a9d18e") if k == 0 else (
+                "#dbe8f5", "#dbe8f5")
+            b.append(rect(xb, yv(vdd), 60, yv(hi) - yv(vdd), hi_col, INK))
+            b.append(rect(xb, yv(lo), 60, yv(0) - yv(lo), lo_col, INK))
+            b.append(rect(xb, yv(hi), 60, yv(lo) - yv(hi), "#f2f2f2", INK))
+            hn = "VOH" if k == 0 else "VIH"
+            ln = "VOL" if k == 0 else "VIL"
+            b.append(text(xb + 30, yv(hi) - 5, f"{hn} {hi:g}",
+                          anchor="middle", size=10))
+            b.append(text(xb + 30, yv(lo) + 13, f"{ln} {lo:g}",
+                          anchor="middle", size=10))
+        x0 += 180
+    b.append(text(100, bot + 40, "green: guaranteed output levels; blue: "
+                  "levels read as high or low; grey: undefined", size=11,
+                  fill=GREY))
+    return svg(w, h, b)
+
+
 if __name__ == "__main__":
     (HERE / "timing-params.svg").write_text(timing_params())
     (HERE / "timing-budget.svg").write_text(timing_budget())
     (HERE / "speed-change.svg").write_text(speed_change())
     (HERE / "frame.svg").write_text(frame())
+    (HERE / "levels.svg").write_text(levels())
