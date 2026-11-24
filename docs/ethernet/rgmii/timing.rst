@@ -162,8 +162,43 @@ Delay placement
 ---------------
 
 The board, the transmitting chip or the receiving chip adds the delay, as
-listed in :numref:`tab-rgmii-delay-places`. Adding it twice moves the clock
-edge onto the next data change, which fails as badly as not adding it.
+listed in :numref:`tab-rgmii-delay-places` and drawn in
+:numref:`fig-rgmii-delay-places`. Adding it twice moves the clock edge onto
+the next data change, which fails as badly as not adding it
+(:numref:`fig-rgmii-delay-count`).
+
+.. graphviz:: delay-places.dot
+   :name: fig-rgmii-delay-places
+   :caption: The three places where the 2 ns clock delay can be added in
+             each direction, of which exactly one is used.
+   :alt: evampire on the left and the Ethernet transceiver on the right, on
+         a circuit board. In the transmit direction TXC and TXD pass from
+         evampire through three dashed candidate boxes: transmitter delays
+         TXC, board longer TXC trace, and receiver delays TXC. In the
+         receive direction RXC and RXD pass the other way through:
+         transmitter delays RXC, board longer RXC trace, and receiver
+         delays RXC.
+   :align: center
+
+.. wavedrom::
+   :name: fig-rgmii-delay-count
+   :alt: Timing diagram with data changing every 4 ns and three copies of
+         the clock. With no delay, every clock edge falls on a data change.
+         With 2 ns of delay, every edge falls in the middle of the data.
+         With 4 ns of delay, the delay added twice, every edge falls on the
+         next data change.
+   :caption: The clock edge at the receiver with the delay added never,
+             once and twice, at 1000 Mbit/s.
+
+   { "signal": [
+       { "name": "data", "wave": "x====x",
+         "data": ["n0", "n1", "n2", "n3"] },
+       { "name": "no delay", "wave": "p..", "period": 2 },
+       { "name": "+ 2 ns, once", "wave": "p..", "period": 2, "phase": -1 },
+       { "name": "+ 4 ns, twice", "wave": "p..", "period": 2, "phase": -2 }
+     ],
+     "config": { "hscale": 2 }
+   }
 
 .. list-table:: Where the 2 ns delay can be added in each direction
    :name: tab-rgmii-delay-places

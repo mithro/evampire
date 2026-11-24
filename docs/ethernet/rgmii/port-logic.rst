@@ -98,7 +98,10 @@ Source of the clock delay
 -------------------------
 
 evampire adds no clock delay itself. The transceiver delays TXC inside
-itself before it samples TXD, and delays RXC before it sends it. evampire
+itself before it samples TXD, and delays RXC before it sends it. Of the
+places in :numref:`fig-rgmii-delay-places`, this is "receiver delays TXC"
+in the transmit direction and "transmitter delays RXC" in the receive
+direction. evampire
 sends TXC aligned with TXD, within TskewT, and receives RXC already centred
 in RXD, within TsetupR and TholdR (:numref:`tab-rgmii-timing`). The
 alternatives below show why, and what would change the choice.
