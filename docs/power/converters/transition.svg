@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="560" height="300" viewBox="0 0 560 300" font-family="Helvetica, Arial, sans-serif">
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
 <rect width="560" height="300" fill="#ffffff"/>
-<line x1="70.0" y1="230.0" x2="75.0" y2="230.0" stroke="#222222" stroke-width="1.2"/>
-<text x="67.0" y="230.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
-<line x1="70.0" y1="159.2" x2="75.0" y2="159.2" stroke="#222222" stroke-width="1.2"/>
-<text x="67.0" y="159.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">2.125 A</text>
-<line x1="70.0" y1="70.0" x2="75.0" y2="70.0" stroke="#222222" stroke-width="1.2"/>
-<text x="67.0" y="70.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">48 V</text>
-<line x1="75.0" y1="230.0" x2="530.0" y2="230.0" stroke="#222222" stroke-width="1.2"/>
-<line x1="75.0" y1="30.0" x2="75.0" y2="230.0" stroke="#222222" stroke-width="1.2"/>
-<text x="302.5" y="268.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">time (schematic)</text>
-<text x="27.0" y="130.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 27.0 130.0)">voltage, current</text>
-<polygon points="166.0,230.0 211.5,194.7 257.0,230.0" fill="#fbe5d6" stroke="none" stroke-width="2.0" stroke-linejoin="round"/>
-<polygon points="348.0,230.0 393.5,194.7 439.0,230.0" fill="#fbe5d6" stroke="none" stroke-width="2.0" stroke-linejoin="round"/>
-<polyline points="75.0,70.0 166.0,70.0 257.0,230.0 348.0,230.0 439.0,70.0 530.0,70.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
-<polyline points="75.0,230.0 166.0,230.0 257.0,159.2 348.0,159.2 439.0,230.0 530.0,230.0" fill="none" stroke="#38761d" stroke-width="2.0" stroke-linejoin="round"/>
-<text x="111.4" y="56.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">switch voltage</text>
-<text x="302.5" y="146.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">switch current</text>
-<text x="211.5" y="183.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">tr</text>
-<text x="393.5" y="183.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">tf</text>
-<text x="302.5" y="103.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">shaded: energy</text>
-<text x="302.5" y="116.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">lost in each</text>
-<text x="302.5" y="129.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">transition</text>
+<line x1="105.0" y1="230.0" x2="110.0" y2="230.0" stroke="#222222" stroke-width="1.2"/>
+<text x="102.0" y="230.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="105.0" y1="159.2" x2="110.0" y2="159.2" stroke="#222222" stroke-width="1.2"/>
+<text x="102.0" y="159.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">2.125 A</text>
+<line x1="105.0" y1="70.0" x2="110.0" y2="70.0" stroke="#222222" stroke-width="1.2"/>
+<text x="102.0" y="70.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">48 V</text>
+<line x1="110.0" y1="230.0" x2="530.0" y2="230.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="110.0" y1="30.0" x2="110.0" y2="230.0" stroke="#222222" stroke-width="1.2"/>
+<text x="320.0" y="268.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">time (schematic)</text>
+<polygon points="194.0,230.0 236.0,194.7 278.0,230.0" fill="#fbe5d6" stroke="none" stroke-width="2.0" stroke-linejoin="round"/>
+<polygon points="362.0,230.0 404.0,194.7 446.0,230.0" fill="#fbe5d6" stroke="none" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="110.0,70.0 194.0,70.0 278.0,230.0 362.0,230.0 446.0,70.0 530.0,70.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="110.0,230.0 194.0,230.0 278.0,159.2 362.0,159.2 446.0,230.0 530.0,230.0" fill="none" stroke="#38761d" stroke-width="2.0" stroke-linejoin="round"/>
+<text x="116.0" y="56.7" font-size="11" text-anchor="start" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">switch voltage</text>
+<text x="320.0" y="146.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">switch current</text>
+<text x="236.0" y="183.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">tr</text>
+<text x="404.0" y="183.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">tf</text>
+<text x="320.0" y="103.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">shaded: energy</text>
+<text x="320.0" y="116.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">lost in each</text>
+<text x="320.0" y="129.7" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">transition</text>
+<text x="24.0" y="130.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 24.0 130.0)">voltage, current</text>
 <text x="300.0" y="282.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Psw = ½ × 48 V × 2.125 A × 40 ns × 250 kHz = 0.51 W</text>
 </svg>
