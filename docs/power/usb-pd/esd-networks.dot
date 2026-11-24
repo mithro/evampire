@@ -1,0 +1,30 @@
+// The two ESD test networks compared on cc-protection.rst: a charged
+// capacitor discharged through a series resistor into the pin.
+//
+// Fixed grid (positions in inches): HBM at y=1.0, IEC 61000-4-2 at y=0.3.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph esd_networks {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.45,
+           fixedsize=true];
+    edge  [arrowsize=0.7];
+
+    node [shape=plaintext, style="", width=1.1];
+    t1 [pos="0.55,1.0!", label="HBM, 2 kV"];
+    t2 [pos="0.55,0.3!", label="IEC, 8 kV"];
+    node [shape=box, style="rounded,filled", width=1.6];
+    c1 [pos="2.0,1.0!", label="100 pF charged\nto 2000 V", fillcolor="#dbe8f5"];
+    r1 [pos="3.75,1.0!", label="1.5 kΩ"];
+    p1 [pos="5.3,1.0!", label="pin under test", width=1.2,
+        fillcolor="#ffffff"];
+    c2 [pos="2.0,0.3!", label="150 pF charged\nto 8000 V", fillcolor="#dbe8f5"];
+    r2 [pos="3.75,0.3!", label="330 Ω"];
+    p2 [pos="5.3,0.3!", label="pin under test", width=1.2,
+        fillcolor="#ffffff"];
+
+    c1 -> r1 -> p1;
+    c2 -> r2 -> p2;
+}

@@ -1,0 +1,68 @@
+// The two ways to protect a CC pin from a VBUS short, side by side:
+// a series blocking switch and a crowbar. Values from cc-protection.rst.
+//
+// Fixed grid (positions in inches): blocking panel at x=0.2 to 3.3,
+// crowbar panel at x=3.6 to 6.9; the connector at the top, y=3.5.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph cc_protect_options {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.4, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowhead=none];
+
+    pb [label="", pos="1.75,1.95!",
+        width=3.1, height=4.0, style="rounded,dashed", fillcolor="none",
+        color="#555555"];
+    pc [label="", pos="5.25,1.95!",
+        width=3.3, height=4.0, style="rounded,dashed", fillcolor="none",
+        color="#555555"];
+
+    node [shape=plaintext, style="", width=2.0, height=0.3, fontsize=12];
+    tb [pos="1.75,4.2!", label="Blocking switch"];
+    tc [pos="5.25,4.2!", label="Crowbar"];
+    lc [pos="5.4,3.8!", label="VBUS short", fontsize=9, fontcolor="#c00000",
+        width=0.8, height=0.2];
+    lb [pos="1.6,3.68!", label="short", fontsize=9, fontcolor="#c00000",
+        width=0.5, height=0.2];
+    node [shape=box, style="rounded,filled", fontsize=10, width=1.4,
+          height=0.5];
+
+    // Blocking.
+    bv  [pos="0.8,3.5!", label="VBUS contact", width=1.1,
+         fillcolor="#fbe5d6"];
+    bc  [pos="2.4,3.5!", label="CC contact", width=1.1, fillcolor="#ffffff"];
+    tvs [pos="0.8,2.55!", label="TVS diode\nto GND", width=1.1];
+    clp [pos="1.35,1.75!", label="diode clamp to GND:\nringing to about 30 V",
+         width=1.6, height=0.5];
+    j1  [pos="2.4,1.75!", shape=point, width=0.08, label="", style=filled,
+         fillcolor="#000000"];
+    sw  [pos="2.4,1.0!", label="series switch, 30 V:\nopens in 70 ns above\n5.75 to 6.2 V",
+         width=1.6, height=0.62, fillcolor="#dbe8f5"];
+    bp  [pos="2.4,0.25!", label="evampire CC pin,\nwith its ESD clamps", width=1.5,
+         fillcolor="#ffffff"];
+
+    // Crowbar.
+    src [pos="4.4,3.45!", label="far-end source:\nover-current protection,\nC_BUS 10 to 120 µF",
+         width=1.65, height=0.62, fillcolor="#fbe5d6", fontsize=9];
+    cc  [pos="6.2,3.45!", label="CC contact,\nrated 0.5 A or more", width=1.4,
+         fillcolor="#ffffff"];
+    trc [pos="6.2,2.55!", label="board trace", width=1.0];
+    j2  [pos="6.2,1.75!", shape=point, width=0.08, label="", style=filled,
+         fillcolor="#000000"];
+    cb  [pos="4.75,1.75!", label="crowbar to GND:\ntrigger above 5.5 V,\nabout 0.5 V on",
+         width=1.5, height=0.62, fillcolor="#dbe8f5"];
+    cp  [pos="6.2,0.6!", label="evampire\nCC circuits", width=1.1,
+         fillcolor="#ffffff"];
+
+    bv -> bc [style=dashed, color="#c00000"];
+    bv -> tvs;
+    bc -> j1; j1 -> clp; j1 -> sw; sw -> bp;
+
+    src -> cc [style=dashed, color="#c00000", penwidth=2];
+    cc -> trc [penwidth=2]; trc -> j2 [penwidth=2]; j2 -> cb [penwidth=2];
+    j2 -> cp;
+}
