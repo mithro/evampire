@@ -14,7 +14,21 @@ A :term:`frame` is one Ethernet message
 (:wikipedia:`Ethernet frame <Ethernet_frame>`). On RXD and TXD it is sent as
 a sequence of bytes, each byte as two nibbles, low nibble first.
 :numref:`tab-rgmii-frame-fields` lists its fields in the order they are
-sent.
+sent, and :numref:`fig-rgmii-frame` draws them.
+
+.. figure:: frame.svg
+   :name: fig-rgmii-frame
+   :alt: A row of fields in the order sent, with their lengths in bytes:
+         preamble 7, SFD 1, destination address 6, source address 6, an
+         optional VLAN tag 4, length or type 2, payload 46 to 1500, and FCS
+         4. A bracket over the preamble and SFD reads "lets the receiver
+         lock on". A bracket from the destination address to the FCS reads
+         "frame: 64 to 1518 bytes, 1522 with one VLAN tag, at most 2000". A
+         bracket from the destination address to the payload reads
+         "covered by the FCS".
+
+   The fields of a frame, with the optional VLAN tag (field widths not to
+   scale).
 
 .. list-table:: Fields of a frame in the order they are sent
    :name: tab-rgmii-frame-fields

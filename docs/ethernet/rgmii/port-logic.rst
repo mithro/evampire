@@ -272,11 +272,48 @@ at 100 Mbit/s, or 50 and 50 at 10 Mbit/s. That gives 25 MHz or 2.5 MHz at
 50 % duty cycle, inside the 40 % to 60 % limit. TXD changes only at the
 start of each TXC cycle and is the same at both edges.
 
+:numref:`fig-rgmii-tx-100` shows the transmit side at 100 Mbit/s.
+
+.. wavedrom::
+   :name: fig-rgmii-tx-100
+   :alt: Timing diagram: the 125 MHz clock; a clock enable high for one cycle
+         in every five; TXC high for five half cycles and low for five, which
+         is 25 MHz at 50 % duty cycle; and TXD changing only at the start of
+         each TXC cycle.
+   :caption: Transmit at 100 Mbit/s: a clock enable every 5 cycles of 125 MHz, and
+             TXC high for 5 half cycles and low for 5.
+
+   { "signal": [
+       { "name": "125 MHz clock", "wave": "p.........", "period": 2 },
+       { "name": "clock enable", "wave": "1.0.......1.0......." },
+       { "name": "TXC, 25 MHz", "wave": "1....0....1....0...." },
+       { "name": "TXD[3:0]", "wave": "=.........=.........", "data": ["nibble 0", "nibble 1"] }
+     ],
+     "config": { "hscale": 1 }
+   }
+
 On receive, the same capture flip-flops are used, and a byte is built from
 the rising-edge samples of two RXC cycles, low nibble first. The preamble may
 arrive with an odd number of nibbles (see :doc:`frames`). The byte boundary
 is found from the SFD: the first nibble D after a run of nibble 5 is the
 high nibble of the SFD.
+
+:numref:`fig-rgmii-rx-100` shows the bytes built from the nibbles.
+
+.. wavedrom::
+   :name: fig-rgmii-rx-100
+   :alt: Timing diagram: RXC at 25 MHz; RXD carrying the nibbles 5, 5, 5, 5, D,
+         1, 0 and 3; and the bytes built from them, 0xD5 after the D and then
+         0x01, each from a low nibble followed by a high nibble.
+   :caption: Receive at 100 Mbit/s: the byte boundary found from the D of the SFD.
+
+   { "signal": [
+       { "name": "RXC, 25 MHz", "wave": "p.......", "period": 1 },
+       { "name": "RXD[3:0]", "wave": "========", "data": ["5", "5", "5", "5", "D", "1", "0", "3"] },
+       { "name": "byte", "wave": "x....=.=", "data": ["0xD5", "0x01"] }
+     ],
+     "config": { "hscale": 2 }
+   }
 
 .. _rgmii-byte-interface:
 
