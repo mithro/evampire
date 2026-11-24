@@ -7,8 +7,8 @@ added, and the timing limits of the interface. The signals are described on
 
 .. _rgmii-why-delay:
 
-The clock must arrive a quarter period after the data
------------------------------------------------------
+Need for a clock delay
+----------------------
 
 The transmitting chip launches its clock and its data at the same moment,
 so the data changes at every clock edge (:std:`RGMII 2.0 <rgmii-2-0>`
@@ -62,8 +62,8 @@ and the duty cycle is 50 %. For :math:`T = 8` ns it gives
 
 .. _rgmii-versions:
 
-The two versions of the specification add the delay in different places
------------------------------------------------------------------------
+Specification versions
+----------------------
 
 .. list-table:: Where each version of the RGMII specification adds the delay
    :name: tab-rgmii-versions
@@ -137,8 +137,8 @@ largest TskewR to 16 ns at 100 Mbit/s and 160 ns at 10 Mbit/s
 
 .. _rgmii-delay-once:
 
-The delay is added exactly once in each direction
--------------------------------------------------
+Delay placement
+---------------
 
 The board, the transmitting chip or the receiving chip adds the delay, as
 listed in :numref:`tab-rgmii-delay-places`. Adding it twice moves the clock
@@ -164,8 +164,8 @@ edge onto the next data change, which fails as badly as not adding it.
 
 .. _rgmii-board-delay:
 
-A board delay needs about 280 mm of extra trace
------------------------------------------------
+Board trace delay
+-----------------
 
 A delay added on the board is a longer clock trace:
 
@@ -205,8 +205,8 @@ reference, the same guidelines recommend RGMII traces shorter than 51 mm
 
 .. _rgmii-transceiver-delays:
 
-Transceivers offer different internal delays
---------------------------------------------
+Transceiver internal delays
+---------------------------
 
 .. list-table:: Internal clock delay of two gigabit transceivers
    :name: tab-rgmii-phy-delays
@@ -235,8 +235,8 @@ access controller to delay TXC. Its pad-skew registers can add at most
 
 .. _rgmii-budget:
 
-A worked timing budget leaves less than 0.4 ns of margin
---------------------------------------------------------
+Worked timing budget
+--------------------
 
 TI's application note SNLA243 works out the transmit timing into a DP83867
 that delays the clock [RGMII-SNLA243]_ sections 3.2 and 3.3. The setup
@@ -305,8 +305,8 @@ TskewT.
 
 .. _rgmii-clock-limits:
 
-The clock has limits on frequency, period, duty cycle and edges
----------------------------------------------------------------
+Clock limits
+------------
 
 .. list-table:: RGMII clock limits at 1000 Mbit/s
    :name: tab-rgmii-clock

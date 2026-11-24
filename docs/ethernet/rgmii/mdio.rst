@@ -1,5 +1,5 @@
-The management interface (MDIO)
-===============================
+Management interface (MDIO)
+===========================
 
 How evampire reads the status of each Ethernet transceiver and changes its
 settings over the two-wire management interface, and which registers it
@@ -8,8 +8,8 @@ uses. The interface and its standard registers are defined in
 
 .. _rgmii-mdio-wires:
 
-Two wires reach every transceiver
----------------------------------
+MDC and MDIO wires
+------------------
 
 Each transceiver has a few dozen 16-bit registers. They report its status,
 such as whether a cable is connected and at what speed, and control its
@@ -37,8 +37,8 @@ one pair of pins, with the two transceivers set to different addresses.
 
 .. _rgmii-mdc-rate:
 
-MDC runs at up to 2.5 MHz, with no lower limit
-----------------------------------------------
+MDC clock rate
+--------------
 
 MDC has a minimum period of 400 ns, that is at most 2.5 MHz, and minimum
 high and low times of 160 ns each (:clause:`22.2.2.13`). It has no maximum
@@ -85,10 +85,10 @@ than that.
 
 .. _rgmii-mdio-frame:
 
-Each access is one 64-bit management frame
-------------------------------------------
+Management frame
+----------------
 
-Every access is one frame with the fields of
+Every access is one 64-bit frame with the fields of
 :numref:`tab-rgmii-mdio-frame` (:clause:`22.2.4.5`,
 :clause:`Table 22-12 <22>`). The bits are sent from left to right, and
 each address and the data are sent most significant bit first
@@ -179,8 +179,8 @@ break marks bits that are not drawn.
 
 .. _rgmii-mdio-software:
 
-Software can drive the two wires directly
------------------------------------------
+Software-driven MDIO
+--------------------
 
 MDC has no maximum period, so software can drive MDC and MDIO as
 general-purpose pins (:wikipedia:`bit banging <Bit_banging>`) at any speed
@@ -190,8 +190,8 @@ does the same work without the processor.
 
 .. _rgmii-registers:
 
-evampire uses seven of the standard registers
----------------------------------------------
+Registers used by evampire
+--------------------------
 
 Registers 0 to 15 are defined by IEEE 802.3, and registers 16 to 31 are
 specific to each manufacturer (:clause:`Table 22-6 <22>`).

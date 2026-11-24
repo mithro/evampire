@@ -6,8 +6,8 @@ to the older MII and GMII interfaces.
 
 .. _rgmii-what:
 
-RGMII connects the forwarding logic to an external Ethernet transceiver
------------------------------------------------------------------------
+Role of RGMII
+-------------
 
 An Ethernet port is split between two jobs:
 
@@ -51,8 +51,8 @@ one port; evampire has one such interface for port A and one for port B
 
 .. _rgmii-six-signals:
 
-Six signals carry the data in each direction
---------------------------------------------
+Signals in each direction
+-------------------------
 
 Each direction has a clock, a control signal and four data bits
 (:std:`RGMII 2.0 <rgmii-2-0>` Table 1). The transmitting chip sends its
@@ -119,8 +119,8 @@ interface, MDC and MDIO, for reading its status and changing its settings
 
 .. _rgmii-full-duplex:
 
-Full duplex needs no carrier-sense or collision wires
------------------------------------------------------
+Full and half duplex
+--------------------
 
 A link runs in
 :wikipedia:`full duplex <Duplex_(telecommunications)>`, where both ends may
@@ -134,8 +134,8 @@ section 3.4.2). evampire runs its links in full duplex only (see
 
 .. _rgmii-mii-gmii:
 
-RGMII carries the same information as GMII on half the wires
-------------------------------------------------------------
+MII, GMII and RGMII
+-------------------
 
 RGMII is a reduced form of two interfaces defined in IEEE 802.3
 (:wikipedia:`media-independent interface <Media-independent_interface>`):

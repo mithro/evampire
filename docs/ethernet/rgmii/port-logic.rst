@@ -1,5 +1,5 @@
-evampire's RGMII port logic
-===========================
+RGMII port logic
+================
 
 The logic behind each RGMII port: the double-data-rate output and input
 stages, where the 2 ns clock delay comes from, the interface to the
@@ -8,8 +8,8 @@ forwarding logic and the clock domains. The pins and pad cells are on
 
 .. _rgmii-tx-stage:
 
-The transmit stage switches between two flip-flops on the clock
----------------------------------------------------------------
+Transmit stage
+--------------
 
 The gf180mcu standard-cell libraries have flip-flops that load on the rising
 edge (dffq) and on the falling edge (dffnq), and a two-input
@@ -54,8 +54,8 @@ multiplexer form gives every bit the same output delay.
 
 .. _rgmii-rx-stage:
 
-The receive stage captures on both clock edges
-----------------------------------------------
+Receive stage
+-------------
 
 .. graphviz:: rx-ddr.dot
    :name: fig-rgmii-rx-ddr
@@ -94,8 +94,8 @@ edge.
 
 .. _rgmii-delay-choice:
 
-The transceiver adds the 2 ns delay in both directions
-------------------------------------------------------
+Source of the clock delay
+-------------------------
 
 evampire adds no clock delay itself. The transceiver delays TXC inside
 itself before it samples TXD, and delays RXC before it sends it. evampire
@@ -179,11 +179,12 @@ that means a delay of 1.2 ns to 2.8 ns, and 4.0 ns is outside it.
 
 .. _rgmii-delay-transceivers:
 
-The delay choice limits which transceivers fit without board changes
---------------------------------------------------------------------
+Transceivers that fit the delay choice
+--------------------------------------
 
-The DP83867 adds the delay in both directions (see :doc:`timing`). The
-KSZ9031RNX adds at most 1.38 ns on its transmit clock [RGMII-KSZ9031]_
+Which transceivers fit without board changes depends on how much of the
+2 ns delay each adds inside itself. The DP83867 adds the delay in both
+directions (see :doc:`timing`). The KSZ9031RNX adds at most 1.38 ns on its transmit clock [RGMII-KSZ9031]_
 section 3.9.3, so the board adds the rest of the transmit delay:
 
 .. math::
@@ -231,8 +232,8 @@ over MDIO, so the transceiver's power-up pin settings need not be right.
 
 .. _rgmii-10-100-logic:
 
-At 10 and 100 Mbit/s the logic uses a clock enable
---------------------------------------------------
+Logic at 10 and 100 Mbit/s
+--------------------------
 
 evampire supports 10 and 100 Mbit/s as well as 1000 Mbit/s (see
 :ref:`the transceiver requirements <req-transceivers>`). The logic always runs from the 125 MHz transmit clock, and uses a clock
@@ -253,8 +254,8 @@ high nibble of the SFD.
 
 .. _rgmii-byte-interface:
 
-Each port presents one byte per clock to the forwarding logic
--------------------------------------------------------------
+Interface to the forwarding logic
+---------------------------------
 
 Behind the input and output stages, each port gives the rest of evampire one
 byte per clock cycle in each direction, with a "data valid" flag and an
@@ -293,8 +294,8 @@ These parts are still needed:
 
 .. _rgmii-clock-domains:
 
-Data crosses from each receive clock into the transmit clock
-------------------------------------------------------------
+Clock domains
+-------------
 
 .. graphviz:: clock-domains.dot
    :name: fig-rgmii-clock-domains

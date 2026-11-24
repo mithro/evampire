@@ -1,5 +1,5 @@
-evampire's RGMII pins and I/O cells
-===================================
+RGMII pins and I/O cells
+========================
 
 The pins evampire uses for its two RGMII ports, the I/O supply they run
 from, the timing of the standard gf180mcu pad cells, and the choice between
@@ -8,8 +8,8 @@ standard and custom I/O cells. The logic in front of the pads is on
 
 .. _rgmii-pins:
 
-Each port uses 12 pins, and the two ports 27 pins in all
---------------------------------------------------------
+Pin count
+---------
 
 .. list-table:: RGMII and management pins of evampire
    :name: tab-rgmii-pins
@@ -41,7 +41,8 @@ Each port uses 12 pins, and the two ports 27 pins in all
      - 1
      - Input
 
-:numref:`tab-rgmii-pins` adds up to 27 pins. MDIO needs an external
+:numref:`tab-rgmii-pins` gives 12 pins for each port, and 27 pins in all
+with the shared management pins and the reference clock. MDIO needs an external
 pull-up resistor (see :doc:`mdio`).
 
 The 125 MHz reference clock (see :ref:`clock and reset <arch-clock>`) can
@@ -52,8 +53,8 @@ KSZ9031RNX has a 125 MHz reference clock output, CLK125_NDO
 
 .. _rgmii-io-voltage:
 
-The pins run at 3.3 V
----------------------
+I/O supply voltage
+------------------
 
 evampire runs its RGMII and MDIO pins at 3.3 V, which both example
 transceivers accept (see :doc:`electrical`). 5 V signalling is outside
@@ -84,8 +85,8 @@ are listed under :ref:`rgmii-io-open-questions`.
 
 .. _rgmii-pad-speed:
 
-The standard pad cell takes 2 ns to 6 ns, depending on the corner
------------------------------------------------------------------
+Standard pad cell delay
+-----------------------
 
 Cell timing comes from *Liberty* files: text tables, in the format read by
 synthesis and timing tools, that give each cell's delay and edge time for a
@@ -128,7 +129,9 @@ voltage, hot).
      - 1.39
      - 2.73
 
-:numref:`tab-gf180-pad-speed` is taken from the Liberty files of the I/O
+The output delay of the standard pad cell is about 2 ns at the FF corner
+and about 6 ns at the SS corner. :numref:`tab-gf180-pad-speed` is taken
+from the Liberty files of the I/O
 library [RGMII-GF180IO]_. The corners are FF at −40 °C and 3.63 V, TT at
 25 °C and 3.30 V, and SS at 125 °C and 2.97 V. The drive setting is 16 mA
 (PDRV1 = PDRV0 = 1) with fast slew (SL = 0), and the input edge is 0.08 ns.
@@ -144,8 +147,8 @@ cancels.
 
 .. _rgmii-pad-duty:
 
-Unequal rising and falling delays change the TXC duty cycle
------------------------------------------------------------
+TXC duty cycle
+--------------
 
 When the falling edge of a pad is delayed more than its rising edge, the
 high time of TXC grows:
@@ -193,13 +196,14 @@ uses most of it before any imbalance of evampire's internal clock is added.
 
 .. _rgmii-pad-edges:
 
-The standard pad's edges are slower than RGMII's 0.75 ns limit
---------------------------------------------------------------
+Standard pad cell edge times
+----------------------------
 
 RGMII allows at most 0.75 ns from 20 % to 80 % of each edge (see
 :doc:`timing`). The Liberty edge times in :numref:`tab-gf180-pad-speed` are
 0.53 ns to 1.89 ns. At the SS corner the edges take a large part of the
-4 ns half period. 10 and 100 Mbit/s are not affected.
+4 ns half period. Only the FF corner is within the 0.75 ns limit. 10 and
+100 Mbit/s are not affected.
 
 evampire runs its RGMII ports at up to 1000 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
 These limits belong to the standard gf180mcu_fd_io cells, which are
@@ -207,8 +211,8 @@ general-purpose 5 V pads, not to the gf180mcu process.
 
 .. _rgmii-custom-io:
 
-Standard or custom I/O cells are chosen by 1000 Mbit/s timing
---------------------------------------------------------------
+Choice of standard or custom I/O cells
+--------------------------------------
 
 Whether the RGMII pins use the standard pad cells or a custom I/O cell is
 chosen by which one meets 1000 Mbit/s RGMII timing at every process,
@@ -252,8 +256,8 @@ all corners. Open designs that a custom cell can start from:
 
 .. _rgmii-gmii-alternative:
 
-GMII is an alternative with a wider data window and more pins
--------------------------------------------------------------
+GMII as an alternative
+----------------------
 
 GMII (:clause:`35`) sends 8 bits at the rising edge of a 125 MHz clock, so
 each bit is valid for a whole 8 ns period instead of 4 ns. Its receiver

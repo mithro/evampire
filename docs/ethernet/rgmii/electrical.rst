@@ -7,10 +7,11 @@ traces. evampire's own pins are described on :doc:`io-cells`.
 
 .. _rgmii-spec-levels:
 
-The specifications use 2.5 V or 1.5 V levels
---------------------------------------------
+Levels in the specifications
+----------------------------
 
-Version 1.3 of the RGMII specification uses 2.5 V
+The two versions of the RGMII specification use different levels.
+Version 1.3 uses 2.5 V
 :wikipedia:`CMOS <CMOS>` levels (:std:`JESD8-5`), for the data signals and
 also for MDC and MDIO (:std:`RGMII 1.3 <rgmii-1-3>` section 4.0 and
 Table 5). :numref:`tab-rgmii-levels-1-3` gives them.
@@ -43,11 +44,12 @@ An empty cell means no limit. Version 2.0 specifies 1.5 V
 
 .. _rgmii-phy-levels:
 
-Transceivers run their RGMII pins at 3.3 V, 2.5 V or 1.8 V
-----------------------------------------------------------
+Levels in transceivers
+----------------------
 
 Transceivers use neither level exclusively. Their RGMII pins run from a
-separate I/O supply that the board designer chooses.
+separate I/O supply that the board designer chooses, at 3.3 V, 2.5 V or
+1.8 V.
 
 .. list-table:: RGMII I/O supply options of two transceivers
    :name: tab-rgmii-phy-io
@@ -94,8 +96,8 @@ value is not used here. Both devices accept 3.3 V, the level evampire uses
 
 .. _rgmii-board:
 
-The board carries the signals on short, matched 50 Ω traces
------------------------------------------------------------
+Board traces
+------------
 
 The traces between evampire and the transceiver are a few centimetres long.
 That is long compared with edges of under a nanosecond, so each trace

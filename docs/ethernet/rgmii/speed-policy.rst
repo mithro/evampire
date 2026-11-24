@@ -1,5 +1,5 @@
-Keeping both ports at the same speed
-====================================
+Port speed policy
+=================
 
 How the processor sets up the two Ethernet transceivers so that ports A and
 B run at the same speed in full duplex, which cut-through forwarding needs.
@@ -7,8 +7,8 @@ The registers it uses are on :doc:`mdio`.
 
 .. _rgmii-same-speed:
 
-Cut-through forwarding works only at equal speeds
--------------------------------------------------
+Cut-through forwarding and link speed
+-------------------------------------
 
 evampire forwards frames
 :term:`cut-through <cut-through forwarding>`: it sends each byte out of the
@@ -23,10 +23,11 @@ By requirement, evampire stores no full frame on the forwarding path (see
 
 .. _rgmii-policy:
 
-Both ports link at the highest speed they share, in full duplex
----------------------------------------------------------------
+Speed set-up
+------------
 
-Every port supports 1000, 100 and 10 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
+Both ports link at the highest speed they share, in full duplex
+(:numref:`fig-rgmii-speed-policy`). Every port supports 1000, 100 and 10 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
 The processor sets up the transceivers as follows:
 
 #. It sets both transceivers to advertise 1000 Mbit/s full duplex
@@ -52,8 +53,8 @@ received and sent on any port whose link is up.
 
 .. _rgmii-slow-partner:
 
-A slower partner brings both ports down to its speed
-----------------------------------------------------
+Slower link partners
+--------------------
 
 If the two ports come up at different speeds, forwarding stays off. The
 processor removes the higher speeds from the faster port's advertisement
@@ -84,8 +85,8 @@ the restricted port, so both ports reach the highest speed they now share.
 
 .. _rgmii-error-forwarding:
 
-A forwarded frame with an error is passed on marked as an error
----------------------------------------------------------------
+Error forwarding
+----------------
 
 A forwarded frame that arrives with RX_CTL showing an error is passed on
 with TX_CTL showing an error on the same byte, that is high then low

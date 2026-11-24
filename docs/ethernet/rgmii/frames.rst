@@ -7,8 +7,8 @@ byte is split into nibbles is described on :doc:`data`.
 
 .. _rgmii-frame-fields:
 
-A frame starts with a preamble and a start frame delimiter
-----------------------------------------------------------
+Frame fields
+------------
 
 A :term:`frame` is one Ethernet message
 (:wikipedia:`Ethernet frame <Ethernet_frame>`). On RXD and TXD it is sent as
@@ -61,8 +61,8 @@ are sent most significant byte first.
 
 .. _rgmii-frame-lengths:
 
-A frame is 64 to 1518 bytes long, or longer with tags
------------------------------------------------------
+Frame length
+------------
 
 From the destination address to the checksum, a basic frame is 64 to
 1518 bytes long (:clause:`Table 4-2 <4>`, minFrameSize and
@@ -79,8 +79,8 @@ deliver them to the processor (see :ref:`req-memory`).
 
 .. _rgmii-preamble-nibbles:
 
-On RGMII the preamble is the nibble 5 repeated, and the SFD is 5 then D
------------------------------------------------------------------------
+Preamble and SFD nibbles
+------------------------
 
 The preamble is seven bytes of the bit pattern 10101010, and the SFD is the
 bit pattern 10101011, each written in the order the bits are sent
@@ -123,8 +123,8 @@ In :numref:`fig-rgmii-frame-start`, RXD carries the
 
 .. _rgmii-preamble-shrink:
 
-The receiver looks for the SFD, because the preamble can arrive shorter
------------------------------------------------------------------------
+Shortened preamble
+------------------
 
 A gigabit transceiver may pass on fewer than seven preamble bytes. IEEE
 802.3 allows the preamble to shrink between the sending and the receiving
@@ -145,8 +145,8 @@ How evampire does this is on :doc:`port-logic`.
 
 .. _rgmii-gap:
 
-Frames are at least 96 bit times apart
---------------------------------------
+Gap between frames
+------------------
 
 A transmitter leaves a gap of at least 96 bit times between the end of one
 frame and the start of the next preamble, at every speed up to
