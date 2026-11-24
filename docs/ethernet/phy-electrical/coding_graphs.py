@@ -8,7 +8,10 @@
   noise margin of each;
 * shaping-filter.svg: the example transmit filter
   y_n = 0.75 a_n + 0.25 a_(n-1) of the 802.3ab tutorial, and a short
-  sequence of PAM-5 symbols with the shaped output on the 17 levels.
+  sequence of PAM-5 symbols with the shaped output on the 17 levels;
+* trellis.svg: the level subsets X and Y, and the eight states of the
+  convolutional encoder of subclause 40.3.1.3.4 over four symbol periods,
+  with one surviving path.
 
 Run with:
 
@@ -19,7 +22,7 @@ SPDX-License-Identifier: Apache-2.0
 
 import pathlib
 
-from svgplot import (Axes, Fig, BLUE, RED, GREY, INK, FILL_GREY,
+from svgplot import (Axes, Fig, BLUE, RED, GREEN, GREY, INK, FILL_GREY,
                      FILL_ORANGE, fmt)
 
 HERE = pathlib.Path(__file__).parent
@@ -135,6 +138,61 @@ def shaping_filter():
     fig.save(HERE / "shaping-filter.svg")
 
 
+def next_state(s, u7, u6):
+    """The convolutional encoder of IEEE 802.3-2022 subclause 40.3.1.3.4,
+    with the state s = 4 cs[2] + 2 cs[1] + cs[0]:
+    cs[1] = u6 ^ cs[0] of the last step, cs[2] = u7 ^ cs[1], cs[0] = cs[2]."""
+    c2, c1, c0 = (s >> 2) & 1, (s >> 1) & 1, s & 1
+    return 4 * (u7 ^ c1) + 2 * (u6 ^ c0) + c2
+
+
+def trellis():
+    fig = Fig(480, 430)
+    steps = 4
+    x0, dx = 150, 64
+    y0, dy = 60, 36
+    fig.text(20, 18, "Level subsets", size=14, anchor="start", weight="bold")
+    for i, lv in enumerate((2, 1, 0, -1, -2)):
+        y = y0 + 6 + i * 42
+        sub = "Y" if lv % 2 == 0 else "X"
+        colour = BLUE if sub == "Y" else RED
+        fig.line(30, y, 70, y, stroke=colour, width=3)
+        fig.text(80, y, f"{fmt(lv)}: {sub}", size=13, anchor="start",
+                 fill=colour)
+    fig.text(62, y0 + 6 + 5 * 42, "X = {−1, +1}\nY = {−2, 0, +2}", size=12)
+    fig.text(x0 + steps * dx / 2, 18, "Encoder states over four symbol "
+             "periods", size=14, weight="bold")
+    xs = [x0 + k * dx for k in range(steps + 1)]
+    ys = [y0 + s * dy for s in range(8)]
+    for k in range(steps):
+        for s in range(8):
+            for u in range(4):
+                t = next_state(s, u >> 1, u & 1)
+                fig.line(xs[k], ys[s], xs[k + 1], ys[t], stroke="#c8c8c8",
+                         width=1)
+    path, s = [0], 0
+    for u in (2, 1, 3, 0):
+        s = next_state(s, u >> 1, u & 1)
+        path.append(s)
+    fig.poly([(xs[k], ys[st]) for k, st in enumerate(path)], stroke=GREEN,
+             width=3.4)
+    for k, x in enumerate(xs):
+        for s, y in enumerate(ys):
+            fig.circle(x, y, 4.5, fill=INK)
+        fig.text(x, ys[-1] + 26, f"n + {k}" if k else "n", size=12)
+    for s, y in enumerate(ys):
+        fig.text(xs[-1] + 12, y, f"state {s}", size=11, anchor="start",
+                 fill=GREY)
+    for k in range(steps):
+        fig.text((xs[k] + xs[k + 1]) / 2, ys[-1] + 44, "8 ns", size=11,
+                 fill=GREY)
+    fig.text(240, 400, "Grey: every allowed transition. "
+             "Green: one path that the\nViterbi decoder keeps. Each step must "
+             "finish within 8 ns.", size=12)
+    fig.save(HERE / "trellis.svg")
+
+
 if __name__ == "__main__":
     level_spacing()
     shaping_filter()
+    trellis()
