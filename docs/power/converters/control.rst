@@ -39,7 +39,24 @@ timing resolution this needs). :numref:`fig-conv-pwm` shows both.
 Voltage-mode and current-mode control
 -------------------------------------
 
-Two ways of choosing the duty cycle are in common use.
+Two ways of choosing the duty cycle are in common use
+(:numref:`fig-conv-control-modes`).
+
+.. graphviz:: control-modes.dot
+   :name: fig-conv-control-modes
+   :caption: Voltage-mode and peak current-mode control loops.
+   :alt: Two block diagrams. (a) Voltage mode: a reference and the output
+         voltage, scaled by a divider, feed an error amplifier; its output,
+         the control voltage, goes to a PWM comparator with a sawtooth
+         ramp; the PWM drives a gate driver and the power stage, whose
+         output returns through the divider: one loop. (b) Peak current
+         mode: the error amplifier sets a current level for a current
+         comparator, which also takes slope compensation and the inductor
+         current from a sense resistor; the comparator resets a latch that
+         a clock sets, and the latch drives the power stage. The sense path
+         forms an inner current loop every period, and the divider path an
+         outer voltage loop.
+   :align: center
 
 Voltage-mode control
    An *error amplifier* compares the output voltage, scaled down by a
