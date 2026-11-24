@@ -48,7 +48,8 @@ digraph boost_short {
             fillcolor="#fbe5d6"];
     b_c    [pos="4.9,1.05!", width=0.9, label="C output\ncapacitor",
             fillcolor="#dbe8f5"];
-    b_ser  [pos="5.8,1.9!", width=1.0, label="Series\nswitch, off",
+    b_ser  [pos="5.8,1.9!", width=1.45, height=0.66,
+            label="Series switch, off;\nbody diode points\nback to C",
             fillcolor="#e2f0d9", style="rounded,filled,bold"];
     b_sh   [pos="6.75,1.05!", width=0.8, label="Short\ncircuit",
             fillcolor="#f4cccc"];

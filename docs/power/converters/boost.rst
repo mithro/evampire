@@ -213,7 +213,8 @@ the path. Turning S1 off does not stop it
          through the inductor, through the body diode of S2, through the
          short and back along ground to the input. (b) The same stage with
          a series switch, off, between the output capacitor and the short,
-         so no path remains from the input to the short.
+         with its body diode pointing back towards the capacitor, so no
+         path remains from the input to the short.
    :align: center
 
 Stopping it needs a switch in
