@@ -330,7 +330,7 @@ Automatic handshakes
 Per endpoint, the software sets flags such as "buffer ready to receive",
 "data ready to send" and "halted". A token decoder matches the address and
 endpoint, and a small state machine replies by itself
-([USBSER-USB2]_ section 8.4.6):
+([USBSER-USB2]_ section 8.4.6, :numref:`fig-usbser-handshake`):
 
 * to OUT data with a good CRC and a ready buffer: ACK, and the buffer is
   marked full; with no ready buffer: NAK; when halted: STALL;
@@ -338,6 +338,22 @@ endpoint, and a small state machine replies by itself
   with no data: NAK;
 * to SETUP: always ACK, into a buffer reserved for the 8-byte request;
 * the DATA0/DATA1 sequence bit per endpoint.
+
+.. graphviz:: software-cost/handshake.dot
+   :name: fig-usbser-handshake
+   :caption: State machine of the automatic handshakes.
+   :alt: State diagram: from idle, a token is decoded for address, endpoint
+         and CRC5; a token not for this device is ignored. A SETUP token
+         leads to receiving the 8-byte DATA0, always answered with ACK into
+         the SETUP buffer, with DATA1 next. An OUT token leads to receiving
+         DATA0 or DATA1: with a bad CRC no reply; when halted STALL; with no
+         room NAK; with the same sequence bit as last time ACK and discard
+         the copy; when ready ACK, mark the buffer full and toggle the bit.
+         An IN token checks the endpoint flags: when halted STALL; with no
+         data NAK; with data ready send DATA0 or DATA1, then wait for the
+         host: on ACK toggle the bit and mark the buffer empty, with no ACK
+         keep the data for a retry. Each branch returns to idle.
+   :align: center
 
 * *Removes:* the reply deadline and all per-packet work. Software is
   involved only when a buffer has been filled or emptied, and a late answer
