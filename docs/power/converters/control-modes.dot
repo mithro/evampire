@@ -68,7 +68,10 @@ digraph control_modes {
     node  [shape=point, width=0.01, height=0.01, label=""];
     a_c1  [pos="0.8,3.70!"];
     b_c1  [pos="0.8,0.3!"];
-    b_c2  [pos="6.55,1.1!"];
+    b_c2  [pos="6.2,1.1!"];
+    b_pi  [pos="6.2,1.625!"];
+    b_pv  [pos="6.95,1.625!"];
+    b_pvd [pos="6.95,0.525!"];
     b_c3  [pos="3.0,1.1!"];
 
     // Panel (a) loop.
@@ -82,8 +85,8 @@ digraph control_modes {
     b_c2 -> b_sns [color="#c55a11", penwidth=1.6];
     b_sns -> b_c3 [arrowhead=none, color="#c55a11", penwidth=1.6];
     b_c3 -> b_cmp [color="#c55a11", penwidth=1.6];
-    b_ps -> b_c2 [arrowhead=none, color="#c55a11", penwidth=1.6];
-    b_c2 -> b_div [color="#1f4e79", penwidth=1.6];
+    b_pi -> b_c2 [arrowhead=none, color="#c55a11", penwidth=1.6];
+    b_pv -> b_pvd [color="#1f4e79", penwidth=1.6];
     b_div -> b_c1 [arrowhead=none, color="#1f4e79", penwidth=1.6];
     b_c1 -> b_ea [color="#1f4e79", penwidth=1.6];
 }
