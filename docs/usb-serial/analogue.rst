@@ -71,9 +71,22 @@ The driver also has to:
 * survive the stresses described in
   :ref:`Short-circuit and electrostatic discharge protection <usbser-protection>`.
 
-The specification shows the impedance made of a CMOS output stage with a
+The specification makes the impedance from a CMOS output stage with a
 lower impedance plus an external series resistor *RS*
-([USBSER-USB2]_ section 7.1.1.1, Figure 7‑3).
+([USBSER-USB2]_ section 7.1.1.1), as in :numref:`fig-usbser-driver`.
+
+.. graphviz:: analogue/driver.dot
+   :name: fig-usbser-driver
+   :caption: The full-speed driver of one line, with its series resistor
+             and the 50 pF test load.
+   :alt: Block diagram: inside evampire, the data and output enable drive
+         a pre-driver with edge-rate control, which drives an output stage
+         with a PMOS to 3.3 V and an NMOS to ground that turns both off for
+         tri-state. The output passes a series resistor RS, on chip or on
+         the board, to the D+ pin, which is loaded by a 50 pF test load to
+         ground. A bracket marks ZDRV, 28 Ω to 44 Ω, as the output stage
+         and RS together. D− has the same driver with opposite data.
+   :align: center
 
 A driver that is only a resistance charging the 50 pF test load gives an
 edge of:
