@@ -139,3 +139,15 @@ class Axes:
         if ylabel:
             yc = (self.y0 + self.y1) / 2
             s.text(self.x0 - 48, yc, ylabel, size=size, rotate=-90)
+
+
+def square(s, a, highs, lo, hi, stroke=BLUE):
+    """Draw a logic trace on axes a: highs is a list of (t0, t1)."""
+    pts = [(a.xr[0], lo)]
+    for t0, t1 in highs:
+        pts += [(t0, lo), (t0, hi), (t1, hi)]
+        if t1 < a.xr[1]:
+            pts.append((t1, lo))
+    if pts[-1][0] < a.xr[1]:
+        pts.append((a.xr[1], pts[-1][1]))
+    s.poly(a.P(pts), stroke=stroke)
