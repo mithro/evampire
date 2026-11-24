@@ -41,7 +41,8 @@ it offers. :numref:`fig-usbpd-sinktx` shows the order.
 
 .. wavedrom::
    :caption: A source reserving the line by changing Rp from SinkTxOK to
-             SinkTxNG, schematic and not to scale.
+            SinkTxNG, schematic and not to scale; the idle CC level is
+            about 1.7 V with SinkTxOK and 0.9 V with SinkTxNG.
    :name: fig-usbpd-sinktx
    :alt: Timing diagram. The source's Rp changes from SinkTxOK, the 3.0 A
          value with the CC wire idle at about 1.7 V, to SinkTxNG, the 1.5 A
@@ -50,14 +51,10 @@ it offers. :numref:`fig-usbpd-sinktx` shows the order.
          16 to 20 ms, from the change before it starts its own exchange.
 
    {"signal": [
-     {"name": "source Rp", "wave": "=.....=...............",
-      "data": ["SinkTxOK, about 1.7 V", "SinkTxNG, about 0.9 V"]},
-     {"name": "sink message", "wave": "z.=......z............",
-      "data": ["already started: finishes"]},
-     {"name": "source timer", "wave": "x.....=.......x.......",
-      "data": ["tSinkTx 16–20 ms"]},
-     {"name": "source message", "wave": "z.............=....z..",
-      "data": ["source's exchange"]}
+     {"name": "source Rp", "wave": "=..=..........", "data": ["SinkTxOK", "SinkTxNG"]},
+     {"name": "sink message", "wave": "z=...z........", "data": ["started: finishes"]},
+     {"name": "source timer", "wave": "x..=.....x....", "data": ["tSinkTx 16–20 ms"]},
+     {"name": "source message", "wave": "z........=...z", "data": ["source's exchange"]}
    ],
    "config": {"hscale": 1}}
 

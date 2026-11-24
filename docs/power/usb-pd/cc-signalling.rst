@@ -722,30 +722,28 @@ The receiver also tells the transmitter when the line is free. The line is
 busy when *nTransitionCount* edges arrive within *tTransitionWindow*, and
 idle after *tTransitionWindow* without them (:pd:`Section 5.2.2.1`). A
 transmitter checks that the line is idle immediately before it starts
-(:pd:`Section 5.2.2`, item 5), and then waits *tInterFrameGap* before the
-preamble (:pd:`Section 5.3.4.9`, item 2). :numref:`fig-usbpd-idle` shows
+(:pd:`Section 5.2.2`, item 5), and starts its preamble no sooner than
+*tInterFrameGap* after the end of the previous packet
+(:pd:`Section 5.3.4.9`, item 2). :numref:`fig-usbpd-idle` shows
 the order.
 
 .. wavedrom::
    :caption: Busy and idle detection before a transmitter starts, schematic
-             and not to scale.
+            and not to scale; tTransitionWindow is 12 µs to 20 µs.
    :name: fig-usbpd-idle
    :alt: Timing diagram. Edges on the CC wire, three or more within
          tTransitionWindow, mark the line busy. After the last edge, a
          window of tTransitionWindow, 12 to 20 µs, with no edges marks it
-         idle. The transmitter then waits tInterFrameGap, 25 µs, and starts
-         its preamble.
+         idle. The transmitter starts its preamble no sooner than
+         tInterFrameGap, 25 µs, after the end of the previous packet.
 
    {"signal": [
-     {"name": "CC", "wave": "0.1.0.1.z...........0.1."},
-     {"name": "line", "wave": "=.............=.....=...",
-      "data": ["busy", "idle", "sending"]},
-     {"name": "no edges", "wave": "x.......=.....x.........",
-      "data": ["tTransitionWindow 12–20 µs"]},
-     {"name": "wait", "wave": "x.............=.....x...",
-      "data": ["tInterFrameGap 25 µs"]}
+     {"name": "CC", "wave": "010101z....010"},
+     {"name": "line", "wave": "=.........==..", "data": ["busy", "idle", "sending"]},
+     {"name": "no edges", "wave": "x.....=...x...", "data": ["tTransitionWindow"]},
+     {"name": "gap", "wave": "x.....=....x..", "data": ["tInterFrameGap 25 µs"]}
    ],
-   "config": {"hscale": 1.1}}
+   "config": {"hscale": 1}}
 
 Open questions
 --------------

@@ -572,18 +572,13 @@ cable is not sent again (:pd:`Section 7.31.1`).
          retry with GoodCRC.
 
    {"signal": [
-     {"name": "port A in", "wave": "z=......z.................",
-      "data": ["message"]},
-     {"name": "port A out", "wave": "z........=.z..............",
-      "data": ["GoodCRC"]},
-     {"name": "port B in", "wave": "z...=.....z.....=.....z...",
-      "data": ["message, not answered", "retry"]},
-     {"name": "port B timer", "wave": "x.........=.....x.........",
-      "data": ["tReceive 0.9–1.1 ms"]},
-     {"name": "port B out", "wave": "z.....................=.z.",
-      "data": ["GoodCRC"]}
+     {"name": "port A in", "wave": "z=...z........", "data": ["message"]},
+     {"name": "port A out", "wave": "z.....=.z.....", "data": ["GoodCRC"]},
+     {"name": "port B in", "wave": "z.=...z...=.z.", "data": ["not answered", "retry"]},
+     {"name": "port B timer", "wave": "x.....=...x...", "data": ["tReceive 0.9–1.1 ms"]},
+     {"name": "port B out", "wave": "z...........=.", "data": ["GoodCRC"]}
    ],
-   "config": {"hscale": 1.1}}
+   "config": {"hscale": 1}}
 
 .. _usbpd-helpers:
 
