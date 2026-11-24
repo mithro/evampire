@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" font-family="sans-serif" font-size="13">
+<rect width="640" height="200" fill="white"/>
+<rect x="18.0" y="60.0" width="66.0" height="46.0" fill="#fbd9b5" stroke="#222222"/>
+<text x="51.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">preamble</text>
+<text x="51.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">7</text>
+<rect x="84.0" y="60.0" width="44.0" height="46.0" fill="#fbd9b5" stroke="#222222"/>
+<text x="106.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">SFD</text>
+<text x="106.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">1</text>
+<rect x="128.0" y="60.0" width="76.0" height="46.0" fill="#d4e6d0" stroke="#222222"/>
+<text x="166.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">destination</text>
+<text x="166.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">6</text>
+<rect x="204.0" y="60.0" width="66.0" height="46.0" fill="#d4e6d0" stroke="#222222"/>
+<text x="237.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">source</text>
+<text x="237.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">6</text>
+<rect x="270.0" y="60.0" width="66.0" height="46.0" fill="#d4e6d0" stroke="#222222" stroke-dasharray="4 4"/>
+<text x="303.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">VLAN tag</text>
+<text x="303.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">4</text>
+<rect x="336.0" y="60.0" width="50.0" height="46.0" fill="#d4e6d0" stroke="#222222"/>
+<text x="361.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">type</text>
+<text x="361.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">2</text>
+<rect x="386.0" y="60.0" width="150.0" height="46.0" fill="#d4e6d0" stroke="#222222"/>
+<text x="461.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">payload</text>
+<text x="461.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">46 to 1500</text>
+<rect x="536.0" y="60.0" width="50.0" height="46.0" fill="#fbd9b5" stroke="#222222"/>
+<text x="561.0" y="80.0" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">FCS</text>
+<text x="561.0" y="98.0" text-anchor="middle" font-size="12" fill="#666666" font-weight="normal">4</text>
+<text x="320.0" y="30.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold">Fields of a frame on the wire, in bytes (not to scale)</text>
+<rect x="40.0" y="140.0" width="18.0" height="14.0" fill="#fbd9b5" stroke="#222222"/>
+<text x="64.0" y="152.0" text-anchor="start" font-size="12" fill="#222222" font-weight="normal">added by the preamble and checksum generator</text>
+<rect x="40.0" y="164.0" width="18.0" height="14.0" fill="#d4e6d0" stroke="#222222"/>
+<text x="64.0" y="176.0" text-anchor="start" font-size="12" fill="#222222" font-weight="normal">written by the processor; the dashed VLAN tag is optional</text>
+</svg>
