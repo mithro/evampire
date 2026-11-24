@@ -13,36 +13,17 @@ timing of USB is beyond what the software can do. The same connectors also
 carry the USB Power Delivery negotiation (see :doc:`/power/usb-pd/index`), and
 the same processor runs it.
 
+:doc:`usb-device`
+   What a USB serial port is, full-speed signalling, transactions and timing.
+:doc:`implementation`
+   Software cost and hardware helpers, the analogue front end, USB Power
+   Delivery roles, and alternatives.
+:doc:`references`
+   The specifications, datasheets and projects cited on these pages.
+
 .. toctree::
-   :maxdepth: 1
    :hidden:
 
-   what-it-is
-   signalling
-   transactions
-   timing
-   software-cost
-   analogue
-   usb-pd-roles
-   alternatives
+   usb-device
+   implementation
    references
-
-What each page covers:
-
-* :doc:`what-it-is`: what a computer sees, the communications device class
-  and why no custom driver is needed.
-* :doc:`signalling`: host and device, the D+ and D− wires, speeds, line
-  states, coding, and the parts of a packet.
-* :doc:`transactions`: how packets combine into transfers, frames, how a
-  device is recognised, and the descriptors a serial port needs.
-* :doc:`timing`: the bit time, the reply deadline, the end of a packet and
-  clock accuracy, each from the :std:`USB 2.0 specification <usb2>`.
-* :doc:`software-cost`: how much processor time each part of USB takes in
-  software, and the hardware helpers that reduce it.
-* :doc:`analogue`: the driver, receivers, pull-up resistor and protection,
-  and how they can be built in gf180mcu.
-* :doc:`usb-pd-roles`: power roles and data roles, the data role swap, two
-  ports, and sharing the processor with USB Power Delivery and Ethernet.
-* :doc:`alternatives`: other ways to give the processor a serial port, and
-  why they are or are not used elsewhere.
-* :doc:`references`: the specifications, datasheets and projects cited.
