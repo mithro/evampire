@@ -384,8 +384,8 @@ voltage across itself [CONV-SLUA618]_ (Section 5.2.2).
          through a diode; Cboot sits between the BOOT node, up to 57 V plus
          the gate drive voltage, and the switch node SW, which swings
          between 0 V and 57 V. The high-side driver takes its supply from
-         BOOT and its reference from SW, and drives the gate of S1 between
-         Vin and SW. S2 connects SW to ground and the inductor L connects
+         BOOT and its reference from SW, and drives the gate of S1, which
+         connects Vin to SW. S2 connects SW to ground and the inductor L connects
          SW to the output. Ground-referenced PWM logic drives the high-side
          driver through a level shifter. Cboot is at least 22 nF for 10 nC
          plus 1 nC at 0.5 V droop.
