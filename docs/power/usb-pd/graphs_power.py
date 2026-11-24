@@ -24,6 +24,9 @@ ovp-ramp.svg
     (monitoring.rst).
 vconn-inrush.svg
     VCONN charging a marked cable, then its load current (cables.rst).
+class-steps.svg
+    The highest Power over Ethernet class for the power left from a USB
+    contract (power-translation.rst).
 
 Every limit comes from the page that shows the figure. Event times that
 the specification leaves free inside a limit are example values, and the
@@ -264,6 +267,35 @@ def vconn_inrush():
     return svg(680, int(pi.bottom + 48), body, "VCONN switch current")
 
 
+def class_steps():
+    """Highest Power over Ethernet class against the power left for the
+    Ethernet port (power-translation.rst; Table 145-11 values)."""
+    p = Plot(60, 20, 590, 260, (0, 100), (0, 8.6))
+    steps = [(4, 1), (6.7, 2), (14, 3), (30, 4), (45, 5), (60, 6), (75, 7),
+             (90, 8)]
+    pts, prev = [(0, 0)], 0
+    for w, c in steps:
+        pts += [(w, prev), (w, c)]
+        prev = c
+    pts.append((100, prev))
+    body = [p.frame()]
+    body += p.yticks(list(range(0, 9)), "highest class")
+    body.append(polyline(p.pts(pts), SNK_INK, 2.2))
+    for w, c in steps:
+        body.append(text(p.x(w) + 3, p.y(c) - 5, f"{w:g} W", 10))
+    for w, c in ((21.2, 3), (50.9, 5), (86.9, 7)):
+        body.append(f'<circle cx="{p.x(w):.1f}" cy="{p.y(c):.1f}" r="4" '
+                    f'fill="{SRC_INK}"/>')
+        body.append(text(p.x(w), p.y(c) + 18, f"{w:g} W", 11, "middle",
+                         fill=SRC_INK))
+    body += p.xticks([0, 20, 40, 60, 80, 100], "P_out, power left for the "
+                     "Ethernet port (W)", grid=False)
+    body.append(text(p.left, p.bottom + 58, "Dots: the worked examples for "
+                     "9 V 3 A, 20 V 3 A and 20 V 5 A contracts.", 12,
+                     fill=GREY))
+    return svg(680, int(p.bottom + 70), body, "Class from a USB contract")
+
+
 if __name__ == "__main__":
     write("vbus-transition.svg", vbus_transition())
     write("current-limit.svg", current_limit())
@@ -271,3 +303,4 @@ if __name__ == "__main__":
     write("vbus-discharge.svg", vbus_discharge())
     write("ovp-ramp.svg", ovp_ramp())
     write("vconn-inrush.svg", vconn_inrush())
+    write("class-steps.svg", class_steps())
