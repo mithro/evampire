@@ -20,7 +20,7 @@ def frame():
               ("source", "6", 70, "#dbe8f5"),
               ("VLAN tag", "4, optional", 80, "#ffffff"),
               ("length or type", "2", 90, "#dbe8f5"),
-              ("payload", "46 to 1500", 120, "#e2f0d9"),
+              ("payload", "42 or 46 to 1500", 120, "#e2f0d9"),
               ("FCS", "4", 50, "#fbe5d6")]
     x, y = 15, 75
     pos = {}
