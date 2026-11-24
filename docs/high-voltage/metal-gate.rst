@@ -397,7 +397,22 @@ Shifting a signal down
    (:download:`calc.py <calc.py>`,
    section 7). Matched plates also cancel the charge they share. The
    floating circuit must stay above both thresholds, 11 V typical on
-   Metal1.
+   Metal1. :numref:`fig-hv-level-shift` shows the circuit.
+
+.. figure:: level-shift.svg
+   :name: fig-hv-level-shift
+   :alt: A floating circuit, 15 V to 40 V above ground, drives a signal and
+         its complement, 5 V apart, onto two Metal1 plates. Each plate sits
+         over the insulator above the channel of an NMOS transistor whose
+         source is at ground. The two drains, carrying currents I1 and I2,
+         go to a ground-referenced comparator that holds them at 1 V. The
+         difference I1 minus I2 is (W/L) times mobility times Cox times
+         delta V times VDS, 58.6 µA at every floating voltage, for Metal1,
+         W/L of 10, a 5 V swing and 1 V on the drains. The floating circuit
+         must stay above both thresholds, 11 V typical on Metal1.
+
+   Shifting a logic signal down from a floating circuit through two
+   metal-gate transistors.
 
 A signal travelling up, from ground to a floating circuit such as the
 high-side gate driver on :ref:`conv-gate-drive`, needs the mirror image:
