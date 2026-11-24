@@ -4,11 +4,16 @@
 
 import datetime
 import os
+import pathlib
 import re
+import sys
 
 from docutils import nodes
 from sphinx import addnodes
 from sphinx.util.nodes import split_explicit_title
+
+# Extensions written for this site live in docs/_ext.
+sys.path.insert(0, str(pathlib.Path(__file__).parent / "_ext"))
 
 project = "evampire"
 author = "The evampire Authors"
@@ -31,6 +36,9 @@ extensions = [
     # Short roles for external links, for example :wikipedia:`Ethernet frame
     # <Ethernet_frame>`.
     "sphinx.ext.extlinks",
+    # Identifies each figure and table by its label instead of a running
+    # number (docs/_ext/stable_ids.py).
+    "stable_ids",
 ]
 
 # :wikipedia:`Page_title` links to that English Wikipedia article. An
@@ -47,8 +55,10 @@ source_suffix = {
 
 exclude_patterns = ["_build"]
 
-# Number figures, tables and code blocks so they can be referenced as
-# "Figure 3" with :numref:.
+# Give figures, tables and code blocks an identifier so they can be
+# referenced with :numref:. The stable_ids extension replaces the running
+# number that Sphinx assigns with the item's label, so the table labelled
+# "tab-power-roles" is "Table power-roles".
 numfig = True
 
 # Render WaveDrom diagrams to SVG at build time (no JavaScript needed when
