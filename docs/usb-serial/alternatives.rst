@@ -84,10 +84,21 @@ External USB-to-serial bridge
 
 A separate USB-to-UART bridge chip on the board, connected to the
 connector's D+ and D− and to a UART on evampire, gives a CDC or
-vendor-driver serial port with no USB logic on evampire. It costs a board
+vendor-driver serial port with no USB logic on evampire
+(:numref:`fig-usbser-bridge`). It costs a board
 part and a UART on the chip, and the bridge still has to follow the data
 role rules of :doc:`usb-pd-roles`. It can serve the first version while the
 on-chip serial port is developed.
+
+.. graphviz:: alternatives/bridge.dot
+   :name: fig-usbser-bridge
+   :caption: An external USB-to-serial bridge, with the configuration
+             channel still on evampire.
+   :alt: Block diagram: the USB Type-C receptacle's D+ and D− go to a
+         USB-to-UART bridge chip, which connects through TX and RX to a UART
+         on evampire. The receptacle's CC1 and CC2 go to evampire's CC and
+         USB Power Delivery block.
+   :align: center
 
 Console over Ethernet
 ---------------------
