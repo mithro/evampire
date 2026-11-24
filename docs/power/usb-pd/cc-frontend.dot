@@ -1,0 +1,34 @@
+// The receive and transmit paths on one CC pin, on chip, as described on
+// analogue.rst and cc-signalling.rst.
+//
+// Fixed grid (positions in inches): CC pin at x=0.6; receive path at
+// y=2.0 and y=1.25, transmit path at y=0.4; processor bits at x=6.4.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph cc_frontend {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.35, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    cc   [pos="0.55,1.2!", label="CC pin", width=0.75, height=2.0,
+          fillcolor="#ffffff"];
+    lpf  [pos="2.0,2.0!", label="low-pass filter,\nτ ≥ 100 ns"];
+    cmp  [pos="3.65,2.0!", label="fast comparator", fillcolor="#dbe8f5"];
+    dac  [pos="3.65,2.85!", label="threshold: DAC or\nresistor ladder", width=1.45];
+    mux  [pos="2.0,1.2!", label="multiplexer\n(optional)", style="rounded,filled,dashed"];
+    adc  [pos="3.65,1.2!", label="shared ADC\n(optional)", style="rounded,filled,dashed"];
+    reg  [pos="3.65,0.35!", label="regulator,\n1.125 V rail", width=1.2];
+    drv  [pos="2.0,0.35!", label="three-state output,\nslew-limited,\n33 to 75 Ω",
+          width=1.45, height=0.62, fillcolor="#fbe5d6"];
+    bits [pos="5.6,1.2!", label="processor\ninput and\noutput bits", width=1.1,
+          height=2.0, fillcolor="#dbe8f5"];
+
+    cc -> lpf; lpf -> cmp; dac -> cmp; cmp -> bits [label="output"];
+    cc -> mux [style=dashed]; mux -> adc [style=dashed];
+    adc -> bits [style=dashed];
+    reg -> drv; drv -> cc;
+    bits -> drv [label="data, enable"];
+}

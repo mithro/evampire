@@ -254,6 +254,22 @@ On chip
 External
    A CC interface such as the FUSB302B, which brings its own comparators.
 
+:numref:`fig-usbpd-cc-frontend` shows the on-chip receive path, and the
+transmit path described below.
+
+.. graphviz:: cc-frontend.dot
+   :name: fig-usbpd-cc-frontend
+   :caption: The on-chip receive and transmit paths of one CC pin; dashed
+             blocks are optional.
+   :alt: Block diagram. The CC pin feeds a low-pass filter with a time
+         constant of at least 100 ns and then a fast comparator, whose
+         threshold comes from a DAC or resistor ladder; its output goes to
+         the processor's input and output bits. Optionally, a multiplexer
+         takes the CC pin to a shared ADC. For transmitting, a regulator
+         makes the 1.125 V rail for a slew-limited three-state output of
+         33 to 75 Ω, which drives the CC pin from the processor's data and
+         enable bits.
+
 .. _usbpd-bmc-driver:
 
 BMC driver
@@ -271,7 +287,8 @@ On chip
    1.125 V rail, and a :wikipedia:`three-state <Three-state_logic>` output
    stage with a controlled :wikipedia:`slew rate <Slew_rate>`. Either CC
    pin can carry VCONN, up to 5.5 V, depending on the plug orientation, so
-   the output transistors are 5 V or 6 V devices.
+   the output transistors are 5 V or 6 V devices
+   (:numref:`fig-usbpd-cc-frontend`).
 External
    A CC interface or controller with its own driver, such as the FUSB302B,
    or the STUSB1602, which drives the line from bits sent by an external

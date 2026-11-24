@@ -126,7 +126,8 @@ Transmitter
 The transmitter is a slew-rate limited
 :wikipedia:`three-state <Three-state_logic>` driver. While it sends, it
 drives the CC wire between 0 V and *vSwing*; at all other times it is high
-impedance (:pd:`Section 5.3.4`, item 1). :numref:`tab-usbpd-tx` lists its
+impedance (:pd:`Section 5.3.4`, item 1; on-chip design in
+:numref:`fig-usbpd-cc-frontend`). :numref:`tab-usbpd-tx` lists its
 limits. The nominal *vSwing* is 1.125 V, and the low level stays within
 -0.075 V to 0.075 V (the transmit mask, :pd:`Table 5.7`).
 

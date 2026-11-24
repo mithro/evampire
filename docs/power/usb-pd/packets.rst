@@ -234,6 +234,17 @@ Hard Reset
 Cable Reset
    The cable plugs only.
 
+:numref:`fig-usbpd-sop-targets` shows where each receiver sits along the
+cable.
+
+.. graphviz:: sop-targets.dot
+   :name: fig-usbpd-sop-targets
+   :caption: The receivers along a marked cable, with the ordered set that
+             addresses each.
+   :alt: A chain from the sending port, the VCONN Source, through the near
+         cable plug, addressed by SOP′, the cable, and the far cable plug,
+         addressed by SOP″, to the far port, addressed by SOP.
+
 :numref:`fig-usbpd-preamble-sop` shows the end of the preamble and the first
 Sync-1 symbol on the wire, sent bit b0 first.
 
