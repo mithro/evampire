@@ -279,9 +279,11 @@ between 75.5 ms and 87.5 ms into the first class event. It then draws its
 highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
 :clause:`Table 145-28 <145>`). Autoclass only lets the power sourcing
-equipment allocate less than the assigned class. It never raises the power
-above the class, and a demoted powered device keeps to its lower class
-[POE-EA-BT]_ (Section 6.2).
+equipment allocate less than the assigned class: the measured power plus a
+margin, up to the power of the assigned class (:clause:`145.2.8`). The
+powered device then draws no more than it drew during the measurement,
+unless it negotiates more over LLDP, up to its requested class
+(:clause:`145.3.8.2`).
 
 Turn on with hysteresis
 -----------------------
@@ -323,18 +325,21 @@ than 0.4 A for classes 1 to 6, or 0.8 A for classes 7 and 8, until 80 ms
 after turn-on (:clause:`Table 145-29 <145>`, items 4 and 7, and
 :clause:`145.3.8.3`).
 
-From 50 ms after turn-on it must also stay within 13 W if it requested
-class 3 or higher, or within its class power if it requested class 1 or 2.
-The power sourcing equipment may end its inrush period at any time from
-50 ms and then enforce the assigned class [POE-EA-BT]_ (Section 7.2). Only
-from 80 ms after turn-on may the powered device draw the power of its
-assigned class.
+From 50 ms after turn-on until 80 ms, the powered device's power limit is
+that of class 3, 13 W, or of its requested class if that is lower
+(:clause:`Figure 145-25 <145>`, state POWER_DELAY). The delay gives the
+power sourcing equipment time to change from its inrush current limit to
+its operating limit before the powered device draws full power
+(:clause:`145.3.8.3`). A powered device assigned class 1, 2 or 3 is within
+its class power from 50 ms. Only from 80 ms may a powered device of
+class 4 to 8 draw the power of its assigned class.
 
-Under the :clause:`33` rules, a Type 2 powered device draws no more than
-inrush current for at least 80 ms after turn-on
-(:clause:`Table 33-18 <33>`). Until 2-event Physical Layer classification
-or Data Link Layer classification has completed, it draws no more than
-13 W (:ref:`poe-classification`).
+Under the :clause:`33` rules, a Type 2 powered device likewise draws less
+than the inrush current limit from 50 ms until 80 ms after turn-on, and no
+more than the class 3 peak power, 14.4 W (:clause:`33.3.7.3`,
+:clause:`Table 33-18 <33>`). Until 2-event Physical Layer classification
+or Data Link Layer classification has completed, it keeps to the Type 1
+limits, 13 W (:clause:`33.3.5.2`).
 
 Charging the capacitor at a constant current takes:
 
