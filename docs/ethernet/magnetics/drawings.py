@@ -11,7 +11,9 @@ Writes, next to this script:
   differential and common-mode current;
 - die-barrier.svg: cross-section of an isolation capacitor between the
   lowest and highest metal layers of the evampire die;
-- embedded.svg: a transformer embedded in a circuit board.
+- embedded.svg: a transformer embedded in a circuit board;
+- cap-area.svg: series capacitor devices and the two kinds of on-chip
+  capacitor, drawn by drawings_cap.py.
 
 The drawings are schematic: shapes and spacings are not to scale.
 
@@ -210,6 +212,8 @@ def embedded():
 
 
 if __name__ == "__main__":
+    from drawings_cap import cap_area
     (HERE / "choke.svg").write_text(choke())
     (HERE / "die-barrier.svg").write_text(die_barrier())
     (HERE / "embedded.svg").write_text(embedded())
+    (HERE / "cap-area.svg").write_text(cap_area())

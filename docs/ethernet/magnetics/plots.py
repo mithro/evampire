@@ -18,11 +18,13 @@ Writes, next to this script:
   limit, alone, with coupling capacitors and with parasitic capacitance;
 - psd.svg: the power spectrum of the symbol stream and the corners;
 - zc.svg: impedance of the 1000 pF termination capacitor;
-- cw-range.svg: the lower limits on the coupling capacitor.
+- cw-range.svg: the lower limits on the coupling capacitor;
+- wander.svg, echo-tail.svg: baseline wander and the echo tail.
 
 Every value is one quoted on the page that shows the graph. The
 return-loss, spectrum, impedance and range graphs are in plots_rl.py, and
-the shared helpers in plotkit.py.
+the gigabit-risk graphs in plots_gb.py, and the shared helpers in
+plotkit.py.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -32,6 +34,7 @@ import pathlib
 
 from plotkit import (INK, GREY, BLUE, ORANGE, GREEN, RED, svg, text, line,
     poly, dot, logspace, linspace, Axes)
+from plots_gb import echo_tail, wander
 from plots_rl import cw_range, psd, rl_caps, rl_mask, rl_parasitic, zc
 
 HERE = pathlib.Path(__file__).parent
@@ -226,5 +229,6 @@ if __name__ == "__main__":
                      ("events", events), ("cm-divider", cm_divider),
                      ("rl-mask", rl_mask), ("rl-caps", rl_caps),
                      ("rl-parasitic", rl_parasitic), ("psd", psd),
-                     ("zc", zc), ("cw-range", cw_range)):
+                     ("zc", zc), ("cw-range", cw_range),
+                     ("wander", wander), ("echo-tail", echo_tail)):
         (HERE / f"{name}.svg").write_text(fn())
