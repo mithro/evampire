@@ -1,5 +1,5 @@
-What each part of the magnetics does
-====================================
+Functions of the magnetics
+==========================
 
 This page lists the jobs that the :term:`magnetics` of a standard port do,
 which part does each job, and which requirement of IEEE 802.3 or of other
@@ -60,8 +60,8 @@ Power over Ethernet on :doc:`poe`. The other jobs are described below.
 
 .. _magnetics-isolation:
 
-Isolation keeps ground differences off the transceiver
-------------------------------------------------------
+Galvanic isolation
+------------------
 
 :term:`Galvanic isolation` means that no conducting path joins two
 circuits: no direct current can flow between them, and a large voltage
@@ -131,8 +131,8 @@ Environment A relaxes only the isolation between the power circuits of
 different ports. It keeps the isolation between each port and the
 equipment.
 
-Parts across the barrier must withstand the test voltage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parts across the barrier
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any part connected between the cable side and the equipment side bridges
 the isolation. Examples are the capacitor to chassis in the common-mode
@@ -148,8 +148,8 @@ most often 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
 
 .. _magnetics-common-mode:
 
-The transformer rejects common-mode voltage and blocks DC
----------------------------------------------------------
+Common-mode rejection and DC blocking
+-------------------------------------
 
 Any voltage on a pair has two parts. The :term:`differential-mode voltage`
 is the difference between the two wires, and carries the data. The
@@ -177,8 +177,8 @@ This is 66.6 dB at 1 MHz and 28.2 dB at 100 MHz.
 
 .. _magnetics-cm-termination:
 
-The termination absorbs common-mode currents
---------------------------------------------
+Common-mode termination
+-----------------------
 
 Each pair, taken as a whole, also forms a transmission line with every
 other pair. Common-mode currents travel along these lines. If the ends are
@@ -236,8 +236,8 @@ the isolation barrier, so it must withstand the test voltage
 
 .. _magnetics-choke:
 
-The choke filters common-mode noise
------------------------------------
+Common-mode choke
+-----------------
 
 A :term:`common-mode choke` is two windings on one core, one in each wire
 of a pair. The data current flows out on one wire and back on the other,
@@ -264,8 +264,8 @@ autotransformer as "8-core" ([MAG-ENT98]_, sections 3.3 to 3.6).
 
 .. _magnetics-surge:
 
-Surges pass the transformer only as differential signals
---------------------------------------------------------
+Surge paths
+-----------
 
 A common-mode surge raises the whole cable in voltage against the
 equipment. It appears across the transformer's isolation, which holds it
@@ -281,8 +281,8 @@ events are given on :doc:`events`.
 
 .. _magnetics-driver-bias:
 
-The circuit-side centre tap biases the line driver
---------------------------------------------------
+Line driver bias
+----------------
 
 How the circuit-side centre tap is connected depends on the kind of line
 driver in the transceiver (:numref:`fig-magnetics-centre-tap-bias`, and
@@ -318,8 +318,8 @@ transformer, as described on :doc:`without-transformer`.
 
 .. _magnetics-identical:
 
-Four identical channels let any pair carry any direction
---------------------------------------------------------
+Identical channels
+------------------
 
 Automatic MDI/MDI-X configuration (:doc:`cable`) can swap pair A with pair
 B and pair C with pair D. Each channel of the magnetics can therefore end up

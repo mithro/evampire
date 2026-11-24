@@ -1,13 +1,13 @@
-The cable and the RJ45 socket
-=============================
+Cable and RJ45 socket
+=====================
 
 This page describes the four twisted pairs of an Ethernet cable, the
 :term:`RJ45` pins they use, and the two pin assignments that let two ports
 find each other. It is the starting point for the other pages on the
 :term:`magnetics`.
 
-Each pair carries a difference voltage
---------------------------------------
+Twisted pairs
+-------------
 
 An Ethernet cable holds four :term:`twisted pairs <twisted pair>`: four
 pairs of wires, the two wires of each pair twisted around each other. Each
@@ -30,8 +30,8 @@ pairs, one in each direction. Whether an integrated transceiver also
 supports these two speeds is open (:ref:`requirements-open-questions`), so
 these pages give their values only where they differ.
 
-The RJ45 pins form four pairs
------------------------------
+RJ45 contacts and pairs
+-----------------------
 
 The RJ45 plug and socket have eight contacts, numbered 1 to 8. The
 connection between the transceiver and the cable is called the
@@ -71,8 +71,8 @@ The 1000BASE-T signal names are those of
 :clause:`Table 40-12 <40>`. The 10BASE-T and 100BASE-TX use is given in
 :clause:`14.5.1` and :clause:`Table 25-2 <25>`.
 
-A port uses one of two pin assignments
---------------------------------------
+MDI and MDI-X pin assignments
+-----------------------------
 
 A transmitter at one end of a cable must reach the receiver at the other
 end. With a straight-through cable, contact 1 to contact 1 and so on, this

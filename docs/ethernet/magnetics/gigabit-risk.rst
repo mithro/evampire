@@ -1,5 +1,5 @@
-Capacitor-coupled gigabit Ethernet over long cables
-===================================================
+Capacitor-coupled gigabit over long cables
+==========================================
 
 This page works through what can limit gigabit Ethernet, 1000BASE-T,
 running through coupling capacitors over a long cable, and gives the
@@ -9,8 +9,8 @@ for short links and backplanes, and in one vendor test for cables up to
 parameter (:ref:`requirements-open-questions`), so the effects that
 depend on it are given as a function of reach.
 
-The signal has energy down to DC
---------------------------------
+Low-frequency content
+---------------------
 
 1000BASE-T scrambles its data so that the transmitted symbols are
 uncorrelated, and shapes them with the filter
@@ -22,8 +22,8 @@ signal has energy right down to zero frequency. Any high-pass filter in the
 path, transformer or capacitor, removes some of it. The receiver corrects
 the resulting baseline wander digitally ([MAG-AB-TUTORIAL]_, slide 51).
 
-Very little of the power is below the corner
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Power below the corner frequency
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Model the symbol stream as uncorrelated symbols with square pulses, one
 every :math:`T`. Its power spectrum is then proportional to
@@ -66,8 +66,8 @@ left out. For :math:`C_\text{w} = 16\ \text{nF}`, the time constant is
 
 That is 0.16 % of the power.
 
-The baseline wander is a small fraction of a decision step
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Baseline wander
+~~~~~~~~~~~~~~~
 
 The part of the signal that a high-pass filter removes is the signal passed
 through the matching low-pass filter. For uncorrelated symbols and a time
@@ -176,8 +176,8 @@ mailing list, states that the scrambler makes baseline wander too small to
 cause a measurable bit error rate ([MAG-DOVE]_). That was written about
 links with transformers.
 
-The echo gets a long tail
--------------------------
+Echo tail
+---------
 
 Each end transmits and receives on the same pair at the same time. A
 :wikipedia:`hybrid <Hybrid_coil>` subtracts most of the transmitted signal
@@ -201,8 +201,8 @@ capacitors at the near end and a transformer at the far end, the echo
 passes through one high-pass filter and the far-end signal through two;
 the correction must handle both.
 
-Common-mode noise reaches the receiver
---------------------------------------
+Common-mode noise
+-----------------
 
 The receiver of :clause:`40.6.1.3.3` must keep receiving while a
 common-mode signal of 1.0 V rms, swept from 1 MHz to 250 MHz, is coupled
@@ -251,8 +251,8 @@ magnetics give (:doc:`functions`). For reference, Analog Devices
 recommends an external choke for capacitor-coupled cables longer than
 about 1 m for this reason ([MAG-ADIWIKI]_).
 
-Parasitic capacitance uses up the return loss
----------------------------------------------
+Parasitic capacitance
+---------------------
 
 Everything on the chip side of the capacitors adds capacitance across the
 line: pads, on-chip protection, external protection diodes and board
@@ -302,8 +302,8 @@ Surges and discharges pass the capacitors as fast edges, which the
 protection on the chip side must clamp. The options are on
 :doc:`without-transformer`.
 
-Longer cables leave less margin
--------------------------------
+Margin against cable reach
+--------------------------
 
 The cable attenuates the far-end signal, while the echo, the common-mode
 noise injected near the receiver, and any residue from the coupling

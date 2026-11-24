@@ -1,5 +1,5 @@
-Candidate front ends for a transformer-free port
-================================================
+Transformer-free front ends
+===========================
 
 This page describes two candidate front ends for a full-design port, which
 connects to the cable without coupling transformers
@@ -13,8 +13,8 @@ Both front ends use one of the isolation routes of :doc:`isolation`. The
 figure shows the external-capacitor route; the other routes change only
 where the barrier sits.
 
-The passive front end uses external parts for power and filtering
------------------------------------------------------------------
+Passive front end
+-----------------
 
 :numref:`fig-magnetics-arch-capacitor` shows one pair of the passive
 front end. High-voltage capacitors carry the data and block direct
@@ -79,8 +79,8 @@ windings carry Power over Ethernet in standard magnetics ([MAG-ENT98]_,
 section 3.9). The combination at 1000 Mbit/s over 100 m of cable is
 reported in one vendor test, without a choke ([MAG-ADIWIKI]_).
 
-The active front end moves work onto evampire
----------------------------------------------
+Active front end
+----------------
 
 The active front end has the same structure, with three changes:
 
@@ -97,8 +97,8 @@ confirmed by implementation. Coupling capacitors on the die, or a second
 die on the cable side, are further options described on
 :doc:`coupling-capacitors` and :doc:`isolation`.
 
-The front ends set specifications for the circuits on evampire
---------------------------------------------------------------
+Circuit specifications
+----------------------
 
 :numref:`tbl-magnetics-specs` collects the specifications that these pages
 set for the circuits on evampire. Values marked "estimate" are derived on
@@ -147,8 +147,8 @@ on :doc:`../phy-electrical/index`.
 For 10BASE-T the line driver also reaches 2.2 V to 2.8 V peak
 (:clause:`14.3.1.2.1`), about ±1.4 V at each pin.
 
-Which IEEE 802.3 requirements a transformer-free port meets
------------------------------------------------------------
+IEEE 802.3 requirements
+-----------------------
 
 :numref:`tbl-magnetics-ieee` lists the IEEE 802.3 requirements that a
 transformer helps meet, and where the passive front end stands on

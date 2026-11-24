@@ -1,13 +1,13 @@
-A port with standard magnetics
-==============================
+Port with standard magnetics
+============================
 
 This page shows the parts of a standard Ethernet port, the kind used on a
 first-version board (:ref:`board configurations <tab-power-board-configs>`):
 a transformer and a common-mode choke on each pair, the centre taps and the
 common-mode termination. :doc:`functions` explains what each part does.
 
-Each pair passes through a transformer and a choke
---------------------------------------------------
+One pair
+--------
 
 :numref:`fig-magnetics-one-pair` shows one pair. The pair passes through
 three parts on its way from the :term:`Ethernet transceiver` to the
@@ -37,8 +37,8 @@ case of the equipment, and the metal shield of the RJ45 socket.
          connects to the socket shield.
    :align: center
 
-The four pairs share one termination capacitor
-----------------------------------------------
+Four pairs and the termination
+------------------------------
 
 :numref:`fig-magnetics-four-pairs` shows all four pairs on the cable side.
 Each block marked "transformer + choke" is one channel of the magnetics: a transformer followed,

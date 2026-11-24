@@ -1,13 +1,13 @@
-Coupling capacitors in place of a transformer
-=============================================
+Coupling capacitors
+===================
 
 This page describes the ports that already connect to twisted-pair cable
 without a transformer, and works out the size of the capacitors that carry
 the data in their place. :doc:`without-transformer` covers the other jobs
 of the transformer, and :doc:`isolation` covers isolation.
 
-Several kinds of port already work without transformers
--------------------------------------------------------
+Transformer-free ports in use
+-----------------------------
 
 These ports are reference examples of the techniques. Each was built in
 another process or product; whether the same works for evampire is
@@ -52,8 +52,8 @@ Capacitor coupling is therefore shown for gigabit Ethernet over a full
 cable in one vendor report. :doc:`gigabit-risk` works through what else
 can limit it.
 
-The data path becomes a capacitor in each wire
-----------------------------------------------
+Data path model
+---------------
 
 Replacing the transformer with a capacitor in each wire turns the data path
 into a series capacitor instead of a parallel inductor.
@@ -91,8 +91,8 @@ around the loop, so the pair sees half the capacitance of one:
 The model leaves out the capacitance from each wire to ground, which
 :doc:`gigabit-risk` treats separately.
 
-Return loss needs at least 9.9 nF
----------------------------------
+Return-loss limit
+-----------------
 
 A 1000BASE-T port must have at least 16 dB of return loss from 1 MHz
 (:doc:`matching-and-droop`). The capacitors add a reactance in series with
@@ -144,8 +144,8 @@ With :math:`Z_0 = 100\ \Omega`:
 The capacitors alone then use the whole 16 dB budget, so real
 capacitors must be larger.
 
-Droop needs at least 16 nF
---------------------------
+Droop limit
+-----------
 
 The series capacitor forms a high-pass filter with the source and load
 resistances in series:
@@ -172,8 +172,8 @@ the voltage is left after 500 ns, against 73.1 % required. Its high-pass
 corner is 99.5 kHz, at the edge of the 1 Hz to 100 kHz range that the
 transmit templates assume (:clause:`40.6.1.2.3`, note 1).
 
-100BASE-TX sets a phase limit
------------------------------
+100BASE-TX phase limit
+----------------------
 
 The 100BASE-TX transmitter must look resistive within a
 phase angle of 3° from 2 MHz to 80 MHz (:std:`ANSI X3.263 <X3.263>`, as
@@ -200,8 +200,8 @@ can instead meet an equivalent time constant above 2.4 µs
 Whether a port without a transformer can use this route in place of the
 inductance requirement is an open question below.
 
-The results give a working range
---------------------------------
+Working range
+-------------
 
 :numref:`tbl-magnetics-cap-size` collects the limits.
 
@@ -235,8 +235,8 @@ above the droop limit with margin, and near the behaviour of standard
 magnetics. :doc:`gigabit-risk` shows what each value means for the
 received signal, and :doc:`isolation` how many high-voltage parts it takes.
 
-Capacitors on the chip cost area
---------------------------------
+On-chip capacitor area
+----------------------
 
 The capacitors can also be built on evampire, if they hold the voltages
 of :doc:`events` or sit behind another isolation barrier

@@ -7,8 +7,8 @@ without a transformer must survive all of them and keep the signal intact.
 It is a reference page; the jobs of the transformer are described on
 :doc:`functions`.
 
-The signals and Power over Ethernet are continuous
---------------------------------------------------
+Continuous voltages
+-------------------
 
 :numref:`tbl-magnetics-continuous` lists what is present on a working
 link all the time.
@@ -42,8 +42,8 @@ link all the time.
 Power over Ethernet also carries up to 0.948 A on each pair
 (:doc:`poe`).
 
-Tests and disturbances are short
---------------------------------
+Tests and disturbances
+----------------------
 
 :numref:`tbl-magnetics-events` lists the tests and the disturbances that
 the port meets from time to time. Each is described below the table.
@@ -120,8 +120,8 @@ Which level a product must pass is set by the product standard for its
 market, not by IEEE 802.3. The tables give level 4, the highest
 standard level, as the design limit.
 
-The energy and current of each event
-------------------------------------
+Event energy and current
+------------------------
 
 The energy of a capacitor-discharge test is the energy stored in the test
 capacitor, and its peak current is the test voltage divided by the source
@@ -178,8 +178,8 @@ about 30 A, shaped by the generator rather than by this resistance alone
 :math:`4\ \text{kV} / 42\ \Omega = 96\ \text{A}` into a short circuit
 ([MAG-SLVA711]_, table 4).
 
-The kind of event decides the protection
-----------------------------------------
+Protection for each kind of event
+---------------------------------
 
 Short, low-energy events
    The human-body model is the kind of event that on-chip protection is

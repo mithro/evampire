@@ -1,5 +1,5 @@
-Choosing and placing magnetics for the first version
-====================================================
+Magnetics for the first version
+===============================
 
 This page is for the designer of a first-version board, which uses an
 external :term:`Ethernet transceiver` and standard :term:`magnetics` on
@@ -7,8 +7,8 @@ each port (:ref:`board configurations <tab-power-board-configs>`). It
 covers the parts each port needs, the kinds of magnetics, board layout,
 what to look for in a data sheet, and example parts.
 
-Each port needs these parts
----------------------------
+Parts for each port
+-------------------
 
 Each of Ethernet ports A and B (:ref:`requirements`) needs:
 
@@ -29,8 +29,10 @@ version, port A takes power and port B supplies it
 (:ref:`board configurations <tab-power-board-configs>`,
 :ref:`power-flow`).
 
-Magnetics come as a module or inside the socket
------------------------------------------------
+Module or integrated socket
+---------------------------
+
+Magnetics come as a separate module or inside the RJ45 socket.
 
 Discrete module
    All four channels in one surface-mount part, placed between the
@@ -46,8 +48,8 @@ rejection worse ([MAG-ENT98]_, section 3.8). Texas Instruments recommends a
 discrete transformer for better electromagnetic compatibility
 ([MAG-DP83867]_, section 9.2.1.1).
 
-Transformers embedded in the board are an alternative
-------------------------------------------------------
+Board-embedded transformers
+---------------------------
 
 A transformer can also be built into the circuit board: ferrite cores are
 embedded in the board and the windings are made from its copper layers and
@@ -65,8 +67,8 @@ cheap. Those reasons apply to evampire's first version too. Embedding also
 needs a board fabricator that places ferrite in the laminate. For the full
 design, which connects without transformers, the option does not apply.
 
-Keep the grounds apart and the pairs short
-------------------------------------------
+Board layout
+------------
 
 :numref:`fig-magnetics-layout` shows the board areas around one port. Board
 dimensions are given in millimetres, with the mil (one thousandth of an
@@ -99,8 +101,8 @@ inch, 25.4 µm) of the cited guidance in brackets.
 * Place protection diodes on the transceiver side of the magnetics
   ([MAG-SNLA387]_, section 2).
 
-What to look for in a data sheet
---------------------------------
+Data sheet checklist
+--------------------
 
 :numref:`tbl-magnetics-checklist` lists what transceiver makers ask of the
 magnetics. Data sheets write the turns ratio as "1CT:1CT": one turn to one

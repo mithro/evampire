@@ -1,5 +1,5 @@
-Doing each job without a transformer
-====================================
+Jobs without a transformer
+==========================
 
 This page gives the options for each job of the :term:`magnetics`
 (:doc:`functions`) when the port has coupling capacitors instead of a
@@ -13,16 +13,16 @@ devices of the gf180mcu process design kit (:ref:`req-process`). Prior work
 from other processes and products is given as a reference example of what
 has been built, not as a prediction for evampire.
 
-The chip sets the common-mode voltage
--------------------------------------
+Common-mode voltage
+-------------------
 
 The coupling capacitors block direct voltage and slow changes of
 common-mode voltage, so the chip, not the cable, sets the common-mode
 voltage on its side of the capacitors. Fast common-mode changes pass
 through the capacitors and must be handled on the chip side.
 
-A slow ground difference mostly stays on the cable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Slow ground differences
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose the cable's common-mode voltage moves at mains frequency relative
 to the chip ground, and the chip holds each pair's common-mode node at its
@@ -75,8 +75,8 @@ About 2 % of a mains-frequency ground difference reaches the chip. At
 signal frequencies the capacitors pass common-mode noise almost completely,
 so rejection there comes from the receiver and from a choke or termination.
 
-Options for common-mode rejection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Common-mode rejection options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 External common-mode choke
    As in single-pair automotive Ethernet. For reference, the DP83TC811
@@ -108,8 +108,8 @@ The rejection that magnetics give, 30 dB to 43 dB (:doc:`functions`),
 and the estimate of about 40 dB on :doc:`gigabit-risk` set the target for
 the choke, capacitors and on-chip circuits together.
 
-The termination is already on the chip
---------------------------------------
+Differential termination
+------------------------
 
 With a voltage-mode driver the 100 Ω termination is already on the chip
 ([MAG-KSZ9031]_, section 12), so matching the cable does not need a
@@ -123,8 +123,8 @@ links ([MAG-US6538500]_). It can also cancel part of the coupling
 capacitors' reactance. Whether it reaches the 1000BASE-T return loss over
 1 MHz to 100 MHz is an open question.
 
-Any inductor across the pair adds to the droop
-----------------------------------------------
+Inductors across the pair
+-------------------------
 
 The coupling capacitors set the droop (:doc:`coupling-capacitors`). Power
 over Ethernet inductors fitted across the pair also shunt low frequencies,
@@ -134,8 +134,11 @@ pair ([MAG-GARDNER14]_, slide 4). The receiver's baseline-wander correction
 (:doc:`../phy-electrical/index`) absorbs whatever the capacitors and
 inductors remove; :doc:`gigabit-risk` estimates how much.
 
-The common mode needs a termination and a filter
-------------------------------------------------
+Common-mode termination and filtering
+-------------------------------------
+
+Without a transformer, the common mode still needs a termination and a
+filter. The options are these.
 
 External termination on the cable side
    As in the standard circuit: 75 Ω per pair to a shared capacitor to
@@ -152,8 +155,8 @@ Active common-mode termination on evampire
    75 Ω, to common-mode signals at the chip side of the capacitors. Its
    bandwidth must reach the frequencies at which emissions are measured.
 
-Protection behind the capacitors is open
-----------------------------------------
+Protection behind the capacitors
+--------------------------------
 
 Without a transformer, the coupling capacitors' voltage rating holds off a
 common-mode surge. The fast edge that passes through them reaches the chip
@@ -186,8 +189,8 @@ each pair (:doc:`gigabit-risk`). A diode across each pair on the cable
 side, with no connection to ground, limits differential surges and does
 not affect the isolation.
 
-Both kinds of line driver work through capacitors
--------------------------------------------------
+Line drivers
+------------
 
 A voltage-mode driver sets its own common-mode voltage and needs no centre
 tap ([MAG-ENT114]_). With capacitors, this job of the centre tap
@@ -200,8 +203,8 @@ couples a current-mode DP83848 through 33 nF capacitors this way, with
 pull-up resistors to 3.3 V on each pin ([MAG-SNLA088]_, figure 5). An
 inductor can take the place of the resistors.
 
-Power over Ethernet needs a separate current path
--------------------------------------------------
+Power over Ethernet current path
+--------------------------------
 
 The power must reach both wires of a pair equally without loading the
 data. Three options exist.
@@ -243,8 +246,8 @@ unless a custom on-chip structure is shown to hold the voltage. Its loss
 is about :math:`0.5\ \text{A} \times 2\ \text{V} = 1\ \text{W}` per pair at
 the drop given in the patent (an estimate).
 
-The capacitors add capacitance to the detection signature
----------------------------------------------------------
+Detection signature
+-------------------
 
 The coupling capacitors block direct current, so the data circuits do not
 change the signature resistance. They do add capacitance between the two
@@ -280,8 +283,8 @@ detection, classification and power-on steps of the power sourcing
 equipment, from 2.7 V up to 57 V (:doc:`../../power/poe/index`). The
 capacitors hold this direct voltage.
 
-All four channels stay identical
---------------------------------
+Identical channels
+------------------
 
 All four channels of the front end are identical, including the Power over
 Ethernet inductors, which are fitted on all four pairs for four-pair power

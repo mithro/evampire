@@ -9,8 +9,8 @@ described on :doc:`../../power/poe/index`.
 
 .. _magnetics-poe-current:
 
-The current enters at a centre tap and splits between two wires
----------------------------------------------------------------
+Current through the centre taps
+-------------------------------
 
 Power over Ethernet sends direct current on the data pairs. The
 :term:`power sourcing equipment` puts one polarity on both wires of one
@@ -105,8 +105,8 @@ same detection signature ([MAG-EA8023BT]_, tables 15 and 16).
 
 .. _magnetics-poe-detection:
 
-The transformer hides the data circuits from detection
-------------------------------------------------------
+Detection and classification
+----------------------------
 
 Before it switches power on, power sourcing equipment detects a powered
 device by its signature resistance and capacitance, measured between 2.7 V

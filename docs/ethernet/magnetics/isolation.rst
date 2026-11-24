@@ -7,8 +7,8 @@ hold. How the isolation is made in the full design is an open question
 (:ref:`requirements-open-questions`), so all three routes are options. The
 isolation tests themselves are described on :doc:`functions`.
 
-Three routes can provide the isolation
---------------------------------------
+Isolation routes
+----------------
 
 :numref:`fig-magnetics-isolation-routes` shows where the isolation barrier
 sits in each route.
@@ -39,8 +39,8 @@ The routes can also be combined, for example a second die whose barrier is
 built into one of the two dies. Each route also has to isolate the Power
 over Ethernet power path, described at the end of this page.
 
-Capacitors pass the direct-voltage test
----------------------------------------
+Capacitors in the isolation tests
+---------------------------------
 
 A capacitor blocks direct current, so a barrier made of capacitors passes
 the 2250 V direct-voltage test of :std:`Annex J.1 <802.3>` if each
@@ -111,8 +111,8 @@ the test. The test equipment must still supply it, and many testers stop at
 a set current. The direct-voltage test avoids the issue for a
 capacitor-coupled port.
 
-External high-voltage capacitors are the most direct route
-----------------------------------------------------------
+External high-voltage capacitors
+--------------------------------
 
 The route uses ceramic capacitors that carry the data and hold off the test
 voltage. Texas Instruments notes that high-voltage multi-layer ceramic
@@ -142,8 +142,8 @@ the IEEE 802.3 isolation is a safety function for evampire boards, and so
 needs certified parts, is set by the product safety standard
 (:std:`IEC 62368-1`) and is an open question.
 
-A second die can sit at cable potential
----------------------------------------
+Second die at cable potential
+-----------------------------
 
 The line driver, receiver and protection sit on a separate die whose ground
 follows the cable. Only signals and power cross the barrier between the two
@@ -169,8 +169,8 @@ own design in both dies. It can also be a commercial Ethernet transceiver
 with an external isolator, which would make the cable-side die an
 external transceiver in the sense of the first-version board.
 
-A barrier on the evampire die uses the oxide between metal layers
------------------------------------------------------------------
+Barrier on the evampire die
+---------------------------
 
 Capacitors on evampire whose plates are the lowest and highest metal layers
 can hold off a high voltage across the oxide between them. Every part of
@@ -213,8 +213,8 @@ page 2), and a published digital isolator built in standard CMOS reached
 2.5 kV ([MAG-KAERIYAMA]_). The real strength of the gf180mcu oxide stack
 is established only by test structures.
 
-The gf180mcu devices hold a few volts to tens of volts
-------------------------------------------------------
+gf180mcu voltage limits
+-----------------------
 
 Any route that puts a cable wire directly on a chip pin needs a junction
 that holds the cable voltage to the chip substrate. :numref:`tbl-magnetics-gf180`
@@ -268,8 +268,8 @@ and the substrate. Whether a custom structure holds more is open, and needs
 test structures. Until such a structure is shown, a cable wire reaches
 evampire only through one of the three barriers above.
 
-The Power over Ethernet path needs its own isolation
-----------------------------------------------------
+Isolation of the Power over Ethernet path
+-----------------------------------------
 
 With capacitor-coupled data, the Power over Ethernet circuits connect to the
 cable directly, not through a transformer winding. The power path must then
@@ -280,8 +280,8 @@ Power over Ethernet input are described on
 :doc:`../../power/converters/buck-boost`, and the arrangement of the
 converters on :doc:`../../power/converters/index`.
 
-Partial isolation limits where a board can be used
---------------------------------------------------
+Partial isolation
+-----------------
 
 A board whose ports meet the isolation only in part, or not at all, can be
 used safely only where both ends of every cable share a ground, such as

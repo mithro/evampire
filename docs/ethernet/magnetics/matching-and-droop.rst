@@ -1,5 +1,5 @@
-Matching the cable and passing low frequencies
-==============================================
+Matching and droop
+==================
 
 This page works out two requirements that the :term:`magnetics` of a
 gigabit port help to meet: how closely the port must match the 100 Ω cable
@@ -9,8 +9,8 @@ replace the transformer on :doc:`coupling-capacitors`.
 
 .. _magnetics-return-loss:
 
-The port must match 100 Ω to within a return loss
--------------------------------------------------
+Return loss
+-----------
 
 Ethernet transceivers drive and terminate a 100 Ω differential load
 directly ([MAG-KSZ9031]_, section 12; [MAG-DP83867]_, section 9.2),
@@ -102,8 +102,8 @@ electrical table). An insertion loss of 1 dB is an amplitude ratio of
 
 .. _magnetics-droop:
 
-The transformer's inductance sets the droop
--------------------------------------------
+Droop
+-----
 
 A transformer cannot pass direct current, and passes low frequencies
 poorly. The reason is its
@@ -118,8 +118,8 @@ whose average is not zero make the received signal's average level drift,
 which is called :term:`baseline wander` (see
 :doc:`../phy-electrical/index`).
 
-A first-order model gives the droop
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+First-order droop model
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Treat the transformer as an ideal 1:1 transformer with its magnetising
 inductance across it. Seen from that inductance, the transceiver's 100 Ω
@@ -177,8 +177,8 @@ With :math:`R_\text{p} = 50\ \Omega` and the usual data-sheet value
 
    f_\text{c} = \frac{1}{2\pi \times 7.0\ \mu\text{s}} = 23\ \text{kHz}
 
-1000BASE-T needs at least 80 µH
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1000BASE-T inductance minimum
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 500 ns after the start of a constant level in the transmitter test pattern,
 more than 73.1 % of the voltage must remain, into a 100 Ω test load
@@ -225,8 +225,8 @@ transformer high-pass pole anywhere from 1 Hz to 100 kHz
 (:clause:`40.6.1.2.3`, note 1). A 1.6 µs time constant puts the pole at
 99.5 kHz, at the edge of that range.
 
-Gigabit magnetics are specified at 350 µH for 100BASE-TX
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inductance for 100BASE-TX
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Gigabit magnetics are specified at 350 µH because the same parts serve
 100BASE-TX. 100BASE-TX takes its electrical specification from the FDDI
@@ -241,8 +241,8 @@ equipment a second way to comply. A transmitter in a Type 2 port above
 13 W, or in any Type 3 or Type 4 port, can instead show an equivalent time
 constant above 2.4 µs (:clause:`25.4.5`, :clause:`25.4.5.1`).
 
-Two time constants are the targets for a port without a transformer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Targets for a transformer-free port
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whatever replaces the transformer must give a time constant of at least the
 1000BASE-T minimum, :math:`\tau_\text{min} = 1.6\ \mu\text{s}`. Standard
