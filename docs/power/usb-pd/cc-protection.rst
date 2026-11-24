@@ -1,7 +1,7 @@
 .. _usbpd-cc-protection:
 
-Protecting the CC pins from a VBUS short
-========================================
+CC protection against VBUS shorts
+=================================
 
 What a short from :term:`VBUS` to a :term:`CC` pin does, why the
 :term:`ESD` protection of a pin does not cover it, and the ways to protect
@@ -33,8 +33,8 @@ conduct above 5.5 V.
 
 .. _usbpd-esd:
 
-Why ESD protection does not cover a VBUS short
-----------------------------------------------
+ESD protection and VBUS shorts
+------------------------------
 
 Every I/O pad has protection against electrostatic discharge. The gf180mcu
 I/O library targets 2000 V in the :wikipedia:`human-body model
@@ -183,10 +183,11 @@ either blocked or diverted at a low voltage.
 
 .. _usbpd-cc-blocking:
 
-Blocking the short is the conventional approach
------------------------------------------------
+Blocking switch
+---------------
 
-A series switch on each CC pin holds off the full VBUS voltage, and the
+The conventional protection is a series switch on each CC pin, which holds
+off the full VBUS voltage, and the
 ringing unless a clamp limits it. It opens within tens of nanoseconds, so
 that the circuits behind it see only a short overshoot, which their own ESD
 clamps absorb. TI designs the TPD8S300A so that the stress on the protected
@@ -249,8 +250,8 @@ without an external protector.
 
 .. _usbpd-cc-crowbar:
 
-A crowbar is an alternative to blocking
----------------------------------------
+Crowbar
+-------
 
 A :wikipedia:`crowbar <Crowbar_(circuit)>` on each CC pin turns on when the
 pin passes a trigger voltage and pulls it close to 0 V. The short's current

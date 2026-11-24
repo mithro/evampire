@@ -35,8 +35,8 @@ block are collected at the end of the page, in
 
 .. _usbpd-rp-sources:
 
-Rp current sources switch between three currents
-------------------------------------------------
+Rp current sources
+------------------
 
 As a source, each CC pin needs a pull-up that advertises one of three current
 levels, and that can be switched off when the port presents Rd. The values
@@ -58,8 +58,8 @@ External
 
 .. _usbpd-rd-circuit:
 
-Rd needs a trimmed path and a path that works with no supply
-------------------------------------------------------------
+Rd circuit
+----------
 
 As a sink, each CC pin needs :term:`Rd`, 5.1 kΩ to ground. A ± 10 % Rd lets
 the sink read the source's current level, and a ± 20 % Rd only lets the source
@@ -134,11 +134,11 @@ External
 
 .. _usbpd-vconn-switch:
 
-The VCONN switch connects a 3.0 V to 5.5 V supply to the unused CC pin
------------------------------------------------------------------------
+VCONN switch
+------------
 
-A port that powers a marked cable connects :term:`VCONN` to the CC pin that
-does not carry messages, and discharges that pin after detach. The voltage,
+A port that powers a marked cable connects :term:`VCONN`, a 3.0 V to 5.5 V
+supply, to the CC pin that does not carry messages, and discharges that pin after detach. The voltage,
 timing and discharge requirements are on :ref:`usbpd-vconn`. The power a
 source must supply depends on what the port carries (:typec:`Table 4-4` and
 :typec:`Table 4-5`). A port without SuperSpeed signals need not supply VCONN
@@ -184,8 +184,8 @@ External
 
 .. _usbpd-comparators:
 
-Comparators read the CC voltage for attach, current level, messages and fast role swap
---------------------------------------------------------------------------------------
+CC comparators
+--------------
 
 Each CC pin needs :term:`comparators <comparator>` at several thresholds:
 
@@ -194,10 +194,10 @@ Each CC pin needs :term:`comparators <comparator>` at several thresholds:
 * as a source, the thresholds that tell Ra, Rd and an open pin apart at each
   current level (:ref:`usbpd-source-thresholds`);
 * for receiving messages, the thresholds with
-  :wikipedia:`hysteresis <Hysteresis>` and the filtering on
-  :ref:`usbpd-receiver`;
-* for fast role swap, if supported, the detection threshold on
-  :ref:`usbpd-fast-role-swap`.
+  :wikipedia:`hysteresis <Hysteresis>` and the filtering of the
+  :ref:`receiver <usbpd-receiver>`;
+* for fast role swap, if supported, the detection threshold of
+  :ref:`fast role swap <usbpd-fast-role-swap>`.
 
 On chip
    One fast comparator on each CC pin, behind a
@@ -213,12 +213,13 @@ External
 
 .. _usbpd-bmc-driver:
 
-The BMC driver sends edges at a controlled rate from a 1.125 V rail
--------------------------------------------------------------------
+BMC driver
+----------
 
 The transmitter drives 0 V and a level near 1.125 V through a limited output
 impedance, with rise and fall times inside a window, and is high-impedance
-when not sending. These values are on :ref:`usbpd-transmitter`. The
+when not sending. These values are in the
+:ref:`transmitter limits <usbpd-transmitter>`. The
 transmitter must also tolerate its output being shorted to ground for
 tFRSwapTx, at most 120 µs (:pd:`Section 5.3.4.10`).
 
@@ -235,8 +236,8 @@ External
 
 .. _usbpd-reference:
 
-One voltage reference sets the driver level, the Rp currents and the thresholds
--------------------------------------------------------------------------------
+Voltage reference
+-----------------
 
 The driver level must stay within ± 6.7 % of 1.125 V (1.05 V to 1.2 V,
 :ref:`usbpd-transmitter`), the 1.5 A and 3.0 A pull-up currents within ± 8 %
@@ -262,8 +263,8 @@ External
 
 .. _usbpd-vbus-sensing:
 
-VBUS sensing and discharge face the full VBUS voltage
------------------------------------------------------
+VBUS sensing and discharge
+--------------------------
 
 The port measures VBUS to detect attach and detach, to check that VBUS is
 near 0 V before it switches VBUS on, and to check the voltage after each
@@ -324,8 +325,8 @@ External
 
 .. _usbpd-power-path:
 
-The power path is a converter function, controlled by evampire
---------------------------------------------------------------
+Power path
+----------
 
 As a sink, a switch connects VBUS to the board's power bus. As a source, a
 converter makes the negotiated voltage from the bus, with a current limit. In
@@ -343,8 +344,8 @@ P-channel MOSFETs on separate sink and source paths
 
 .. _usbpd-analogue-examples:
 
-Commercial controllers as reference examples
---------------------------------------------
+Commercial controllers
+----------------------
 
 :numref:`tab-usbpd-ref-parts` lists the commercial parts, and
 :numref:`tab-usbpd-ref-values` the values they reach for each block. They

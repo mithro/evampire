@@ -1,7 +1,7 @@
 .. _usbpd-software:
 
-What USB Power Delivery needs from the processor
-================================================
+Processor requirements
+======================
 
 The processor time, sampling rate, edge accuracy and reply deadlines that
 sending and receiving :term:`USB Power Delivery` messages in software needs,
@@ -22,8 +22,8 @@ The instruction counts are estimates for hand-written
 instruction set (:std:`RISC-V ISA <riscv-unpriv>`), to be confirmed by
 implementation.
 
-Software does all the digital work in the simplest design
----------------------------------------------------------
+Software-only design
+--------------------
 
 The minimum hardware per port is the analogue front end
 (:ref:`usbpd-analogue`), connected to plain bits that the processor reads and
@@ -77,8 +77,8 @@ more, such as tReceiverResponse (:pd:`Table 7.10`).
 
 .. _usbpd-receive:
 
-Receiving needs each edge timed to within 333 ns
-------------------------------------------------
+Receive timing
+--------------
 
 The receiver measures the time between successive edges on the
 configuration channel. An interval of about 1 :term:`UI` is a ``0``, and two
@@ -124,8 +124,8 @@ For reference, the Chromium OS EC firmware times edges with a 2.4 MHz counter,
 this bound, which assumes both edges of an interval displaced by the full
 0.07 UI.
 
-Polling costs a fixed rate plus the work per edge
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Polling cost
+^^^^^^^^^^^^
 
 With only a plain input bit, the processor reads the comparator in a
 :wikipedia:`polling <Polling_(computer_science)>` loop, and the time of one
@@ -211,8 +211,8 @@ takes 5 clock cycles for a load and 5 for a taken branch
 ([USBPD-PICORV32]_, "Cycles per Instruction Performance"). Its poll iteration
 of 10 cycles takes at most 333 ns with a clock of 30 MHz or more.
 
-An interrupt on each edge trades polling for overhead
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Interrupt per edge
+^^^^^^^^^^^^^^^^^^
 
 An :wikipedia:`interrupt <Interrupt>` on each comparator edge removes the
 polling between edges. Each edge then costs the interrupt entry and exit plus
@@ -270,8 +270,8 @@ and no timer or input capture unit ([USBSER-VUSB]_, home page).
 
 .. _usbpd-transmit:
 
-Transmitting needs each edge within 50 ns of its time
------------------------------------------------------
+Transmit timing
+---------------
 
 The transmit mask leaves 0.015 UI between the ideal edge time and the start
 of the inner mask (:pd:`Table 5.6`, X1Tx). Read strictly, each edge has to
@@ -281,8 +281,8 @@ by measuring a transmitter against it (:ref:`usbpd-transmitter`). Computing
 each edge time from a counter, rather than counting loop iterations, keeps
 the average bit rate within the 0.25 % pBitRate limit (:pd:`Table 5.10`).
 
-A counter wait loop needs a short iteration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Counter wait loop
+^^^^^^^^^^^^^^^^^
 
 The processor computes the next edge time, waits in a
 :wikipedia:`busy-wait <Busy_waiting>` loop until a counter reaches it, and
@@ -325,8 +325,8 @@ That is 100 instructions per bit at 300 kbit/s. The core is busy and
 interrupts are off for the whole message, 1430 µs for the longest one
 (:ref:`usbpd-durations`).
 
-Cycle-exact code removes the loop jitter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Cycle-exact code
+^^^^^^^^^^^^^^^^
 
 On an in-order core whose instructions each take a fixed, known number of
 clock cycles, straight-line code can place every edge an exact number of
@@ -351,8 +351,8 @@ clocked at 12 MHz to 20 MHz ([USBSER-VUSB]_, home page). That is 8 to
 
 .. _usbpd-goodcrc-deadline:
 
-The GoodCRC reply must start 25 µs to 195 µs after the message
---------------------------------------------------------------
+GoodCRC deadline
+----------------
 
 After the last bit of a received message, the receiver starts its GoodCRC
 reply no sooner than tInterFrameGap, 25 µs (:pd:`Table 5.10`), and no later
@@ -410,8 +410,8 @@ For reference, the Chromium OS EC firmware waits on the
 the edge times, and decodes each interval as soon as it arrives
 ([USBPD-CROS-EC]_, ``wait_bits()`` and ``pd_dequeue_bits()``).
 
-A received message keeps a polling processor busy for up to 2.3 ms
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Processor busy time
+^^^^^^^^^^^^^^^^^^^
 
 With polled receive and a bit-banged reply, the processor is busy from the
 first edge of a message to the end of its GoodCRC:
@@ -470,8 +470,8 @@ deadline.
 
 .. _usbpd-software-two-ports:
 
-Two ports can share one loop, use helpers, or rely on retries
--------------------------------------------------------------
+Software for two ports
+----------------------
 
 With two ports, messages can arrive on both at once, because each port's
 partner decides when it transmits. A source sets with its Rp value whether
@@ -503,14 +503,14 @@ cable is not sent again (:pd:`Section 7.31.1`).
 
 .. _usbpd-helpers:
 
-Each hardware helper removes one need
--------------------------------------
+Hardware helpers
+----------------
 
 The helpers below are generic microcontroller timer and serial features.
 None is specific to USB.
 
-Input capture timestamps each received edge
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Input capture
+^^^^^^^^^^^^^
 
 :term:`Input capture` copies a free-running counter on each edge of an
 input, giving the edge a timestamp in hardware ([USBPD-ATMEGA328P]_,
@@ -552,8 +552,8 @@ For reference, the Chromium OS EC firmware for STM32 microcontrollers uses
 timer input capture with direct memory access for receive
 ([USBPD-CROS-EC]_, ``pd_hw_init_rx()`` and ``pd_rx_start()``).
 
-Output compare places each transmitted edge
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Output compare
+^^^^^^^^^^^^^^
 
 :term:`Output compare` changes an output when a counter reaches the value
 in a compare register ([USBPD-ATMEGA328P]_, section 15.7; [USBPD-MSP430]_,
@@ -563,8 +563,8 @@ is doing. Software loads the next edge time within half a UI, 1.67 µs at
 6 instructions per edge plus the bit work, that is 19.2 instructions per bit,
 or :math:`5.8 \times 10^{6}` instructions/s.
 
-A shift register sends a prepared message
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Shift register
+^^^^^^^^^^^^^^
 
 A :wikipedia:`shift register <Shift_register>` clocked at twice the bit rate
 sends one BMC half bit per clock from memory. Software encodes the whole
@@ -576,8 +576,8 @@ unit fed by direct memory access and clocked by a timer output at twice the
 bit rate ([USBPD-CROS-EC]_, ``pd_hw_init()``, ``pd_write_sym()`` and
 ``pd_start_tx()``).
 
-The CRC-32 and the protocol stay in software
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CRC-32 and protocol
+^^^^^^^^^^^^^^^^^^^
 
 The CRC-32 is updated one 4-bit nibble at a time from a 16-entry
 :wikipedia:`table <Lookup_table>` of 64 bytes, which the 16 instructions per
@@ -590,8 +590,8 @@ BMC and 4B5B, checks the CRC, holds messages in a FIFO, and sends the GoodCRC
 reply by itself ([USBPD-FUSB302B]_, figure 12 and "PD Automatic Receive
 GoodCRC"). An automatic GoodCRC removes the 195 µs deadline from software.
 
-How the methods compare
-^^^^^^^^^^^^^^^^^^^^^^^
+Method comparison
+^^^^^^^^^^^^^^^^^
 
 :numref:`tab-usbpd-methods` gives each method's cost with the estimates
 above: instructions per bit and per second, the time other interrupts are
@@ -659,8 +659,8 @@ For polling and wait loops, the rate is what the core must reach while the
 loop runs, and the core does nothing else then. The interrupt per edge row
 keeps only the edge interrupt on, and uses an overhead of 30 instructions.
 
-Which helper each need calls for
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Helper for each need
+^^^^^^^^^^^^^^^^^^^^
 
 Each need is met in software when the core reaches the rate or latency
 given here, and calls for a helper when it does not:

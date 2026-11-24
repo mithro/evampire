@@ -1,7 +1,7 @@
 .. _usbpd-process-limits:
 
-gf180mcu voltage limits for the USB circuits
-============================================
+gf180mcu voltage limits
+=======================
 
 The voltage limits of the :term:`gf180mcu` process that decide which USB
 Type-C circuits can be built on evampire, and the on-chip and external option
@@ -15,8 +15,8 @@ above the ratings of the standard devices, up to the breakdowns of the layers
 it relies on. The converter pages use the same limits for the power
 converters (:doc:`../converters/index`).
 
-Standard devices are rated for 3.3 V, 5 V, 6 V and 10 V
--------------------------------------------------------
+Standard device ratings
+-----------------------
 
 The design manual describes the process as "0.18μm 3.3V/(5V)6V dual-gate
 MCU Technology" ([USBPD-GF180-DRM]_, Section 1.0), and its device list adds
@@ -71,8 +71,8 @@ The 5 V devices are the 6 V devices with a marker layer
 of the 1 kΩ, 2 kΩ and 3 kΩ per square polysilicon resistors
 ([USBPD-GF180-ELEC]_, Section 6.1C).
 
-Measured breakdowns are above the ratings
------------------------------------------
+Measured breakdown voltages
+---------------------------
 
 :numref:`tab-usbpd-pdk-breakdown` gives the documented
 :wikipedia:`breakdown voltages <Breakdown_voltage>`. The minimum is the
@@ -81,7 +81,8 @@ value. :term:`BVDSS` is the drain-to-source breakdown of a transistor that
 is switched off, and :term:`BVCEO` the collector-to-emitter breakdown of a
 bipolar transistor with its base open. The
 :wikipedia:`gate oxide <Gate_oxide>` is the insulator between a
-transistor's gate and its channel.
+transistor's gate and its channel. Each minimum breakdown is at or above the
+rating of the same device in :numref:`tab-usbpd-pdk-ratings`.
 
 .. list-table:: Documented breakdown limits
    :name: tab-usbpd-pdk-breakdown
@@ -146,8 +147,8 @@ parasitic transistor between two N+ regions under it: at least 8.5 V,
 regions of different potential out from under a track or resistor that
 carries more than that voltage.
 
-The SPICE models put the deep N-well breakdown near 30 V
---------------------------------------------------------
+Deep N-well breakdown
+---------------------
 
 A :term:`deep N-well` is an N-type layer below a P-well, which isolates the
 transistors in that P-well from the P substrate. The process has the layer
@@ -189,11 +190,13 @@ connects the N+ contact of a deep N-well in the 6 V area only to the 6 V
 supply ([USBPD-GF180-DRM]_, Appendix B, rules not coded in the checks). A
 deep N-well held at VBUS potential is outside that rule.
 
-Custom structures build on the breakdowns, not the ratings
-----------------------------------------------------------
+Custom structures
+-----------------
 
-The requirements allow custom devices wherever a function needs them
-(:ref:`req-process`). For the USB circuits these are:
+Custom structures hold more than the ratings of the standard devices by
+working to the documented breakdown limits instead. The requirements allow
+custom devices wherever a function needs them (:ref:`req-process`). For the
+USB circuits these are:
 
 Stacked transistors in isolated wells
    Each transistor holds a share of the voltage within its own rating. The
@@ -221,8 +224,8 @@ devices in other CMOS processes.
 
 .. _usbpd-placement:
 
-Each function has an on-chip and an external option
----------------------------------------------------
+On-chip and external options
+----------------------------
 
 :numref:`tab-usbpd-placement` lists each function of
 :ref:`usbpd-analogue` and :ref:`usbpd-cc-protection` with the highest
