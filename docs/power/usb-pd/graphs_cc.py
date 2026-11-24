@@ -12,6 +12,9 @@ cc-thresholds.svg
     The CC voltage ranges and threshold windows at a sink (Type-C
     Tables 4-35 and 4-36) and at a source with a current-source Rp
     (Type-C Table 4-37), as quoted on resistor-advertisement.rst.
+packet.svg
+    The parts of a packet, a Hard Reset, and the order in which the
+    nibbles and symbols are sent (packets.rst).
 
 Every number comes from the page that shows the figure.
 
@@ -117,5 +120,59 @@ def cc_thresholds():
     return svg(680, height, body, "CC voltage ranges and thresholds")
 
 
+def seg_row(x, y, h, segs):
+    """Boxes left to right: (width, fill, line 1, line 2)."""
+    out, edges = [], [x]
+    for w, fill, a, b in segs:
+        out.append(rect(x, y, w, h, fill))
+        out.append(text(x + w / 2, y + h / 2 - 3, a, 12, "middle"))
+        out.append(text(x + w / 2, y + h / 2 + 13, b, 11, "middle"))
+        x += w
+        edges.append(x)
+    return out, edges
+
+
+def bracket(x0, x1, y, label):
+    return [line(x0, y - 6, x0, y), line(x0, y, x1, y), line(x1, y, x1, y - 6),
+            text((x0 + x1) / 2, y + 15, label, 11, "middle")]
+
+
+def packet_layout():
+    body = []
+    pre, kc, dat = FILL, CABLE, "#ffffff"
+    body.append(text(40, 24, "Message packet", 13, weight="bold"))
+    row, e = seg_row(40, 34, 44, [
+        (120, pre, "Preamble", "64 bits"),
+        (80, kc, "SOP", "20 bits"),
+        (90, dat, "Header", "20 bits"),
+        (150, dat, "Data objects", "0 to 7 × 40 bits"),
+        (90, dat, "CRC", "40 bits"),
+        (70, kc, "EOP", "5 bits")])
+    body += row
+    body += bracket(e[1], e[6], 96, "5-bit symbols (4b5b and K-codes)")
+    body += bracket(e[2], e[4], 130, "covered by the CRC")
+    body.append(text(40, 182, "Hard Reset or Cable Reset", 13,
+                     weight="bold"))
+    row, e2 = seg_row(40, 192, 44, [
+        (120, pre, "Preamble", "64 bits"),
+        (80, kc, "4 K-codes", "20 bits")])
+    body += row
+    body.append(text(40, 276, "Order on the wire: header of GoodCRC, "
+                     "bytes 41h 02h", 13, weight="bold"))
+    row, e3 = seg_row(40, 286, 44, [
+        (150, dat, "byte 0, low: 1h", "symbol 01001"),
+        (150, dat, "byte 0, high: 4h", "symbol 01010"),
+        (150, dat, "byte 1, low: 2h", "symbol 10100"),
+        (150, dat, "byte 1, high: 0h", "symbol 11110")])
+    body += row
+    body.append(line(40, 346, 640, 346, arrow="end"))
+    body.append(text(40, 362, "sent first", 11))
+    body.append(text(640, 362, "sent last", 11, "end"))
+    body.append(text(40, 386, "Symbols are written b4 to b0 and sent b0 "
+                     "first: 01001 goes out as 1, 0, 0, 1, 0.", 12))
+    return svg(680, 400, body, "USB PD packet layout")
+
+
 if __name__ == "__main__":
     write("cc-thresholds.svg", cc_thresholds())
+    write("packet.svg", packet_layout())
