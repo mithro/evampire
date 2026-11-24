@@ -18,9 +18,8 @@ tells the steps apart by measuring its own input voltage.
 for a simple case: Type 2 power sourcing equipment and a class 4 powered
 device.
 
-.. _fig-poe-voltage-timeline:
-
 .. figure:: voltage-timeline.svg
+   :name: fig-poe-voltage-timeline
    :alt: Voltage at the powered device input against time. Two detection
          steps at about 4 V and 8 V, a class event at about 17.5 V, a mark
          event at about 8.5 V, a second class event and a second mark
@@ -178,9 +177,8 @@ equipment and the lower rows the powered device. The isolation switch and
 power good are parts of the powered device described on
 :doc:`powered-device`.
 
-.. _fig-poe-states:
-
 .. wavedrom::
+   :name: fig-poe-states
    :caption: What each end does during a two-event classification by Type 2
              power sourcing equipment.
    :alt: Timing diagram. The power sourcing equipment port goes from 0 V

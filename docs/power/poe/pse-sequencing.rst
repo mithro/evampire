@@ -18,9 +18,8 @@ measurements, the current limit and a fast switch-off that does not wait
 for software (:doc:`monitoring`). :numref:`fig-poe-pse-channel` shows one
 channel.
 
-.. _fig-poe-pse-channel:
-
 .. graphviz:: pse-controller.dot
+   :name: fig-poe-pse-channel
    :caption: One power sourcing equipment channel, with the switch in the
              negative pair and the sequence run by evampire's software.
    :alt: Block diagram. The high-voltage converter feeds the positive pairs

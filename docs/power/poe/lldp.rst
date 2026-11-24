@@ -117,9 +117,8 @@ evampire as its powered device, and the downstream powered device sees
 evampire as its power sourcing equipment. The address filter that selects
 these frames is described in :ref:`arch-address-filter`.
 
-.. _fig-poe-lldp-path:
-
 .. graphviz:: lldp-path.dot
+   :name: fig-poe-lldp-path
    :caption: LLDP frames from each port go to evampire's processor, and all
              other frames pass between the ports through the forwarding
              logic.

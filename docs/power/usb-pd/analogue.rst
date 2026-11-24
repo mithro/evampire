@@ -18,9 +18,8 @@ of the process that decide each on-chip option are on
 block are collected at the end of the page, in
 :ref:`usbpd-analogue-examples`.
 
-.. _fig-usbpd-port-blocks:
-
 .. graphviz:: port-blocks.dot
+   :name: fig-usbpd-port-blocks
    :caption: The analogue and digital blocks of one dual-role USB Type-C
              port, from the CC1, CC2 and VBUS pins to the processor.
    :alt: Block diagram. On the connector side, the CC1 and CC2 pins pass

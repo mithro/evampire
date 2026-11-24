@@ -250,9 +250,8 @@ Each helper below takes one part of the baseline into hardware.
 :numref:`tab-usbser-split` summarises what remains for software after each
 step.
 
-.. _fig-usbser-blocks:
-
 .. graphviz:: software-cost/blocks.dot
+   :name: fig-usbser-blocks
    :caption: Hardware helpers between the analogue front end and the
              processor, each of which removes one part of the software work.
    :alt: Block diagram: the analogue front end connects to a receive
