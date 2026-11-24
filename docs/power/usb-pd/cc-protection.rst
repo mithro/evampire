@@ -376,19 +376,17 @@ The crowbar has these costs:
    :alt: Timing diagram. A short appears and stays. The CC pin rises past
          the trigger and the crowbar turns on, holding the pin near 0 V;
          the VBUS capacitance discharges 2.3 to 28 mJ into it. The source's
-         over-current protection switches VBUS off and the crowbar releases.
-         The source retries, the crowbar fires again with another
-         discharge, and the source switches off again.
+         over-current protection switches VBUS off, the pin falls to 0 V and
+         the crowbar releases. The source retries, the pin rises again and
+         the crowbar fires again with another discharge; the cycle repeats
+         for as long as the short lasts.
 
    {"signal": [
-     {"name": "short", "wave": "0...1..................."},
-     {"name": "CC pin", "wave": "=...=.=.................",
-      "data": ["≤ 5.5 V", "rises", "held near 0 V"]},
-     {"name": "crowbar", "wave": "0.....1.....0.....1....."},
-     {"name": "source VBUS", "wave": "=.........=.....=...=...",
-      "data": ["on", "off: over-current", "retry", "off"]},
-     {"name": "energy", "wave": "x.....=...x.......=...x.",
-      "data": ["C_BUS 2.3–28 mJ", "again"]}
+     {"name": "short", "wave": "0..1.........."},
+     {"name": "CC pin", "wave": "=..==..=..==..", "data": ["≤ 5.5 V", "rises", "near 0 V", "0 V", "rises", "near 0 V"]},
+     {"name": "crowbar", "wave": "0...1..0...1.."},
+     {"name": "source VBUS", "wave": "=......=..=...", "data": ["on", "off", "retry"]},
+     {"name": "C_BUS energy", "wave": "x...=..x...=..", "data": ["2.3–28 mJ", "again"]}
    ],
    "config": {"hscale": 1}}
 
