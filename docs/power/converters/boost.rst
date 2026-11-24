@@ -186,12 +186,26 @@ In a boost converter there is always a path from the input, through the
 inductor and S2 (or its diode, or the body diode of a transistor), to the
 output. If the output is short-circuited, current flows along that path
 whatever the switches do, limited only by the source and the resistance of
-the path. Turning S1 off does not stop it.
+the path. Turning S1 off does not stop it
+(:numref:`fig-conv-boost-short`, panel a).
+
+.. graphviz:: boost-short.dot
+   :name: fig-conv-boost-short
+   :caption: Fault current in a boost converter with a shorted output, and
+             a series switch that blocks it.
+   :alt: Two schematics. (a) The boost power stage with S1 off and a short
+         circuit in place of the load: a thick red path runs from the input
+         through the inductor, through the body diode of S2, through the
+         short and back along ground to the input. (b) The same stage with
+         a series switch, off, between the output capacitor and the short,
+         so no path remains from the input to the short.
+   :align: center
 
 Stopping it needs a switch in
 series with the input or the output that can block current, or a converter
 in which a series switch is part of the power stage, such as the
-four-switch buck-boost converter (:doc:`buck-boost`). This matters for the
+four-switch buck-boost converter (:doc:`buck-boost`). Panel b of
+:numref:`fig-conv-boost-short` shows a switch in the output. This matters for the
 high-voltage converter, whose output goes to an Ethernet cable that a user
 can short (:doc:`first-version`).
 
