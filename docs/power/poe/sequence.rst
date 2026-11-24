@@ -144,6 +144,11 @@ device. It shows a different signature from the third event on
 (:clause:`Table 145-26 <145>`). :doc:`powered-device` and
 :doc:`power-sourcing` give the details.
 
+Type 3 and Type 4 power sourcing equipment must issue the class events the
+assigned class needs. Type 2 equipment may instead issue one class event
+and complete the classification over LLDP, giving 13 W at the powered
+device until then (:doc:`classification`).
+
 The power sourcing equipment issues no more class events than it needs for
 the class it can afford. :numref:`tab-poe-events` gives the highest class
 each number of events can assign (:clause:`Table 145-11 <145>`).
@@ -167,7 +172,8 @@ each number of events can assign (:clause:`Table 145-11 <145>`).
 With 4 events a powered device that asked for class 5 gets class 5, and
 with 5 events one that asked for class 7 gets class 7. A powered device
 gets the lower of the class it asked for and the class in
-:numref:`tab-poe-events`.
+:numref:`tab-poe-events`. Getting a lower class is called
+:term:`power demotion` (:ref:`poe-demotion`).
 
 Both ends act at each step
 --------------------------

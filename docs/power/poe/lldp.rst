@@ -10,12 +10,13 @@ powered device and as power sourcing equipment.
 Classification sets the first allocation
 ----------------------------------------
 
-Classification (:doc:`sequence`) gives a powered device its first power
-allocation, in fixed steps, before the link is up. After the link is up,
-the two ends can change the allocation in steps of 0.1 W by exchanging
-Ethernet frames. The standard calls this Data Link Layer classification
-(:clause:`145.5`). When both are used, the Data Link Layer value takes
-precedence (:clause:`145.2.8`).
+:term:`Physical Layer classification` (:doc:`sequence`) gives a powered
+device its first power allocation, in fixed steps, before the link is up.
+After the link is up, the two ends can change the allocation in steps of
+0.1 W by exchanging Ethernet frames. The standard calls this
+:term:`Data Link Layer classification` (:clause:`145.5`). When both are
+used, the Data Link Layer value takes precedence (:clause:`145.2.8`).
+:doc:`classification` compares the two methods.
 
 The frames are LLDP frames
 --------------------------
@@ -38,15 +39,16 @@ The field's main entries are:
 Values are in units of 0.1 W, so 255 means 25.5 W
 (:clause:`Table 145-12 <145>`).
 
-Classes 4 and higher must support it
-------------------------------------
+Every powered device of class 4 and higher must support it
+----------------------------------------------------------
 
-A single-signature powered device that requests class 4 or higher must
-support the exchange; for classes 1 to 3 it is optional
-(:clause:`145.3.6`, :clause:`145.5`). The power sourcing equipment's
-support is optional. A powered device of class 1 to 3 that does not support
-it can have its power changed only by removing the power and classifying it
-again.
+:numref:`tab-poe-class-methods` lists which devices must support the
+exchange. Every Type 2 powered device must, and so must a Type 3 or Type 4
+powered device that requests class 4 or higher, and every dual-signature
+one. For single-signature classes 1 to 3 it is optional. It is optional for power sourcing equipment, except Type 2
+equipment that issues only one class event. A powered device of class 1 to
+3 that does not support it can have its power changed only by removing the
+power and classifying it again.
 
 The allocated value sets the assigned class (:clause:`Table 145-12 <145>`),
 as in :numref:`tab-poe-dll-class`.
@@ -133,9 +135,14 @@ these frames is described in :ref:`arch-address-filter`.
 The software takes both roles
 -----------------------------
 
+evampire takes part in the exchange in both roles
+(:ref:`req-poe-classification`).
+
 As a powered device on port A, the software sends its requested power and
 watches the allocated value. It may lower its request to hand power back,
-or ask again for up to the class it requested during classification.
+or ask again for up to the class it requested during classification. That
+is how it raises a demoted allocation, or the 13 W that Type 2 power
+sourcing equipment gives after one class event (:ref:`poe-class-outcome`).
 
 As power sourcing equipment on port B, the software reads the request,
 decides from the power budget how much to allocate (:doc:`sharing`), and
@@ -145,9 +152,3 @@ match (:doc:`monitoring`).
 
 When the power on port A falls, the software lowers the allocation on port
 B first (:ref:`power budget <power-budget>`).
-
-Open questions
---------------
-
-* Whether port B supports the exchange, which the standard leaves optional
-  for power sourcing equipment.
