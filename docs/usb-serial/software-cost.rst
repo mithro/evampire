@@ -410,7 +410,20 @@ Once automatic handshakes are added, packets are held in buffers that the proces
 writes. A serial port with 64-byte packets needs one 64-byte buffer per direction
 of each bulk endpoint, or two, so that the hardware fills one while the
 software works on the other. It also needs an 8-byte buffer for SETUP, and
-buffers of the chosen sizes for endpoint 0 and the interrupt endpoint.
+buffers of the chosen sizes for endpoint 0 and the interrupt endpoint
+(:numref:`fig-usbser-buffers`).
+
+.. graphviz:: software-cost/buffers.dot
+   :name: fig-usbser-buffers
+   :caption: Two 64-byte buffers per bulk direction and the SETUP buffer
+             between the USB hardware and the processor.
+   :alt: Block diagram: the deserialiser, serialiser and automatic
+         handshakes fill bulk OUT buffer A while the processor reads bulk
+         OUT buffer B; the hardware sends from bulk IN buffer A while the
+         processor fills bulk IN buffer B; an 8-byte SETUP buffer passes
+         from the hardware to the processor. The roles of A and B swap
+         after each packet.
+   :align: center
 
 Summary of the helpers
 ----------------------
