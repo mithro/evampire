@@ -181,13 +181,35 @@ full speed only.
    "config": {"hscale": 1.5}}
 
 A device also recognises some states by how long they last
-([USBSER-USB2]_ Table 7‑2, section 7.1.7.5, section 7.1.7.6):
+([USBSER-USB2]_ Table 7‑2, section 7.1.7.5, section 7.1.7.6;
+:numref:`fig-usbser-long-states`):
 
 * *Reset:* SE0 for more than 2.5 µs. The device then returns to its
   default state with address 0.
 * *Suspend:* idle for more than 3 ms. The device must then reduce its
   current from VBUS. The host normally prevents this by sending a packet
   every millisecond (see :doc:`transactions`).
+
+.. wavedrom::
+   :caption: Line states recognised by their length: reset and suspend,
+             and the start-of-frame packets that keep a device out of
+             suspend (not to scale).
+   :name: fig-usbser-long-states
+   :alt: Timing diagram with three rows. Reset: after idle, SE0 for more
+         than 2.5 µs, then idle. Suspend: after a packet, idle for more than
+         3 ms, after which the device is suspended. Normal operation: a
+         start-of-frame packet every 1 ms, with idle between, so the idle
+         time never reaches 3 ms.
+
+   {"signal": [
+     {"name": "reset", "wave": "2.3.....2.",
+      "data": ["idle", "SE0 longer than 2.5 µs", "idle"]},
+     {"name": "suspend", "wave": "5.2.....4.",
+      "data": ["packet", "idle longer than 3 ms", "suspended"]},
+     {"name": "normal", "wave": "5.2..5.2..",
+      "data": ["SOF", "idle, under 1 ms", "SOF", "idle"]}
+   ],
+   "config": {"hscale": 2}}
 
 NRZI coding and bit stuffing
 ----------------------------
