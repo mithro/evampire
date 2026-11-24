@@ -50,7 +50,8 @@ equaliser removes.
 The receive path also corrects *baseline wander*. The coupling
 transformers, or the coupling capacitors of a transformer-free connection
 (:doc:`../magnetics/index`), block DC, so a long run of symbols that does
-not average to zero shifts the zero level. A slow feedback loop restores it
+not average to zero shifts the zero level
+(:numref:`fig-phy-baseline-wander`). A slow feedback loop restores it
 ([PHY-TUT98]_ slide 51; [PHY-KSZ9031]_ Figure 3‑2).
 
 .. _phy-master-slave:

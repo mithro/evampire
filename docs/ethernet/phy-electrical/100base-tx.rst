@@ -160,7 +160,8 @@ single-pole edges against the peak band.
 Receiver
 --------
 
-The receiver reverses the transmit steps and corrects what the cable did:
+The receiver reverses the transmit steps and corrects what the cable did
+(:numref:`fig-phy-100base-tx-rx`):
 
 * an adaptive :term:`equaliser` undoes the frequency-dependent loss of the
   cable, which depends on its length;
@@ -174,3 +175,30 @@ The receiver reverses the transmit steps and corrects what the cable did:
 
 The Microchip KSZ9031 datasheet describes the same chain
 ([PHY-KSZ9031]_ section 3.1.2).
+
+.. graphviz:: rx-100base-tx.dot
+   :name: fig-phy-100base-tx-rx
+   :caption: The 100BASE-TX receive chain: first the steps that correct
+             the cable, then the steps that undo the coding.
+   :alt: Top row, left to right: receive pair, adaptive equaliser,
+         baseline wander correction, clock recovery and sampling, labelled
+         correct what the cable did. Bottom row, right to left: MLT-3 to
+         bits, descrambler, 5B-to-4B decoder, data nibbles, labelled undo
+         the transmitter's coding.
+   :align: center
+
+:numref:`fig-phy-baseline-wander` shows baseline wander and its
+correction.
+
+.. figure:: baseline-wander.svg
+   :name: fig-phy-baseline-wander
+   :alt: Two graphs of level against time from 0 to 384 ns. Top, after the
+         coupling: three-level symbols whose dashed zero level drifts
+         down to about minus 0.7 during a shaded run of mostly plus 1
+         symbols, then recovers. Bottom, after baseline restoration: the
+         same symbols around a fixed zero level.
+   :align: center
+
+   Baseline wander: a coupling that blocks DC shifts the zero level during
+   a run of symbols that does not average to zero, and the restoring loop
+   removes the shift; the time constant is schematic.
