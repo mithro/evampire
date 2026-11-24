@@ -27,8 +27,8 @@ processor makes every power decision once it is running
    Negotiating over LLDP, choosing the class to offer, sharing the budget,
    and ports that take either role.
 :doc:`high-voltage`
-   The voltages the process can hold, isolation from the cable, and the on-
-   chip and external options for each function.
+   The voltages the process can hold, isolation from the cable, and the
+   on-chip and external options for each function.
 :doc:`references`
    The data sheets, papers and other sources cited on these pages.
 

@@ -1,7 +1,8 @@
 Converter fundamentals
 ======================
 
-These pages explain how switching voltage converters work, starting from the simplest.
+These pages explain how switching voltage converters work, starting from the
+simplest.
 
 :doc:`why-switching`
    Why the power path uses switching converters instead of linear
@@ -12,9 +13,9 @@ These pages explain how switching voltage converters work, starting from the sim
 :doc:`boost`
    The step-up (boost) converter, worked the same way.
 :doc:`buck-boost`
-   Converters that step up or down: the inverting buck-boost, the four-
-   switch buck-boost used in USB Power Delivery sources, and the isolated
-   flyback converter.
+   Converters that step up or down: the inverting buck-boost, the
+   four-switch buck-boost used in USB Power Delivery sources, and the
+   isolated flyback converter.
 :doc:`control`
    Pulse-width modulation, voltage-mode and current-mode control, the
    feedback loop, soft start, protection, dead time, high-side gate drive,

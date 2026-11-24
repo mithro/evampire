@@ -1,7 +1,8 @@
 Ports with magnetics
 ====================
 
-These pages explain a standard Ethernet port, in which coupling transformers connect the transceiver to the RJ45 socket.
+These pages explain a standard Ethernet port, in which coupling transformers
+connect the transceiver to the RJ45 socket.
 
 :doc:`cable`
    The four twisted pairs of an Ethernet cable, the RJ45 pins they use, and

@@ -1,7 +1,8 @@
 Power allocation
 ================
 
-These pages cover how evampire's software decides how much power each port receives or offers.
+These pages cover how evampire's software decides how much power each port
+receives or offers.
 
 :doc:`lldp`
    How the two ends change the power allocation over LLDP after the link is up.

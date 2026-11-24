@@ -1,7 +1,8 @@
 USB full-speed device
 =====================
 
-These pages explain what a USB full-speed serial device is and how it talks to a computer.
+These pages explain what a USB full-speed serial device is and how it talks
+to a computer.
 
 :doc:`what-it-is`
    What a computer sees, the communications device class and why no custom

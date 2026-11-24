@@ -1,7 +1,8 @@
 Power contracts
 ===============
 
-These pages explain how the two ends of a USB Type-C cable agree on more power with USB Power Delivery messages.
+These pages explain how the two ends of a USB Type-C cable agree on more
+power with USB Power Delivery messages.
 
 :doc:`power-levels`
    The voltages and currents USB Power Delivery offers, and the messages

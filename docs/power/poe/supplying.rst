@@ -1,7 +1,8 @@
 Supplying power
 ===============
 
-These pages cover the end of the cable that supplies power, the power sourcing equipment.
+These pages cover the end of the cable that supplies power, the power
+sourcing equipment.
 
 :doc:`power-sourcing`
    What the end that supplies power must do at each step.

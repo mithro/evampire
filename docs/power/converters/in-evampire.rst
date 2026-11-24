@@ -1,7 +1,8 @@
 Converters in evampire
 ======================
 
-These pages cover evampire's three converters and how evampire controls and integrates them.
+These pages cover evampire's three converters and how evampire controls and
+integrates them.
 
 :doc:`arrangement`
    The voltage and current ranges of evampire's three converters in every

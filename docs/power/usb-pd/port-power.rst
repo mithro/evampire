@@ -1,7 +1,8 @@
 Power from a USB Type-C port
 ============================
 
-These pages explain how a USB Type-C port supplies power before any USB Power Delivery message is sent.
+These pages explain how a USB Type-C port supplies power before any USB
+Power Delivery message is sent.
 
 :doc:`type-c-power`
    The source, the sink, the connector and the configuration channel wires.

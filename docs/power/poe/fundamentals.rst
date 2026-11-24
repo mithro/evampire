@@ -1,7 +1,8 @@
 Fundamentals
 ============
 
-These pages explain how an Ethernet cable carries power and the steps before the power is switched on.
+These pages explain how an Ethernet cable carries power and the steps before
+the power is switched on.
 
 :doc:`basics`
    The two ends of the cable, which pairs carry the power, and the voltages.

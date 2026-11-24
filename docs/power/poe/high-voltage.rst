@@ -1,7 +1,8 @@
 High voltage and isolation
 ==========================
 
-These pages cover the voltages a cable-side circuit must hold and the choice of what to build on the chip.
+These pages cover the voltages a cable-side circuit must hold and the choice
+of what to build on the chip.
 
 :doc:`hv-limits`
    The voltages the gf180mcu process can hold, and the four kinds of
