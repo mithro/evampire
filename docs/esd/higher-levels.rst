@@ -123,29 +123,30 @@ Pins above the supply
 
 The standard pad cannot serve a pin that must carry more than DVDD in
 normal use. Its PMOS drain is P-type silicon inside an N-type well tied to
-DVDD. Once the pad rises about 0.7 V above DVDD, that P-N junction is
-forward biased and conducts. The pad also snaps back at 10.7 V. Either
+DVDD (:numref:`fig-esd-io-cell`). Once the pad rises about 0.7 V above
+DVDD, that P-N junction is forward biased and conducts. The pad also snaps back at 10.7 V. Either
 path would load a high-voltage signal.
 
 Such a pin needs a clamp that blocks current up to the pin's working
 voltage. It must also conduct before the weakest junction or oxide behind
 the pin breaks down. A junction breaks down by avalanche: the electric
 field across its depleted region grows strong enough that carriers knock
-further carriers loose. Lighter doping spreads the field over a wider
-region, so the junction withstands more voltage. A gate oxide fails when
+further carriers loose (:numref:`fig-hv-depletion`). Lighter doping
+spreads the field over a wider region, so the junction withstands more
+voltage. A gate oxide fails when
 its field exceeds what the oxide withstands, about 12 V across the 6 V
 oxide ([ESD-GF180-EP-OX]_).
 
 How the circuit behind the pin is built sets that weakest point. Take a
 stack of transistors in series that shares a high voltage between them:
 
-* If every transistor sits in its own isolating well, the stack divides
-  the pad voltage evenly. The 15.6 V peak of a +8 kV discharge then puts
+* If every transistor sits in its own isolating well
+  (:numref:`fig-hv-dnw-stack`), the stack divides the pad voltage evenly. The 15.6 V peak of a +8 kV discharge then puts
   about 1.6 V on each of ten transistors. The full 15.6 V lands on the
   junction that isolates the top well from the substrate. That junction
   must withstand it.
-* If the transistors share the substrate, the top transistor's N-type
-  region meets the P-type substrate at a junction that breaks down at
+* If the transistors share the substrate (:numref:`fig-hv-stack-section`),
+  the top transistor's N-type region meets the P-type substrate at a junction that breaks down at
   8.5 V minimum and 11 V typical ([ESD-GF180-EP-JN]_). During a discharge
   that junction becomes a path into the substrate, and no measured
   failure current covers it.
@@ -154,8 +155,20 @@ A clamp that stays off to a set voltage and then carries amperes can be
 built in two ways. One is a stack of snapback devices, whose trigger
 voltages add. The other is a transistor with a long, lightly doped drift
 region that withstands the working voltage, switched on by a timer like
-the rail clamp's. Designing either is a separate task. Neither is
-simulated here.
+the rail clamp's (:numref:`fig-esd-hv-clamps`). Designing either is a
+separate task. Neither is simulated here.
+
+.. figure:: figures/hv-clamps.svg
+   :name: fig-esd-hv-clamps
+   :alt: Two clamps from the pin to ground. Left, three grounded-gate NMOS
+         transistors in series, whose trigger voltages add. Right, a
+         resistor from the pin and a capacitor to ground form a timer whose
+         node drives, through a driver, the gate of a transistor with a
+         long, lightly doped drift region, connected from the pin to
+         ground.
+
+   Two kinds of clamp for a pin that works above DVDD, drawn as block
+   schematics.
 
 Level 4 on other chips
 ----------------------
@@ -178,7 +191,8 @@ Board protection
 The common alternative puts a :term:`transient voltage suppressor <TVS>`
 at the connector, with a series resistor between it and the chip. The
 suppressor carries most of the current, and the resistor limits what
-reaches the chip's own protection. For reference:
+reaches the chip's own protection (:numref:`fig-esd-board-tvs`). For
+reference:
 
 * The Texas Instruments TPD1E10B06 suppressor is rated ±30 kV contact and
   ±30 kV air discharge ([ESD-TPD1E10B06]_, section 5.3). It has 12 pF of
@@ -224,6 +238,18 @@ It neglects the inductance of the board traces. As an example, take the
 TPD1E10B06 at its 14 V maximum for 5 A, the standard pad holding about 4 V
 at a current near 1 A (:doc:`results-hbm`), and 10 Ω in series:
 :math:`(14\ \text{V} - 4\ \text{V}) / 10\ \Omega = 1\ \text{A}`.
+
+.. figure:: figures/board-tvs.svg
+   :name: fig-esd-board-tvs
+   :alt: An IEC discharge enters the connector. A suppressor from the
+         connector to ground, rated 14 V at 5 A, carries most of the
+         current. A 10 ohm series resistor leads on to the chip pin, whose
+         protection holds the pin near 4 V. The chip current is about
+         (V_TVS minus V_pin) divided by R_series, (14 V minus 4 V) divided
+         by 10 ohm, 1 A.
+
+   A board suppressor at the connector and a series resistor in front of
+   the chip pin, with the example values above.
 
 The 30 A of a level 4 discharge is six times the datasheet's 5 A clamping
 figure. The datasheet fits its dynamic resistance to TLP measurements

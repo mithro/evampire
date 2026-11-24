@@ -168,9 +168,89 @@ def testbench():
         d.save(str(OUT / "testbench.svg"))
 
 
+def board_tvs():
+    with schemdraw.Drawing(show=False) as d:
+        d += elm.Arrow().right().at((-1.6, 3)).to((0, 3)).color(HOT)
+        note(d, -1.7, 3.7, "IEC discharge", color=HOT)
+        d += elm.Dot(open=True).at((0, 3)).label("connector", loc="bottom")
+        d += elm.Line().at((0, 3)).to((2.5, 3)).color(HOT)
+        d += elm.Dot().at((2.5, 3))
+        d += (elm.DiodeTVS().down().at((2.5, 3)).to((2.5, 0)).color(HOT)
+              .label("suppressor\n14 V at 5 A", loc="bottom", ofst=0.3))
+        d += elm.Ground().at((2.5, 0))
+        d += (elm.Resistor().right().at((2.5, 3)).to((6.5, 3))
+              .label("$R_{series}$ = 10 Ω", loc="top"))
+        d += elm.Line().at((6.5, 3)).to((8.0, 3))
+        d += elm.Dot().at((8.0, 3)).label("chip pin", loc="top")
+        box(d, 7.2, 0.6, 8.8, 2.4, "chip", color=CHIP)
+        d += elm.Line().at((8.0, 3)).to((8.0, 2.4))
+        d += elm.Line().at((8.0, 0.6)).to((8.0, 0))
+        d += elm.Ground().at((8.0, 0))
+        note(d, 9.2, 1.5, "protection holds\nthe pin near 4 V", color=CHIP)
+        note(d, 0.4, 0.9, "most of\nthe current", color=HOT,
+             halign="center")
+        note(d, 4.5, -1.3, "$I_{chip}$ ≈ ($V_{TVS}$ − $V_{pin}$) / "
+             "$R_{series}$ = (14 V − 4 V) / 10 Ω = 1 A", halign="center")
+        extent(d, -4.2, 15.4, -1.8)
+        OUT.mkdir(exist_ok=True)
+        d.save(str(OUT / "board-tvs.svg"))
+
+
+def snapback_stack(d, x):
+    note(d, x + 1.6, 7.6, "stack of snapback devices", halign="center")
+    d += elm.Dot(open=True).at((x, 7.0)).label("pin", loc="left")
+    d += elm.Line().at((x, 7.0)).to((x + 1.6, 7.0))
+    y = 7.0
+    for k in range(3):
+        fet = d.add(elm.NFet().anchor("drain").at((x + 1.6, y)).reverse()
+                    .color(CLAMP))
+        d += elm.Line().at(fet.gate).to((fet.gate[0] - 0.5, fet.gate[1]))
+        d += elm.Line().at((fet.gate[0] - 0.5, fet.gate[1])).to(
+            (fet.gate[0] - 0.5, fet.source[1]))
+        d += elm.Line().at((fet.gate[0] - 0.5, fet.source[1])).to(fet.source)
+        y = fet.source[1]
+    d += elm.Ground().at((x + 1.6, y))
+    note(d, x + 2.4, 4.4, "trigger voltages\nadd", color=CLAMP)
+
+
+def drift_clamp(d, x):
+    note(d, x + 2.4, 7.6, "drift-region transistor and timer",
+         halign="center")
+    d += elm.Dot(open=True).at((x, 7.0)).label("pin", loc="left")
+    d += elm.Line().at((x, 7.0)).to((x + 4.4, 7.0))
+    d += elm.Dot().at((x + 0.8, 7.0))
+    d += elm.Resistor().down().at((x + 0.8, 7.0)).to((x + 0.8, 4.2)).label(
+        "R", loc="bottom")
+    d += elm.Dot().at((x + 0.8, 4.2))
+    d += elm.Capacitor().down().at((x + 0.8, 4.2)).to((x + 0.8, 2.0)).label(
+        "C", loc="bottom")
+    d += elm.Ground().at((x + 0.8, 2.0))
+    d += elm.Line().at((x + 0.8, 4.2)).to((x + 1.4, 4.2))
+    box(d, x + 1.4, 3.6, x + 3.2, 4.8, "driver")
+    d += elm.Line().at((x + 3.2, 4.2)).to((x + 3.4, 4.2))
+    fet = d.add(elm.NFet().anchor("gate").at((x + 3.4, 4.2)).reverse()
+                .color(CLAMP))
+    d += elm.Line().at(fet.drain).to((fet.drain[0], 7.0))
+    d += elm.Line().at((x + 4.4, 7.0)).to((fet.drain[0], 7.0))
+    d += elm.Ground().at(fet.source)
+    note(d, fet.drain[0] + 0.4, 5.2, "long, lightly\ndoped drift region",
+         color=CLAMP)
+
+
+def hv_clamps():
+    with schemdraw.Drawing(show=False) as d:
+        snapback_stack(d, 0)
+        drift_clamp(d, 8.2)
+        extent(d, -2.6, 18.6, 1.0)
+        OUT.mkdir(exist_ok=True)
+        d.save(str(OUT / "hv-clamps.svg"))
+
+
 def main():
     testers()
     testbench()
+    board_tvs()
+    hv_clamps()
 
 
 if __name__ == "__main__":
