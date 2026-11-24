@@ -457,10 +457,9 @@ class.
      - 71.3
      - 4
 
-Source: :clause:`145` as tabulated on :doc:`../poe/index`. Type 2 power
-sourcing equipment grants class 4 from classification only when it issues
-two class events. Otherwise the powered device has 13 W until LLDP raises
-the allocation (:ref:`poe-class-outcome`).
+Source: :clause:`145` as tabulated on :doc:`../poe/index`. The class
+assigned also depends on the power sourcing equipment
+(:ref:`poe-class-outcome`).
 
 The power left for the board while it starts is
 

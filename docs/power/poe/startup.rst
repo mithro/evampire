@@ -155,8 +155,8 @@ its assigned class, from 3.84 W for class 1 to 71.3 W for class 8
 The assigned class depends on the power sourcing equipment as well as on
 the class requested (:numref:`tab-poe-class-outcome`). A board that
 requests class 6 gets class 4, 25.5 W, from Type 2 power sourcing equipment
-that issues two class events. From Type 2 equipment that issues one, it
-gets 13 W until LLDP raises the allocation. The software reads the assigned class from the sequencer when it starts, and
+that issues two class events, and less from one that issues only one. The
+software reads the assigned class from the sequencer when it starts, and
 keeps the board within it (:doc:`monitoring`). The power left for the board
 after its converters is worked out on :doc:`../converters/index`.
 

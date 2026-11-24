@@ -51,7 +51,7 @@ changes its allocation in one of two ways:
 
 Over LLDP
    In steps of 0.1 W, with a powered device that supports the exchange.
-   Every powered device of class 4 and higher does
+   Every powered device that requests class 4 or higher does
    (:numref:`tab-poe-class-methods`), and evampire's port always answers
    (:ref:`req-poe-classification`).
 By classifying again

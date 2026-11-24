@@ -39,18 +39,14 @@ The field's main entries are:
 Values are in units of 0.1 W, so 255 means 25.5 W
 (:clause:`Table 145-12 <145>`).
 
-Every powered device of class 4 and higher must support it
-----------------------------------------------------------
+Powered devices that request class 4 or higher must support it
+---------------------------------------------------------------
 
 :numref:`tab-poe-class-methods` lists which devices must support the
-exchange. Every Type 2 powered device must, and so must a Type 3 or Type 4
-powered device that requests class 4 or higher, on either pair set if it
-is a dual-signature device (:clause:`145.3.6`, :clause:`145.5`). For
-classes 1 to 3 it is optional. It is optional for power sourcing
-equipment, except Type 2 equipment that issues only one class event
-(:clause:`33.2.6.2`). A powered device of class 1 to 3 that does not
-support it can have its power changed only by removing the power and
-classifying it again.
+exchange: every Type 2 powered device, and every powered device that
+requests class 4 or higher. A powered device that does not support it can
+have its power changed only by removing the power and classifying it
+again.
 
 The allocated value sets the assigned class (:clause:`Table 145-12 <145>`),
 as in :numref:`tab-poe-dll-class`.
@@ -142,9 +138,8 @@ evampire takes part in the exchange in both roles
 
 As a powered device on port A, the software sends its requested power and
 watches the allocated value. It may lower its request to hand power back,
-or ask again for up to the class it requested during classification. That
-is how it raises a demoted allocation, or the 13 W that Type 2 power
-sourcing equipment gives after one class event (:ref:`poe-class-outcome`).
+or ask again for up to the class it requested during classification, for
+example after demotion (:ref:`poe-class-outcome`).
 
 As power sourcing equipment on port B, the software reads the request,
 decides from the power budget how much to allocate (:doc:`sharing`), and
