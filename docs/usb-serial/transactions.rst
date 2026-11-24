@@ -147,6 +147,24 @@ section 9.2.6, section 7.1.7.3):
 6. The host selects the configuration with SET_CONFIGURATION
    ([USBSER-USB2]_ section 9.4.7). The device's other endpoints then work.
 
+:numref:`fig-usbser-enumeration` shows the sequence with its time limits.
+
+.. graphviz:: transactions/enumeration.dot
+   :name: fig-usbser-enumeration
+   :caption: Enumeration of a full-speed device, with the time limits of
+             each step (not to scale).
+   :alt: Sequence diagram with host and device lanes. VBUS becomes valid;
+         the device turns its D+ pull-up on within 100 ms (TSIGATT). The
+         host waits at least 100 ms (TATTDB), then sends a reset of SE0 for
+         at least 10 ms (TDRST) and waits a 10 ms recovery (TRSTRCY). It
+         asks for the device descriptor at address 0 and the device returns
+         the first bytes with the endpoint 0 packet size. The host sends
+         SET_ADDRESS, which completes within 50 ms, with the new address
+         used 2 ms later. The host reads the device, configuration and
+         string descriptors, each data packet within 500 ms, then sends
+         SET_CONFIGURATION, after which the other endpoints work.
+   :align: center
+
 A request without a data stage must complete within 50 ms. For a request
 that returns data, each data packet must follow within 500 ms
 ([USBSER-USB2]_ section 9.2.6.4). These limits are far longer than the
