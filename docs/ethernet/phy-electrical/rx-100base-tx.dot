@@ -1,0 +1,37 @@
+// The receive chain of a 100BASE-TX transceiver: the analogue and timing
+// steps that correct what the cable did, then the coding steps that undo
+// the transmitter's.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph rx100 {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.6"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.45, height=0.62,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
+
+    pins [pos="0.5,2.0!", width=0.8, label="Receive\npair", fillcolor="#ffffff"];
+    eq   [pos="2.0,2.0!", label="Adaptive\nequaliser"];
+    bw   [pos="3.85,2.0!", width=1.6, label="Baseline wander\ncorrection"];
+    cr   [pos="5.8,2.0!", width=1.6, label="Clock recovery\nand sampling"];
+
+    mlt  [pos="5.8,0.6!", width=1.6, label="MLT-3 to bits", fillcolor="#f2f2f2"];
+    dsc  [pos="3.85,0.6!", width=1.6, label="Descrambler", fillcolor="#f2f2f2"];
+    dec  [pos="2.0,0.6!", label="5B-to-4B\ndecoder", fillcolor="#f2f2f2"];
+    out  [pos="0.5,0.6!", width=0.8, label="Data\nnibbles", fillcolor="#ffffff"];
+
+    t1 [pos="3.15,2.62!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=10, fontcolor="#555555", label="Correct what the cable did"];
+    t2 [pos="3.15,-0.02!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=10, fontcolor="#555555", label="Undo the transmitter's coding"];
+
+    pins -> eq;
+    eq   -> bw;
+    bw   -> cr;
+    cr   -> mlt;
+    mlt  -> dsc;
+    dsc  -> dec;
+    dec  -> out;
+}

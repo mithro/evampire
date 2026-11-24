@@ -1,7 +1,7 @@
 .. _phy-int-slower:
 
-What 100BASE-TX and 10BASE-T add
-================================
+Slower speeds
+=============
 
 This page lists what the integrated gigabit transceiver needs in addition
 to support 100BASE-TX and 10BASE-T, which every port supports
@@ -10,8 +10,8 @@ to support 100BASE-TX and 10BASE-T, which every port supports
 
 .. _phy-int-100:
 
-100BASE-TX adds coding and edge control
----------------------------------------
+100BASE-TX blocks
+-----------------
 
 Coding
    4B5B, the 11-bit scrambler and MLT-3 (:doc:`../100base-tx`): digital
@@ -29,7 +29,8 @@ Edge control
 
 For a single-pole (first-order) response with time constant
 :math:`\tau`, the output reaches 10 % of its final value at
-:math:`0.105\,\tau` and 90 % at :math:`2.303\,\tau`, so the
+:math:`0.105\,\tau` and 90 % at :math:`2.303\,\tau`
+(:numref:`fig-phy-100base-tx-edges`), so the
 :wikipedia:`rise time <Rise_time>` is :math:`t_\text{r} = 2.2\,\tau`. The
 :wikipedia:`cut-off frequency <Cutoff_frequency>` is
 :math:`f_\text{3dB} = 1/(2\pi\tau)`, so
@@ -64,8 +65,8 @@ switched for 100BASE-TX, the gigabit driver produces the 100BASE-TX edges.
 
 .. _phy-int-10:
 
-10BASE-T adds Manchester coding and a higher-swing driver
----------------------------------------------------------
+10BASE-T blocks
+---------------
 
 Coding and receiver
    Manchester coding and decoding, and a comparator receiver for the
@@ -77,9 +78,10 @@ Driver
 A driver with a matched resistive source needs
 :math:`V_\text{src} = 2\,V_\text{line}` (:ref:`phy-int-swing`), that is
 4.4 V to 5.6 V peak for 10BASE-T and 3.1 V to 3.9 V for 10BASE-Te. From a
-3.3 V supply a differential driver reaches at most ±3.3 V, so a matched
+3.3 V supply a differential driver reaches at most ±3.3 V
+(:numref:`fig-phy-int-10base-t-swing`), so a matched
 resistive-source driver at 3.3 V cannot reach the 10BASE-T level (estimate,
-from those numbers). Other options can:
+from those numbers). The options are:
 
 * an active termination, whose output impedance is set by feedback rather
   than a series resistor, so that less of the supply is lost in the source
@@ -91,10 +93,26 @@ from those numbers). Other options can:
 * an output stage on the gf180mcu 5 V, 6 V or 10 V transistors
   (:numref:`tab-phy-int-devices`), with a supply above 3.3 V;
 * 10BASE-Te, at 1.54 V to 1.96 V, which interoperates with 10BASE-T when
-  its cabling requirements are met (:clause:`14.1.1.1`).
+  its cabling requirements are met (:clause:`14.1.1.1`). Behind a matched
+  source it needs 3.1 V to 3.9 V, so a 3.3 V driver reaches it only at the
+  bottom of that range and only if its output swings to the supply rails
+  (estimate); otherwise it needs one of the options above.
 
 The link pulses that autonegotiation needs do not need this driver
 (:ref:`phy-int-autoneg`).
+
+.. figure:: ten-base-t-swing.svg
+   :name: fig-phy-int-10base-t-swing
+   :alt: Horizontal chart of the peak source voltage a matched driver
+         needs, twice the line voltage, from 0 to 6 V. 1000BASE-T at 1 V
+         on the line needs 2 V; 10BASE-Te needs 3.1 V to 3.9 V; 10BASE-T
+         needs 4.4 V to 5.6 V. A dashed line at 3.3 V marks what a
+         differential driver on a 3.3 V supply could reach with no headroom
+         left for its output transistors.
+   :align: center
+
+   The source voltage a matched driver needs for each speed, against
+   the ±3.3 V that a 3.3 V supply allows.
 
 .. _phy-int-slower-questions:
 

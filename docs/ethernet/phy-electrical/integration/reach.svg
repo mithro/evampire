@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="550" viewBox="0 0 480 550" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="550" fill="#ffffff"/>
+<line x1="62.0" y1="30.0" x2="62.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="142.0" y1="30.0" x2="142.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="222.0" y1="30.0" x2="222.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="302.0" y1="30.0" x2="302.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="382.0" y1="30.0" x2="382.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="462.0" y1="30.0" x2="462.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="220.0" x2="462.0" y2="220.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="182.0" x2="462.0" y2="182.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="144.0" x2="462.0" y2="144.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="106.0" x2="462.0" y2="106.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="68.0" x2="462.0" y2="68.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="30.0" x2="462.0" y2="30.0" stroke="#e4e4e4" stroke-width="1"/>
+<rect x="62.0" y="30.0" width="400.0" height="190.0" rx="0" fill="none" stroke="#222222" stroke-width="1.2"/>
+<line x1="62.0" y1="220.0" x2="62.0" y2="225.0" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="235.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="142.0" y1="220.0" x2="142.0" y2="225.0" stroke="#222222" stroke-width="1.2"/>
+<text x="142.0" y="235.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
+<line x1="222.0" y1="220.0" x2="222.0" y2="225.0" stroke="#222222" stroke-width="1.2"/>
+<text x="222.0" y="235.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">40</text>
+<line x1="302.0" y1="220.0" x2="302.0" y2="225.0" stroke="#222222" stroke-width="1.2"/>
+<text x="302.0" y="235.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">60</text>
+<line x1="382.0" y1="220.0" x2="382.0" y2="225.0" stroke="#222222" stroke-width="1.2"/>
+<text x="382.0" y="235.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">80</text>
+<line x1="462.0" y1="220.0" x2="462.0" y2="225.0" stroke="#222222" stroke-width="1.2"/>
+<text x="462.0" y="235.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">100</text>
+<line x1="57.0" y1="220.0" x2="62.0" y2="220.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="220.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">3</text>
+<line x1="57.0" y1="182.0" x2="62.0" y2="182.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="182.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">4</text>
+<line x1="57.0" y1="144.0" x2="62.0" y2="144.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="144.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
+<line x1="57.0" y1="106.0" x2="62.0" y2="106.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="106.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">6</text>
+<line x1="57.0" y1="68.0" x2="62.0" y2="68.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="68.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">7</text>
+<line x1="57.0" y1="30.0" x2="62.0" y2="30.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="30.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">8</text>
+<text x="262.0" y="256.0" font-size="14" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Cable reach (m)</text>
+<text x="14.0" y="125.0" font-size="14" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 14.0 125.0)">ADC effective bits</text>
+<text x="62.0" y="14.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">(a) ADC effective bits needed (estimate)</text>
+<polyline points="62.0,186.0 66.0,184.9 70.0,183.7 74.0,182.5 78.0,181.3 82.0,180.1 86.0,179.0 90.0,177.8 94.0,176.6 98.0,175.4 102.0,174.2 106.0,173.1 110.0,171.9 114.0,170.7 118.0,169.5 122.0,168.3 126.0,167.2 130.0,166.0 134.0,164.8 138.0,163.6 142.0,162.4 146.0,161.3 150.0,160.1 154.0,158.9 158.0,157.7 162.0,156.5 166.0,155.3 170.0,154.2 174.0,153.0 178.0,151.8 182.0,150.6 186.0,149.4 190.0,148.3 194.0,147.1 198.0,145.9 202.0,144.7 206.0,143.5 210.0,142.4 214.0,141.2 218.0,140.0 222.0,138.8 226.0,137.6 230.0,136.5 234.0,135.3 238.0,134.1 242.0,132.9 246.0,131.7 250.0,130.6 254.0,129.4 258.0,128.2 262.0,127.0 266.0,125.8 270.0,124.7 274.0,123.5 278.0,122.3 282.0,121.1 286.0,119.9 290.0,118.8 294.0,117.6 298.0,116.4 302.0,115.2 306.0,114.0 310.0,112.9 314.0,111.7 318.0,110.5 322.0,109.3 326.0,108.1 330.0,107.0 334.0,105.8 338.0,104.6 342.0,103.4 346.0,102.2 350.0,101.1 354.0,99.9 358.0,98.7 362.0,97.5 366.0,96.3 370.0,95.1 374.0,94.0 378.0,92.8 382.0,91.6 386.0,90.4 390.0,89.2 394.0,88.1 398.0,86.9 402.0,85.7 406.0,84.5 410.0,83.3 414.0,82.2 418.0,81.0 422.0,79.8 426.0,78.6 430.0,77.4 434.0,76.3 438.0,75.1 442.0,73.9 446.0,72.7 450.0,71.5 454.0,70.4 458.0,69.2 462.0,68.0" fill="none" stroke="#1f4e79" stroke-width="2.2" stroke-linejoin="round"/>
+<polyline points="78.0,219.3 82.0,218.1 86.0,217.0 90.0,215.8 94.0,214.6 98.0,213.4 102.0,212.2 106.0,211.1 110.0,209.9 114.0,208.7 118.0,207.5 122.0,206.3 126.0,205.2 130.0,204.0 134.0,202.8 138.0,201.6 142.0,200.4 146.0,199.3 150.0,198.1 154.0,196.9 158.0,195.7 162.0,194.5 166.0,193.3 170.0,192.2 174.0,191.0 178.0,189.8 182.0,188.6 186.0,187.4 190.0,186.3 194.0,185.1 198.0,183.9 202.0,182.7 206.0,181.5 210.0,180.4 214.0,179.2 218.0,178.0 222.0,176.8 226.0,175.6 230.0,174.5 234.0,173.3 238.0,172.1 242.0,170.9 246.0,169.7 250.0,168.6 254.0,167.4 258.0,166.2 262.0,165.0 266.0,163.8 270.0,162.7 274.0,161.5 278.0,160.3 282.0,159.1 286.0,157.9 290.0,156.8 294.0,155.6 298.0,154.4 302.0,153.2 306.0,152.0 310.0,150.9 314.0,149.7 318.0,148.5 322.0,147.3 326.0,146.1 330.0,145.0 334.0,143.8 338.0,142.6 342.0,141.4 346.0,140.2 350.0,139.1 354.0,137.9 358.0,136.7 362.0,135.5 366.0,134.3 370.0,133.1 374.0,132.0 378.0,130.8 382.0,129.6 386.0,128.4 390.0,127.2 394.0,126.1 398.0,124.9 402.0,123.7 406.0,122.5 410.0,121.3 414.0,120.2 418.0,119.0 422.0,117.8 426.0,116.6 430.0,115.4 434.0,114.3 438.0,113.1 442.0,111.9 446.0,110.7 450.0,109.5 454.0,108.4 458.0,107.2 462.0,106.0" fill="none" stroke="#1f4e79" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/>
+<circle cx="462.0" cy="68.0" r="4" fill="#1f4e79" stroke="none"/>
+<text x="456.0" y="56.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">7</text>
+<circle cx="262.0" cy="128.8" r="4" fill="#1f4e79" stroke="none"/>
+<text x="256.0" y="116.8" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">5.4</text>
+<circle cx="182.0" cy="151.6" r="4" fill="#1f4e79" stroke="none"/>
+<text x="176.0" y="139.6" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">4.8</text>
+<circle cx="102.0" cy="174.4" r="4" fill="#1f4e79" stroke="none"/>
+<text x="96.0" y="162.4" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">4.2</text>
+<text x="302.0" y="194.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">dashed: about one bit fewer with an</text>
+<text x="302.0" y="208.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">analogue echo canceller</text>
+<line x1="62.0" y1="320.0" x2="62.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="142.0" y1="320.0" x2="142.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="222.0" y1="320.0" x2="222.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="302.0" y1="320.0" x2="302.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="382.0" y1="320.0" x2="382.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="462.0" y1="320.0" x2="462.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="490.0" x2="462.0" y2="490.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="456.0" x2="462.0" y2="456.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="422.0" x2="462.0" y2="422.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="388.0" x2="462.0" y2="388.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="354.0" x2="462.0" y2="354.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="320.0" x2="462.0" y2="320.0" stroke="#e4e4e4" stroke-width="1"/>
+<rect x="62.0" y="320.0" width="400.0" height="170.0" rx="0" fill="none" stroke="#222222" stroke-width="1.2"/>
+<line x1="62.0" y1="490.0" x2="62.0" y2="495.0" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="505.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="142.0" y1="490.0" x2="142.0" y2="495.0" stroke="#222222" stroke-width="1.2"/>
+<text x="142.0" y="505.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
+<line x1="222.0" y1="490.0" x2="222.0" y2="495.0" stroke="#222222" stroke-width="1.2"/>
+<text x="222.0" y="505.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">40</text>
+<line x1="302.0" y1="490.0" x2="302.0" y2="495.0" stroke="#222222" stroke-width="1.2"/>
+<text x="302.0" y="505.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">60</text>
+<line x1="382.0" y1="490.0" x2="382.0" y2="495.0" stroke="#222222" stroke-width="1.2"/>
+<text x="382.0" y="505.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">80</text>
+<line x1="462.0" y1="490.0" x2="462.0" y2="495.0" stroke="#222222" stroke-width="1.2"/>
+<text x="462.0" y="505.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">100</text>
+<line x1="57.0" y1="490.0" x2="62.0" y2="490.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="490.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="57.0" y1="456.0" x2="62.0" y2="456.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="456.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">200</text>
+<line x1="57.0" y1="422.0" x2="62.0" y2="422.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="422.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">400</text>
+<line x1="57.0" y1="388.0" x2="62.0" y2="388.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="388.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">600</text>
+<line x1="57.0" y1="354.0" x2="62.0" y2="354.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="354.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">800</text>
+<line x1="57.0" y1="320.0" x2="62.0" y2="320.0" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="320.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">1000</text>
+<text x="262.0" y="526.0" font-size="14" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Cable reach (m)</text>
+<text x="14.0" y="405.0" font-size="14" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 14.0 405.0)">Taps, at most</text>
+<text x="62.0" y="300.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">(b) Filter taps needed (estimate)</text>
+<polyline points="62.0,422.0 66.0,421.0 70.0,420.1 74.0,419.1 78.0,418.1 82.0,417.2 86.0,416.2 90.0,415.2 94.0,414.2 98.0,413.3 102.0,412.3 106.0,411.3 110.0,410.4 114.0,409.4 118.0,408.4 122.0,407.5 126.0,406.5 130.0,405.5 134.0,404.6 138.0,403.6 142.0,402.6 146.0,401.7 150.0,400.7 154.0,399.7 158.0,398.7 162.0,397.8 166.0,396.8 170.0,395.8 174.0,394.9 178.0,393.9 182.0,392.9 186.0,392.0 190.0,391.0 194.0,390.0 198.0,389.1 202.0,388.1 206.0,387.1 210.0,386.1 214.0,385.2 218.0,384.2 222.0,383.2 226.0,382.3 230.0,381.3 234.0,380.3 238.0,379.4 242.0,378.4 246.0,377.4 250.0,376.5 254.0,375.5 258.0,374.5 262.0,373.6 266.0,372.6 270.0,371.6 274.0,370.6 278.0,369.7 282.0,368.7 286.0,367.7 290.0,366.8 294.0,365.8 298.0,364.8 302.0,363.9 306.0,362.9 310.0,361.9 314.0,361.0 318.0,360.0 322.0,359.0 326.0,358.0 330.0,357.1 334.0,356.1 338.0,355.1 342.0,354.2 346.0,353.2 350.0,352.2 354.0,351.3 358.0,350.3 362.0,349.3 366.0,348.4 370.0,347.4 374.0,346.4 378.0,345.4 382.0,344.5 386.0,343.5 390.0,342.5 394.0,341.6 398.0,340.6 402.0,339.6 406.0,338.7 410.0,337.7 414.0,336.7 418.0,335.8 422.0,334.8 426.0,333.8 430.0,332.9 434.0,331.9 438.0,330.9 442.0,329.9 446.0,329.0 450.0,328.0 454.0,327.0 458.0,326.1 462.0,325.1" fill="none" stroke="#c0392b" stroke-width="2.2" stroke-linejoin="round"/>
+<polyline points="62.0,490.0 66.0,489.8 70.0,489.5 74.0,489.3 78.0,489.0 82.0,488.8 86.0,488.5 90.0,488.3 94.0,488.1 98.0,487.8 102.0,487.6 106.0,487.3 110.0,487.1 114.0,486.9 118.0,486.6 122.0,486.4 126.0,486.1 130.0,485.9 134.0,485.6 138.0,485.4 142.0,485.2 146.0,484.9 150.0,484.7 154.0,484.4 158.0,484.2 162.0,483.9 166.0,483.7 170.0,483.5 174.0,483.2 178.0,483.0 182.0,482.7 186.0,482.5 190.0,482.2 194.0,482.0 198.0,481.8 202.0,481.5 206.0,481.3 210.0,481.0 214.0,480.8 218.0,480.6 222.0,480.3 226.0,480.1 230.0,479.8 234.0,479.6 238.0,479.3 242.0,479.1 246.0,478.9 250.0,478.6 254.0,478.4 258.0,478.1 262.0,477.9 266.0,477.6 270.0,477.4 274.0,477.2 278.0,476.9 282.0,476.7 286.0,476.4 290.0,476.2 294.0,475.9 298.0,475.7 302.0,475.5 306.0,475.2 310.0,475.0 314.0,474.7 318.0,474.5 322.0,474.3 326.0,474.0 330.0,473.8 334.0,473.5 338.0,473.3 342.0,473.0 346.0,472.8 350.0,472.6 354.0,472.3 358.0,472.1 362.0,471.8 366.0,471.6 370.0,471.3 374.0,471.1 378.0,470.9 382.0,470.6 386.0,470.4 390.0,470.1 394.0,469.9 398.0,469.7 402.0,469.4 406.0,469.2 410.0,468.9 414.0,468.7 418.0,468.4 422.0,468.2 426.0,468.0 430.0,467.7 434.0,467.5 438.0,467.2 442.0,467.0 446.0,466.7 450.0,466.5 454.0,466.3 458.0,466.0 462.0,465.8" fill="none" stroke="#2e7d32" stroke-width="2.2" stroke-linejoin="round"/>
+<circle cx="462.0" cy="324.8" r="4" fill="#c0392b" stroke="none"/>
+<circle cx="462.0" cy="465.7" r="4" fill="#2e7d32" stroke="none"/>
+<text x="456.0" y="312.8" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">972</text>
+<text x="456.0" y="449.7" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">143</text>
+<circle cx="262.0" cy="373.7" r="4" fill="#c0392b" stroke="none"/>
+<circle cx="262.0" cy="477.9" r="4" fill="#2e7d32" stroke="none"/>
+<text x="256.0" y="361.7" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">684</text>
+<text x="256.0" y="461.9" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">71</text>
+<circle cx="182.0" cy="392.8" r="4" fill="#c0392b" stroke="none"/>
+<circle cx="182.0" cy="482.7" r="4" fill="#2e7d32" stroke="none"/>
+<text x="176.0" y="380.8" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">572</text>
+<text x="176.0" y="466.7" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">43</text>
+<circle cx="102.0" cy="412.5" r="4" fill="#c0392b" stroke="none"/>
+<circle cx="102.0" cy="487.6" r="4" fill="#2e7d32" stroke="none"/>
+<text x="96.0" y="400.5" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">456</text>
+<text x="96.0" y="471.6" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">14</text>
+<text x="78.0" y="337.0" font-size="12" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">total taps, 4 pairs</text>
+<text x="78.0" y="445.8" font-size="12" text-anchor="start" font-weight="normal" fill="#2e7d32" dominant-baseline="middle">echo taps, one pair</text>
+</svg>

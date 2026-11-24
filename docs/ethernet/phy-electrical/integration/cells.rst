@@ -10,11 +10,11 @@ processing. The choice of cells and supply is open.
 
 .. _phy-int-devices:
 
-gf180mcu has 3.3 V, 5 V, 6 V and 10 V transistors
--------------------------------------------------
+Transistors
+-----------
 
-:numref:`tab-phy-int-devices` gives typical values of the gf180mcu
-transistors from the PDK's electrical parameters ([PHY-GF180PDK]_).
+gf180mcu has 3.3 V, 5 V, 6 V and 10 V transistors.
+:numref:`tab-phy-int-devices` gives their typical values from the PDK's electrical parameters ([PHY-GF180PDK]_).
 
 .. list-table:: gf180mcu n-channel transistors, typical values
    :name: tab-phy-int-devices
@@ -59,8 +59,8 @@ transistors and stacked or drain-extended devices are also in scope
 
 .. _phy-int-cells:
 
-Three cell libraries exist, with different speeds
--------------------------------------------------
+Cell libraries
+--------------
 
 Three families of standard cells are available:
 
@@ -80,8 +80,8 @@ Three families of standard cells are available:
 
 .. _phy-int-logic-depth:
 
-Logic per 8 ns is set by the flip-flop and the carry delay
-----------------------------------------------------------
+Logic depth per 8 ns
+--------------------
 
 The time left for logic between two flip-flops in a period :math:`T` is
 
@@ -182,12 +182,26 @@ carry column is :math:`t_\text{carry}`. In the 1.62 V slow-corner row of the 7-
 takes longer than 8 ns. The OSU cells are characterised at the typical
 corner only, so their slow-corner speed comes from simulation with the PDK
 models. The OSU 12-track library gives the same timing as the 9-track one
-([PHY-OSU]_).
+([PHY-OSU]_). :numref:`fig-phy-int-carry-stages` draws each row.
+
+.. figure:: carry-stages.svg
+   :name: fig-phy-int-carry-stages
+   :alt: Horizontal bars against time from 0 to 11 ns, one per library and
+         corner, with a red line at 8 ns. Each bar starts with the
+         flip-flop time and is filled with carry stages up to 8 ns, with the
+         number of stages at the right: fd_sc 7-track typical 3.3 V 6.3,
+         slow 3.0 V 2.3, typical 1.8 V 1.4, slow 1.62 V 0 because the
+         flip-flop alone exceeds 8 ns; fd_sc 9-track typical 3.3 V 8.0,
+         slow 3.0 V 3.4, slow 1.62 V 0.2; OSU 9-track typical 3.3 V 21.
+   :align: center
+
+   How the 8 ns period divides into flip-flop time and full-adder carry
+   stages for each cell library and corner (estimate).
 
 .. _phy-int-cell-options:
 
-The choice of cells and supply is open
---------------------------------------
+Cell and supply options
+-----------------------
 
 What the decision loop needs depends on its structure
 (:ref:`phy-int-decision-loop`): its logic depth in carry stages, to be
@@ -227,8 +241,8 @@ conditions:
 
 .. _phy-int-energy:
 
-Switching energy falls with the square of the supply
-----------------------------------------------------
+Switching energy
+----------------
 
 Charging a node of capacitance :math:`C` to voltage :math:`V` stores
 :math:`\tfrac{1}{2} C V^2` and dissipates as much again in the
@@ -272,7 +286,18 @@ input capacitance of 4.70 fF at 3.3 V and 4.275 fF at 1.8 V
      - fJ
 
 At 1.8 V each operation takes :math:`41.6 / 154 = 0.27` of the energy at
-3.3 V. :doc:`area-power` uses these values.
+3.3 V (:numref:`fig-phy-int-energy`). :doc:`area-power` uses these values.
+
+.. figure:: energy.svg
+   :name: fig-phy-int-energy
+   :alt: Graph of energy per gate in fJ from 0 to 200 against supply
+         voltage from 0 to 4 V. A parabola E = 3 × 4.70 fF × V squared
+         passes through 154 fJ at 3.3 V; a point at 41.6 fJ at 1.8 V lies
+         slightly below it because the input capacitance there is
+         4.275 fF.
+   :align: center
+
+   Switching energy per gate against supply voltage.
 
 .. _phy-int-cells-questions:
 

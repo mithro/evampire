@@ -1,7 +1,7 @@
 .. _phy-int-control:
 
-Control: link pulses, autonegotiation logic and registers
-=========================================================
+Control logic and registers
+===========================
 
 This page lists what a gigabit-only integrated transceiver needs for
 :doc:`../autonegotiation` and for software control: the link pulse driver
@@ -9,8 +9,8 @@ and receiver, the state machines and timers, and the management registers.
 
 .. _phy-int-autoneg:
 
-Autonegotiation needs a pulse driver, a comparator and state machines
----------------------------------------------------------------------
+Autonegotiation logic
+---------------------
 
 1000BASE-T requires autonegotiation (:clause:`40.5.1`), so even a
 gigabit-only transceiver needs:
@@ -19,7 +19,8 @@ Link pulse driver
    Fast link pulse bursts with the timing of :numref:`tab-phy-flp-timing`.
    Each pulse fits the 10BASE-T link test pulse template, with its peak
    between 585 mV and 3.1 V and a width of about 100 ns
-   (:clause:`Figure 14-13 <14>`). The gigabit driver of
+   (:clause:`Figure 14-13 <14>`, :numref:`fig-phy-link-pulses`). The
+   gigabit driver of
    :doc:`transmitter` reaches 1 V on the line, inside that range, so the
    link pulses need no higher-swing driver (estimate, to be confirmed by
    checking the whole template shape).
@@ -67,12 +68,26 @@ The longest timer, break_link_timer, runs to 1.5 s. Counted with the
 transceiver's 25 MHz reference,
 :math:`\log_2(1.5 \times 25 \times 10^{6}) = 25.2`, so it needs a 26-bit
 counter (estimate). A prescaler shares one fast counter among all the
-timers.
+timers. :numref:`fig-phy-int-control` shows how the blocks connect.
+
+.. graphviz:: control-blocks.dot
+   :name: fig-phy-int-control
+   :caption: The control blocks for autonegotiation in an integrated
+             transceiver.
+   :alt: The transmit state machine drives the link pulse driver, which is
+         the gigabit driver at 1 V, onto the pins of one pair. The pins
+         feed a comparator with pulse spacing timers, which feeds the
+         receive state machine. The receive state machine feeds the
+         arbitration state machine, which drives the transmit state
+         machine and exchanges data with the next pages and seed source
+         and with the management registers. Timers on one prescaled
+         26-bit counter feed all three state machines.
+   :align: center
 
 .. _phy-int-registers:
 
-The standard registers let the same software drive both configurations
-----------------------------------------------------------------------
+Management registers
+--------------------
 
 :clause:`22.2.4` defines a set of 16-bit registers that every transceiver
 provides, so the same software can control any of them. An integrated

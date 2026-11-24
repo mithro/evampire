@@ -1,7 +1,7 @@
 .. _phy-1000base-t-receiver:
 
-1000BASE-T: equalisers, clocking and the receiver's arithmetic
-==============================================================
+1000BASE-T: receiver and clocking
+=================================
 
 This page explains the rest of a 1000BASE-T receiver: the equalisers, the
 master and slave clocking that keeps the cancellers matched, the
@@ -10,8 +10,8 @@ arithmetic they do every symbol period.
 
 .. _phy-equalisation:
 
-Two equalisers undo the cable's spreading
------------------------------------------
+Equalisers
+----------
 
 An :term:`equaliser` is a filter whose response is the inverse of the
 cable's, so that cable and equaliser together pass all frequencies alike
@@ -28,16 +28,49 @@ parts ([PHY-TUT98]_ slides 30 and 51):
   tails. Its input is the decided symbols rather than the noisy samples, so
   it adds no noise.
 
+:numref:`fig-phy-pulse-response` shows which part of a received pulse each
+equaliser removes, and :numref:`fig-phy-equalisers` how the two connect.
+
+.. graphviz:: equalisers.dot
+   :name: fig-phy-equalisers
+   :caption: The feed-forward equaliser filters the samples; the
+             decision-feedback equaliser filters the decided symbols, and
+             its output is subtracted before the decision.
+   :alt: Samples after the cancellers go through the feed-forward
+         equaliser, an FIR filter, to a subtractor and then to the
+         decision, the trellis decoder, which outputs the decided symbols.
+         The decided symbols also feed the decision-feedback equaliser,
+         an FIR filter, whose output, the postcursor tails, goes back to
+         the subtractor.
+   :align: center
+
+.. figure:: pulse-response.svg
+   :name: fig-phy-pulse-response
+   :alt: Graph of amplitude against time in symbol periods of 8 ns, from
+         minus 3 to 9. A smooth received pulse rises from about minus 1.2,
+         peaks at 1 at time 0 and decays over the following periods.
+         Stems mark its samples once per symbol period: a small one at
+         minus 1 in a blue precursor region labelled feed-forward
+         equaliser, the cursor of 1 at 0, and decreasing samples of about
+         0.7, 0.3, 0.13 and smaller from 1 to 8 in an orange postcursor
+         region labelled decision-feedback equaliser.
+   :align: center
+
+   A received symbol pulse sampled once per symbol period: the
+   feed-forward equaliser removes the precursor and the decision-feedback
+   equaliser the postcursor tail; the shape is schematic.
+
 The receive path also corrects *baseline wander*. The coupling
 transformers, or the coupling capacitors of a transformer-free connection
 (:doc:`../magnetics/index`), block DC, so a long run of symbols that does
-not average to zero shifts the zero level. A slow feedback loop restores it
+not average to zero shifts the zero level
+(:numref:`fig-phy-baseline-wander`). A slow feedback loop restores it
 ([PHY-TUT98]_ slide 51; [PHY-KSZ9031]_ Figure 3‑2).
 
 .. _phy-master-slave:
 
-One end sets the clock for both directions
-------------------------------------------
+Master and slave clocking
+-------------------------
 
 The echo and near-end crosstalk cancellers are driven by the transceiver's
 own transmit symbols, while the ADC samples at the far end's symbol timing.
@@ -72,20 +105,42 @@ standard defines optional alternative names in its Annex K.
 After autonegotiation both ends train their equalisers and cancellers on
 idle symbols. A slave must reach reliable reception within
 350 ms ± 5 ms and a master within 750 ms ± 10 ms, the *maxwait_timer*
-(:clause:`40.4.5.2`).
+(:clause:`40.4.5.2`, :numref:`fig-phy-startup`).
 
 .. _phy-pair-skew:
 
-The receiver lines up the four pairs and corrects swaps
--------------------------------------------------------
+Pair skew and swaps
+-------------------
 
 The four pairs of a cable differ slightly in length and propagation speed,
 so symbols sent together arrive at different times. The standard allows up
 to 50 ns of difference between any two pairs (:clause:`40.7.4.2`), and
-the receiver realigns them (:clause:`40.1.4`). It also detects and corrects
+the receiver realigns them (:clause:`40.1.4`, :numref:`fig-phy-pair-skew`). It also detects and corrects
 pairs that are swapped or have their two wires reversed, using the idle
 symbols sent before data starts (:clause:`40.1.4`; [PHY-KSZ9031]_
 section 3.4).
+
+.. wavedrom::
+   :caption: Symbols sent together on the four pairs arrive at different
+             times and the receiver realigns them; the offsets are drawn
+             smaller than the 50 ns, about six symbol periods, that the
+             standard allows.
+   :name: fig-phy-pair-skew
+   :alt: Timing diagram. Four rows, pair A to pair D as received, each
+         carrying symbols n, n+1 and n+2, shifted by different fractions
+         of a symbol, less than the 50 ns allowed. A fifth row, after alignment, carries the code
+         groups n, n+1 and n+2 in step.
+
+   { "signal": [
+       { "name": "pair A in", "wave": "x===x.", "data": ["A n", "A n+1", "A n+2"] },
+       { "name": "pair B in", "wave": "x===x.", "data": ["B n", "B n+1", "B n+2"], "phase": -0.6 },
+       { "name": "pair C in", "wave": "x===x.", "data": ["C n", "C n+1", "C n+2"], "phase": -0.25 },
+       { "name": "pair D in", "wave": "x===x.", "data": ["D n", "D n+1", "D n+2"], "phase": -0.8 },
+       {},
+       { "name": "aligned", "wave": "x.===x", "data": ["n", "n+1", "n+2"] }
+     ],
+     "config": { "hscale": 2 }
+   }
 
 Separately, a cable can be wired straight through or crossed over. A
 transceiver can detect which, and swap its pairs to match: automatic
@@ -96,10 +151,11 @@ described in :clause:`40.8.2`.
 
 .. _phy-blocks:
 
-A gigabit transceiver has a copy of the signal path for each pair
------------------------------------------------------------------
+Transceiver blocks
+------------------
 
-:numref:`fig-phy-blocks` puts the blocks of these pages together for one
+A gigabit transceiver has a copy of the signal path for each of the four
+pairs. :numref:`fig-phy-blocks` puts the blocks of these pages together for one
 pair, and :numref:`tab-phy-blocks` lists them with the page that explains
 each one.
 
@@ -170,8 +226,8 @@ DP83867 and the Microchip KSZ9031 ([PHY-DP83867]_ section 9.2.1.2;
 
 .. _phy-dsp-rate:
 
-The filters need about 10¹¹ multiply-and-adds per second
---------------------------------------------------------
+Arithmetic rate
+---------------
 
 Every 8 ns, for each of the four pairs, the receiver evaluates and adapts
 five filters and takes one step of the Viterbi decoder. Each tap does one

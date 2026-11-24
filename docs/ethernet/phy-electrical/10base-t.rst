@@ -1,7 +1,7 @@
 .. _phy-10base-t:
 
-10BASE-T: two levels and a clock in every bit
-=============================================
+10BASE-T: Manchester coding and link pulses
+===========================================
 
 This page describes 10BASE-T (:clause:`14`), the simplest of the three
 twisted-pair speeds: its coding, its signal levels and the link pulses that
@@ -9,12 +9,12 @@ show a cable is connected.
 
 .. _phy-manchester:
 
-Manchester coding puts a transition in the middle of every bit
---------------------------------------------------------------
+Manchester coding
+-----------------
 
 10BASE-T uses one pair for each direction: pins 1 and 2 of the
 :term:`RJ45` socket to transmit and pins 3 and 6 to receive
-(:clause:`14.5.1`). It sends the data bits at 10 Mbit/s with
+(:clause:`14.5.1`, :numref:`fig-phy-cable`). It sends the data bits at 10 Mbit/s with
 :wikipedia:`Manchester coding <Manchester_code>`: each 100 ns bit is split
 into two halves at opposite levels, so every bit has a transition in its
 middle. A 1 bit goes from low to high in the middle of the bit and a 0 bit
@@ -41,10 +41,12 @@ per bit, so the fundamental frequency lies between 5 MHz (alternating 1 and
 
 .. _phy-10base-t-levels:
 
-The signal is 2.2 V to 2.8 V and the receiver ignores less than 300 mV
-----------------------------------------------------------------------
+Signal levels
+-------------
 
-:numref:`tab-phy-10base-t` gives the main transmitter and receiver limits.
+A 10BASE-T transmitter drives a peak of 2.2 V to 2.8 V, and an idle
+receiver ignores signals below 300 mV. :numref:`tab-phy-10base-t` gives
+these and the other main transmitter and receiver limits.
 
 .. list-table:: 10BASE-T transmitter and receiver limits
    :name: tab-phy-10base-t
@@ -87,16 +89,32 @@ While idle, the receiver must ignore any signal whose peak is below 300 mV
 after a 3-pole, 15 MHz low-pass filter, so that noise on a silent line is
 not taken for data (:clause:`14.3.1.3.2`). For reference, the Microchip
 KSZ9031 sets its squelch threshold at 300 mV ([PHY-KSZ9031]_ section
-3.1.5).
+3.1.5). :numref:`fig-phy-10base-t-levels` shows the transmitted peak bands
+and the idle threshold.
+
+.. figure:: 10base-t-levels.svg
+   :name: fig-phy-10base-t-levels
+   :alt: Two graphs of differential voltage against time from 0 to 500 ns.
+         Top, the transmitter: a Manchester waveform at plus and minus 2.5 V,
+         with shaded bands from 2.2 V to 2.8 V for 10BASE-T and from 1.54 V
+         to 1.96 V for 10BASE-Te, on both polarities. Bottom, the idle
+         receiver after the 15 MHz filter: noise of under 0.25 V stays inside
+         dashed thresholds at plus and minus 300 mV and is ignored; a
+         signal of plus and minus 0.9 V crosses them and is accepted.
+   :align: center
+
+   10BASE-T and 10BASE-Te peak levels at the transmitter, and the 300 mV
+   threshold of the idle receiver; the edge shapes and the received
+   amplitude are schematic.
 
 .. _phy-link-pulses:
 
-Link pulses show the cable is connected
----------------------------------------
+Link test pulses
+----------------
 
 Between frames the line is silent, except for a single positive
 *link test pulse* after every 16 ms ± 8 ms of silence
-(:clause:`14.2.1.1`). The pulse has to fit the template of
+(:clause:`14.2.1.1`), which shows the far end that the cable is connected. The pulse has to fit the template of
 :clause:`Figure 14-13 <14>`: its peak lies between 585 mV and 3.1 V, and it
 is about one bit time, 100 ns, wide.
 
@@ -105,3 +123,18 @@ A receiver that sees neither data nor a link test pulse for 50 ms to
 transmitting data (:clause:`14.2.1.7`). The link pulses are also the
 building blocks of :doc:`autonegotiation`, which replaces each single
 pulse with a burst of pulses that carries data.
+:numref:`fig-phy-link-pulses` shows the pulses and the link_loss time.
+
+.. figure:: link-pulses.svg
+   :name: fig-phy-link-pulses
+   :alt: Two graphs. Top, voltage against time from 0 to 240 ms: link test
+         pulses at 16, 40 and 64 ms, spaced 8 ms to 24 ms apart, then no
+         pulse; a shaded window from 50 ms to 150 ms after the last pulse
+         marks where link_loss declares the link failed. Bottom, one pulse
+         against time from minus 100 ns to 300 ns: a positive pulse about
+         100 ns wide with a peak of 2.5 V, inside a shaded band from
+         585 mV to 3.1 V.
+   :align: center
+
+   Link test pulses on a silent line, the link_loss time after the last
+   one, and one pulse enlarged; the pulse shape is schematic.

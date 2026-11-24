@@ -1,7 +1,7 @@
 .. _phy-int-receiver:
 
-Receiver: echo removal and the ADC
-==================================
+Receiver
+========
 
 This page works out what the integrated receiver needs before the digital
 filters: how the echo is shared between analogue and digital stages, and
@@ -11,8 +11,8 @@ the echo canceller.
 
 .. _phy-int-echo:
 
-Each stage removes part of the echo
------------------------------------
+Echo removal
+------------
 
 The receiver sees its own transmission at full size, while the far-end
 signal at 100 MHz can be as small as 6 % of its launched voltage over a
@@ -62,8 +62,8 @@ been shared.
 
 .. _phy-int-analogue-echo:
 
-An analogue echo canceller trades area and power against ADC bits and taps
---------------------------------------------------------------------------
+Analogue echo canceller
+-----------------------
 
 An analogue echo canceller is an analogue FIR filter fed with the sent
 symbols. For reference, Lee and Razavi's 0.4 µm design removes about
@@ -81,8 +81,8 @@ is settled by building both, or by simulating them, for gf180mcu.
 
 .. _phy-int-adc:
 
-The ADC needs about 7 effective bits at 100 m, fewer for shorter reach
-----------------------------------------------------------------------
+ADC resolution
+--------------
 
 An ideal :math:`N`-bit converter with full-scale range :math:`V_\text{FS}`
 has steps of :math:`q = V_\text{FS}/2^N`. Its rounding error is spread
@@ -195,10 +195,26 @@ is to be confirmed by simulation with channel models.
      - 1.9
      - 4.2
 
+:numref:`fig-phy-int-reach` plots the table, with the filter taps of
+:numref:`tab-phy-int-reach-taps`.
+
+.. figure:: reach.svg
+   :name: fig-phy-int-reach
+   :alt: Two graphs against cable reach from 0 to 100 m. Top, ADC effective
+         bits rise in a straight line through 4.2 at 10 m, 4.8 at 30 m,
+         5.4 at 50 m and 7 at 100 m, with a dashed line one bit lower for
+         an analogue echo canceller. Bottom, taps at most: total taps for
+         4 pairs rise through 456, 572, 684 and 972, and echo taps for one
+         pair through 14, 43, 71 and 143, at the same reaches.
+   :align: center
+
+   ADC effective bits and filter taps needed against cable reach
+   (estimate).
+
 .. _phy-int-adc-options:
 
-Several ADC architectures reach 7 bits at 125 MS/s
---------------------------------------------------
+ADC architectures
+-----------------
 
 :numref:`tab-phy-int-adcs` lists reference examples of 7-bit to 8-bit
 converters at 100 MS/s to 200 MS/s. The spurious-free dynamic range (SFDR)
@@ -266,15 +282,39 @@ The options for evampire are:
   capacitor DAC, interleaved to reach 125 MS/s.
 
 Each needs a gf180mcu design and a test chip to set its power and area.
+:numref:`fig-phy-int-adc-options` sketches the three families.
+
+.. graphviz:: adc-options.dot
+   :name: fig-phy-int-adc-options
+   :caption: Simplified sketches of the three ADC families.
+   :alt: Three sketches. Folding: the input goes to folding amplifiers
+         and fine comparators, and directly to coarse comparators; both
+         feed an encoder. Pipelined, time-interleaved: the input passes
+         stages that each resolve a few bits and pass on a residue; a note
+         says several copies take turns to reach 125 MS/s. Successive
+         approximation: one comparator, bit-by-bit logic and a capacitor
+         DAC in a loop; a note says several copies take turns.
+   :align: center
 
 .. _phy-int-analogue-alternatives:
 
-Analogue equalisers and filters are an alternative to a fast ADC
-----------------------------------------------------------------
+Analogue filters and equalisers
+-------------------------------
 
 Most of the echo canceller, the crosstalk cancellers and the equalisers
 can be built as analogue FIR filters or as an analogue decision-feedback
-equaliser ahead of the ADC, instead of digital filters after it.
+equaliser ahead of the ADC, instead of digital filters after it
+(:numref:`fig-phy-int-analogue-chain`).
+
+.. graphviz:: analogue-chain.dot
+   :name: fig-phy-int-analogue-chain
+   :caption: Digital filters after a fast ADC, or analogue filters before
+             a coarse ADC.
+   :alt: Two chains. Digital filters: hybrid, then an ADC of about 7
+         effective bits, then digital echo, NEXT, FFE and DFE filters.
+         Analogue filters: hybrid, then analogue FIR filters and an
+         analogue DFE, then a coarse ADC or comparators.
+   :align: center
 
 The gigabit reference designs on these pages do this work in digital logic
 ([PHY-TUT98]_ slide 51; [PHY-HE01]_), in processes of 0.25 µm and smaller.

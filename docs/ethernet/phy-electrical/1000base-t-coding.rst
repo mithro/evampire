@@ -1,7 +1,7 @@
 .. _phy-1000base-t-coding:
 
-1000BASE-T: four pairs, five levels and a trellis code
-======================================================
+1000BASE-T: PAM-5 and trellis coding
+====================================
 
 This page explains how 1000BASE-T (:clause:`40`) carries 1000 Mbit/s: all
 four pairs at once, five signal levels, a shaping filter, scrambling and an
@@ -10,8 +10,8 @@ carries both directions at the same time.
 
 .. _phy-1000-rate:
 
-Four pairs times 125 MBd times 2 bits gives 1000 Mbit/s
--------------------------------------------------------
+Data rate
+---------
 
 1000BASE-T sends on all four pairs at the same time, at 125 MBd on each
 (:clause:`40.1.3`). The data rate in one direction is
@@ -58,12 +58,22 @@ symbol rate, called the :wikipedia:`Nyquist frequency
 <Nyquist_frequency>`. A channel that passes frequencies up to it can carry
 the symbols, so these pages use 62.5 MHz as the reference frequency. The
 transmitted spectrum is about 80 MHz wide (:clause:`40.7.1`), inside the
-100 MHz for which the cable is specified.
+100 MHz for which the cable is specified (:numref:`fig-phy-nyquist`).
+
+.. figure:: nyquist.svg
+   :name: fig-phy-nyquist
+   :alt: Timing diagram of eight 8 ns symbol slots alternating +2 and −2,
+         and the line voltage alternating high and low every slot. An arrow
+         over two slots marks one period of 16 ns, 62.5 MHz.
+   :align: center
+
+   The fastest symbol pattern changes level every 8 ns symbol and
+   repeats every 16 ns, a 62.5 MHz signal.
 
 .. _phy-pam5:
 
-Five levels give room for a code
---------------------------------
+Five-level signalling
+---------------------
 
 Two bits per symbol need at least four levels. 1000BASE-T uses five, −2,
 −1, 0, +1 and +2, which is five-level
@@ -98,8 +108,24 @@ groups for idle and control (:clause:`40.3.1.3.5`,
 Five levels cost noise tolerance. For the same peak voltage, three levels
 (−1, 0, +1, as in :doc:`100base-tx`) are spaced twice as far apart as five
 levels (−2 to +2). A receiver misreads a level when noise exceeds half the
-spacing, so five levels tolerate half the noise voltage. A voltage ratio
-of 2 is
+spacing, so five levels tolerate half the noise voltage
+(:numref:`fig-phy-level-spacing`).
+
+.. figure:: level-spacing.svg
+   :name: fig-phy-level-spacing
+   :alt: Two level ladders on one voltage scale from minus peak to plus
+         peak. Three levels, minus 1, 0 and plus 1, have decision
+         thresholds at minus and plus half the peak, so the margin from 0
+         to the next threshold is half the peak. Five levels, minus 2 to
+         plus 2, have thresholds at plus and minus a quarter and three
+         quarters of the peak, so their margin is half as large, 6.0 dB
+         less.
+   :align: center
+
+   Three and five levels at the same peak voltage: the five-level noise
+   margin is half as large.
+
+A voltage ratio of 2 is
 
 .. math::
 
@@ -111,8 +137,8 @@ described below wins this back.
 
 .. _phy-shaping:
 
-A shaping filter makes 17 levels out of 5
------------------------------------------
+Transmit shaping filter
+-----------------------
 
 Each pair must be able to send fixed *test modes* on command, so that its
 output can be measured without a receiver (:clause:`40.6.1.1.2`). In test
@@ -153,12 +179,28 @@ takes 17 levels: the multiples of 0.25 from −2 to +2. The digital-to-analogue
 converter therefore needs at least 17 levels. The tutorial's design point
 lists a 17-level converter at 125 MHz ([PHY-TUT98]_ slide 51), and the
 DP83867 describes its output as 17-level shaped PAM-5 ([PHY-DP83867]_
-Figure 7‑1).
+Figure 7‑1). :numref:`fig-phy-shaping` shows the filter and an example
+sequence.
+
+.. figure:: shaping-filter.svg
+   :name: fig-phy-shaping
+   :alt: Top, a block diagram: the symbol a n goes through a multiplier of
+         0.75 to a sum, and through an 8 ns delay and a multiplier of 0.25
+         to the same sum, whose output y n goes to the DAC. Bottom, level
+         against time from 0 to 80 ns: ten PAM-5 symbols 0, +1, −1, +2, +2,
+         0, −2, −1, +1, 0 drawn dashed, and the shaped output 0, 0.75,
+         −0.5, 1.25, 2, 0.5, −1.5, −1.25, 0.5, 0.25 drawn solid, on faint
+         grid lines at every 0.25 from −2 to +2. The 1.25 point is marked:
+         +2 after −1.
+   :align: center
+
+   The example transmit shaping filter and its output for ten symbols;
+   every output lies on one of the 17 levels.
 
 .. _phy-1000-scrambler:
 
-Scrambling makes the symbols look random
-----------------------------------------
+Scrambling
+----------
 
 Before coding, the data is combined by exclusive-OR with a pseudo-random
 sequence from a 33-bit linear feedback shift register, the *side-stream
@@ -179,21 +221,33 @@ generator polynomials:
 
 In this notation (:numref:`tab-phy-scramblers`), :math:`x^{k}` marks a tap
 after :math:`k` stages of the shift register, and the new bit is the
-exclusive-OR of the taps. Master and slave are explained in
-:doc:`1000base-t-receiver`.
+exclusive-OR of the taps (:numref:`fig-phy-1000-scrambler`). Master and
+slave are explained in :doc:`1000base-t-receiver`.
+
+.. figure:: scrambler-1000base-t.svg
+   :name: fig-phy-1000-scrambler
+   :alt: Two shift registers of 33 stages, drawn with some stages left out.
+         In the master's, stages 13 and 33 are shaded as taps; in the
+         slave's, stages 20 and 33. In each, the exclusive-OR of the two
+         taps feeds back into stage 1 and is combined by a second
+         exclusive-OR with the incoming bits.
+   :align: center
+
+   The master and slave side-stream scramblers, simplified: the standard
+   derives several scrambling bits from the register at each step.
 
 Scrambling makes the transmitted symbols uncorrelated over time, between
 the four pairs and between the two directions on each pair
 (:clause:`40.1.4`). This spreads the transmitted power across the band,
-and it lets the adaptive cancellers of :doc:`1000base-t-echo` tell the
+and it lets the :doc:`adaptive cancellers <1000base-t-echo>` tell the
 transceiver's own symbols apart from the far end's. The scrambler runs
 continuously, so the receiver locks its own copy to the incoming stream
 before any data arrives.
 
 .. _phy-trellis:
 
-The trellis code wins back the 6 dB
------------------------------------
+Trellis code
+------------
 
 A :term:`trellis code` adds redundancy with a small state machine in the
 transmitter, so that only some sequences of code groups are legal. In
@@ -213,12 +267,27 @@ picks the legal sequence closest to what was received. The decoder and the
 equaliser's feedback loop must finish each step in one 8 ns symbol period,
 which makes them the critical timing path of the receiver
 ([PHY-TUT98]_ slide 23). :doc:`integration/signal-processing` covers that
-loop.
+loop. :numref:`fig-phy-trellis` shows the level subsets and the encoder
+states.
+
+.. figure:: trellis.svg
+   :name: fig-phy-trellis
+   :alt: Left, the five levels split into two subsets: X holds −1 and +1,
+         and Y holds −2, 0 and +2. Right, a trellis of the eight encoder
+         states, 0 to 7, in five columns for symbol periods n to n + 4,
+         8 ns apart. Grey lines join each state to the four states that
+         may follow it. A green line marks one path through the states,
+         0, 4, 3, 0, 0.
+   :align: center
+
+   The level subsets and the eight-state trellis of the 1000BASE-T
+   convolutional encoder (:clause:`40.3.1.3.4`), with one path that the
+   Viterbi decoder keeps.
 
 .. _phy-idle:
 
-Idle uses three levels and frames start and end with delimiters
----------------------------------------------------------------
+Idle and frame delimiters
+-------------------------
 
 Between frames the transmitter sends idle code groups whose symbols use
 only −2, 0 and +2 (:clause:`40.1.3`). The three widely spaced levels make
@@ -226,4 +295,18 @@ it easier for a receiver to lock on and train its filters before it can
 decode all five levels. A frame starts with a two-code-group
 Start-of-Stream delimiter and ends with two convolutional state reset code
 groups followed by a two-code-group End-of-Stream delimiter
-(:clause:`40.1.3.1`).
+(:clause:`40.1.3.1`, :numref:`fig-phy-frame-delimiters`).
+
+.. figure:: frame-delimiters.svg
+   :name: fig-phy-frame-delimiters
+   :alt: Timing diagram of code groups, one per 8 ns: two idle code groups
+         using only −2, 0 and +2, two SSD code groups, three data code groups
+         using all five levels, two CSReset code groups, two ESD code groups,
+         then idle again. The levels of the delimiters and resets are drawn
+         dashed, as not listed on these pages.
+   :align: center
+
+   The code groups around one frame: SSD is the Start-of-Stream
+   delimiter, CSReset the convolutional state reset and ESD the
+   End-of-Stream delimiter; the number of data code groups depends on the
+   frame.

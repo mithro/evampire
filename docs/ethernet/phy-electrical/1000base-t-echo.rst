@@ -1,7 +1,7 @@
 .. _phy-echo-page:
 
-1000BASE-T: the channel limits, echo and crosstalk
-==================================================
+1000BASE-T: channel, echo and crosstalk
+=======================================
 
 This page gives the size of the cable effects that 1000BASE-T must handle,
 and explains how a :term:`hybrid` and adaptive cancellers let one pair carry
@@ -10,8 +10,8 @@ both directions at once. The effects themselves are introduced in
 
 .. _phy-channel-limits:
 
-The standard limits loss and crosstalk as functions of frequency
-----------------------------------------------------------------
+Channel limits
+--------------
 
 :clause:`40.7` limits the link segment with three formulas of frequency.
 Each is a loss in decibels; a loss of :math:`L` dB multiplies a voltage by
@@ -69,7 +69,25 @@ For example, at the Nyquist frequency :math:`f = 62.5` MHz:
 
 so at least 12 % of the transmitted voltage at that frequency reaches the
 far end. :numref:`tab-phy-channel-limits` gives the same calculation at
-other frequencies.
+other frequencies, and :numref:`fig-phy-channel-limits` plots the limits.
+
+.. figure:: channel-limits.svg
+   :name: fig-phy-channel-limits
+   :alt: Two graphs of loss in dB from 0 to 70 against frequency from
+         1 MHz to 100 MHz on a log scale. Top: the insertion loss limit
+         rises from about 2.5 dB at 1 MHz through 7.1 dB at 10 MHz and
+         18.7 dB at 62.5 MHz to 24.0 dB at 100 MHz. The NEXT loss limit
+         falls from about 61 dB at 1 MHz through 43.9 dB at 10 MHz and
+         30.5 dB at 62.5 MHz to 27.1 dB at 100 MHz. The gap between them is
+         shaded as the margin, 11.8 dB at 62.5 MHz and 3.1 dB at 100 MHz.
+         Dashed lines mark 31.25 MHz and 62.5 MHz. Bottom: the ELFEXT loss
+         limit, measured against the received signal, falls from 57 dB to
+         17 dB, and the power-sum limit runs 2.6 dB below it.
+   :align: center
+
+   The 1000BASE-T channel limits of :clause:`40.7` against frequency:
+   insertion loss and NEXT loss with the margin between them shaded, and
+   ELFEXT loss, which is already relative to the received signal.
 
 .. list-table:: 1000BASE-T channel limits for a 100 m channel, from the
    formulas of :clause:`40.7`
@@ -105,8 +123,8 @@ other frequencies.
 
 .. _phy-next-margin:
 
-Near-end crosstalk from one pair comes within 3 dB of the signal
-----------------------------------------------------------------
+Near-end crosstalk margin
+-------------------------
 
 The wanted signal and the near-end crosstalk start from transmitters of the
 same size. The wanted signal is reduced by the insertion loss, and the
@@ -117,7 +135,8 @@ crosstalk from one neighbouring pair by
 
    M(f) = L_\text{NEXT}(f) - L_\text{IL}(f)
 
-where :math:`M` is the margin in dB. At 62.5 MHz,
+where :math:`M` is the margin in dB, shaded in
+:numref:`fig-phy-channel-limits`. At 62.5 MHz,
 :math:`M = 30.5 - 18.7 = 11.8` dB; at 100 MHz, :math:`M = 27.1 - 24.0 =
 3.1` dB. There are three neighbouring pairs, and the transceiver's own
 transmission on the same pair, the echo, is larger still. The receiver
@@ -126,8 +145,8 @@ page describes.
 
 .. _phy-echo:
 
-The hybrid removes most of the transceiver's own signal
--------------------------------------------------------
+Hybrid
+------
 
 Each pair carries :math:`1000 / 4 = 250` Mbit/s in each direction at the
 same time (:clause:`40.1.3`). Both ends drive the same two wires, so the
@@ -180,8 +199,8 @@ to 27). In the Microchip KSZ9031 this stage is an analogue hybrid that
 
 .. _phy-echo-canceller:
 
-The echo canceller predicts and subtracts what the hybrid leaves
-----------------------------------------------------------------
+Echo canceller
+--------------
 
 The second stage is the echo canceller, a digital adaptive
 :wikipedia:`finite impulse response <Finite_impulse_response>` (FIR)
@@ -192,6 +211,19 @@ received samples. Each filter coefficient, or *tap*, multiplies one past
 symbol. The coefficients adapt continuously to keep the remaining error
 small, commonly with the :wikipedia:`least-mean-squares
 <Least_mean_squares_filter>` method ([PHY-TUT98]_ slide 58).
+:numref:`fig-phy-echo-canceller` shows the structure.
+
+.. graphviz:: echo-canceller.dot
+   :name: fig-phy-echo-canceller
+   :caption: An adaptive FIR echo canceller: each tap multiplies one past
+             symbol by a coefficient, and the sum predicts the echo.
+   :alt: The symbols sent pass along a delay line of 8 ns stages. Each
+         stage output, or tap, feeds a multiplier by a coefficient c0, c1,
+         c2 up to cn. The products are summed to give the predicted echo,
+         which is subtracted from the ADC samples, far-end signal plus
+         echo. The result is the far-end signal and the error, which
+         feeds a least-mean-squares update that adjusts the coefficients.
+   :align: center
 
 Reflections from far along the cable return long after the symbol that
 caused them, so the filter is long. The 802.3ab tutorial's examples use 60
@@ -201,16 +233,30 @@ reach.
 
 .. _phy-crosstalk:
 
-Three more cancellers remove near-end crosstalk
------------------------------------------------
+Near-end crosstalk cancellers
+-----------------------------
 
 Near-end crosstalk comes from the transceiver's own transmitters on the
 other three pairs, so the transceiver knows exactly what caused it. Each
 receiver runs three more adaptive FIR filters, one for each other pair,
 that predict and subtract that crosstalk ([PHY-KSZ9031]_ section 3.2.5).
-With the :term:`equaliser` of :doc:`1000base-t-receiver`, each receiver has
+With the two :term:`equalisers <equaliser>` of
+:ref:`the receiver page <phy-equalisation>`, each receiver has
 five adaptive filters, and the transceiver has twenty ([PHY-HEALEY]_
-slide 38).
+slide 38). :numref:`fig-phy-next-cancellers` shows where the inputs of the
+four cancellers of one receiver come from.
+
+.. graphviz:: next-cancellers.dot
+   :name: fig-phy-next-cancellers
+   :caption: The four cancellers of the receiver of pair A, each driven by
+             one of the transceiver's own transmitters.
+   :alt: Four rows on the left: the transceiver's own symbols on pairs A,
+         B, C and D. Pair A's symbols feed the echo canceller; pairs B, C
+         and D each feed a near-end crosstalk canceller. All four outputs
+         are subtracted from the pair A ADC samples, and the result goes
+         to the equaliser and decoder of pair A. A dashed box shows that
+         far-end crosstalk enters the ADC samples with no canceller.
+   :align: center
 
 Far-end crosstalk comes from symbols the receiving transceiver did not
 send, so it cannot be predicted from its own symbols. The cable limits keep

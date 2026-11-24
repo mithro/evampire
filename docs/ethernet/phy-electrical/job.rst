@@ -1,7 +1,7 @@
 .. _phy-job:
 
-What a transceiver does and what the cable does to the signal
-=============================================================
+Transceiver role and the cable
+==============================
 
 This page describes the job of an :term:`Ethernet transceiver`, the three
 speeds it handles, and the four ways a twisted-pair cable changes the signal
@@ -9,8 +9,8 @@ on its way.
 
 .. _phy-position:
 
-The transceiver sits between the forwarding logic and the cable
----------------------------------------------------------------
+Position of the transceiver
+---------------------------
 
 The IEEE 802.3 standard [PHY-8023]_ calls the logic that sends and receives
 whole :term:`frames <frame>` the :term:`media access controller (MAC)
@@ -56,8 +56,8 @@ support. This exchange is :term:`autonegotiation`
 
 .. _phy-speeds:
 
-A transceiver handles three speeds, each with its own coding
--------------------------------------------------------------
+The three speeds
+----------------
 
 A gigabit transceiver for twisted-pair cable normally supports three
 speeds, each defined in its own clauses of IEEE 802.3
@@ -93,8 +93,20 @@ twisted pair.
      - 5
 
 10BASE-T and 100BASE-TX use one pair for each direction. 1000BASE-T uses
-all four pairs in both directions at once. These pages describe the speeds
+all four pairs in both directions at once (:numref:`fig-phy-speeds`). These pages describe the speeds
 in that order, because each one adds techniques to the one before.
+
+.. figure:: speeds.svg
+   :name: fig-phy-speeds
+   :alt: Three rows, one per speed, each with four pairs A to D between
+         end 1 and end 2 and a ladder of levels at the right. 10BASE-T:
+         pair A carries one direction and pair B the other; pairs C and D
+         are unused; 2 levels. 100BASE-TX: the same pairs; 3 levels.
+         1000BASE-T: all four pairs carry both directions; 5 levels.
+   :align: center
+
+   The pairs each speed uses, the direction on each, and the number of
+   levels on the wire.
 
 Three terms are used on every page:
 
@@ -114,30 +126,49 @@ Differential voltage
 
 .. _phy-cable:
 
-The cable is four twisted pairs specified up to 100 MHz
--------------------------------------------------------
+The cable
+---------
 
 An Ethernet cable holds four pairs of copper wires. The two wires of each
 pair are twisted around each other, which makes the pair a balanced
 :wikipedia:`transmission line <Transmission_line>` of 100 Ω characteristic
 impedance (:clause:`40.7.2.2`) and reduces the interference it picks up
-and radiates (:wikipedia:`twisted pair <Twisted_pair>`).
+and radiates (:wikipedia:`twisted pair <Twisted_pair>`). 1000BASE-T names
+the pairs A to D: pair A lands on contacts 1 and 2 of the :term:`RJ45`
+socket, B on 3 and 6, C on 4 and 5, and D on 7 and 8
+(:clause:`Table 40-12 <40>`, :numref:`fig-phy-cable`).
+
+.. figure:: cable.svg
+   :name: fig-phy-cable
+   :alt: An RJ45 plug face with contacts 1 to 8 on the left. Lines run
+         from contacts 1 and 2 to pair A, 3 and 6 to pair B, 4 and 5 to
+         pair C, and 7 and 8 to pair D. The four pairs run through a cable
+         jacket, each drawn as two wires twisted together, with a break to
+         show the length; an arrow above marks a link of up to 100 m. A
+         note says each pair has a differential impedance of 100 ohms and
+         its signal is the voltage of one wire minus the other, for pair A
+         contact 1 minus contact 2.
+   :align: center
+
+   The four twisted pairs of a cable and the RJ45 contacts they land on.
 
 1000BASE-T runs over Class D cabling built from Category 5 components, as
 specified in :std:`ISO/IEC 11801 <iso-iec-11801>` and :std:`TIA-568`
 (:clause:`40.7.1`, see :wikipedia:`Category 5 cable
-<Category_5_cable>`). The link transmission parameters are specified for a
+<Category_5_cable>`). Their transmission is specified up to 100 MHz
+(:clause:`40.7.2.1`). The link transmission parameters are specified for a
 link segment of up to at least 100 m (:clause:`40.7.2`). The receiver must reach a
 :wikipedia:`bit error ratio <Bit_error_rate>` below :math:`10^{-10}` over
 such a link (:clause:`40.6.1.3.1`).
 
 .. _phy-impairments:
 
-The cable changes the signal in four ways
------------------------------------------
+Cable impairments
+-----------------
 
-Four effects of the cable set the design of every transceiver.
-:doc:`1000base-t-echo` gives the size of each one for 1000BASE-T.
+Four effects of the cable set the design of every transceiver
+(:numref:`fig-phy-cable-effects`). :doc:`1000base-t-echo` gives the size
+of each one for 1000BASE-T.
 
 :term:`Insertion loss`
    The signal becomes smaller as it travels, and more so at high
@@ -164,3 +195,22 @@ Far-end crosstalk
 Losses are given in :wikipedia:`decibels <Decibel>` (dB). A loss of
 :math:`L` dB multiplies a voltage by :math:`10^{-L/20}`: 6 dB halves it and
 20 dB divides it by 10.
+
+.. figure:: impairments.svg
+   :name: fig-phy-cable-effects
+   :alt: Four panels. (a) Insertion loss: voltage against time from 0 to
+         64 ns with 8 ns symbol slots; a sent pulse of height 1 from 8 ns
+         to 16 ns arrives as a smooth pulse of height about 0.4 peaking
+         near 18 ns, whose shaded tail lasts past 48 ns, over later
+         symbols. (b) Return loss: a sender drives a line with a connector
+         part way along; a thick incident arrow goes towards the
+         connector and a thin reflected arrow comes back. (c) Near-end
+         crosstalk: a transmitter on pair B and a receiver on pair A at
+         the same end, with a thick coupling arrow from B to A. (d)
+         Far-end crosstalk: the transmitter on pair B is at the far end;
+         a thin coupling arrow from B to A there, then a dashed arrow
+         along pair A to the receiver.
+   :align: center
+
+   The four ways the cable changes the signal; the pulse shapes are
+   schematic, not to scale.
