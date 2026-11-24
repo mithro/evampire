@@ -228,8 +228,9 @@ conducting path to its input (:wikipedia:`galvanic isolation
 :wikipedia:`flyback converter <Flyback_converter>`: an inverting buck-boost
 converter whose inductor has a second winding. The switch charges the
 transformer's magnetising inductance from the input; when it opens, the
-energy leaves through the secondary winding and a rectifier. With turns
-ratio :math:`N_p / N_s`,
+energy leaves through the secondary winding and a rectifier
+(:numref:`fig-conv-flyback`). The windings are wound so that the rectifier
+blocks while the switch is on. With turns ratio :math:`N_p / N_s`,
 
 .. math::
 
@@ -242,6 +243,22 @@ spike caused by the transformer's leakage inductance. For an illustrative
 12 V output with :math:`N_p / N_s = 4`, the duty cycle is 0.565 at 37 V in and
 0.457 at 57 V in, and the switch must block at least
 :math:`57 + 4 \times 12 = 105` V.
+
+.. graphviz:: flyback.dot
+   :name: fig-conv-flyback
+   :caption: Flyback converter for the 12 V example, with its isolation
+             barrier; the leakage-inductance spike adds to the switch
+             voltage shown.
+   :alt: Schematic: the 37 V to 57 V input connects to the top of the
+         primary winding Np; the bottom of the winding connects through
+         the switch, rated at least 105 V, to the primary ground. A dashed
+         isolation barrier separates the primary winding from the secondary
+         winding Ns; the turns ratio is 4. Dots mark the top of the primary
+         and the bottom of the secondary. The top of the secondary connects
+         through a rectifier to the 12 V output, with a capacitor and the
+         load to a separate secondary ground. The duty cycle is 0.565 at
+         37 V and 0.457 at 57 V.
+   :align: center
 
 Many powered devices use a flyback converter because the Power over
 Ethernet standard asks for the cable to be isolated from the rest of the
