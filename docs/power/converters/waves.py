@@ -198,10 +198,53 @@ def boost_waves():
     s.save(HERE / "boost-waves.svg")
 
 
+def cap_ripple():
+    """Output capacitor current and voltage ripple of the buck example."""
+    c_uf = 22.0
+    s = Svg(600, 395)
+    t_end = 2 * T_US
+    ai = Axes(s, (110, 30, 520, 160), (0, t_end), (-0.5, 0.5))
+    ai.frame(xticks=range(9), yticks=[-0.383, 0, 0.383], ylabel="iC (A)",
+             grid=False, yfmt=lambda v: f"{v:+.3f}".replace("-", "−")
+             if v else "0")
+    pts, vs = [], []
+    v, dt, t = 0.0, 0.01, 0.0
+    while t <= t_end + 1e-9:
+        ph = t % T_US
+        i = (-RIPPLE / 2 + RISE * ph if ph < D * T_US
+             else RIPPLE / 2 - FALL * (ph - D * T_US))
+        pts.append((t, i))
+        vs.append((t, v))
+        v += i * dt / c_uf * 1e3          # mV, with t in µs and C in µF
+        t += dt
+    s.line(ai.X(0), ai.Y(0), ai.X(t_end), ai.Y(0), stroke=GREY, dash="3 3",
+           width=1)
+    s.poly(ai.P(pts), stroke=BLUE)
+    mean = sum(x for _, x in vs) / len(vs)
+    vs = [(t, x - mean) for t, x in vs]
+    lo, hi = min(x for _, x in vs), max(x for _, x in vs)
+    av = Axes(s, (110, 200, 520, 320), (0, t_end), (-12, 12))
+    av.frame(xticks=range(9), yticks=[round(lo, 1), 0, round(hi, 1)],
+             ylabel="ripple (mV)", grid=False,
+             xlabel="time (µs), 250 kHz, 22 µF",
+             yfmt=lambda x: f"{x:+.1f}".replace("-", "−") if x else "0")
+    s.poly(av.P(vs), stroke=ORANGE)
+    x = av.X(t_end) + 12
+    s.line(x, av.Y(lo), x, av.Y(hi), arrow="both", width=1)
+    s.text(x + 6, av.Y(0), f"{hi - lo:.1f} mV\npeak to\npeak", size=11,
+           anchor="start")
+    s.text(ai.X(t_end) + 8, ai.Y(0), "iL − Iout", size=11, anchor="start",
+           fill=BLUE)
+    s.text(300, 382, "the voltage rises while iC is positive and falls "
+           "while it is negative", size=11, fill=GREY)
+    s.save(HERE / "cap-ripple.svg")
+
+
 FIGURES = {
     "buck-balance": buck_balance,
     "conduction-modes": conduction_modes,
     "boost-waves": boost_waves,
+    "cap-ripple": cap_ripple,
 }
 
 if __name__ == "__main__":
