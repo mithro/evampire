@@ -242,19 +242,26 @@ answering the host.
 
 .. wavedrom::
    :caption: The device must start its reply between 2 and 6.5 bit times
-             after the end of the host's packet.
+             after the end of the host's packet (not to scale).
    :name: fig-usbser-turnaround
    :alt: Timing diagram: the host sends a data packet ending with an end of
-         packet; after a gap of 2 to 6.5 bit times the device starts its
-         ACK handshake.
+         packet; after a gap of 2 to 6.5 bit times, 166.7 ns to 541.7 ns,
+         the device starts its ACK handshake. The 6.5 bit times split into
+         the receiver delay t_rx, the time to decide t_reply and the driver
+         delay t_tx. The host waits 16 to 18 bit times, 1.333 µs to 1.5 µs,
+         before it gives up.
 
    {"signal": [
-     {"name": "host", "wave": "3...5.x.....",
+     {"name": "host", "wave": "3...5.x.........",
       "data": ["DATA packet", "EOP"]},
-     {"name": "gap", "wave": "x.....4...x.",
+     {"name": "gap", "wave": "x.....4...x.....",
       "data": ["2 to 6.5 bit times"]},
-     {"name": "device", "wave": "x.........3.",
-      "data": ["ACK"]}
+     {"name": "device", "wave": "x.........3.....",
+      "data": ["ACK"]},
+     {"name": "inside 6.5", "wave": "x.....567.x.....",
+      "data": ["t_rx", "t_reply", "t_tx"]},
+     {"name": "host timeout", "wave": "x.....8.........",
+      "data": ["host waits 16 to 18 bit times, 1.333 µs to 1.5 µs"]}
    ],
    "config": {"hscale": 2.5}}
 
