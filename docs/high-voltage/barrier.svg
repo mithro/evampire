@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="330" viewBox="0 0 640 330" font-family="sans-serif" font-size="13">
+<rect width="640" height="330" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<text x="160" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#222222">Capacitors</text>
+<line x1="160" y1="40" x2="160" y2="250" stroke="#666666" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="20" y="90" width="70" height="110" rx="6" fill="#fde9d3" stroke="#222222"/>
+<text x="55" y="140" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">trans-</text>
+<text x="55" y="156" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">mitter</text>
+<rect x="230" y="90" width="70" height="110" rx="6" fill="#e2f0d9" stroke="#222222"/>
+<text x="265" y="140" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">receiver</text>
+<line x1="90" y1="115" x2="152" y2="115" stroke="#222222" stroke-width="1.5"/>
+<line x1="168" y1="115" x2="230" y2="115" stroke="#222222" stroke-width="1.5"/>
+<line x1="90" y1="175" x2="152" y2="175" stroke="#222222" stroke-width="1.5"/>
+<line x1="168" y1="175" x2="230" y2="175" stroke="#222222" stroke-width="1.5"/>
+<line x1="152" y1="101" x2="152" y2="129" stroke="#222222" stroke-width="2.5"/>
+<line x1="168" y1="101" x2="168" y2="129" stroke="#222222" stroke-width="2.5"/>
+<line x1="152" y1="161" x2="152" y2="189" stroke="#222222" stroke-width="2.5"/>
+<line x1="168" y1="161" x2="168" y2="189" stroke="#222222" stroke-width="2.5"/>
+<text x="160" y="270" text-anchor="middle" font-size="12" font-weight="normal" fill="#666666">insulator</text>
+<text x="160" y="292" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">passes a changing voltage</text>
+<text x="160" y="310" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">no steady current</text>
+<text x="480" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#222222">Coils</text>
+<line x1="480" y1="40" x2="480" y2="250" stroke="#666666" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="340" y="90" width="70" height="110" rx="6" fill="#fde9d3" stroke="#222222"/>
+<text x="375" y="140" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">trans-</text>
+<text x="375" y="156" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">mitter</text>
+<rect x="550" y="90" width="70" height="110" rx="6" fill="#e2f0d9" stroke="#222222"/>
+<text x="585" y="140" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">receiver</text>
+<line x1="410" y1="115" x2="446" y2="115" stroke="#222222" stroke-width="1.5"/>
+<line x1="514" y1="115" x2="550" y2="115" stroke="#222222" stroke-width="1.5"/>
+<line x1="410" y1="175" x2="446" y2="175" stroke="#222222" stroke-width="1.5"/>
+<line x1="514" y1="175" x2="550" y2="175" stroke="#222222" stroke-width="1.5"/>
+<path d="M462,115 Q444,122.5 462,130 Q444,137.5 462,145 Q444,152.5 462,160 Q444,167.5 462,175 " stroke="#222222" stroke-width="1.8" fill="none"/>
+<line x1="462" y1="175" x2="462" y2="175" stroke="#222222" stroke-width="1.5"/>
+<path d="M498,115 Q516,122.5 498,130 Q516,137.5 498,145 Q516,152.5 498,160 Q516,167.5 498,175 " stroke="#222222" stroke-width="1.8" fill="none"/>
+<line x1="498" y1="175" x2="498" y2="175" stroke="#222222" stroke-width="1.5"/>
+<text x="480" y="270" text-anchor="middle" font-size="12" font-weight="normal" fill="#666666">insulator</text>
+<text x="480" y="292" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">passes a changing current</text>
+<text x="480" y="310" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">no steady current</text>
+</svg>

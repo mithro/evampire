@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="380" viewBox="0 0 640 380" font-family="sans-serif" font-size="13">
+<rect width="640" height="380" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect x="20" y="150" width="360" height="170" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<text x="200" y="308" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">P substrate, 0 V</text>
+<rect x="40" y="150" width="120" height="50" rx="8" fill="#fbd9b5" stroke="#222222"/>
+<text x="100" y="180" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">low-side circuits</text>
+<rect x="200" y="150" width="160" height="90" rx="14" fill="#fbd9b5" stroke="#222222"/>
+<text x="280" y="180" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">high-side circuits</text>
+<text x="280" y="198" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">in a floating</text>
+<text x="280" y="214" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">N-type tub</text>
+<path d="M190,150 L190,242 Q190,252 204,252 L356,252 Q370,252 370,242 L370,150" stroke="#c0392b" stroke-width="2" stroke-dasharray="5 3" fill="none"/>
+<text x="280" y="272" text-anchor="middle" font-size="11" font-weight="normal" fill="#c0392b">its junction to the substrate</text>
+<text x="280" y="286" text-anchor="middle" font-size="11" font-weight="normal" fill="#c0392b">holds up to 500 V or 1200 V</text>
+<line x1="520" y1="40" x2="520" y2="340" stroke="#222222" stroke-width="1.5"/>
+<text x="520" y="30" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">bus, hundreds of volts</text>
+<rect x="498" y="84" width="44" height="52" rx="0" fill="#e2f0d9" stroke="#222222"/>
+<text x="548" y="114" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">high-side switch</text>
+<rect x="498" y="224" width="44" height="52" rx="0" fill="#e2f0d9" stroke="#222222"/>
+<text x="548" y="254" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">low-side switch</text>
+<text x="520" y="356" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0 V</text>
+<circle cx="520" cy="180" r="4" fill="#222222"/>
+<text x="528" y="184" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">switching node</text>
+<polyline points="520,180 420,180 420,170 360,170" stroke="#222222" stroke-width="1.5" fill="none"/>
+<polyline points="300,150 300,110 498,110" stroke="#222222" stroke-width="1.5" fill="none"/>
+<text x="400" y="104" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">gate drive</text>
+<polyline points="100,150 100,64 460,64 460,250 498,250" stroke="#222222" stroke-width="1.5" fill="none"/>
+<text x="528" y="200" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">the tub follows it,</text>
+<text x="528" y="214" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">down to −5 V</text>
+</svg>
