@@ -517,6 +517,53 @@ def dead_time():
     s.save(HERE / "dead-time.svg")
 
 
+def pwm_resolution():
+    """Edge placement of a counter, a delay line and dithering."""
+    s = Svg(600, 375)
+    tr = (0, 56)
+    ideal = 37.4
+    rows = []
+    ck = Axes(s, (150, 30, 580, 55), tr, (0, 1))
+    pts = []
+    for k in range(7):
+        pts += [(8 * k, 0), (8 * k, 1), (8 * k + 4, 1), (8 * k + 4, 0)]
+    pts.append((56, 0))
+    s.poly(ck.P(pts), stroke=GREY, width=1.4)
+    s.text(142, 42, "125 MHz clock", size=12, anchor="end")
+    for ax_y, name, edge, col in ((85, "ideal edge", ideal, GREEN),
+                                  (135, "counter only", 40, RED),
+                                  (185, "counter and\n8-tap delay line", 37,
+                                   BLUE)):
+        ax = Axes(s, (150, ax_y, 580, ax_y + 25), tr, (0, 1))
+        square(s, ax, [(0, edge)], 0, 1, stroke=col)
+        s.text(142, ax_y + 12, name, size=12, anchor="end")
+        rows.append((ax, edge, col))
+    for ax, edge, col in rows[1:]:
+        err = f"{edge - ideal:+.1f}".replace("-", "−")
+        s.text(ax.X(edge) + 6, ax.y0 + 11, f"{edge:g} ns ({err} ns)",
+               size=11, fill=col, anchor="start")
+    s.text(rows[0][0].X(ideal) + 6, rows[0][0].y0 + 11, "37.4 ns", size=11,
+           fill=GREEN, anchor="start")
+    # Delay-line taps inside the clock period 32..40 ns.
+    for k in range(9):
+        x = rows[2][0].X(32 + k)
+        s.line(x, 222, x, 230, stroke=BLUE, width=1)
+    s.text(rows[2][0].X(36), 242, "taps 1 ns apart", size=10, fill=BLUE)
+    # Dithering: alternate periods end at 32 and 40 ns.
+    s.text(142, 290, "dithering:\nperiod 1, 2", size=12, anchor="end")
+    for j, (y0, edge) in enumerate(((268, 40), (300, 32))):
+        ax = Axes(s, (150, y0, 580, y0 + 22), tr, (0, 1))
+        square(s, ax, [(0, edge)], 0, 1, stroke=ORANGE)
+    s.text(365, 338, "periods ending at 40 ns and 32 ns alternate: 36 ns on "
+           "average", size=11, fill=ORANGE)
+    for k in range(8):
+        x = ck.X(8 * k)
+        s.line(x, 60, x, 325, stroke="#dddddd", width=1, dash="2 3")
+    s.text(365, 362, "time (ns), one 8 ns clock period per grid line",
+           size=11, fill=GREY)
+    s.save(HERE / "pwm-resolution.svg")
+
+
 FIGURES = {
     "buck-balance": buck_balance,
     "conduction-modes": conduction_modes,
@@ -528,6 +575,7 @@ FIGURES = {
     "soft-start": soft_start,
     "current-limit": current_limit,
     "dead-time": dead_time,
+    "pwm-resolution": pwm_resolution,
 }
 
 if __name__ == "__main__":

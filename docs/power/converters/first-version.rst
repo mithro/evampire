@@ -162,6 +162,20 @@ often combined:
   period to the next, so that the average falls between them, at the cost
   of a small ripple at a lower frequency.
 
+:numref:`fig-conv-pwm-resolution` shows the three on a 125 MHz counter.
+
+.. figure:: pwm-resolution.svg
+   :name: fig-conv-pwm-resolution
+   :alt: Timing diagram against a 125 MHz clock with 8 ns periods. An ideal
+         PWM edge at 37.4 ns; a counter alone can only end the pulse at
+         40 ns, 2.6 ns late; a counter with an 8-tap delay line, taps 1 ns
+         apart, ends it at 37 ns, 0.4 ns early; with dithering, periods
+         ending at 40 ns and 32 ns alternate, giving 36 ns on average.
+   :align: center
+
+   Placing a PWM edge with a 125 MHz counter, a delay line and dithering
+   (illustrative edge position).
+
 In peak current-mode control the duty cycle comes from a comparator, not
 from a counter, so the voltage step is set by the reference DAC instead:
 10 bits for 20 mV steps over 21 V, and 9 bits for 100 mV steps over 48 V
