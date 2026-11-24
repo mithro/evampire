@@ -60,6 +60,18 @@ board-embedded transformers have coupled 1000BASE-T Ethernet
 inductance in some samples, with large variation in the ferrite's
 permeability after machining ([MAG-BOWEN17]_).
 
+:numref:`fig-magnetics-embedded` shows how the board forms the windings.
+
+.. figure:: embedded.svg
+   :name: fig-magnetics-embedded
+   :alt: Left, a cross-section through one limb of an embedded core: a
+         ferrite core sits inside the board laminate, and a top copper
+         trace, a bottom copper trace and a via on each side form one turn
+         around it. Right, a top view of a racetrack-shaped ferrite core
+         with one winding of several turns on each straight side.
+
+   A transformer embedded in a circuit board (schematic, not to scale).
+
 Industry has kept wound parts. An embedded part needs a footprint 20 % to
 50 % larger than a wound one, and its advantage is less hand labour
 ([MAG-QUILICI]_, design methodology), while wound magnetics are already
