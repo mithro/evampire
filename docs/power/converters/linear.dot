@@ -27,7 +27,7 @@ graph linear {
 
     node  [shape=plaintext, style="", fontsize=10, width=0.9, height=0.2];
     out_l [pos="4.9,2.2!", width=1.2, label="Vout, below Vin"];
-    g_l   [pos="2.3,1.48!", width=0.5, label="gate"];
+    g_l   [pos="2.6,1.48!", width=0.5, label="gate"];
     h_l   [pos="2.3,2.5!", width=3.0, fontcolor="#c0392b",
            label="heat = (Vin − Vout) × Iout"];
 
