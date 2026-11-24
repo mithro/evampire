@@ -44,7 +44,9 @@ uv run python docs/check_source.py docs   # fast: source-only check, no build
    - docutils system-message boxes, and unresolved references or roles
      (`class="problematic"`);
    - numbered figures and tables that no link points to;
-   - diagrams without `:alt:`.
+   - diagrams without `:alt:`;
+   - pages that the left sidebar does not link to. The home page is in
+     the sidebar through the `Overview <self>` entry of its own `toctree`.
 
 `check_html.py` checks links across the whole site, so it needs a full
 build; no check renders a single page on its own.

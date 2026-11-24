@@ -46,7 +46,7 @@ checkers listed below.
 |---|---|
 | [`docs/`](docs/) | The documentation source, published as the [evampire documentation](https://evampire.readthedocs.io/) |
 | [`docs/check_source.py`](docs/check_source.py) | Fails when a page names part of a standard as plain text instead of linking to it |
-| [`docs/check_html.py`](docs/check_html.py) | Fails on error boxes, unreferenced figure and table numbers, and diagrams without alt text in the built pages |
+| [`docs/check_html.py`](docs/check_html.py) | Fails on error boxes, unreferenced figure and table numbers, diagrams without alt text, and pages missing from the sidebar in the built pages |
 | [`.github/workflows/docs.yml`](.github/workflows/docs.yml) | Builds and checks the documentation on every push and pull request, and runs the link checker |
 
 ## Licence, citing and contributing
