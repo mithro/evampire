@@ -144,10 +144,42 @@ def start_timeline():
     s.save(HERE / "start-timeline.svg")
 
 
+def runaway():
+    """Inductor current rise with 57 V across 47 µH, against time."""
+    s = Svg(560, 360)
+    a = Axes(s, (80, 20, 530, 290), (1e-8, 2e-5), (0.01, 30), xlog=True,
+             ylog=True)
+    labels = {1e-8: "10 ns", 1e-7: "100 ns", 1e-6: "1 µs", 1e-5: "10 µs"}
+    a.frame(xticks=list(labels), yticks=[0.01, 0.1, 1, 10],
+            xfmt=lambda v: labels[v], yfmt=lambda v: f"{v:g}",
+            xlabel="time after the current limit is passed (log scale)",
+            ylabel="current rise (A, log scale)")
+    rate = 57 / 47e-6
+    s.poly(a.P([(1e-8, rate * 1e-8), (2e-5, rate * 2e-5)]), stroke=BLUE)
+    for t, txt in ((1e-7, "0.12 A at 100 ns"), (1e-6, "1.21 A at 1 µs"),
+                   (1e-5, "12.1 A at 10 µs")):
+        s.add(f'<circle cx="{a.X(t):.1f}" cy="{a.Y(rate * t):.1f}" r="4" '
+              f'fill="{BLUE}"/>')
+        if t < 5e-6:
+            s.text(a.X(t) + 8, a.Y(rate * t) + 12, txt, size=11,
+                   anchor="start")
+        else:
+            s.text(a.X(t) - 8, a.Y(rate * t) - 12, txt, size=11,
+                   anchor="end")
+    s.line(a.x0, a.Y(1), a.X(0.82e-6), a.Y(1), stroke=RED, dash="5 3")
+    s.line(a.X(0.82e-6), a.Y(1), a.X(0.82e-6), a.y1, stroke=RED, dash="5 3")
+    s.text(a.X(0.82e-6) - 6, a.Y(0.03), "1 A margin\nreached at\n0.82 µs",
+           size=11, fill=RED, anchor="end")
+    s.text(a.X(1e-8) + 6, a.Y(15), "1.21 A/µs: 57 V across 47 µH", size=11,
+           anchor="start", fill=BLUE)
+    s.save(HERE / "runaway.svg")
+
+
 FIGURES = {
     "pwm-resolution": pwm_resolution,
     "pse-template": pse_template,
     "start-timeline": start_timeline,
+    "runaway": runaway,
 }
 
 if __name__ == "__main__":

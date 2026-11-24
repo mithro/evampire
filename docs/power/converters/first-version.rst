@@ -425,7 +425,17 @@ needed is
 where :math:`\Delta I_\text{margin}` is the margin between the current limit
 and the current at which the inductor saturates or a switch is damaged, in
 A, and :math:`V_L` the voltage across the inductor in V. A 1 A margin in the
-example allows 0.82 µs.
+example allows 0.82 µs. :numref:`fig-conv-runaway` plots the rise.
+
+.. figure:: runaway.svg
+   :name: fig-conv-runaway
+   :alt: Log-log graph of current rise against time: a straight line at
+         1.21 A/µs, for 57 V across 47 µH, through 0.12 A at 100 ns,
+         1.21 A at 1 µs and 12.1 A at 10 µs. Dashed lines mark a 1 A margin
+         reached at 0.82 µs.
+   :align: center
+
+   Inductor current rise of the buck example once nothing stops it.
 
 The USB Power Delivery specification gives no response time for the source's
 over-current protection; it requires that the protection does not trip
