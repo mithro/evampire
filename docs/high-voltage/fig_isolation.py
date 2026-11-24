@@ -34,7 +34,8 @@ def dnw_stack():
         body.append(text(x + ww / 2, 158, f"{v} V", size=13))
         if k < n - 1:
             body.append(text(x + ww / 2 + pitch / 2, 84, "5 V", size=11))
-            body.append(f'<path d="M{x + ww / 2},104 Q{x + pitch / 2 + ww / 2},'
+            body.append(f'<path d="M{x + ww / 2},104 '
+                        f'Q{x + pitch / 2 + ww / 2},'
                         f'84 {x + pitch + ww / 2},104" stroke="{INK}" '
                         f'stroke-width="1.2" fill="none"/>')
     body.append(text(320, 30, "Each transistor in its own deep N-well",
@@ -44,7 +45,8 @@ def dnw_stack():
     # The weak point: the top deep N-well's junction with the substrate.
     xt = x0 + ww / 2
     body.append(path(f"M{x0 - 4},114 L{x0 - 4},168 Q{x0 - 4},176 {x0 + 4},176 "
-                     f"L{x0 + ww - 4},176 Q{x0 + ww + 4},176 {x0 + ww + 4},168 "
+                     f"L{x0 + ww - 4},176 "
+                     f"Q{x0 + ww + 4},176 {x0 + ww + 4},168 "
                      f"L{x0 + ww + 4},114", stroke=DEPL, dash="5 3",
                      width=2.2))
     body.append(line(xt, 184, xt, 222, marker=True))

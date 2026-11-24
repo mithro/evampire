@@ -16,9 +16,10 @@ import sys
 from svgdraw import (ARROW, INK, METAL, NWELL, OXIDE, POLY, SUB, line,
                      path, rect, svg, text)
 import fig_edge
+import fig_graphs
 import fig_isolation
-import fig_metalgate
 import fig_junctions
+import fig_metalgate
 
 
 def stack_section():
@@ -182,7 +183,7 @@ def main(argv):
     (out / "grading.svg").write_text(grading(), encoding="utf-8")
     (out / "metal-gate.svg").write_text(metal_gate(), encoding="utf-8")
     for module in (fig_junctions, fig_edge, fig_isolation,
-                   fig_metalgate):
+                   fig_metalgate, fig_graphs):
         for name, draw in module.FIGURES.items():
             (out / name).write_text(draw(), encoding="utf-8")
     return 0

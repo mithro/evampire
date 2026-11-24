@@ -147,7 +147,8 @@ def plan(y0):
                   size=12, fill=GREY))
     # Section line through the middle of the right-hand side.
     ys = (y1 + y2) / 2 + 40
-    b.append(line((x1 + x2) / 2, ys, x2 + r + 30, ys, stroke=INK, dash="8 3 2 3",
+    b.append(line((x1 + x2) / 2, ys, x2 + r + 30, ys, stroke=INK,
+                  dash="8 3 2 3",
                   width=1.2))
     b.append(text((x1 + x2) / 2 - 6, ys + 4, "A", anchor="end", size=13,
                   weight="bold"))

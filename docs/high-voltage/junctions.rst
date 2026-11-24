@@ -111,7 +111,21 @@ shallower and wider.
 
 The values come from the two equations above
 (:download:`calc.py <calc.py>`,
-section 1).
+section 1). :numref:`fig-hv-doping-breakdown` plots both equations across
+the range.
+
+.. figure:: doping-breakdown.svg
+   :name: fig-hv-doping-breakdown
+   :alt: Two log-log graphs against doping from 10 to the 14 to 10 to the
+         17 per cubic centimetre. Top, breakdown voltage falls from 1690 V
+         through 300 V and 53 V to 9 V; the gf180mcu estimate of 1.2 to 5.3
+         times 10 to the 15 is shaded, where the flat junction holds about
+         90 V to 270 V, above a 57 V line and far above the published
+         N-well breakdown of 14 V typical. Bottom, the depletion width at
+         breakdown falls from 150 µm through 20 µm and 2.7 µm to 0.36 µm.
+
+   Breakdown voltage and depletion width of a flat junction against
+   doping, with the gf180mcu substrate estimate shaded.
 
 gf180mcu substrate doping
 -------------------------
@@ -203,7 +217,8 @@ surface in the 6 V area (:doc:`metal-gate`). A capacitance measurement on a
 large N-well test structure would give the doping profile directly.
 
 At :math:`1.2 \times 10^{15}` to :math:`5.3 \times 10^{15}\ \text{cm}^{-3}`,
-a flat junction to the substrate would hold about 90 V to 270 V. The
+a flat junction to the substrate would hold about 90 V to 270 V
+(:numref:`fig-hv-doping-breakdown`). The
 published breakdown of the N-well to the substrate is 10 V minimum and
 14 V typical [HV-GF180-EP-5]_. The flat bottom of the well is not what
 breaks down.
@@ -271,11 +286,24 @@ junction of 10 µm radius, against about 320 V for a flat one
 
 The values come from
 :download:`calc.py <calc.py>`,
-section 3. The published 14 V is lower again than the corner values, so the
+section 3, and :numref:`fig-hv-edge-breakdown` plots them. The published
+14 V is lower again than the corner values, so the
 field at the edge of a gf180mcu N-well is higher than curvature alone
 explains. A more heavily doped layer at the surface beside the well, or an
 edge sharper than 0.5 µm, would do it. Breakdown measurements on test wells
 with different corner shapes and spacings would show which.
+
+.. figure:: edge-breakdown.svg
+   :name: fig-hv-edge-breakdown
+   :alt: Graph of breakdown voltage from 0 to 330 V against edge radius
+         from 0.2 µm to 3.2 µm, for a substrate doped at 10 to the 15 per
+         cubic centimetre. A straight side rises from 50 V at 0.5 µm to
+         123 V at 3 µm; a corner from 21 V to 72 V. A dashed line marks the
+         flat bottom at 300 V, and another the published N-well breakdown
+         of 14 V typical, below both curves.
+
+   Breakdown of the curved edges of a well against their radius, against
+   the flat bottom and the published N-well breakdown.
 
 Design consequences
 -------------------

@@ -28,7 +28,6 @@ import matplotlib
 matplotlib.use("Agg")
 import schemdraw  # noqa: E402
 import schemdraw.elements as elm  # noqa: E402
-from schemdraw import logic  # noqa: E402
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
 schemdraw.use("svg")
