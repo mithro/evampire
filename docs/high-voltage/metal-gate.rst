@@ -1,14 +1,14 @@
 .. _hv-metal-gate:
 
-Transistors with a metal gate
-=============================
+Metal-gate transistors
+======================
 
 This page describes a transistor whose gate is one of the metal layers,
 which lets a high-voltage node control low-voltage silicon with only
 insulator between them.
 
-The gate can be any conductor
------------------------------
+Metal as the gate
+-----------------
 
 A MOS transistor works because charge on its gate draws an equal and
 opposite charge into the silicon below it. Above a threshold voltage that
@@ -39,8 +39,8 @@ source and drain stay at low voltage.
    voltage of the sensed node, and the silicon stays near the source
    voltage.
 
-The silicon never sees the high voltage
----------------------------------------
+Voltage across the insulator
+----------------------------
 
 Once the gate is above threshold, the inversion layer connects to the
 source and sits near the source voltage. The silicon surface then changes
@@ -66,8 +66,8 @@ doped P+ taps around the device stop it spreading
 (:numref:`fig-hv-metal-gate`), because heavier doping raises the threshold
 far above the sensed voltage, as the threshold equation below shows.
 
-Each metal layer is a different gate insulator
-----------------------------------------------
+Metal layers as gate insulators
+-------------------------------
 
 The open gf180mcu extraction rules give the capacitance per area of each
 metal layer to the substrate [HV-OPENPDKS-EXTRACT]_. A capacitance per area
@@ -113,8 +113,8 @@ corners 7 % to 13 % either side
 section 7). Over active silicon, with no field oxide below, each layer
 sits closer to the channel.
 
-The threshold rises with the insulator thickness
-------------------------------------------------
+Threshold voltage
+-----------------
 
 The threshold is the gate voltage at which the electron concentration at
 the surface equals the doping. It is the sum of the voltage needed to bring
@@ -186,8 +186,8 @@ The last term dominates for every metal layer, so the threshold rises
 almost in proportion to the insulator thickness. It also rises with the
 doping, and steeply.
 
-A measured threshold calibrates the layers
-------------------------------------------
+Threshold calibration
+---------------------
 
 The foundry publishes the threshold of this very device with its gate on
 Metal1: a field transistor in the 6 V area, NMOS, :math:`W/L = 200/0.36`,
@@ -253,8 +253,8 @@ extrapolation from one measured layer, and four things limit it:
 Each layer and each area therefore needs its own test device before a
 design relies on its threshold.
 
-The channel runs round the field oxide
---------------------------------------
+Channel around the field oxide
+------------------------------
 
 The field oxide is recessed into the silicon, and it can reach deeper than
 the N+ source and drain (:numref:`fig-hv-metal-gate`). The inversion layer
@@ -265,8 +265,8 @@ does. The silicon under the field oxide also carries any implant that stops
 inversion between ordinary transistors, whose doping is not published. The
 published Metal1 threshold already includes both effects for that layer.
 
-Charge in the insulator moves the threshold
--------------------------------------------
+Charge in the insulator
+-----------------------
 
 Fixed charge trapped in the insulator adds to the gate's charge. By
 :math:`Q = CV`, a charge per area :math:`Q_\text{ox}` next to the silicon
@@ -290,8 +290,8 @@ shifter below does. It does not cancel drift that differs between the
 plates. In the level shifter the two plates hold opposite logic states, so
 if one state lasts longer the plates drift apart.
 
-Turning on is gradual
----------------------
+Subthreshold current
+--------------------
 
 Below threshold the current does not stop. The electron concentration at
 the surface is exponential in the surface potential
@@ -308,8 +308,8 @@ section 7). A sensor whose output is a current above threshold is not
 affected. A sensor that has to switch hard on and off within a small
 voltage window needs gain after it.
 
-The current above threshold
----------------------------
+Current above threshold
+-----------------------
 
 With its drain a volt or so above its source, the transistor works in its
 linear region [HV-MIT-6012-L10]_ (slide 10-3):
@@ -367,8 +367,8 @@ The sensed node carries no DC current, since the gate is an insulator. It
 carries only the charge of the plate's capacitance: 101 fF for a plate
 100 µm square on Metal3, 293 fF on Metal1 and 58 fF on Metal5.
 
-What it can be used for
------------------------
+Applications
+------------
 
 Detecting a voltage
    The transistor turns on when the sensed node crosses its threshold, with
@@ -407,8 +407,8 @@ isolation from the substrate, the subject of :doc:`junctions` and
 :doc:`grading`, still limits it. Capacitive coupling across an insulator
 (:doc:`dielectric`) is the alternative in that direction.
 
-Alternatives for sensing a high voltage
----------------------------------------
+Alternative voltage sensors
+---------------------------
 
 A resistor divider sets a voltage proportional to the node, but draws
 current all the time: 57 µW at 1 µA (:doc:`grading`). A capacitor divider

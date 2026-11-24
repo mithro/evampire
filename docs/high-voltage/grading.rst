@@ -1,14 +1,14 @@
 .. _hv-grading:
 
-Spreading the voltage across the surface
-========================================
+Surface voltage grading
+=======================
 
 This page describes ways to make the voltage between a high-voltage region
 and the surrounding substrate fall gradually across the surface, instead of
 all at one edge, so that no point reaches the critical field.
 
-A gradual fall keeps the field low
-----------------------------------
+Even voltage fall
+-----------------
 
 The field at a point is how steeply the voltage changes there. A voltage
 that falls evenly over a length :math:`L` has a field of :math:`V/L`
@@ -72,8 +72,8 @@ ways of getting closer to the ideal (:numref:`fig-hv-grading`).
    surface: floating rings, a field plate, a depleted thin layer and a
    resistive chain.
 
-Floating rings take the voltage in steps
-----------------------------------------
+Floating field rings
+--------------------
 
 Rings of N-type silicon drawn around the high-voltage well, and connected
 to nothing, are called :term:`floating field rings <floating field ring>`.
@@ -91,8 +91,8 @@ voltage. For one worked case, the best gap from the well to the first
 ring is about a third of the flat depletion width [HV-SPIRITO]_ (slide 25).
 Spacings are found by device simulation and checked on test structures.
 
-A field plate pushes the field away from the edge
--------------------------------------------------
+Field plates
+------------
 
 A :term:`field plate` is a conductor, metal or polysilicon, connected to the
 well and extending over the insulator beyond the well's edge. Its voltage
@@ -105,8 +105,8 @@ thicknesses balances the two. In a standard process, polysilicon on the
 :term:`field oxide` and then each metal layer over the dielectrics above it
 give a set of steps.
 
-A thin layer depleted from below spreads the field evenly
----------------------------------------------------------
+Depleted thin layers (RESURF)
+-----------------------------
 
 A thin, lightly doped N layer lying on a P substrate is depleted from two
 sides at once: sideways from its edge, and upward from the junction with
@@ -124,8 +124,8 @@ gives at most about :math:`1.4 \times 10^{12}\ \text{cm}^{-2}`.
 or an N-well with part of its area blocked from the implant, comes near
 that value is a question for measurement on test structures.
 
-A resistor chain forces an even gradient
-----------------------------------------
+Resistor chains
+---------------
 
 The rings and layers above find their own voltages. A resistor chain sets
 them instead. A long polysilicon resistor, often drawn as a spiral, runs
@@ -142,12 +142,12 @@ takes 570 µW
 section 6). A high-resistance polysilicon resistor of that value is long, so
 its area is part of the design.
 
-Current through the substrate grades only at high power
--------------------------------------------------------
+Current through the substrate
+-----------------------------
 
 The substrate itself could be graded by driving a current through it
 between two contacts, so that its voltage falls steadily from one to the
-other. The substrate is a thick, fairly conductive slab. At
+other, but only at high power. The substrate is a thick, fairly conductive slab. At
 :math:`10^{15}\ \text{cm}^{-3}` P-type silicon has a resistivity of about
 14 Ω·cm [HV-NBS]_ (Table 5), so a slab 1 mm long, 1 mm wide and 300 µm
 thick has about 450 Ω between its ends. Holding 57 V across it takes about
@@ -156,8 +156,8 @@ thick has about 450 Ω between its ends. Holding 57 V across it takes about
 section 6). The thickness and resistivity are illustrations: thinning the
 die or a lighter-doped substrate would raise the resistance.
 
-Commercial chips float a well hundreds of volts up
---------------------------------------------------
+Floating wells in commercial chips
+----------------------------------
 
 Commercial gate-driver chips for half bridges are built on bulk silicon
 with junction isolation. Their high-side circuits sit in a floating well that

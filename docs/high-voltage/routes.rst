@@ -1,13 +1,13 @@
 .. _hv-routes:
 
-Choosing a route
+Route comparison
 ================
 
 This page sets the routes for holding a circuit above the substrate side by
 side, and lists the measurements that would decide between them.
 
-The routes side by side
------------------------
+Summary of routes
+-----------------
 
 Each route moves the voltage to the substrate onto a different structure
 (:numref:`tab-hv-routes`). The well routes are explained on
@@ -67,8 +67,8 @@ can bias the rings.
      - A second die and its package
      - The barrier between the dies
 
-Test structures would answer most of the questions
---------------------------------------------------
+Test structures
+---------------
 
 Most of the open values are breakdown voltages and doping that a few test
 structures on a gf180mcu run would measure directly:

@@ -1,14 +1,14 @@
 .. _hv-substrate:
 
-Every node also faces the substrate
-===================================
+Series stacks on one substrate
+==============================
 
 This page explains why a stack of low-voltage devices in series does not,
 on its own, let a chip hold a high voltage: each node of the stack also
 forms a junction with the shared substrate.
 
-A series stack shares the voltage along its length
---------------------------------------------------
+Voltage sharing in a series stack
+---------------------------------
 
 Ten identical diodes in series, carrying the same current, each take one
 tenth of the voltage across the stack. With 50 V across the stack, each
@@ -22,8 +22,8 @@ transistors, each connected as a diode, and a voltage swept from 0 V to
 100 V across them [HV-SIM-STACK]_. With no connection to a substrate, the
 ten transistors share the voltage exactly: 5.00 V each at 50 V.
 
-Each node is also a junction to the substrate
----------------------------------------------
+Junctions to the substrate
+--------------------------
 
 On a chip, every device is built in one slab of P-type silicon, the
 :term:`substrate`, held at the lowest voltage on the chip. Each N-type
@@ -67,8 +67,8 @@ The stack divides the voltage along the string. Nothing divides the voltage
 between the string and the substrate, so the junction under the top node
 holds the full 50 V on its own.
 
-The simulation shows the substrate junction failing first
----------------------------------------------------------
+Simulated stack breakdown
+-------------------------
 
 With the PDK's junction models added to the stack, current starts to flow
 into the substrate at about 11.7 V across the stack, while each transistor
@@ -82,8 +82,8 @@ deep N-well of the top transistor holds the full voltage to the substrate.
 In the simulation it breaks down at about 31 V, a value that comes only from
 the model's fitted breakdown parameter [HV-SIM-STACK]_.
 
-Three routes hold more voltage to the substrate
------------------------------------------------
+Routes to a higher voltage
+--------------------------
 
 Every circuit that sits above the substrate needs something between it and
 the substrate that holds the full voltage continuously. The physics allows

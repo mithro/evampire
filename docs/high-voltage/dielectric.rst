@@ -1,14 +1,14 @@
 .. _hv-dielectric:
 
-Replacing the junction with an insulator
-========================================
+Insulator isolation
+===================
 
 This page describes isolating a circuit from the substrate with an
 insulator instead of a junction, from devices built on the field oxide of
 a standard process to separate silicon islands.
 
-Oxide holds far more voltage per micrometre than silicon
---------------------------------------------------------
+Oxide breakdown field
+---------------------
 
 Thin thermal silicon dioxide breaks down at fields of about 9 MV/cm to
 11 MV/cm [HV-US4954189]_, and Park takes about 6 MV/cm for the thicker
@@ -42,8 +42,8 @@ The values are the voltage divided by the field
 (:download:`calc.py <calc.py>`,
 section 5).
 
-Devices on the field oxide have no junction to the substrate
-------------------------------------------------------------
+Devices on the field oxide
+--------------------------
 
 Polysilicon lies on the :term:`field oxide`, the thick insulator between
 transistors. A resistor, a diode or a transistor made in that polysilicon
@@ -73,8 +73,8 @@ scatter carriers. That suits voltage sensing, biasing and gradients better
 than power switching. How much the gf180mcu field oxide and the dielectrics
 above it hold to the substrate is an open question on :doc:`routes`.
 
-Signals cross an insulator through capacitors or transformers
--------------------------------------------------------------
+Signals across an insulator
+---------------------------
 
 A circuit isolated by an insulator still has to exchange signals with the
 rest of the chip. A capacitor passes a changing voltage across its
@@ -84,8 +84,8 @@ digital isolators carry data across a capacitive silicon dioxide barrier in
 this way [HV-ISO7741]_ (Description). The Ethernet isolation routes that use such
 barriers are on :doc:`../ethernet/magnetics/isolation`.
 
-A buried oxide isolates every device
-------------------------------------
+Buried oxide
+------------
 
 In :term:`silicon on insulator` wafers, a layer of oxide lies under the thin
 silicon in which the devices are built. Trenches filled with oxide cut that
@@ -103,11 +103,11 @@ substrate from behind the circuits down to the oxide and supporting the die
 on an insulating carrier. That is wafer processing outside the foundry's
 flow, and its cost and yield are open questions.
 
-Two dies in one package isolate completely
-------------------------------------------
+Two dies in one package
+-----------------------
 
-The simplest insulator is a gap between two separate dies, each with its
-own substrate, in one package. Signals cross between them through
+Two separate dies in one package, each with its own substrate, isolate
+completely: the simplest insulator is the gap between them. Signals cross between them through
 capacitors or coils, as above. The second die can be a gf180mcu die of its
 own, designed for the high-voltage side. The Ethernet pages describe this
 as the route with a second die on the cable side

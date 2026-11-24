@@ -1,5 +1,5 @@
-References for the high-voltage pages
-=====================================
+References
+==========
 
 The sources cited on the high-voltage pages, grouped by kind. Each citation
 in the text gives the section, equation, table or slide used.

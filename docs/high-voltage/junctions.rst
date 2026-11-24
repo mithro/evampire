@@ -1,14 +1,14 @@
 .. _hv-junctions:
 
-How a junction holds voltage
-============================
+Junction breakdown
+==================
 
 This page explains how a reverse-biased P-N junction holds a voltage, why
 the doping on its lightly doped side sets how much, and why the curved
 edges of a well break down long before its flat bottom.
 
-The voltage sits across the depletion region
---------------------------------------------
+The depletion region
+--------------------
 
 A reverse-biased junction holds its voltage across a
 :term:`depletion region`, a layer on both sides of the junction emptied of
@@ -59,8 +59,8 @@ For :math:`N = 10^{15}\ \text{cm}^{-3}`:
      &= 2.67 \times 10^{10} \times 7.50 \times 10^{-14} \\
      &= 2.0 \times 10^{-3}\ \text{cm} = 20\ \text{µm}
 
-Lighter doping holds more and needs more room
----------------------------------------------
+Doping and breakdown voltage
+----------------------------
 
 Lighter doping spreads the same charge over a wider layer, so the field
 reaches its critical value only at a higher voltage. The price is width:
@@ -93,11 +93,11 @@ The values come from the two equations above
 (:download:`calc.py <calc.py>`,
 section 1).
 
-The gf180mcu substrate is lightly doped
----------------------------------------
+gf180mcu substrate doping
+-------------------------
 
-The gf180mcu documents give the substrate's type but not its doping. The
-doping can be estimated from the junction capacitance in the PDK's models,
+The gf180mcu substrate is lightly doped, but the gf180mcu documents give
+only its type, not its doping. The doping can be estimated from the junction capacitance in the PDK's models,
 because the width of a depletion region, and so its capacitance per area,
 depends on the doping of its lightly doped side. For a junction much more
 heavily doped on one side, the capacitance per area at zero bias is
@@ -188,8 +188,8 @@ published breakdown of the N-well to the substrate is 10 V minimum and
 14 V typical [HV-GF180-EP-5]_. The flat bottom of the well is not what
 breaks down.
 
-Curved edges break down first
------------------------------
+Breakdown at curved edges
+-------------------------
 
 A well is made by implanting dopant at the surface and letting it diffuse
 down and sideways, so its edges are curved. Along a straight side the edge
@@ -237,8 +237,8 @@ explains. A more heavily doped layer at the surface beside the well, or an
 edge sharper than 0.5 µm, would do it. Breakdown measurements on test wells
 with different corner shapes and spacings would show which.
 
-What this means for a design
-----------------------------
+Design consequences
+-------------------
 
 The substrate's light doping is enough, in principle, for a junction that
 holds well over 57 V. What limits a drawn well is its edges. Three things
