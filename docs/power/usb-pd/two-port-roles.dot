@@ -1,0 +1,46 @@
+// The three ways a board with two dual-role USB Type-C ports can use them,
+// side by side. Bold arrows: power. Orange: source; green: sink. The
+// dashed arrow in the first panel is an optional Ethernet output.
+//
+// Fixed grid (positions in inches): one panel per column at x=1.15, 3.55
+// and 5.95; y=3.35 title, 2.6 USB ports, 1.6 power bus, 0.6 Ethernet.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph two_port_roles {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.0, height=0.5,
+           fixedsize=true];
+    edge  [arrowsize=0.8, penwidth=2.5];
+
+    node [shape=plaintext, style="", width=2.2, height=0.3, fontsize=12];
+    t1 [pos="1.15,3.35!", label="Sink and source"];
+    t2 [pos="3.55,3.35!", label="Both sources"];
+    t3 [pos="5.95,3.35!", label="Both sinks"];
+
+    node [shape=box, style="rounded,filled", width=1.0, height=0.5,
+          fontsize=11];
+    a1 [pos="0.6,2.6!", label="USB port 1\nsink", fillcolor="#e2f0d9"];
+    b1 [pos="1.7,2.6!", label="USB port 2\nsource", fillcolor="#fbe5d6"];
+    a2 [pos="3.0,2.6!", label="USB port 1\nsource", fillcolor="#fbe5d6"];
+    b2 [pos="4.1,2.6!", label="USB port 2\nsource", fillcolor="#fbe5d6"];
+    a3 [pos="5.4,2.6!", label="USB port 1\nsink", fillcolor="#e2f0d9"];
+    b3 [pos="6.5,2.6!", label="USB port 2\nsink", fillcolor="#e2f0d9"];
+
+    node [width=2.1, height=0.4, fillcolor="#dbe8f5",
+          style="rounded,filled,bold"];
+    p1 [pos="1.15,1.6!", label="Board power bus"];
+    p2 [pos="3.55,1.6!", label="Board power bus"];
+    p3 [pos="5.95,1.6!", label="Board power bus"];
+
+    node [width=1.7, height=0.5, fillcolor="#ffffff",
+          style="rounded,filled,dashed"];
+    e1 [pos="1.15,0.6!", label="Ethernet output\n(optional)"];
+    e2 [pos="3.55,0.6!", label="Power over\nEthernet input"];
+    e3 [pos="5.95,0.6!", label="Ethernet output"];
+
+    a1 -> p1; p1 -> b1; p1 -> e1 [style=dashed];
+    e2 -> p2; p2 -> a2; p2 -> b2;
+    a3 -> p3; b3 -> p3; p3 -> e3;
+}

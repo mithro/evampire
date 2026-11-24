@@ -182,6 +182,7 @@ the sink must request again. Before lowering its offer, the specification
 recommends that the source sends an Alert, a data message that warns the
 sink of an event. It sends it up to *tReducePowerAlert*, 2.0 s to 2.4 s,
 before the reduced capabilities (:pd:`Section 6.4.5.5`, :pd:`Table 4.7`).
+:numref:`fig-usbpd-lower-offer` shows the sequence.
 
 The input can fall faster than that, for example when the Power over
 Ethernet input is removed. The source then relies on its over-current

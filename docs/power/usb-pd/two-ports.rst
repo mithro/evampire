@@ -20,6 +20,20 @@ board can work in more ways than with one:
   :term:`Power over Ethernet` or from the other input;
 * both ports as sinks, for example two chargers feeding one Ethernet output.
 
+:numref:`fig-usbpd-two-port-roles` shows the three combinations.
+
+.. graphviz:: two-port-roles.dot
+   :name: fig-usbpd-two-port-roles
+   :caption: The three ways a board can use two dual-role USB Type-C ports;
+             bold arrows show the direction of power.
+   :alt: Three panels, each with USB port 1 and USB port 2 above the board
+         power bus and an Ethernet port below it. Sink and source: power
+         flows from USB port 1 into the bus and out of USB port 2, with an
+         optional Ethernet output. Both sources: power flows from the Power
+         over Ethernet input into the bus and out of both USB ports. Both
+         sinks: power flows from both USB ports into the bus and out of the
+         Ethernet output.
+
 Whenever two or more ports supply power at once, their offers together must
 stay within the :ref:`power budget <power-budget>`. The rule and how the
 software applies it on every kind of port are on
@@ -86,6 +100,41 @@ steps on the port that gives it up are:
    tSrcTransition before it lowers its current limit
    (:pd:`Section 4.5.1.3`; see :ref:`usbpd-limiting`).
 #. Send PS_RDY. From here the port's share is the new, lower offer.
+
+:numref:`fig-usbpd-lower-offer` shows these steps in time, with the
+moment the freed power can go to the other port.
+
+.. wavedrom::
+   :caption: Lowering the offer on port A to free power for port B,
+             schematic and not to scale; the break marks the 2.0 s to 2.4 s
+             wait after the Alert.
+   :name: fig-usbpd-lower-offer
+   :alt: Timing diagram. Port A sends Alert, then after tReducePowerAlert,
+         2.0 to 2.4 s, sends Source_Capabilities. The sink answers Request
+         within 15 ms and the source answers Accept within 15 ms. The sink
+         lowers its current at once; the source lowers its current limit
+         only after tSrcTransition, 25 ms after Accept, and sends PS_RDY
+         within tSrcTransReq, 325 ms. From the end of tSrcTransition, the
+         power budget of port B can be raised.
+
+   {"signal": [
+     {"name": "port A messages", "wave": "=..z.|.=....=..=..z...=..z..",
+      "data": ["Alert", "Source_Capabilities", "Request", "Accept",
+               "PS_RDY"]},
+     {"name": "wait", "wave": "=......x....................",
+      "data": ["tReducePowerAlert 2.0–2.4 s"]},
+     {"name": "timers", "wave": "x...........=..=..=..x......",
+      "data": ["≤ 15 ms", "≤ 15 ms", "≥ 25 ms"]},
+     {"name": "PS_RDY limit", "wave": "x.................=...x.....",
+      "data": ["≤ 325 ms"]},
+     {"name": "port A sink current", "wave": "=.................=.........",
+      "data": ["old current", "new, lower current"]},
+     {"name": "port A source limit", "wave": "=....................=......",
+      "data": ["old limit", "new limit"]},
+     {"name": "port B budget", "wave": "=....................=......",
+      "data": ["old share", "can be raised"]}
+   ],
+   "config": {"hscale": 1.1}}
 
 Without the Alert, the exchange takes at most about 355 ms: up to 15 ms each
 for the Request and the Accept (*tReceiverResponse*), then up to
