@@ -41,12 +41,12 @@ Receiver oversampling or clock recovery
 ---------------------------------------
 
 Most hardware USB receivers oversample four times per bit
-(:numref:`fig-usbser-sampling`). A receiver can instead take one sample per bit at a
-phase set from each edge, or rely on a clock locked to the host's frames
-(:doc:`timing`). The FPGA cores cited there oversample at 48 MHz and run the rest of their
-logic at 12 MHz ([USBSER-FOBOOT]_, ``hw/foboot-bitstream.py``).
-On a custom chip the choice is between more fast flip-flops and a finer
-phase adjustment, and either is open.
+(:numref:`fig-usbser-sampling`). A receiver can instead take one sample per
+bit at a phase set from each edge, or rely on a clock locked to the host's
+frames (:doc:`timing`). The FPGA cores cited there oversample at 48 MHz and
+run the rest of their logic at 12 MHz ([USBSER-FOBOOT]_,
+``hw/foboot-bitstream.py``). On a custom chip the choice is between more
+fast flip-flops and a finer phase adjustment, and either is open.
 
 Serial channel over the configuration channel
 ---------------------------------------------

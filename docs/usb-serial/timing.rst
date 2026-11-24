@@ -366,13 +366,13 @@ its receiver needs either edge correction or a closer match
 
 .. graphviz:: timing/clocks.dot
    :name: fig-usbser-clocks
-   :caption: Three sources for the 48 MHz USB clock.
-   :alt: Three rows. (a) The 125 MHz Ethernet reference feeds a phase-locked
-         loop that makes the 48 MHz USB clock, within 100 ppm. (b) A
-         trimmable local oscillator makes the 48 MHz clock; a counter
-         counts its cycles between start-of-frame tokens, 48 000 per 1 ms
-         frame or 20.8 ppm per count, and trims the oscillator. (c) A
-         dedicated crystal makes the 48 MHz clock.
+   :caption: Three sources for the 48 MHz USB clock.
+   :alt: Three rows. (a) The 125 MHz Ethernet reference feeds a phase-locked
+         loop that makes the 48 MHz USB clock, within 100 ppm. (b) A
+         trimmable local oscillator makes the 48 MHz clock; a counter
+         counts its cycles between start-of-frame tokens, 48 000 per 1 ms
+         frame or 20.8 ppm per count, and trims the oscillator. (c) A
+         dedicated crystal makes the 48 MHz clock.
    :align: center
 
 Counting a clock of frequency :math:`f` over one frame gives a resolution

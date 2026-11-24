@@ -13,9 +13,9 @@ A :wikipedia:`linear regulator <Linear_regulator>` puts a transistor in
 series between the input and the output and adjusts how hard it conducts so
 that the output stays at the set voltage. The transistor carries the full
 load current and drops the whole difference between the input and output
-voltages, so it turns that difference times the current into heat. A
-linear regulator can only make a voltage lower than its input. :numref:`fig-conv-linear`
-shows its parts.
+voltages, so it turns that difference times the current into heat. A linear
+regulator can only make a voltage lower than its input.
+:numref:`fig-conv-linear` shows its parts.
 
 .. graphviz:: linear.dot
    :name: fig-conv-linear

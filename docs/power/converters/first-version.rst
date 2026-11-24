@@ -430,9 +430,9 @@ example allows 0.82 µs. :numref:`fig-conv-runaway` plots the rise.
 .. figure:: runaway.svg
    :name: fig-conv-runaway
    :alt: Log-log graph of current rise against time: a straight line at
-         1.21 A/µs, for 57 V across 47 µH, through 0.12 A at 100 ns,
-         1.21 A at 1 µs and 12.1 A at 10 µs. Dashed lines mark a 1 A margin
-         reached at 0.82 µs.
+         1.21 A/µs, for 57 V across 47 µH, through 0.12 A at 100 ns,
+         1.21 A at 1 µs and 12.1 A at 10 µs. Dashed lines mark a 1 A margin
+         reached at 0.82 µs.
    :align: center
 
    Inductor current rise of the buck example once nothing stops it.
@@ -669,19 +669,19 @@ separate converters, the bus follows VBUS, so the board supplies run from
 5 V directly. With a bus near the Power over Ethernet voltage, the USB
 converter must first raise the bus from 5 V, so it too needs a default
 operating point and protection that work without software, or the board
-supplies take their start-up power from VBUS directly. :numref:`fig-conv-usb-start` shows
-both cases.
+supplies take their start-up power from VBUS directly.
+:numref:`fig-conv-usb-start` shows both cases.
 
 .. graphviz:: usb-start.dot
    :name: fig-conv-usb-start
    :caption: Start-up power paths from vSafe5V for two arrangements.
    :alt: Two diagrams. (a) Three separate converters: VBUS at vSafe5V,
-         4.75 V to 5.5 V, passes a VBUS switch onto the power bus at about
-         5 V, which feeds the board supplies and evampire. (b) High bus: the
-         USB converter, with a hardware default, raises the bus to 37 V to
-         57 V, which feeds the board supplies; a dashed path shows VBUS
+         4.75 V to 5.5 V, passes a VBUS switch onto the power bus at about
+         5 V, which feeds the board supplies and evampire. (b) High bus: the
+         USB converter, with a hardware default, raises the bus to 37 V to
+         57 V, which feeds the board supplies; a dashed path shows VBUS
          feeding the supplies directly instead. Before negotiation the
-         source offers 2.375 W to 14.25 W.
+         source offers 2.375 W to 14.25 W.
    :align: center
 
 Open questions

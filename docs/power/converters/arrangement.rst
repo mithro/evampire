@@ -578,9 +578,9 @@ pump in nanometre-scale bulk CMOS reaches 36 V [CONV-ISMAIL2017]_ (Title).
    :caption: A 4:1 switched-capacitor stage in series-parallel form; the
              switches are not drawn.
    :alt: Two phases. In phase 1 four capacitors in series sit across the
-         37 V to 57 V input, each charging to Vin/4. In phase 2 the same
+         37 V to 57 V input, each charging to Vin/4. In phase 2 the same
          four capacitors are in parallel across the output, which is Vin/4,
-         9.25 V to 14.25 V. Switches change the connections every period,
+         9.25 V to 14.25 V. Switches change the connections every period,
          and a regulator follows for a fixed output.
    :align: center
 

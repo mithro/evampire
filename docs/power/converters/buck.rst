@@ -202,22 +202,22 @@ the output voltage ripple is
      &= 17.4 \ \text{mV}
 
 for an illustrative 22 µF capacitor; this is [CONV-SLVA477]_ (Equation 12)
-solved for the ripple. A real
-capacitor adds the ripple current times its
-:wikipedia:`equivalent series resistance <Equivalent_series_resistance>`. :numref:`fig-conv-cap-ripple` shows the
-capacitor current and the output ripple of the example.
+solved for the ripple. A real capacitor adds the ripple current times its
+:wikipedia:`equivalent series resistance <Equivalent_series_resistance>`.
+:numref:`fig-conv-cap-ripple` shows the capacitor current and the output
+ripple of the example.
 
 .. figure:: cap-ripple.svg
    :name: fig-conv-cap-ripple
-   :alt: Two traces over two 4 µs periods. The capacitor current, the
+   :alt: Two traces over two 4 µs periods. The capacitor current, the
          inductor current less the load current, is a triangle between
-         −0.383 A and +0.383 A. The output voltage ripple rises while the
-         current is positive and falls while it is negative, 17.4 mV peak
-         to peak with 22 µF.
+         −0.383 A and +0.383 A. The output voltage ripple rises while the
+         current is positive and falls while it is negative, 17.4 mV peak
+         to peak with 22 µF.
    :align: center
 
    Output capacitor current and voltage ripple of the buck example
-   with an ideal 22 µF capacitor.
+   with an ideal 22 µF capacitor.
 
 Continuous and discontinuous conduction
 ---------------------------------------
