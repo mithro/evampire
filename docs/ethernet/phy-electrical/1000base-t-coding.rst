@@ -245,7 +245,22 @@ picks the legal sequence closest to what was received. The decoder and the
 equaliser's feedback loop must finish each step in one 8 ns symbol period,
 which makes them the critical timing path of the receiver
 ([PHY-TUT98]_ slide 23). :doc:`integration/signal-processing` covers that
-loop.
+loop. :numref:`fig-phy-trellis` shows the level subsets and the encoder
+states.
+
+.. figure:: trellis.svg
+   :name: fig-phy-trellis
+   :alt: Left, the five levels split into two subsets: X holds −1 and +1,
+         and Y holds −2, 0 and +2. Right, a trellis of the eight encoder
+         states, 0 to 7, in five columns for symbol periods n to n + 4,
+         8 ns apart. Grey lines join each state to the four states that
+         may follow it. A green line marks one path through the states,
+         0, 4, 3, 0, 0.
+   :align: center
+
+   The level subsets and the eight-state trellis of the 1000BASE-T
+   convolutional encoder (:clause:`40.3.1.3.4`), with one path that the
+   Viterbi decoder keeps.
 
 .. _phy-idle:
 
