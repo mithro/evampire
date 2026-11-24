@@ -33,6 +33,21 @@ writes:
   driver enable, driver data and comparator threshold selection;
 * inputs: the :term:`comparator` outputs.
 
+:numref:`fig-usbpd-register-bits` shows these bits between the front end
+and the processor.
+
+.. graphviz:: register-bits.dot
+   :name: fig-usbpd-register-bits
+   :caption: The plain input and output bits of one port in the software-only
+             design.
+   :alt: Block diagram. Output bits for the Rp level and enable, the Rd
+         enable, the VCONN enable for each CC pin, the driver enable and
+         data, and the comparator threshold select drive the Rp current
+         sources, Rd, the VCONN switches, the BMC driver and the
+         comparators. The comparator outputs come back as input bits. The
+         processor reads and writes all the bits and does the BMC, 4b5b and
+         CRC-32 coding, GoodCRC, timers, state machines and protocol.
+
 Software does the rest: :term:`BMC` encoding and decoding
 (:ref:`usbpd-bmc`), :wikipedia:`4B5B` coding, the CRC-32 and the start of
 packet (:ref:`usbpd-packets`), the :term:`GoodCRC` reply, retries and all
