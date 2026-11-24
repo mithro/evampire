@@ -116,25 +116,47 @@ class PageParser(html.parser.HTMLParser):
 
 
 def sidebar_problems(parsed):
-    """Return the pages that the home page's left sidebar does not link to.
+    """Return the pages that the left sidebar of some page does not link to.
 
-    Furo puts the same page tree in the sidebar of every page, so the home
-    page's sidebar stands for them all.
+    Furo puts the whole page tree in the sidebar of every page. Files in
+    folders that Sphinx names with a leading underscore, such as ``_static``,
+    are not pages.
     """
-    home = parsed.get("index.html")
-    if home is None:
-        return ["index.html: the site has no home page"]
-    listed = set()
-    for href in home.sidebar_links:
-        url = urllib.parse.urlsplit(href)
-        if not (url.scheme or url.netloc):
-            # The entry for the page being shown links to "#".
-            listed.add(posixpath.normpath(url.path or "index.html"))
-    return [
-        f"{name}: the left sidebar does not link to this page; add it to a "
-        f"toctree (the home page needs a 'self' entry)"
-        for name in parsed
-        if name not in listed and name not in GENERATED_PAGES]
+    pages = [name for name in parsed if not name.startswith("_")]
+    expected = [name for name in pages if name not in GENERATED_PAGES]
+    problems = []
+    # For each page, the pages whose sidebar does not link to it.
+    missing = {name: [] for name in expected}
+    for name in pages:
+        hrefs = parsed[name].sidebar_links
+        if not hrefs:
+            problems.append(
+                f"{name}: no links found in the left sidebar; the check looks "
+                f"for them inside Furo's <div class=\"sidebar-tree\">")
+            continue
+        listed = set()
+        for href in hrefs:
+            url = urllib.parse.urlsplit(href)
+            if url.scheme or url.netloc:
+                continue
+            if url.path:
+                listed.add(posixpath.normpath(posixpath.join(
+                    posixpath.dirname(name), urllib.parse.unquote(url.path))))
+            elif href == "#":
+                # The entry for the page being shown.
+                listed.add(name)
+        for target in expected:
+            if target not in listed:
+                missing[target].append(name)
+    for target, sidebars in missing.items():
+        if sidebars:
+            others = len(sidebars) - 1
+            where = sidebars[0] + (f" and {others} other page(s)" if others else "")
+            problems.append(
+                f"{target}: the left sidebar of {where} does not link to this "
+                f"page; add it to a toctree (the home page needs a 'self' "
+                f"entry)")
+    return problems
 
 
 def page_problems(root, pages):
