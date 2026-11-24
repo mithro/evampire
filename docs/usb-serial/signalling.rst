@@ -386,7 +386,17 @@ inverted, most significant bit first. A receiver that runs the same register
 over the whole packet, CRC included, ends with a fixed value when there is
 no error: ``01100`` for CRC5 and ``1000000000001101`` for CRC16
 ([USBSER-USB2]_ section 8.3.5.1, section 8.3.5.2). The PID has its own check
-and is not covered.
+and is not covered. :numref:`fig-usbser-crc5` shows the CRC5 register.
+
+.. graphviz:: signalling/crc5.dot
+   :name: fig-usbser-crc5
+   :caption: The CRC5 shift register for the generator polynomial
+             x⁵ + x² + 1.
+   :alt: Shift register of five stages, c0 to c4. Each data bit is XORed
+         with c4; the result, the feedback, enters c0 and is also XORed into
+         the input of c2, between c1 and c2. The register starts at 11111;
+         over a good token, CRC included, it ends at 01100.
+   :align: center
 
 A packet with a wrong PID check, CRC, bit stuffing or length is ignored and
 gets no reply ([USBSER-USB2]_ section 8.3.1, section 8.4.1). The sender
