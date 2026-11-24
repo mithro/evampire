@@ -106,7 +106,22 @@ The ripple is 34 % of the input current, within the 20 % to 40 % commonly
 used [CONV-SLVA372]_ (Equation 6), and the inductor current peaks at
 :math:`1.5 + 0.252 = 1.752` A. The output current is only
 :math:`30 / 54 = 0.556` A: a boost converter draws more current from its
-input than it delivers, in the ratio of the voltages.
+input than it delivers, in the ratio of the voltages. :numref:`fig-conv-boost-waves` shows
+the waveforms of this example.
+
+.. figure:: boost-waves.svg
+   :name: fig-conv-boost-waves
+   :alt: Waveforms over two 4 µs periods. The S1 gate is high for the
+         first 2.52 µs of each period and the S2 gate for the rest. The
+         switch node is at 0 V while S1 is on and at 54 V while S2 is on.
+         The inductor current rises from 1.248 A to 1.752 A while S1 is on
+         and falls back while S2 is on, averaging 1.500 A. The S2 current
+         is zero while S1 is on and follows the inductor current while S2
+         is on, averaging 0.556 A, the output current.
+   :align: center
+
+   Idealised waveforms of the boost worked example: 20 V to 54 V,
+   250 kHz, 100 µH and 30 W.
 
 Large step-up ratios
 --------------------

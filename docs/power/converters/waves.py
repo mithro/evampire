@@ -151,8 +151,11 @@ def square(s, a, highs, lo, hi, stroke=BLUE):
     """Draw a logic trace on axes a: highs is a list of (t0, t1)."""
     pts = [(a.xr[0], lo)]
     for t0, t1 in highs:
-        pts += [(t0, lo), (t0, hi), (t1, hi), (t1, lo)]
-    pts.append((a.xr[1], lo))
+        pts += [(t0, lo), (t0, hi), (t1, hi)]
+        if t1 < a.xr[1]:
+            pts.append((t1, lo))
+    if pts[-1][0] < a.xr[1]:
+        pts.append((a.xr[1], pts[-1][1]))
     s.poly(a.P(pts), stroke=stroke)
 
 
@@ -309,12 +312,222 @@ def rhp_step():
     s.save(HERE / "rhp-step.svg")
 
 
+def boost_waves():
+    """Boost example: gates, switch node, inductor and S2 current."""
+    d, t_per = 0.630, 4.0
+    iin, rip = 1.5, 0.504
+    s = Svg(600, 470)
+    rows = [("S1 gate", 30), ("S2 gate", 85), ("switch node", 140),
+            ("inductor\ncurrent", 230), ("S2 current", 345)]
+    tr = (0, 2 * t_per)
+    a1 = Axes(s, (120, 30, 520, 60), tr, (0, 1))
+    a2 = Axes(s, (120, 85, 520, 115), tr, (0, 1))
+    av = Axes(s, (120, 140, 520, 200), tr, (0, 60))
+    ai = Axes(s, (120, 225, 520, 315), tr, (1.1, 1.9))
+    a5 = Axes(s, (120, 340, 520, 420), tr, (0, 1.9))
+    on = [(k * t_per, (k + d) * t_per) for k in range(2)]
+    off = [((k + d) * t_per, (k + 1) * t_per) for k in range(2)]
+    square(s, a1, on, 0, 1)
+    square(s, a2, off, 0, 1)
+    pts = [(0, 0)]
+    for t0, t1 in off:
+        pts += [(t0, 0), (t0, 54), (t1, 54), (t1, 0)]
+    s.poly(av.P(pts), stroke=BLUE)
+    s.text(av.X((d + 0.5 * (1 - d)) * t_per), av.Y(54) - 9, "54 V", size=11)
+    lo, hi = iin - rip / 2, iin + rip / 2
+    pts = []
+    for k in range(2):
+        pts += [(k * t_per, lo), ((k + d) * t_per, hi)]
+    pts.append((2 * t_per, lo))
+    s.poly(ai.P(pts), stroke=BLUE)
+    s.line(ai.X(0), ai.Y(iin), ai.X(2 * t_per), ai.Y(iin), stroke=GREY,
+           dash="5 4", width=1)
+    for v in (lo, iin, hi):
+        s.text(ai.x1 + 6, ai.Y(v), f"{v:.3f} A", size=11, anchor="start")
+    pts = [(0, 0)]
+    for t0, t1 in off:
+        pts += [(t0, 0), (t0, hi), (t1, lo), (t1, 0)]
+    pts.append((2 * t_per, 0))
+    s.poly(a5.P(pts), stroke=ORANGE)
+    s.line(a5.X(0), a5.Y(0.556), a5.X(2 * t_per), a5.Y(0.556), stroke=GREY,
+           dash="5 4", width=1)
+    s.text(a5.X(1.0), a5.Y(0.556) - 9, "average 0.556 A = output current",
+           size=11, fill=GREY, anchor="start")
+    for name, y in rows:
+        s.text(112, y + 15, name, size=12, anchor="end")
+    s.line(120, 445, 520, 445, stroke=INK, width=1)
+    for k in range(3):
+        s.line(a1.X(k * t_per), 441, a1.X(k * t_per), 449, stroke=INK)
+        s.text(a1.X(k * t_per), 460, f"{k * 4} µs", size=11)
+    s.text(a1.X(d * t_per / 2), 22, "D·T = 2.52 µs", size=11)
+    s.save(HERE / "boost-waves.svg")
+
+
+def hysteretic():
+    """Hysteretic control and pulse-frequency modulation (schematic)."""
+    s = Svg(600, 330)
+    s.text(300, 14, "(a) Hysteretic: the switch turns on at the lower "
+           "threshold and off at the upper", size=12, weight="bold")
+    a = Axes(s, (110, 30, 580, 120), (0, 10), (0, 1))
+    hi_, lo_ = 0.8, 0.3
+    pts, gate, v, t, on = [], [], lo_, 0.0, True
+    # Light load first (slow fall), then heavy load (fast fall).
+    while t < 10:
+        fall = 0.12 if t < 5 else 0.35
+        if on:
+            dt = (hi_ - v) / 0.5
+            gate.append((t, t + dt))
+            v, t, on = hi_, t + dt, False
+        else:
+            dt = (v - lo_) / fall
+            v, t, on = lo_, t + dt, True
+        pts.append((min(t, 10), v))
+    s.poly(a.P([(0, lo_)] + pts), stroke=BLUE)
+    for y, lab in ((hi_, "upper"), (lo_, "lower")):
+        s.line(a.x0, a.Y(y), a.x1, a.Y(y), stroke=GREY, dash="4 3", width=1)
+        s.text(a.x0 - 6, a.Y(y), lab, size=11, anchor="end", fill=GREY)
+    g = Axes(s, (110, 130, 580, 150), (0, 10), (0, 1))
+    square(s, g, [(t0, min(t1, 10)) for t0, t1 in gate if t0 < 10], 0, 1)
+    s.text(102, 140, "switch", size=11, anchor="end")
+    s.text(a.X(2.5), 165, "light load: slow", size=11, fill=GREY)
+    s.text(a.X(7.5), 165, "heavy load: fast", size=11, fill=GREY)
+    s.text(102, 75, "output\nvoltage", size=11, anchor="end", fill=BLUE)
+    s.text(300, 195, "(b) Pulse-frequency modulation: fixed pulses only as "
+           "often as the load needs", size=12, weight="bold")
+    p = Axes(s, (110, 220, 580, 260), (0, 10), (0, 1))
+    bursts = [0.5, 0.8, 1.1, 4.5, 4.8, 5.1, 8.5, 8.8, 9.1]
+    square(s, p, [(b, b + 0.15) for b in bursts], 0, 1)
+    s.text(102, 240, "switch", size=11, anchor="end")
+    s.text(p.X(2.8), 280, "no switching while the output\ncapacitor "
+           "holds the light load", size=11, fill=GREY)
+    s.line(110, 305, 580, 305, stroke=INK, width=1)
+    s.text(345, 320, "time (schematic)", size=11, fill=GREY)
+    s.save(HERE / "hysteretic.svg")
+
+
+def soft_start():
+    """Start-up without and with soft start (schematic)."""
+    import math
+    s = Svg(600, 330)
+    for col, (title, soft) in enumerate((("Without soft start", False),
+                                         ("With soft start", True))):
+        x0 = 75 + col * 270
+        s.text(x0 + 120, 14, title, size=12, weight="bold")
+        av = Axes(s, (x0, 30, x0 + 240, 140), (0, 10), (0, 1.3))
+        ai = Axes(s, (x0, 170, x0 + 240, 280), (0, 10), (0, 1.3))
+        av.frame(yticks=[], grid=False)
+        ai.frame(yticks=[], grid=False, xlabel="time (schematic)")
+        s.line(av.x0, av.Y(1), av.x1, av.Y(1), stroke=GREY, dash="4 3",
+               width=1)
+        s.line(ai.x0, ai.Y(1.1), ai.x1, ai.Y(1.1), stroke=RED, dash="4 3",
+               width=1)
+        s.text(ai.x1, ai.Y(1.1) - 8, "current limit", size=10, fill=RED,
+               anchor="end")
+        ts = [k * 0.05 for k in range(201)]
+        if soft:
+            v = [(t, min(t / 6, 1) - 0.02 * math.sin(min(t / 6, 1) * 3)) for t in ts]
+            i = [(t, 0.45 if t < 6 else 0.3 + 0.15 * math.exp(-(t - 6)))
+                 for t in ts]
+            s.text(av.X(7.2), av.Y(0.55), "reference ramps;\noutput follows",
+                   size=10, fill=GREY)
+            s.text(ai.X(3), ai.Y(0.65), "stays below the limit", size=10,
+                   fill=GREY)
+        else:
+            v = [(t, 1 + 0.25 * math.exp(-(t - 2) / 1.2) * math.cos((t - 2) * 2)
+                  if t > 2 else 1.25 * t / 2)
+                 for t in ts]
+            i = [(t, 1.1 if t < 2 else 0.3 + 0.8 * math.exp(-(t - 2) * 1.5))
+                 for t in ts]
+            s.text(av.X(6), av.Y(1.22), "overshoot", size=10, fill=RED)
+            s.text(ai.X(0.3), ai.Y(1.24), "runs at the limit", size=10,
+                   fill=RED, anchor="start")
+        s.poly(av.P(v), stroke=BLUE)
+        s.poly(ai.P(i), stroke=ORANGE)
+    s.text(67, 85, "output\nvoltage", size=11, anchor="end", fill=BLUE)
+    s.text(67, 225, "inductor\ncurrent", size=11, anchor="end", fill=ORANGE)
+    s.save(HERE / "soft-start.svg")
+
+
+def current_limit():
+    """Cycle-by-cycle current limit and hiccup mode (schematic)."""
+    s = Svg(600, 320)
+    s.text(300, 14, "(a) Cycle-by-cycle: the on time ends when the current "
+           "reaches the limit", size=12, weight="bold")
+    a = Axes(s, (90, 30, 580, 130), (0, 6), (0, 1.2))
+    a.frame(yticks=[], grid=False)
+    s.line(a.x0, a.Y(1), a.x1, a.Y(1), stroke=RED, dash="4 3", width=1.2)
+    s.text(a.x1, a.Y(1) - 8, "limit", size=10, fill=RED, anchor="end")
+    pts, i = [], 0.55
+    for k in range(6):
+        d_nom = 0.45
+        rise = 0.6 if k < 2 else 1.6           # overload from period 2
+        t_on = min(d_nom, (1 - i) / rise)
+        pts += [(k, i), (k + t_on, i + rise * t_on)]
+        i = i + rise * t_on - 0.4 * (1 - t_on)
+    pts.append((6, i))
+    s.poly(a.P(pts), stroke=BLUE)
+    s.text(82, 80, "inductor\ncurrent", size=11, anchor="end")
+    s.text(a.X(1), a.Y(0.15), "normal", size=10, fill=GREY)
+    s.text(a.X(4), a.Y(0.15), "overload: pulses cut short", size=10,
+           fill=GREY)
+    s.text(300, 170, "(b) Hiccup: a sustained overload stops switching, "
+           "then retries", size=12, weight="bold")
+    h = Axes(s, (90, 190, 580, 260), (0, 10), (0, 1))
+    h.frame(yticks=[], grid=False, xlabel="time (schematic)")
+    for b0 in (0.3, 4.8, 9.3):
+        for k in range(8):
+            t0 = b0 + k * 0.08
+            s.line(h.X(t0), h.Y(0), h.X(t0), h.Y(0.9), stroke=BLUE, width=1.2)
+    s.text(h.X(2.6), h.Y(0.45), "off", size=11, fill=GREY)
+    s.text(h.X(7.1), h.Y(0.45), "off", size=11, fill=GREY)
+    s.text(82, 225, "switching", size=11, anchor="end")
+    s.text(h.X(0.6), h.Y(1.0) - 6, "burst", size=10, fill=BLUE)
+    s.text(h.X(5.1), h.Y(1.0) - 6, "retry", size=10, fill=BLUE)
+    s.save(HERE / "current-limit.svg")
+
+
+def dead_time():
+    """Gate signals with dead time and the switch node (schematic)."""
+    s = Svg(600, 300)
+    tr = (0, 10)
+    g1 = Axes(s, (120, 20, 580, 50), tr, (0, 1))
+    g2 = Axes(s, (120, 80, 580, 110), tr, (0, 1))
+    sw = Axes(s, (120, 140, 580, 230), tr, (-0.15, 1))
+    square(s, g1, [(0, 4)], 0, 1)
+    square(s, g2, [(5, 10)], 0, 1)
+    for t0, t1 in ((4, 5),):
+        for ax in (g1, g2, sw):
+            s.rect(ax.X(t0), ax.y0 - 5, ax.X(t1) - ax.X(t0),
+                   ax.y1 - ax.y0 + 10, fill=FILL_ORANGE, stroke="none",
+                   opacity=0.7)
+    s.poly(g1.P([(0, 0), (0, 1), (4, 1), (4, 0), (10, 0)]), stroke=BLUE)
+    s.poly(g2.P([(0, 0), (5, 0), (5, 1), (10, 1)]), stroke=BLUE)
+    s.poly(sw.P([(0, 1), (4, 1), (4.3, -0.12), (5, -0.12), (5.1, 0),
+                 (10, 0)]), stroke=BLUE)
+    s.line(sw.x0, sw.Y(0), sw.x1, sw.Y(0), stroke=GREY, dash="3 3", width=1)
+    for ax, name in ((g1, "high-side\ngate"), (g2, "low-side\ngate"),
+                     (sw, "switch\nnode")):
+        s.text(112, (ax.y0 + ax.y1) / 2, name, size=11, anchor="end")
+    s.text(sw.X(4.5), sw.Y(-0.12) + 18, "dead time: the body diode\nof the "
+           "low-side switch conducts,\nnode one diode drop below ground",
+           size=10, fill=ORANGE)
+    s.text(sw.X(2), sw.Y(1) - 8, "Vin", size=11)
+    s.text(345, 290, "both gates high together would short the input to "
+           "ground (shoot-through)", size=11, fill=RED)
+    s.save(HERE / "dead-time.svg")
+
+
 FIGURES = {
     "buck-balance": buck_balance,
     "conduction-modes": conduction_modes,
     "pwm": pwm,
     "subharmonic": subharmonic,
     "rhp-step": rhp_step,
+    "boost-waves": boost_waves,
+    "hysteretic": hysteretic,
+    "soft-start": soft_start,
+    "current-limit": current_limit,
+    "dead-time": dead_time,
 }
 
 if __name__ == "__main__":
