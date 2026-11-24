@@ -468,7 +468,23 @@ it lets go, the wire returns to the level set by Rp and Rd
 
 :numref:`fig-usbpd-preamble-start` shows the start of a packet and
 :numref:`fig-usbpd-message-end` shows the end, after the EOP symbol that
-closes every packet.
+closes every packet. Both draw the idle level at mid level.
+:numref:`fig-usbpd-dc-level` draws the start and end on the real voltage
+scale, at the 3.0 A level, where the idle level is above vSwing.
+
+.. figure:: dc-level.svg
+   :name: fig-usbpd-dc-level
+   :alt: Two graphs of CC voltage against time in microseconds. Start of a
+         packet: the line idles at 1.7 V, the 3.0 A level, then the
+         transmitter drives it to 0 V and sends the preamble between 0 V and
+         vSwing, 1.125 V. End of a packet: after the last bit the line is
+         driven low, held low for at least 1 µs (tHoldLowBMC), then released
+         and rises back to 1.7 V; the release comes within 23 µs
+         (tEndDriveBMC) of the end of the last bit. Dashed lines mark the
+         idle levels of 0.4 V and 0.9 V for the other Rp values.
+
+   The BMC signal starting and ending at the Rp/Rd level of the 3.0 A
+   advertisement, with the other idle levels dashed.
 
 .. wavedrom::
    :caption: Start of a packet: the line idles at the Rp/Rd level, drawn at
@@ -667,7 +683,20 @@ requirements ([USBPD-BMCRX]_, Section 1):
   ([USBPD-BMCRX]_, Sections 4.1 and 4.2).
 
 Both use thresholds of about ±0.2 V on the difference
-([USBPD-BMCRX]_, Section 3.3).
+([USBPD-BMCRX]_, Section 3.3). :numref:`fig-usbpd-edge-receivers` shows the
+two signal chains.
+
+.. graphviz:: edge-receivers.dot
+   :name: fig-usbpd-edge-receivers
+   :caption: The two edge-detecting receivers, which compare a difference
+             rather than the signal level.
+   :alt: Two block chains. Finite-difference receiver: CC, low-pass filter,
+         sample every 50 ns, subtract the sample taken 300 to 500 ns
+         earlier, compare with plus and minus 0.2 V, giving a rising or
+         falling edge. Subtraction receiver: CC feeds two low-pass filters
+         with time constants of 200 ns and 300 ns; their outputs are
+         subtracted, and the difference is compared with plus and minus
+         0.2 V, giving a rising or falling edge.
 
 Idle-line detection
 ~~~~~~~~~~~~~~~~~~~

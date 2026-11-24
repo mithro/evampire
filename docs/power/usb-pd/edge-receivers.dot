@@ -1,0 +1,42 @@
+// The two edge-detecting BMC receivers published by the USB Implementers
+// Forum, as described on cc-signalling.rst ([USBPD-BMCRX] Sections 3 and 4).
+//
+// Fixed grid (positions in inches): finite-difference chain at y=2.6,
+// subtraction chain at y=0.95 and 0.35; columns at x=0.5 to 6.5.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph edge_receivers {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.25, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    node [shape=plaintext, style="", width=3.0, height=0.3, fontsize=12];
+    t1 [pos="1.9,3.25!", label="Finite-difference receiver"];
+    t2 [pos="1.7,1.6!", label="Subtraction receiver"];
+
+    node [shape=box, style="rounded,filled", width=1.25, height=0.55,
+          fontsize=11];
+    cc1  [pos="0.45,2.6!", label="CC", width=0.6, fillcolor="#ffffff"];
+    flt  [pos="1.55,2.6!", label="low-pass\nfilter"];
+    smp  [pos="3.0,2.6!", label="sample\nevery 50 ns"];
+    dif  [pos="4.65,2.6!", label="subtract the sample\n300 to 500 ns earlier",
+          width=1.8];
+    cmp1 [pos="6.35,2.6!", label="compare\nwith ±0.2 V", fillcolor="#dbe8f5"];
+
+    cc2  [pos="0.45,0.65!", label="CC", width=0.6, fillcolor="#ffffff"];
+    lp1  [pos="1.9,0.95!", label="low-pass\nτ = 200 ns"];
+    lp2  [pos="1.9,0.35!", label="low-pass\nτ = 300 ns"];
+    sub  [pos="3.5,0.65!", label="subtract", width=1.0];
+    cmp2 [pos="6.35,0.65!", label="compare\nwith ±0.2 V", fillcolor="#dbe8f5"];
+
+    node [shape=plaintext, style="", width=0.9, height=0.4, fontsize=10];
+    o1 [pos="7.5,2.6!", label="rising or\nfalling edge"];
+    o2 [pos="7.5,0.65!", label="rising or\nfalling edge"];
+
+    cc1 -> flt; flt -> smp; smp -> dif; dif -> cmp1; cmp1 -> o1;
+    cc2 -> lp1; cc2 -> lp2; lp1 -> sub; lp2 -> sub;
+    sub -> cmp2 [label="difference"]; cmp2 -> o2;
+}
