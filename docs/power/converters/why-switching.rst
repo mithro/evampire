@@ -181,18 +181,19 @@ At the same 60 W output a linear regulator loses 51 W to 111 W
 efficiency of evampire's own
 converters sets how much of the input power is left for the output ports;
 :ref:`power-translation` uses it as :math:`\eta`, and
-:doc:`arrangement` gives ranges for each way of arranging the converters. :numref:`fig-conv-linear-efficiency` compares the two.
+:doc:`arrangement` gives ranges for each way of arranging the converters.
+:numref:`fig-conv-linear-efficiency` compares the two.
 
 .. figure:: linear-efficiency.svg
    :name: fig-conv-linear-efficiency
-   :alt: Graph of efficiency against input voltage from 37 V to 57 V. A
-         linear regulator to 20 V falls from 54.1 % at 37 V to 35.1 % at
-         57 V; to 5 V it falls from 13.5 % to 8.8 %. A shaded band from 90 %
-         to 96 % marks the switching converters of other designs.
+   :alt: Graph of efficiency against input voltage from 37 V to 57 V. A
+         linear regulator to 20 V falls from 54.1 % at 37 V to 35.1 % at
+         57 V; to 5 V it falls from 13.5 % to 8.8 %. A shaded band from 90 %
+         to 96 % marks the switching converters of other designs.
    :align: center
 
    Efficiency of a linear regulator from the powered device input
-   to 5 V and 20 V, against the switching converters cited above.
+   to 5 V and 20 V, against the switching converters cited above.
 
 Uses for linear regulators
 --------------------------

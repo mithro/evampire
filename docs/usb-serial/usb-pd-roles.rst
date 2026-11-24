@@ -131,11 +131,11 @@ through these events.
              a data role swap, a voltage change, a Hard Reset and a power
              role swap (not to scale).
    :name: fig-usbser-pullup
-   :alt: Timing diagram. evampire attaches as source with VBUS at 5 V, as
+   :alt: Timing diagram. evampire attaches as source with VBUS at 5 V, as
          DFP and with its pull-up off. After DR_Swap it is UFP and turns
-         the pull-up on. VBUS changes from 5 V to 20 V and the pull-up stays
-         on. A Hard Reset takes VBUS to 0 V, returns evampire to DFP and
-         turns the pull-up off. VBUS returns to 5 V, a new DR_Swap makes
+         the pull-up on. VBUS changes from 5 V to 20 V and the pull-up stays
+         on. A Hard Reset takes VBUS to 0 V, returns evampire to DFP and
+         turns the pull-up off. VBUS returns to 5 V, a new DR_Swap makes
          evampire UFP, and the pull-up turns on again. A power role swap
          dips VBUS and makes evampire the sink, and the pull-up stays on.
 

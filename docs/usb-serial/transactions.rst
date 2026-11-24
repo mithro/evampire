@@ -100,9 +100,9 @@ Transactions are grouped into *transfers* of one of four types
 * *Control* transfers on endpoint 0, which every device has. A control
   transfer is a SETUP transaction with a request, optional IN or OUT data
   transactions, and a final status transaction in the opposite direction
-  ([USBSER-USB2]_ section 8.5.3, :numref:`fig-usbser-control-transfer`). The maximum data packet size on
-  endpoint 0 at full speed is 8, 16, 32 or 64 bytes
-  ([USBSER-USB2]_ section 5.5.3).
+  ([USBSER-USB2]_ section 8.5.3, :numref:`fig-usbser-control-transfer`). The
+  maximum data packet size on endpoint 0 at full speed is 8, 16, 32 or
+  64 bytes ([USBSER-USB2]_ section 5.5.3).
 * *Bulk* transfers, for data that may wait for free bus time. The maximum
   packet size at full speed is 8, 16, 32 or 64 bytes
   ([USBSER-USB2]_ section 5.8.3). With 64-byte packets a single device can
@@ -129,7 +129,8 @@ Frames
 
 The host divides time into 1 ms *frames*. It starts each one with a
 start-of-frame (SOF) token that carries an 11-bit frame number
-(:numref:`fig-usbser-frames`); the interval is 1.000 ms ± 500 ns ([USBSER-USB2]_ section 7.1.12, section 8.4.3,
+(:numref:`fig-usbser-frames`); the interval is 1.000 ms ± 500 ns
+([USBSER-USB2]_ section 7.1.12, section 8.4.3,
 Table 7‑9). A device does not reply to SOF. A full-speed device that has no
 use for timing may ignore the content, but the SOF traffic keeps it out of
 suspend ([USBSER-USB2]_ section 7.1.7.6). Because the frame interval comes
@@ -137,13 +138,13 @@ from the host's accurate clock, a device can measure it to correct its own
 clock (see :doc:`timing`).
 
 .. wavedrom::
-   :caption: Frames of 1 ms, each started by a start-of-frame token, with
+   :caption: Frames of 1 ms, each started by a start-of-frame token, with
              transactions in between (not to scale).
    :name: fig-usbser-frames
    :alt: Timing diagram: the bus carries an SOF token with frame number n,
          an IN transaction and idle time, then an SOF with frame number
          n+1, an OUT transaction and idle, then an SOF with frame number
-         n+2. A second row marks each frame as 1.000 ms ± 500 ns long.
+         n+2. A second row marks each frame as 1.000 ms ± 500 ns long.
 
    {"signal": [
      {"name": "bus", "wave": "5.3.2...5.3.2...5.",
@@ -184,14 +185,14 @@ section 9.2.6, section 7.1.7.3):
    :caption: Enumeration of a full-speed device, with the time limits of
              each step (not to scale).
    :alt: Sequence diagram with host and device lanes. VBUS becomes valid;
-         the device turns its D+ pull-up on within 100 ms (TSIGATT). The
-         host waits at least 100 ms (TATTDB), then sends a reset of SE0 for
-         at least 10 ms (TDRST) and waits a 10 ms recovery (TRSTRCY). It
+         the device turns its D+ pull-up on within 100 ms (TSIGATT). The
+         host waits at least 100 ms (TATTDB), then sends a reset of SE0 for
+         at least 10 ms (TDRST) and waits a 10 ms recovery (TRSTRCY). It
          asks for the device descriptor at address 0 and the device returns
          the first bytes with the endpoint 0 packet size. The host sends
-         SET_ADDRESS, which completes within 50 ms, with the new address
-         used 2 ms later. The host reads the device, configuration and
-         string descriptors, each data packet within 500 ms, then sends
+         SET_ADDRESS, which completes within 50 ms, with the new address
+         used 2 ms later. The host reads the device, configuration and
+         string descriptors, each data packet within 500 ms, then sends
          SET_CONFIGURATION, after which the other endpoints work.
    :align: center
 

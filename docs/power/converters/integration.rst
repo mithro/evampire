@@ -218,19 +218,19 @@ High-side drivers
 
 .. figure:: hs-isolation.svg
    :name: fig-conv-hs-isolation
-   :alt: Three schematic cross-sections over a P-type substrate at 0 V. (a)
-         A standard n-well holding the driver at up to 62 V: the junction
-         to the substrate, marked red, holds up to 62 V against a documented
-         breakdown of 10 V minimum. (b) A deep n-well at up to 62 V
-         enclosing a p-well at the 57 V switch node and an n-well at the
-         62 V driver supply; the inner junctions hold about 5 V, and the
+   :alt: Three schematic cross-sections over a P-type substrate at 0 V. (a)
+         A standard n-well holding the driver at up to 62 V: the junction
+         to the substrate, marked red, holds up to 62 V against a documented
+         breakdown of 10 V minimum. (b) A deep n-well at up to 62 V
+         enclosing a p-well at the 57 V switch node and an n-well at the
+         62 V driver supply; the inner junctions hold about 5 V, and the
          deep n-well to substrate junction, whose breakdown is an open
-         question, holds the full voltage. (c) Polysilicon devices at 57 V
-         to 62 V on field oxide, with no junction to the substrate; the
+         question, holds the full voltage. (c) Polysilicon devices at 57 V
+         to 62 V on field oxide, with no junction to the substrate; the
          field oxide holds the voltage.
    :align: center
 
-   Ways to float a high-side driver 57 V to 62 V above the substrate
+   Ways to float a high-side driver 57 V to 62 V above the substrate
    (schematic, not to scale); stacking junctions in series is a fourth.
 
 Bootstrap supply

@@ -175,16 +175,16 @@ limit must handle.
 
 .. figure:: buck-balance.svg
    :name: fig-conv-buck-balance
-   :alt: Two traces over two 4 µs periods. The inductor voltage is +36 V for
-         the first 1 µs of each period and −12 V for the remaining 3 µs; the
-         shaded areas above and below zero are each 36 V·µs. The inductor
-         current rises from 1.742 A to 2.508 A while the voltage is positive
-         and falls back while it is negative, averaging 2.125 A, a ripple of
-         0.766 A.
+   :alt: Two traces over two 4 µs periods. The inductor voltage is +36 V for
+         the first 1 µs of each period and −12 V for the remaining 3 µs; the
+         shaded areas above and below zero are each 36 V·µs. The inductor
+         current rises from 1.742 A to 2.508 A while the voltage is positive
+         and falls back while it is negative, averaging 2.125 A, a ripple of
+         0.766 A.
    :align: center
 
-   Inductor voltage and current of the buck worked example: 48 V to 12 V,
-   250 kHz, 47 µH and 2.125 A.
+   Inductor voltage and current of the buck worked example: 48 V to 12 V,
+   250 kHz, 47 µH and 2.125 A.
 
 The ripple is inversely proportional to :math:`L \, f_\text{sw}`, so a higher
 switching frequency allows a smaller inductor for the same ripple: 117.5 µH
@@ -219,9 +219,9 @@ stays at zero for part of the period: *discontinuous conduction mode*.
 
 .. figure:: conduction-modes.svg
    :name: fig-conv-conduction-modes
-   :alt: Four panels of inductor current against time over 8 µs on the same
-         scale. (a) Continuous conduction at 2.125 A: a triangle wave
-         between 1.742 A and 2.508 A. (b) The boundary at 0.383 A: the
+   :alt: Four panels of inductor current against time over 8 µs on the same
+         scale. (a) Continuous conduction at 2.125 A: a triangle wave
+         between 1.742 A and 2.508 A. (b) The boundary at 0.383 A: the
          triangle just touches zero at the end of each period. (c)
          Discontinuous conduction with a diode: the current rises, falls to
          zero and stays at zero, with zero inductor voltage, until the next

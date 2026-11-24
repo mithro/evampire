@@ -168,19 +168,19 @@ Phase margin
 The crossover frequency must be well below the switching frequency, because
 the duty cycle changes only once per period. The LM5122 data sheet places
 it between one twentieth and one fifth of the switching frequency
-[CONV-LM5122]_ (Section 8.1.1), 12.5 kHz to 50 kHz at 250 kHz.
+[CONV-LM5122]_ (Section 8.1.1), 12.5 kHz to 50 kHz at 250 kHz.
 
 .. figure:: bode.svg
    :name: fig-conv-bode
-   :alt: Bode plot from 100 Hz to 1 MHz. The loop gain falls at 20 dB per
-         decade from about 50 dB at 100 Hz and crosses 0 dB at 25 kHz,
-         inside a shaded band from 12.5 kHz to 50 kHz, one twentieth to one
-         fifth of the 250 kHz switching frequency. The phase starts at −90°
+   :alt: Bode plot from 100 Hz to 1 MHz. The loop gain falls at 20 dB per
+         decade from about 50 dB at 100 Hz and crosses 0 dB at 25 kHz,
+         inside a shaded band from 12.5 kHz to 50 kHz, one twentieth to one
+         fifth of the 250 kHz switching frequency. The phase starts at −90°
          and falls towards −180°; at the crossover it is −125°, a phase
          margin of 55° above −180°.
    :align: center
 
-   Loop gain and phase of an illustrative compensated loop with a 25 kHz
+   Loop gain and phase of an illustrative compensated loop with a 25 kHz
    crossover and a 55° phase margin; not a design of evampire's
    converters.
 
@@ -189,7 +189,8 @@ Right-half-plane zero of the boost converter
 
 When a boost converter's duty cycle increases, S2 conducts for less of each
 period, so less current reaches the output and the output first falls
-(:numref:`fig-conv-rhp-step`). In control terms this is a *right-half-plane zero*, at
+(:numref:`fig-conv-rhp-step`). In control terms this is a *right-half-plane
+zero*, at
 
 .. math::
 
@@ -260,13 +261,13 @@ Soft start
 At turn-on the output capacitor is empty. If the controller aimed straight
 at the final voltage, the inductor current would rise to the current limit
 and the output could overshoot. A *soft start* raises the reference
-gradually over a set time so that the output follows it. The TPS23753A,
-for example, has a soft-start period of 400 µs to 800 µs
-[CONV-TPS23753A]_ (Section 7.5), and the LM5177 sets it with a capacitor
-[CONV-LM5177]_ (Section 8.2.2.9). Soft start also limits the current
-drawn from the input during start-up, which matters on a Power over
-Ethernet input with its inrush limit (:doc:`../poe/index`). :numref:`fig-conv-soft-start` compares
-a start without and with soft start.
+gradually over a set time so that the output follows it. The TPS23753A, for
+example, has a soft-start period of 400 µs to 800 µs [CONV-TPS23753A]_
+(Section 7.5), and the LM5177 sets it with a capacitor [CONV-LM5177]_
+(Section 8.2.2.9). Soft start also limits the current drawn from the input
+during start-up, which matters on a Power over Ethernet input with its
+inrush limit (:doc:`../poe/index`). :numref:`fig-conv-soft-start` compares a
+start without and with soft start.
 
 .. figure:: soft-start.svg
    :name: fig-conv-soft-start
@@ -315,9 +316,9 @@ In a synchronous converter the two switches of a half bridge must never be
 on together, or they short the input to ground (*shoot-through*). A
 transistor takes a few nanoseconds to turn off, so the controller leaves a
 gap, the :wikipedia:`dead time <Dead_time>`, between one switch turning off
-and the other turning on (:numref:`fig-conv-dead-time`). During the gap the inductor current flows through
-the off switch's body diode, which has a larger voltage drop, so the gap
-should be as short as is safe.
+and the other turning on (:numref:`fig-conv-dead-time`). During the gap the
+inductor current flows through the off switch's body diode, which has a
+larger voltage drop, so the gap should be as short as is safe.
 
 For reference, the LM5176 has a fixed 45 ns
 dead time [CONV-LM5176]_ (Section 6.5, tDT1 and tDT2), and the LM5177
@@ -364,15 +365,15 @@ voltage across itself [CONV-SLUA618]_ (Section 5.2.2).
    :name: fig-conv-bootstrap
    :caption: High-side gate drive with a bootstrap capacitor and a level
              shifter, on a Power over Ethernet input.
-   :alt: Schematic: a 5 V supply charges the bootstrap capacitor Cboot
-         through a diode; Cboot sits between the BOOT node, up to 57 V plus
+   :alt: Schematic: a 5 V supply charges the bootstrap capacitor Cboot
+         through a diode; Cboot sits between the BOOT node, up to 57 V plus
          the gate drive voltage, and the switch node SW, which swings
-         between 0 V and 57 V. The high-side driver takes its supply from
+         between 0 V and 57 V. The high-side driver takes its supply from
          BOOT and its reference from SW, and drives the gate of S1 between
          Vin and SW. S2 connects SW to ground and the inductor L connects
          SW to the output. Ground-referenced PWM logic drives the high-side
-         driver through a level shifter. Cboot is at least 22 nF for 10 nC
-         plus 1 nC at 0.5 V droop.
+         driver through a level shifter. Cboot is at least 22 nF for 10 nC
+         plus 1 nC at 0.5 V droop.
    :align: center
 
 The capacitor must supply the gate charge without drooping too far
@@ -439,12 +440,12 @@ The switching frequency trades size against loss:
 
 .. figure:: fsw-tradeoff.svg
    :name: fig-conv-fsw-tradeoff
-   :alt: Log-log graph against switching frequency from 100 kHz to beyond
-         2.2 MHz. The inductance for 0.766 A ripple in the buck example
-         falls as one over the frequency: 117.5 µH at 100 kHz, 47 µH at
-         250 kHz, 19.6 µH at 600 kHz and 5.3 µH at 2.2 MHz. On a second
+   :alt: Log-log graph against switching frequency from 100 kHz to beyond
+         2.2 MHz. The inductance for 0.766 A ripple in the buck example
+         falls as one over the frequency: 117.5 µH at 100 kHz, 47 µH at
+         250 kHz, 19.6 µH at 600 kHz and 5.3 µH at 2.2 MHz. On a second
          axis, the switching loss rises in proportion to the frequency
-         through 0.51 W at 250 kHz.
+         through 0.51 W at 250 kHz.
    :align: center
 
    Inductance and switching loss of the buck worked example against
@@ -514,8 +515,8 @@ with the symbols in :numref:`tab-conv-sym-loss`.
      - Body diode voltage and one dead time
      - V, s
 
-For the buck worked example (48 V to 12 V, 2.125 A, 250 kHz) with
-illustrative part values, the switching loss with 40 ns of rise plus fall
+For the buck worked example (48 V to 12 V, 2.125 A, 250 kHz) with
+illustrative part values, the switching loss with 40 ns of rise plus fall
 time (:numref:`fig-conv-transition`) is
 
 .. math::
@@ -533,11 +534,11 @@ choices.
 .. figure:: transition.svg
    :name: fig-conv-transition
    :alt: Schematic of a hard-switched transition: while the switch turns on
-         over the rise time, its current rises from 0 to 2.125 A as its
-         voltage falls from 48 V to 0; at turn-off the reverse happens over
+         over the rise time, its current rises from 0 to 2.125 A as its
+         voltage falls from 48 V to 0; at turn-off the reverse happens over
          the fall time. Shaded triangles mark the energy lost in each
-         overlap. The result is ½ × 48 V × 2.125 A × 40 ns × 250 kHz =
-         0.51 W.
+         overlap. The result is ½ × 48 V × 2.125 A × 40 ns × 250 kHz =
+         0.51 W.
    :align: center
 
    Switch voltage and current during the transitions of the buck

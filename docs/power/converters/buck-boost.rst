@@ -26,8 +26,8 @@ is negative.
          the inductor connects the switch node to ground; a diode conducts
          from the output to the switch node; the output capacitor, marked
          minus at the top and plus at ground, and the load connect the
-         output to ground. A note gives 105 V across the switch for 57 V in
-         and a 48 V output.
+         output to ground. A note gives 105 V across the switch for 57 V in
+         and a 48 V output.
    :align: center
 
 Volt-second balance (:doc:`buck`) gives
@@ -164,10 +164,10 @@ the two regions.
    :name: fig-conv-regions
    :alt: Graph of duty cycle against conversion ratio M from 0 to 1.4. In
          the buck region, below M = 0.98, the duty cycle equals M; points
-         mark 57 V to 5 V at 0.088, 37 V to 5 V at 0.135, 57 V to 20 V at
-         0.351, 37 V to 20 V at 0.541 and 57 V to 48 V at 0.842. A grey
+         mark 57 V to 5 V at 0.088, 37 V to 5 V at 0.135, 57 V to 20 V at
+         0.351, 37 V to 20 V at 0.541 and 57 V to 48 V at 0.842. A grey
          band from 0.98 to 1.02 marks where both half bridges switch. In
-         the boost region the duty cycle is 1 − 1/M; 37 V to 48 V, M =
+         the boost region the duty cycle is 1 − 1/M; 37 V to 48 V, M =
          1.297, needs 0.229.
    :align: center
 
@@ -263,18 +263,18 @@ spike caused by the transformer's leakage inductance. For an illustrative
 
 .. graphviz:: flyback.dot
    :name: fig-conv-flyback
-   :caption: Flyback converter for the 12 V example, with its isolation
+   :caption: Flyback converter for the 12 V example, with its isolation
              barrier; the leakage-inductance spike adds to the switch
              voltage shown.
-   :alt: Schematic: the 37 V to 57 V input connects to the top of the
+   :alt: Schematic: the 37 V to 57 V input connects to the top of the
          primary winding Np; the bottom of the winding connects through
-         the switch, rated at least 105 V, to the primary ground. A dashed
+         the switch, rated at least 105 V, to the primary ground. A dashed
          isolation barrier separates the primary winding from the secondary
          winding Ns; the turns ratio is 4. Dots mark the top of the primary
          and the bottom of the secondary. The top of the secondary connects
-         through a rectifier to the 12 V output, with a capacitor and the
+         through a rectifier to the 12 V output, with a capacitor and the
          load to a separate secondary ground. The duty cycle is 0.565 at
-         37 V and 0.457 at 57 V.
+         37 V and 0.457 at 57 V.
    :align: center
 
 Many powered devices use a flyback converter because the Power over

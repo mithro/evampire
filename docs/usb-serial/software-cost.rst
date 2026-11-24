@@ -141,11 +141,11 @@ The instruction rate needed while a packet arrives is:
 
 Three further needs come with it:
 
-* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle
-  of its bit (:numref:`fig-usbser-bit-cell`), and the sampling instant has to be corrected
-  from the edges, at least every 7 bit times. The loop therefore has to
-  have a fixed, known duration of exactly one bit time, or measure edge
-  times from a counter.
+* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle of
+  its bit (:numref:`fig-usbser-bit-cell`), and the sampling instant has to
+  be corrected from the edges, at least every 7 bit times. The loop
+  therefore has to have a fixed, known duration of exactly one bit time, or
+  measure edge times from a counter.
 * *Sample rate.* One sample per bit is 12 million samples per second, if the
   sampling instant is kept centred. A receiver that finds the edges by
   oversampling four times per bit needs 48 million samples per second
@@ -238,17 +238,17 @@ time it has nothing to send. How often a host does this depends on its
 controller.
 
 The upper bound comes from the packet lengths: a token, 2 bit
-times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
-polls fit in a 1 ms frame (:numref:`fig-usbser-polls`). At that rate the
+times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
+polls fit in a 1 ms frame (:numref:`fig-usbser-polls`). At that rate the
 device spends essentially all its time receiving tokens and replying.
 
 .. wavedrom::
    :caption: Repeated IN polls answered with NAK (not to scale).
    :name: fig-usbser-polls
    :alt: Timing diagram: the host sends an IN token, there is a gap of 2
-         bit times, the device answers NAK, and after another 2 bit times
-         the host sends the next IN token. One poll takes 58 bit times,
-         4.83 µs, so up to 207 fit in a 1 ms frame.
+         bit times, the device answers NAK, and after another 2 bit times
+         the host sends the next IN token. One poll takes 58 bit times,
+         4.83 µs, so up to 207 fit in a 1 ms frame.
 
    {"signal": [
      {"name": "host", "wave": "3...x.....3...x.....3...",
@@ -406,12 +406,12 @@ from a crystal.
 Packet buffers
 ~~~~~~~~~~~~~~
 
-Once automatic handshakes are added, packets are held in buffers that the processor reads and
-writes. A serial port with 64-byte packets needs one 64-byte buffer per direction
-of each bulk endpoint, or two, so that the hardware fills one while the
-software works on the other. It also needs an 8-byte buffer for SETUP, and
-buffers of the chosen sizes for endpoint 0 and the interrupt endpoint
-(:numref:`fig-usbser-buffers`).
+Once automatic handshakes are added, packets are held in buffers that the
+processor reads and writes. A serial port with 64-byte packets needs one
+64-byte buffer per direction of each bulk endpoint, or two, so that the
+hardware fills one while the software works on the other. It also needs an
+8-byte buffer for SETUP, and buffers of the chosen sizes for endpoint 0 and
+the interrupt endpoint (:numref:`fig-usbser-buffers`).
 
 .. graphviz:: software-cost/buffers.dot
    :name: fig-usbser-buffers
@@ -462,21 +462,22 @@ Summary of the helpers
 Chosen split
 ------------
 
-The chosen split builds the first four helpers in hardware: the receive deserialiser,
-the transmit serialiser, the CRC, and automatic handshakes with packet
-buffers. Software does everything else: enumeration, the descriptors, the
-CDC-ACM requests, moving the serial data, and the policy of when to connect
-and disconnect. With this split, USB places no packet-level deadline on the
-processor, so it can serve USB, USB Power Delivery and Ethernet duties in
-any order (see :doc:`usb-pd-roles`).
+The chosen split builds the first four helpers in hardware: the receive
+deserialiser, the transmit serialiser, the CRC, and automatic handshakes
+with packet buffers. Software does everything else: enumeration, the
+descriptors, the CDC-ACM requests, moving the serial data, and the policy of
+when to connect and disconnect. With this split, USB places no packet-level
+deadline on the processor, so it can serve USB, USB Power Delivery and
+Ethernet duties in any order (see :doc:`usb-pd-roles`).
 
-Smaller splits remain options and depend on the processor. Without automatic handshakes,
-the processor has to meet the reply deadline,
+Smaller splits remain options and depend on the processor. Without automatic
+handshakes, the processor has to meet the reply deadline,
 :math:`f_\text{clk}/\text{CPI} \ge N_\text{reply}/t_\text{reply}`, and be
-free at the end of every packet for the device. Without the deserialiser and serialiser, it
-needs the rates of the baseline. Another option is a small programmable
-state machine in place of fixed logic for the deserialiser and serialiser, as the RP2040's
-programmable I/O does in Pico-PIO-USB ([USBSER-PICO-PIO-USB]_).
+free at the end of every packet for the device. Without the deserialiser and
+serialiser, it needs the rates of the baseline. Another option is a small
+programmable state machine in place of fixed logic for the deserialiser and
+serialiser, as the RP2040's programmable I/O does in Pico-PIO-USB
+([USBSER-PICO-PIO-USB]_).
 
 Reference implementations
 -------------------------

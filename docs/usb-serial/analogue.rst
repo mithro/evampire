@@ -78,13 +78,13 @@ lower impedance plus an external series resistor *RS*
 .. graphviz:: analogue/driver.dot
    :name: fig-usbser-driver
    :caption: The full-speed driver of one line, with its series resistor
-             and the 50 pF test load.
+             and the 50 pF test load.
    :alt: Block diagram: inside evampire, the data and output enable drive
          a pre-driver with edge-rate control, which drives an output stage
-         with a PMOS to 3.3 V and an NMOS to ground that turns both off for
+         with a PMOS to 3.3 V and an NMOS to ground that turns both off for
          tri-state. The output passes a series resistor RS, on chip or on
-         the board, to the D+ pin, which is loaded by a 50 pF test load to
-         ground. A bracket marks ZDRV, 28 Ω to 44 Ω, as the output stage
+         the board, to the D+ pin, which is loaded by a 50 pF test load to
+         ground. A bracket marks ZDRV, 28 Ω to 44 Ω, as the output stage
          and RS together. D− has the same driver with opposite data.
    :align: center
 
@@ -114,21 +114,21 @@ edge of:
 
 At 28 Ω, :math:`t_{10\text{–}90} = 2.197 \times 28\ \Omega \times
 50\ \text{pF} = 3.08\ \text{ns}`, below the 4 ns minimum; at 44 Ω it is
-4.83 ns (:numref:`fig-usbser-driver-waveform`). A driver at the low end of
+4.83 ns (:numref:`fig-usbser-driver-waveform`). A driver at the low end of
 the impedance range therefore needs its own slew-rate control, which the
 specification requires in any case.
 
 .. figure:: analogue/driver-waveform.svg
    :name: fig-usbser-driver-waveform
-   :alt: Graph of voltage from 0 V to 3.6 V against time from 0 ns to
-         60 ns. D+ rises and D− falls as RC edges into 50 pF, for a 28 Ω
-         driver, 3.08 ns from 10 % to 90 %, and a 44 Ω driver, 4.83 ns.
-         They cross in the shaded crossover band of 1.3 V to 2.0 V. Shaded
-         bands mark VOH of 2.8 V to 3.6 V and VOL of at most 0.3 V. A note
-         gives the required 4 ns to 20 ns edge and the assumed 3.3 V swing.
+   :alt: Graph of voltage from 0 V to 3.6 V against time from 0 ns to
+         60 ns. D+ rises and D− falls as RC edges into 50 pF, for a 28 Ω
+         driver, 3.08 ns from 10 % to 90 %, and a 44 Ω driver, 4.83 ns.
+         They cross in the shaded crossover band of 1.3 V to 2.0 V. Shaded
+         bands mark VOH of 2.8 V to 3.6 V and VOL of at most 0.3 V. A note
+         gives the required 4 ns to 20 ns edge and the assumed 3.3 V swing.
    :align: center
 
-   Edges of a purely resistive driver into the 50 pF test load, against
+   Edges of a purely resistive driver into the 50 pF test load, against
    the driver's voltage limits.
 
 Receivers
@@ -149,12 +149,12 @@ shows their input ranges:
 
 .. figure:: analogue/receiver-levels.svg
    :name: fig-usbser-receiver-levels
-   :alt: Input voltage from 0 V to 3.6 V. For the differential receiver, a
-         box from 0.8 V to 2.5 V marks the common-mode range VCM, within
-         which a 200 mV difference, VDI, must be resolved as J or K. For the
-         single-ended receivers, a box from 0.8 V to 2.0 V marks where the
+   :alt: Input voltage from 0 V to 3.6 V. For the differential receiver, a
+         box from 0.8 V to 2.5 V marks the common-mode range VCM, within
+         which a 200 mV difference, VDI, must be resolved as J or K. For the
+         single-ended receivers, a box from 0.8 V to 2.0 V marks where the
          switching threshold lies; above it is high, below it low, and both
-         lines low after a 14 ns to 82 ns filter is SE0.
+         lines low after a 14 ns to 82 ns filter is SE0.
    :align: center
 
    Input voltage ranges of the differential and single-ended receivers.
@@ -169,7 +169,7 @@ Pull-up resistor
 ----------------
 
 The device announces itself (:numref:`fig-usbser-connect`) with
-1.5 kΩ ± 5 % from D+ to a supply of
+1.5 kΩ ± 5 % from D+ to a supply of
 3.0 V to 3.6 V (*RPU*, *VTERM*). It must be able to pull D+ from 0 V to
 2.0 V within 2.5 µs, and it must not supply current when VBUS is absent
 ([USBSER-USB2]_ section 7.1.5.1, Table 7‑7). With the host's 15 kΩ ± 5 %
@@ -242,7 +242,7 @@ analysis of such shorts for the CC pins in
 :ref:`CC pin protection <usbpd-cc-protection>` applies to the data pins in
 the same way.
 
-If the pad's output stage is supplied from 3.3 V, a short to 5.25 V
+If the pad's output stage is supplied from 3.3 V, a short to 5.25 V
 forward-biases the diode from the pad to its supply
 (:numref:`fig-usbser-short`). The current is then
 limited only by the series resistance:
@@ -281,13 +281,13 @@ to :math:`1.35\ \text{V} / 28\ \Omega = 48\ \text{mA}`, continuously for
 .. graphviz:: analogue/short.dot
    :name: fig-usbser-short
    :caption: Current path of a short from VBUS to D+ into a pad supplied
-             from 3.3 V.
-   :alt: Diagram: VBUS at 5.25 V, shorted to D+, drives current through a
-         series resistance of 28 Ω to 44 Ω to the pad on evampire, then
-         through the forward-biased pad diode into the 3.3 V pad supply.
+             from 3.3 V.
+   :alt: Diagram: VBUS at 5.25 V, shorted to D+, drives current through a
+         series resistance of 28 Ω to 44 Ω to the pad on evampire, then
+         through the forward-biased pad diode into the 3.3 V pad supply.
          The output stage and receivers also connect to the pad. The
-         current is (5.25 − 3.3 − 0.6) V divided by 28 Ω to 44 Ω, 31 mA to
-         48 mA, continuously for 24 hours.
+         current is (5.25 − 3.3 − 0.6) V divided by 28 Ω to 44 Ω, 31 mA to
+         48 mA, continuously for 24 hours.
    :align: center
 
 The pad, its diode and the 3.3 V supply all have to accept this

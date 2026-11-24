@@ -162,18 +162,18 @@ often combined:
   period to the next, so that the average falls between them, at the cost
   of a small ripple at a lower frequency.
 
-:numref:`fig-conv-pwm-resolution` shows the three on a 125 MHz counter.
+:numref:`fig-conv-pwm-resolution` shows the three on a 125 MHz counter.
 
 .. figure:: pwm-resolution.svg
    :name: fig-conv-pwm-resolution
-   :alt: Timing diagram against a 125 MHz clock with 8 ns periods. An ideal
-         PWM edge at 37.4 ns; a counter alone can only end the pulse at
-         40 ns, 2.6 ns late; a counter with an 8-tap delay line, taps 1 ns
-         apart, ends it at 37 ns, 0.4 ns early; with dithering, periods
-         ending at 40 ns and 32 ns alternate, giving 36 ns on average.
+   :alt: Timing diagram against a 125 MHz clock with 8 ns periods. An ideal
+         PWM edge at 37.4 ns; a counter alone can only end the pulse at
+         40 ns, 2.6 ns late; a counter with an 8-tap delay line, taps 1 ns
+         apart, ends it at 37 ns, 0.4 ns early; with dithering, periods
+         ending at 40 ns and 32 ns alternate, giving 36 ns on average.
    :align: center
 
-   Placing a PWM edge with a 125 MHz counter, a delay line and dithering
+   Placing a PWM edge with a 125 MHz counter, a delay line and dithering
    (illustrative edge position).
 
 In peak current-mode control the duty cycle comes from a comparator, not
@@ -341,7 +341,7 @@ one feeds.
          Inside evampire, the inductor current and output divider feed
          comparators with DAC thresholds for peak current and current
          limit; the bus, output and port sense points feed an ADC with
-         averaging for monitoring at 1 kHz or less; the port sense resistor
+         averaging for monitoring at 1 kHz or less; the port sense resistor
          also feeds a port short comparator that acts within microseconds.
    :align: center
 
@@ -442,18 +442,18 @@ across a 0.2 Ω sense resistor, about 1.0 A to 1.2 A [CONV-TPS23881]_
 
 .. figure:: pse-template.svg
    :name: fig-conv-pse-template
-   :alt: Graph of current against time, both on log scales from 1 µs to
-         1 s and 0.5 A to 100 A. The upper bound for the port current is
-         50 A up to 10 µs and 1.75 A from 8.2 ms; a dashed line joins the
+   :alt: Graph of current against time, both on log scales from 1 µs to
+         1 s and 0.5 A to 100 A. The upper bound for the port current is
+         50 A up to 10 µs and 1.75 A from 8.2 ms; a dashed line joins the
          two points, whose exact shape is in the cited source. A shaded
-         band from 50 ms to 75 ms marks overload removal. Below, bars show
+         band from 50 ms to 75 ms marks overload removal. Below, bars show
          that in current limit a Type 3 port holds power for at least
-         10 ms and a Type 4 port for at least 6 ms, and both remove it by
-         75 ms.
+         10 ms and a Type 4 port for at least 6 ms, and both remove it by
+         75 ms.
    :align: center
 
    Current and time limits of a power sourcing equipment port in a fault,
-   from :numref:`tab-conv-fault-times`; the shape between 10 µs and 8.2 ms
+   from :numref:`tab-conv-fault-times`; the shape between 10 µs and 8.2 ms
    is drawn as a straight line.
 
 .. _conv-start-up:
@@ -540,12 +540,12 @@ For reference, in the TPS23753A [CONV-TPS23753A]_ (Section 8.4.6.1):
 .. graphviz:: start-path.dot
    :name: fig-conv-start-path
    :caption: Start-up path of a powered-device input converter.
-   :alt: Block diagram: the 37 V to 57 V input feeds a current source of
-         2.5 mA to 6 mA, or a 28 kΩ resistor, which charges a hold
-         capacitor of at least 0.70 µF. The capacitor supplies a controller
+   :alt: Block diagram: the 37 V to 57 V input feeds a current source of
+         2.5 mA to 6 mA, or a 28 kΩ resistor, which charges a hold
+         capacitor of at least 0.70 µF. The capacitor supplies a controller
          with under-voltage lockout, which drives the gate of the input
-         converter power stage and turns the current source off at 8.65 V
-         to 9.3 V. An auxiliary winding or the converter output feeds back
+         converter power stage and turns the current source off at 8.65 V
+         to 9.3 V. An auxiliary winding or the converter output feeds back
          to the hold capacitor and takes over after start-up.
    :align: center
 
@@ -594,9 +594,9 @@ and :math:`C_\text{hold} \ge 3.06 \times 10^{-3} \times 800 \times 10^{-6} / 3.5
    :alt: Hold capacitor voltage against time, schematic. During the inrush
          period the converter is held off and the voltage is zero. The
          current source then charges the capacitor up to the turn-on
-         threshold band of 8.65 V to 9.3 V. The source turns off and the
-         converter starts with an 800 µs soft start, while the voltage
-         droops by less than the 3.3 V to 3.7 V hysteresis. A winding or
+         threshold band of 8.65 V to 9.3 V. The source turns off and the
+         converter starts with an 800 µs soft start, while the voltage
+         droops by less than the 3.3 V to 3.7 V hysteresis. A winding or
          the output then takes over and the voltage rises again.
    :align: center
 

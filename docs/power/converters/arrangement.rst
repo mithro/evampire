@@ -178,12 +178,12 @@ draws them on one voltage axis.
 
 .. figure:: ranges.svg
    :name: fig-conv-ranges
-   :alt: Horizontal bars on a 0 V to 60 V axis: powered device input 37 V
-         to 57 V; power sourcing equipment output 44 V to 57 V for Type 1,
-         50 V to 57 V for Types 2 and 3, and 52 V to 57 V for Type 4; USB
-         standard power range 5 V to 21.5 V; USB extended power range 48 V
-         fixed supply 45.6 V to 50.9 V; USB extended power range adjustable
-         15 V to 50.9 V. A grey band from 44 V to 57 V marks the shared
+   :alt: Horizontal bars on a 0 V to 60 V axis: powered device input 37 V
+         to 57 V; power sourcing equipment output 44 V to 57 V for Type 1,
+         50 V to 57 V for Types 2 and 3, and 52 V to 57 V for Type 4; USB
+         standard power range 5 V to 21.5 V; USB extended power range 48 V
+         fixed supply 45.6 V to 50.9 V; USB extended power range adjustable
+         15 V to 50.9 V. A grey band from 44 V to 57 V marks the shared
          band. Circled numbers 1 to 4 mark the four overlaps listed in the
          text.
    :align: center
@@ -231,7 +231,7 @@ voltage (:numref:`fig-conv-separate`).
          flyback, which feeds the power bus, whose voltage is open. The bus
          feeds the board supplies, a boost converter to Ethernet port B's
          power sourcing equipment switch, and a four-switch buck-boost to
-         the USB Type-C port of 5 V to 48 V. A dashed path from the USB port
+         the USB Type-C port of 5 V to 48 V. A dashed path from the USB port
          through a VBUS switch, on when the USB port is a sink, feeds the
          bus.
    :align: center
@@ -361,14 +361,14 @@ input range in which a pass-through meets the output window.
 .. figure:: pass-through.svg
    :name: fig-conv-pass-through
    :alt: Horizontal bars of powered device input voltage for each output
-         type. Type 1: regulated path from 37 V to 44.2 V, pass-through from
-         44.2 V to 57 V. Types 2 and 3: regulated from 42.5 V to 50.2 V,
-         pass-through above 50.2 V. Type 4: regulated from 41.2 V to
-         52.2 V, pass-through above 52.2 V.
+         type. Type 1: regulated path from 37 V to 44.2 V, pass-through from
+         44.2 V to 57 V. Types 2 and 3: regulated from 42.5 V to 50.2 V,
+         pass-through above 50.2 V. Type 4: regulated from 41.2 V to
+         52.2 V, pass-through above 52.2 V.
    :align: center
 
    Input voltages at which a pass-through meets each output type, for a
-   0.2 V drop.
+   0.2 V drop.
 
 The input can be anywhere in its range, so a pass-through meets the output
 window only when the measured input is high enough. evampire measures the

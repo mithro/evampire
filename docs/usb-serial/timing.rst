@@ -112,12 +112,12 @@ the margin on each side.
 
 .. figure:: timing/bit-cell.svg
    :name: fig-usbser-bit-cell
-   :alt: One 83.33 ns bit with ideal edges at 0 ns and 83.33 ns. Around each
-         edge, windows show the sent limits TDJ1 ± 3.5 ns and TDJ2 ± 4 ns
-         for paired transitions, and the accepted limits TJR1 ± 18.5 ns and
-         TJR2 ± 9 ns for paired transitions. A dashed line marks the sample
-         at 41.67 ns, with a margin of 23.2 ns to the edge of each TJR1
-         window, at 18.5 ns and 64.83 ns.
+   :alt: One 83.33 ns bit with ideal edges at 0 ns and 83.33 ns. Around each
+         edge, windows show the sent limits TDJ1 ± 3.5 ns and TDJ2 ± 4 ns
+         for paired transitions, and the accepted limits TJR1 ± 18.5 ns and
+         TJR2 ± 9 ns for paired transitions. A dashed line marks the sample
+         at 41.67 ns, with a margin of 23.2 ns to the edge of each TJR1
+         window, at 18.5 ns and 64.83 ns.
    :align: center
 
    Edge windows of one full-speed bit and the margin of a sample taken in
@@ -166,9 +166,9 @@ Two cases show what this means (:numref:`fig-usbser-drift`):
 .. figure:: timing/drift.svg
    :name: fig-usbser-drift
    :alt: Graph of drift in ns against the number of bits since the last
-         correction, 0 to 700. A line for ε = 0.003 reaches 1.75 ns at 7
-         bits and 159 ns at 636 bits. A line for ε = 437 ppm reaches the
-         dashed 23.2 ns margin at 636 bits.
+         correction, 0 to 700. A line for ε = 0.003 reaches 1.75 ns at 7
+         bits and 159 ns at 636 bits. A line for ε = 437 ppm reaches the
+         dashed 23.2 ns margin at 636 bits.
    :align: center
 
    Drift of a free-running sampling instant for the two cases above.
@@ -214,20 +214,20 @@ As an example, evampire's existing 125 MHz reference (see
 :ref:`arch-clock`) gives 10.42 clock periods per bit. Bits of 10 or 11
 periods last 80 ns or 88 ns, errors of −3.33 ns and +4.67 ns. The second
 is outside ± 3.5 ns, so edges timed from 125 MHz directly do not meet
-*TDJ1*. A clock that is a multiple of 12 MHz, such as 48 MHz, has no such
+*TDJ1*. A clock that is a multiple of 12 MHz, such as 48 MHz, has no such
 error (:numref:`fig-usbser-edge-placement`).
 
 .. figure:: timing/edge-placement.svg
    :name: fig-usbser-edge-placement
-   :alt: Timing diagram from 0 ns to 250 ns. A 125 MHz clock ticks every
-         8 ns. Bits timed from it last 10 periods, 80 ns, ending 3.33 ns
-         early, inside the ± 3.5 ns window after the previous edge; or 11
-         periods, 88 ns, ending 4.67 ns late, outside the window. A 48 MHz
-         clock gives bits of exactly 4 periods, 83.33 ns, each ending in the
+   :alt: Timing diagram from 0 ns to 250 ns. A 125 MHz clock ticks every
+         8 ns. Bits timed from it last 10 periods, 80 ns, ending 3.33 ns
+         early, inside the ± 3.5 ns window after the previous edge; or 11
+         periods, 88 ns, ending 4.67 ns late, outside the window. A 48 MHz
+         clock gives bits of exactly 4 periods, 83.33 ns, each ending in the
          middle of its window.
    :align: center
 
-   Transmitted bits timed from a 125 MHz clock and from a 48 MHz clock,
+   Transmitted bits timed from a 125 MHz clock and from a 48 MHz clock,
    against the TDJ1 window.
 
 Inter-packet delay and reply deadline
@@ -245,10 +245,10 @@ answering the host.
              after the end of the host's packet (not to scale).
    :name: fig-usbser-turnaround
    :alt: Timing diagram: the host sends a data packet ending with an end of
-         packet; after a gap of 2 to 6.5 bit times, 166.7 ns to 541.7 ns,
-         the device starts its ACK handshake. The 6.5 bit times split into
+         packet; after a gap of 2 to 6.5 bit times, 166.7 ns to 541.7 ns,
+         the device starts its ACK handshake. The 6.5 bit times split into
          the receiver delay t_rx, the time to decide t_reply and the driver
-         delay t_tx. The host waits 16 to 18 bit times, 1.333 µs to 1.5 µs,
+         delay t_tx. The host waits 16 to 18 bit times, 1.333 µs to 1.5 µs,
          before it gives up.
 
    {"signal": [
@@ -315,8 +315,8 @@ End of packet
 -------------
 
 The end of packet has several rules that a receiver and a transmitter must
-follow (:numref:`fig-usbser-eop`) ([USBSER-USB2]_ section 7.1.7.4.1, section 7.1.13.2.1, section 7.1.4.1,
-section 7.1.9.1, Table 7‑9):
+follow (:numref:`fig-usbser-eop`) ([USBSER-USB2]_ section 7.1.7.4.1, section
+7.1.13.2.1, section 7.1.4.1, section 7.1.9.1, Table 7‑9):
 
 * A transmitter sends SE0 for 160 ns to 175 ns (*TFEOPT*, 1.92 to 2.10 bit
   times), then J for one bit time, then releases the line.
@@ -332,13 +332,13 @@ section 7.1.9.1, Table 7‑9):
 .. figure:: timing/eop.svg
    :name: fig-usbser-eop
    :alt: D+ and D− at the end of a packet. During the last bit, a K, D+ is
-         low and D− high. Both then go low for the SE0, sent for 160 ns to
-         175 ns (TFEOPT); D+ then goes high for one bit of J, after which
+         low and D− high. Both then go low for the SE0, sent for 160 ns to
+         175 ns (TFEOPT); D+ then goes high for one bit of J, after which
          the transmitter releases the line and it stays at idle. An arrow
-         shows that the receiver accepts an SE0 from 82 ns (TFEOPR). A note
+         shows that the receiver accepts an SE0 from 82 ns (TFEOPR). A note
          says that during a normal J/K change both lines may be low for up
-         to 14 ns (TFST), so the SE0 filter must be longer than 14 ns and
-         shorter than 82 ns, and that hubs may stretch the last bit to six
+         to 14 ns (TFST), so the SE0 filter must be longer than 14 ns and
+         shorter than 82 ns, and that hubs may stretch the last bit to six
          bit times.
    :align: center
 

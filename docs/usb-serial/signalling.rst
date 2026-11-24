@@ -11,9 +11,10 @@ Host and device
 ---------------
 
 USB connects one *host*, normally a computer, to one or more *devices*. The
-host starts every exchange: a device only sends when the host has asked
-it to in the packet before ([USBSER-USB2]_ section 8.4.1), as in the
-transactions of :numref:`fig-usbser-transactions`. A device never talks to another device.
+host starts every exchange: a device only sends when the host has asked it
+to in the packet before ([USBSER-USB2]_ section 8.4.1), as in the
+transactions of :numref:`fig-usbser-transactions`. A device never talks to
+another device.
 
 The end of a cable at the host is the *downstream facing port* (DFP) and the
 end at the device is the *upstream facing port* (UFP). On a USB Type-C port
@@ -114,11 +115,11 @@ rise, and knows that a full-speed device is attached
    :caption: Connect detection: the host's pull-down resistors and the
              device's switched pull-up on D+.
    :alt: Schematic: in the host, D+ and D− each connect to ground through
-         15 kΩ. The cable carries D+ and D− to the device, evampire, where
-         they reach the driver and receivers. In the device a 1.5 kΩ ± 5 %
-         resistor and a switch connect D+ to a 3.0 V to 3.6 V supply; the
-         switch closes when VBUS is present. D+ sits near 0 V with no
-         device and at least 2.7 V, idle J, once the pull-up is on. A
+         15 kΩ. The cable carries D+ and D− to the device, evampire, where
+         they reach the driver and receivers. In the device a 1.5 kΩ ± 5 %
+         resistor and a switch connect D+ to a 3.0 V to 3.6 V supply; the
+         switch closes when VBUS is present. D+ sits near 0 V with no
+         device and at least 2.7 V, idle J, once the pull-up is on. A
          low-speed device puts the pull-up on D− instead.
    :align: center
 
@@ -197,10 +198,10 @@ A device also recognises some states by how long they last
              suspend (not to scale).
    :name: fig-usbser-long-states
    :alt: Timing diagram with three rows. Reset: after idle, SE0 for more
-         than 2.5 µs, then idle. Suspend: after a packet, idle for more than
-         3 ms, after which the device is suspended. Normal operation: a
-         start-of-frame packet every 1 ms, with idle between, so the idle
-         time never reaches 3 ms.
+         than 2.5 µs, then idle. Suspend: after a packet, idle for more than
+         3 ms, after which the device is suspended. Normal operation: a
+         start-of-frame packet every 1 ms, with idle between, so the idle
+         time never reaches 3 ms.
 
    {"signal": [
      {"name": "reset", "wave": "2.3.....2.",
@@ -307,10 +308,10 @@ start-of-frame token, in the order they are sent.
 .. figure:: signalling/packets.svg
    :name: fig-usbser-packets
    :alt: Four rows of fields, sent from left to right. Token (OUT, IN,
-         SETUP): SYNC 8 bits, PID 8 bits, ADDR 7 bits, ENDP 4 bits, CRC5 5
+         SETUP): SYNC 8 bits, PID 8 bits, ADDR 7 bits, ENDP 4 bits, CRC5 5
          bits, EOP. Start of frame: SYNC, PID, an 11-bit frame number,
-         CRC5, EOP. Data (DATA0, DATA1): SYNC, PID, 0 to 1023 bytes of data,
-         CRC16 16 bits, EOP. Handshake (ACK, NAK, STALL): SYNC, PID, EOP.
+         CRC5, EOP. Data (DATA0, DATA1): SYNC, PID, 0 to 1023 bytes of data,
+         CRC16 16 bits, EOP. Handshake (ACK, NAK, STALL): SYNC, PID, EOP.
    :align: center
 
    Fields of the full-speed packet kinds, in the order sent; widths are

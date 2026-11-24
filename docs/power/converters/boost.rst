@@ -106,22 +106,22 @@ The ripple is 34 % of the input current, within the 20 % to 40 % commonly
 used [CONV-SLVA372]_ (Equation 6), and the inductor current peaks at
 :math:`1.5 + 0.252 = 1.752` A. The output current is only
 :math:`30 / 54 = 0.556` A: a boost converter draws more current from its
-input than it delivers, in the ratio of the voltages. :numref:`fig-conv-boost-waves` shows
-the waveforms of this example.
+input than it delivers, in the ratio of the voltages.
+:numref:`fig-conv-boost-waves` shows the waveforms of this example.
 
 .. figure:: boost-waves.svg
    :name: fig-conv-boost-waves
-   :alt: Waveforms over two 4 µs periods. The S1 gate is high for the
-         first 2.52 µs of each period and the S2 gate for the rest. The
-         switch node is at 0 V while S1 is on and at 54 V while S2 is on.
-         The inductor current rises from 1.248 A to 1.752 A while S1 is on
-         and falls back while S2 is on, averaging 1.500 A. The S2 current
+   :alt: Waveforms over two 4 µs periods. The S1 gate is high for the
+         first 2.52 µs of each period and the S2 gate for the rest. The
+         switch node is at 0 V while S1 is on and at 54 V while S2 is on.
+         The inductor current rises from 1.248 A to 1.752 A while S1 is on
+         and falls back while S2 is on, averaging 1.500 A. The S2 current
          is zero while S1 is on and follows the inductor current while S2
-         is on, averaging 0.556 A, the output current.
+         is on, averaging 0.556 A, the output current.
    :align: center
 
-   Idealised waveforms of the boost worked example: 20 V to 54 V,
-   250 kHz, 100 µH and 30 W.
+   Idealised waveforms of the boost worked example: 20 V to 54 V,
+   250 kHz, 100 µH and 30 W.
 
 Large step-up ratios
 --------------------
@@ -170,15 +170,15 @@ steepens as :math:`D` approaches 1.
    :name: fig-conv-boost-gain
    :alt: Graph of voltage gain against duty cycle from 0 to 1. The curve
          1 over (1 minus D) starts at 1, passes 2 at D = 0.5 and rises
-         steeply above D = 0.8. Points mark 48 V in at D = 0.111 (gain
-         1.12), 36 V at 0.333 (1.50), 28 V at 0.481 (1.93), 20 V at 0.630
-         (2.70), 15 V at 0.722 (3.60), 9 V at 0.833 (6.00) and 5 V at 0.907
+         steeply above D = 0.8. Points mark 48 V in at D = 0.111 (gain
+         1.12), 36 V at 0.333 (1.50), 28 V at 0.481 (1.93), 20 V at 0.630
+         (2.70), 15 V at 0.722 (3.60), 9 V at 0.833 (6.00) and 5 V at 0.907
          (10.80). Shaded bands mark the LM5155 maximum duty-cycle ranges of
-         80 % to 90 % and 90 % to 96 %.
+         80 % to 90 % and 90 % to 96 %.
    :align: center
 
    Boost voltage gain against duty cycle, with the fixed USB voltages of
-   :numref:`tab-conv-boost-duty` raised to 54 V.
+   :numref:`tab-conv-boost-duty` raised to 54 V.
 
 At high duty cycles the off time, during which all the energy is passed to
 the output, becomes short. The current in S2 and the output capacitor then
