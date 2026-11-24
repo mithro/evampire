@@ -498,7 +498,34 @@ returns to Unattached.SRC, and any other dual-role port to Unattached.SNK
 (:typec:`Section 4.5.2.2.2`). USB Power Delivery uses it when a power role
 swap stalls, with no PS_RDY message within tPSSourceOn
 (:pd:`Section 7.31.5.3`), and when a :term:`Hard Reset` does not clear an
-error (:pd:`Section 7.1.3`).
+error (:pd:`Section 7.1.3`). :numref:`fig-usbpd-error-recovery` shows the
+sequence.
+
+.. wavedrom::
+   :caption: ErrorRecovery forcing a detach and a fresh attach, schematic and
+             not to scale; the 240 ms applies if the port was supplying
+             VCONN.
+   :name: fig-usbpd-error-recovery
+   :alt: Timing diagram. The port leaves its attached state for
+         ErrorRecovery: it stops driving VBUS and VCONN and its CC pins go
+         open, at least 126 kΩ. It stays there for tErrorRecovery, at least
+         25 ms, or 240 ms if it was supplying VCONN, while the partner sees
+         a detach. It then returns to Unattached.SRC or Unattached.SNK and
+         attach starts again.
+
+   {"signal": [
+     {"name": "port state", "wave": "=...=.......=.......",
+      "data": ["attached", "ErrorRecovery", "Unattached.SRC or .SNK"]},
+     {"name": "port CC", "wave": "=...=.......=.......",
+      "data": ["Rp or Rd", "open, ≥ 126 kΩ", "toggling"]},
+     {"name": "VBUS, VCONN", "wave": "=...0...............",
+      "data": ["as before"]},
+     {"name": "timer", "wave": "x...=.......x.......",
+      "data": ["tErrorRecovery ≥ 25 ms, or ≥ 240 ms"]},
+     {"name": "partner", "wave": "=....=..............",
+      "data": ["attached", "sees a detach"]}
+   ],
+   "config": {"hscale": 1.2}}
 
 ErrorRecovery is why both the Rp and the Rd circuits must be able to turn
 off completely, including the unpowered Rd once the board has power.

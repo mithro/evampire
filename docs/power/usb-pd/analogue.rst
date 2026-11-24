@@ -180,8 +180,9 @@ VCONN switch
 ------------
 
 A port that powers a marked cable connects :term:`VCONN`, a 3.0 V to 5.5 V
-supply, to the CC pin that does not carry messages, and discharges that pin after detach. The voltage,
-timing and discharge requirements are on :ref:`usbpd-vconn`. The power a
+supply, to the CC pin that does not carry messages, and discharges that
+pin after detach (:numref:`fig-usbpd-vconn-cable`). The voltage, timing and
+discharge requirements are on :ref:`usbpd-vconn`. The power a
 source must supply depends on what the port carries (:typec:`Table 4-4` and
 :typec:`Table 4-5`). A port without SuperSpeed signals need not supply VCONN
 unless it offers more than 3 A, and then it must supply 100 mW. The current

@@ -37,7 +37,29 @@ After changing Rp from SinkTxOK to SinkTxNG, the source waits *tSinkTx*
 has already started can finish (:pd:`Section 7.31.13.1`,
 :pd:`Table 7.10`). A source therefore switches Rp during normal operation,
 and its Rp circuit must provide the 1.5 A and 3.0 A levels whatever power
-it offers.
+it offers. :numref:`fig-usbpd-sinktx` shows the order.
+
+.. wavedrom::
+   :caption: A source reserving the line by changing Rp from SinkTxOK to
+             SinkTxNG, schematic and not to scale.
+   :name: fig-usbpd-sinktx
+   :alt: Timing diagram. The source's Rp changes from SinkTxOK, the 3.0 A
+         value with the CC wire idle at about 1.7 V, to SinkTxNG, the 1.5 A
+         value with the CC wire idle at about 0.9 V. A message the sink had
+         already started is allowed to finish. The source waits tSinkTx,
+         16 to 20 ms, from the change before it starts its own exchange.
+
+   {"signal": [
+     {"name": "source Rp", "wave": "=.....=...............",
+      "data": ["SinkTxOK, about 1.7 V", "SinkTxNG, about 0.9 V"]},
+     {"name": "sink message", "wave": "z.=......z............",
+      "data": ["already started: finishes"]},
+     {"name": "source timer", "wave": "x.....=.......x.......",
+      "data": ["tSinkTx 16–20 ms"]},
+     {"name": "source message", "wave": "z.............=....z..",
+      "data": ["source's exchange"]}
+   ],
+   "config": {"hscale": 1}}
 
 Rp can be a resistor to a supply or a
 :wikipedia:`current source <Current_source>`: 80 µA, 180 µA or 330 µA from

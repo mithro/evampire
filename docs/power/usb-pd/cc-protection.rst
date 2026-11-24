@@ -403,8 +403,8 @@ Options for evampire
 On-chip blocking switch
    A custom high-voltage switch on each CC pin: stacked transistors in
    isolated wells, each holding part of the voltage, or a drain-extended
-   transistor (:ref:`conv-custom`). It also passes
-   the BMC signal, the Rp and Rd currents and VCONN, and keeps the
+   transistor (:ref:`conv-custom`; :numref:`fig-usbpd-custom-structures`).
+   It also passes the BMC signal, the Rp and Rd currents and VCONN, and keeps the
    dead-battery Rd visible without power (:ref:`usbpd-rd-circuit`). Its
    connector side sits at the full VBUS voltage above the substrate. An
    N-well holds at least 10 V to the substrate, below 21.5 V. A deep N-well

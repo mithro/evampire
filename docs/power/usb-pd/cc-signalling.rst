@@ -294,7 +294,8 @@ The 300 ns minimum rise and fall time limits
 the cable, such as the USB 2.0 data pair. The slope can be set by the
 driver design or by an RC filter at the driver output (:pd:`Section 5.3.4`,
 item 1). The mask sets the opposite limit: an edge must not be so slow that
-it enters the inner mask.
+it enters the inner mask. :numref:`fig-usbpd-tx-mask` draws both limits:
+the fastest allowed edge and the slowest RC edge that stays out.
 
 *Assumption:* the edge has the shape of the step response of a first-order
 :wikipedia:`RC circuit <RC_circuit>` with :wikipedia:`time constant
