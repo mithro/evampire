@@ -21,8 +21,8 @@ described in :ref:`power-roles`. :doc:`usb-pd-roles` explains how they
 combine. evampire acts only as a device, so its port must be in the UFP
 data role for the serial port to work.
 
-The D+ and D− wires on a USB Type-C connector
----------------------------------------------
+D+ and D− on the USB Type-C connector
+-------------------------------------
 
 USB 2.0 data travels on one pair of wires, D+ and D−. They are driven with
 opposite levels most of the time, so the information is in the difference
@@ -57,8 +57,8 @@ described in :doc:`analogue`.
          connects the D+ pin to 3.3 V.
    :align: center
 
-Speeds, and why full speed is used
-----------------------------------
+USB speeds
+----------
 
 USB 2.0 has three speeds (:numref:`tab-usbser-speeds`).
 
@@ -97,8 +97,8 @@ Full speed is the speed that fits the requirement:
   only after a handshake during reset ([USBSER-USB2]_ section 7.1.7.5), so
   a full-speed device works on every USB 2.0 host.
 
-How a device announces itself
------------------------------
+Connect detection
+-----------------
 
 The host pulls each of D+ and D− to ground through 15 kΩ
 ([USBSER-USB2]_ section 7.1.5.1). With nothing attached both wires sit
@@ -211,8 +211,8 @@ error and ignores the packet ([USBSER-USB2]_ section 7.1.9.1).
    ],
    "config": {"hscale": 2}}
 
-Start, packet identifier and end of a packet
---------------------------------------------
+Packet start, identifier and end
+--------------------------------
 
 Every packet has the same frame (:numref:`fig-usbser-packet`):
 
@@ -316,8 +316,8 @@ specification; on the wire bit 0 goes first. The other identifiers in the
 specification (DATA2, MDATA, NYET, PRE, ERR, SPLIT, PING) are used only at
 high speed or between hubs, and a full-speed device ignores them.
 
-Checksums: CRC5 and CRC16
--------------------------
+CRC5 and CRC16 checksums
+------------------------
 
 Token and data packets end with a
 :wikipedia:`cyclic redundancy check <Cyclic_redundancy_check>` (CRC), a

@@ -1,5 +1,5 @@
-Transactions, enumeration and the serial port class
-===================================================
+Transactions and enumeration
+============================
 
 This page describes how the packets of :doc:`signalling` combine into
 transactions and transfers, how the host recognises and configures a newly
@@ -124,8 +124,8 @@ that returns data, each data packet must follow within 500 ms
 packet-level deadlines of :doc:`timing`, so the request handling itself is
 ordinary software.
 
-Descriptors of a serial port
-----------------------------
+Serial port descriptors
+-----------------------
 
 A USB serial port uses the communications device class with the abstract
 control model subclass (CDC-ACM, see :doc:`what-it-is`).

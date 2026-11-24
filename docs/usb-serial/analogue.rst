@@ -1,5 +1,5 @@
-The analogue front end on gf180mcu
-==================================
+Analogue front end
+==================
 
 This page lists the electrical requirements of a full-speed device's D+ and
 D− connection from the :std:`USB 2.0 specification <usb2>` [USBSER-USB2]_, and compares
@@ -21,8 +21,8 @@ port.
          reports whether VBUS is present.
    :align: center
 
-The full-speed driver
----------------------
+Full-speed driver
+-----------------
 
 :numref:`tab-usbser-driver` lists the driver requirements.
 
@@ -68,7 +68,8 @@ The driver also has to:
 * never drive both lines high at once (SE1);
 * change monotonically, with its edge rate controlled to limit radio
   emissions ([USBSER-USB2]_ section 7.1.1, section 7.1.2.1);
-* survive the stresses of :ref:`usbser-protection`.
+* survive the stresses described in
+  :ref:`Short-circuit and electrostatic discharge protection <usbser-protection>`.
 
 The specification shows the impedance made of a CMOS output stage with a
 lower impedance plus an external series resistor *RS*
@@ -103,8 +104,8 @@ At 28 Ω, :math:`t_{10\text{–}90} = 2.197 \times 28\ \Omega \times
 4.83 ns. A driver at the low end of the impedance range therefore needs its
 own slew-rate control, which the specification requires in any case.
 
-The receivers
--------------
+Receivers
+---------
 
 A full-speed device has three receivers ([USBSER-USB2]_ section 7.1.4.1,
 Figure 7‑24):
@@ -124,8 +125,8 @@ Each line, without its pull-up or pull-down, must present more than
 and D+ and D− must match within 10 % ([USBSER-USB2]_ section 7.1.6.1,
 Table 7‑7).
 
-The pull-up resistor
---------------------
+Pull-up resistor
+----------------
 
 The device announces itself with 1.5 kΩ ± 5 % from D+ to a supply of
 3.0 V to 3.6 V (*RPU*, *VTERM*). It must be able to pull D+ from 0 V to
@@ -180,8 +181,8 @@ happens when VBUS changes or when evampire itself supplies VBUS.
 
 .. _usbser-protection:
 
-Protection: short circuits and electrostatic discharge
-------------------------------------------------------
+Short-circuit and electrostatic discharge protection
+----------------------------------------------------
 
 USB 2.0 asks a transceiver to withstand ([USBSER-USB2]_ section 7.1.1,
 Figure 7‑2):
@@ -245,8 +246,8 @@ page). These are ratings for handling a chip; a connector pin of a finished
 product also faces the stronger system-level discharge test, which
 :ref:`the CC pin protection page <usbpd-esd>` compares for the CC pins.
 
-What the gf180mcu standard I/O cells provide
---------------------------------------------
+gf180mcu standard I/O cells
+---------------------------
 
 The ``gf180mcu_fd_io`` library has a bidirectional pad ``bi_t`` with 4, 8,
 12 or 16 mA drive and fast or slow slew, and a 24 mA version ``bi_24t``. It
@@ -363,8 +364,8 @@ recommends 68 Ω
 series resistors and an external 1.5 kΩ pull-up driven from a chip output
 ([USBSER-TT04-USBCDC]_).
 
-Custom options
---------------
+Custom circuits
+---------------
 
 Where the standard cells fall short, the process allows custom circuits:
 

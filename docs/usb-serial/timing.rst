@@ -6,8 +6,8 @@ specification [USBSER-USB2]_, and works out what each one requires of the
 circuit or the software that meets it. :doc:`software-cost` uses these
 figures.
 
-The bit time and its tolerance
-------------------------------
+Bit time and tolerance
+----------------------
 
 The bit time is the reciprocal of the bit rate:
 
@@ -37,8 +37,8 @@ which is 11.97 Mbit/s to 12.03 Mbit/s, or a bit time of 83.13 ns to
 ± 0.05 % ([USBSER-USB2]_ section 7.1.11). The tolerance covers every source
 of error: initial accuracy, supply, temperature and ageing.
 
-Edge timing: what is sent and what must be received
----------------------------------------------------
+Transmit and receive edge timing
+--------------------------------
 
 The sender's edges may deviate from their ideal positions by small amounts,
 and the receiver must cope with much larger deviations, because the signal
@@ -77,8 +77,8 @@ side of the ideal position, and the specification notes that a receiver
 sampling four times per bit, with a simple digital phase-locked loop, can
 meet this ([USBSER-USB2]_ section 7.1.15.1).
 
-Sampling margin in the receiver
--------------------------------
+Receiver sampling margin
+------------------------
 
 A receiver that takes one sample per bit, placed in the middle of the bit,
 has this margin against the receive jitter:
@@ -147,12 +147,12 @@ Two cases show what this means:
 
 A receiver therefore either corrects its sampling instant at each edge, or
 holds its clock within a few hundred parts per million of the host's (see
-`Clock accuracy and tracking the host's frames`_).
+`Clock accuracy and frame tracking`_).
 
 .. _usbser-placing-edges:
 
-Placing transmitted edges
--------------------------
+Transmit edge placement
+-----------------------
 
 A transmitter that changes its output only on the edges of a clock of
 frequency :math:`f_\text{tx}` can place each edge exactly when
@@ -189,8 +189,8 @@ is outside ± 3.5 ns, so edges timed from 125 MHz directly do not meet
 *TDJ1*. A clock that is a multiple of 12 MHz, such as 48 MHz, has no such
 error.
 
-Inter-packet delay and the reply deadline
------------------------------------------
+Inter-packet delay and reply deadline
+-------------------------------------
 
 The time between packets runs from the end of one packet to the start of
 the next ([USBSER-USB2]_ section 7.1.18.1). The end is the change from SE0
@@ -263,8 +263,8 @@ works out what this takes. The deadline applies to every token addressed to
 the device, including the IN tokens the host sends repeatedly when the
 device has nothing to send.
 
-The end of a packet
--------------------
+End of packet
+-------------
 
 The end of packet has several rules that a receiver and a transmitter must
 follow ([USBSER-USB2]_ section 7.1.7.4.1, section 7.1.13.2.1, section 7.1.4.1,
@@ -281,12 +281,12 @@ section 7.1.9.1, Table 7‑9):
   must accept up to six bit times without a transition before the end of
   packet, without reporting a stuffing error.
 
-Clock accuracy and tracking the host's frames
----------------------------------------------
+Clock accuracy and frame tracking
+---------------------------------
 
 The device's bit clock has to be within ± 0.25 % of 12 MHz to transmit, and
 its receiver needs either edge correction or a closer match
-(`Sampling margin in the receiver`_). Three sources can provide it:
+(`Receiver sampling margin`_). Three sources can provide it:
 
 * *A crystal-derived clock.* evampire already has a 125 MHz reference for
   Ethernet (:ref:`arch-clock`), and gigabit Ethernet requires that

@@ -1,13 +1,13 @@
-Alternative ways to provide a serial port
-=========================================
+Serial port alternatives
+========================
 
 This page lists other ways to give evampire's processor a serial channel to
 a computer, including some that other projects avoid. For each it gives the
 reason others avoid it and whether that reason applies to evampire. All of
 them remain open (see `Open questions`_).
 
-USB low speed instead of full speed
------------------------------------
+USB low speed
+-------------
 
 At low speed a bit lasts 666.7 ns instead of 83.33 ns, eight times longer,
 so pure software needs an eighth of the instruction rate worked out in
@@ -37,8 +37,8 @@ low-speed device that is not CDC-ACM, for example a vendor-specific or human
 interface device with a small program on the computer, stays within the
 specification at the cost of the no-driver property of :doc:`what-it-is`.
 
-Oversampling or clock recovery in the receiver
-----------------------------------------------
+Receiver oversampling or clock recovery
+---------------------------------------
 
 Most hardware USB receivers oversample four times per bit
 (:doc:`software-cost`). A receiver can instead take one sample per bit at a
@@ -48,8 +48,8 @@ logic at 12 MHz ([USBSER-FOBOOT]_, ``hw/foboot-bitstream.py``).
 On a custom chip the choice is between more fast flip-flops and a finer
 phase adjustment, and either is open.
 
-A serial channel over the configuration channel
------------------------------------------------
+Serial channel over the configuration channel
+---------------------------------------------
 
 USB Power Delivery carries messages on the CC wire, which evampire's
 software already drives and samples (:doc:`/power/usb-pd/index`). Its
@@ -79,8 +79,8 @@ transport on the reassigned pins is left to the vendor. It needs a special
 debug cable or adapter at the computer, so it does not give a serial port on
 an ordinary cable.
 
-An external USB-to-serial bridge
---------------------------------
+External USB-to-serial bridge
+-----------------------------
 
 A separate USB-to-UART bridge chip on the board, connected to the
 connector's D+ and D− and to a UART on evampire, gives a CDC or
@@ -89,8 +89,8 @@ part and a UART on the chip, and the bridge still has to follow the data
 role rules of :doc:`usb-pd-roles`. It can serve the first version while the
 on-chip serial port is developed.
 
-A console over Ethernet
------------------------
+Console over Ethernet
+---------------------
 
 The processor already sends and receives Ethernet frames
 (:doc:`/overview`). A console over the network needs no USB at all, but it

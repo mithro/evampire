@@ -41,15 +41,15 @@ RV32I, the 32-bit base RISC-V instruction set, not measurements. The
 :doc:`/power/usb-pd/software` page uses the same method for the
 configuration channel.
 
-Baseline: only input and output bits
-------------------------------------
+Software-only baseline
+----------------------
 
 The minimum hardware is the analogue front end of :doc:`analogue` connected
 to plain processor-visible bits: D+ and D− receiver outputs as inputs; and
 driver enable, D+ level, D− level and pull-up enable as outputs. Everything
 else is software.
 
-Receiving
+Reception
 ~~~~~~~~~
 
 For each bit the software has to take a sample at the right moment, undo
@@ -143,7 +143,7 @@ Three further needs come with it:
   a packet loses the packet. Interrupts stay off from the SYNC to the end of
   the reply.
 
-Transmitting
+Transmission
 ~~~~~~~~~~~~
 
 To send, the software takes each bit, inserts a stuffed bit after six ones,
@@ -176,8 +176,8 @@ The edges must also meet the ± 3.5 ns source jitter limit. A loop of fixed
 length places them exactly only if :math:`f_\text{clk}` is a whole multiple
 of 12 MHz, or at least 286 MHz (:ref:`usbser-placing-edges`).
 
-The reply deadline
-~~~~~~~~~~~~~~~~~~
+Reply deadline
+~~~~~~~~~~~~~~
 
 After the end of each packet addressed to the device, the software has to
 start the reply within :math:`t_\text{reply}`, at most 541.7 ns
@@ -217,8 +217,8 @@ its own address and endpoints, so it can prepare the 16 bits that follow
 the PID (address, endpoint and CRC5) for each endpoint it serves, and
 compare the received bits with that list.
 
-Waiting for the next packet
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Idle time between packets
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The host may send a token at any moment, so software has to watch the line
 continuously while it is connected. While a terminal program has the port
@@ -231,8 +231,8 @@ times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
 polls fit in a 1 ms frame. At that rate the device spends essentially all
 its time receiving tokens and replying.
 
-Summary of the baseline
-~~~~~~~~~~~~~~~~~~~~~~~
+Baseline summary
+~~~~~~~~~~~~~~~~
 
 With only input and output bits, the processor needs about
 :math:`123 \times 10^{6}` instructions per second while receiving and about
@@ -242,10 +242,12 @@ to the end of the reply, and transmits from a clock that is a multiple of
 12 MHz.
 When a bulk IN endpoint is being polled, this applies most of the time.
 
-Hardware helpers, in order of what they remove
-----------------------------------------------
+Hardware helpers
+----------------
 
-Each helper below takes one part of the baseline into hardware.
+Each helper below takes one part of the baseline into hardware, in the
+order in which they are added, so each step removes the largest remaining
+load.
 :numref:`fig-usbser-blocks` shows them together and
 :numref:`tab-usbser-split` summarises what remains for software after each
 step.
@@ -263,8 +265,8 @@ step.
          trims the clock.
    :align: center
 
-1. Receive deserialiser
-~~~~~~~~~~~~~~~~~~~~~~~
+Receive deserialiser
+~~~~~~~~~~~~~~~~~~~~
 
 The deserialiser samples D+ and D−, recovers the bit timing from the edges,
 detects SYNC and end of packet, undoes NRZI, removes stuffed bits, flags
@@ -297,8 +299,8 @@ typical corner, 5 V and 25 °C ([USBSER-GF180-SC]_, cell
 :wikipedia:`current-mode logic <Current-mode_logic>`, are an option for a
 higher oversampling rate.
 
-2. Transmit serialiser
-~~~~~~~~~~~~~~~~~~~~~~
+Transmit serialiser
+~~~~~~~~~~~~~~~~~~~
 
 The serialiser takes bytes from a FIFO, sends SYNC, inserts stuffed bits,
 applies NRZI, drives J, K and SE0, and ends with the end of packet. It runs
@@ -311,8 +313,8 @@ from a clock that is a multiple of 12 MHz.
   :math:`D \times 666.7` ns ahead for a FIFO of :math:`D` bytes, or the
   whole packet loaded before it starts.
 
-3. CRC5 and CRC16 in hardware
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hardware CRC5 and CRC16
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A CRC16 register on the receive and transmit byte streams, and a CRC5 check
 on received tokens, is a few dozen flip-flops and exclusive-or gates.
@@ -322,8 +324,8 @@ on received tokens, is a few dozen flip-flops and exclusive-or gates.
   second; the CRC check moves out of the reply deadline.
 * *Leaves:* the reply deadline itself.
 
-4. Automatic handshakes
-~~~~~~~~~~~~~~~~~~~~~~~
+Automatic handshakes
+~~~~~~~~~~~~~~~~~~~~
 
 Per endpoint, the software sets flags such as "buffer ready to receive",
 "data ready to send" and "halted". A token decoder matches the address and
@@ -348,8 +350,8 @@ This is the split of the eptri interface of ValentyUSB, which answers NAK
 until the processor arms an endpoint's buffer and adds the CRC16 to IN
 packets itself ([USBSER-VALENTYUSB]_, ``cpu/eptri.py``).
 
-5. Frame timer
-~~~~~~~~~~~~~~
+Frame timer
+~~~~~~~~~~~
 
 A counter that latches the local clock count at each start-of-frame token
 lets software, or a small control loop, trim an oscillator against the
@@ -359,14 +361,14 @@ from a crystal.
 Packet buffers
 ~~~~~~~~~~~~~~
 
-From step 4 on, packets are held in buffers that the processor reads and
+Once automatic handshakes are added, packets are held in buffers that the processor reads and
 writes. A serial port with 64-byte packets needs one 64-byte buffer per direction
 of each bulk endpoint, or two, so that the hardware fills one while the
 software works on the other. It also needs an 8-byte buffer for SETUP, and
 buffers of the chosen sizes for endpoint 0 and the interrupt endpoint.
 
-Summary of the steps
---------------------
+Summary of the helpers
+----------------------
 
 .. list-table:: What software has to do after each hardware step
    (instruction counts are estimates)
@@ -399,10 +401,10 @@ Summary of the steps
      - Data rate
      - Request, 50 ms
 
-Working plan for the split
---------------------------
+Chosen split
+------------
 
-The plan is to build steps 1 to 4 in hardware: the receive deserialiser,
+The chosen split builds the first four helpers in hardware: the receive deserialiser,
 the transmit serialiser, the CRC, and automatic handshakes with packet
 buffers. Software does everything else: enumeration, the descriptors, the
 CDC-ACM requests, moving the serial data, and the policy of when to connect
@@ -410,12 +412,12 @@ and disconnect. With this split, USB places no packet-level deadline on the
 processor, so it can serve USB, USB Power Delivery and Ethernet duties in
 any order (see :doc:`usb-pd-roles`).
 
-Smaller splits remain options and depend on the processor. Without step 4,
+Smaller splits remain options and depend on the processor. Without automatic handshakes,
 the processor has to meet the reply deadline,
 :math:`f_\text{clk}/\text{CPI} \ge N_\text{reply}/t_\text{reply}`, and be
-free at the end of every packet for the device. Without steps 1 and 2, it
+free at the end of every packet for the device. Without the deserialiser and serialiser, it
 needs the rates of the baseline. Another option is a small programmable
-state machine in place of fixed logic for steps 1 and 2, as the RP2040's
+state machine in place of fixed logic for the deserialiser and serialiser, as the RP2040's
 programmable I/O does in Pico-PIO-USB ([USBSER-PICO-PIO-USB]_).
 
 Reference implementations
@@ -483,7 +485,7 @@ Open questions
 --------------
 
 * The processor core, its clock :math:`f_\text{clk}` and its CPI, which set
-  whether a smaller split than steps 1 to 4 is enough.
+  whether a smaller split than the first four helpers meets the deadlines.
 * The measured instruction counts, by writing the receive, transmit and
   reply code and running it on the chosen core or an FPGA model of it.
 * Fixed logic or a small programmable state machine for the serialiser and

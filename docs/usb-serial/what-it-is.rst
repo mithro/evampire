@@ -1,12 +1,12 @@
-What a USB serial port is
-=========================
+USB serial port basics
+======================
 
 This page describes what a computer sees when evampire's processor is
 attached as a USB serial port, and what the port is for. How the bits get
 there is on the following pages.
 
-A serial port, seen from the computer
--------------------------------------
+The computer's view
+-------------------
 
 A :wikipedia:`serial port <Serial_port>` is a channel that carries a stream
 of bytes in each direction between a computer and a device. On a computer it
@@ -17,8 +17,8 @@ from. The interface comes from the
 line with its own connector; a USB device can present the same interface
 to programs without any UART behind it.
 
-The communications device class and the abstract control model
----------------------------------------------------------------
+Communications device class
+---------------------------
 
 USB defines *device classes*: standard descriptions of a kind of device,
 so that one driver in the operating system works with every device of that
@@ -36,8 +36,8 @@ and a data interface with one channel in each direction for the bytes
 ([USBSER-CDC]_ section 3.4). :doc:`transactions` lists the descriptors and
 endpoints in detail.
 
-Why no custom driver is needed
-------------------------------
+Operating system drivers
+------------------------
 
 The common operating systems include a driver that binds to a CDC-ACM
 interface by its class codes:
@@ -55,8 +55,8 @@ open. The class codes have to be exactly these: Windows does not load
 ``usbser.sys`` automatically when the subclass is not 02h
 ([USBSER-WIN-USBSER]_).
 
-What the serial port is used for
---------------------------------
+Uses of the serial port
+-----------------------
 
 The serial port gives the firmware on evampire's processor a text channel
 to a computer: a console for status and diagnostic messages, and a way to

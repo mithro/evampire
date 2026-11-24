@@ -1,5 +1,5 @@
-Interaction with USB Power Delivery roles
-=========================================
+USB Power Delivery roles
+========================
 
 This page describes how the USB serial port fits with the power roles of a
 USB Type-C port, the data role swap, boards with two ports, and the other
@@ -8,8 +8,8 @@ work the processor does. The USB Power Delivery negotiation itself is on
 USB Power Delivery specifications on the :doc:`standards page
 </standards>`.
 
-Power role and data role
-------------------------
+Power and data roles
+--------------------
 
 A USB Type-C port has a *power role*, source or sink (:ref:`power-roles`),
 and, when it carries USB data, a separate *data role*: DFP, the host side,
@@ -45,8 +45,8 @@ the cases.
      - UFP
      - No host to talk to; nothing happens
 
-The data role swap
-------------------
+Data role swap
+--------------
 
 A data role swap is a USB Power Delivery message exchange, DR_Swap, that
 exchanges DFP and UFP and nothing else: VBUS, the CC resistors and VCONN
@@ -73,8 +73,8 @@ serial port is enabled.
 If the other end refuses the swap, evampire stays DFP. It then leaves D+
 and D− undriven and its pull-up off, because there is no host to answer.
 
-When to connect the pull-up
----------------------------
+Pull-up control
+---------------
 
 The device connects its D+ pull-up to announce itself and must not drive
 current into D+ while VBUS is absent ([USBSER-USB2]_ section 7.1.5.1). On
@@ -116,8 +116,8 @@ buffers and the per-byte work but add no packet-level deadline. With a
 smaller split, each port's deadlines apply independently, and packets on
 the two ports can arrive at the same time.
 
-Sharing the processor
----------------------
+Processor sharing
+-----------------
 
 The processor also runs the USB Power Delivery negotiation on each USB
 Type-C port, the Power over Ethernet negotiation, the power budget and the
