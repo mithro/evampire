@@ -276,7 +276,7 @@ gives a short description and a link to the full explanation.
    Mutual identification
       The part of Power over Ethernet classification in which power
       sourcing equipment and a powered device each learn the type of the
-      other (:clause:`145.3.6`, see :doc:`power/poe/classification`).
+      other (:clause:`145.2.8`, see :doc:`power/poe/classification`).
 
    Pair set
       Two pairs of an Ethernet cable, one positive and one negative, that
@@ -311,7 +311,9 @@ gives a short description and a link to the full explanation.
    Power demotion
       Assigning a powered device a lower class than it requested, by
       issuing fewer class events, when power sourcing equipment cannot
-      supply the requested class (see :ref:`poe-demotion`).
+      supply the requested class. The name comes from the Ethernet
+      Alliance; the standard describes it without naming it
+      (:clause:`Table 145-11 <145>`, see :ref:`poe-demotion`).
 
    Power over Ethernet
    PoE

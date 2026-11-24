@@ -22,16 +22,16 @@ The standard gives the two ends of a cable two ways to agree the power:
    allocation in steps of 0.1 W (:doc:`lldp`).
 
 Both also give :term:`mutual identification`: each end learns the type of
-the other (:clause:`33.3.5`, :clause:`145.3.6`). [POE-EA-BT]_ (Section 5)
-summarises both methods for Types 1 to 4.
+the other (:clause:`33.2.6`, :clause:`145.2.8`).
 
 Each type implements a set of methods
 -------------------------------------
 
 :numref:`tab-poe-class-methods` lists the methods that each type must
-implement. The Type 1 and Type 2 rows come from :clause:`33.2.6` and
-:clause:`33.3.5`, the Type 3 and Type 4 rows from :clause:`145.2.8`,
-:clause:`145.3.6` and :clause:`145.5`.
+implement. The Type 1 and Type 2 rows come from
+:clause:`Table 33-8 <33>`, :clause:`33.2.6` and :clause:`33.3.5`, the
+Type 3 and Type 4 rows from :clause:`145.2.8`, :clause:`145.3.6` and
+:clause:`145.5`.
 
 .. list-table:: Classification methods each type implements
    :name: tab-poe-class-methods
@@ -72,36 +72,40 @@ implement. The Type 1 and Type 2 rows come from :clause:`33.2.6` and
 The rules for power sourcing equipment differ by type:
 
 * Type 2 power sourcing equipment implements 2-event Physical Layer
-  classification, Data Link Layer classification, or both
-  [POE-BT-BASELINE-0115]_. When the first class event shows class
-  signature 4, it may skip the second only if it implements Data Link
-  Layer classification. It may then give class 0 power, 15.4 W at its
-  output, until mutual identification is complete (:clause:`33.2.6`,
-  [POE-BT-STEWART-0316]_). When the first shows class signature 0 to 3, it
-  treats the powered device as Type 1 and may stop there.
-* Type 3 and Type 4 power sourcing equipment must implement multiple-event
-  Physical Layer classification, so it gives full class power without
-  LLDP [POE-EA-BT]_ (Summary). It issues one class event only when the
-  powered device requests class 1 to 3, or when it has no more than
-  class 3 power to give [POE-BT-BASELINE-0115]_.
+  classification, Data Link Layer classification, or both; one class event
+  without Data Link Layer classification is not allowed
+  (:clause:`Table 33-8 <33>`, :clause:`33.2.6`).
+* When the first class event shows class signature 4, Type 2 equipment may
+  skip the second only if it implements Data Link Layer classification. It
+  may then give class 0 power, 15.4 W at its output, until mutual
+  identification is complete (:clause:`33.2.6.1`, :clause:`33.2.6.2`).
+  When the first shows class signature 0 to 3, it treats the powered
+  device as Type 1 and may stop there.
+* Type 3 and Type 4 power sourcing equipment must perform multiple-event
+  Physical Layer classification, and must be able to assign the highest
+  class it can support that way (:clause:`145.2.8`). It therefore gives
+  full class power without LLDP. It issues one class event when the
+  powered device requests class 1 to 3, or when it can support no more
+  than class 3 (:clause:`Table 145-11 <145>`).
 * Data Link Layer classification is optional for Type 3 and Type 4 power
-  sourcing equipment [POE-EA-BT]_ (Section 5.4).
+  sourcing equipment (:clause:`145.2.8`, :clause:`145.5`).
 
 The rules for powered devices are the reverse: Data Link Layer
 classification is required for most of them. A Type 2 powered device
 implements both 2-event class signatures and Data Link Layer
-classification [POE-BT-MUTUALID-PD]_. Until either has completed, it
-behaves as a Type 1 powered device and draws no more than 13 W.
+classification (:clause:`33.3.5`). Until either has completed, it keeps to
+the limits of a Type 1 powered device, 13 W (:clause:`33.3.5.2`).
 A single-signature Type 3 or Type 4 powered device that requests class 4
 or higher, and a dual-signature one that requests class 4 or higher on
 either pair set, implements Data Link Layer classification
-[POE-BT-PDCLASS-0317]_.
+(:clause:`145.3.6`, :clause:`145.5`). For other Type 3 and Type 4 powered
+devices it is optional.
 
-For reference, the TPS2373 data sheet states that every Type 3 and Type 4
-powered device does Data Link Layer classification [POE-TPS2373]_
-(PoE Overview). The draft text above and [POE-EA-BT]_ (Section 5.4) make
-it optional for classes 1 to 3. evampire implements it in either case
-(:ref:`req-poe-classification`).
+Some summaries are stricter than the standard. For reference, the TPS2373
+data sheet states that every Type 3 and Type 4 powered device does Data
+Link Layer classification [POE-TPS2373]_ (PoE Overview), whereas
+:clause:`145.3.6` makes it optional for single-signature classes 1 to 3.
+evampire implements it in either case (:ref:`req-poe-classification`).
 
 .. _poe-class-outcome:
 
@@ -157,7 +161,7 @@ equipment has the power to give.
 
 The rows follow from :numref:`tab-poe-events` and the Type 2 rules above. A
 Type 1 power sourcing equipment assigns class 0 to a powered device that
-shows class signature 4 [POE-BT-STEWART-0316]_, and a Type 1 powered device
+shows class signature 4 (:clause:`33.2.6.1`), and a Type 1 powered device
 of class 0 gets 13 W from all of them. A powered device that requests
 class 5 to 8 shows class signature 4 in the first two class events
 (:numref:`tab-poe-request`), so Type 1 and Type 2 power sourcing equipment
@@ -176,8 +180,10 @@ Fewer class events demote the powered device
 The assigned class is the lower of the requested class and the class that
 the number of class events allows (:numref:`tab-poe-events`). A power
 sourcing equipment that cannot supply the requested class, because of its
-type or its power budget, issues fewer class events. The standard calls
-this :term:`power demotion` [POE-EA-BT]_ (Section 5, Table 7).
+type or its power budget, issues fewer class events
+(:clause:`Table 145-11 <145>`). The standard has no name for this; the
+Ethernet Alliance overview calls it :term:`power demotion` [POE-EA-BT]_
+(Section 5).
 
 Demotion follows from the power sourcing equipment's capability, not from
 a missing LLDP exchange. The powered device conforms to its assigned class
@@ -186,7 +192,9 @@ underpowered (:clause:`145.3.6`, :ref:`poe-pd-dll`).
 
 Over LLDP a demoted powered device can ask again for up to its requested
 class, and the power sourcing equipment grants it if its budget allows. It
-cannot ask for more than its requested class [POE-EA-BT]_ (Section 5.4).
+cannot ask for more than its requested class: its request is limited to
+the power of that class (:clause:`145.5.3.3.1`, variable
+``pd_dllmax_value``).
 Autoclass only lowers the allocation (:ref:`autoclass <poe-autoclass>`).
 
 Before classification is complete, and in the first 80 ms after turn-on,

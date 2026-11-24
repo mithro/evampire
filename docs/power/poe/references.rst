@@ -18,34 +18,6 @@ Summaries
    Connectivity Discovery <https://standards.ieee.org/ieee/802.1AB/6047/>`__,
    standard page (see also :std:`802.1AB`).
 
-IEEE 802.3bt task force contributions
--------------------------------------
-
-Draft text from the task force that wrote :clause:`145` and revised
-:clause:`33`. It is cited for the classification rules where the published
-wording could not be checked; the published standard governs.
-
-.. [POE-BT-BASELINE-0115] L. Yseboodt, `Physical Layer & DLL classification
-   v130
-   <https://www.ieee802.org/3/bt/public/jan15/yseboodt_3_0115_baseline_v130.pdf>`__,
-   IEEE 802.3bt task force baseline, 2015-01. Classification permutations
-   for PSE and PD Types 1 to 4.
-
-.. [POE-BT-STEWART-0316] H. Stewart, `33.2.7.1 PSE Single-Event Physical
-   Layer classification, baseline
-   <https://www.ieee802.org/3/bt/public/mar16/hstewart_02_0316-33_2_7_1to2-v3-BASELINE.pdf>`__,
-   IEEE 802.3bt task force baseline, 2016-03.
-
-.. [POE-BT-MUTUALID-PD] D. Abramson, `Mutual identification, PD
-   requirements
-   <https://grouper.ieee.org/groups/802/3/bt/public/nov14/Mutual_ID_PD_updated.docx>`__,
-   IEEE 802.3bt task force contribution, 2014-11. Draft text of the Type 2
-   PD classification rules.
-
-.. [POE-BT-PDCLASS-0317] L. Yseboodt, `PD Classification text v104
-   <https://www.ieee802.org/3/bt/public/mar17/yseboodt_03_0317_pdclassification.pdf>`__,
-   IEEE 802.3bt task force baseline, 2017-03.
-
 Powered-device controllers
 --------------------------
 
