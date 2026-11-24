@@ -310,7 +310,25 @@ circuits after them (:numref:`tab-conv-sense-uses`).
      - Fine; sets the budget margin
 
 Control and protection use comparators, each with its own threshold from a
-DAC; monitoring uses an ADC with averaging.
+DAC; monitoring uses an ADC with averaging. :numref:`fig-conv-sensing`
+shows the sense points of a power sourcing equipment output and what each
+one feeds.
+
+.. graphviz:: sensing.dot
+   :name: fig-conv-sensing
+   :caption: Sense points of a boost converter feeding a power sourcing
+             equipment port, and the circuits on evampire that use them.
+   :alt: Block diagram: the power path runs from the power bus through the
+         boost power stage, the output capacitor and the port switch to
+         Ethernet port B. Below it are four sense points: bus voltage and
+         current, an inductor current sense resistor, an output divider,
+         and a port current sense resistor after the output capacitor.
+         Inside evampire, the inductor current and output divider feed
+         comparators with DAC thresholds for peak current and current
+         limit; the bus, output and port sense points feed an ADC with
+         averaging for monitoring at 1 kHz or less; the port sense resistor
+         also feeds a port short comparator that acts within microseconds.
+   :align: center
 
 Two differences limit the sharing:
 
