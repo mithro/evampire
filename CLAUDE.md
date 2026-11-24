@@ -62,9 +62,49 @@ uv run python docs/index/overview.py docs/index/overview.svg
 uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline.svg
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
-uv run python docs/high-voltage/figures.py docs/high-voltage  # cross-sections
+uv run python docs/high-voltage/figures.py docs/high-voltage  # every high-voltage figure
+uv run python docs/architecture/figures.py docs/architecture
 uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
+uv run docs/esd/sim/tlp_plot.py
+uv run docs/esd/sim/circuits.py
+uv run docs/esd/sim/paths.py
+uv run python docs/esd/sim/sections.py
+uv run docs/esd/sim/plots.py
+uv run docs/esd/sim/model_figs.py
+uv run docs/ethernet/rgmii/figures.py
+uv run docs/ethernet/magnetics/plots.py
+uv run docs/ethernet/magnetics/drawings.py
+uv run docs/ethernet/phy-electrical/cable_figures.py
+uv run docs/ethernet/phy-electrical/channel_graphs.py
+uv run docs/ethernet/phy-electrical/coding_graphs.py
+uv run docs/ethernet/phy-electrical/driver_figures.py
+uv run docs/ethernet/phy-electrical/signal_graphs.py
+uv run docs/ethernet/phy-electrical/startup_timeline.py
+uv run docs/ethernet/phy-electrical/timing_figures.py
+uv run docs/ethernet/phy-electrical/integration/int_graphs.py
+uv run docs/power/converters/waves.py
+uv run docs/power/converters/control_waves.py
+uv run docs/power/converters/fv_figures.py
+uv run docs/power/converters/graphs.py
+uv run docs/power/converters/sections.py
+uv run docs/power/usb-pd/graphs_cc.py
+uv run docs/power/usb-pd/graphs_levels.py
+uv run docs/power/usb-pd/graphs_power.py
+uv run docs/power/usb-pd/graphs_protection.py
+uv run docs/power/usb-pd/graphs_signal.py
+uv run docs/power/usb-pd/sections.py
+uv run docs/usb-serial/figures.py
+uv run docs/usb-serial/sequences.py        # writes the sequence .dot files
+uv run docs/usb-serial/timing_figs.py
 ```
+
+Each script's docstring names the files it writes. Modules without a
+`# /// script` header (`svgdraw.py`, `svgkit.py`, `svgplot.py`, `svgfig.py`,
+`plotkit.py` and the `fig_*.py`, `*_figs.py` and `plots_*.py` modules) are
+helpers imported by the scripts above; run the script, not the helper.
+`FONT_SCALE` in `docs/power/usb-pd/svgfig.py` sets the text size of every
+USB Power Delivery graph. Every script reproduces its committed files byte
+for byte, so a rerun that changes a file means its inputs changed.
 
 The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
 the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
@@ -94,6 +134,14 @@ comes from the gf180mcu PDK and is not in this repository.
   roles, modes, the budget, translation, sharing, and the board
   configurations table (`tab-power-board-configs`). Pages link to that table
   rather than restating the configurations.
+- The sidebar nests the way the index pages do. The root `index.rst` has one
+  captioned `toctree` per group of topics (The chip, Data interfaces, Power,
+  Silicon, Reference). Sphinx shows captions only for the root page, so a
+  topic with more than about seven pages groups them under small group
+  pages instead (for example `power/poe/fundamentals.rst`). A group page
+  opens with one sentence, lists its pages with one line each, and holds
+  the `toctree` for them; the topic index lists the groups. A new page goes
+  into the group page that fits it.
 - Each topic has its own `references.rst`. Citation keys carry a per-topic
   prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `ESD-`, `HV-`,
   `USBSER-`)
@@ -152,6 +200,16 @@ publish copies of them, or quote from them at length.
   design with no history or changelog. Don't invent terms: use the
   standard's names.
 - **Plain sentences:** at most 45 words each.
+- **Headings:** short noun phrases in sentence case with no end
+  punctuation, usually 2 to 6 words ("Breakdown at curved edges", not
+  "Curved edges break down first"). Page titles must read well in the
+  sidebar. Keep "Open questions" and "References". A heading is never the
+  only place a fact is stated: the section's text states it.
+- **Diagrams:** every section that describes a layout, a set of
+  connections, a sequence, a change of state, a waveform or how one
+  quantity depends on another has its own figure. Never send the reader to
+  a standard, datasheet or other site for a picture; redraw it from the
+  numbers on the page and cite the source of the numbers.
 - **Each fact in one place:** link to it instead of restating it.
 - **Page shape:** each page opens with one sentence saying what it covers.
   A page that leaves design decisions open ends with one "Open questions"
