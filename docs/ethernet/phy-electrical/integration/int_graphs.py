@@ -16,7 +16,9 @@ that its page gives:
 * carry-stages.svg: the 8 ns period split into flip-flop time and carry
   stages for each cell library and corner (cells.rst);
 * area-power.svg: the area and power ranges of one port by part
-  (area-power.rst).
+  (area-power.rst);
+* ten-base-t-swing.svg: the source voltage a matched driver needs for
+  each speed against the 3.3 V supply (slower-speeds.rst).
 
 Run with:
 
@@ -252,6 +254,27 @@ def area_power():
     fig.save(HERE / "area-power.svg")
 
 
+def ten_base_t_swing():
+    fig = Fig(480, 260)
+    rows = [("1000BASE-T, 1 V on the line", 2.0, 2.0),
+            ("10BASE-Te, 1.54 V to 1.96 V", 3.1, 3.9),
+            ("10BASE-T, 2.2 V to 2.8 V", 4.4, 5.6)]
+    ax = Axes(fig, 210, 20, 462, 200, (0, 6), (0, len(rows)))
+    ax.frame(range(0, 7), [], "Peak source voltage Vsrc = 2 Vline (V)", None)
+    for i, (name, lo, hi) in enumerate(rows):
+        yc = ax.Y(len(rows) - i - 0.5)
+        fig.text(204, yc, name, size=12, anchor="end")
+        if hi > lo:
+            fig.rect(ax.X(lo), yc - 9, ax.X(hi) - ax.X(lo), 18, fill=BLUE,
+                     stroke="none")
+        else:
+            fig.circle(ax.X(lo), yc, 5, fill=BLUE)
+    ax.vline(3.3, stroke=RED, width=2, dash="6 4")
+    fig.text(ax.X(3.3) - 4, 12, "±3.3 V from a 3.3 V supply", size=12,
+             anchor="end", fill=RED)
+    fig.save(HERE / "ten-base-t-swing.svg")
+
+
 if __name__ == "__main__":
     phase_steps()
     jitter()
@@ -260,3 +283,4 @@ if __name__ == "__main__":
     carry_stages()
     energy()
     area_power()
+    ten_base_t_swing()
