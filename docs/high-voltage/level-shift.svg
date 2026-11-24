@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="sans-serif" font-size="13">
+<rect width="640" height="440" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect x="130" y="20" width="380" height="56" rx="6" fill="#fde9d3" stroke="#222222"/>
+<text x="320" y="42" text-anchor="middle" font-size="14" font-weight="bold" fill="#222222">floating circuit, 15 V to 40 V above ground</text>
+<text x="320" y="62" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">drives a signal and its complement, 5 V apart</text>
+<rect x="150" y="138" width="110" height="10" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="150" y="148" width="110" height="40" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="150" y="188" width="110" height="14" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<line x1="150" y1="196" x2="260" y2="196" stroke="#2e86de" stroke-width="4"/>
+<text x="205" y="172" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">insulator</text>
+<text x="144" y="147" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">Metal1 plate</text>
+<circle cx="150" cy="196" r="3.5" fill="#222222"/>
+<circle cx="260" cy="196" r="3.5" fill="#222222"/>
+<rect x="380" y="138" width="110" height="10" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="380" y="148" width="110" height="40" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="380" y="188" width="110" height="14" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<line x1="380" y1="196" x2="490" y2="196" stroke="#2e86de" stroke-width="4"/>
+<text x="435" y="172" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">insulator</text>
+<text x="496" y="147" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Metal1 plate</text>
+<circle cx="490" cy="196" r="3.5" fill="#222222"/>
+<circle cx="380" cy="196" r="3.5" fill="#222222"/>
+<line x1="205" y1="76" x2="205" y2="138" stroke="#222222" stroke-width="1.5"/>
+<text x="211" y="110" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">signal</text>
+<line x1="435" y1="76" x2="435" y2="138" stroke="#222222" stroke-width="1.5"/>
+<text x="441" y="110" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">complement</text>
+<polyline points="150,196 120,196 120,330" stroke="#222222" stroke-width="1.5" fill="none"/>
+<polyline points="490,196 520,196 520,330" stroke="#222222" stroke-width="1.5" fill="none"/>
+<line x1="120" y1="330" x2="120" y2="338" stroke="#222222" stroke-width="1.5"/>
+<line x1="110" y1="338" x2="130" y2="338" stroke="#222222" stroke-width="2"/>
+<line x1="114" y1="342" x2="126" y2="342" stroke="#222222" stroke-width="1.5"/>
+<line x1="520" y1="330" x2="520" y2="338" stroke="#222222" stroke-width="1.5"/>
+<line x1="510" y1="338" x2="530" y2="338" stroke="#222222" stroke-width="2"/>
+<line x1="514" y1="342" x2="526" y2="342" stroke="#222222" stroke-width="1.5"/>
+<text x="114" y="260" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">source</text>
+<text x="114" y="276" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0 V</text>
+<text x="526" y="260" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">source</text>
+<text x="526" y="276" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">0 V</text>
+<polyline points="260,196 260,262 270,262" stroke="#222222" stroke-width="1.5" fill="none"/>
+<polyline points="380,196 380,262 370,262" stroke="#222222" stroke-width="1.5" fill="none"/>
+<line x1="260" y1="246" x2="260" y2="214" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)"/>
+<line x1="380" y1="246" x2="380" y2="214" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text x="254" y="236" text-anchor="end" font-size="13" font-weight="normal" fill="#222222">I<tspan dy="4" font-size="0.75em">1</tspan><tspan dy="-4"> </tspan></text>
+<text x="388" y="236" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">I<tspan dy="4" font-size="0.75em">2</tspan><tspan dy="-4"> </tspan></text>
+<rect x="270" y="236" width="100" height="52" rx="6" fill="#e2f0d9" stroke="#222222"/>
+<text x="320" y="256" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">comparator</text>
+<text x="320" y="274" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">drains at 1 V</text>
+<line x1="320" y1="288" x2="320" y2="318" stroke="#222222" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="328" y="314" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">logic out, ground referenced</text>
+<text x="320" y="376" text-anchor="middle" font-size="14" font-weight="bold" fill="#222222">I<tspan dy="4" font-size="0.75em">1</tspan><tspan dy="-4"> </tspan>− I<tspan dy="4" font-size="0.75em">2</tspan><tspan dy="-4"> </tspan>= (W/L) μ<tspan dy="4" font-size="0.75em">n</tspan><tspan dy="-4"> </tspan>C<tspan dy="4" font-size="0.75em">ox</tspan><tspan dy="-4"> </tspan>ΔV V<tspan dy="4" font-size="0.75em">DS</tspan><tspan dy="-4"> </tspan>= 58.6 µA</text>
+<text x="320" y="396" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">at every floating voltage, for Metal1, W/L = 10, ΔV = 5 V and V<tspan dy="4" font-size="0.75em">DS</tspan><tspan dy="-4"> </tspan>= 1 V</text>
+<text x="320" y="420" text-anchor="middle" font-size="13" font-weight="normal" fill="#666666">The floating circuit must stay above both thresholds: 11 V typical on Metal1</text>
+</svg>

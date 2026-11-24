@@ -1,13 +1,13 @@
 .. _hv-routes:
 
-Choosing a route
+Route comparison
 ================
 
 This page sets the routes for holding a circuit above the substrate side by
 side, and lists the measurements that would decide between them.
 
-The routes side by side
------------------------
+Summary of routes
+-----------------
 
 Each route moves the voltage to the substrate onto a different structure
 (:numref:`tab-hv-routes`). The well routes are explained on
@@ -15,7 +15,11 @@ Each route moves the voltage to the substrate onto a different structure
 :doc:`grading`, the insulator routes on :doc:`dielectric`, and metal-gate sensing on
 :doc:`metal-gate`. They combine: a high-voltage well can have a
 field plate and floating rings, and polysilicon devices on the field oxide
-can bias the rings.
+can bias the rings. Each structure is drawn on its own page: the wells in
+:numref:`fig-hv-curved-edge` and :numref:`fig-hv-edge-remedies`, the
+grading structures in :numref:`fig-hv-grading`, devices on the oxide in
+:numref:`fig-hv-poly-on-fox`, the metal gate in :numref:`fig-hv-metal-gate`
+and substrate removal in :numref:`fig-hv-oxide-isolation`.
 
 .. list-table:: Routes for holding a circuit above the substrate
    :name: tab-hv-routes
@@ -67,8 +71,8 @@ can bias the rings.
      - A second die and its package
      - The barrier between the dies
 
-Test structures would answer most of the questions
---------------------------------------------------
+Test structures
+---------------
 
 Most of the open values are breakdown voltages and doping that a few test
 structures on a gf180mcu run would measure directly:

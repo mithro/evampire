@@ -5,8 +5,8 @@ This page gives a high-level view of the blocks inside evampire and how
 frames move between them. The :doc:`../ethernet/index` and
 :doc:`../power/index` pages describe each external interface in detail.
 
-The blocks form a forwarding path and a processor path
-------------------------------------------------------
+Forwarding and processor paths
+------------------------------
 
 :numref:`fig-block-diagram` shows the blocks inside evampire. The two
 forwarding paths run down the left-hand side, and the processor's path to
@@ -35,8 +35,8 @@ outline are outside the chip. Blue blocks are the RGMII interfaces, grey
 blocks the forwarding path, green blocks the processor's frame path, and
 orange blocks the processor and its control interfaces.
 
-Each block has one job
-----------------------
+Blocks
+------
 
 .. _arch-rgmii:
 
@@ -77,6 +77,20 @@ Rate-matching buffers
    between frames gives the buffer time to return to its centre point
    before the next frame starts. The size of the buffer sets the longest
    frame that can be forwarded (see :ref:`the forwarding requirements <req-forwarding>`).
+   :numref:`fig-rate-matching` shows the buffer's level across a frame.
+
+   .. figure:: rate-matching.svg
+      :name: fig-rate-matching
+      :alt: Graph of the buffer level from its centre, from minus 3 to plus 3
+            bytes, against time in byte times from 0 to 12 000. During a frame of
+            10 000 bytes the level rises one byte every 5000 bytes with the
+            receive clock 200 ppm fast, reaching the slack of plus 2 bytes at the
+            frame's end, and falls the same way when it is 200 ppm slow. In the
+            gap after the frame, drawn not to scale, it returns to the
+            centre.
+
+      The rate-matching buffer's level across the longest frame, for a
+      slack of 2 bytes.
 
 .. _arch-output-selectors:
 
@@ -139,7 +153,18 @@ Preamble and checksum generator
    on to the frame, and ends with a 4-byte checksum (:clause:`3`; see also the frame structure on
    :doc:`../ethernet/rgmii/index`). This block adds both to frames from the
    processor, so that the processor only writes the addresses, type field
-   and payload.
+   and payload (:numref:`fig-frame-layout`).
+
+   .. figure:: frame-layout.svg
+      :name: fig-frame-layout
+      :alt: The fields of a frame on the wire in two rows, with their lengths
+            in bytes: preamble 7, SFD 1, destination 6, source 6, an optional
+            VLAN tag 4, type 2, payload 42 or 46 to 1500, at least 42 with a
+            VLAN tag and 46 without, and FCS 4. The preamble, SFD and FCS
+            are added by the preamble and checksum generator; the others are
+            written by the processor.
+
+      The fields of a frame and which block writes each, not to scale.
 
 .. _arch-microcontroller:
 
@@ -190,8 +215,8 @@ Clock and reset
    transceiver, is discussed on :doc:`../ethernet/rgmii/index`. The processor's
    clock is an open question (see :ref:`requirements-open-questions`).
 
-Each data path passes through a fixed sequence of blocks
---------------------------------------------------------
+Data paths
+----------
 
 .. list-table:: Blocks on each data path, in order
    :name: tab-data-paths
@@ -214,6 +239,7 @@ Each data path passes through a fixed sequence of blocks
        generator, output selector A or B or both, RGMII interface A or B or
        both
 
-:numref:`tab-data-paths` lists the blocks on each path. The delay from one
+:numref:`tab-data-paths` lists the blocks of :numref:`fig-block-diagram`
+on each path. The delay from one
 external port to the other is a fixed small number of clock cycles. A frame
 copied to the processor is also forwarded to the other port as usual.
