@@ -15,7 +15,11 @@ Each route moves the voltage to the substrate onto a different structure
 :doc:`grading`, the insulator routes on :doc:`dielectric`, and metal-gate sensing on
 :doc:`metal-gate`. They combine: a high-voltage well can have a
 field plate and floating rings, and polysilicon devices on the field oxide
-can bias the rings.
+can bias the rings. Each structure is drawn on its own page: the wells in
+:numref:`fig-hv-curved-edge` and :numref:`fig-hv-edge-remedies`, the
+grading structures in :numref:`fig-hv-grading`, devices on the oxide in
+:numref:`fig-hv-poly-on-fox`, the metal gate in :numref:`fig-hv-metal-gate`
+and substrate removal in :numref:`fig-hv-oxide-isolation`.
 
 .. list-table:: Routes for holding a circuit above the substrate
    :name: tab-hv-routes

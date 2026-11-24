@@ -15,7 +15,18 @@ tenth of the voltage across the stack. With 50 V across the stack, each
 diode has 5 V across it, below the 8.5 V minimum breakdown of a 6 V
 gf180mcu junction [HV-GF180-EP-5]_. Ten discrete diodes soldered in series
 on a board behave this way, because each one sits on its own piece of
-silicon, insulated from the others by its package.
+silicon, insulated from the others by its package
+(:numref:`fig-hv-discrete-stack`).
+
+.. figure:: discrete-stack.svg
+   :name: fig-hv-discrete-stack
+   :alt: Ten packaged diodes in a row on a circuit board, connected in series
+         from 50 V to 0 V, with 5 V across each. Each die sits in its own
+         package, so the board ground touches no die. 5 V is below the 8.5 V
+         minimum breakdown of a 6 V junction.
+
+   Ten discrete diodes in series: each on its own silicon, so each holds
+   only its share of the voltage.
 
 The same stack built on one chip was simulated with ten 5 V gf180mcu NMOS
 transistors, each connected as a diode, and a voltage swept from 0 V to

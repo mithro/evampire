@@ -182,6 +182,20 @@ voltage, with a slope of :math:`2/(q \varepsilon_\text{Si} N)`. Applied to
 the model between 2 V and 10 V, that slope gives
 :math:`5.3 \times 10^{15}\ \text{cm}^{-3}`. The models of other junctions
 to the same substrate give other values (:numref:`tab-hv-doping-estimates`).
+:numref:`fig-hv-cv-doping` shows the model's curve, the abrupt line
+matched at zero bias, and the straight line fitted between 2 V and 10 V.
+
+.. figure:: cv-doping.svg
+   :name: fig-hv-cv-doping
+   :alt: Graph of 1/C squared against reverse voltage from 0 to 10 V for the
+         6 V N-well model with grading 0.31. The model curve rises and bends
+         over. A dashed abrupt-junction line for 1.2 times 10 to the 15 per
+         cubic centimetre, matched at 0 V, rises far more steeply. A dashed
+         straight line through the model at 2 V and 10 V, the shaded fitting
+         window, has the slope of 5.3 times 10 to the 15.
+
+   1/C² of the 6 V N-well junction model against reverse voltage, with
+   the two abrupt-junction estimates of the doping.
 
 .. list-table:: Substrate doping estimated from the junction models
                [HV-GF180-MODELS]_
@@ -318,3 +332,18 @@ raise the breakdown of an edge:
   substrate takes the depletion region.
 * Spreading the voltage over a wider part of the surface, which is the
   subject of :doc:`grading`.
+
+:numref:`fig-hv-edge-remedies` shows the first two.
+
+.. figure:: edge-remedies.svg
+   :name: fig-hv-edge-remedies
+   :alt: Top, two plan views of the corner of a well: a square drawn corner
+         diffuses to a corner whose radius is about the well depth, while a
+         rounded drawn corner gives a larger radius and a higher breakdown.
+         Bottom, two cross-sections: a P+ region at 0 V close to the well
+         squeezes the depletion region and raises the field, while a P+
+         region set back lets the lightly doped substrate take the depletion.
+
+   Two geometric remedies for early breakdown at a well edge: rounding
+   the drawn corner, and keeping P+ away from the edge. Schematic.
+

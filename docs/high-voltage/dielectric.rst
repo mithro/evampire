@@ -18,7 +18,8 @@ gf180mcu substrate (:doc:`junctions`). An insulator therefore holds a given volt
 in a far thinner layer, and it has no depletion region that needs room to
 spread. Its limit is long-term wear: a design keeps the continuous field in
 an insulator well below its breakdown field. :numref:`tab-hv-oxide-thickness`
-gives the thickness that holds 57 V and 100 V at each field.
+gives the thickness that holds 57 V and 100 V at each field, and
+:numref:`fig-hv-oxide-silicon` compares it with silicon.
 
 .. list-table:: Oxide thickness that holds a voltage at a given field
    :name: tab-hv-oxide-thickness
@@ -41,6 +42,16 @@ gives the thickness that holds 57 V and 100 V at each field.
 The values are the voltage divided by the field
 (:download:`calc.py <calc.py>`,
 section 5).
+
+.. figure:: oxide-silicon.svg
+   :name: fig-hv-oxide-silicon
+   :alt: Four bars to scale. The oxide that holds 57 V is 57 nm thick at
+         10 MV/cm, 95 nm at 6 MV/cm and 142 nm at 4 MV/cm. The shortest
+         silicon that holds 57 V, with a perfectly even fall, is 1.8 µm.
+         Oxide's critical field is 20 to 33 times silicon's.
+
+   Thickness that holds 57 V in oxide and in silicon. The silicon length
+   is the even-fall ideal of :numref:`fig-hv-lmin`.
 
 Devices on the field oxide
 --------------------------
@@ -96,10 +107,20 @@ Signals across an insulator
 A circuit isolated by an insulator still has to exchange signals with the
 rest of the chip. A capacitor passes a changing voltage across its
 dielectric, and a pair of coils passes a changing current through its
-magnetic field, while neither conducts at a steady voltage. Commercial
+magnetic field, while neither conducts at a steady voltage
+(:numref:`fig-hv-barrier`). Commercial
 digital isolators carry data across a capacitive silicon dioxide barrier in
 this way [HV-ISO7741]_ (Description). The Ethernet isolation routes that use such
 barriers are on :doc:`../ethernet/magnetics/isolation`.
+
+.. figure:: barrier.svg
+   :name: fig-hv-barrier
+   :alt: Two schematics across a dashed insulator. Left, a transmitter
+         drives a receiver through two series capacitors, one in each wire:
+         they pass a changing voltage. Right, a pair of facing coils: they
+         pass a changing current. Neither carries a steady current.
+
+   A signal crossing an insulator by capacitors or by coils.
 
 Buried oxide
 ------------
@@ -143,4 +164,5 @@ completely: the simplest insulator is the gap between them. Signals cross betwee
 capacitors or coils, as above. The second die can be a gf180mcu die of its
 own, designed for the high-voltage side. The Ethernet pages describe this
 as the route with a second die on the cable side
-(:doc:`../ethernet/magnetics/isolation`).
+(:doc:`../ethernet/magnetics/isolation`, second row of
+:numref:`fig-magnetics-isolation-routes`).

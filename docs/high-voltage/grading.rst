@@ -12,7 +12,7 @@ Even voltage fall
 
 The field at a point is how steeply the voltage changes there. A voltage
 that falls evenly over a length :math:`L` has a field of :math:`V/L`
-everywhere along it. A carrier crossing a field frees new carriers at a
+everywhere along it (:numref:`fig-hv-even-fall`). A carrier crossing a field frees new carriers at a
 rate per centimetre :math:`\alpha`, which Fulop's fit gives as
 :math:`a_\alpha E^7` [HV-PARK]_ (Equation 3.25). Avalanche runs away when
 each carrier crossing the field frees one more, that is, when
@@ -50,10 +50,31 @@ For 57 V:
 
 The field is then 3.2 × 10\ :sup:`5` V/cm, and holding 100 V takes 3.5 µm
 (:download:`calc.py <calc.py>`,
-section 4). The flat-junction fit on :doc:`junctions` comes from the same
+section 4, :numref:`fig-hv-lmin`). The flat-junction fit on :doc:`junctions` comes from the same
 coefficient: its triangular field gives an ionisation integral of 0.98.
 The length does not depend on the doping, because a uniform field needs
 the charge that would bend it to be absent or balanced.
+
+
+.. figure:: even-fall.svg
+   :name: fig-hv-even-fall
+   :alt: Two pairs of graphs against distance along the surface. An abrupt
+         fall: the potential drops from V to 0 over a short distance, and the
+         field is a tall narrow peak at one edge. An even fall over a length L:
+         the potential falls in a straight line, and the field is V/L
+         everywhere along it.
+
+   Potential and field of an abrupt fall and of an even fall. Schematic.
+
+.. figure:: lmin.svg
+   :name: fig-hv-lmin
+   :alt: Graph of the shortest length for a voltage to fall over, from 0 to
+         4 µm, against voltage from 0 to 100 V. It rises a little faster than
+         linearly, through 1.8 µm at 57 V, where the field is 3.2 times 10 to
+         the 5 V/cm, to 3.5 µm at 100 V.
+
+   Shortest length for a voltage to fall over in silicon, for a perfectly
+   even fall.
 
 That is the ideal of a perfectly even fall. Real structures leave the field
 peaked at their edges, so they need more length than this, by an amount
@@ -82,7 +103,8 @@ until it reaches the first ring. The ring then rises with it, a fixed step
 below the well, and the depletion region spreads on from the ring to the
 next one [HV-KAO-WOLLEY]_ [HV-US4573066]_ (upper left of
 :numref:`fig-hv-grading`). Each ring holds part of the
-voltage, and the spacing between rings sets how large each step is. Four or
+voltage, and the spacing between rings sets how large each step is
+(:numref:`fig-hv-rings-steps`). Four or
 five rings are usual [HV-SPIRITO]_ (slide 26).
 
 The rings need nothing beyond the wells the process already has, and no
@@ -91,6 +113,19 @@ whole voltage on one edge and a gap too narrow lets two rings share their
 voltage. For one worked case, the best gap from the well to the first
 ring is about a third of the flat depletion width [HV-SPIRITO]_ (slide 25).
 Spacings are found by device simulation and checked on test structures.
+
+.. figure:: rings-steps.svg
+   :name: fig-hv-rings-steps
+   :alt: Cross-section of a well at V with four floating rings and a substrate
+         contact at 0 V. The gap from the well to ring 1 is about a third of
+         the flat depletion width. A depletion edge at a lower voltage reaches
+         ring 1; at a higher voltage it spreads on from ring 1 to ring 2. Below,
+         the surface potential falls in a staircase: V at the well, then flat
+         steps at V minus delta V1 to V minus delta V4 on the rings, sloping in
+         the gaps, to 0 V.
+
+   Floating rings take the voltage in steps. The step sizes are
+   schematic.
 
 Field plates
 ------------
@@ -105,7 +140,18 @@ breakdown to the end of the plate, and a thick one leaves it at the
 junction [HV-SPIRITO]_ (slide 28). A plate built in steps over different
 thicknesses balances the two. In a standard process, polysilicon on the
 :term:`field oxide` and then each metal layer over the dielectrics above it
-give a set of steps.
+give a set of steps (:numref:`fig-hv-plate-variants`).
+
+.. figure:: plate-variants.svg
+   :name: fig-hv-plate-variants
+   :alt: Three cross-sections of a well with a field plate. On a thin
+         insulator the plate pulls the depletion edge out, and breakdown moves
+         to the end of the plate. On a thick insulator breakdown stays at the
+         junction. A stepped plate of polysilicon on the field oxide and then
+         metal layers above shares the field between the steps.
+
+   Field plates on a thin insulator, on a thick insulator and in steps.
+   Schematic.
 
 Depleted thin layers (RESURF)
 -----------------------------
@@ -153,11 +199,22 @@ between two contacts, so that its voltage falls steadily from one to the
 other, but only at high power. The substrate is a thick, fairly conductive slab. At
 :math:`10^{15}\ \text{cm}^{-3}` P-type silicon has a resistivity of about
 14 Ω·cm [HV-NBS]_ (Table 5), so a slab 1 mm long, 1 mm wide and 300 µm
-thick has about 450 Ω between its ends. Holding 57 V across it takes about
+thick has about 450 Ω between its ends (:numref:`fig-hv-substrate-slab`). Holding 57 V across it takes about
 130 mA and 7 W
 (:download:`calc.py <calc.py>`,
 section 6). The thickness and resistivity are illustrations: thinning the
 die or a lighter-doped substrate would raise the resistance.
+
+.. figure:: substrate-slab.svg
+   :name: fig-hv-substrate-slab
+   :alt: A slab of P-type silicon at 10 to the 15 per cubic centimetre, about
+         14 ohm centimetres, 1 mm long, 1 mm wide and 300 µm thick, with a
+         contact at each end, one at 57 V and one at 0 V. The voltage falls
+         evenly along it. About 450 ohm lies between the contacts, so it takes
+         130 mA and 7 W at 57 V.
+
+   Grading the substrate itself with a current: the illustrative slab
+   of the text.
 
 Floating wells in commercial chips
 ----------------------------------
@@ -166,8 +223,22 @@ Commercial gate-driver chips for half bridges are built on bulk silicon
 with junction isolation. Their high-side circuits sit in a floating well that
 rises to the full bus voltage above the grounded substrate,
 in an isolation tub that International Rectifier describes as able to
-float from 500 V or 1200 V down to −5 V [HV-IR-AN978]_ (Section 2.3). That
+float from 500 V or 1200 V down to −5 V [HV-IR-AN978]_ (Section 2.3)
+(:numref:`fig-hv-floating-well`). That
 is a reference example from a dedicated
 high-voltage process, not evidence of what gf180mcu can hold. The gf180mcu
 values depend on the doping and edges described on :doc:`junctions`, which
 test structures would measure.
+
+.. figure:: floating-well.svg
+   :name: fig-hv-floating-well
+   :alt: Cross-section of a gate-driver die on a P substrate at 0 V. Low-side
+         circuits sit in the substrate; high-side circuits sit in a floating
+         N-type tub whose junction to the substrate holds up to 500 V or
+         1200 V. Outside the die two switches form a half bridge on a bus of
+         hundreds of volts. The low-side circuits drive the low switch; the
+         tub drives the high switch and follows the switching node, down to
+         minus 5 V.
+
+   A junction-isolated half-bridge gate driver: the high-side circuits
+   float with the switching node. Schematic.
