@@ -130,6 +130,27 @@ Table 2. The DP83867 datasheet repeats them [RGMII-DP83867]_ section 6.9.
 An empty cell means no limit. Timing is measured at half the I/O supply
 voltage (:std:`RGMII 2.0 <rgmii-2-0>` section 3.3).
 
+:numref:`fig-rgmii-timing-params` shows what each parameter measures. Without
+an internal delay, TskewT is the spread of the data changes around the clock
+edge at the transmitter, and TskewR is how far after a data change the
+clock edge must arrive at the receiver. With an internal delay, the setup
+and hold times bound a window around the clock edge in which the data must
+not change.
+
+.. figure:: timing-params.svg
+   :name: fig-rgmii-timing-params
+   :alt: Four timing rows with time in nanoseconds from −4 to 5. Without
+         internal delay, at the transmitter the data changes within −0.5 to
+         +0.5 ns of each clock edge (TskewT); at the receiver the clock edge
+         falls 1.0 to 2.6 ns after the data change (TskewR). With internal
+         delay, at the transmitter the data is stable from at least 1.2 ns
+         before to 1.2 ns after the clock edge (TsetupT, TholdT); at the
+         receiver at least 1.0 ns each side is required (TsetupR, TholdR).
+
+   The RGMII skew, setup and hold parameters of
+   :numref:`tab-rgmii-timing`, as intervals between data changes and clock
+   edges at 1000 Mbit/s.
+
 The skew numbers are defined only for 1000 Mbit/s. At 10 and 100 Mbit/s the
 clock period is 50 or 5 times longer. The KSZ9031RNX datasheet relaxes the
 largest TskewR to 16 ns at 100 Mbit/s and 160 ns at 10 Mbit/s
@@ -301,7 +322,19 @@ margin. SNLA243 uses :math:`t_\text{d} = 2.0` ns,
    &= 0.2\ \text{ns}
 
 Both margins are positive but small, with a transmitter that meets
-TskewT.
+TskewT. :numref:`fig-rgmii-timing-budget` shows how each error uses up part
+of the delay and of the clock high time.
+
+.. figure:: timing-budget.svg
+   :name: fig-rgmii-timing-budget
+   :alt: Two stacked bars on a time axis from 0 to 3.5 ns. The setup bar
+         divides td of 2.0 ns into Δtd 0.2, tT 0.5, tIO 0.35, tB 0.1 and tsu
+         0.5 ns, leaving a margin of 0.35 ns. The hold bar divides thi of
+         3.6 ns into td 2.0, Δtd 0.2, tT 0.5, tIO 0.35, tB 0.1 and th
+         0.25 ns, leaving a margin of 0.2 ns.
+
+   The worked setup and hold budgets, with each error as one segment and the
+   margin left at the end.
 
 .. _rgmii-clock-limits:
 
