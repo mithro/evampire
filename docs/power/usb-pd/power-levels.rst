@@ -133,7 +133,8 @@ A :term:`programmable power supply <PPS>` (PPS) is a supply whose voltage
 the sink sets in 20 mV steps (*vPpsStep*, :pd:`Table 4.7`) within 5 V to
 11 V, 5 V to 16 V or 5 V to 21 V (:pd:`Table 4.2`). The sink also sets a
 current limit in 50 mA steps (*iPpsCLStep*, :pd:`Table 4.7`), and the source
-holds that current by lowering its voltage. This lets a sink charge a
+holds that current by lowering its voltage (:numref:`fig-usbpd-pps-limit`).
+This lets a sink charge a
 battery directly. The sink repeats its request at least every *tPPSRequest*,
 10 s (:pd:`Section 7.31.16.1`, :pd:`Table 7.10`).
 

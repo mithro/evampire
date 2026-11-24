@@ -141,7 +141,21 @@ the sink must reach the new current before the shortest *tSrcTransition*
 (25 ms) ends, and the source lowers its limit only after tSrcTransition
 (:pd:`Section 4.5.1.3`). When the current goes up, the sink may draw the new
 current as soon as it has the PS_RDY, so the source raises its limit before
-it sends PS_RDY.
+it sends PS_RDY. :numref:`fig-usbpd-current-limit` shows both orders.
+
+.. figure:: current-limit.svg
+   :name: fig-usbpd-current-limit
+   :alt: Graph of current from 0 to 4 A against time from -50 to 400 ms.
+         The contract is lowered from 3 A to 1.5 A at the first Accept: the
+         sink current falls at once, and the limit setting, with a 10 %
+         tolerance band, falls from 3.3 A to 1.7 A only after
+         tSrcTransition, 25 ms, before PS_RDY. The contract is then raised
+         back to 3 A at a second Accept: the limit rises to 3.3 A before
+         PS_RDY, and the sink current rises after PS_RDY.
+
+   The source's current-limit setting and the sink current when the
+   contract is lowered and raised, with a 10 % limit tolerance; event times
+   are examples.
 
 PPS current limit
 ^^^^^^^^^^^^^^^^^
@@ -159,7 +173,21 @@ settles within *tPpsCLProgramSettle* (250 ms). If VBUS falls below
 *vPpsShutdown* (85 % to 95 % of the offer's minimum voltage), the source may
 send a Hard Reset and must discharge VBUS to vSafe0V. A PPS source's current
 limit is therefore a regulation loop, part of the converter control, with a
-measurement accurate to ±150 mA.
+measurement accurate to ±150 mA. :numref:`fig-usbpd-pps-limit` shows the
+resulting VBUS against current.
+
+.. figure:: pps-limit.svg
+   :name: fig-usbpd-pps-limit
+   :alt: Graph of VBUS from 0 to 10 V against VBUS current from 0 to 3 A,
+         for a 5 V to 11 V PPS offer with 9 V and 2 A requested. VBUS stays
+         at 9 V up to 2 A. Above that, the current is held within 150 mA
+         of 2 A while VBUS falls, down to the vPpsShutdown band at 85 to
+         95 % of 5 V, below which the source may send Hard Reset. A dashed
+         line at 1 A marks iPpsCLMin, the lowest limit setting; settings
+         are in 50 mA steps.
+
+   VBUS against current for a PPS source in current limit, for an example
+   request of 9 V and 2 A.
 
 Over-voltage limit
 ^^^^^^^^^^^^^^^^^^
