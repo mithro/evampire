@@ -1,7 +1,7 @@
 .. _usbpd-start-up:
 
-Power available from a USB charger at start-up
-==============================================
+Power at start-up
+=================
 
 The power a USB Type-C source makes available to evampire as a
 :term:`sink` before any :term:`USB Power Delivery` negotiation, at each
@@ -15,8 +15,8 @@ attach (:ref:`usbpd-dead-battery`) are available. Whether this power is
 enough depends on how much evampire and the rest of the board need, which
 is an open question of the requirements (:ref:`requirements-open-questions`).
 
-A source supplies 5 V and the current its pull-up advertises
-------------------------------------------------------------
+Default supply and current levels
+---------------------------------
 
 Before a USB Power Delivery contract, the source supplies VBUS at
 vSafe5V, 4.75 V to 5.5 V at its receptacle (:pd:`Table 4.9`;
@@ -105,8 +105,8 @@ The nominal power is the specification's power equivalent at 5 V
 USB 2.0 device may draw until the host configures it, and the second the
 five unit loads it may draw afterwards (:std:`USB 2.0 Section 7.2.1 <usb2>`).
 
-evampire follows the USB 2.0 default level
-------------------------------------------
+evampire's default level
+------------------------
 
 The default level depends on the sink as well as the source. evampire's
 data connection is a USB 2.0 full-speed device (:ref:`req-usb-serial`), so
@@ -125,8 +125,8 @@ A sink starts at the default level and moves up when it reads a higher one.
 It must come back down within tSinkAdj, at most 60 ms, if the source lowers
 its advertisement (:typec:`Section 4.5.2.3`, :typec:`Table 4-32`).
 
-An unpowered board reaches each level in turn
----------------------------------------------
+Start-up sequence
+-----------------
 
 :numref:`tab-usbpd-start-up-steps` follows a board without power from the
 moment it is plugged into a charger. The attach steps are described on
@@ -162,8 +162,8 @@ the levels apart (:typec:`Table 4-28`). Until step 3, the board can count
 only on the default level. Whether the start-up sequencer or the processor
 carries out step 3 is listed below.
 
-The source offers USB Power Delivery for a limited time
--------------------------------------------------------
+Source_Capabilities timing
+--------------------------
 
 A USB Power Delivery source sends its first Source_Capabilities message
 within tFirstSourceCap, 250 ms, of VBUS reaching vSafe5V

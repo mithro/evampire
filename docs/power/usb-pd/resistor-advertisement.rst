@@ -1,7 +1,7 @@
 .. _usbpd-resistor-advertisement:
 
-The source advertises its current with a pull-up
-================================================
+Current advertisement with Rp
+=============================
 
 How the source's pull-up and the sink's pull-down on the
 :term:`configuration channel` tell each end what is attached and how much
@@ -16,8 +16,8 @@ ends are described on :doc:`type-c-power`.
 
 .. _usbpd-cc-voltages:
 
-The pull-up and pull-down form a divider whose voltage gives the level
-----------------------------------------------------------------------
+CC voltage divider
+------------------
 
 The source connects a :wikipedia:`pull-up <Pull-up_resistor>`, :term:`Rp`,
 to each CC pin. The sink connects a pull-down, :term:`Rd`, to each of its CC
@@ -90,8 +90,8 @@ only detect that a source is attached. A sink without power may present a
 and stops USB Power Delivery messages until the sink switches to a resistor
 (:typec:`Table 4-28`, note 1; :ref:`usbpd-dead-battery`).
 
-The CC voltage follows from the divider
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CC voltage calculation
+^^^^^^^^^^^^^^^^^^^^^^
 
 With a resistor Rp, the CC voltage is set by the divider. With a
 current-source Rp, it is the current times Rd:
@@ -168,8 +168,8 @@ a sink reads the level without knowing how the source made it: about 0.4 V,
 
 .. _usbpd-cc-states:
 
-Each end names what it sees on a CC pin
----------------------------------------
+CC pin states
+-------------
 
 The attach rules on :doc:`attach` are written in terms of the state of each
 CC pin (:numref:`tab-usbpd-cc-states`). A source sees a sink's Rd, nothing,
@@ -206,8 +206,8 @@ the SNK states. The voltages that separate the states follow.
 
 .. _usbpd-sink-thresholds:
 
-The sink compares the CC voltage with three thresholds
-------------------------------------------------------
+Sink thresholds
+---------------
 
 The sink has to tell four ranges apart: no source, and the three advertised
 levels. :typec:`Section 4.11.3.1.1` gives the method: work out the lowest
@@ -253,8 +253,8 @@ threshold lies at or below 0.248 V (:typec:`Table 4-35`).
 
 .. _usbpd-source-thresholds:
 
-The source compares the CC voltage with two thresholds for each level
----------------------------------------------------------------------
+Source thresholds
+-----------------
 
 The source has to tell Rd, Ra and an open pin apart. It knows which Rp it
 is presenting, so it needs one pair of thresholds for each level it uses.

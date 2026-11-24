@@ -1,7 +1,7 @@
 .. _usbpd-attach:
 
-Two dual-role ports decide who supplies power
-=============================================
+Attach and detach
+=================
 
 How a :term:`dual-role port` finds the device at the other end of a USB
 Type-C cable, settles on the source or sink role, and starts again after an
@@ -16,8 +16,8 @@ while the port presents :term:`Rp`, and SNK.Rp or SNK.Open while it presents
 
 .. _usbpd-toggling:
 
-An unattached dual-role port toggles between Rp and Rd
-------------------------------------------------------
+Toggling between Rp and Rd
+--------------------------
 
 When nothing is attached, a dual-role port alternates between presenting Rd
 on both CC pins (state Unattached.SNK) and presenting Rp on both CC pins
@@ -94,8 +94,8 @@ The time to notice a connection depends on how many of the two ends toggle
 
 .. _usbpd-attach-sequence:
 
-The attach sequence waits for a stable CC pin before power flows
-----------------------------------------------------------------
+Attach sequence
+---------------
 
 :numref:`fig-usbpd-drp-states` shows the states a dual-role port passes
 through. It leaves out the accessory and debug states and the return to the
@@ -192,8 +192,8 @@ When both ends toggle, the end that happens to present Rp while the other
 presents Rd becomes the source. Without a preference mechanism, the outcome
 is random (:typec:`Section 4.5.2.2.7.2`; :typec:`Section 2.3.3`).
 
-Detach
-^^^^^^
+Detaching
+^^^^^^^^^
 
 A source detects that the sink has left when the CC pin it monitors reads
 SRC.Open, within tSRCDisconnect. It then removes VBUS within tVBUSOFF
@@ -205,8 +205,8 @@ within tSinkDisconnect (:typec:`Section 4.5.2.2.5.2`).
 
 .. _usbpd-try:
 
-Try.SRC and Try.SNK bias the outcome once, at attach
-----------------------------------------------------
+Try.SRC and Try.SNK
+-------------------
 
 A dual-role port can bias the outcome with one of two optional mechanisms.
 Only one of them may be enabled at a time (:typec:`Section 4.5.1.4.1`,
@@ -255,8 +255,8 @@ during attach. After attach, two ports that support
 
 .. _usbpd-initial-role:
 
-The power budget decides which role evampire prefers
-----------------------------------------------------
+Preferred initial role
+----------------------
 
 evampire's preferred role on a port follows from the input power it has and
 its :ref:`power budget <power-budget>`, as set out for each
@@ -298,8 +298,8 @@ that cannot swap data roles (:typec:`Section 4.5.1.4.1`).
 
 .. _usbpd-dead-battery:
 
-A board without power must still present Rd
--------------------------------------------
+Rd on an unpowered board
+------------------------
 
 A board with no power from Ethernet that is plugged into a USB charger has
 no supply at that moment. The charger turns VBUS on only after it sees Rd
@@ -325,8 +325,8 @@ as for any two sink-only ports (:typec:`Table 4-9`).
 
 .. _usbpd-error-recovery:
 
-ErrorRecovery forces a detach and a fresh attach
-------------------------------------------------
+ErrorRecovery
+-------------
 
 Every port that supports USB Power Delivery must support the ErrorRecovery
 state, and must enter it from any state when its software directs it to

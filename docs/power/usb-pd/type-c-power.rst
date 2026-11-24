@@ -15,8 +15,8 @@ between Ethernet and USB Type-C in both directions (:ref:`power-roles`,
 
 .. _usbpd-connector:
 
-The receptacle has 24 contacts, and power uses four kinds
-----------------------------------------------------------
+Receptacle contacts
+-------------------
 
 A USB Type-C receptacle has two rows of 12 contacts, row A and row B, one
 above the other (:numref:`fig-usbpd-receptacle`; :typec:`Section 3.2.3`,
@@ -74,8 +74,8 @@ contacts carry other signals, for example in alternate modes
 (:typec:`Section 4.2`, :typec:`Section 4.3`). The D+ and D− contacts carry
 the USB serial port of :ref:`req-usb-serial` (see :doc:`/usb-serial/index`).
 
-The cable has one CC wire, which tells each end which way up the plug is
---------------------------------------------------------------------------
+CC wire and plug orientation
+----------------------------
 
 The :term:`configuration channel` (CC) is the wire on which the two ends
 find each other, agree on power and exchange messages
@@ -111,8 +111,8 @@ the cable needs it (:ref:`usbpd-vconn`).
 
 .. _usbpd-two-mechanisms:
 
-Two mechanisms set the power: a resistor level and USB Power Delivery messages
-------------------------------------------------------------------------------
+Two power mechanisms
+--------------------
 
 The source and the sink agree on power in one of two ways, summarised in
 :numref:`tab-usbpd-mechanisms` (:typec:`Table 2-1`).
