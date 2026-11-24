@@ -12,7 +12,9 @@
   impedance change, near-end crosstalk and far-end crosstalk;
 * pulse-response.svg: a received symbol pulse sampled once per symbol
   period, with the precursor and postcursor samples that the two
-  equalisers remove.
+  equalisers remove;
+* speeds.svg: the pairs that each of the three speeds uses, the direction
+  on each, and the number of levels on the wire.
 
 The pulse shapes are schematic, not to scale. Run with:
 
@@ -190,7 +192,49 @@ def pulse_response():
     fig.save(HERE / "pulse-response.svg")
 
 
+def speeds():
+    fig = Fig(480, 420)
+    rows = [("10BASE-T, 10 Mbit/s", ("→", "←", None, None), 2),
+            ("100BASE-TX, 100 Mbit/s", ("→", "←", None, None), 3),
+            ("1000BASE-T, 1000 Mbit/s", ("↔", "↔", "↔", "↔"), 5)]
+    xl, xr = 90, 330
+    for r, (name, dirs, levels) in enumerate(rows):
+        y0 = 20 + r * 135
+        fig.text(20, y0, name, size=14, anchor="start", weight="bold")
+        fig.rect(xl - 52, y0 + 14, 44, 104, fill=FILL_GREY, rx=4)
+        fig.text(xl - 30, y0 + 66, "end\n1", size=12)
+        fig.rect(xr + 8, y0 + 14, 44, 104, fill=FILL_GREY, rx=4)
+        fig.text(xr + 30, y0 + 66, "end\n2", size=12)
+        for i, ((p, _, colour), d) in enumerate(zip(PAIRS, dirs)):
+            y = y0 + 28 + i * 25
+            used = d is not None
+            fig.line(xl - 8, y, xr + 8, y, stroke=colour if used else "#cccccc",
+                     width=3 if used else 1.5, dash=None if used else "4 3")
+            fig.text(xl + 4, y - 8, f"pair {p}", size=11, anchor="start",
+                     fill=colour if used else GREY)
+            xm = (xl + xr) / 2 + 30
+            if d == "→":
+                fig.arrowhead(xm - 20, y, xm + 6, y, colour, size=11)
+            if d == "←":
+                fig.arrowhead(xm + 20, y, xm - 6, y, colour, size=11)
+            if d == "↔":
+                fig.arrowhead(xm, y, xm + 30, y, colour, size=11)
+                fig.arrowhead(xm, y, xm - 30, y, colour, size=11)
+            if not used:
+                fig.text(xm + 50, y - 8, "unused", size=11, fill=GREY)
+        # Level ladder.
+        xlad = 420
+        fig.line(xlad, y0 + 24, xlad, y0 + 110, stroke=GREY)
+        for k in range(levels):
+            y = y0 + 24 + k * 86 / (levels - 1)
+            fig.line(xlad - 10, y, xlad + 10, y, stroke=INK, width=2.4)
+        fig.text(xlad + 16, y0 + 67, f"{levels}\nlevels", size=12,
+                 anchor="start")
+    fig.save(HERE / "speeds.svg")
+
+
 if __name__ == "__main__":
     cable()
     impairments()
     pulse_response()
+    speeds()

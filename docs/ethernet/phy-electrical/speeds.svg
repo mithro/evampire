@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="420" viewBox="0 0 480 420" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="420" fill="#ffffff"/>
+<text x="20.0" y="20.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">10BASE-T, 10 Mbit/s</text>
+<rect x="38.0" y="34.0" width="44.0" height="104.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="60.0" y="79.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">end</text>
+<text x="60.0" y="93.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<rect x="338.0" y="34.0" width="44.0" height="104.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="360.0" y="79.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">end</text>
+<text x="360.0" y="93.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="82.0" y1="48.0" x2="338.0" y2="48.0" stroke="#1f4e79" stroke-width="3"/>
+<text x="94.0" y="40.0" font-size="11" text-anchor="start" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">pair A</text>
+<polygon points="246.0,48.0 235.9,43.7 235.9,52.3" fill="#1f4e79"/>
+<line x1="82.0" y1="73.0" x2="338.0" y2="73.0" stroke="#c0392b" stroke-width="3"/>
+<text x="94.0" y="65.0" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">pair B</text>
+<polygon points="234.0,73.0 244.1,77.3 244.1,68.7" fill="#c0392b"/>
+<line x1="82.0" y1="98.0" x2="338.0" y2="98.0" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="94.0" y="90.0" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">pair C</text>
+<text x="290.0" y="90.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">unused</text>
+<line x1="82.0" y1="123.0" x2="338.0" y2="123.0" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="94.0" y="115.0" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">pair D</text>
+<text x="290.0" y="115.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">unused</text>
+<line x1="420.0" y1="44.0" x2="420.0" y2="130.0" stroke="#777777" stroke-width="1.2"/>
+<line x1="410.0" y1="44.0" x2="430.0" y2="44.0" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="130.0" x2="430.0" y2="130.0" stroke="#222222" stroke-width="2.4"/>
+<text x="436.0" y="80.0" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<text x="436.0" y="94.0" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">levels</text>
+<text x="20.0" y="155.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">100BASE-TX, 100 Mbit/s</text>
+<rect x="38.0" y="169.0" width="44.0" height="104.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="60.0" y="214.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">end</text>
+<text x="60.0" y="228.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<rect x="338.0" y="169.0" width="44.0" height="104.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="360.0" y="214.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">end</text>
+<text x="360.0" y="228.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="82.0" y1="183.0" x2="338.0" y2="183.0" stroke="#1f4e79" stroke-width="3"/>
+<text x="94.0" y="175.0" font-size="11" text-anchor="start" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">pair A</text>
+<polygon points="246.0,183.0 235.9,178.7 235.9,187.3" fill="#1f4e79"/>
+<line x1="82.0" y1="208.0" x2="338.0" y2="208.0" stroke="#c0392b" stroke-width="3"/>
+<text x="94.0" y="200.0" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">pair B</text>
+<polygon points="234.0,208.0 244.1,212.3 244.1,203.7" fill="#c0392b"/>
+<line x1="82.0" y1="233.0" x2="338.0" y2="233.0" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="94.0" y="225.0" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">pair C</text>
+<text x="290.0" y="225.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">unused</text>
+<line x1="82.0" y1="258.0" x2="338.0" y2="258.0" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="94.0" y="250.0" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">pair D</text>
+<text x="290.0" y="250.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">unused</text>
+<line x1="420.0" y1="179.0" x2="420.0" y2="265.0" stroke="#777777" stroke-width="1.2"/>
+<line x1="410.0" y1="179.0" x2="430.0" y2="179.0" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="222.0" x2="430.0" y2="222.0" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="265.0" x2="430.0" y2="265.0" stroke="#222222" stroke-width="2.4"/>
+<text x="436.0" y="215.0" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">3</text>
+<text x="436.0" y="229.0" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">levels</text>
+<text x="20.0" y="290.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">1000BASE-T, 1000 Mbit/s</text>
+<rect x="38.0" y="304.0" width="44.0" height="104.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="60.0" y="349.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">end</text>
+<text x="60.0" y="363.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<rect x="338.0" y="304.0" width="44.0" height="104.0" rx="4" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="360.0" y="349.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">end</text>
+<text x="360.0" y="363.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="82.0" y1="318.0" x2="338.0" y2="318.0" stroke="#1f4e79" stroke-width="3"/>
+<text x="94.0" y="310.0" font-size="11" text-anchor="start" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">pair A</text>
+<polygon points="270.0,318.0 259.9,313.7 259.9,322.3" fill="#1f4e79"/>
+<polygon points="210.0,318.0 220.1,322.3 220.1,313.7" fill="#1f4e79"/>
+<line x1="82.0" y1="343.0" x2="338.0" y2="343.0" stroke="#c0392b" stroke-width="3"/>
+<text x="94.0" y="335.0" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">pair B</text>
+<polygon points="270.0,343.0 259.9,338.7 259.9,347.3" fill="#c0392b"/>
+<polygon points="210.0,343.0 220.1,347.3 220.1,338.7" fill="#c0392b"/>
+<line x1="82.0" y1="368.0" x2="338.0" y2="368.0" stroke="#2e7d32" stroke-width="3"/>
+<text x="94.0" y="360.0" font-size="11" text-anchor="start" font-weight="normal" fill="#2e7d32" dominant-baseline="middle">pair C</text>
+<polygon points="270.0,368.0 259.9,363.7 259.9,372.3" fill="#2e7d32"/>
+<polygon points="210.0,368.0 220.1,372.3 220.1,363.7" fill="#2e7d32"/>
+<line x1="82.0" y1="393.0" x2="338.0" y2="393.0" stroke="#6a3d9a" stroke-width="3"/>
+<text x="94.0" y="385.0" font-size="11" text-anchor="start" font-weight="normal" fill="#6a3d9a" dominant-baseline="middle">pair D</text>
+<polygon points="270.0,393.0 259.9,388.7 259.9,397.3" fill="#6a3d9a"/>
+<polygon points="210.0,393.0 220.1,397.3 220.1,388.7" fill="#6a3d9a"/>
+<line x1="420.0" y1="314.0" x2="420.0" y2="400.0" stroke="#777777" stroke-width="1.2"/>
+<line x1="410.0" y1="314.0" x2="430.0" y2="314.0" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="335.5" x2="430.0" y2="335.5" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="357.0" x2="430.0" y2="357.0" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="378.5" x2="430.0" y2="378.5" stroke="#222222" stroke-width="2.4"/>
+<line x1="410.0" y1="400.0" x2="430.0" y2="400.0" stroke="#222222" stroke-width="2.4"/>
+<text x="436.0" y="350.0" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
+<text x="436.0" y="364.0" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">levels</text>
+</svg>
