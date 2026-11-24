@@ -120,6 +120,24 @@ Which level a product must pass is set by the product standard for its
 market, not by IEEE 802.3. The tables give level 4, the highest
 standard level, as the design limit.
 
+:numref:`fig-magnetics-events` places the events by peak voltage and time
+scale. The current waveforms of the human-body model and the system-level
+discharge, which set the time scales drawn for them, are in
+:numref:`fig-esd-sources`.
+
+.. figure:: events.svg
+   :name: fig-magnetics-events
+   :alt: Graph of peak voltage in kilovolts against the time scale of the
+         event on a log axis from 1 ns to 100 s. The system-level discharge
+         is at 8 kV and about 100 ns; the charged cable at up to 5 kV and
+         over 600 ns; the surge at 4 kV and 50 µs; the fast transient at
+         2 kV and 50 ns; the human-body model at 2 kV and about 200 ns; the
+         isolation impulse at 2.4 kV and 50 µs; and the isolation tests at
+         2.1 kV and 2.25 kV for 60 s.
+
+   The tests and disturbances of :numref:`tbl-magnetics-events`, by peak
+   voltage and time scale.
+
 Event energy and current
 ------------------------
 
@@ -172,9 +190,10 @@ For the human-body model at 2 kV and the system-level discharge at 8 kV:
 
    I_\text{IEC} &= \frac{8\ \text{kV}}{330\ \Omega} = 24\ \text{A}
 
-The standard system-level current waveform at 8 kV has a first peak of
-about 30 A, shaped by the generator rather than by this resistance alone
-([MAG-SLVA711]_, figure 1). The surge at level 4 drives
+The standard system-level current waveform at 8 kV has a first peak of
+about 30 A, shaped by the generator rather than by this resistance alone
+([MAG-SLVA711]_; the simulated waveform is the right-hand graph of
+:numref:`fig-esd-sources`). The surge at level 4 drives
 :math:`4\ \text{kV} / 42\ \Omega = 96\ \text{A}` into a short circuit
 ([MAG-SLVA711]_, table 4).
 
