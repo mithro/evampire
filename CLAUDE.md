@@ -162,8 +162,9 @@ publish copies of them, or quote from them at length.
 - **Numbering:** every figure and table has a caption, a label, a
   `:numref:` reference and `:alt:` text. The label is its identifier:
   `docs/_ext/stable_ids.py` replaces Sphinx's running number with the label,
-  less its `fig-` or `tab-` prefix, so `tab-poe-pairs` is shown as
-  "Table poe-pairs" and adding a table renumbers nothing. Start a label with
+  less its `fig-` or `tab-` prefix, so `tab-poe-pairs` is captioned
+  "Table poe-pairs:" and linked as "Table poe-pairs", and adding a table
+  renumbers nothing. Start a label with
   `fig-` or `tab-` and the topic's prefix, and keep it short, since readers
   see it. Renaming a label changes the identifier readers see. Label
   diagrams with the `:name:` option; a `.. _label:` line before a captioned

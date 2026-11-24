@@ -11,12 +11,18 @@ Sphinx still does the numbering (``numfig = True``). This extension runs
 after it and swaps each number for the identifier, which the HTML writer and
 ``:numref:`` then print unchanged.
 
+A caption puts a colon after the identifier, as in "Table poe-pairs: The two
+pair sets". A ``:numref:`` link has none, so the running text reads "Table
+poe-pairs lists the pins". Both take their text from ``numfig_format``, so
+the colon is added by the HTML translator, which writes only the caption.
+
 SPDX-License-Identifier: Apache-2.0
 """
 
 import re
 
 from sphinx.util import logging
+from sphinx.writers.html5 import HTML5Translator
 
 logger = logging.getLogger(__name__)
 
@@ -67,8 +73,23 @@ def _replace_numbers(app, env):
     return []
 
 
+class CaptionColonTranslator(HTML5Translator):
+    """Write "Table poe-pairs: " at the start of a caption."""
+
+    def add_fignumber(self, node):
+        start = len(self.body)
+        super().add_fignumber(node)
+        # Sphinx appends three strings: the opening <span>, the identifier
+        # followed by a space, and the closing </span>.
+        added = self.body[start:]
+        if len(added) == 3 and added[1].endswith(" "):
+            self.body[start + 1] = added[1][:-1] + ": "
+
+
 def setup(app):
     # Sphinx assigns the numbers in its own handler for this event, at the
     # default priority of 500. A higher number runs later.
     app.connect("env-get-updated", _replace_numbers, priority=900)
+    for builder in ("html", "dirhtml", "singlehtml"):
+        app.set_translator(builder, CaptionColonTranslator)
     return {"parallel_read_safe": True, "parallel_write_safe": True}
