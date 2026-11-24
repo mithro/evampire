@@ -318,7 +318,8 @@ voltage it sees on an :term:`SPR` port, and its options.
      - Transistors, inductor and gate drivers
 
 The highest voltages come from :typec:`Table 4-5` (VCONN),
-:typec:`Table 4-37` (the dead-battery Rd at the 3.0 A level) and
+:typec:`Table 4-35` (the top of the ± 20 % Rd range, the margin target for
+the dead-battery Rd at the 3.0 A level, :ref:`usbpd-rd-circuit`) and
 :ref:`usbpd-spr` (VBUS with a PPS supply).
 
 On an
