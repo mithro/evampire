@@ -3,9 +3,9 @@
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
 <rect x="20" y="150" width="360" height="170" rx="0" fill="#dbe8f5" stroke="#222222"/>
 <text x="200" y="308" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">P substrate, 0 V</text>
-<rect x="40" y="150" width="120" height="50" rx="8" fill="#fbd9b5" stroke="#222222"/>
+<path d="M40,150 L40,192 Q40,200 48,200 L152,200 Q160,200 160,192 L160,150" fill="#fbd9b5" stroke="#222222"/>
 <text x="100" y="180" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">low-side circuits</text>
-<rect x="200" y="150" width="160" height="90" rx="14" fill="#fbd9b5" stroke="#222222"/>
+<path d="M200,150 L200,226 Q200,240 214,240 L346,240 Q360,240 360,226 L360,150" fill="#fbd9b5" stroke="#222222"/>
 <text x="280" y="180" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">high-side circuits</text>
 <text x="280" y="198" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">in a floating</text>
 <text x="280" y="214" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">N-type tub</text>

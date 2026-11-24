@@ -2,20 +2,20 @@
 <rect width="640" height="440" fill="white"/>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
 <rect x="20" y="90" width="600" height="150" rx="0" fill="#dbe8f5" stroke="#222222"/>
-<rect x="20" y="90" width="110" height="60" rx="10" fill="#fbd9b5" stroke="#222222"/>
+<path d="M20,90 L20,140 Q20,150 30,150 L120,150 Q130,150 130,140 L130,90" fill="#fbd9b5" stroke="#222222"/>
 <text x="70" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">well, V</text>
-<rect x="190" y="90" width="30" height="34" rx="6" fill="#fbd9b5" stroke="#222222"/>
+<path d="M190,90 L190,118 Q190,124 196,124 L214,124 Q220,124 220,118 L220,90" fill="#fbd9b5" stroke="#222222"/>
 <text x="205" y="82" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">ring 1</text>
-<rect x="290" y="90" width="30" height="34" rx="6" fill="#fbd9b5" stroke="#222222"/>
+<path d="M290,90 L290,118 Q290,124 296,124 L314,124 Q320,124 320,118 L320,90" fill="#fbd9b5" stroke="#222222"/>
 <text x="305" y="82" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">ring 2</text>
-<rect x="390" y="90" width="30" height="34" rx="6" fill="#fbd9b5" stroke="#222222"/>
+<path d="M390,90 L390,118 Q390,124 396,124 L414,124 Q420,124 420,118 L420,90" fill="#fbd9b5" stroke="#222222"/>
 <text x="405" y="82" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">ring 3</text>
-<rect x="490" y="90" width="30" height="34" rx="6" fill="#fbd9b5" stroke="#222222"/>
+<path d="M490,90 L490,118 Q490,124 496,124 L514,124 Q520,124 520,118 L520,90" fill="#fbd9b5" stroke="#222222"/>
 <text x="505" y="82" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">ring 4</text>
 <rect x="580" y="90" width="34" height="16" rx="0" fill="#7fa7d6" stroke="#222222"/>
 <text x="597" y="82" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0 V</text>
 <path d="M20,195 Q120,200 150,160 Q175,130 190,110" stroke="#666666" stroke-width="1.8" stroke-dasharray="4 3" fill="none"/>
-<path d="M20,225 Q140,230 205,160 Q240,150 280,150 Q300,145 305,130 Q330,120 345,90" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="6 4" fill="none"/>
+<path d="M20,225 Q140,230 205,160 Q240,148 268,142 Q285,136 290,120" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="6 4" fill="none"/>
 <text x="250" y="208" text-anchor="start" font-size="12" font-weight="normal" fill="#666666">edge at a lower voltage: reaches ring 1</text>
 <text x="250" y="226" text-anchor="start" font-size="12" font-weight="normal" fill="#c0392b">at a higher voltage: spreads on from ring 1 to ring 2</text>
 <line x1="130" y1="74" x2="190" y2="74" stroke="#222222" stroke-width="1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>

@@ -27,7 +27,7 @@
 <circle cx="436.7" cy="159.9" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
 <circle cx="610.0" cy="212.5" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
 <line x1="90" y1="157.7" x2="610" y2="157.7" stroke="#666666" stroke-width="1.3" stroke-dasharray="6 4"/>
-<text x="604" y="151.7" text-anchor="end" font-size="12" font-weight="normal" fill="#666666">57 V</text>
+<text x="96" y="151.7" text-anchor="start" font-size="12" font-weight="normal" fill="#666666">57 V, the most on an Ethernet cable</text>
 <line x1="90" y1="199.4" x2="610" y2="199.4" stroke="#666666" stroke-width="1.3" stroke-dasharray="6 4"/>
 <text x="96" y="215.4" text-anchor="start" font-size="12" font-weight="normal" fill="#666666">published N-well breakdown, 14 V typical</text>
 <text x="394.9" y="120.4" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">about 90 V to 270 V</text>
