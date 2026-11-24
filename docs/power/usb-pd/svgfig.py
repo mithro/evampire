@@ -92,13 +92,14 @@ def write(name, content):
 class Plot:
     """A rectangular plot area mapping data (x, y) to pixels.
 
-    xlog selects a logarithmic x axis (base 10)."""
+    xlog and ylog select logarithmic axes (base 10)."""
 
-    def __init__(self, left, top, width, height, xr, yr, xlog=False):
+    def __init__(self, left, top, width, height, xr, yr, xlog=False,
+                 ylog=False):
         self.left, self.top, self.w, self.h = left, top, width, height
         self.x0, self.x1 = xr
         self.y0, self.y1 = yr
-        self.xlog = xlog
+        self.xlog, self.ylog = xlog, ylog
 
     @property
     def right(self):
@@ -116,7 +117,11 @@ class Plot:
         return self.left + (v - a) / (b - a) * self.w
 
     def y(self, v):
-        return self.top + (self.y1 - v) / (self.y1 - self.y0) * self.h
+        if self.ylog:
+            a, b, v = math.log10(self.y0), math.log10(self.y1), math.log10(v)
+        else:
+            a, b = self.y0, self.y1
+        return self.top + (b - v) / (b - a) * self.h
 
     def pts(self, data):
         return [(self.x(a), self.y(b)) for a, b in data]
