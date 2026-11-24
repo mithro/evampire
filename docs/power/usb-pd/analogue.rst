@@ -303,6 +303,30 @@ On chip, shared
 External
    A reference IC on the board.
 
+:numref:`fig-usbpd-reference` shows what the reference sets, and
+:numref:`fig-usbpd-vertical-pnp` the vertical PNP it can be built from.
+
+.. graphviz:: reference.dot
+   :name: fig-usbpd-reference
+   :caption: One voltage reference sets the three CC quantities whose
+             accuracy the specifications fix.
+   :alt: Block diagram. A voltage reference, a bandgap built from the
+         vertical PNP, feeds the BMC driver level of 1.125 V within 6.7 %,
+         the Rp currents of the 1.5 A and 3.0 A levels within 8 %, and the
+         comparator thresholds, which must lie inside their windows.
+
+.. figure:: vertical-pnp.svg
+   :name: fig-usbpd-vertical-pnp
+   :alt: Cross-section, not to scale. A P substrate is the collector, with
+         a P+ contact at 0 V. An N-well in it is the base, contacted
+         through N+. A P+ region in the N-well is the emitter. An arrow
+         shows holes crossing the base from the emitter to the substrate.
+         The base-emitter voltage is 0.63 to 0.83 V and the current gain
+         0.8 to 2.4.
+
+   The vertical PNP transistor of the process, schematic and not to scale:
+   its collector is always the substrate.
+
 .. _usbpd-vbus-sensing:
 
 VBUS sensing and discharge
@@ -364,6 +388,21 @@ On chip, discharge
 External
    A top resistor on the board, as with the TUSB320, so the chip sees only
    the divided voltage, and a discharge transistor on the board.
+
+:numref:`fig-usbpd-vbus-sense` shows the two options. The cross-section of
+the polysilicon divider is in :numref:`fig-usbpd-custom-structures`.
+
+.. graphviz:: vbus-sense.dot
+   :name: fig-usbpd-vbus-sense
+   :caption: VBUS sensing and discharge on chip, and with the high-voltage
+             parts on the board.
+   :alt: Two panels. On chip: VBUS, up to 21.5 V or 22.15 V with PPS,
+         feeds a polysilicon divider of 333 squares, 1 MΩ, drawing 21.5 µA
+         at 21.5 V, whose output goes to an ADC or comparator; and a custom
+         discharge switch that holds VBUS, to ground. External: VBUS feeds
+         a board top resistor of 855 to 920 kΩ, as with the TUSB320, to a
+         sense pin rated at most 4 V; and a discharge transistor on the
+         board, to ground.
 
 .. _usbpd-power-path:
 

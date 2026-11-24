@@ -189,6 +189,21 @@ The design manual also restricts the potential of a deep N-well. Rule DF.15a
 connects the N+ contact of a deep N-well in the 6 V area only to the 6 V
 supply ([USBPD-GF180-DRM]_, Appendix B, rules not coded in the checks). A
 deep N-well held at VBUS potential is outside that rule.
+:numref:`fig-usbpd-deep-nwell` shows where each junction of
+:numref:`tab-usbpd-model-bv` lies.
+
+.. figure:: deep-nwell.svg
+   :name: fig-usbpd-deep-nwell
+   :alt: Cross-section, not to scale. In a P substrate at 0 V, a deep
+         N-well holds a P-well with an NMOS and a P+ contact. The deep
+         N-well is contacted through an N+ region, which the design rules
+         tie to the 6 V supply. The P-well to deep N-well junction breaks
+         down at 14.732 V in the models, and the deep N-well to substrate
+         junction at 30.48 V. A separate N-well to the substrate holds
+         10 V minimum, 14 V typical.
+
+   A P-well isolated from the substrate by a deep N-well, with the
+   breakdown of each junction, schematic and not to scale.
 
 Custom structures
 -----------------
@@ -218,6 +233,24 @@ Clamps, crowbars and references
    Built from the documented diodes and bipolar transistors, including a
    :wikipedia:`thyristor <Thyristor>` from the parasitic bipolar
    transistors, and a bandgap reference from the vertical PNP.
+
+:numref:`fig-usbpd-custom-structures` shows the first four.
+
+.. figure:: custom-structures.svg
+   :name: fig-usbpd-custom-structures
+   :alt: Four cross-sections, not to scale, each on a P substrate at 0 V.
+         Stacked transistors: three NMOS, each in a P-well inside its own
+         N-type well, at V/3, 2V/3 and V; each transistor holds V/3 and the
+         top well holds V to the substrate. Drain-extended transistor: an
+         N+ source in a P-well, a polysilicon gate, and an N+ drain inside
+         a lightly doped drift region that spreads the voltage. Series MIM
+         capacitor: top and bottom metal plates on the insulator above the
+         substrate, with no junction. Polysilicon resistor on field oxide:
+         its VBUS end and its tap sit on the oxide, which holds VBUS to the
+         substrate.
+
+   Four custom structures for voltages above the standard ratings,
+   schematic and not to scale.
 
 :ref:`conv-custom` gives reference examples of stacked and drain-extended
 devices in other CMOS processes.
