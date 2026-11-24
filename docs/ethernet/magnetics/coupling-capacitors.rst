@@ -13,6 +13,22 @@ These ports are reference examples of the techniques. Each was built in
 another process or product; whether the same works for evampire is
 established only by building it.
 
+:numref:`fig-magnetics-ref-ports` draws three of them for one pair.
+
+.. graphviz:: ref-ports.dot
+   :name: fig-magnetics-ref-ports
+   :caption: Three reference front ends without a transformer, for one
+             pair (schematic).
+   :alt: Three rows from the transceiver to the cable. First, the
+         capacitor-coupled DP83848: a 33 nF capacitor in each wire.
+         Second, single-pair automotive and industrial Ethernet: a 100 nF
+         capacitor in each wire, a common-mode choke, and two 1 kΩ
+         resistors from the wires to a midpoint with 4.7 nF to ground.
+         Third, power over one pair: a capacitor in each wire carries the
+         data, and an inductor from each wire carries the direct current
+         to the power circuits.
+   :align: center
+
 Capacitor-coupled 10 and 100 Mbit/s
    Texas Instruments documents its DP83848 transceiver connected through a
    33 nF capacitor in each wire ([MAG-SNLA088]_, figure 5). Its bit-error

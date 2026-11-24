@@ -1,0 +1,85 @@
+// Reference front ends that already work without a transformer, drawn
+// for one pair at the same scale: a capacitor-coupled DP83848; a
+// single-pair port with blocking capacitors, a common-mode choke and a
+// termination of two 1 kohm resistors and 4.7 nF; and power over one
+// pair, with inductors for the power and capacitors for the data.
+//
+// Fixed grid, positions in inches. One row per example.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph ref_ports {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+
+    // ---- Capacitor-coupled DP83848, 10 and 100 Mbit/s. ----
+    t0 [pos="2.4,4.75!", shape=plaintext, style="", width=4.8, height=0.22, fontsize=10, label="Capacitor-coupled DP83848, 10 and 100 Mbit/s"];
+    x0 [pos="0.35,3.95!", width=0.65, height=1.1, fillcolor="#dbe8f5", label="trans-\nceiver"];
+    k0 [pos="4.6,3.95!", width=0.55, height=1.1, fillcolor="#fbe5d6", label="cable"];
+    cp0 [pos="1.35,4.40!", width=0.55, height=0.28, fillcolor="#fff2cc", label="33 nF"];
+    cn0 [pos="1.35,3.50!", width=0.55, height=0.28, fillcolor="#fff2cc", label="33 nF"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    ap0 [pos="0.68,4.40!"]; an0 [pos="0.68,3.50!"];
+    bp0 [pos="4.32,4.40!"]; bn0 [pos="4.32,3.50!"];
+    node [shape=box, style=filled, fixedsize=true];
+    ap0 -- cp0; an0 -- cn0;
+    cp0 -- bp0; cn0 -- bn0;
+
+    // ---- Single-pair automotive and industrial Ethernet. ----
+    t1 [pos="2.4,3.00!", shape=plaintext, style="", width=4.8, height=0.22, fontsize=10, label="Single-pair automotive and industrial Ethernet"];
+    x1 [pos="0.35,2.20!", width=0.65, height=1.1, fillcolor="#dbe8f5", label="trans-\nceiver"];
+    k1 [pos="4.6,2.20!", width=0.55, height=1.1, fillcolor="#fbe5d6", label="cable"];
+    cp1 [pos="1.35,2.65!", width=0.55, height=0.28, fillcolor="#fff2cc", label="100 nF"];
+    cn1 [pos="1.35,1.75!", width=0.55, height=0.28, fillcolor="#fff2cc", label="100 nF"];
+    ch1 [pos="2.35,2.20!", width=0.65, height=1.1, fillcolor="#e2efda", label="common-\nmode\nchoke"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    hp1 [pos="2.02,2.65!"]; hn1 [pos="2.02,1.75!"];
+    ip1 [pos="2.68,2.65!"]; in1 [pos="2.68,1.75!"];
+    node [shape=box, style=filled, fixedsize=true];
+    cp1 -- hp1; cn1 -- hn1;
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    ap1 [pos="0.68,2.65!"]; an1 [pos="0.68,1.75!"];
+    bp1 [pos="4.32,2.65!"]; bn1 [pos="4.32,1.75!"];
+    node [shape=point, width=0.07, height=0.07, style=filled, fillcolor="#000000"];
+    jp1 [pos="3.4,2.65!"]; jn1 [pos="3.4,1.75!"];
+    node [shape=box, style=filled, fixedsize=true];
+    ap1 -- cp1; an1 -- cn1;
+    ip1 -- jp1 -- bp1; in1 -- jn1 -- bn1;
+    ra1 [pos="3.4,2.40!", width=0.45, height=0.25, fillcolor="#ffffff", label="1 kΩ"];
+    rb1 [pos="3.4,2.00!", width=0.45, height=0.25, fillcolor="#ffffff", label="1 kΩ"];
+    tc1 [pos="3.9,2.20!", width=0.5, height=0.25, fillcolor="#ffffff", label="4.7 nF"];
+    tg1 [pos="3.9,1.85!", shape=plaintext, style="", width=0.6, height=0.2, label="ground"];
+    node [shape=point, width=0.07, height=0.07, style=filled, fillcolor="#000000"];
+    m1 [pos="3.4,2.20!"];
+    node [shape=box, style=filled, fixedsize=true];
+    jp1 -- ra1 -- m1 -- rb1 -- jn1 [color="#c55a11"];
+    m1 -- tc1 -- tg1 [color="#c55a11"];
+
+    // ---- Power over one pair. ----
+    t2 [pos="2.4,1.25!", shape=plaintext, style="", width=4.8, height=0.22, fontsize=10, label="Power over one pair"];
+    x2 [pos="0.35,0.45!", width=0.65, height=1.1, fillcolor="#dbe8f5", label="trans-\nceiver"];
+    k2 [pos="4.6,0.45!", width=0.55, height=1.1, fillcolor="#fbe5d6", label="cable"];
+    cp2 [pos="1.35,0.90!", width=0.55, height=0.28, fillcolor="#fff2cc", label="C"];
+    cn2 [pos="1.35,0.00!", width=0.55, height=0.28, fillcolor="#fff2cc", label="C"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    ap2 [pos="0.68,0.90!"]; an2 [pos="0.68,0.00!"];
+    bp2 [pos="4.32,0.90!"]; bn2 [pos="4.32,0.00!"];
+    node [shape=point, width=0.07, height=0.07, style=filled, fillcolor="#000000"];
+    jp2 [pos="3.4,0.90!"]; jn2 [pos="3.4,0.00!"];
+    node [shape=box, style=filled, fixedsize=true];
+    ap2 -- cp2; an2 -- cn2;
+    cp2 -- jp2 -- bp2; cn2 -- jn2 -- bn2;
+    lp2 [pos="3.4,0.65!", width=0.45, height=0.25, fillcolor="#e2efda", label="L"];
+    ln2 [pos="3.4,0.25!", width=0.45, height=0.25, fillcolor="#e2efda", label="L"];
+    pw2 [pos="2.4,0.45!", width=1.2, height=0.45, fillcolor="#ffffff", label="power circuits\n(DC from L)"];
+    jp2 -- lp2 [color="#c00000"]; jn2 -- ln2 [color="#c00000"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    up2 [pos="3.4,0.55!"]; un2 [pos="3.4,0.35!"];
+    vp2 [pos="3.0,0.55!"]; vn2 [pos="3.0,0.35!"];
+    node [shape=box, style=filled, fixedsize=true];
+    lp2 -- up2 -- vp2 [color="#c00000"]; ln2 -- un2 -- vn2 [color="#c00000"];
+}
