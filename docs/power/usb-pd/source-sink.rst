@@ -81,7 +81,26 @@ it settles (*vSrcNew*, *vSrcValid*, :pd:`Table 4.7`). It must change at no
 more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, :pd:`Table 4.7`). This
 :wikipedia:`slew rate <Slew_rate>` limit keeps the current that charges the
 sink's input capacitors within a 3 A connector rating, for up to 100 µF of
-sink capacitance (:pd:`Table 4.7`).
+sink capacitance (:pd:`Table 4.7`). :numref:`fig-usbpd-vbus-transition`
+shows these limits on a change from 5 V to 9 V, with the sink's side
+from :ref:`usbpd-sink-sequence`; the order of messages is in
+:numref:`fig-usbpd-negotiation`.
+
+.. figure:: vbus-transition.svg
+   :name: fig-usbpd-vbus-transition
+   :alt: Two graphs against time after Accept, from -100 to 600 ms. Top:
+         VBUS stays at 5 V inside its 5 % band until at least 25 ms after
+         Accept (tSrcTransition), then rises to 9 V at no more than
+         30 mV/µs and stays inside 9 V plus or minus 5 %, with a further
+         0.5 V while settling. PS_RDY comes at an example time of 140 ms,
+         before the 325 ms limit tSrcTransReq. A shaded region from 450 to
+         550 ms marks tPSTransition, after which the sink sends Hard Reset.
+         Bottom: the sink current falls from the old contract to at most
+         0.5 A, iSnkStdby, within the recommended 15 ms, stays there until
+         PS_RDY, then rises to the new contract.
+
+   VBUS and the sink current when the contract changes from 5 V to 9 V;
+   event times are examples within the limits.
 
 The source needs at least 10 µF of output capacitance, or 120 µF when the
 port is powered from a supply shared with other ports (*cSrcBulk*,
