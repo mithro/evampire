@@ -235,10 +235,21 @@ VBUS discharge
 
 After detach, a source must bring VBUS below vSafe5V (maximum) within
 tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
-(:pd:`Section 4.1.5.5`, :pd:`Table 4.9`). It also discharges VBUS before
+(:pd:`Section 4.1.5.5`, :pd:`Table 4.9`; :numref:`fig-usbpd-vbus-discharge`).
+It also discharges VBUS before
 attaching (the AttachWait.SRC state, :typec:`Section 4.5.2.2.8.1`) and
 during a power role swap. A switched load from VBUS to ground, controlled by
 the processor, does this (:ref:`usbpd-vbus-sensing`).
+
+.. figure:: vbus-discharge.svg
+   :name: fig-usbpd-vbus-discharge
+   :alt: Graph of VBUS from 0 to 22 V against time after detach from 0 to
+         800 ms. Grey regions mark where VBUS must not be: above 5.5 V
+         (vSafe5V) from 275 ms, and above 0.8 V (vSafe0V) from 650 ms. An
+         example discharge falls from 20 V and stays below both.
+
+   An example discharge of VBUS from 20 V after detach, with the two
+   limits.
 
 .. _usbpd-sink-sequence:
 

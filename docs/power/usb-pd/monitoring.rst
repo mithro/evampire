@@ -253,6 +253,18 @@ the time available is
    t_\text{OVP} \le \frac{2.5\ \text{V}}{30\ \text{mV}/\mu\text{s}}
                 = 83\ \mu\text{s}
 
+:numref:`fig-usbpd-ovp-ramp` shows this time budget.
+
+.. figure:: ovp-ramp.svg
+   :name: fig-usbpd-ovp-ramp
+   :alt: Graph of VBUS from 19.5 to 25 V against time from -60 to 120 µs.
+         VBUS rises from 20 V at 30 mV/µs, crosses 21.0 V (20 V plus 5 %),
+         then the 21.5 V over-voltage threshold at 0 µs, and reaches 24 V,
+         what an SPR sink tolerates, 83 µs later.
+
+   The time an over-voltage protection has on a 20 V contract when VBUS
+   rises at 30 mV/µs.
+
 A faulty source can make VBUS rise faster, so this is an upper bound.
 
 Fault response
