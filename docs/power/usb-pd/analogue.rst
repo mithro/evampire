@@ -431,6 +431,16 @@ As a sink, a switch connects VBUS to the board's power bus. As a source, a
 converter makes the negotiated voltage from the bus, with a current limit. In
 both roles, power must not flow backwards, and a dual-role port presents at
 most 10 µF on VBUS when it is not sourcing (:typec:`Table 4-2`).
+:numref:`fig-usbpd-power-path` shows the two paths.
+
+.. graphviz:: power-path.dot
+   :name: fig-usbpd-power-path
+   :caption: The power path of one dual-role port; bold arrows carry power.
+   :alt: Block diagram. VBUS, with at most 10 µF on it when the port is not
+         sourcing, feeds the board power bus through a sink switch that
+         blocks reverse current. The bus feeds VBUS through a source
+         converter with a current limit, which also blocks reverse current.
+         evampire controls both paths and sets the limit.
 
 The converters are described on :doc:`../converters/index`, their gate drive
 on :ref:`conv-gate-drive`, their protection on :ref:`conv-protection`, and
