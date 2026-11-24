@@ -207,8 +207,25 @@ def dr_swap():
     s.write(HERE / "usb-pd-roles" / "dr-swap.dot")
 
 
+def control_transfer():
+    s = Seq("control_transfer", "Host", "Device", comment="Stages of a "
+            "control transfer that reads data, such as GET_DESCRIPTOR.")
+    s.title("Setup stage")
+    s.msg("l", "SETUP, DATA0 (8-byte request)")
+    s.msg("r", "ACK")
+    s.title("Data stage: IN transactions")
+    s.msg("l", "IN")
+    s.msg("r", "DATA1")
+    s.msg("l", "ACK", note="repeated, DATA0/DATA1\\nalternating, until all is sent")
+    s.title("Status stage: opposite direction")
+    s.msg("l", "OUT, zero-length DATA1")
+    s.msg("r", "ACK", note="a request that writes data\\nends with an IN status stage")
+    s.write(HERE / "transactions" / "control-transfer.dot")
+
+
 if __name__ == "__main__":
     transactions()
     retry()
     enumeration()
     dr_swap()
+    control_transfer()

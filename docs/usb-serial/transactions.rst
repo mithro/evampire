@@ -100,7 +100,7 @@ Transactions are grouped into *transfers* of one of four types
 * *Control* transfers on endpoint 0, which every device has. A control
   transfer is a SETUP transaction with a request, optional IN or OUT data
   transactions, and a final status transaction in the opposite direction
-  ([USBSER-USB2]_ section 8.5.3). The maximum data packet size on
+  ([USBSER-USB2]_ section 8.5.3, :numref:`fig-usbser-control-transfer`). The maximum data packet size on
   endpoint 0 at full speed is 8, 16, 32 or 64 bytes
   ([USBSER-USB2]_ section 5.5.3).
 * *Bulk* transfers, for data that may wait for free bus time. The maximum
@@ -110,6 +110,19 @@ Transactions are grouped into *transfers* of one of four types
   Table 5‑9).
 * *Interrupt* transfers, polled by the host at an interval the device
   chooses.
+
+.. graphviz:: transactions/control-transfer.dot
+   :name: fig-usbser-control-transfer
+   :caption: The setup, data and status stages of a control transfer that
+             reads data.
+   :alt: Sequence diagram. Setup stage: the host sends SETUP and DATA0 with
+         the 8-byte request; the device answers ACK. Data stage: the host
+         sends IN, the device DATA1, the host ACK, repeated with DATA0 and
+         DATA1 alternating until all is sent. Status stage, in the opposite
+         direction: the host sends OUT with a zero-length DATA1 and the
+         device answers ACK. A request that writes data ends with an IN
+         status stage instead.
+   :align: center
 
 Frames
 ------
