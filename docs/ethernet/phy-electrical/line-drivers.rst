@@ -26,6 +26,26 @@ needs about 7 bits of linearity. Two ways to build it are in use:
 * a linear amplifier with a low output impedance fed from a DAC, the
   *voltage-mode* driver below.
 
+:numref:`fig-phy-line-drivers` draws both, simplified to one pair.
+
+.. figure:: line-drivers.svg
+   :name: fig-phy-line-drivers
+   :alt: Two simplified schematics side by side, each ending in the
+         transceiver-side transformer winding with its centre tap. Left,
+         current-mode: the centre tap and two termination resistors go to
+         the analogue supply rail; the two wires go down to switched
+         current cells, each with a switch that steers the current of its
+         current source to wire plus or wire minus, with more cells
+         implied. Right, voltage-mode: a DAC feeds a differential linear
+         amplifier whose two outputs reach the wires through source
+         resistors that are also the termination; the centre tap goes to
+         ground through a 0.1 µF capacitor. A note below says both produce
+         17 shaped levels, peak distortion below 10 mV in test mode 4, and
+         about 7 bits of linearity.
+   :align: center
+
+   The two kinds of gigabit line driver, simplified to one pair.
+
 10BASE-T and 100BASE-TX drivers need fewer levels (:numref:`tab-phy-speeds`)
 but have their own amplitude and edge-shape limits
 (:doc:`10base-t`, :doc:`100base-tx`).
