@@ -12,11 +12,25 @@ Inverting buck-boost converter
 ------------------------------
 
 The basic :wikipedia:`buck-boost converter <Buck%E2%80%93boost_converter>`
-has one switch, one inductor and one diode. During the on time the switch
+has one switch, one inductor and one diode (:numref:`fig-conv-inverting`).
+During the on time the switch
 connects the inductor across the input and its current rises. During the off
 time the inductor discharges through the diode into the output capacitor.
 Because the inductor current then flows *out of* the output node, the output
-is negative. Volt-second balance (:doc:`buck`) gives
+is negative.
+
+.. graphviz:: inverting.dot
+   :name: fig-conv-inverting
+   :caption: Power stage of an inverting buck-boost converter.
+   :alt: Schematic: the input connects through a switch to the switch node;
+         the inductor connects the switch node to ground; a diode conducts
+         from the output to the switch node; the output capacitor, marked
+         minus at the top and plus at ground, and the load connect the
+         output to ground. A note gives 105 V across the switch for 57 V in
+         and a 48 V output.
+   :align: center
+
+Volt-second balance (:doc:`buck`) gives
 
 .. math::
 
