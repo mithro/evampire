@@ -53,8 +53,21 @@ On chip
    the rating of the standard 5 V and 6 V transistors
    (:ref:`usbpd-process-limits`).
 External
-   Resistors to 3.3 V or 5 V, each switched by a transistor that evampire
+   Resistors to 3.3 V or 5 V, each switched by a transistor that evampire
    controls.
+
+:numref:`fig-usbpd-rp-sources` shows the two options side by side.
+
+.. graphviz:: rp-sources.dot
+   :name: fig-usbpd-rp-sources
+   :caption: The switched Rp of one CC pin, built on chip from current
+             mirrors or on the board from switched resistors.
+   :alt: Two panels. On chip: a 3.3 V supply and a voltage reference feed
+         switched current-mirror outputs of 80, 180 or 330 µA, which drive
+         the CC pin; with the pin open, 3.3 V minus the 2.432 V threshold
+         leaves 0.87 V of headroom. External, on the board: a 3.3 V or 5 V
+         supply feeds resistors of 36, 12 or 4.7 kΩ, or 56, 22 or 10 kΩ,
+         through switch transistors set by evampire to the CC pin.
 
 .. _usbpd-rd-circuit:
 
@@ -72,7 +85,8 @@ The Type-C specification gives an example for the unpowered case: a ± 20 %
 resistor in series with a transistor whose gate is weakly pulled up to the CC
 pin, with a threshold below the 1.32 V maximum of the voltage-clamp Rd
 (:typec:`Section 4.8.5`). Once powered, the chip switches this path off and
-uses the trimmed Rd. The voltage on the CC pin is then:
+uses the trimmed Rd (:numref:`fig-usbpd-rd-paths`). The voltage on the CC
+pin is then:
 
 .. math::
 
@@ -110,7 +124,35 @@ For example, take a standard 6 V NMOS at its highest documented threshold,
 2.0 kΩ. At the highest 1.5 A pull-up current, 194.4 µA, the path gives
 :math:`194.4\ \mu\text{A} \times 2.0\ \text{k}\Omega + 0.85\ \text{V} = 1.2\ \text{V}`,
 with the overdrive neglected. At the 3.0 A level, 356.4 µA, it gives 1.6 V,
-inside the 2.181 V limit.
+inside the 2.181 V limit. :numref:`fig-usbpd-dead-battery` plots the
+equation over the range of pull-up currents.
+
+.. graphviz:: rd-paths.dot
+   :name: fig-usbpd-rd-paths
+   :caption: The two Rd paths on one CC pin: the trimmed Rd for a powered
+             chip, and the dead-battery path that needs no supply.
+   :alt: Schematic. The source's Rp drives a current I_Rp of 80, 180 or
+         330 µA into the CC pin. One path is the trimmed Rd of 5.1 kΩ
+         within 10 % in series with a switch to ground that is on once the
+         chip is powered. The other is an NMOS, standard or native, above a
+         series resistor R_s of 2.0 kΩ in the example, to ground; the
+         NMOS gate is weakly pulled up from CC. Once powered, the gate is
+         pulled low, the path turns off and the pin presents at least
+         126 kΩ.
+
+.. figure:: dead-battery.svg
+   :name: fig-usbpd-dead-battery
+   :alt: Graph of CC voltage from 0 to 2.6 V against pull-up current from
+         0 to 380 µA, with R_s of 2.0 kΩ. Shaded bands mark the current
+         ranges of the default, 1.5 A and 3.0 A levels. Straight lines show
+         V_CC for a standard NMOS with threshold 0.85 V and 0.61 V, and a
+         native NMOS with threshold 0.08 V. A limit of 1.32 V applies up to
+         the 1.5 A level and 2.181 V at the 3.0 A level. Points mark
+         194.4 µA giving 1.2 V and 356.4 µA giving 1.6 V for the 0.85 V
+         threshold.
+
+   CC voltage of the dead-battery path against the source's pull-up current,
+   with the overdrive neglected.
 
 On chip, native transistor
    The PDK's 6 V :term:`native transistor` *nfet_06v0_nvt* has a

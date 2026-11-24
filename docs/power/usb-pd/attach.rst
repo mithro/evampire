@@ -429,7 +429,8 @@ The unpowered Rd needs to pull the CC voltage only into the range of the
 :typec:`Table 4-28`). The specification's example is a 5.1 kΩ ± 20 %
 resistor in series with a transistor whose gate is weakly pulled to CC. It
 turns on from the source's own pull-up and can be switched off once the
-board is powered. :ref:`usbpd-rd-circuit` describes evampire's circuit.
+board is powered. :ref:`usbpd-rd-circuit` describes evampire's circuit, and
+:numref:`fig-usbpd-rd-paths` draws it.
 
 Once the board has power from VBUS, the processor takes over the CC pins,
 keeps Rd present and continues as a sink in Attached.SNK. :doc:`start-up`
