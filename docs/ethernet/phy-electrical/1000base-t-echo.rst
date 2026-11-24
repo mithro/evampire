@@ -210,6 +210,19 @@ received samples. Each filter coefficient, or *tap*, multiplies one past
 symbol. The coefficients adapt continuously to keep the remaining error
 small, commonly with the :wikipedia:`least-mean-squares
 <Least_mean_squares_filter>` method ([PHY-TUT98]_ slide 58).
+:numref:`fig-phy-echo-canceller` shows the structure.
+
+.. graphviz:: echo-canceller.dot
+   :name: fig-phy-echo-canceller
+   :caption: An adaptive FIR echo canceller: each tap multiplies one past
+             symbol by a coefficient, and the sum predicts the echo.
+   :alt: The symbols sent pass along a delay line of 8 ns stages. Each
+         stage output, or tap, feeds a multiplier by a coefficient c0, c1,
+         c2 up to cn. The products are summed to give the predicted echo,
+         which is subtracted from the ADC samples, far-end signal plus
+         echo. The result is the far-end signal and the error, which
+         feeds a least-mean-squares update that adjusts the coefficients.
+   :align: center
 
 Reflections from far along the cable return long after the symbol that
 caused them, so the filter is long. The 802.3ab tutorial's examples use 60
@@ -228,7 +241,20 @@ receiver runs three more adaptive FIR filters, one for each other pair,
 that predict and subtract that crosstalk ([PHY-KSZ9031]_ section 3.2.5).
 With the two :term:`equalisers <equaliser>` (:ref:`phy-equalisation`), each receiver has
 five adaptive filters, and the transceiver has twenty ([PHY-HEALEY]_
-slide 38).
+slide 38). :numref:`fig-phy-next-cancellers` shows where the inputs of the
+four cancellers of one receiver come from.
+
+.. graphviz:: next-cancellers.dot
+   :name: fig-phy-next-cancellers
+   :caption: The four cancellers of the receiver of pair A, each driven by
+             one of the transceiver's own transmitters.
+   :alt: Four rows on the left: the transceiver's own symbols on pairs A,
+         B, C and D. Pair A's symbols feed the echo canceller; pairs B, C
+         and D each feed a near-end crosstalk canceller. All four outputs
+         are subtracted from the pair A ADC samples, and the result goes
+         to the equaliser and decoder of pair A. A dashed box shows that
+         far-end crosstalk enters the ADC samples with no canceller.
+   :align: center
 
 Far-end crosstalk comes from symbols the receiving transceiver did not
 send, so it cannot be predicted from its own symbols. The cable limits keep
