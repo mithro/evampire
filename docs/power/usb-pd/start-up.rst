@@ -129,7 +129,8 @@ Start-up sequence
 -----------------
 
 :numref:`tab-usbpd-start-up-steps` follows a board without power from the
-moment it is plugged into a charger. The attach steps are described on
+moment it is plugged into a charger, and :numref:`fig-usbpd-start-up`
+draws the same steps against time. The attach steps are described on
 :ref:`usbpd-attach-sequence`.
 
 .. list-table:: Power available to an unpowered board as it starts
@@ -156,6 +157,39 @@ moment it is plugged into a charger. The attach steps are described on
      - The processor runs and carries out the USB Power Delivery
        negotiation (:ref:`req-power-control`, :ref:`usbpd-negotiation`).
      - The current of the contract (:ref:`usbpd-power-levels`)
+
+.. wavedrom::
+   :caption: An unpowered board plugged into a charger, with the current it
+             may draw at each step of :numref:`tab-usbpd-start-up-steps`,
+             schematic and not to scale.
+   :name: fig-usbpd-start-up
+   :alt: Timing diagram. The charger presents Rp throughout. In step 1 the
+         board presents its unpowered Rd and the charger waits tCCDebounce,
+         100 to 200 ms; the board may draw no current. In step 2 the charger
+         turns VBUS on to vSafe5V within tVBUSON, at most 275 ms, and the
+         board may draw the default level. In step 3 the board switches to
+         an Rd within 10 % and may draw 1.5 A or 3.0 A as advertised. The
+         first Source_Capabilities arrives within tFirstSourceCap, 250 ms,
+         of VBUS on. In step 4 the board answers with Request, the charger
+         sends Accept and then PS_RDY, and the board may draw the contract
+         current.
+
+   {"signal": [
+     {"name": "step", "wave": "=.....=......=.=..=.....",
+      "data": ["1", "2", "3", "4", "contract"]},
+     {"name": "charger CC", "wave": "=.......................", "data": ["Rp"]},
+     {"name": "charger timer", "wave": "x=....=...x.............",
+      "data": ["tCCDebounce 100–200 ms", "tVBUSON ≤ 275 ms"]},
+     {"name": "VBUS", "wave": "0.........=.......=.....",
+      "data": ["vSafe5V", "contract voltage"]},
+     {"name": "messages", "wave": "x.........=....=..=.....",
+      "data": ["tFirstSourceCap ≤ 250 ms", "Request, Accept", "PS_RDY"]},
+     {"name": "board Rd", "wave": "=............=..........",
+      "data": ["unpowered Rd (± 20 % or clamp)", "Rd ± 10 %"]},
+     {"name": "board current", "wave": "=.........=..=....=.....",
+      "data": ["none", "default", "1.5 A or 3.0 A", "contract current"]}
+   ],
+   "config": {"hscale": 1}}
 
 An unpowered Rd, a resistor within ± 20 % or a voltage clamp, cannot tell
 the levels apart (:typec:`Table 4-28`). Until step 3, the board can count
