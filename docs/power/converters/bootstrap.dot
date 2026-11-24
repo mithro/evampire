@@ -1,0 +1,66 @@
+// High-side gate drive with a bootstrap supply and a level shifter.
+//
+// Fixed grid (positions in inches): the bootstrap node (BOOT) runs along
+// y=3.5, the switch node (SW) along y=2.1, ground at y=0.45. The high-side
+// driver floats between BOOT and SW; small points on its outline are its
+// supply, reference, input and output connections. The level-shifter wire
+// crosses the switch-node wire without connecting to it.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph bootstrap {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=0.9, height=0.5,
+           fixedsize=true];
+    edge  [arrowhead=none, penwidth=1.4];
+
+    sup5  [pos="0.45,3.5!", width=0.75, label="5 V\nsupply", fillcolor="#ffffff"];
+    bd    [pos="1.25,3.5!", width=0.7, label="Diode", fillcolor="#fbe5d6"];
+    cb    [pos="2.05,2.8!", width=0.6, label="Cboot", fillcolor="#dbe8f5"];
+    drv   [pos="3.3,2.85!", width=1.3, height=0.7,
+           label="High-side\ndriver (floating)", fillcolor="#fbe5d6"];
+    s1    [pos="5.0,2.85!", width=0.9, label="S1\nhigh side", fillcolor="#fbe5d6"];
+    s2    [pos="5.0,1.3!", width=0.9, label="S2\nlow side", fillcolor="#fbe5d6"];
+    l     [pos="6.6,2.1!", width=0.7, label="L", fillcolor="#dbe8f5"];
+    pwm   [pos="0.6,1.2!", width=1.05, label="PWM logic\n(ground)", fillcolor="#ffffff"];
+    ls    [pos="1.85,1.2!", width=0.85, label="Level\nshifter", fillcolor="#fbe5d6"];
+
+    // Text labels.
+    node  [shape=plaintext, style="", fontsize=10, width=1.0, height=0.2];
+    boot_l [pos="2.75,3.82!", width=1.6, height=0.35,
+            label="BOOT: up to 57 V\n+ gate drive voltage"];
+    vin_l  [pos="5.0,3.8!", width=1.6, label="Vin, up to 57 V"];
+    sw_l   [pos="5.62,1.92!", width=1.1, label="SW: 0 V to 57 V"];
+    cb_l   [pos="1.1,2.7!", width=1.2, height=0.5,
+            label="≥ 22 nF for\n10 nC + 1 nC at\n0.5 V droop"];
+    out_l  [pos="7.25,2.3!", width=0.7, label="to output"];
+    g_l    [pos="5.0,0.28!", width=0.8, label="ground"];
+    gate_l [pos="4.25,3.0!", width=0.5, label="gate"];
+
+    // Junctions, corners and driver connection points.
+    node  [shape=point, width=0.07, height=0.07, label="", style=filled,
+           fillcolor=black];
+    boot  [pos="2.05,3.5!"];
+    b2    [pos="3.3,3.5!", width=0.01];
+    d_vb  [pos="3.3,3.2!", width=0.04];
+    d_vs  [pos="3.3,2.5!", width=0.04];
+    d_in  [pos="2.65,2.85!", width=0.04];
+    d_out [pos="3.95,2.85!", width=0.04];
+    c_b   [pos="2.05,2.1!", width=0.01];
+    sw_d  [pos="3.3,2.1!"];
+    sw    [pos="5.0,2.1!"];
+    v_t   [pos="5.0,3.6!", width=0.01];
+    g     [pos="5.0,0.45!", width=0.01];
+    o_t   [pos="7.3,2.1!", width=0.01];
+    k1    [pos="2.45,1.2!", width=0.01];
+    k2    [pos="2.45,2.85!", width=0.01];
+
+    sup5 -> bd;  bd -> boot;  boot -> b2;  b2 -> d_vb;
+    boot -> cb;  cb -> c_b;  c_b -> sw_d;  sw_d -> sw;  d_vs -> sw_d;
+    d_out -> s1 [arrowhead=normal, arrowsize=0.6];
+    v_t -> s1;  s1 -> sw;  sw -> s2;  s2 -> g;  sw -> l;  l -> o_t;
+    pwm -> ls [arrowhead=normal, arrowsize=0.6];
+    ls -> k1;  k1 -> k2;  k2 -> d_in [arrowhead=normal, arrowsize=0.6];
+}

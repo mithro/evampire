@@ -305,8 +305,25 @@ supply. A capacitor sits between the switch node and the high-side driver's
 supply pin, and a diode charges it from the low-side supply whenever the
 switch node is at ground. When the switch node rises, the capacitor rises
 with it and powers the driver, so the driver only ever sees the gate drive
-voltage across itself [CONV-SLUA618]_ (Section 5.2.2). The capacitor must
-supply the gate charge without drooping too far
+voltage across itself [CONV-SLUA618]_ (Section 5.2.2).
+:numref:`fig-conv-bootstrap` shows the circuit.
+
+.. graphviz:: bootstrap.dot
+   :name: fig-conv-bootstrap
+   :caption: High-side gate drive with a bootstrap capacitor and a level
+             shifter, on a Power over Ethernet input.
+   :alt: Schematic: a 5 V supply charges the bootstrap capacitor Cboot
+         through a diode; Cboot sits between the BOOT node, up to 57 V plus
+         the gate drive voltage, and the switch node SW, which swings
+         between 0 V and 57 V. The high-side driver takes its supply from
+         BOOT and its reference from SW, and drives the gate of S1 between
+         Vin and SW. S2 connects SW to ground and the inductor L connects
+         SW to the output. Ground-referenced PWM logic drives the high-side
+         driver through a level shifter. Cboot is at least 22 nF for 10 nC
+         plus 1 nC at 0.5 V droop.
+   :align: center
+
+The capacitor must supply the gate charge without drooping too far
 [CONV-SLUA618]_ (Section 5.2.2.4, Equation 30):
 
 .. math::
