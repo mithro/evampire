@@ -11,7 +11,9 @@
   sequence of PAM-5 symbols with the shaped output on the 17 levels;
 * trellis.svg: the level subsets X and Y, and the eight states of the
   convolutional encoder of subclause 40.3.1.3.4 over four symbol periods,
-  with one surviving path.
+  with one surviving path;
+* scrambler-100base-tx.svg and scrambler-1000base-t.svg: the scrambler
+  shift registers, with the taps of their generator polynomials.
 
 Run with:
 
@@ -192,7 +194,71 @@ def trellis():
     fig.save(HERE / "trellis.svg")
 
 
+def xor_gate(fig, x, y, r=10):
+    fig.add(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="#ffffff" '
+            f'stroke="{INK}" stroke-width="1.3"/>')
+    fig.line(x - r, y, x + r, y, width=1.2)
+    fig.line(x, y - r, x, y + r, width=1.2)
+
+
+def lfsr_row(fig, y, shown, taps, title):
+    """Shift register stages `shown` (None marks a gap), the exclusive-OR
+    of the tap outputs fed back into stage 1, and its exclusive-OR with the
+    data."""
+    fig.text(20, y - 50, title, size=13, anchor="start", weight="bold")
+    x, w, gap = 50, 24, 5
+    xs = {}
+    for s in shown:
+        if s is None:
+            fig.text(x + 8, y, "…", size=14)
+            x += 16 + gap
+            continue
+        colour = FILL_ORANGE if s in taps else FILL_GREY
+        fig.rect(x, y - 12, w, 24, fill=colour, rx=2)
+        fig.text(x + w / 2, y, str(s), size=11)
+        xs[s] = x
+        x += w + gap
+    xe = x
+    # Shift direction arrows between visible neighbours are implied; draw
+    # the input arrow to stage 1 and the feedback.
+    xf = 32
+    yb = y + 40
+    xx = xe + 10
+    xor_gate(fig, xx, yb)
+    for k in taps:
+        xc = xs[k] + w / 2
+        fig.line(xc, y + 12, xc, yb)
+        fig.line(xc, yb, xx - 10, yb) if k == min(taps) else None
+    fig.line(xs[max(taps)] + w / 2, yb, xx - 10, yb)
+    fig.line(xx, yb + 10, xx, yb + 28)
+    fig.line(xx, yb + 28, xf, yb + 28)
+    fig.line(xf, yb + 28, xf, y)
+    fig.line(xf, y, xs[shown[0]], y, arrow=True)
+    fig.text(xf + 8, yb + 16, "new bit", size=11, anchor="start", fill=GREY)
+    # Exclusive-OR of the new bit with the data.
+    yd = yb + 60
+    xor_gate(fig, xx, yd)
+    fig.line(xx, yb + 28, xx, yd - 10, arrow=True)
+    fig.line(xx - 110, yd, xx - 10, yd, arrow=True)
+    fig.text(xx - 114, yd, "bits in", size=12, anchor="end")
+    fig.line(xx, yd + 10, xx, yd + 36, arrow=True)
+    fig.text(xx - 8, yd + 30, "scrambled bits out", size=12, anchor="end")
+
+
+def scramblers():
+    fig = Fig(480, 230)
+    lfsr_row(fig, 60, list(range(1, 12)), (9, 11),
+             "100BASE-TX: 1 + x⁹ + x¹¹, repeats every 2047 bits")
+    fig.save(HERE / "scrambler-100base-tx.svg")
+    fig = Fig(480, 470)
+    shown = [1, 2, None, 12, 13, 14, None, 19, 20, 21, None, 32, 33]
+    lfsr_row(fig, 60, shown, (13, 33), "Master: 1 + x¹³ + x³³")
+    lfsr_row(fig, 290, shown, (20, 33), "Slave: 1 + x²⁰ + x³³")
+    fig.save(HERE / "scrambler-1000base-t.svg")
+
+
 if __name__ == "__main__":
     level_spacing()
     shaping_filter()
     trellis()
+    scramblers()
