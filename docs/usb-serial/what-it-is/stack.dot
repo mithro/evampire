@@ -1,0 +1,43 @@
+// The layers between a terminal program and evampire's firmware, beside a
+// plain UART serial line for comparison.
+//
+// Fixed grid (positions in inches): one column per path, x=1.6 for USB
+// and x=5.2 for the UART line; layers from top (y=4.2) to bottom (y=0.3).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph stack {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+           fontname="Helvetica", fontsize=11, width=2.6, height=0.48,
+           fixedsize=true];
+    edge  [arrowsize=0.6, dir=both];
+
+    t_u  [pos="1.6,4.75!", shape=plaintext, style="", height=0.25,
+          fontsize=12, label="USB serial port"];
+    t_s  [pos="5.2,4.75!", shape=plaintext, style="", height=0.25,
+          fontsize=12, label="UART serial line"];
+
+    app  [pos="1.6,4.2!", label="Terminal program or script"];
+    port [pos="1.6,3.45!", label="COM3 or /dev/ttyACM0"];
+    drv  [pos="1.6,2.7!", label="Operating system\nCDC-ACM driver", height=0.55];
+    host [pos="1.6,1.95!", label="USB host controller"];
+    cab  [pos="1.6,1.2!", label="USB cable: D+ and D−", fillcolor="#ffffff"];
+    dev  [pos="1.6,0.45!", label="evampire: USB device\nand firmware",
+          fillcolor="#fbe5d6", height=0.55];
+
+    app2 [pos="5.2,4.2!", label="Terminal program or script"];
+    port2 [pos="5.2,3.45!", label="COM1 or /dev/ttyS0"];
+    drv2 [pos="5.2,2.7!", label="Operating system\nserial driver", height=0.55];
+    uart [pos="5.2,1.95!", label="UART in the computer"];
+    line [pos="5.2,1.2!", label="Serial line: TX, RX", fillcolor="#ffffff"];
+    dev2 [pos="5.2,0.45!", label="Device: UART and\nfirmware", fillcolor="#fbe5d6",
+          height=0.55];
+
+    same [pos="3.4,3.8!", shape=plaintext, style="", width=1.0, height=0.4,
+          fontsize=10, fontcolor="#1f4e79", label="same interface\nfor programs"];
+
+    app -> port -> drv -> host -> cab -> dev;
+    app2 -> port2 -> drv2 -> uart -> line -> dev2;
+}
