@@ -1,0 +1,52 @@
+// Raising an offer after a Capability Mismatch (two-ports.rst). Every
+// Request is answered, and an accepted one is followed by PS_RDY. GoodCRC
+// replies are left out. Time runs from top to bottom, not to scale.
+//
+// Fixed grid (positions in inches): source at x=0.8, sink at x=3.8, notes
+// at x=5.9; one row per message from y=3.6 down to y=0.3.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph raise_offer {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=point, width=0.05, color="#555555", label=""];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    src [pos="0.8,4.3!", shape=box, style="rounded,filled",
+         fillcolor="#fbe5d6", fontname="Helvetica", fontsize=10, width=1.0,
+         height=0.4, label="Source"];
+    snk [pos="3.8,4.3!", shape=box, style="rounded,filled",
+         fillcolor="#e2f0d9", fontname="Helvetica", fontsize=10, width=1.0,
+         height=0.4, label="Sink"];
+    s0 [pos="0.8,0.0!", width=0.01]; k0 [pos="3.8,0.0!", width=0.01];
+
+    s1 [pos="0.8,3.6!"]; k1 [pos="3.8,3.6!"];
+    s2 [pos="0.8,3.05!"]; k2 [pos="3.8,3.05!"];
+    s3 [pos="0.8,2.5!"]; k3 [pos="3.8,2.5!"];
+    s4 [pos="0.8,1.7!"]; k4 [pos="3.8,1.7!"];
+    s5 [pos="0.8,1.15!"]; k5 [pos="3.8,1.15!"];
+    s6 [pos="0.8,0.75!"]; k6 [pos="3.8,0.75!"];
+    s7 [pos="0.8,0.35!"]; k7 [pos="3.8,0.35!"];
+
+    node [shape=plaintext, width=2.1, height=0.5, fontname="Helvetica",
+          fontsize=9, fontcolor="#333333"];
+    n1 [pos="5.95,3.6!", label="asks for an offered PDO\nand flags that it needs more"];
+    n3 [pos="5.95,2.8!", label="the request is answered:\nAccept, then PS_RDY"];
+    n4 [pos="5.95,1.7!", label="larger offer, up to the\nPort Present PDP"];
+    n6 [pos="5.95,0.75!", label="new contract; in a group of\nshared ports within 3 s"];
+
+    node [width=1.8, height=0.2, fontsize=9, fontcolor="#000000"];
+    l1 [pos="2.3,3.72!", label="Request, Capability Mismatch"];
+    l2 [pos="2.3,3.17!", label="Accept"];
+    l3 [pos="2.3,2.62!", label="PS_RDY"];
+    l4 [pos="2.3,1.82!", label="Source_Capabilities"];
+    l5 [pos="2.3,1.27!", label="Request"];
+    l6 [pos="2.3,0.87!", label="Accept"];
+    l7 [pos="2.3,0.47!", label="PS_RDY"];
+
+    edge [arrowhead=none, style=dashed, color="#999999"];
+    src -> s0; snk -> k0;
+
+    edge [arrowhead=normal, style=solid, color="#000000"];
+    k1 -> s1; s2 -> k2; s3 -> k3; s4 -> k4; k5 -> s5; s6 -> k6; s7 -> k7;
+}

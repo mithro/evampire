@@ -130,23 +130,13 @@ moment the freed power can go to the other port.
          power budget of port B can be raised.
 
    {"signal": [
-     {"name": "port A messages", "wave": "=..z.|.=....=..=..z...=..z..",
-      "data": ["Alert", "Source_Capabilities", "Request", "Accept",
-               "PS_RDY"]},
-     {"name": "wait", "wave": "=......x....................",
-      "data": ["tReducePowerAlert 2.0–2.4 s"]},
-     {"name": "timers", "wave": "x...........=..=..=..x......",
-      "data": ["≤ 15 ms", "≤ 15 ms", "≥ 25 ms"]},
-     {"name": "PS_RDY limit", "wave": "x.................=...x.....",
-      "data": ["≤ 325 ms"]},
-     {"name": "port A sink current", "wave": "=.................=.........",
-      "data": ["old current", "new, lower current"]},
-     {"name": "port A source limit", "wave": "=....................=......",
-      "data": ["old limit", "new limit"]},
-     {"name": "port B budget", "wave": "=....................=......",
-      "data": ["old share", "can be raised"]}
+     {"name": "port A", "wave": "=.z|=...=.=.z.=.", "data": ["Alert", "Source_Capabilities", "Request", "Accept", "PS_RDY"]},
+     {"name": "timers", "wave": "=...x.......=..x", "data": ["tReducePowerAlert", "tSrcTransition"]},
+     {"name": "A current", "wave": "1...........0..."},
+     {"name": "A limit", "wave": "1..............0"},
+     {"name": "B share", "wave": "0..............1"}
    ],
-   "config": {"hscale": 1.1}}
+   "config": {"hscale": 1}}
 
 Without the Alert, the exchange takes at most about 355 ms: up to 15 ms each
 for the Request and the Accept (*tReceiverResponse*), then up to
@@ -175,40 +165,33 @@ its maximum or the sink's need within 3 s of such a request
 When a device is unplugged, the source sees the detach on CC and removes
 VBUS, reaching vSafe0V within *tSafe0V* (650 ms) (:pd:`Section 4.1.5.5`).
 Its share is free once VBUS is off. The software can then raise the offer
-on the other port as above. :numref:`fig-usbpd-raise-offer` shows both
-cases.
+on the other port as above. :numref:`fig-usbpd-raise-offer` shows a raised
+offer and :numref:`fig-usbpd-unplug` an unplugged device.
+
+.. graphviz:: raise-offer.dot
+   :name: fig-usbpd-raise-offer
+   :caption: Raising an offer after a Capability Mismatch; GoodCRC replies
+             are left out, and time runs downwards, not to scale.
+   :alt: Sequence diagram between a source and a sink. The sink sends a
+         Request for an offered PDO with Capability Mismatch set. The source
+         answers Accept and then PS_RDY. It then sends a larger
+         Source_Capabilities, up to its Port Present PDP. The sink sends a
+         Request, and the source answers Accept and PS_RDY, setting up the
+         new contract, within 3 s in a group of shared ports.
 
 .. wavedrom::
-   :caption: Raising an offer after a Capability Mismatch, and freeing a
-             port's share when its device is unplugged, schematic and not to
-             scale; the break marks a wait.
-   :name: fig-usbpd-raise-offer
-   :alt: Timing diagram in two parts. Raising: the sink sends a Request with
-         Capability Mismatch set; the source sends a larger
-         Source_Capabilities, and Request, Accept and PS_RDY follow, within
-         3 s in a group of shared ports. Unplugging: port B's CC goes open
-         when its device is unplugged; port B's VBUS falls to vSafe0V within
-         tSafe0V, 650 ms; port A's offer can then be raised.
+   :caption: Freeing a port's share when its device is unplugged,
+             schematic and not to scale.
+   :name: fig-usbpd-unplug
+   :alt: Timing diagram. Port B's CC goes open when its device is
+         unplugged. Port B's VBUS falls to vSafe0V within tSafe0V, 650 ms.
+         Port A's share can then be raised.
 
    {"signal": [
-     ["raise",
-      {"name": "messages", "wave": "=.....z|.=.....=..=..=..z...",
-       "data": ["Request, Capability Mismatch", "Source_Capabilities",
-                "Request", "Accept", "PS_RDY"]},
-      {"name": "limit", "wave": "x.....=................x....",
-       "data": ["within 3 s in a group of shared ports"]}
-     ],
-     {},
-     ["unplug",
-      {"name": "port B CC", "wave": "=..=........................",
-       "data": ["Rd", "open: device unplugged"]},
-      {"name": "port B VBUS", "wave": "1..=......0.................",
-       "data": ["falling"]},
-      {"name": "port B timer", "wave": "x..=......x.................",
-       "data": ["tSafe0V ≤ 650 ms"]},
-      {"name": "port A share", "wave": "=..........=................",
-       "data": ["old share", "can be raised"]}
-     ]
+     {"name": "port B CC", "wave": "=.=.........", "data": ["Rd", "open: device unplugged"]},
+     {"name": "port B VBUS", "wave": "1.=..0......", "data": ["falling"]},
+     {"name": "tSafe0V", "wave": "x.=...x.....", "data": ["≤ 650 ms"]},
+     {"name": "port A share", "wave": "=.....=.....", "data": ["old share", "can be raised"]}
    ],
    "config": {"hscale": 1}}
 
