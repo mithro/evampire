@@ -204,7 +204,22 @@ Each fixed offer's maximum current is (:pd:`Section 3.2.4`):
      - Nominal voltage of the offer
      - V
 
-The current may be rounded up or down to 10 mA (:pd:`Section 3.2.1`,
+:numref:`fig-usbpd-offer-currents` plots the equation for each voltage.
+
+.. figure:: offer-currents.svg
+   :name: fig-usbpd-offer-currents
+   :alt: Graph of maximum current from 0 to 5.4 A against Port Present PDP
+         from 0 to 100 W. The 5 V offer rises from 0 and reaches 3 A at
+         15 W. The 9 V offer starts at 15 W and reaches 3 A at 27 W. The
+         15 V offer starts at 27 W and reaches 3 A at 45 W. The 20 V offer
+         starts at 45 W and reaches 3 A at 60 W, the limit with a 3 A
+         cable; with a 5 A cable it rises to 5 A at 100 W. Grey lines mark
+         the worked examples at 8, 19, 42 and 61 W.
+
+   The maximum current of each fixed offer against the Port Present PDP,
+   from where the offer becomes required.
+
+The current may be rounded up or down to 10 mA (:pd:`Section 3.2.1`,
 item 1). The examples round down, so that no offer exceeds the Port
 Present PDP. These further rules apply:
 
