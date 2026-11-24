@@ -18,6 +18,34 @@ Summaries
    Connectivity Discovery <https://standards.ieee.org/ieee/802.1AB/6047/>`__,
    standard page (see also :std:`802.1AB`).
 
+IEEE 802.3bt task force contributions
+-------------------------------------
+
+Draft text from the task force that wrote :clause:`145` and revised
+:clause:`33`. It is cited for the classification rules where the published
+wording could not be checked; the published standard governs.
+
+.. [POE-BT-BASELINE-0115] L. Yseboodt, `Physical Layer & DLL classification
+   v130
+   <https://www.ieee802.org/3/bt/public/jan15/yseboodt_3_0115_baseline_v130.pdf>`__,
+   IEEE 802.3bt task force baseline, 2015-01. Classification permutations
+   for PSE and PD Types 1 to 4.
+
+.. [POE-BT-STEWART-0316] H. Stewart, `33.2.7.1 PSE Single-Event Physical
+   Layer classification, baseline
+   <https://www.ieee802.org/3/bt/public/mar16/hstewart_02_0316-33_2_7_1to2-v3-BASELINE.pdf>`__,
+   IEEE 802.3bt task force baseline, 2016-03.
+
+.. [POE-BT-MUTUALID-PD] D. Abramson, `Mutual identification, PD
+   requirements
+   <https://grouper.ieee.org/groups/802/3/bt/public/nov14/Mutual_ID_PD_updated.docx>`__,
+   IEEE 802.3bt task force contribution, 2014-11. Draft text of the Type 2
+   PD classification rules.
+
+.. [POE-BT-PDCLASS-0317] L. Yseboodt, `PD Classification text v104
+   <https://www.ieee802.org/3/bt/public/mar17/yseboodt_03_0317_pdclassification.pdf>`__,
+   IEEE 802.3bt task force baseline, 2017-03.
+
 Powered-device controllers
 --------------------------
 
@@ -25,6 +53,10 @@ Powered-device controllers
    with Automatic MPS and Autoclass
    <https://www.ti.com/lit/ds/symlink/tps2372.pdf>`__, data sheet SLUSCM4B,
    revised 2018-11.
+
+.. [POE-TPS2373] Texas Instruments, `TPS2373 High-Power PoE PD Interface
+   with Advanced Startup <https://www.ti.com/lit/ds/symlink/tps2373.pdf>`__,
+   data sheet SLUSCD1C, revised 2018-11.
 
 .. [POE-TPS2378] Texas Instruments, `TPS2378 IEEE 802.3at PoE Powered Device
    Controller <https://www.ti.com/lit/ds/symlink/tps2378.pdf>`__, data sheet
@@ -82,6 +114,35 @@ Power sourcing equipment controllers
    or eight 802.3at Ethernet Port PoE PSE Controllers
    <https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/data-sheets/si3474-datasheet.pdf>`__,
    revision 0.5, 2021-12-03.
+
+Network equipment
+-----------------
+
+Vendor documents, cited as reference examples of how power sourcing
+equipment in the field classifies.
+
+.. [POE-CISCO-9200] Cisco, `Troubleshoot Power over Ethernet on Catalyst
+   9000 Switches
+   <https://www.cisco.com/c/en/us/support/docs/switches/catalyst-9200-series-switches/215636-troubleshooting-power-over-ethernet-poe.html>`__,
+   technical note 215636.
+
+.. [POE-CISCO-9300] Cisco, `Verify Differences between PoE 802.3AT/802.3BT
+   on Catalyst 9000
+   <https://www.cisco.com/c/en/us/support/docs/switches/catalyst-9300-series-switches/220318-verify-differences-between-poe-802-3at-8.html>`__,
+   technical note 220318.
+
+.. [POE-EXTREME-LLDP] Extreme Networks, `PoE/PoE+ Allocation Using LLDP
+   <https://documentation.extremenetworks.com/Fabric%20Engine%20v9.1%20User%20Guide/GUID-6DFC1F30-0D47-4F13-A18D-74B645CBAB12.shtml>`__,
+   Fabric Engine v9.1 User Guide, 9039040-00 Rev AB.
+
+.. [POE-JUNIPER-POE] Juniper Networks, `Understanding PoE on EX Series
+   Switches
+   <https://networkingdocs.hpe.com/documentation/us/en/software/junos/poe/topics/concept/poe-overview.html>`__,
+   Junos OS documentation.
+
+.. [POE-PD-9001GR] Microchip, `PD-9001GR Gigabit Midspan PoE Injector
+   <https://www.digikey.co.uk/en/product-highlight/m/microchip-technology/pd-9001gr-family-of-high-power-gigabit-midspan-poe-injectors>`__,
+   product highlight on DigiKey.
 
 Surge and ESD
 -------------

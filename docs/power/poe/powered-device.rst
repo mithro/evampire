@@ -272,11 +272,16 @@ device that the power sourcing equipment is Type 3 or Type 4
 (:clause:`145.3.7`). It may then use the shorter maintain power signature
 pulses (:doc:`sequence`).
 
+.. _poe-autoclass:
+
 With the optional *autoclass*, a powered device drops to class signature 0
 between 75.5 ms and 87.5 ms into the first class event. It then draws its
 highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
-:clause:`Table 145-28 <145>`).
+:clause:`Table 145-28 <145>`). Autoclass only lets the power sourcing
+equipment allocate less than the assigned class. It never raises the power
+above the class, and a demoted powered device keeps to its lower class
+[POE-EA-BT]_ (Section 6.2).
 
 Turn on with hysteresis
 -----------------------
@@ -308,14 +313,28 @@ examples.
 The values are from [POE-TPS2372]_ and [POE-LT4275]_ (Electrical
 Characteristics).
 
-Limit the inrush current
-------------------------
+.. _poe-pd-inrush:
+
+Limit the inrush current and the start-up power
+-----------------------------------------------
 
 After turn-on the powered device charges its input capacitor. It draws less
 than 0.4 A for classes 1 to 6, or 0.8 A for classes 7 and 8, until 80 ms
 after turn-on (:clause:`Table 145-29 <145>`, items 4 and 7, and
-:clause:`145.3.8.3`). A powered device of class 1, 2 or 3 must also be
-within its class power 50 ms after turn-on.
+:clause:`145.3.8.3`).
+
+From 50 ms after turn-on it must also stay within 13 W if it requested
+class 3 or higher, or within its class power if it requested class 1 or 2.
+The power sourcing equipment may end its inrush period at any time from
+50 ms and then enforce the assigned class [POE-EA-BT]_ (Section 7.2). Only
+from 80 ms after turn-on may the powered device draw the power of its
+assigned class.
+
+Under the :clause:`33` rules, a Type 2 powered device draws no more than
+inrush current for at least 80 ms after turn-on
+(:clause:`Table 33-18 <33>`). Until 2-event Physical Layer classification
+or Data Link Layer classification has completed, it draws no more than
+13 W (:ref:`poe-classification`).
 
 Charging the capacitor at a constant current takes:
 
@@ -415,14 +434,21 @@ The model assumes rectangular pulses as seen at the power sourcing
 equipment. The input capacitor delays the pulse seen at the cable, so a
 real design makes the pulses longer than 7 ms.
 
-Ask for more power over LLDP from class 4
------------------------------------------
+.. _poe-pd-dll:
 
-A single-signature powered device that requests class 4 or higher must
-also support power negotiation over :term:`LLDP` once the link is up
-(:clause:`145.3.6`). :doc:`lldp` describes it. A powered device assigned a
-lower class than it requested must give the user an active indication if
-it is underpowered (:clause:`145.3.6`).
+Take part in Data Link Layer classification
+-------------------------------------------
+
+Once the link is up, a Type 2 powered device, and a Type 3 or Type 4
+powered device that requests class 4 or higher, must also take part in
+:term:`Data Link Layer classification` over :term:`LLDP`
+(:numref:`tab-poe-class-methods`). :doc:`lldp` describes the exchange, and
+evampire does it in both roles (:ref:`req-poe-classification`).
+
+A powered device assigned a lower class than it requested must give the
+user an active indication if it is underpowered (:clause:`145.3.6`). It
+stays within the assigned class until the exchange raises the allocation
+(:ref:`poe-demotion`).
 
 An alternative: accept passive power as a fallback input
 --------------------------------------------------------
