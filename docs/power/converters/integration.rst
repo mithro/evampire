@@ -206,6 +206,8 @@ High-side drivers
    another isolation structure: a deep n-well, if its breakdown is high
    enough; more than one junction in series; or devices built in
    polysilicon, which has no junction to the substrate.
+   :numref:`fig-conv-hs-isolation` compares the standard n-well with two
+   of these.
 
    For reference, a
    36 V charge pump has been built in nanometre-scale bulk CMOS
@@ -213,6 +215,23 @@ High-side drivers
    in low-voltage bulk CMOS [CONV-KER2007]_ (Title). For a lower switch
    node, such as a converter running
    from a bus of 6 V or less, the standard devices suffice.
+
+.. figure:: hs-isolation.svg
+   :name: fig-conv-hs-isolation
+   :alt: Three schematic cross-sections over a P-type substrate at 0 V. (a)
+         A standard n-well holding the driver at up to 62 V: the junction
+         to the substrate, marked red, holds up to 62 V against a documented
+         breakdown of 10 V minimum. (b) A deep n-well at up to 62 V
+         enclosing a p-well at the 57 V switch node and an n-well at the
+         62 V driver supply; the inner junctions hold about 5 V, and the
+         deep n-well to substrate junction, whose breakdown is an open
+         question, holds the full voltage. (c) Polysilicon devices at 57 V
+         to 62 V on field oxide, with no junction to the substrate; the
+         field oxide holds the voltage.
+   :align: center
+
+   Ways to float a high-side driver 57 V to 62 V above the substrate
+   (schematic, not to scale); stacking junctions in series is a fourth.
 
 Bootstrap supply
    The bootstrap diode blocks the input voltage while the switch node is
