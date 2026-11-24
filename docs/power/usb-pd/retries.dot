@@ -32,6 +32,13 @@ digraph retries {
     l2 [pos="3.3,2.8!", label="lost"];
     l3 [pos="3.3,2.0!", label="lost"];
 
+    node [width=2.0, height=0.2, fontcolor="#000000"];
+    m1 [pos="1.95,3.72!", label="message, MessageID n"];
+    m2 [pos="1.95,2.92!", label="same message, MessageID n"];
+    m3 [pos="1.95,2.12!", label="same message, MessageID n"];
+    m4 [pos="2.3,1.32!", label="Soft_Reset"];
+    m5 [pos="2.3,0.62!", label="Hard Reset"];
+
     node [width=2.0, height=0.5, fontcolor="#333333"];
     n1 [pos="5.9,3.6!", label="no GoodCRC within\ntReceive, 0.9 to 1.1 ms"];
     n2 [pos="5.9,2.8!", label="first retry, within\ntRetry, 195 µs"];
@@ -43,9 +50,6 @@ digraph retries {
     snd -> s0; rcv -> r0;
 
     edge [arrowhead=normal, style=solid, color="#000000"];
-    s1 -> x1 [label="message, MessageID n"];
-    s2 -> x2 [label="same message, MessageID n"];
-    s3 -> x3 [label="same message, MessageID n"];
-    s4 -> r4 [label="Soft_Reset"];
-    s5 -> r5 [label="Hard Reset", style=dashed];
+    s1 -> x1; s2 -> x2; s3 -> x3; s4 -> r4;
+    s5 -> r5 [style=dashed];
 }

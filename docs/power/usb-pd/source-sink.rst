@@ -111,7 +111,7 @@ from :ref:`usbpd-sink-sequence`; the order of messages is in
          VBUS stays at 5 V inside its 5 % band until at least 25 ms after
          Accept (tSrcTransition), then rises to 9 V at no more than
          30 mV/µs and stays inside 9 V plus or minus 5 %, with a further
-         0.5 V while settling. PS_RDY comes at an example time of 140 ms,
+         0.5 V while settling. PS_RDY comes at an example time of 210 ms,
          before the 325 ms limit tSrcTransReq. A shaded region from 450 to
          550 ms marks tPSTransition, after which the sink sends Hard Reset.
          Bottom: the sink current falls from the old contract to at most
