@@ -28,7 +28,7 @@ graph io_supplies {
 
     io1 -- co1 [penwidth=3, color="#c00000"];
     node [shape=plaintext, style="", width=1.9, height=0.35, fontsize=9];
-    l1 [pos="0.95,1.05!", fontcolor="#c00000", label="connected together"];
+    l1 [pos="1.6,1.05!", width=1.0, fontcolor="#c00000", label="connected\ntogether"];
     l2 [pos="3.05,1.05!", label="separate; I/O supply\nat least the core supply"];
     l3 [pos="5.15,1.05!", label="separate"];
 }
