@@ -8,7 +8,9 @@ the reference examples and assumptions of the other pages. The result is
 an illustration from published designs in other processes, not a
 prediction for evampire: the area and power of a gf180mcu transceiver are
 not known. Synthesis of the signal processing for gf180mcu, and test chips
-of the ADC, the line driver and the PLL, would establish them.
+of the ADC, the line driver and the PLL, would establish them. The totals
+leave out the blocks for 100BASE-TX and 10BASE-T, which every port also
+needs (:ref:`the transceiver requirements <req-transceivers>`).
 
 .. _phy-int-dsp-power:
 

@@ -58,11 +58,19 @@ The build does not run these scripts. When you change their inputs, re-run
 them and commit what they write:
 
 ```sh
+uv run python docs/index/overview.py docs/index/overview.svg
 uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline.svg
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
 uv run python docs/high-voltage/figures.py docs/high-voltage  # cross-sections
+uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
 ```
+
+The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
+the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
+model and I/O cell repositories at pinned commits, and takes about twenty
+minutes; `docs/esd/simulation.rst` gives the command. With `--reuse` it
+rebuilds the tables and figures from the waveforms of its last run.
 
 Four scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
@@ -81,12 +89,14 @@ comes from the gf180mcu PDK and is not in this repository.
 - Each topic is a folder with an `index.rst` and short child pages of about
   five A4 pages each, ordered simplest first. The topics are
   `ethernet/{rgmii,phy-electrical,magnetics}`, `power/{poe,usb-pd,converters}`,
-  `high-voltage` and `usb-serial`. `power/index.rst` holds what the power topics share:
+  `esd`, `high-voltage` and `usb-serial`. `power/index.rst` holds what the
+  power topics share:
   roles, modes, the budget, translation, sharing, and the board
   configurations table (`tab-power-board-configs`). Pages link to that table
   rather than restating the configurations.
 - Each topic has its own `references.rst`. Citation keys carry a per-topic
-  prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `HV-`, `USBSER-`)
+  prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `ESD-`, `HV-`,
+  `USBSER-`)
   so they don't clash across the site. A new topic picks its own prefix.
 - `docs/glossary.rst` is one site-wide `.. glossary::` with `:sorted:`. Every
   `:term:` resolves there. When merging branches, keep the terms from both
@@ -97,11 +107,16 @@ comes from the gf180mcu PDK and is not in this repository.
   link to.
 - Diagrams are Graphviz `.dot` files next to the page, rendered as SVG.
   Prefer `layout=neato` with pinned `pos` and `splines=false`. Free layouts
-  come out too wide to read. WaveDrom is rendered to SVG at build time
+  come out too wide to read. The front-page block diagram is the one
+  exception: `docs/index/overview.py` draws it directly as SVG, for the die
+  outline, pads and wire hops that Graphviz can't draw. WaveDrom is rendered to SVG at build time
   (`render_using_wavedrompy`).
-- `docs/_static/custom.css` puts a white panel behind diagrams in dark mode
-  and limits diagrams to the column width. `diagram-links.js` adds an "Open
-  diagram at full size" link that shows on narrow screens only.
+- `docs/_static/custom.css` makes the page use the full window width (Furo
+  centres a fixed 46em column by default), sets figure and table captions
+  smaller and grey with a bold number, puts a white panel behind diagrams
+  in dark mode and limits diagrams to the column width.
+  `diagram-links.js` adds an "Open diagram at full size" link that shows on
+  narrow screens only.
 
 ## Roles defined in `docs/conf.py`
 

@@ -1,0 +1,10 @@
+Event,Trigger (ps),Snapback,Fraction
+IEC +2 kV,10,partly,0.54
+IEC +2 kV,100,partly,0.91
+IEC +2 kV,500,no,0.48
+"HBM +2 kV, no clamp",10,partly,0.58
+"HBM +2 kV, no clamp",100,partly,0.58
+"HBM +2 kV, no clamp",500,yes,0.62
+"IEC +8 kV, 4× diodes, 4 pads",10,partly,1.81
+"IEC +8 kV, 4× diodes, 4 pads",100,yes,2.01
+"IEC +8 kV, 4× diodes, 4 pads",500,no,0.49

@@ -85,6 +85,13 @@ linkcheck_ignore = [
     r"https://doi\.org/10\.3390/.*",
     r"https://www\.mdpi\.com/.*",
     r"https://www\.littelfuse\.com/.*",
+    # SourceForge answers 403 to the GitHub Actions runners.
+    r"https://ngspice\.sourceforge\.io/.*",
+]
+# GitHub draws its line anchors (#L16-L52) with JavaScript, so the checker
+# never finds them in the page. The page itself is still checked.
+linkcheck_anchors_ignore_for_url = [
+    r"https://github\.com/.*",
 ]
 
 myst_enable_extensions = [

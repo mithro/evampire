@@ -1,8 +1,69 @@
 /*
- * Site-wide styling for diagrams.
+ * Site-wide styling: page width and diagrams.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* Use the full width of the window. Furo centres a fixed 46em column by
+ * widening the left sidebar to calc(50% - 26em), which leaves blank space
+ * on both sides of the page. Instead, keep the sidebar at the width of its
+ * contents and let the column take all the remaining width, with 2em of
+ * padding instead of Furo's 3em. A reader who wants shorter lines can make
+ * the window narrower. */
+.sidebar-drawer {
+  width: 15em;
+  flex: none;
+}
+
+.content {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 2em;
+}
+
+/* Keep Furo's narrower padding on narrow screens. */
+@media (max-width: 67em) {
+  .content {
+    padding: 0 1em;
+  }
+}
+
+/* Captions. Furo styles table captions but leaves figure captions in body
+ * text, so a long figure caption reads like the paragraph after it. Set
+ * both smaller and in the secondary text colour, with a bold number. A
+ * figure caption shrinks to fit a short line, so it stays centred under the
+ * figure, and wraps a long one as left-aligned lines in a narrower block.
+ * Extra space below the figure separates the caption from the following
+ * paragraph. It goes on the figure because Furo's
+ * "article figure :last-child" rule zeroes the caption's bottom margin. */
+article figure {
+  margin-bottom: 1.75rem;
+}
+
+article figcaption {
+  font-size: var(--font-size--small);
+  line-height: 1.5;
+  color: var(--color-foreground-secondary);
+  width: fit-content;
+  max-width: min(100%, 48em);
+  margin: 0.75rem auto 0;
+  text-align: left;
+}
+
+article figcaption p {
+  margin: 0;
+}
+
+article table > caption {
+  color: var(--color-foreground-secondary);
+}
+
+article figcaption .caption-number,
+article table > caption .caption-number {
+  font-weight: 600;
+  color: var(--color-foreground-primary);
+}
 
 /* Diagrams are drawn with dark lines and text. Graphviz output has a white
  * background; WaveDrom output is transparent. Give both a light panel so they

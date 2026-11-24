@@ -7,10 +7,12 @@ This page sets out, for each function that handles the cable voltage, the
 external option and the on-chip option, and what would decide between
 them.
 
-Every function is an open choice
---------------------------------
+The full design builds each function on chip where it can
+---------------------------------------------------------
 
-The choice is made per function. An on-chip option is a custom design
+The full design builds most of these functions on chip, on evampire or on
+a second cable-side die (:numref:`tab-power-board-configs`). The choice is made per function. An
+on-chip option is a custom design
 using the structures in :ref:`req-process`: custom transistor layouts,
 drain-extended or stacked transistors, parasitic bipolar transistors and
 custom I/O cells. An on-chip option for a cable-side function also needs
@@ -310,7 +312,8 @@ of the top devices is the open question of :doc:`hv-limits`.
 Open questions
 --------------
 
-* For each function above, whether it is built on evampire, on a second
-  cable-side die, or with external parts.
+* Which of the high-voltage switches above, if any, stay external parts,
+  and whether the cable-side functions sit on evampire or on a second
+  cable-side die.
 * Whether an on-chip surge clamp, alone or with an external pre-clamp, is
   pursued, which needs a thermal estimate and a test structure.
