@@ -93,8 +93,20 @@ twisted pair.
      - 5
 
 10BASE-T and 100BASE-TX use one pair for each direction. 1000BASE-T uses
-all four pairs in both directions at once. These pages describe the speeds
+all four pairs in both directions at once (:numref:`fig-phy-speeds`). These pages describe the speeds
 in that order, because each one adds techniques to the one before.
+
+.. figure:: speeds.svg
+   :name: fig-phy-speeds
+   :alt: Three rows, one per speed, each with four pairs A to D between
+         end 1 and end 2 and a ladder of levels at the right. 10BASE-T:
+         pair A carries one direction and pair B the other; pairs C and D
+         are unused; 2 levels. 100BASE-TX: the same pairs; 3 levels.
+         1000BASE-T: all four pairs carry both directions; 5 levels.
+   :align: center
+
+   The pairs each speed uses, the direction on each, and the number of
+   levels on the wire.
 
 Three terms are used on every page:
 
