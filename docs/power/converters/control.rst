@@ -122,6 +122,20 @@ Pulse-frequency modulation
    pulse-frequency mode at light load [CONV-LM5177]_ (Features)
    [CONV-TPS55289]_ (Features).
 
+:numref:`fig-conv-hysteretic` shows both.
+
+.. figure:: hysteretic.svg
+   :name: fig-conv-hysteretic
+   :alt: Two timing diagrams. (a) Hysteretic control: the output voltage
+         rises to an upper threshold while the switch is on and falls to a
+         lower threshold while it is off; at light load it falls slowly and
+         the switch turns on rarely, at heavy load it falls fast and the
+         switch turns on often. (b) Pulse-frequency modulation: bursts of
+         three fixed pulses separated by long gaps with no switching.
+   :align: center
+
+   Hysteretic control and pulse-frequency modulation (schematic).
+
 A changing frequency spreads switching noise across a band that is harder
 to filter. That is
 why fixed-frequency PWM is the usual choice at medium and high load. For
