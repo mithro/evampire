@@ -3,8 +3,8 @@
 ebat
 ====
 
-ebat is a reduced variant of evampire that keeps the power side and leaves
-out all of the Ethernet data side. It moves power between
+ebat is a reduced variant of evampire, on its own die, that keeps the power
+side and leaves out all of the Ethernet data side. It moves power between
 :term:`Power over Ethernet` and :term:`USB Type-C` in the same ways as
 evampire, but it has no Ethernet transceivers, no forwarding between ports
 and no network traffic of its own. Like evampire, it is in design and no

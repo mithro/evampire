@@ -63,9 +63,9 @@ Add an Ethernet link that carries only LLDP
    data circuits at all (:ref:`req-ebat-no-data`).
 Use evampire
    evampire forwards Ethernet traffic between its ports and handles LLDP in
-   its processor (:ref:`req-forwarding`). Whether an ebat board uses an
-   evampire die, with its data pins unused, is an open question
-   (:ref:`ebat-requirements-open-questions`).
+   its processor (:ref:`req-forwarding`). ebat is its own die without
+   these circuits (:ref:`req-ebat-no-data`), so a board that needs more
+   than class 3 uses evampire instead of ebat.
 
 A single signature gives 13 W
 -----------------------------

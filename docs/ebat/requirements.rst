@@ -12,6 +12,8 @@ page ends with the questions still open.
 ebat has no Ethernet data path
 ------------------------------
 
+* ebat is its own die, separate from evampire, with none of evampire's
+  Ethernet data circuits on it.
 * ebat has no :term:`Ethernet transceiver`, integrated or external, and no
   :term:`RGMII` interface. It does not receive, forward or send Ethernet
   :term:`frames <frame>`.
@@ -122,9 +124,6 @@ ebat keeps :ref:`req-process` unchanged.
 Open questions
 --------------
 
-* Whether ebat is a separate die, or an evampire die on a board that leaves
-  the Ethernet data pins unused. A separate die is smaller. An evampire die
-  keeps the option of LLDP on a board that fits transceivers.
 * Whether port A presents one powered-device signature or two, one on each
   pair set (:ref:`ebat-dual-signature`), and which powered-device Type it
   is (:ref:`ebat-power-without-lldp`).
