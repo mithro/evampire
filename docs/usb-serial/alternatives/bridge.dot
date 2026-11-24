@@ -22,7 +22,9 @@ digraph bridge {
            fillcolor="#fbe5d6"];
     evu   [pos="5.9,1.75!", width=1.6, label="UART", fillcolor="#fbe5d6"];
     evc   [pos="5.9,0.6!", width=1.6, label="CC and USB Power\nDelivery", fillcolor="#fbe5d6"];
-    chip  [pos="5.9,1.25!", width=1.95, height=2.4, label="evampire", labelloc=t,
+    chip_l [pos="5.9,2.62!", shape=plaintext, style="", width=1.0, height=0.25,
+            fontsize=12, fontcolor="#1f4e79", label="evampire"];
+    chip  [pos="5.9,1.25!", width=1.95, height=2.4, label="",
            style="rounded,bold", color="#1f4e79", fontcolor="#1f4e79",
            fillcolor="none", fontsize=12];
 
