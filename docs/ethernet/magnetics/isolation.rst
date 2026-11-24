@@ -178,6 +178,23 @@ the die that connects to the cable, including its bond pads, must then sit
 above that oxide. :doc:`coupling-capacitors` gives the die area such
 capacitors take.
 
+:numref:`fig-magnetics-die-barrier` shows the arrangement in cross-section.
+
+.. figure:: die-barrier.svg
+   :name: fig-magnetics-die-barrier
+   :alt: Cross-section of the die. Above the substrate, at the chip
+         ground, an oxide stack holds metal levels M1 to M5. A plate on M1
+         is on the chip side; a plate on M5 above it, and the bond pad to
+         the cable beside it, are on the cable side. Arrows across the four
+         oxide layers between the plates, 1.15 µm to 1.45 µm each and
+         4.6 µm to 5.8 µm in all, mark the voltage held. At about
+         500 V rms/µm the stack holds 2300 V rms to 2900 V rms in a short
+         test.
+
+   An isolation capacitor between the lowest and highest metal layers,
+   with everything connected to the cable on the top metal (schematic,
+   not to scale).
+
 The oxide between the first and fifth metal layers of gf180mcu is four
 layers of 1.15 µm to 1.45 µm ([MAG-GF180]_, inter-layer specification),
 4.6 µm to 5.8 µm in all. Texas Instruments gives the short-term strength of
