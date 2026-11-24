@@ -95,6 +95,20 @@ the two ends then negotiate the contract again (:pd:`Section 7.1.1`). If
 Soft_Reset also fails, the port sends a :term:`Hard Reset`, which does
 change VBUS (:pd:`Section 7.1.1`; :ref:`usbpd-hard-reset`). One missed
 GoodCRC therefore costs only a repeated message.
+:numref:`fig-usbpd-retries` shows the whole sequence.
+
+.. graphviz:: retries.dot
+   :name: fig-usbpd-retries
+   :caption: A message whose GoodCRC never arrives: two retries, then
+             Soft_Reset, then Hard Reset only if that fails too.
+   :alt: Sequence diagram between a sender and a receiver, time downwards.
+         The sender sends a message with MessageID n, which is lost; after
+         tReceive, 0.9 to 1.1 ms, with no GoodCRC, it sends the same message
+         with the same MessageID within tRetry, 195 µs. That is lost, and
+         so is a second retry, the last one since nRetryCount is 2. The
+         sender then sends Soft_Reset, which resets the protocol without
+         changing VBUS. Only if Soft_Reset fails does it send Hard Reset,
+         which changes VBUS.
 
 .. _usbpd-timing:
 
