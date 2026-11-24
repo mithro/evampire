@@ -162,10 +162,12 @@ With the limits above:
    I_\text{inrush} = \frac{10\ \mu\text{F} \times 3.0\ \text{V}}{2\ \text{ms}}
                    = 15\ \text{mA}
 
-Once charged, the cable draws its operating power. The 100 mW a source must
-supply is :math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest
-valid VCONN voltage. A VCONN switch for evampire therefore needs a current
-limit of at least 33 mA (:numref:`fig-usbpd-vconn-inrush`). Sources with SuperSpeed data must supply 1 W to
+Once charged, a passive marked cable draws at most 20 mW, or 75 mW in the
+first tRaWeaken (:numref:`tab-usbpd-vconn`). The source must nevertheless be
+able to supply 100 mW, which is
+:math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest valid
+VCONN voltage. A VCONN switch for evampire therefore needs a current limit of
+at least 33 mA (:numref:`fig-usbpd-vconn-inrush`). Sources with SuperSpeed data must supply 1 W to
 1.5 W (:typec:`Table 4-4`), and the controllers in
 :numref:`tab-usbpd-vconn-parts`, built for those, have much higher limits.
 They are reference examples, not requirements for evampire.
@@ -175,10 +177,13 @@ They are reference examples, not requirements for evampire.
    :alt: Two graphs against time after VCONN is switched on, 0 to 4 ms.
          VCONN rises linearly from 0 to 3.0 V, the lowest valid VCONN, by
          tVCONNON at 2 ms. The switch current is 15 mA while it charges
-         10 µF, then 33 mA, the cable's 100 mW at 3.0 V.
+         10 µF. The cable then draws at most 75 mW, 25 mA, for a time, and
+         then at most 20 mW, 6.7 mA. A dashed line at 33 mA marks the
+         100 mW the source must be able to supply.
 
    The VCONN switch charging a marked cable at a constant current, then
-   carrying its load.
+   carrying its load, against the 100 mW a source must be able to supply;
+   the length of the 75 mW period is schematic.
 
 .. list-table:: VCONN current limits of commercial USB PD controllers
    :name: tab-usbpd-vconn-parts

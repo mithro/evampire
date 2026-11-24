@@ -396,8 +396,8 @@ class 5 (45 W). A 9 V, 3 A contract (27 W) gives 21.2 W and class 3; a 20 V,
 
 .. figure:: class-steps.svg
    :name: fig-usbpd-class-steps
-   :alt: Staircase graph of the highest class, 0 to 8, against P_out from
-         0 to 100 W, with steps at 4, 6.7, 14, 30, 45, 60, 75 and 90 W.
+   :alt: Staircase graph of the highest class, from none to 8, against P_out
+         from 0 to 100 W, with steps at 4, 6.7, 14, 30, 45, 60, 75 and 90 W.
          Dots mark 21.2 W at class 3, 50.9 W at class 5 and 86.9 W at
          class 7.
 

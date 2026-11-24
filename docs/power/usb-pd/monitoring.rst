@@ -275,8 +275,8 @@ the time available is
    :name: fig-usbpd-ovp-ramp
    :alt: Graph of VBUS from 19.5 to 25 V against time from -60 to 120 µs.
          VBUS rises from 20 V at 30 mV/µs, crosses 21.0 V (20 V plus 5 %),
-         then the 21.5 V over-voltage threshold at 0 µs, and reaches 24 V,
-         what an SPR sink tolerates, 83 µs later.
+         then 21.5 V, the lowest the over-voltage threshold may be, at 0 µs,
+         and reaches 24 V, what an SPR sink tolerates, 83 µs later.
 
    The time an over-voltage protection has on a 20 V contract when VBUS
    rises at 30 mV/µs.
