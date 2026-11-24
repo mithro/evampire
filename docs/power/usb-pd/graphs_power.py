@@ -17,6 +17,13 @@ current-limit.svg
 pps-limit.svg
     VBUS against current for a PPS source in current limit
     (monitoring.rst; PD Table 4.7).
+vbus-discharge.svg
+    An example VBUS discharge against tSafe5V and tSafe0V (source-sink.rst).
+ovp-ramp.svg
+    VBUS rising through the over-voltage threshold of a 20 V contract
+    (monitoring.rst).
+vconn-inrush.svg
+    VCONN charging a marked cable, then its load current (cables.rst).
 
 Every limit comes from the page that shows the figure. Event times that
 the specification leaves free inside a limit are example values, and the
@@ -184,7 +191,83 @@ def pps_limit():
     return svg(680, int(p.bottom + 70), body, "PPS current limit")
 
 
+def vbus_discharge():
+    """An example VBUS discharge from 20 V against the two limits
+    (source-sink.rst). The exponential is an example shape."""
+    import math
+    p = Plot(60, 20, 590, 260, (0, 800), (0, 22))
+    body = [band(p, 275, 800, 5.5, 22, FILL), band(p, 650, 800, 0.8, 22,
+                                                   "#bfbfbf")]
+    body.append(p.frame())
+    body += p.yticks([0.8, 5.5, 10, 15, 20], "VBUS (V)")
+    pts = [(t_ms, 20 * math.exp(-t_ms / 150)) for t_ms in range(0, 801, 5)]
+    body.append(polyline(p.pts(pts), SRC_INK, 2.2))
+    body.append(text(p.x(285), p.y(14), "must be at or below vSafe5V, "
+                     "5.5 V, from 275 ms (tSafe5V)", 11))
+    body.append(text(p.x(660), p.y(9), "at or below", 11))
+    body.append(text(p.x(660), p.y(9) + 14, "vSafe0V, 0.8 V,", 11))
+    body.append(text(p.x(660), p.y(9) + 28, "from 650 ms", 11))
+    body.append(text(p.x(660), p.y(9) + 42, "(tSafe0V)", 11))
+    body += p.xticks([0, 100, 200, 275, 400, 500, 650, 800],
+                     "time after detach (ms)", grid=False)
+    body.append(text(p.left, p.bottom + 58, "Grey: where VBUS must not be. "
+                     "The curve is an example discharge.", 12, fill=GREY))
+    return svg(680, int(p.bottom + 70), body, "VBUS discharge after detach")
+
+
+def ovp_ramp():
+    """VBUS rising at 30 mV/us through the over-voltage threshold of a 20 V
+    contract (monitoring.rst)."""
+    p = Plot(60, 20, 590, 240, (-60, 120), (19.5, 25))
+    body = [p.frame()]
+    body += p.yticks([20, 21, 21.5, 24], "VBUS (V)", fmt="{:g}")
+    for v, lab in ((21.0, "21.0 V: 20 V + 5 % (vSrcNew)"),
+                   (21.5, "21.5 V: over-voltage threshold"),
+                   (24.0, "24 V: what an SPR sink tolerates")):
+        body.append(line(p.left, p.y(v), p.right, p.y(v), GREY, 1.0, "6,3"))
+        body.append(text(p.x(-56), p.y(v) - 5, lab, 11))
+    ramp = [(-60, 20 + 0.03 * 0), (-50, 20.0), (0, 21.5), (83.3, 24.0),
+            (100, 24.5)]
+    body.append(polyline(p.pts(ramp[1:]), SRC_INK, 2.2))
+    body.append(line(p.x(-60), p.y(20), p.x(-50), p.y(20), SRC_INK, 2.2))
+    body.append(line(p.x(0), p.y(20.6), p.x(83.3), p.y(20.6), arrow="both"))
+    body.append(text(p.x(41.7), p.y(20.6) - 6, "83 µs to switch off", 11,
+                     "middle"))
+    for x in (0, 83.3):
+        body.append(line(p.x(x), p.top, p.x(x), p.bottom, INK, 0.8, "4,3"))
+    body.append(text(p.x(30) - 8, p.y(22.6), "30 mV/µs", 11, "end"))
+    body += p.xticks([-50, 0, 50, 100], "time from crossing the threshold "
+                     "(µs)", grid=False)
+    return svg(680, int(p.bottom + 48), body, "Over-voltage time budget")
+
+
+def vconn_inrush():
+    """VCONN charging the cable at constant current, then the cable load
+    (cables.rst)."""
+    pv = Plot(60, 20, 590, 150, (-0.5, 4), (0, 3.5))
+    pi = Plot(60, 210, 590, 110, (-0.5, 4), (0, 40))
+    body = [pv.frame(), pi.frame()]
+    body += pv.yticks([0, 1, 2, 3], "VCONN (V)")
+    body += pi.yticks([0, 15, 33], "current (mA)")
+    body.append(polyline(pv.pts([(-0.5, 0), (0, 0), (2, 3.0), (4, 3.0)]),
+                         SRC_INK, 2.2))
+    body.append(polyline(pi.pts([(-0.5, 0), (0, 0), (0, 15), (2, 15),
+                                 (2, 33), (4, 33)]), SRC_INK, 2.2))
+    for p in (pv, pi):
+        body.append(line(p.x(2), p.top, p.x(2), p.bottom, INK, 0.8, "4,3"))
+    body.append(text(pv.x(2) + 6, pv.y(3.0) + 16, "3.0 V, lowest valid "
+                     "VCONN, by tVCONNON = 2 ms", 11))
+    body.append(text(pi.x(0.1), pi.y(15) - 6, "15 mA charges 10 µF", 11))
+    body.append(text(pi.x(2.1), pi.y(33) - 6, "33 mA: 100 mW at 3.0 V", 11))
+    body += pi.xticks([0, 1, 2, 3, 4], "time after VCONN is switched on (ms)",
+                      grid=False)
+    return svg(680, int(pi.bottom + 48), body, "VCONN switch current")
+
+
 if __name__ == "__main__":
     write("vbus-transition.svg", vbus_transition())
     write("current-limit.svg", current_limit())
     write("pps-limit.svg", pps_limit())
+    write("vbus-discharge.svg", vbus_discharge())
+    write("ovp-ramp.svg", ovp_ramp())
+    write("vconn-inrush.svg", vconn_inrush())
