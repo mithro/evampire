@@ -355,6 +355,21 @@ input of the same type, for an illustrative 0.2 V drop.
      - 52.2
      - 41.2
 
+:numref:`fig-conv-pass-through` shows, for each type, the part of the
+input range in which a pass-through meets the output window.
+
+.. figure:: pass-through.svg
+   :name: fig-conv-pass-through
+   :alt: Horizontal bars of powered device input voltage for each output
+         type. Type 1: regulated path from 37 V to 44.2 V, pass-through from
+         44.2 V to 57 V. Types 2 and 3: regulated from 42.5 V to 50.2 V,
+         pass-through above 50.2 V. Type 4: regulated from 41.2 V to
+         52.2 V, pass-through above 52.2 V.
+   :align: center
+
+   Input voltages at which a pass-through meets each output type, for a
+   0.2 V drop.
+
 The input can be anywhere in its range, so a pass-through meets the output
 window only when the measured input is high enough. evampire measures the
 input voltage (:doc:`first-version`), so software can choose pass-through
