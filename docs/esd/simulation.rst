@@ -232,7 +232,8 @@ Test generators
 ---------------
 
 Each generator is a charged capacitor that discharges through a resistor
-and the inductance of its wiring into the pin:
+and the inductance of its wiring into the pin, as in
+:numref:`fig-esd-testers`:
 
 * Human body model: 100 pF and 1500 Ω ([ESD-ESDA-P5]_), with 5 µH, which
   sets a rise time within the 2 ns to 10 ns that the ESD Association gives.

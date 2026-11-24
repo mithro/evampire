@@ -42,7 +42,25 @@ The human body model values are from the ESD Association
 Renesas TB505 ([ESD-TB505]_, Figure 1). In the charged device model the
 chip itself is the charged capacitor. The discharge often lasts less than
 1 ns, with a peak of several tens of amperes ([ESD-ESDA-P5]_, "Charged
-Device Model (CDM) Testing").
+Device Model (CDM) Testing"). :numref:`fig-esd-testers` draws each tester as
+a circuit.
+
+.. figure:: figures/testers.svg
+   :name: fig-esd-testers
+   :alt: Three circuits. Human body model at 2 kV: a 100 pF capacitor
+         discharges through a switch and a 1500 ohm resistor into the pin
+         of a chip whose other pin is grounded; about 1990 V lies across the
+         resistor and about 10 V on the pin, with 1.33 A flowing. IEC
+         61000-4-2: a 150 pF capacitor discharges through a 330 ohm
+         resistor and a metal tip into the pin, with a first peak of 3.75 A
+         per kilovolt, 30 A at 8 kV; in contact discharge the tip touches
+         the pin first, and in air discharge a spark jumps as it
+         approaches. Charged device model: the chip itself is charged
+         through its capacitance to its surroundings, and discharges when a
+         pin touches ground, in under 1 ns at tens of amperes.
+
+   The three ESD testers as circuits. The red resistor holds almost all of
+   the test voltage.
 
 The human body model and charged device model rate a chip for handling in
 a factory with ESD controls. :std:`IEC 61000-4-2` rates a finished product
@@ -87,7 +105,7 @@ Current into the pin
 --------------------
 
 At the moment of discharge, the tester's capacitor, its resistor and the
-pin form one loop. The protection on the pin starts to conduct at a few
+pin form one loop (:numref:`fig-esd-testers`). The protection on the pin starts to conduct at a few
 volts. From then on, the pin voltage is small, and almost the whole test
 voltage lies across the tester's resistor. The resistor therefore sets the
 current:
