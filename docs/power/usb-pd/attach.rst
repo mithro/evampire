@@ -171,6 +171,31 @@ A source such as a charger finds the port while it presents Rd
    if it prefers the source role (:ref:`usbpd-try`).
 
 The CC pin that shows SNK.Rp is the one that meets the CC wire.
+:numref:`fig-usbpd-attach-to-source` shows the sequence in time.
+
+.. wavedrom::
+   :caption: evampire attaching as the sink to a charger, schematic and not
+             to scale.
+   :name: fig-usbpd-attach-to-source
+   :alt: Timing diagram. The charger presents Rp and evampire presents Rd
+         throughout. The charger goes from Unattached.SRC to AttachWait.SRC,
+         waits tCCDebounce of 100 to 200 ms, enters Attached.SRC and turns
+         VBUS on within tVBUSON, at most 275 ms. evampire goes from
+         Unattached.SNK to AttachWait.SNK and enters Attached.SNK once VBUS
+         is present.
+
+   {"signal": [
+     {"name": "charger CC", "wave": "=................", "data": ["Rp"]},
+     {"name": "charger state", "wave": "=...=....=.......",
+      "data": ["Unattached.SRC", "AttachWait.SRC", "Attached.SRC"]},
+     {"name": "charger timer", "wave": "x...=....=...x...",
+      "data": ["tCCDebounce 100–200 ms", "tVBUSON ≤ 275 ms"]},
+     {"name": "VBUS", "wave": "0............1..."},
+     {"name": "evampire CC", "wave": "=................", "data": ["Rd"]},
+     {"name": "evampire state", "wave": "=...=.........=..",
+      "data": ["Unattached.SNK", "AttachWait.SNK", "Attached.SNK"]}
+   ],
+   "config": {"hscale": 1}}
 
 Attaching to a sink
 ^^^^^^^^^^^^^^^^^^^
@@ -185,12 +210,65 @@ A sink such as a phone finds the port while it presents Rp
    enters Attached.SRC.
 #. It turns VBUS on within tVBUSON.
 
+:numref:`fig-usbpd-attach-to-sink` shows the sequence in time.
+
+.. wavedrom::
+   :caption: evampire attaching as the source to a phone, schematic and not
+             to scale.
+   :name: fig-usbpd-attach-to-sink
+   :alt: Timing diagram. evampire presents Rp and the phone presents Rd.
+         evampire goes from Unattached.SRC to AttachWait.SRC, where it
+         discharges any voltage left on VBUS to vSafe0V within tVsafe0V, at
+         most 650 ms, and waits tCCDebounce, 100 to 200 ms. It then enters
+         Attached.SRC and turns VBUS on within tVBUSON, at most 275 ms. The
+         phone enters Attached.SNK once VBUS is present.
+
+   {"signal": [
+     {"name": "evampire CC", "wave": "=....................", "data": ["Rp"]},
+     {"name": "evampire state", "wave": "=...=.......=........",
+      "data": ["Unattached.SRC", "AttachWait.SRC", "Attached.SRC"]},
+     {"name": "discharge", "wave": "x...=...x............",
+      "data": ["tVsafe0V ≤ 650 ms"]},
+     {"name": "debounce", "wave": "x...=.......=...x....",
+      "data": ["tCCDebounce 100–200 ms", "tVBUSON ≤ 275 ms"]},
+     {"name": "VBUS", "wave": "=.......0.......1....", "data": ["left over"]},
+     {"name": "phone CC", "wave": "=....................", "data": ["Rd"]},
+     {"name": "phone state", "wave": "=...=............=...",
+      "data": ["Unattached.SNK", "AttachWait.SNK", "Attached.SNK"]}
+   ],
+   "config": {"hscale": 1}}
+
 Attaching to another dual-role port
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When both ends toggle, the end that happens to present Rp while the other
 presents Rd becomes the source. Without a preference mechanism, the outcome
 is random (:typec:`Section 4.5.2.2.7.2`; :typec:`Section 2.3.3`).
+:numref:`fig-usbpd-drp-meet` shows two toggling ports meeting.
+
+.. wavedrom::
+   :caption: Two toggling dual-role ports meeting, schematic and not to
+             scale: port A presents Rp while port B presents Rd, so A
+             becomes the source.
+   :name: fig-usbpd-drp-meet
+   :alt: Timing diagram. Port A toggles Rp, Rd, Rp; port B presents Rp and
+         then Rd. While both present Rp, or both Rd, neither sees the other.
+         When A presents Rp and B presents Rd, A sees SRC.Rd and B sees
+         SNK.Rp, and both stop toggling: A goes on as the source and B as
+         the sink. Each toggle period tDRP is 50 to 100 ms, with Rp for 30 to
+         70 % of it.
+
+   {"signal": [
+     {"name": "port A CC", "wave": "=..=..=.........",
+      "data": ["Rp", "Rd", "Rp, held"]},
+     {"name": "port B CC", "wave": "=...=...........",
+      "data": ["Rp", "Rd, held"]},
+     {"name": "seen", "wave": "x.....=.........",
+      "data": ["A sees SRC.Rd, B sees SNK.Rp: A is the source"]},
+     {"name": "port A period", "wave": "=.....x.........",
+      "data": ["tDRP 50–100 ms"]}
+   ],
+   "config": {"hscale": 1}}
 
 Detaching
 ^^^^^^^^^
@@ -202,6 +280,42 @@ role goes from Attached.SRC to TryWait.SNK rather than Unattached.SNK, so
 that two ports that both prefer the source role do not swap back and forth
 without end. A sink detects detach when VBUS falls below vSinkDisconnect,
 within tSinkDisconnect (:typec:`Section 4.5.2.2.5.2`).
+:numref:`fig-usbpd-detach` shows both cases.
+
+.. wavedrom::
+   :caption: Detach seen by evampire as the source and as the sink,
+             schematic and not to scale.
+   :name: fig-usbpd-detach
+   :alt: Timing diagram in two parts. As the source: the sink's Rd goes
+         open; within tSRCDisconnect, at most 20 ms, evampire sees SRC.Open
+         and leaves Attached.SRC; VBUS falls to vSafe0V, 0 to 0.8 V, within
+         tVBUSOFF, at most 650 ms. As the sink: the charger's VBUS falls;
+         once it is below vSinkDisconnect, at most 3.67 V, evampire leaves
+         Attached.SNK within tSinkDisconnect, at most 40 ms.
+
+   {"signal": [
+     ["as source",
+      {"name": "far-end CC", "wave": "=..=................",
+       "data": ["Rd", "open"]},
+      {"name": "evampire state", "wave": "=.......=...........",
+       "data": ["Attached.SRC", "Unattached.SNK or TryWait.SNK"]},
+      {"name": "detect", "wave": "x..=....x...........",
+       "data": ["tSRCDisconnect ≤ 20 ms"]},
+      {"name": "VBUS off", "wave": "x..=.........x......",
+       "data": ["tVBUSOFF ≤ 650 ms"]},
+      {"name": "VBUS", "wave": "1............0......"}
+     ],
+     {},
+     ["as sink",
+      {"name": "VBUS", "wave": "1..=..=.............",
+       "data": ["falling", "below vSinkDisconnect"]},
+      {"name": "detect", "wave": "x.....=.....x.......",
+       "data": ["tSinkDisconnect ≤ 40 ms"]},
+      {"name": "evampire state", "wave": "=...........=.......",
+       "data": ["Attached.SNK", "unattached"]}
+     ]
+   ],
+   "config": {"hscale": 1}}
 
 .. _usbpd-try:
 
