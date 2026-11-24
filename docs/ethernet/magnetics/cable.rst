@@ -113,17 +113,20 @@ A transmitter at one end of a cable must reach the receiver at the other
 end. With a straight-through cable, contact 1 to contact 1 and so on, this
 works only when the two ends use opposite pin assignments, called
 :term:`MDI` and :term:`MDI-X`. :numref:`fig-magnetics-crossover` shows the
-two assignments at 10 and 100 Mbit/s. At 1000 Mbit/s, MDI-X swaps pair A
+two assignments at each speed. At 1000 Mbit/s, MDI-X swaps pair A
 with pair B and pair C with pair D (:clause:`Table 40-12 <40>`).
 
 .. graphviz:: crossover.dot
    :name: fig-magnetics-crossover
-   :caption: The MDI and MDI-X pin assignments at 10 and 100 Mbit/s, joined
-             by a straight-through cable.
-   :alt: Two ports joined by a straight cable. On the MDI port the
-         transmitter uses pins 1 and 2 and the receiver pins 3 and 6; on the
-         MDI-X port these are swapped, so each transmitter reaches the other
-         port's receiver.
+   :caption: The MDI and MDI-X pin assignments at 10 and 100 Mbit/s and at
+             1000 Mbit/s, joined by a straight-through cable.
+   :alt: Two pairs of ports joined by straight cables. At 1000 Mbit/s the
+         MDI port puts BI_DA, BI_DB, BI_DC and BI_DD on pins 1 and 2, 3 and
+         6, 4 and 5, and 7 and 8; the MDI-X port puts BI_DB, BI_DA, BI_DD
+         and BI_DC on the same pins. At 10 and 100 Mbit/s, on the MDI port
+         the transmitter uses pins 1 and 2 and the receiver pins 3 and 6; on
+         the MDI-X port these are swapped, so each transmitter reaches the
+         other port's receiver.
    :align: center
 
 Automatic MDI/MDI-X configuration (:clause:`40.4.4`) lets a port find the
