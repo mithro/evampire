@@ -1,0 +1,35 @@
+// The control blocks of an integrated transceiver for autonegotiation:
+// the link pulse driver and comparator at the pins, the transmit, receive
+// and arbitration state machines, the next-page logic with its seed
+// source, the timers on one shared counter, and the registers.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph control {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.62,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.4];
+
+    pins [pos="6.6,1.6!", width=0.8, height=2.2, label="Pins\nof one\npair", fillcolor="#ffffff"];
+    drv  [pos="4.9,2.3!", width=1.9, label="Link pulse driver:\ngigabit driver at 1 V", fillcolor="#fbe5d6"];
+    cmp  [pos="4.9,0.9!", width=1.9, label="Comparator and\npulse spacing timers", fillcolor="#fbe5d6"];
+    tx   [pos="2.7,2.3!", label="Transmit\nstate machine"];
+    rx   [pos="2.7,0.9!", label="Receive\nstate machine"];
+    arb  [pos="0.7,1.6!", width=1.4, label="Arbitration\nstate machine"];
+    np   [pos="0.7,3.0!", width=1.4, label="Next pages\nand seed source"];
+    tim  [pos="2.7,-0.3!", width=2.3, label="Timers on one prescaled\n26-bit counter"];
+    reg  [pos="0.7,0.2!", width=1.4, label="Management\nregisters", fillcolor="#e2efda"];
+
+    tx -> drv;
+    drv -> pins;
+    pins -> cmp;
+    cmp -> rx;
+    arb -> tx;
+    rx -> arb;
+    np -> arb [dir=both];
+    tim -> rx;
+    reg -> arb [dir=both];
+}

@@ -236,7 +236,8 @@ from one of three routes, each open (:ref:`requirements-open-questions`):
   commercial part, with the isolation between the two dies;
 * an isolation barrier on the evampire die itself.
 
-:doc:`../../magnetics/index` analyses the circuits of each route and the
+:doc:`../../magnetics/index` analyses the circuits of each route
+(:numref:`fig-magnetics-isolation-routes`) and the
 common-mode range they leave at the pins. The standard analogue pads of
 gf180mcu contain only protection diodes ([PHY-GF180IO]_), sized for short
 discharge events. The line driver and receiver are custom circuits, and can

@@ -1,0 +1,27 @@
+// The early-check bench of the order of work: a test chip drives a real
+// cable to a commercial transceiver, and its ADC samples are captured to
+// an FPGA that runs the signal processing.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph bench {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.2"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.9, height=0.8,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
+
+    chip [pos="0.9,1.4!", label="Test chip: DAC,\ndriver, hybrid, ADC"];
+    cable [pos="3.4,1.4!", width=1.6, height=0.5, label="Real cable",
+           fillcolor="#ffffff"];
+    phy [pos="5.8,1.4!", width=2.0, label="Commercial\ntransceiver", fillcolor="#f2f2f2"];
+    fpga [pos="0.9,0.0!", label="FPGA: signal\nprocessing", fillcolor="#dbe8f5"];
+    pc [pos="5.8,0.0!", width=2.0, label="Reports what it\nreceives", shape=plaintext,
+        style=""];
+
+    chip -> cable [dir=both];
+    cable -> phy [dir=both];
+    chip -> fpga [label="  captured ADC samples"];
+    phy -> pc [style=dashed];
+}

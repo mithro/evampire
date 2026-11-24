@@ -282,6 +282,19 @@ The options for evampire are:
   capacitor DAC, interleaved to reach 125 MS/s.
 
 Each needs a gf180mcu design and a test chip to set its power and area.
+:numref:`fig-phy-int-adc-options` sketches the three families.
+
+.. graphviz:: adc-options.dot
+   :name: fig-phy-int-adc-options
+   :caption: Simplified sketches of the three ADC families.
+   :alt: Three sketches. Folding: the input goes to folding amplifiers
+         and fine comparators, and directly to coarse comparators; both
+         feed an encoder. Pipelined, time-interleaved: the input passes
+         stages that each resolve a few bits and pass on a residue, and
+         several copies take turns to reach 125 MS/s. Successive
+         approximation: one comparator, bit-by-bit logic and a capacitor
+         DAC in a loop, with copies taking turns.
+   :align: center
 
 .. _phy-int-analogue-alternatives:
 
@@ -290,7 +303,18 @@ Analogue filters and equalisers
 
 Most of the echo canceller, the crosstalk cancellers and the equalisers
 can be built as analogue FIR filters or as an analogue decision-feedback
-equaliser ahead of the ADC, instead of digital filters after it.
+equaliser ahead of the ADC, instead of digital filters after it
+(:numref:`fig-phy-int-analogue-chain`).
+
+.. graphviz:: analogue-chain.dot
+   :name: fig-phy-int-analogue-chain
+   :caption: Digital filters after a fast ADC, or analogue filters before
+             a coarse ADC.
+   :alt: Two chains. Digital filters: hybrid, then an ADC of about 7
+         effective bits, then digital echo, NEXT, FFE and DFE filters.
+         Analogue filters: hybrid, then analogue FIR filters and an
+         analogue DFE, then a coarse ADC or comparators.
+   :align: center
 
 The gigabit reference designs on these pages do this work in digital logic
 ([PHY-TUT98]_ slide 51; [PHY-HE01]_), in processes of 0.25 µm and smaller.

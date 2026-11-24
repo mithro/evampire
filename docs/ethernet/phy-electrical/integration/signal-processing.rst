@@ -179,7 +179,20 @@ time each coefficient gets
 updates: 44 000 for :math:`K = 1000`. Whether that is enough for the
 adaptation to converge, and whether the error terms can be collected
 without moving 880 values every few symbols, is open; a simulation of the
-training sequence answers it.
+training sequence answers it. :numref:`fig-phy-int-adapt-split` shows the
+split.
+
+.. graphviz:: adapt-split.dot
+   :name: fig-phy-int-adapt-split
+   :caption: The filters run every symbol in hardware; an update engine
+             changes their coefficients K times less often.
+   :alt: Samples enter filters in hardware that run every 8 ns symbol and
+         output equalised samples. Error terms go down to an update
+         engine, in slower hardware or software, running K times less
+         often, which sends new coefficients back, drawn dashed. A note
+         gives, for K = 1000, 1.1 × 10^8 updates per second and 44 000
+         updates per coefficient in 350 ms.
+   :align: center
 
 .. _phy-int-decision-loop:
 

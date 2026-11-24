@@ -1,0 +1,36 @@
+// The two equalisers of a gigabit receiver: a feed-forward equaliser on
+// the incoming samples, and a decision-feedback equaliser fed with the
+// symbols already decided, whose output is subtracted before the decision.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph equalisers {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.2"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.4, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
+
+    in   [pos="0.5,1.5!", width=0.9, label="Samples\nafter the\ncancellers",
+          height=0.75, fillcolor="#ffffff"];
+    ffe  [pos="2.1,1.5!", label="Feed-forward\nequaliser (FIR)"];
+    sub  [pos="3.6,1.5!", shape=circle, width=0.45, height=0.45,
+          fillcolor="#ffffff", label="−", fontsize=16];
+    dec  [pos="5.0,1.5!", label="Decision\n(trellis decoder)", fillcolor="#e2efda"];
+    out  [pos="6.6,1.5!", width=1.1, label="Decided\nsymbols", fillcolor="#ffffff"];
+    dfe  [pos="5.0,0.3!", width=1.9, label="Decision-feedback\nequaliser (FIR)"];
+    j    [pos="6.0,1.5!", shape=point, width=0.07];
+
+    in  -> ffe;
+    ffe -> sub [label="+"];
+    sub -> dec;
+    dec -> j [arrowhead=none];
+    j   -> out;
+    j2  [pos="6.0,0.3!", shape=point, width=0.01];
+    j   -> j2 [arrowhead=none];
+    j2  -> dfe;
+    j3  [pos="3.6,0.3!", shape=point, width=0.01];
+    dfe -> j3 [arrowhead=none, label="  postcursor\n  tails"];
+    j3  -> sub;
+}

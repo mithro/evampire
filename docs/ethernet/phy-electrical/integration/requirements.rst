@@ -21,7 +21,21 @@ logic is the same whether the transceiver is external or on the chip.
 
 On receive, the bytes are timed by the clock recovered from the cable, and
 the :ref:`rate-matching buffer <arch-rate-matching>` moves them onto
-evampire's own clock, as with RGMII.
+evampire's own clock, as with RGMII (:numref:`fig-phy-int-byte-interface`).
+
+.. graphviz:: byte-interface.dot
+   :name: fig-phy-int-byte-interface
+   :caption: The byte interface of one port, with the integrated
+             transceiver and with an external one over RGMII.
+   :alt: Top, integrated transceiver: the forwarding logic sends TXD[7:0],
+         TX_EN and TX_ER to the integrated transceiver, one byte per 8 ns;
+         the transceiver sends RXD[7:0], RX_DV and RX_ER on the recovered
+         clock to the rate-matching buffer, which passes them to the
+         forwarding logic on evampire's clock. Bottom, external
+         transceiver: the forwarding logic exchanges the same signals with
+         the RGMII block and buffer, which connects to the external
+         transceiver through the RGMII pins.
+   :align: center
 
 .. _phy-int-blocks:
 

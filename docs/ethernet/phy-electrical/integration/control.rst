@@ -68,7 +68,21 @@ The longest timer, break_link_timer, runs to 1.5 s. Counted with the
 transceiver's 25 MHz reference,
 :math:`\log_2(1.5 \times 25 \times 10^{6}) = 25.2`, so it needs a 26-bit
 counter (estimate). A prescaler shares one fast counter among all the
-timers.
+timers. :numref:`fig-phy-int-control` shows how the blocks connect.
+
+.. graphviz:: control-blocks.dot
+   :name: fig-phy-int-control
+   :caption: The control blocks for autonegotiation in an integrated
+             transceiver.
+   :alt: The transmit state machine drives the link pulse driver, which is
+         the gigabit driver at 1 V, onto the pins of one pair. The pins
+         feed a comparator with pulse spacing timers, which feeds the
+         receive state machine. The receive state machine feeds the
+         arbitration state machine, which drives the transmit state
+         machine and exchanges data with the next pages and seed source
+         and with the management registers. Timers on one prescaled
+         26-bit counter feed the receive state machine.
+   :align: center
 
 .. _phy-int-registers:
 

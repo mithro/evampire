@@ -102,4 +102,16 @@ Order of work
    :ref:`RGMII block <arch-rgmii>`, checked with the forwarding logic.
 
 The 100BASE-TX and 10BASE-T blocks of :doc:`slower-speeds` reuse
-steps 3, 5 and 6.
+steps 3, 5 and 6. :numref:`fig-phy-int-test-bench` shows the bench for
+steps 4 to 6.
+
+.. graphviz:: test-bench.dot
+   :name: fig-phy-int-test-bench
+   :caption: The early-check bench: a test chip on a real cable to a
+             commercial transceiver, with its ADC samples captured to an
+             FPGA.
+   :alt: A test chip with the DAC, driver, hybrid and ADC connects through
+         a real cable to a commercial transceiver, which reports what it
+         receives. The test chip's captured ADC samples go to an FPGA that
+         runs the signal processing.
+   :align: center

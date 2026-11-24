@@ -1,0 +1,44 @@
+// The byte interface between the forwarding logic and one port: with the
+// integrated transceiver (top) and with an external transceiver over
+// RGMII (bottom). Received bytes are timed by the clock recovered from the
+// cable and cross onto evampire's clock in the rate-matching buffer.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph byteif {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.0"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.62,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
+
+    t1 [pos="3.35,3.3!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=11, fontname="Helvetica-Bold", label="Integrated transceiver"];
+    fl1 [pos="0.8,2.6!", width=1.3, label="Forwarding\nlogic", fillcolor="#dbe8f5"];
+    rm1 [pos="3.35,1.95!", width=1.4, label="Rate-matching\nbuffer"];
+    ph1 [pos="5.9,2.6!", width=1.8, height=0.9, label="Integrated\ntransceiver\n(on evampire)",
+         fillcolor="#fbe5d6"];
+
+    fl1 -> ph1;
+    ph1 -> rm1;
+    rm1 -> fl1;
+    l1 [pos="3.35,2.9!", shape=plaintext, style="", width=3.0, height=0.35,
+        fontsize=9, label="TXD[7:0], TX_EN, TX_ER: one byte per 8 ns"];
+    l2 [pos="5.3,1.75!", shape=plaintext, style="", width=1.6, height=0.35,
+        fontsize=9, label="RXD[7:0], RX_DV, RX_ER\non the recovered clock"];
+    l3 [pos="1.35,1.85!", shape=plaintext, style="", width=1.2, height=0.35,
+        fontsize=9, label="on evampire's\nclock"];
+
+    t2 [pos="3.35,1.2!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=11, fontname="Helvetica-Bold", label="External transceiver"];
+    fl2 [pos="0.8,0.6!", width=1.3, label="Forwarding\nlogic", fillcolor="#dbe8f5"];
+    rg2 [pos="3.0,0.6!", width=1.4, label="RGMII block\nand buffer"];
+    ph2 [pos="5.9,0.6!", width=1.8, label="External\ntransceiver", fillcolor="#ffffff"];
+    fl2 -> rg2 [dir=both];
+    rg2 -> ph2 [dir=both];
+    l4 [pos="1.9,0.85!", shape=plaintext, style="", width=1.0, height=0.25,
+        fontsize=9, label="same signals"];
+    l5 [pos="4.5,0.85!", shape=plaintext, style="", width=1.0, height=0.25,
+        fontsize=9, label="RGMII pins"];
+}

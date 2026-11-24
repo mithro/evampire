@@ -202,7 +202,7 @@ ends reach the same answer because they apply the same rules to the same
 pages.
 
 For 1000BASE-T the master is chosen by these rules
-(:clause:`40.5.2`, :clause:`Table 40-5 <40>`):
+(:clause:`40.5.2`, :clause:`Table 40-5 <40>`, :numref:`fig-phy-resolution`):
 
 #. An end configured as master becomes master, and one configured as slave
    becomes slave. If both are configured to the same role, the link fails
@@ -212,6 +212,18 @@ For 1000BASE-T the master is chosen by these rules
 #. Otherwise the end that sent the larger seed becomes master. With equal
    seeds both ends draw new seeds and negotiate again; after seven failed
    attempts a configuration fault is declared.
+
+.. graphviz:: resolution.dot
+   :name: fig-phy-resolution
+   :caption: The master and slave resolution that both ends apply to the
+             same next pages.
+   :alt: Flowchart. Either end set by hand? If yes: both set to the same
+         role? If yes, configuration fault; if no, the set roles apply.
+         If no end is set by hand: one multiport and one single-port? If
+         yes, the multiport end becomes master. If no: seeds equal? If
+         no, the larger seed becomes master; if yes, both draw new seeds
+         and negotiate again, with a fault after 7 failures.
+   :align: center
 
 .. _phy-autoneg-parallel:
 

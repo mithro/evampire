@@ -29,7 +29,20 @@ parts ([PHY-TUT98]_ slides 30 and 51):
   it adds no noise.
 
 :numref:`fig-phy-pulse-response` shows which part of a received pulse each
-equaliser removes.
+equaliser removes, and :numref:`fig-phy-equalisers` how the two connect.
+
+.. graphviz:: equalisers.dot
+   :name: fig-phy-equalisers
+   :caption: The feed-forward equaliser filters the samples; the
+             decision-feedback equaliser filters the decided symbols, and
+             its output is subtracted before the decision.
+   :alt: Samples after the cancellers go through the feed-forward
+         equaliser, an FIR filter, to a subtractor and then to the
+         decision, the trellis decoder, which outputs the decided symbols.
+         The decided symbols also feed the decision-feedback equaliser,
+         an FIR filter, whose output, the postcursor tails, goes back to
+         the subtractor.
+   :align: center
 
 .. figure:: pulse-response.svg
    :name: fig-phy-pulse-response
