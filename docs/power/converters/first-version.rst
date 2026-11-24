@@ -205,7 +205,8 @@ Control loop rates
 ------------------
 
 :numref:`tab-conv-loop-needs` states what each part of the control needs in
-rate and latency. The figures follow from the switching frequency and the
+rate and latency; :numref:`fig-conv-control-modes` shows the inner and
+outer loops. The figures follow from the switching frequency and the
 crossover frequencies on :doc:`control`, with an illustrative 250 kHz
 switching frequency.
 

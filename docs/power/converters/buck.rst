@@ -189,7 +189,8 @@ limit must handle.
 The ripple is inversely proportional to :math:`L \, f_\text{sw}`, so a higher
 switching frequency allows a smaller inductor for the same ripple: 117.5 µH
 at 100 kHz, 47 µH at 250 kHz, 19.6 µH at 600 kHz and 5.3 µH at 2.2 MHz in
-this example. The cost is higher switching loss (:ref:`conv-losses`).
+this example (:numref:`fig-conv-fsw-tradeoff`). The cost is higher
+switching loss (:ref:`conv-losses`).
 
 The output capacitor absorbs the ripple current. With an ideal capacitor
 the output voltage ripple is
