@@ -243,7 +243,9 @@ is connected before the old one is disconnected. The steps are
 #. After Accept, the new VCONN Source turns VCONN on and sends PS_RDY
    within *tVconnSourceOn* (50 ms).
 #. The old VCONN Source turns VCONN off within *tVconnSourceOff* (25 ms) of
-   the end of that PS_RDY. For those 25 ms both ports supply VCONN.
+   the end of that PS_RDY. Both ports supply VCONN from the moment the new
+   VCONN Source turns it on until the old one turns it off, up to 50 ms plus
+   25 ms.
 
 :numref:`fig-usbpd-vconn-swap` shows the order.
 
@@ -254,21 +256,19 @@ is connected before the old one is disconnected. The steps are
          an idle line. After Accept the new VCONN Source turns VCONN on and
          sends PS_RDY within tVconnSourceOn, at most 50 ms. The old VCONN
          Source keeps VCONN on until up to tVconnSourceOff, 25 ms, after the
-         end of PS_RDY, so both supply VCONN for that time. VCONN at the
-         cable stays on throughout.
+         end of PS_RDY. Both supply VCONN from the new source's turn-on to
+         the old source's turn-off. VCONN at the cable stays on throughout.
 
    {"signal": [
-     {"name": "messages", "wave": "=..=..z....=.z......",
-      "data": ["VCONN_Swap", "Accept", "PS_RDY"]},
-     {"name": "new VCONN Source", "wave": "0.....1............."},
-     {"name": "old VCONN Source", "wave": "1.................0."},
-     {"name": "timer", "wave": "x.....=....x.=....x.",
-      "data": ["tVconnSourceOn ≤ 50 ms", "tVconnSourceOff ≤ 25 ms"]},
-     {"name": "overlap", "wave": "x............=....x.",
-      "data": ["both supply VCONN"]},
-     {"name": "VCONN at cable", "wave": "1..................."}
+     {"name": "messages", "wave": "=..=.z..=.z...", "data": ["VCONN_Swap", "Accept", "PS_RDY"]},
+     {"name": "new source", "wave": "0.....1......."},
+     {"name": "tVconnSourceOn", "wave": "x....=..x.....", "data": ["≤ 50 ms"]},
+     {"name": "tVconnSourceOff", "wave": "x.........=.x.", "data": ["≤ 25 ms"]},
+     {"name": "old source", "wave": "1...........0."},
+     {"name": "overlap", "wave": "x.....=.....x.", "data": ["both supply VCONN"]},
+     {"name": "VCONN at cable", "wave": "1............."}
    ],
-   "config": {"hscale": 1.2}}
+   "config": {"hscale": 1}}
 
 A port that cannot supply VCONN answers Reject or Not_Supported. If the
 port that sent VCONN_Swap is not the VCONN Source and gets Not_Supported, it
