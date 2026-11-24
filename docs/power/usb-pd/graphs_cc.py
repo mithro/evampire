@@ -14,6 +14,9 @@ cc-thresholds.svg
     (Type-C Table 4-37), as quoted on resistor-advertisement.rst.
 dc-level.svg
     The BMC signal starting and ending at the Rp/Rd level (cc-signalling.rst).
+rx-margin.svg
+    The measured BMC interval against the 0.75 UI decision point
+    (software.rst).
 packet.svg
     The parts of a packet, a Hard Reset, and the order in which the
     nibbles and symbols are sent (packets.rst).
@@ -259,7 +262,46 @@ def dc_level():
     return svg(680, int(y + 30), body, "CC signal on its DC level")
 
 
+def rx_margin():
+    """Measured BMC interval: edge displacement and sampling error against
+    the 0.75 UI decision point (software.rst)."""
+    p = Plot(150, 30, 500, 130, (0.2, 1.3), (0, 2))
+    x_rx, ts = 0.07, 0.11            # UI; 0.11 UI = 333 ns at 3.03 us
+    body = [p.frame()]
+    rows = [(1.45, 0.5, "half of a 1", "0.5 UI"),
+            (0.55, 1.0, "a whole 0", "1 UI")]
+    for y, nom, a, b in rows:
+        lo, hi = nom - 2 * x_rx, nom + 2 * x_rx
+        h = 0.5
+        body.append(rect(p.x(lo - ts), p.y(y + h / 2), p.x(lo) - p.x(lo - ts),
+                         p.y(y - h / 2) - p.y(y + h / 2), CABLE))
+        body.append(rect(p.x(hi), p.y(y + h / 2), p.x(hi + ts) - p.x(hi),
+                         p.y(y - h / 2) - p.y(y + h / 2), CABLE))
+        body.append(rect(p.x(lo), p.y(y + h / 2), p.x(hi) - p.x(lo),
+                         p.y(y - h / 2) - p.y(y + h / 2), FILL))
+        body.append(line(p.x(nom), p.y(y + h / 2), p.x(nom), p.y(y - h / 2),
+                         INK, 2.0))
+        body.append(text(p.left - 8, p.y(y) - 2, a, 12, "end"))
+        body.append(text(p.left - 8, p.y(y) + 13, b, 12, "end"))
+    body.append(line(p.x(0.75), p.top - 6, p.x(0.75), p.bottom, INK, 1.6,
+                     "6,3"))
+    body.append(text(p.x(0.75), p.top - 10, "decision at 0.75 UI", 11,
+                     "middle"))
+    body += p.xticks([0.25, 0.36, 0.5, 0.64, 0.75, 0.86, 1.0, 1.14, 1.25],
+                     "measured interval (UI)", fmt="{:g}", size=10,
+                     grid=False)
+    ly = p.bottom + 64
+    body.append(rect(p.left, ly - 10, 22, 12, FILL))
+    body.append(text(p.left + 30, ly, "two edges each up to 0.07 UI off: "
+                     "± 0.14 UI", 12))
+    body.append(rect(p.left, ly + 10, 22, 12, CABLE))
+    body.append(text(p.left + 30, ly + 20, "sampling error up to T_s = "
+                     "0.11 UI, 333 ns at 330 kbit/s", 12))
+    return svg(680, int(ly + 34), body, "Receive timing margin")
+
+
 if __name__ == "__main__":
     write("cc-thresholds.svg", cc_thresholds())
     write("packet.svg", packet_layout())
     write("dc-level.svg", dc_level())
+    write("rx-margin.svg", rx_margin())
