@@ -106,16 +106,16 @@ def section(phi):
     for x in range(X0 + 30, xm, 50):
         b.append(line(x, Y0 - 26, x, Y0 - 4, marker=True, width=1.2))
     b.append(text(X0 + 4, Y0 - 32, "implant through the drawn window",
-                  anchor="start", size=13))
+                  anchor="start", size=15))
     b.append(line(xm, Y0 - 30, xm, Y0 + 2, stroke=GREY, dash="3 3", width=1))
     b.append(line(xm + 2, Y0 - 10, xm + D * CELL + 4, Y0 - 10, marker=True,
                   width=1.2))
     b.append(text(xm + D * CELL + 10, Y0 - 6, "and spreads sideways",
-                  anchor="start", size=13))
-    b.append(text(X0 + 90, Y0 + 38, "N-well, at +V", size=14,
+                  anchor="start", size=15))
+    b.append(text(X0 + 90, Y0 + 38, "N-well, at +V", size=16,
                   weight="bold"))
     b.append(text(X0 + w - 8, Y0 + h - 12, "P substrate, 0 V",
-                  anchor="end", size=14))
+                  anchor="end", size=16))
     # Where the field is highest, and where it is even.
     px = X0 + (XM + D * 0.71) * CELL
     py = Y0 + D * 0.71 * CELL
@@ -123,14 +123,14 @@ def section(phi):
              f'stroke="{DEPL}" stroke-width="2.5"/>')
     b.append(line(px + 112, py + 46, px + 7, py + 5, marker=True, width=1.2))
     b.append(text(px + 116, py + 50, "lines crowd at the curved edge:",
-                  anchor="start", size=13))
+                  anchor="start", size=15))
     b.append(text(px + 116, py + 66, "the field reaches its critical",
-                  anchor="start", size=13))
+                  anchor="start", size=15))
     b.append(text(px + 116, py + 82, "value here first",
-                  anchor="start", size=13))
+                  anchor="start", size=15))
     b.append(text(X0 + 8, Y0 + (D + WP) * CELL + 22,
                   "under the flat bottom the lines lie further apart: "
-                  "a lower field", anchor="start", size=13))
+                  "a lower field", anchor="start", size=15))
     return b
 
 
@@ -187,10 +187,10 @@ def curved_edge():
                      weight="bold"))
     body.append(line(360, 12, 384, 12, stroke=BLUE, width=1.3))
     body.append(text(390, 17, "equipotentials, 20 % of V apart",
-                     anchor="start", size=12))
+                     anchor="start", size=13))
     body.append(path("M360,30 L384,30", dash="6 4"))
     body.append(text(390, 35, "edge of the depletion region",
-                     anchor="start", size=12))
+                     anchor="start", size=13))
     body += section(solve())
     body += plan(Y0 + NY * CELL + 50)
     return svg(w, h, body)

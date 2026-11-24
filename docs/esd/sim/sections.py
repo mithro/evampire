@@ -55,10 +55,11 @@ def diode(x, y, up, label, anchor):
                  anchor=anchor, size=12, fill=HOT)]
 
 
-def bracket(x1, x2, y, label):
+def bracket(x1, x2, y, label, anchor="middle"):
+    tx = {"middle": (x1 + x2) / 2, "end": x2, "start": x1}[anchor]
     return [line(x1, y, x2, y, width=1), line(x1, y - 4, x1, y + 4, width=1),
             line(x2, y - 4, x2, y + 4, width=1),
-            text((x1 + x2) / 2, y + 16, label, size=11)]
+            text(tx, y + 16, label, anchor=anchor, size=11)]
 
 
 def driver_section():
@@ -86,7 +87,7 @@ def driver_section():
     b.append(rect(480, top - 10, 34, 10, POLY))
     b.append(rect(519, top, 45, 22, NPLUS))
     b.append(rect(585, top, 30, 22, PPLUS))
-    b += bracket(399, 480, top + 38, "no silicide, 3.78 µm")
+    b += bracket(399, 480, top + 38, "no silicide, 3.78 µm", anchor="end")
     b.append(text(497, top - 16, "1.15 µm gate", size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):
         b.append(text(x, top + 16, s, size=11))
@@ -123,7 +124,7 @@ def driver_section():
     b.append(line(bx, by - 5, 470, top + 24, stroke=SNAP, width=2))
     b.append(line(bx, by + 5, 530, top + 24, stroke=SNAP, width=2,
                   arrow=True))
-    b.append(line(bx, by, bx - 18, by, stroke=SNAP, width=2))
+    b.append(line(bx, by, bx - 10, by, stroke=SNAP, width=2))
     b.append(text(640, top + 172, "parasitic NPN (drain, P-well, source): "
                   "triggers at 10.7 V,", size=12, fill=SNAP, anchor="end"))
     b.append(text(640, top + 188, "snaps back to about 6 V", size=12,

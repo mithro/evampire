@@ -64,7 +64,7 @@ the charge that would bend it to be absent or balanced.
          the potential falls in a straight line, and the field is V/L
          everywhere along it.
 
-   Potential and field of an abrupt fall and of an even fall. Schematic.
+   Potential and field of an abrupt fall and of an even fall, schematic.
 
 .. figure:: lmin.svg
    :name: fig-hv-lmin
@@ -124,8 +124,7 @@ Spacings are found by device simulation and checked on test structures.
          steps at V minus delta V1 to V minus delta V4 on the rings, sloping in
          the gaps, to 0 V.
 
-   Floating rings take the voltage in steps. The step sizes are
-   schematic.
+   Floating rings taking the voltage in steps of schematic size.
 
 Field plates
 ------------
@@ -150,8 +149,8 @@ give a set of steps (:numref:`fig-hv-plate-variants`).
          junction. A stepped plate of polysilicon on the field oxide and then
          metal layers above shares the field between the steps.
 
-   Field plates on a thin insulator, on a thick insulator and in steps.
-   Schematic.
+   Field plates on a thin insulator, on a thick insulator and in steps,
+   schematic.
 
 Depleted thin layers (RESURF)
 -----------------------------
@@ -240,5 +239,5 @@ test structures would measure.
          tub drives the high switch and follows the switching node, down to
          minus 5 V.
 
-   A junction-isolated half-bridge gate driver: the high-side circuits
-   float with the switching node. Schematic.
+   A junction-isolated half-bridge gate driver whose high-side circuits float
+   with the switching node, schematic.

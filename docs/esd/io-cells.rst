@@ -92,8 +92,8 @@ each one turns on and :term:`snaps back <Snapback>` to about 6 V
          the NMOS, with the drain as collector, the P-well as base and the
          source as emitter, triggers at 10.7 V and snaps back to about 6 V.
 
-   The output transistors in cross-section: their drains are the pad's
-   primary protection. Schematic, not to scale.
+   The output transistors in cross-section, whose drains are the pad's primary
+   protection, schematic and not to scale.
 
 Secondary protection
 ~~~~~~~~~~~~~~~~~~~~
@@ -185,27 +185,29 @@ models instead.
 
 The estimate holds once the capacitors are in inversion. The timer node
 starts at DVSS, where the capacitors are depleted and the model gives only
-0.075 pF. The node therefore rises to about 0.7 V within some tens of
-nanoseconds, and only then charges at the 1.6 µs rate. 0.7 V is below the
+0.075 pF. The node therefore rises quickly to about 0.7 V, with a time
+constant of 360 kΩ × 0.075 pF = 27 ns, and only then charges at the
+1.6 µs rate. 0.7 V is below the
 first inverter's switching voltage, so the clamp still turns on.
 
 A human body model discharge decays with a time constant of 150 ns, ten
 times shorter than 1.6 µs, so the clamp stays on for the whole event. A
 supply that rises much more slowly than 1.6 µs lets the timer node follow
 DVDD, so the clamp stays off in normal use (:numref:`fig-esd-clamp-timing`).
+:numref:`fig-esd-hbm-pos` shows a whole simulated event.
 
 .. figure:: figures/clamp-timing.svg
    :name: fig-esd-clamp-timing
-   :alt: Two graphs of voltage. (a) In an ESD event DVDD jumps to 4.5 V within
-         nanoseconds and decays over 150 ns; the timer node rises only to
-         about 0.7 V to 0.9 V, far below DVDD through the peak current, so the
-         inverters hold the clamp on. (b) In a power-up over 100 µs, much slower
+   :alt: Two graphs of voltage. (a) In the first 100 ns of an ESD event
+         DVDD jumps to 4.5 V within nanoseconds and decays with a 150 ns
+         time constant; the timer node rises only to about 0.7 V to 0.8 V,
+         far below DVDD, so the clamp gate follows DVDD and the clamp is
+         on. (b) In a power-up over 100 µs, much slower
          than the 1.6 µs time constant, the timer node follows DVDD and the
          clamp gate stays at 0 V.
 
-   The rail clamp timer in a fast event and in a slow power-up, from the
-   hand estimate above with an illustrative DVDD. :numref:`fig-esd-hbm-pos`
-   shows a simulated event.
+   The rail clamp timer in the first 100 ns of an ESD event and in a slow
+   power-up, from the hand estimate above with an illustrative DVDD.
 
 Discharge paths
 ---------------

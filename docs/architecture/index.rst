@@ -82,11 +82,12 @@ Rate-matching buffers
    .. figure:: rate-matching.svg
       :name: fig-rate-matching
       :alt: Graph of the buffer level from its centre, from minus 3 to plus 3
-            bytes, against bytes received from 0 to 12 000. During a frame of
+            bytes, against time in byte times from 0 to 12 000. During a frame of
             10 000 bytes the level rises one byte every 5000 bytes with the
             receive clock 200 ppm fast, reaching the slack of plus 2 bytes at the
             frame's end, and falls the same way when it is 200 ppm slow. In the
-            gap after the frame it returns to the centre.
+            gap after the frame, drawn not to scale, it returns to the
+            centre.
 
       The rate-matching buffer's level across the longest frame, for a
       slack of 2 bytes.
@@ -156,13 +157,14 @@ Preamble and checksum generator
 
    .. figure:: frame-layout.svg
       :name: fig-frame-layout
-      :alt: A bar of the fields of a frame on the wire, with their lengths in
-            bytes: preamble 7, SFD 1, destination 6, source 6, an optional VLAN
-            tag 4, type 2, payload 46 to 1500 and FCS 4. The preamble, SFD and FCS
+      :alt: The fields of a frame on the wire in two rows, with their lengths
+            in bytes: preamble 7, SFD 1, destination 6, source 6, an optional
+            VLAN tag 4, type 2, payload 42 or 46 to 1500, at least 42 with a
+            VLAN tag and 46 without, and FCS 4. The preamble, SFD and FCS
             are added by the preamble and checksum generator; the others are
             written by the processor.
 
-      The fields of a frame, and which block writes each. Not to scale.
+      The fields of a frame and which block writes each, not to scale.
 
 .. _arch-microcontroller:
 

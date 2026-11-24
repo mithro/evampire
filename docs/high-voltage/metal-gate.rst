@@ -35,9 +35,8 @@ source and drain stay at low voltage.
          inversion layer runs along the bottom of the field oxide and up its
          sidewalls to the source and drain. P+ taps sit outside the device.
 
-   A transistor with its gate on Metal3. The insulator holds the whole
-   voltage of the sensed node, and the silicon stays near the source
-   voltage.
+   A transistor with its gate on Metal3, where the insulator holds the whole
+   voltage of the sensed node and the silicon stays near the source voltage.
 
 Voltage across the insulator
 ----------------------------
@@ -59,8 +58,8 @@ apply.
          the silicon surface, then to 0 V within a fraction of a micrometre.
          The silicon surface is below 1 V in both cases.
 
-   Potential through the insulator and silicon under a Metal1 plate, at
-   the typical threshold and at 57 V. The silicon part is schematic.
+   Potential through the insulator and silicon under a Metal1 plate, at the
+   typical threshold and at 57 V, with the silicon part schematic.
 
 
 At 57 V the field in the insulator is 0.48 MV/cm under Metal1 and
@@ -481,8 +480,8 @@ isolation from the substrate, the subject of :doc:`junctions` and
          inverts the channel between them. The junction of the N-well with
          the substrate still holds the 40 V.
 
-   The mirror-image transistor for a signal travelling up. The voltages
-   are examples.
+   The mirror-image transistor for a signal travelling up, with example
+   voltages.
 
 
 Alternative voltage sensors

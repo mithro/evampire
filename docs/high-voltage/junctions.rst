@@ -23,7 +23,8 @@ charge, field and potential of a junction at that point.
 
 .. figure:: depletion.svg
    :name: fig-hv-depletion
-   :alt: Four panels on one distance axis. (a) An N+ region at +300 V meets
+   :alt: Four panels on one distance axis, to scale on the P side; the N+
+         side is much thinner than drawn. (a) An N+ region at +300 V meets
          a P region doped at 10 to the 15 per cubic centimetre, at 0 V. A
          depletion region 20 µm wide, holding fixed ions only, lies almost
          entirely in the P side. (b) The fixed charge: a thin, tall positive
@@ -34,9 +35,8 @@ charge, field and potential of a junction at that point.
          The potential falls as a parabola from 300 V at the junction to
          0 V at the edge of the depletion region, and is flat outside it.
 
-   A one-sided junction at breakdown, for P-side doping of
-   10\ :sup:`15` cm\ :sup:`-3`. The P side is to scale; the N+ side is
-   much thinner than drawn.
+   A one-sided junction at breakdown for P-side doping of 10\ :sup:`15` cm\
+   :sup:`-3`, with the P side to scale.
 
 When one side of the junction is much more heavily doped than the other,
 almost all of the depletion region lies in the lightly doped side, and that
@@ -120,8 +120,9 @@ the range.
          17 per cubic centimetre. Top, breakdown voltage falls from 1690 V
          through 300 V and 53 V to 9 V; the gf180mcu estimate of 1.2 to 5.3
          times 10 to the 15 is shaded, where the flat junction holds about
-         90 V to 270 V, above a 57 V line and far above the published
-         N-well breakdown of 14 V typical. Bottom, the depletion width at
+         90 V to 270 V, above a line at 57 V, the most on an Ethernet
+         cable, and far above the published N-well breakdown of 14 V
+         typical. Bottom, the depletion width at
          breakdown falls from 150 µm through 20 µm and 2.7 µm to 0.36 µm.
 
    Breakdown voltage and depletion width of a flat junction against
@@ -247,7 +248,8 @@ corner it is part of a sphere. The field lines crowd together at a curved
 edge, so the field there reaches the critical value at a lower voltage than
 under the flat bottom [HV-SZE-GIBBONS]_ [HV-SPIRITO]_ (slide 21).
 :numref:`fig-hv-curved-edge` shows the equipotentials around such a well,
-and where its straight sides and corners lie.
+solved for an edge radius equal to the well's depth, and where its
+straight sides and corners lie.
 
 .. figure:: curved-edge.svg
    :name: fig-hv-curved-edge
@@ -263,9 +265,7 @@ and where its straight sides and corners lie.
          radius is 300 V for the flat bottom, 74 V along a side and 35 V at
          a corner.
 
-   A diffused well in cross-section and in plan view. The equipotentials
-   are solved for an edge radius equal to the well's depth; the drawing is
-   not to scale for any particular well.
+   A diffused well in cross-section and in plan view.
 
 Baliga and Ghandhi give the breakdown of cylindrical and spherical
 junctions as a fraction of the flat value, as a function of the radius
@@ -344,6 +344,6 @@ raise the breakdown of an edge:
          squeezes the depletion region and raises the field, while a P+
          region set back lets the lightly doped substrate take the depletion.
 
-   Two geometric remedies for early breakdown at a well edge: rounding
-   the drawn corner, and keeping P+ away from the edge. Schematic.
+   Two geometric remedies for early breakdown at a well edge, rounding the
+   drawn corner and keeping P+ away from the edge, schematic.
 

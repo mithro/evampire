@@ -24,6 +24,9 @@ GREEN = "#2e8b57"
 LAYERS = ("Metal1", "Metal2", "Metal3", "Metal4", "Metal5")
 T_FOX = (1.18, 2.30, 3.42, 4.54, 5.96)        # tab-hv-metal-stack, um
 T_ACT = (0.87, 2.00, 3.12, 4.24, 5.65)
+C_FOX = (29.304, 15.016, 10.094, 7.602, 5.798)  # aF/um^2, calc.py
+# Threshold shift from 1e11 cm^-2 of fixed charge, Q/C: 5.5 V to 27.6 V.
+SHIFT = tuple(1e11 * 1.602e-19 / (c * 1e-10) for c in C_FOX)
 VT = {"lightest estimate, 1.2 × 10¹⁵ cm⁻³": (5.0, 10.0, 15.1, 20.1, 26.5),
       "from the Metal1 minimum": (8.5, 16.8, 25.1, 33.5, 44.0),
       "from the Metal1 typical": (11.0, 21.7, 32.4, 43.0, 56.5)}
@@ -161,8 +164,8 @@ def metal_vt():
                     "threshold (V)")
     # Shift by 1e11 cm^-2 of fixed charge: 5.5 V on Metal1, in proportion.
     typ = VT["from the Metal1 typical"]
-    pts_hi = [ax.px(t, v + 5.5 * t / T_FOX[0]) for t, v in zip(T_FOX, typ)]
-    pts_lo = [ax.px(t, v - 5.5 * t / T_FOX[0]) for t, v in zip(T_FOX, typ)]
+    pts_hi = [ax.px(t, v + d) for t, v, d in zip(T_FOX, typ, SHIFT)]
+    pts_lo = [ax.px(t, v - d) for t, v, d in zip(T_FOX, typ, SHIFT)]
     poly = pts_hi + pts_lo[::-1]
     body.append('<polygon points="' + " ".join(
         f"{x:.1f},{min(max(y, ax.y0), ax.y0 + ax.h):.1f}" for x, y in poly)
@@ -186,14 +189,17 @@ def metal_vt():
         _, yy = ax.px(0, ys)
         body.append(label(x, yy, name, col))
         ys -= 4.5
-    xm, ylo = ax.px(T_FOX[0], 8.5)
-    _, yhi = ax.px(T_FOX[0], 11)
-    body.append(line(xm, ylo, xm, yhi, stroke=INK, width=4))
     x, yy = ax.px(0.15, 36)
     body.append(label(x, yy, "measured Metal1: 8.5 V minimum,", INK))
     body.append(label(x, yy + 15, "11 V typical", INK))
     x, yy = ax.px(3.9, 14)
     body.append(label(x, yy, "shaded: ±10¹¹ cm⁻² of fixed charge", DEPL))
+    # The measured Metal1 threshold, drawn last so the dots do not hide it.
+    xm, ylo = ax.px(T_FOX[0] - 0.22, 8.5)
+    _, yhi = ax.px(0, 11)
+    body.append(line(xm, ylo, xm, yhi, stroke=INK, width=3))
+    for y in (ylo, yhi):
+        body.append(line(xm - 5, y, xm + 5, y, stroke=INK, width=2))
     return svg(640, 390, body)
 
 
@@ -212,7 +218,7 @@ def transfer():
     for name, (c, vt, col) in caps.items():
         def f(v, c=c, vt=vt):
             return max(0.0, 10 * 400 * c * (v - 0.5 - vt) * 1e6)
-        body.append(ax.curve(f, vt + 0.5, 60, stroke=col, width=2.5))
+        body.append(ax.curve(f, vt + 1.0, 60, stroke=col, width=2.5))
         body.append(ax.dot(57, f(57), col))
         x, y = ax.px(57, f(57))
         if f(57) > 1:

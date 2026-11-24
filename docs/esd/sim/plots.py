@@ -62,21 +62,23 @@ def timer(t, dvdd):
 
 def clamp_timing():
     fig, (a, b) = plt.subplots(1, 2, figsize=(9.0, 3.6))
-    t = np.linspace(0, 600e-9, 6001)
+    t = np.linspace(0, 100e-9, 2001)
     dvdd = np.where(t < 5e-9, 4.5 * t / 5e-9,
                     4.5 * np.exp(-(t - 5e-9) / 150e-9))
     v, gate = timer(t, dvdd)
     a.plot(t * 1e9, dvdd, color=COL["dvdd"], lw=2, label="DVDD")
     a.plot(t * 1e9, v, color=COL["node"], lw=2, label="timer node")
-    a.set_title("(a) ESD event: DVDD rises in ns,\ndecays over 150 ns",
+    a.plot(t * 1e9, gate, color=COL["gate"], lw=2, ls="--",
+           label="clamp gate")
+    a.set_title("(a) First 100 ns of an ESD event",
                 loc="left", fontsize=11)
     a.set_xlabel("time (ns)")
     a.set_ylabel("voltage (V)")
     a.set_ylim(-0.2, 5.2)
     a.legend(loc="upper right")
-    a.annotate("the node lags far below DVDD\nthrough the peak current:\n"
-               "the inverters hold the clamp on", xy=(60, 0.85),
-               xytext=(150, 2.6), arrowprops={"arrowstyle": "->"},
+    a.annotate("the node lags far below\nDVDD: the gate follows\n"
+               "DVDD and the clamp is on", xy=(40, 0.8),
+               xytext=(35, 1.6), arrowprops={"arrowstyle": "->"},
                fontsize=9.5)
     t = np.linspace(0, 100e-6, 20001)
     dvdd = 5.0 * t / 100e-6
@@ -135,7 +137,11 @@ def scaled():
             pts.append((float(r["Diodes (×)"]), float(r["Fraction"])))
         x, y = zip(*sorted(pts))
         gap = pads == "1" and pol == "−"
+        if gap:
+            # Same values as four pads at 1x and 4x: shift to stay visible.
+            x = tuple(v * 1.07 for v in x)
         ax.plot(x, y, marker=mark, color=col, lw=1.8,
+                mfc="white" if gap else col,
                 ls="none" if gap else ("-" if pads == "4" else "--"),
                 label=f"{'positive' if pol == '+' else 'negative'}, "
                       f"{pads} DVDD and {pads} DVSS "

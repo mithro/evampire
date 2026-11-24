@@ -78,10 +78,11 @@ they are. :numref:`fig-esd-scaled` plots the results.
 
 .. figure:: figures/scaled-pad.svg
    :name: fig-esd-scaled-pad
-   :alt: Schematic of the bi_t pad between the DVDD and DVSS rings, with
-         dedicated diodes of 1, 2 or 4 times the drain diode width beside the
-         drain diodes, and one or four DVDD pads and as many DVSS pads along
-         the rings, each with its rail clamp.
+   :alt: Schematic of the bi_t pad between the DVDD and DVSS rings. Beside
+         the drivers' drain diodes sit dedicated diodes of 0, 1 or 3 times
+         the drivers' width, giving 1, 2 or 4 times in all, and the output
+         NMOS, which snaps back above 10.7 V. One or four DVDD pads and as
+         many DVSS pads lie along the rings, each with its rail clamp.
 
    The pad with dedicated diodes and more supply pads, as simulated.
 
@@ -197,9 +198,11 @@ separate task. Neither is simulated here.
 .. figure:: figures/hv-clamps.svg
    :name: fig-esd-hv-clamps
    :alt: Two clamps from the pin to ground. Left, three grounded-gate NMOS
-         transistors in series, whose trigger voltages add. Right, a
+         transistors in series, each in its own isolated well, whose
+         trigger voltages add. Right, a
          resistor from the pin and a capacitor to ground form a timer whose
-         node drives, through a driver, the gate of a transistor with a
+         node drives, through an inverting driver of an odd number of
+         inverters, the gate of a transistor with a
          long, lightly doped drift region, connected from the pin to
          ground.
 
@@ -278,7 +281,8 @@ at a current near 1 A (:doc:`results-hbm`), and 10 Ω in series:
 .. figure:: figures/board-tvs.svg
    :name: fig-esd-board-tvs
    :alt: An IEC discharge enters the connector. A suppressor from the
-         connector to ground, rated 14 V at 5 A, carries most of the
+         connector to ground, at its datasheet point of 14 V at 5 A,
+         carries most of the
          current. A 10 ohm series resistor leads on to the chip pin, whose
          protection holds the pin near 4 V. The chip current is about
          (V_TVS minus V_pin) divided by R_series, (14 V minus 4 V) divided

@@ -13,6 +13,7 @@ SPDX-License-Identifier: Apache-2.0
 import pathlib
 import sys
 
+from svgdraw import well
 from svgdraw import (ARROW, INK, METAL, NWELL, OXIDE, POLY, SUB, line,
                      path, rect, svg, text)
 import fig_edge
@@ -34,11 +35,12 @@ def stack_section():
     for k in range(n):
         x = x0 + k * pitch
         v = 50 - 5 * k
-        body.append(rect(x, 110, ww, 38, NWELL, rx=6))
+        body.append(well(x, 110, ww, 38, NWELL, r=6))
         body.append(text(x + ww / 2, 134, f"{v} V", size=13))
         if k < n - 1:
             body.append(text(x + ww / 2 + pitch / 2, 84, "5 V", size=11))
-            body.append(f'<path d="M{x + ww / 2},104 Q{x + pitch / 2 + ww / 2},84 '
+            body.append(f'<path d="M{x + ww / 2},104 '
+                        f'Q{x + pitch / 2 + ww / 2},84 '
                         f'{x + pitch + ww / 2},104" stroke="{INK}" '
                         f'stroke-width="1.2" fill="none"/>')
     body.append(text(320, 32, "Along the stack: 5 V between neighbours",
@@ -63,7 +65,7 @@ def panel(ox, oy, title, extra):
     body.append(rect(ox + 5, oy + 70, 290, 125, SUB))
     body.append(text(ox + 200, oy + 185, "P substrate, 0 V", size=12))
     # High-voltage N-well on the left.
-    body.append(rect(ox + 5, oy + 70, 70, 55, NWELL, rx=8))
+    body.append(well(ox + 5, oy + 70, 70, 55, NWELL, r=8))
     body.append(text(ox + 40, oy + 102, "well, V", size=12))
     # Substrate contact on the right.
     body.append(rect(ox + 262, oy + 70, 28, 14, "#7fa7d6"))
@@ -75,7 +77,7 @@ def panel(ox, oy, title, extra):
 def rings(ox, oy):
     b = []
     for i, x in enumerate((105, 145, 185)):
-        b.append(rect(ox + x, oy + 70, 18, 26, NWELL, rx=5))
+        b.append(well(ox + x, oy + 70, 18, 26, NWELL, r=5))
     b.append(text(ox + 150, oy + 50, "floating rings, each a step lower",
                   size=12))
     b.append(path(f"M{ox + 5},{oy + 150} Q{ox + 95},{oy + 150} {ox + 115},"

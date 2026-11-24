@@ -58,39 +58,56 @@ def note(d, x, y, text, color="black", halign="left"):
     d += elm.Label().at((x, y)).label(text, color=color, halign=halign)
 
 
-def tester_loop(d, y, c_label, r_label, title):
-    """Capacitor, switch and resistor into a pin whose protection
-    conducts to the grounded pin. Returns the x of the pin."""
-    note(d, 0, y + 5.0, title, halign="left")
+def tester_loop(d, y, c_label, r_label, l_label, title, r_colour,
+                title_dy=5.4):
+    """Capacitor, resistor and wiring inductance, switched into a pin whose
+    protection conducts to the grounded pin, with the simulation's values.
+    """
+    note(d, 0, y + title_dy, title, halign="left")
     d += elm.Capacitor().up().at((0.6, y)).to((0.6, y + 3)).label(
         c_label, loc="top", ofst=0.25)
-    d += elm.Line().at((0.6, y + 3)).to((1.4, y + 3))
-    d += elm.Switch().right().at((1.4, y + 3)).to((3.4, y + 3)).label(
-        "discharge", loc="top")
-    d += elm.Resistor().right().at((3.4, y + 3)).to((6.4, y + 3)).color(
-        HOT).label(r_label, loc="top")
-    d += elm.Line().at((6.4, y + 3)).to((8.0, y + 3))
+    d += elm.Line().at((0.6, y + 3)).to((1.0, y + 3))
+    d += elm.Resistor().right().at((1.0, y + 3)).to((3.6, y + 3)).color(
+        r_colour).label(r_label, loc="top")
+    d += elm.Inductor().right().at((3.6, y + 3)).to((5.4, y + 3)).label(
+        l_label, loc="top")
+    d += elm.Dot().at((5.6, y + 3))
+    d += elm.Line().at((5.4, y + 3)).to((5.6, y + 3))
+    d += elm.Switch().right().at((5.6, y + 3)).to((7.2, y + 3))
+    d += elm.Line().at((7.2, y + 3)).to((8.0, y + 3))
     d += elm.Dot().at((8.0, y + 3)).label("pin", loc="right")
-    box(d, 7.2, y + 0.6, 8.8, y + 2.4, "chip", color=CHIP)
+    box(d, 7.0, y + 0.6, 9.0, y + 2.4, "chip", color=CHIP)
     d += elm.Line().at((8.0, y + 3)).to((8.0, y + 2.4))
     d += elm.Line().at((8.0, y + 0.6)).to((8.0, y))
     d += elm.Line().at((0.6, y)).to((8.0, y))
     d += elm.Ground().at((4.3, y))
-    return 8.0
 
 
 def testers():
     with schemdraw.Drawing(show=False) as d:
-        tester_loop(d, 9.0, "100 pF", "1500 Ω",
-                    "Human body model, 2 kV")
-        note(d, 4.9, 10.9, "≈ 1990 V across\nthe resistor", color=HOT,
+        tester_loop(d, 10.6, "100 pF", "1500 Ω", "5 µH",
+                    "Human body model, 2 kV", HOT)
+        note(d, 2.3, 12.5, "≈ 1990 V across it", color=HOT,
              halign="center")
-        note(d, 9.0, 10.5, "≈ 10 V on the pin,\n1.33 A at 2 kV", color=CHIP)
-        tester_loop(d, 2.6, "150 pF", "330 Ω",
-                    "IEC 61000-4-2, through a metal tip")
-        note(d, 9.0, 4.1, "first peak 3.75 A\nper kV, 30 A at 8 kV",
+        note(d, 9.4, 12.1, "≈ 10 V on the pin,\n1.33 A at 2 kV", color=CHIP)
+        tester_loop(d, 2.6, "150 pF", "330 Ω", "2 µH",
+                    "IEC 61000-4-2, through a metal tip", "black",
+                    title_dy=6.4)
+        # The fast branch that forms the IEC first peak, fitted.
+        y = 2.6
+        d += elm.Line().at((-0.8, y)).to((0.6, y))
+        d += elm.Capacitor().up().at((-0.8, y)).to((-0.8, y + 4.4)).label(
+            "6 pF", loc="top", ofst=0.25)
+        d += elm.Resistor().right().at((-0.8, y + 4.4)).to((1.8, y + 4.4)
+                                                           ).label("200 Ω")
+        d += elm.Inductor().right().at((1.8, y + 4.4)).to((3.6, y + 4.4)
+                                                          ).label("120 nH")
+        d += elm.Line().at((3.6, y + 4.4)).to((5.6, y + 4.4))
+        d += elm.Line().at((5.6, y + 4.4)).to((5.6, y + 3))
+        note(d, 6.0, y + 4.9, "fast branch, fitted\nto the first peak",
+             color=GREY)
+        note(d, 9.4, y + 1.6, "first peak 3.75 A\nper kV, 30 A at 8 kV",
              color=CHIP)
-        # Contact and air discharge at the tip.
         note(d, 0.3, 1.5, "contact discharge: the tip touches the pin "
              "first", color=GREY)
         note(d, 0.3, 0.7, "air discharge: a spark jumps as the tip "
@@ -98,71 +115,67 @@ def testers():
         # Charged device model: the chip is the capacitor.
         y = -4.4
         note(d, 0, y + 3.6, "Charged device model", halign="left")
-        box(d, 0.2, y + 1.2, 3.6, y + 2.6, "charged chip", color=CHIP)
-        d += elm.Line().at((3.6, y + 1.9)).to((4.8, y + 1.9))
+        box(d, -0.2, y + 1.2, 4.0, y + 2.6, "charged chip", color=CHIP)
+        d += elm.Line().at((4.0, y + 1.9)).to((4.8, y + 1.9))
         d += elm.Switch().right().at((4.8, y + 1.9)).to((6.8, y + 1.9)).label(
             "pin touches", loc="top")
         d += elm.Line().at((6.8, y + 1.9)).to((7.6, y + 1.9)).color(HOT)
         d += elm.Ground().at((7.6, y + 1.9))
-        d += elm.Capacitor().down().at((2.1, y + 1.2)).to((2.1, y - 0.6)
+        d += elm.Capacitor().down().at((1.9, y + 1.2)).to((1.9, y - 0.6)
                                                           ).linestyle("--")
-        d += elm.Ground().at((2.1, y - 0.6))
-        note(d, 2.5, y + 0.3, "capacitance to\nits surroundings",
+        d += elm.Ground().at((1.9, y - 0.6))
+        note(d, 2.3, y + 0.3, "capacitance to\nits surroundings",
              color=GREY)
         note(d, 8.3, y + 1.9, "under 1 ns,\ntens of amperes", color=CHIP)
-        extent(d, 0, 14.6, y - 1.0)
+        extent(d, -1.2, 14.6, y - 1.0)
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "testers.svg"))
 
 
 def clamp_cell(d, x, name):
     """A supply pad cell holding a rail clamp between the two rings."""
-    box(d, x - 1.6, 0.6, x + 1.6, 5.4, color=CLAMP)
-    note(d, x - 0.1, 5.0, name, color=CLAMP, halign="center")
-    d += elm.Line().at((x + 1.5, 6)).to((x + 1.5, 4.6))
-    d += elm.Line().at((x + 1.5, 4.6)).to((x, 4.6))
-    d += elm.Line().at((x, 4.6)).to((x, 4.2))
+    box(d, x - 1.5, 0.6, x + 1.5, 5.4, color=CLAMP)
+    note(d, x, 6.8, name, color=CLAMP, halign="center")
+    d += elm.Line().at((x, 6)).to((x, 4.2))
     d += elm.Line().at((x, 0)).to((x, 1.8))
     box(d, x - 1.1, 1.8, x + 1.1, 4.2, "rail\nclamp", color=CLAMP)
-    d += elm.Dot().at((x + 1.5, 6))
+    d += elm.Dot().at((x, 6))
     d += elm.Dot().at((x, 0))
 
 
 def testbench():
-    with schemdraw.Drawing(show=False) as d:
+    with schemdraw.Drawing(show=False, fontsize=18) as d:
         # The DVDD and DVSS rings, with their resistance.
-        for y, name in ((6, "DVDD ring"), (0, "DVSS ring")):
-            d += elm.Line().at((1.6, y)).to((7.0, y)).linewidth(2.4)
-            d += (elm.Resistor().right().at((7.0, y)).to((9.6, y))
-                  .label("0 Ω or 1 Ω", loc="top" if y else "bottom"))
-            d += elm.Line().at((9.6, y)).to((17.4, y)).linewidth(2.4)
+        for y, name in ((6, "DVDD"), (0, "DVSS")):
+            d += elm.Line().at((1.4, y)).to((7.0, y)).linewidth(2.4)
+            d += (elm.Resistor().right().at((7.0, y)).to((9.0, y))
+                  .label("0 or 1 Ω", loc="top" if y else "bottom"))
+            d += elm.Line().at((9.0, y)).to((17.4, y)).linewidth(2.4)
             note(d, 17.6, y, name)
         # The bidirectional pad cell.
-        box(d, 1.6, 0.6, 6.8, 5.4, color=CHIP)
-        note(d, 4.2, 5.0, "bi_t pad cell", color=CHIP, halign="center")
-        note(d, 4.2, 3.1, "drivers, drain\ndiodes, input\nprotection",
+        box(d, 1.4, 0.6, 6.6, 5.4, color=CHIP)
+        note(d, 4.0, 6.8, "bi_t pad", color=CHIP, halign="center")
+        note(d, 4.0, 3.3, "drivers, drain\ndiodes, input\nprotection",
              color=CHIP, halign="center")
-        note(d, 4.2, 1.3, "core inputs\nA, OE: low", color=GREY,
-             halign="center")
-        d += elm.Line().at((4.2, 5.4)).to((4.2, 6))
-        d += elm.Line().at((4.2, 0.6)).to((4.2, 0))
-        d += elm.Dot().at((4.2, 6))
-        d += elm.Dot().at((4.2, 0))
-        clamp_cell(d, 11.6, "DVDD pad")
+        note(d, 4.0, 1.4, "A, OE: low", color=GREY, halign="center")
+        d += elm.Line().at((4.0, 5.4)).to((4.0, 6))
+        d += elm.Line().at((4.0, 0.6)).to((4.0, 0))
+        d += elm.Dot().at((4.0, 6))
+        d += elm.Dot().at((4.0, 0))
+        clamp_cell(d, 11.4, "DVDD pad")
         clamp_cell(d, 15.4, "DVSS pad")
         # The generator into PAD, returning to the grounded DVSS.
-        d += elm.Line().at((1.6, 3.0)).to((0.6, 3.0)).color(HOT)
+        d += elm.Line().at((1.4, 3.0)).to((0.6, 3.0)).color(HOT)
         d += elm.Dot(open=True).at((0.6, 3.0)).label("PAD", loc="top")
-        box(d, -4.0, 1.6, -0.6, 4.4, "HBM or\nIEC\ngenerator")
-        d += elm.Line().at((-0.6, 3.0)).to((0.6, 3.0)).color(HOT)
-        d += elm.Line().at((-2.3, 1.6)).to((-2.3, -1.2))
-        d += elm.Line().at((-2.3, -1.2)).to((15.4, -1.2))
+        box(d, -4.4, 1.6, -0.4, 4.4, "HBM or IEC\ngenerator")
+        d += elm.Line().at((-0.4, 3.0)).to((0.6, 3.0)).color(HOT)
+        d += elm.Line().at((-2.4, 1.6)).to((-2.4, -1.2))
+        d += elm.Line().at((-2.4, -1.2)).to((15.4, -1.2))
         d += elm.Line().at((15.4, 0)).to((15.4, -1.2))
         d += elm.Ground().at((6.0, -1.2))
-        note(d, 6.4, -1.9, "tester ground on the DVSS pad", color=GREY)
-        note(d, 6.4, -2.7, "DVDD has no outside connection: it floats",
-             color=GREY)
-        extent(d, -4.0, 20.6, -3.2)
+        note(d, 6.4, -2.0, "tester ground on the DVSS pad", color=GREY)
+        note(d, 6.4, -3.0, "DVDD floats", color=GREY)
+        extent(d, -4.4, 19.4, -3.4)
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "testbench.svg"))
 
@@ -175,7 +188,8 @@ def board_tvs():
         d += elm.Line().at((0, 3)).to((2.5, 3)).color(HOT)
         d += elm.Dot().at((2.5, 3))
         d += (elm.DiodeTVS().down().at((2.5, 3)).to((2.5, 0)).color(HOT)
-              .label("suppressor\n14 V at 5 A", loc="bottom", ofst=0.3))
+              .label("suppressor:\n14 V at 5 A\n(datasheet)",
+                     loc="bottom", ofst=0.3))
         d += elm.Ground().at((2.5, 0))
         d += (elm.Resistor().right().at((2.5, 3)).to((6.5, 3))
               .label("$R_{series}$ = 10 Ω", loc="top"))
@@ -209,7 +223,8 @@ def snapback_stack(d, x):
         d += elm.Line().at((fet.gate[0] - 0.5, fet.source[1])).to(fet.source)
         y = fet.source[1]
     d += elm.Ground().at((x + 1.6, y))
-    note(d, x + 2.4, 4.4, "trigger voltages\nadd", color=CLAMP)
+    note(d, x + 2.4, 4.8, "trigger voltages\nadd", color=CLAMP)
+    note(d, x + 2.4, 3.2, "each in its own\nisolated well", color=GREY)
 
 
 def drift_clamp(d, x):
@@ -225,7 +240,7 @@ def drift_clamp(d, x):
         "C", loc="bottom")
     d += elm.Ground().at((x + 0.8, 2.0))
     d += elm.Line().at((x + 0.8, 4.2)).to((x + 1.4, 4.2))
-    box(d, x + 1.4, 3.6, x + 3.2, 4.8, "driver")
+    box(d, x + 1.4, 3.2, x + 3.2, 5.2, "invert-\ning\ndriver")
     d += elm.Line().at((x + 3.2, 4.2)).to((x + 3.4, 4.2))
     fet = d.add(elm.NFet().anchor("gate").at((x + 3.4, 4.2)).reverse()
                 .color(CLAMP))

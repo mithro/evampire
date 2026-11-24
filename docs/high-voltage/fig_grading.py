@@ -13,6 +13,7 @@ files itself.
 SPDX-License-Identifier: Apache-2.0
 """
 
+from svgdraw import well
 from svgdraw import (ARROW, BLUE, DEPL, FOX, GREY, INK, METAL, NWELL, OXIDE,
                      POLY, PPLUS, SUB, line, path, polyline, rect, svg,
                      text)
@@ -59,11 +60,11 @@ def rings_steps():
     body = [ARROW]
     top = 90
     body.append(rect(20, top, 600, 150, SUB))
-    body.append(rect(20, top, 110, 60, NWELL, rx=10))
+    body.append(well(20, top, 110, 60, NWELL, r=10))
     body.append(text(70, top + 36, "well, V", size=13, weight="bold"))
     xs = (190, 290, 390, 490)
     for k, x in enumerate(xs):
-        body.append(rect(x, top, 30, 34, NWELL, rx=6))
+        body.append(well(x, top, 30, 34, NWELL, r=6))
         body.append(text(x + 15, top - 8, f"ring {k + 1}", size=12))
     body.append(rect(580, top, 34, 16, PPLUS))
     body.append(text(597, top - 8, "0 V", size=12))
@@ -72,8 +73,8 @@ def rings_steps():
                      f"Q175,{top + 40} 190,{top + 20}", dash="4 3",
                      stroke=GREY))
     body.append(path(f"M20,{top + 135} Q140,{top + 140} 205,{top + 70} "
-                     f"Q240,{top + 60} 280,{top + 60} Q300,{top + 55} "
-                     f"305,{top + 40} Q330,{top + 30} 345,{top}"))
+                     f"Q240,{top + 58} 268,{top + 52} Q285,{top + 46} "
+                     f"290,{top + 30}"))
     body.append(text(250, top + 118, "edge at a lower voltage: reaches "
                      "ring 1", anchor="start", size=12, fill=GREY))
     body.append(text(250, top + 136, "at a higher voltage: spreads on from "
@@ -109,11 +110,12 @@ def plate_panel(ox, title, kind):
     b = [text(ox + 100, 20, title, size=13, weight="bold")]
     top = 80
     b.append(rect(ox, top, 200, 130, SUB))
-    b.append(rect(ox, top, 60, 40, NWELL, rx=8))
-    b.append(text(ox + 28, top + 26, "well", size=12))
+    b.append(well(ox, top, 60, 40, NWELL, r=8))
+    b.append(text(ox + 22, top + 26, "well", size=12))
     if kind == "thin":
         b.append(rect(ox + 40, top - 8, 130, 8, OXIDE))
         b.append(rect(ox + 40, top - 18, 110, 10, METAL))
+        b.append(rect(ox + 40, top - 8, 8, 8, METAL))
         b.append(path(f"M{ox},{top + 85} Q{ox + 110},{top + 85} {ox + 150},"
                       f"{top + 30} Q{ox + 160},{top + 10} {ox + 165},{top}"))
         bx, by = ox + 150, top + 2
@@ -121,6 +123,7 @@ def plate_panel(ox, title, kind):
     elif kind == "thick":
         b.append(rect(ox + 40, top - 40, 130, 40, OXIDE))
         b.append(rect(ox + 40, top - 50, 110, 10, METAL))
+        b.append(rect(ox + 40, top - 40, 8, 40, METAL))
         b.append(path(f"M{ox},{top + 80} Q{ox + 90},{top + 80} {ox + 100},"
                       f"{top + 30} Q{ox + 105},{top + 10} {ox + 110},{top}"))
         bx, by = ox + 60, top + 32
@@ -131,6 +134,7 @@ def plate_panel(ox, title, kind):
         b.append(rect(ox + 40, top - 22, 60, 8, POLY))
         b.append(rect(ox + 40, top - 36, 100, 8, METAL))
         b.append(rect(ox + 40, top - 50, 140, 8, METAL))
+        b.append(rect(ox + 40, top - 42, 6, 42, METAL))
         b.append(path(f"M{ox},{top + 90} Q{ox + 120},{top + 92} {ox + 170},"
                       f"{top + 30} Q{ox + 180},{top + 10} {ox + 185},{top}"))
         bx, by = None, None
@@ -193,9 +197,9 @@ def floating_well():
     top = 150
     body.append(rect(20, top, 360, 170, SUB))
     body.append(text(200, top + 158, "P substrate, 0 V", size=13))
-    body.append(rect(40, top, 120, 50, NWELL, rx=8))
+    body.append(well(40, top, 120, 50, NWELL, r=8))
     body.append(text(100, top + 30, "low-side circuits", size=12))
-    body.append(rect(200, top, 160, 90, NWELL, rx=14))
+    body.append(well(200, top, 160, 90, NWELL, r=14))
     body.append(text(280, top + 30, "high-side circuits", size=12))
     body.append(text(280, top + 48, "in a floating", size=12))
     body.append(text(280, top + 64, "N-type tub", size=12))

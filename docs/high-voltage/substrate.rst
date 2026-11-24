@@ -21,7 +21,7 @@ silicon, insulated from the others by its package
 .. figure:: discrete-stack.svg
    :name: fig-hv-discrete-stack
    :alt: Ten packaged diodes in a row on a circuit board, connected in series
-         from 50 V to 0 V, with 5 V across each. Each die sits in its own
+         and reverse biased from 50 V to 0 V, with 5 V across each. Each die sits in its own
          package, so the board ground touches no die. 5 V is below the 8.5 V
          minimum breakdown of a 6 V junction.
 

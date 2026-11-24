@@ -123,7 +123,8 @@ def doping_breakdown():
         for n, vb, wb in TABLE:
             body.append(ax.dot(n, vb if k == 0 else wb, col))
         if k == 0:
-            for v, s, dy, anc in ((57, "57 V", -6, "end"),
+            for v, s, dy, anc in ((57, "57 V, the most on an Ethernet "
+                                   "cable", -6, "start"),
                                   (14, "published N-well breakdown, 14 V "
                                    "typical", 16, "start")):
                 _, y = ax.px(1e14, v)

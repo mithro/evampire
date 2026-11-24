@@ -81,3 +81,13 @@ def polyline(points, stroke=INK, width=1.8, fill="none", dash=None):
 ARROW = ('<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
          'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
          f'<path d="M0,0 L10,5 L0,10 z" fill="{INK}"/></marker></defs>')
+
+
+def well(x, y, w, h, fill, r=8, stroke=INK):
+    """A well seen in cross-section from the surface at y: square corners
+    at the surface and rounded corners at its bottom."""
+    return (f'<path d="M{n(x)},{n(y)} L{n(x)},{n(y + h - r)} '
+            f'Q{n(x)},{n(y + h)} {n(x + r)},{n(y + h)} '
+            f'L{n(x + w - r)},{n(y + h)} Q{n(x + w)},{n(y + h)} '
+            f'{n(x + w)},{n(y + h - r)} L{n(x + w)},{n(y)}" fill="{fill}" '
+            f'stroke="{stroke}"/>')

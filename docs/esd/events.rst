@@ -48,19 +48,21 @@ a circuit.
 .. figure:: figures/testers.svg
    :name: fig-esd-testers
    :alt: Three circuits. Human body model at 2 kV: a 100 pF capacitor
-         discharges through a switch and a 1500 ohm resistor into the pin
-         of a chip whose other pin is grounded; about 1990 V lies across the
-         resistor and about 10 V on the pin, with 1.33 A flowing. IEC
-         61000-4-2: a 150 pF capacitor discharges through a 330 ohm
-         resistor and a metal tip into the pin, with a first peak of 3.75 A
-         per kilovolt, 30 A at 8 kV; in contact discharge the tip touches
-         the pin first, and in air discharge a spark jumps as it
+         discharges through a 1500 ohm resistor, 5 µH of wiring and a
+         switch into the pin of a chip whose other pin is grounded; about
+         1990 V lies across the resistor and about 10 V on the pin, with
+         1.33 A flowing. The IEC tester: a 150 pF capacitor discharges
+         through 330 ohm and 2 µH, and a fast branch of 6 pF, 200 ohm and
+         120 nH, fitted to the first peak, discharges in parallel with it,
+         through a switch and a metal tip into the pin, with a first peak
+         of 3.75 A per kilovolt, 30 A at 8 kV; in contact discharge the tip
+         touches the pin first, and in air discharge a spark jumps as it
          approaches. Charged device model: the chip itself is charged
          through its capacitance to its surroundings, and discharges when a
          pin touches ground, in under 1 ns at tens of amperes.
 
-   The three ESD testers as circuits. The red resistor holds almost all of
-   the test voltage.
+   The three ESD testers as circuits, with the wiring inductances and the IEC
+   tester's fast branch used in the simulation.
 
 The human body model and charged device model rate a chip for handling in
 a factory with ESD controls. :std:`IEC 61000-4-2` rates a finished product

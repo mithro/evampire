@@ -58,13 +58,15 @@ def rate_matching():
     body = [rect(x0, y0, pw * 10000 / xmax, ph, "#f3f3f3", stroke="none")]
     body.append(text(x0 + pw * 5000 / xmax, y0 + 16, "one frame of "
                      "10 000 bytes", size=12, fill=GREY))
-    body.append(text(x0 + pw * 11000 / xmax, y0 + 16, "gap", size=12,
+    body.append(text(x0 + pw * 11000 / xmax, y0 + 16, "gap, not", size=12,
+                     fill=GREY))
+    body.append(text(x0 + pw * 11000 / xmax, y0 + 31, "to scale", size=12,
                      fill=GREY))
     for occ in (-3, -2, -1, 0, 1, 2, 3):
         _, y = px(0, occ)
         body.append(line(x0, y, x0 + pw, y, stroke="#dddddd"))
-        body.append(text(x0 - 8, y + 4, f"{occ:+d}".replace("-", "−") if occ else "0",
-                         anchor="end", size=12))
+        s = f"{occ:+d}".replace("-", "−") if occ else "0"
+        body.append(text(x0 - 8, y + 4, s, anchor="end", size=12))
     for b in range(0, 12001, 2000):
         x, _ = px(b, 0)
         body.append(text(x, y0 + ph + 18, f"{b:,}".replace(",", " "),
@@ -92,36 +94,42 @@ def rate_matching():
         body.append(text(x, y + (0 if sign > 0 else 12), name,
                          anchor="start", size=12, fill=col))
     body.append(rect(x0, y0, pw, ph, "none"))
-    body.append(text(x0 + pw / 2, y0 + ph + 40, "bytes received", size=13))
+    body.append(text(x0 + pw / 2, y0 + ph + 40, "time, in byte times",
+                     size=13))
     body.append(text(24, y0 + ph / 2, "buffer level from its centre "
                      "(bytes)", size=13, rotate=-90))
     return svg(w, h, body)
 
 
-FIELDS = (("preamble", 7, GEN, None), ("SFD", 1, GEN, None),
-          ("destination", 6, CPU, None), ("source", 6, CPU, None),
-          ("VLAN tag", 4, CPU, "4 4"), ("type", 2, CPU, None),
-          ("payload", "46 to 1500", CPU, None), ("FCS", 4, GEN, None))
-WIDTHS = (66, 44, 76, 66, 66, 50, 150, 50)
+ROWS = ((("preamble", "7", GEN, None, 110), ("SFD", "1", GEN, None, 70),
+         ("destination", "6", CPU, None, 150),
+         ("source", "6", CPU, None, 130)),
+        (("VLAN tag", "4", CPU, "4 4", 110), ("type", "2", CPU, None, 70),
+         ("payload", "42 or 46 to 1500", CPU, None, 170),
+         ("FCS", "4", GEN, None, 110)))
 
 
 def frame_layout():
-    w, h = 640, 200
-    body = []
-    x = 18
-    for (name, n, fill, dash), wd in zip(FIELDS, WIDTHS):
-        body.append(rect(x, 60, wd, 46, fill, dash=dash))
-        body.append(text(x + wd / 2, 80, name, size=12))
-        body.append(text(x + wd / 2, 98, f"{n}", size=12, fill=GREY))
-        x += wd
-    body.append(text(320, 30, "Fields of a frame on the wire, in bytes "
-                     "(not to scale)", size=14, weight="bold"))
-    body.append(rect(40, 140, 18, 14, GEN))
-    body.append(text(64, 152, "added by the preamble and checksum generator",
-                     anchor="start", size=12))
-    body.append(rect(40, 164, 18, 14, CPU))
-    body.append(text(64, 176, "written by the processor; the dashed VLAN "
-                     "tag is optional", anchor="start", size=12))
+    """The fields of a frame in two rows, so the text stays large on a
+    narrow screen."""
+    w, h = 500, 300
+    body = [text(250, 26, "Fields of a frame, in bytes", size=16,
+                 weight="bold")]
+    for k, row in enumerate(ROWS):
+        x, y = 20, 46 + k * 86
+        for name, n, fill, dash, wd in row:
+            body.append(rect(x, y, wd, 58, fill, dash=dash))
+            body.append(text(x + wd / 2, y + 25, name, size=15))
+            body.append(text(x + wd / 2, y + 46, n, size=14, fill=GREY))
+            x += wd
+    body.append(text(20, 226, "the second row follows on from the first",
+                     anchor="start", size=13, fill=GREY))
+    body.append(rect(20, 240, 20, 16, GEN))
+    body.append(text(48, 254, "added by the generator", anchor="start",
+                     size=14))
+    body.append(rect(20, 266, 20, 16, CPU))
+    body.append(text(48, 280, "written by the processor; VLAN tag "
+                     "optional", anchor="start", size=14))
     return svg(w, h, body)
 
 

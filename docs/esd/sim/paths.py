@@ -33,7 +33,7 @@ MODES = [
      {"dvdd.a", "dvdd.b", "dvdd.c", "clamp", "dvss.c", "dvss.b", "dn"},
      {"dp"}, "PMOS drain\navalanches\nabove 9.7 V"),
 ]
-XS = {"a": (0.6, 1.5), "b": (1.5, 3.5), "c": (3.5, 6.5)}
+XS = {"a": (0.6, 1.5), "b": (1.5, 3.5), "c": (3.5, 7.2)}
 
 
 def style(el, part, main, second):
@@ -51,9 +51,9 @@ def panel(d, ox, oy, mode):
         for seg, (x0, x1) in XS.items():
             d += style(elm.Line().at((ox + x0, oy + y)).to((ox + x1, oy + y)),
                        f"{name}.{seg}", main, second)
-        d += elm.Line().at((ox + 6.5, oy + y)).to((ox + 7.6, oy + y)).color(
+        d += elm.Line().at((ox + 7.2, oy + y)).to((ox + 8.6, oy + y)).color(
             "#999999")
-        note(d, ox + 7.8, oy + y, name.upper(), halign="left")
+        note(d, ox + 8.8, oy + y, name.upper(), halign="left")
     # PAD and its wires.
     d += elm.Dot(open=True).at((ox + 0.6, oy + 3)).label(
         f"PAD {sign}", loc="left")
@@ -72,30 +72,30 @@ def panel(d, ox, oy, mode):
     for y0, y1 in ((3.0, 2.3), (1.0, 0.0)):
         d += style(elm.Line().at((ox + 3.5, oy + y0)).to((ox + 3.5, oy + y1)),
                    "nmos", main, second)
-    box(d, ox + 2.5, oy + 0.9, ox + 4.5, oy + 2.3, "output\nNMOS",
+    box(d, ox + 2.3, oy + 0.8, ox + 4.7, oy + 2.3, "output\nNMOS",
         color=SECOND if "nmos" in second else "#999999",
         ls="--" if "nmos" in second else "-")
     # Rail clamp.
     for y0, y1 in ((6.0, 4.0), (2.0, 0.0)):
-        d += style(elm.Line().at((ox + 6.5, oy + y0)).to((ox + 6.5, oy + y1)),
+        d += style(elm.Line().at((ox + 7.2, oy + y0)).to((ox + 7.2, oy + y1)),
                    "clamp", main, second)
-    box(d, ox + 5.4, oy + 2.0, ox + 7.6, oy + 4.0, "rail\nclamp",
+    box(d, ox + 6.0, oy + 2.0, ox + 8.4, oy + 4.0, "rail\nclamp",
         color=HOT if "clamp" in main else "#999999")
     # The tester's ground on one rail; the other floats.
     gy = 6.0 if ground == "DVDD" else 0.0
     d += elm.Ground().at((ox + 0.6, oy + gy))
     if note2:
-        note(d, ox + 2.2, oy + 4.6 if "PMOS" in note2 else oy - 1.0, note2,
+        note(d, ox + 2.0, oy + 4.6 if "PMOS" in note2 else oy - 1.0, note2,
              color=SECOND, halign="left")
 
 
 def main():
-    with schemdraw.Drawing(show=False) as d:
+    with schemdraw.Drawing(show=False, fontsize=18) as d:
         for k, mode in enumerate(MODES):
-            panel(d, (k % 2) * 12.0, -(k // 2) * 10.0, mode)
-        extent(d, -1.6, 22.8, -11.0)
-        note(d, 0.2, -11.6, "thick red: the main path; dashed orange: a "
-             "second path at higher voltage", color=GREY, halign="left")
+            panel(d, (k % 2) * 13.0, -(k // 2) * 10.4, mode)
+        extent(d, -1.8, 24.6, -11.6)
+        note(d, 0.2, -12.0, "thick red: the main path; dashed orange: a "
+             "second path\nat higher voltage", color=GREY, halign="left")
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "paths.svg"))
 

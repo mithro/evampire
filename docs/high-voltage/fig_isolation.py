@@ -13,6 +13,7 @@ files itself.
 SPDX-License-Identifier: Apache-2.0
 """
 
+from svgdraw import well
 from svgdraw import (ARROW, BLUE, DEPL, FOX, INK, NPLUS, NWELL, OXIDE,
                      POLY, PPLUS, SUB, line, path, rect, svg, text)
 
@@ -29,8 +30,8 @@ def dnw_stack():
     for k in range(n):
         x = x0 + k * pitch
         v = 50 - 5 * k
-        body.append(rect(x, 110, ww, 62, NWELL, rx=8))
-        body.append(rect(x + 8, 110, ww - 16, 26, PWELL, rx=4))
+        body.append(well(x, 110, ww, 62, NWELL, r=8))
+        body.append(well(x + 8, 110, ww - 16, 26, PWELL, r=4))
         body.append(text(x + ww / 2, 158, f"{v} V", size=13))
         if k < n - 1:
             body.append(text(x + ww / 2 + pitch / 2, 84, "5 V", size=11))
@@ -137,8 +138,8 @@ def iso_panel(ox, title, kind):
     y = 60
     if kind == "bulk":
         b.append(rect(ox, y, 200, 190, SUB))
-        b.append(rect(ox + 15, y, 70, 40, NWELL, rx=8))
-        b.append(rect(ox + 115, y, 70, 40, NWELL, rx=8))
+        b.append(well(ox + 15, y, 70, 40, NWELL, r=8))
+        b.append(well(ox + 115, y, 70, 40, NWELL, r=8))
         b.append(text(ox + 50, y + 25, "0 V", size=12))
         b.append(text(ox + 150, y + 25, "50 V", size=12))
         b.append(text(ox + 100, y + 120, "one shared", size=12))
@@ -158,7 +159,7 @@ def iso_panel(ox, title, kind):
         b.append(rect(x, y, 8, 36, OXIDE))
     b.append(rect(ox, y + 36, 200, 16, OXIDE))
     b.append(text(ox + 100, y + 48, "buried oxide" if kind == "soi"
-                  else "oxide", size=11))
+                  else "dielectric added after thinning", size=11))
     if kind == "soi":
         b.append(rect(ox, y + 52, 200, 138, SUB))
         b.append(text(ox + 100, y + 110, "handle wafer", size=12))

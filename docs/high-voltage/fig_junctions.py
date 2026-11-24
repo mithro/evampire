@@ -74,7 +74,7 @@ def axis(y0, label):
 
 def charge(y0):
     """Panel (b): the fixed charge density."""
-    b = [text(10, y0 - 70, "(b) Fixed charge of the ions", anchor="start",
+    b = [text(10, y0 - 70, "(b) Fixed charge", anchor="start",
               weight="bold")]
     # Donor charge on the N+ side: a thin, very tall block, cut short.
     top = y0 - 58

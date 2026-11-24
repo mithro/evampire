@@ -14,6 +14,7 @@ files itself.
 SPDX-License-Identifier: Apache-2.0
 """
 
+from svgdraw import well
 from svgdraw import (ARROW, BLUE, DEPL, GREY, INK, METAL, NWELL, OXIDE,
                      POLY, PPLUS, SUB, line, path, polyline, rect, svg, text)
 
@@ -52,26 +53,32 @@ def ground(x, y):
 
 
 def discrete_stack():
-    w, h = 640, 230
+    w, h = 640, 240
     body = [ARROW]
-    body.append(rect(20, 120, 600, 14, "#cfe3c7"))
-    body.append(text(320, 150, "circuit board", size=12, fill=GREY))
-    x0, pitch = 40, 58
+    body.append(rect(20, 128, 600, 14, "#cfe3c7"))
+    body.append(text(320, 160, "circuit board", size=13, fill=GREY))
+    x0, pitch = 56, 54
+    body.append(line(20, 100, x0, 100, width=2))
+    body.append(line(x0 + 9 * pitch + 40, 100, 620, 100, width=2))
     for k in range(10):
         x = x0 + k * pitch
-        body.append(rect(x, 78, 38, 34, PKG, rx=4))
-        body.append(rect(x + 11, 88, 16, 14, DIE))
+        body.append(rect(x, 80, 40, 40, PKG, rx=4))
+        body.append(rect(x + 7, 89, 26, 22, DIE))
+        # Cathode towards the higher voltage on the left: reverse biased.
+        body.append(f'<polygon points="{x + 27},93 {x + 27},107 '
+                    f'{x + 15},100" fill="{INK}"/>')
+        body.append(line(x + 14, 93, x + 14, 107, width=2.5))
+        body.append(text(x + 20, 72, "5 V", size=13))
         if k < 9:
-            body.append(line(x + 38, 95, x + pitch, 95, width=2))
-            body.append(text(x + 38 + (pitch - 38) / 2, 72, "5 V", size=11))
-    body.append(text(x0 + 19, 60, "50 V", size=13, weight="bold"))
-    body.append(text(x0 + 9 * pitch + 19, 60, "0 V", size=13, weight="bold"))
-    body.append(text(320, 26, "Ten packaged diodes in series, 50 V across "
-                     "them", size=14, weight="bold"))
-    body.append(text(320, 180, "each die (blue) sits in its own package: "
-                     "5 V each, below the 8.5 V minimum", size=12))
-    body.append(text(320, 198, "breakdown of a 6 V junction; the board's "
-                     "ground touches no die", size=12))
+            body.append(line(x + 40, 100, x + pitch, 100, width=2))
+    body.append(text(20, 92, "50 V", anchor="start", size=14,
+                     weight="bold"))
+    body.append(text(620, 92, "0 V", anchor="end", size=14, weight="bold"))
+    body.append(text(320, 30, "Ten packaged diodes in series, 50 V across "
+                     "them", size=15, weight="bold"))
+    body.append(text(320, 192, "each die (blue) sits in its own package:",
+                     size=13))
+    body.append(text(320, 212, "the board's ground touches no die", size=13))
     return svg(w, h, body)
 
 
@@ -114,15 +121,15 @@ def edge_remedies():
         ox, top = 10 + k * 330, 300
         body.append(text(ox + 155, top - 24, title, size=13, weight="bold"))
         body.append(rect(ox, top, 310, 150, SUB))
-        body.append(rect(ox, top, 120, 50, NWELL, rx=10))
+        body.append(well(ox, top, 120, 50, NWELL, r=10))
         body.append(text(ox + 60, top + 30, "well, V", size=12))
         xp = ox + 120 + gap
         body.append(rect(xp, top, 40, 16, PPLUS))
         body.append(text(xp + 20, top - 6, "P+, 0 V", size=11))
         reach = min(gap, 70)
-        body.append(path(f"M{ox},{top + 50 + reach} Q{ox + 100},"
-                         f"{top + 52 + reach} {ox + 120 + reach * 0.7},"
-                         f"{top + reach * 0.8} L{ox + 120 + reach},{top}"))
+        body.append(path(f"M{ox},{top + 110} Q{ox + 112},{top + 110} "
+                         f"{ox + 120 + reach * 0.6},{top + 40} "
+                         f"L{ox + 120 + reach},{top}"))
         body.append(text(ox + 155, top + 136, note, size=12, fill=DEPL))
     return svg(w, h, body)
 
@@ -171,7 +178,7 @@ def level_up():
     top = 110
     body.append(rect(20, top, 600, 130, SUB))
     body.append(text(320, top + 118, "P substrate, 0 V", size=13))
-    body.append(rect(140, top, 360, 80, NWELL, rx=14))
+    body.append(well(140, top, 360, 80, NWELL, r=14))
     body.append(text(320, top + 66, "N-well of the floating circuit, 40 V",
                      size=12))
     body.append(rect(190, top, 60, 20, PPLUS))

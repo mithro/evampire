@@ -50,8 +50,8 @@ section 5).
          silicon that holds 57 V, with a perfectly even fall, is 1.8 µm.
          Oxide's critical field is 20 to 33 times silicon's.
 
-   Thickness that holds 57 V in oxide and in silicon. The silicon length
-   is the even-fall ideal of :numref:`fig-hv-lmin`.
+   Thickness that holds 57 V in oxide and, for the even-fall ideal of
+   :numref:`fig-hv-lmin`, in silicon.
 
 Devices on the field oxide
 --------------------------
@@ -71,16 +71,16 @@ polysilicon on the silicon below it, described next.
    :name: fig-hv-poly-on-fox
    :alt: (a) A polysilicon strip of alternating P and N segments on the
          field oxide over a P substrate at 0 V, at 57 V at one end and 0 V
-         at the other. The field oxide holds the whole voltage to the
+         at the other; the alternating segments form diodes in back-to-back
+         pairs. The field oxide holds the whole voltage to the
          substrate: 0.31 µm equivalent, 1.83 MV/cm at 57 V. (b) Two
          cross-sections with polysilicon at 40 V over field oxide between
          an N region at 0 V and one at 5 V. On the left an inversion layer
          under the polysilicon joins the two N regions. On the right a P+
          region between them cuts the inversion layer.
 
-   Polysilicon diodes on the field oxide, and the inversion that
-   polysilicon at a high voltage causes below it. The voltages in (b) are
-   examples.
+   Polysilicon diodes on the field oxide, and the inversion that polysilicon
+   at a high voltage causes below it, with example voltages in (b).
 
 The polysilicon is also a gate over the field oxide. The open extraction
 rules give polysilicon 110.67 aF/µm² to the substrate
@@ -149,12 +149,13 @@ flow, and its cost and yield are open questions.
          voltage. Silicon on insulator: three silicon islands at 0 V, 25 V
          and 50 V, separated by oxide-filled trenches, on a buried oxide over
          a handle wafer; the oxide holds the voltage. Bulk die with its
-         substrate removed: the same islands on oxide, on an insulating
-         carrier where the substrate was; the oxide holds the voltage.
+         substrate removed: the same islands, separated by trench oxide,
+         on a dielectric added after thinning, on an insulating carrier
+         where the substrate was; the oxide holds the voltage.
 
-   Junction isolation in bulk silicon against oxide isolation, in silicon
-   on insulator and in a bulk die with its substrate removed. The voltages
-   are examples.
+   Junction isolation in bulk silicon against oxide isolation, in silicon on
+   insulator and in a bulk die with its substrate removed, with example
+   voltages.
 
 Two dies in one package
 -----------------------
