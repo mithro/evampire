@@ -177,7 +177,8 @@ Serial port descriptors
 A USB serial port uses the communications device class with the abstract
 control model subclass (CDC-ACM, see :doc:`what-it-is`).
 :numref:`tab-usbser-cdc` lists what the device reports in its
-configuration descriptor.
+configuration descriptor, and :numref:`fig-usbser-descriptors` shows how
+the descriptors nest.
 
 .. list-table:: Descriptors and endpoints of a CDC-ACM serial port
    :name: tab-usbser-cdc
@@ -208,6 +209,22 @@ configuration descriptor.
    * - Data endpoints
      - One bulk IN and one bulk OUT endpoint
      - [USBSER-CDC]_ section 3.4.2
+
+.. graphviz:: transactions/descriptors.dot
+   :name: fig-usbser-descriptors
+   :caption: The descriptors of a CDC-ACM serial port as a tree, with
+             endpoint 0 and the ACM requests it carries.
+   :alt: Tree: the device descriptor, class 02h, contains the configuration
+         descriptor. The configuration contains a communications interface,
+         class 02h, subclass 02h for the abstract control model and protocol
+         00h, with the Header, Call Management, Abstract Control Management
+         and Union functional descriptors and an interrupt IN endpoint for
+         notifications; and a data interface, class 0Ah, with a bulk IN
+         endpoint for data to the host and a bulk OUT endpoint for data from
+         the host. Beside the tree, endpoint 0, the control endpoint of every
+         device, carries SET_LINE_CODING, GET_LINE_CODING and
+         SET_CONTROL_LINE_STATE.
+   :align: center
 
 With endpoint 0, the device has four endpoints: control, interrupt IN, bulk
 IN and bulk OUT. Through endpoint 0 the host also sends three ACM requests
