@@ -1,15 +1,15 @@
 .. _esd-simulation:
 
-How the ESD simulation is built
-===============================
+ESD simulation set-up
+=====================
 
 This page describes the circuit simulation behind :doc:`results-hbm` and
 :doc:`results-iec`: what is
 simulated, which foundry models it uses, what it adds to them and why, and
 what it cannot show.
 
-The simulated chip is three foundry cells
------------------------------------------
+Simulated circuit
+-----------------
 
 The simulation runs in :wikipedia:`ngspice <Ngspice>` ([ESD-NGSPICE]_)
 with the typical-corner gf180mcu device models at 27 °C
@@ -43,8 +43,8 @@ circuit. It uses four modules in the same folder:
 :download:`sim/spice.py <sim/spice.py>` holds the paths, the foundry
 figures and the code that runs ngspice.
 
-Four changes add the behaviour of an ESD event
------------------------------------------------
+Added ESD behaviour
+-------------------
 
 The foundry netlists and models are written for normal operation. An ESD
 event drives the protection devices to amperes and into breakdown, which
@@ -76,8 +76,8 @@ simulation adds.
        branch fitted to the TLP measurement of the grounded-gate PMOS
        stands in for it
 
-Six changes work around faults in the models under ngspice
-----------------------------------------------------------
+Model fault workarounds
+-----------------------
 
 The rest of the changes keep the foundry models from giving wrong results
 or stopping the simulator (:numref:`tab-esd-sim-faults`).
@@ -136,8 +136,8 @@ pulse's first peak. :numref:`tab-esd-solver` lists the events that needed
 another setting or a shorter run, with the time each reached. A run that
 ends before its stop time without an error message counts as stalled.
 
-The diodes are fitted to the foundry's measurements
----------------------------------------------------
+Diode fit
+---------
 
 The gf180mcu design manual plots TLP measurements of a 6 V N+/P-well diode
 and a 6 V P+/N-well diode ([ESD-GF180-DRM-14-5-7]_,
@@ -179,8 +179,8 @@ also crosses the silicide-blocked drain and the well under the channel, so
 the real drain diode has more resistance than the scaled test diode.
 :doc:`results-hbm` shows what doubling it changes.
 
-The snapback branch follows the TLP measurement
------------------------------------------------
+Snapback branch fit
+-------------------
 
 The design manual's 6 V grounded-gate NMOS triggers at 10.7 V
 ([ESD-GF180-DRM-14-5-5]_). The caption of its figure gives eight fingers
@@ -212,8 +212,8 @@ that overshot 10.7 V. The script stops if a latch fires with its filtered
 voltage more than 10 mV below 10.7 V. :numref:`tab-esd-trigger` gives when
 each snapback latched.
 
-The PMOS avalanche branch follows the TLP measurement
-------------------------------------------------------
+PMOS avalanche branch fit
+-------------------------
 
 The design manual's 6 V grounded-gate PMOS avalanches at 9.7 V and has no
 snapback ([ESD-GF180-DRM-14-5-6]_). The caption of its figure gives twelve
@@ -228,8 +228,8 @@ PMOS, for discharges that pull the pad below DVDD.
    :file: sim/results/ggpmos-fit.csv
    :header-rows: 1
 
-The test generators are checked against their standards
--------------------------------------------------------
+Test generators
+---------------
 
 Each generator is a charged capacitor that discharges through a resistor
 and the inductance of its wiring into the pin:
@@ -272,8 +272,8 @@ discharge a little before the current reaches its peak. The rise time of
 ([ESD-TB505]_, Figure 2) and a rise of less than 1 ns ([ESD-TB505]_,
 "Pulse Rise Time").
 
-The simulation cannot show heating or failure
----------------------------------------------
+Simulation limits
+-----------------
 
 The device models do not include self-heating, and so cannot show a device
 failing. The results judge survival instead by comparing the peak current

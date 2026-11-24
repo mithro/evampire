@@ -1,7 +1,7 @@
 .. _esd-higher-levels:
 
-Protecting a pin for IEC level 4
-================================
+IEC level 4 protection
+======================
 
 This page works out what a pin wired to a connector needs to survive
 :std:`IEC 61000-4-2` level 4, ±8 kV contact or ±15 kV air discharge, and
@@ -9,8 +9,8 @@ compares the ways to provide it: on the chip, on the board, or both. The
 choice for each of evampire's connector pins is an open design decision
 (:ref:`esd-open`).
 
-The test asks the pin to carry 30 A
------------------------------------
+Level 4 current
+---------------
 
 The level 4 contact discharge peaks at 30 A ([ESD-TB505]_, Figure 2), and
 the simulated generator at 29.4 A (:doc:`simulation`). The protection must
@@ -55,8 +55,8 @@ pad and the grounded supply adds 3 V. The pad must stay below the output
 NMOS's 10.7 V trigger, if snapback is not to carry the current, and the
 input gates below their 12 V minimum oxide breakdown (:ref:`esd-limits`).
 
-Wider diodes and more clamps lower the stress
----------------------------------------------
+Wider diodes and more clamps
+----------------------------
 
 :numref:`tab-esd-scaled` repeats the ±8 kV contact discharge with the pad's
 diodes widened, as if dedicated diodes were added beside the output
@@ -118,8 +118,8 @@ test structure adds about 1.1 pF at 0 V. A pin with 1000 µm diodes to both
 rails carries about 2.3 pF of them. Whether a signal tolerates that is a
 question for each interface.
 
-A pin that works above the supply needs its own clamp
------------------------------------------------------
+Pins above the supply
+---------------------
 
 The standard pad cannot serve a pin that must carry more than DVDD in
 normal use. Its PMOS drain is P-type silicon inside an N-type well tied to
@@ -157,8 +157,8 @@ region that withstands the working voltage, switched on by a timer like
 the rail clamp's. Designing either is a separate task. Neither is
 simulated here.
 
-Other chips reach level 4 on chip
----------------------------------
+Level 4 on other chips
+----------------------
 
 For reference, the Texas Instruments TRS3232E, an RS-232 transceiver,
 specifies ±8 kV contact and ±15 kV air discharge on its four bus pins
@@ -172,8 +172,8 @@ recommends a series resistor of at least 50 Ω on logic inputs tied to a
 supply. The TRS3232E is made in another process, so its rating says
 nothing about gf180mcu.
 
-A board protection part takes the current off the chip
-------------------------------------------------------
+Board protection
+----------------
 
 The common alternative puts a :term:`transient voltage suppressor <TVS>`
 at the connector, with a series resistor between it and the chip. The

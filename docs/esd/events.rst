@@ -1,14 +1,14 @@
 .. _esd-events:
 
-ESD tests and what reaches the pin
-==================================
+ESD tests
+=========
 
 This page describes the electrostatic discharge (ESD) tests that chips and
 products are rated against. It then shows why a test at thousands of volts
 leaves only a few volts on a pin whose protection conducts.
 
-The chip tests and the product test differ
-------------------------------------------
+Chip and product tests
+----------------------
 
 An ESD rating names a test and a voltage. The voltage is the voltage to
 which the tester charges a capacitor, which then discharges through a
@@ -83,8 +83,8 @@ contact discharge. Some parts also quote ±15 kV human body model, such as
 the bus pins of the TRS3232E ([ESD-TRS3232E]_, section 5.2). The name of
 the test, not the voltage, says how severe it is.
 
-The test voltage appears across the resistor, not the pin
----------------------------------------------------------
+Current into the pin
+--------------------
 
 At the moment of discharge, the tester's capacitor, its resistor and the
 pin form one loop. The protection on the pin starts to conduct at a few
@@ -134,8 +134,8 @@ is higher still: 3.75 A per kilovolt, 30 A at 8 kV ([ESD-TB505]_,
 Figure 2). An IEC contact discharge at 2 kV gives a higher peak current
 than a human body model test at 8 kV ([ESD-TND410]_, Table 3).
 
-The protection's job is to carry the current
---------------------------------------------
+Role of the protection
+----------------------
 
 A kilovolt test does not put kilovolts on the chip. It puts amperes through
 the chip for a short time, and the chip survives if two conditions hold:
@@ -152,8 +152,8 @@ This is how a process whose transistors are rated for 5 V survives a
 that do this, and :doc:`results-hbm` and :doc:`results-iec` simulate
 them.
 
-Most of the stored energy stays in the tester
----------------------------------------------
+Energy of a discharge
+---------------------
 
 The energy stored in the tester's capacitor bounds the energy any test can
 deliver:

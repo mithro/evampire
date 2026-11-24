@@ -5,8 +5,8 @@ This page gives a high-level view of the blocks inside evampire and how
 frames move between them. The :doc:`../ethernet/index` and
 :doc:`../power/index` pages describe each external interface in detail.
 
-The blocks form a forwarding path and a processor path
-------------------------------------------------------
+Forwarding and processor paths
+------------------------------
 
 :numref:`fig-block-diagram` shows the blocks inside evampire. The two
 forwarding paths run down the left-hand side, and the processor's path to
@@ -35,8 +35,8 @@ outline are outside the chip. Blue blocks are the RGMII interfaces, grey
 blocks the forwarding path, green blocks the processor's frame path, and
 orange blocks the processor and its control interfaces.
 
-Each block has one job
-----------------------
+Blocks
+------
 
 .. _arch-rgmii:
 
@@ -190,8 +190,8 @@ Clock and reset
    transceiver, is discussed on :doc:`../ethernet/rgmii/index`. The processor's
    clock is an open question (see :ref:`requirements-open-questions`).
 
-Each data path passes through a fixed sequence of blocks
---------------------------------------------------------
+Data paths
+----------
 
 .. list-table:: Blocks on each data path, in order
    :name: tab-data-paths

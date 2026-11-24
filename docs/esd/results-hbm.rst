@@ -12,10 +12,11 @@ device with the current at which the foundry measured that device failing
 In the current graphs on this page, a current is positive when it flows
 out of the pad into the chip.
 
-A 2 kV human body model discharge stays far below the limits
-------------------------------------------------------------
+The 2 kV discharge
+------------------
 
-:numref:`fig-esd-hbm-pos` shows a positive 2 kV discharge. In the first
+:numref:`fig-esd-hbm-pos` shows a positive 2 kV discharge, which stays far
+below the measured limits. In the first
 nanoseconds the rail clamp's gate rises behind DVDD, and the clamp turns
 on. From about 5 ns the gate is within 0.1 V of DVDD. The PMOS drain diode
 then carries almost the whole current onto DVDD, and the clamp carries it
@@ -69,8 +70,8 @@ measured limit.
 
    Voltages and currents of a −2 kV human body model discharge into PAD.
 
-Without the rail clamp the output NMOS snaps back
--------------------------------------------------
+Discharge without the rail clamp
+--------------------------------
 
 :numref:`fig-esd-hbm-noclamp` repeats the positive discharge with the DVDD
 and DVSS pads, and so their clamps, removed. The PMOS drain diode now has
@@ -102,8 +103,8 @@ no avalanche current before then (:doc:`simulation`), so the spike's
 height is an upper estimate. With the clamp, the input gates stay at
 5.4 V.
 
-The least-known inputs change the 2 kV result little
-----------------------------------------------------
+Sensitivity to uncertain inputs
+-------------------------------
 
 The drain diodes' series resistance and the resistance of the supply rings
 are the inputs least known (:doc:`simulation`). :numref:`tab-esd-sens`

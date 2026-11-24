@@ -1,14 +1,14 @@
 .. _esd-io-cells:
 
-ESD protection inside the gf180mcu I/O cells
-============================================
+gf180mcu I/O cell protection
+============================
 
 This page describes the ESD protection built into the standard gf180mcu
 I/O cells, with the device sizes taken from the cells' netlists, and the
 limits of each protection device measured by the foundry.
 
-The library is rated for 2 kV human body model
-----------------------------------------------
+Library rating
+--------------
 
 The foundry I/O library, gf180mcu_fd_io, targets 2000 V
 :term:`human body model <Human body model>`, 200 V machine model and 500 V
@@ -27,12 +27,14 @@ uses three of them:
   contains a :term:`rail clamp`.
 * ``gf180mcu_fd_io__asig_5p0``, the analogue pad, which has diodes only.
 
-The protection has three parts
-------------------------------
+Protection structure
+--------------------
 
-:numref:`fig-esd-io-cell` shows the protection of the bidirectional pad
-and of the supply pads. Every pad sits on two rings of metal that run
-round the chip: DVDD and DVSS.
+The protection of the bidirectional pad has three parts: the output
+driver, the secondary protection of the input gates and the rail clamp.
+:numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
+Every pad sits on two rings of metal that run round the chip: DVDD and
+DVSS.
 
 .. figure:: figures/io-cell.svg
    :name: fig-esd-io-cell
@@ -51,8 +53,8 @@ round the chip: DVDD and DVSS.
    The ESD protection of gf180mcu_fd_io__bi_t, and the rail clamp in each
    DVDD and DVSS pad.
 
-The primary protection is the output driver
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Primary protection
+~~~~~~~~~~~~~~~~~~
 
 The pad has no separate primary diodes. The output transistors are the
 primary protection. Their drains connect to the pad, and each drain is a
@@ -77,8 +79,8 @@ grounded-gate NMOS. Above about 10.7 V the parasitic NPN transistor inside
 each one turns on and :term:`snaps back <Snapback>` to about 6 V
 (:ref:`esd-limits`).
 
-The secondary protection guards the input gates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Secondary protection
+~~~~~~~~~~~~~~~~~~~~
 
 The input buffer's transistor gates are reached through four 440 Ω
 polysilicon resistors in parallel, about 110 Ω, and two small diodes of
@@ -89,8 +91,8 @@ with the current: in the simulated +2 kV human body model discharge the pad
 reaches 5.6 V and the gates 5.4 V, and in the +8 kV IEC discharge the pad
 reaches 15.6 V and the gates 12.4 V (:numref:`tab-esd-events-voltage`).
 
-The rail clamp shorts DVDD to DVSS during a fast event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Rail clamp
+~~~~~~~~~~
 
 A positive discharge into the pad, with DVSS grounded, flows through the
 PMOS drain diode onto the DVDD ring. Nothing on DVDD would then let it
@@ -176,8 +178,8 @@ times shorter than 1.6 µs, so the clamp stays on for the whole event. A
 supply that rises much more slowly than 1.6 µs lets the timer node follow
 DVDD, so the clamp stays off in normal use.
 
-Each discharge mode uses a different path
------------------------------------------
+Discharge paths
+---------------
 
 An ESD test applies each polarity between a pin and each supply pin. With
 DVSS as the grounded pin, the paths are as in :numref:`tab-esd-paths`.
@@ -210,8 +212,8 @@ circuit connected to it sees the full pad voltage.
 
 .. _esd-limits:
 
-The foundry measured each device's limit with TLP
--------------------------------------------------
+TLP limits
+----------
 
 The gf180mcu design manual gives :term:`transmission line pulse <TLP>`
 (TLP) measurements of each ESD device. A TLP tester applies rectangular

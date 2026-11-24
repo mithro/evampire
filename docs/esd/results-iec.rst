@@ -13,8 +13,8 @@ the current at which the foundry measured that device failing
 In the current graphs on this page, a current is positive when it flows
 out of the pad into the chip.
 
-The 8 kV contact discharge exceeds the measured limits
-------------------------------------------------------
+The 8 kV contact discharge
+--------------------------
 
 :numref:`fig-esd-iec-8kv` shows an 8 kV contact discharge, level 4 of
 :std:`IEC 61000-4-2`. The first peak of 29.4 A arrives within a
@@ -93,10 +93,14 @@ its stress; the later, lower hump is not simulated.
    :file: sim/results/solver.csv
    :header-rows: 1
 
-Two parts of the IEC results rest on models used outside their range
---------------------------------------------------------------------
+Models outside their range
+--------------------------
 
-DVDD at 10 V to 11 V is above the 8.5 V minimum junction breakdown of a
+Two parts of the IEC results rest on models used outside their range: the
+rail clamp's current and the output NMOS's trigger time.
+
+The rail clamp's current is the first. DVDD at 10 V to 11 V is above the
+8.5 V minimum junction breakdown of a
 6 V NMOS (:numref:`tab-esd-breakdown`). The clamp transistor is an
 ordinary 6 V NMOS without silicide blocking, and the simulation gives it no
 snapback branch. At this voltage much of the clamps' simulated current is
@@ -134,8 +138,8 @@ the most stressed device reaches between 0.48 and 0.91 of its limit. With
 a 500 ps trigger the NMOS does not snap back at all, and the PMOS drain
 diode carries the current.
 
-How the stress grows with the test voltage
-------------------------------------------
+Stress against test voltage
+---------------------------
 
 :numref:`fig-esd-sweep` and :numref:`tab-esd-sweep` give every test level
 of both tests in both polarities. For each event the graph shows the most
