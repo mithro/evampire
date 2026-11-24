@@ -49,7 +49,7 @@ For 57 V:
      &= 1.8 \times 10^{-4}\ \text{cm} = 1.8\ \text{µm}
 
 The field is then 3.2 × 10\ :sup:`5` V/cm, and holding 100 V takes 3.5 µm
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 4). The flat-junction fit on :doc:`junctions` comes from the same
 coefficient: its triangular field gives an ionisation integral of 0.98.
 The length does not depend on the doping, because a uniform field needs
@@ -138,7 +138,7 @@ directly, so that each ring sits at a chosen fraction of the voltage.
 The cost is the current that flows down the chain all the time. A chain
 holding 57 V with 1 µA flowing needs 57 MΩ and takes 57 µW; with 10 µA it
 takes 570 µW
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 6). A high-resistance polysilicon resistor of that value is long, so
 its area is part of the design.
 
@@ -152,7 +152,7 @@ other. The substrate is a thick, fairly conductive slab. At
 14 Ω·cm [HV-NBS]_ (Table 5), so a slab 1 mm long, 1 mm wide and 300 µm
 thick has about 450 Ω between its ends. Holding 57 V across it takes about
 130 mA and 7 W
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 6). The thickness and resistivity are illustrations: thinning the
 die or a lighter-doped substrate would raise the resistance.
 

@@ -39,7 +39,7 @@ gives the thickness that holds 57 V and 100 V at each field.
      - 250
 
 The values are the voltage divided by the field
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 5).
 
 Devices on the field oxide have no junction to the substrate
@@ -58,7 +58,7 @@ The polysilicon is also a gate over the field oxide. The open extraction
 rules give polysilicon 110.67 aF/µm² to the substrate
 [HV-OPENPDKS-EXTRACT]_, the capacitance of 0.31 µm of oxide. At 57 V that
 oxide holds 1.83 MV/cm, and at 100 V 3.2 MV/cm
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 8), close to the derated field in :numref:`tab-hv-oxide-thickness`.
 The foundry publishes the threshold of a field transistor gated by
 polysilicon in the 3.3 V area as 6.5 V minimum and 8.5 V typical

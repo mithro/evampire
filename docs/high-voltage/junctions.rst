@@ -90,7 +90,7 @@ needs that much lightly doped silicon on one side of it.
      - 0.36
 
 The values come from the two equations above
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 1).
 
 The gf180mcu substrate is lightly doped
@@ -173,7 +173,7 @@ to the same substrate give other values (:numref:`tab-hv-doping-estimates`).
      - 5.3 × 10\ :sup:`16`
 
 The values come from
-`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+:download:`calc.py <calc.py>`,
 section 2. The deep N-well's grading of 0.15 is far from either simple
 junction, so its slope value means little. The lowest value,
 :math:`1.2 \times 10^{15}\ \text{cm}^{-3}`, is best read as a lower bound.
@@ -230,7 +230,7 @@ junction of 10 µm radius, against about 320 V for a flat one
      - 72
 
 The values come from
-`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+:download:`calc.py <calc.py>`,
 section 3. The published 14 V is lower again than the corner values, so the
 field at the edge of a gf180mcu N-well is higher than curvature alone
 explains. A more heavily doped layer at the surface beside the well, or an

@@ -52,7 +52,7 @@ limits on :doc:`junctions` do not apply.
 
 At 57 V the field in the insulator is 0.48 MV/cm under Metal1 and
 0.10 MV/cm under Metal5
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 7), far below the fields on :doc:`dielectric`. The breakdown of the
 gf180mcu dielectrics is not published, but these fields leave a wide
 margin. Low-voltage metal near the plate is closer. Metal1 under a Metal2
@@ -109,7 +109,7 @@ silicon have less capacitance and act as thicker gate insulators.
 
 The capacitances are nominal. The same rules give minimum and maximum
 corners 7 % to 13 % either side
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 7). Over active silicon, with no field oxide below, each layer
 sits closer to the channel.
 
@@ -195,7 +195,7 @@ Metal1: a field transistor in the 6 V area, NMOS, :math:`W/L = 200/0.36`,
 the 5.0 V the lightest doping estimate gives for Metal1. The equation above
 reaches 8.5 V with :math:`3.0 \times 10^{15}` cm\ :sup:`-3` under the
 field oxide, and 11 V with :math:`4.8 \times 10^{15}` cm\ :sup:`-3`
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 7). Applying the same doping under the other layers gives
 :numref:`tab-hv-metal-vt`.
 
@@ -231,7 +231,7 @@ section 7). Applying the same doping under the other layers gives
      - 56.5
 
 The values come from
-`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+:download:`calc.py <calc.py>`,
 section 7. The first column is a lower bound. The other two are an
 extrapolation from one measured layer, and four things limit it:
 
@@ -273,7 +273,7 @@ Fixed charge trapped in the insulator adds to the gate's charge. By
 shifts the threshold by :math:`Q_\text{ox}/C_\text{ox}`. A charge of
 :math:`10^{11}` electron charges per cm² shifts it by 5.5 V under Metal1 and
 by 27.6 V under Metal5
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 7). The charge in the gf180mcu dielectrics is not published, and
 deposited dielectrics may hold more than grown oxide.
 
@@ -303,7 +303,7 @@ insulator has the smaller capacitance, so the gate controls the surface
 weakly. The gate voltage needed per tenfold change is therefore much
 larger: 550 mV with Metal1 and 2.6 V with Metal5 at the doping that fits
 the typical Metal1 threshold
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 7). A sensor whose output is a current above threshold is not
 affected. A sensor that has to switch hard on and off within a small
 voltage window needs gain after it.
@@ -356,7 +356,7 @@ gate at 57 V and the drain at 1 V:
 The same transistor carries 533 µA with its gate on Metal1. On Metal5 it is
 just at threshold at 57 V, and carries 29 µA only if the threshold is at
 its minimum
-(`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+(:download:`calc.py <calc.py>`,
 section 7). The thick insulator weakens the gate, but the large gate
 voltage makes up much of it, so currents of tens to hundreds of microamps
 are available from a modest width. The channel needs to be long compared
@@ -394,7 +394,7 @@ Shifting a signal down
    whatever the floating circuit's voltage. With Metal1, a 5 V swing,
    :math:`W/L = 10` and 1 V on the drains, it is 58.6 µA at every floating
    voltage from 15 V to 40 V
-   (`calc.py <https://github.com/mithro/evampire/blob/main/docs/high-voltage/calc.py>`__,
+   (:download:`calc.py <calc.py>`,
    section 7). Matched plates also cancel the charge they share. The
    floating circuit must stay above both thresholds, 11 V typical on
    Metal1.
