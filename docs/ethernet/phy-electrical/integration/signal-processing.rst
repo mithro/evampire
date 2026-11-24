@@ -25,10 +25,30 @@ gives more than 150 × 10⁹ operations per second for a gigabit transceiver
 
 The logic can meet this at any clock and parallelism whose product gives
 880 taps every 8 ns: for example one copy of each filter at 125 MHz, or two
-copies at 62.5 MHz, each handling alternate symbols. Every filter except
+copies at 62.5 MHz, each handling alternate symbols
+(:numref:`fig-phy-int-parallel`). Every filter except
 the decision loop below can be pipelined and split into parallel paths,
 so for them the clock is a trade between area and power,
 not a limit.
+
+.. wavedrom::
+   :caption: One filter copy at 125 MHz handles every symbol; two copies
+             at 62.5 MHz each handle alternate symbols, doing the same
+             work per 8 ns.
+   :name: fig-phy-int-parallel
+   :alt: Timing diagram of symbols n to n+7, one per 8 ns. Row "one copy,
+         125 MHz" handles each symbol in its own 8 ns slot. Rows "copy A,
+         62.5 MHz" and "copy B, 62.5 MHz" each take 16 ns per symbol: A
+         handles n, n+2, n+4 and n+6, and B handles n+1, n+3 and n+5.
+
+   { "signal": [
+       { "name": "symbols", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
+       { "name": "one copy, 125 MHz", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
+       { "name": "copy A, 62.5 MHz", "wave": "=.=.=.=.", "data": ["n", "n+2", "n+4", "n+6"] },
+       { "name": "copy B, 62.5 MHz", "wave": "x=.=.=.=", "data": ["n+1", "n+3", "n+5"] }
+     ],
+     "config": { "hscale": 2 }
+   }
 
 .. _phy-int-reach-taps:
 

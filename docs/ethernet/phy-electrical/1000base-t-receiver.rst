@@ -102,10 +102,31 @@ Pair skew and swaps
 The four pairs of a cable differ slightly in length and propagation speed,
 so symbols sent together arrive at different times. The standard allows up
 to 50 ns of difference between any two pairs (:clause:`40.7.4.2`), and
-the receiver realigns them (:clause:`40.1.4`). It also detects and corrects
+the receiver realigns them (:clause:`40.1.4`, :numref:`fig-phy-pair-skew`). It also detects and corrects
 pairs that are swapped or have their two wires reversed, using the idle
 symbols sent before data starts (:clause:`40.1.4`; [PHY-KSZ9031]_
 section 3.4).
+
+.. wavedrom::
+   :caption: Symbols sent together on the four pairs arrive at different
+             times, up to 50 ns apart, and the receiver realigns them; the
+             offsets are schematic.
+   :name: fig-phy-pair-skew
+   :alt: Timing diagram. Four rows, pair A to pair D as received, each
+         carrying symbols n, n+1 and n+2, shifted by different fractions
+         of a symbol. A fifth row, after alignment, carries the code
+         groups n, n+1 and n+2 in step.
+
+   { "signal": [
+       { "name": "pair A in", "wave": "x===x.", "data": ["A n", "A n+1", "A n+2"] },
+       { "name": "pair B in", "wave": "x===x.", "data": ["B n", "B n+1", "B n+2"], "phase": -0.6 },
+       { "name": "pair C in", "wave": "x===x.", "data": ["C n", "C n+1", "C n+2"], "phase": -0.25 },
+       { "name": "pair D in", "wave": "x===x.", "data": ["D n", "D n+1", "D n+2"], "phase": -0.8 },
+       {},
+       { "name": "aligned", "wave": "x.===x", "data": ["n", "n+1", "n+2"] }
+     ],
+     "config": { "hscale": 2 }
+   }
 
 Separately, a cable can be wired straight through or crossed over. A
 transceiver can detect which, and swap its pairs to match: automatic

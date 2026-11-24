@@ -58,7 +58,24 @@ symbol rate, called the :wikipedia:`Nyquist frequency
 <Nyquist_frequency>`. A channel that passes frequencies up to it can carry
 the symbols, so these pages use 62.5 MHz as the reference frequency. The
 transmitted spectrum is about 80 MHz wide (:clause:`40.7.1`), inside the
-100 MHz for which the cable is specified.
+100 MHz for which the cable is specified (:numref:`fig-phy-nyquist`).
+
+.. wavedrom::
+   :caption: The fastest symbol pattern changes level every 8 ns symbol
+             and repeats every 16 ns, a 62.5 MHz signal.
+   :name: fig-phy-nyquist
+   :alt: Timing diagram of eight 8 ns symbol slots and a line that
+         alternates high and low every slot. An arrow over two slots marks
+         one period of 16 ns, 62.5 MHz.
+
+   { "signal": [
+       { "name": "symbol", "wave": "========", "data": ["+2", "−2", "+2", "−2", "+2", "−2", "+2", "−2"] },
+       { "name": "line", "wave": "hlhlhlhl" },
+       { "node": "..a.b" }
+     ],
+     "edge": ["a<->b 16 ns: 62.5 MHz"],
+     "config": { "hscale": 2 }
+   }
 
 .. _phy-pam5:
 

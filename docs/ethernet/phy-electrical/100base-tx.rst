@@ -51,7 +51,25 @@ For :math:`R = 100` Mbit/s:
    f_\text{line} = \frac{5}{4} \times 100 \times 10^{6} = 125 \times 10^{6}\ \text{Bd}
 
 which is why 100BASE-TX runs at 125 MBd, the same symbol rate as
-1000BASE-T.
+1000BASE-T (:numref:`fig-phy-4b5b`).
+
+.. wavedrom::
+   :caption: 4B5B coding: each 4-bit group of data, 40 ns at 100 Mbit/s,
+             becomes a 5-bit code word sent in the same 40 ns at 125 MBd.
+   :name: fig-phy-4b5b
+   :alt: Timing diagram over 80 ns. The data row holds two 4-bit groups,
+         each 40 ns long, made of four 10 ns data bits. The code row holds
+         two 5-bit code words in the same two 40 ns slots, each made of
+         five 8 ns code bits.
+
+   { "signal": [
+       { "name": "data bits, 10 ns", "wave": "=....=....=....=....", "data": ["", "", "", ""] },
+       { "name": "data", "wave": "=...................", "data": ["4 data bits, 40 ns"] },
+       { "name": "code", "wave": "=...................", "data": ["5-bit code word, 40 ns"] },
+       { "name": "code bits, 8 ns", "wave": "=...=...=...=...=..." }
+     ],
+     "config": { "hscale": 1 }
+   }
 
 .. _phy-100base-tx-scrambler:
 
