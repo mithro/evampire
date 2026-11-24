@@ -21,6 +21,20 @@ almost all of it. A frame arriving at 100 Mbit/s cannot leave at
 By requirement, evampire stores no full frame on the forwarding path (see
 :ref:`req-memory`).
 
+:numref:`fig-rgmii-speed-buffer` shows both cases.
+
+.. figure:: speed-buffer.svg
+   :name: fig-rgmii-speed-buffer
+   :alt: Two graphs for a 1518-byte frame against time in microseconds. Left,
+         1000 Mbit/s in and 100 Mbit/s out: the bytes held rise to
+         about 1366, 90 % of the frame, at 12 µs and fall to zero at
+         about 121 µs. Right, 100 Mbit/s in and 1000 Mbit/s out: the
+         bytes the transmitter needs rise ten times faster than the
+         bytes that arrive, so it runs out after the first byte.
+
+   Bytes held, and bytes needed against bytes arrived, when the two
+   ports run at different speeds, for a 1518-byte frame.
+
 .. _rgmii-policy:
 
 Speed set-up

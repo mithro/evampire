@@ -157,6 +157,20 @@ For reference, FPGAs use calibrated delay lines for this job. The AMD
 7-series IDELAYE2 is a 31-tap input delay, and its taps are calibrated by an
 IDELAYCTRL block against a reference clock [RGMII-UG953]_.
 
+:numref:`fig-rgmii-delay-options` sketches the two on-chip options.
+
+.. graphviz:: delay-options.dot
+   :name: fig-rgmii-delay-options
+   :caption: The two on-chip delay options: a delay line calibrated by software and
+             a delay-locked loop.
+   :alt: Top, a calibrated delay line: the clock passes a chain of delay
+         stages, a multiplexer picks the output of one stage, and its
+         setting comes from software, found by a loopback test.
+         Bottom, a delay-locked loop: an adjustable delay line whose
+         output is compared with a fraction of the clock period, and
+         the result adjusts the line.
+   :align: center
+
 The uncalibrated chain needs enough stages for 2 ns at the TT corner:
 
 .. math::
@@ -202,6 +216,17 @@ The equations ignore wiring delay. With :math:`t_\text{d} = 2.0` ns,
 Used as a transmit delay, the chain must give at least 1.2 ns of setup and
 1.2 ns of hold at evampire's pins (TsetupT, TholdT). In a 4 ns half period
 that means a delay of 1.2 ns to 2.8 ns, and 4.0 ns is outside it.
+
+:numref:`fig-rgmii-chain-delay` shows the three corners against the window.
+
+.. figure:: chain-delay.svg
+   :name: fig-rgmii-chain-delay
+   :alt: Bar graph of the delay of 11 buf_2 stages at three corners: 1.3 ns at
+         FF and about 2.1 ns at TT, both inside the shaded 1.2 ns to
+         2.8 ns window, and 4.0 ns at SS, outside it.
+
+   An uncalibrated 11-stage chain at three corners against the allowed
+   transmit delay.
 
 .. _rgmii-delay-transceivers:
 
@@ -255,6 +280,18 @@ More trace is needed if evampire's TXC-to-TXD skew or the board skew uses
 part of the budget. The exact length follows from the board-level timing
 analysis. The software sets the delay registers of the fitted transceiver
 over MDIO, so the transceiver's power-up pin settings need not be right.
+
+:numref:`fig-rgmii-meander-86` shows the KSZ9031RNX case.
+
+.. figure:: meander-86.svg
+   :name: fig-rgmii-meander-86
+   :alt: Top view of evampire and the Ethernet transceiver with three straight
+         data traces and a clock trace with a meander of about 86 mm,
+         which adds 0.62 ns to the KSZ9031RNX's 1.38 ns for 2.0 ns in
+         all.
+
+   The board delay for the KSZ9031RNX transmit clock (schematic, not to
+   scale).
 
 .. _rgmii-10-100-logic:
 
@@ -326,6 +363,21 @@ byte per clock cycle in each direction, with a "data valid" flag and an
 :numref:`fig-rgmii-rx-ddr` and the decoded RX_CTL. The transmit side feeds
 the byte register of :numref:`fig-rgmii-tx-ddr` and TX_CTL. This is the
 same information as the GMII signals (see :doc:`signals`).
+
+:numref:`fig-rgmii-byte-interface` compares the two configurations.
+
+.. graphviz:: byte-interface.dot
+   :name: fig-rgmii-byte-interface
+   :caption: The byte interface with an external and with an integrated
+             transceiver; dashed parts are needed only with an
+             external one.
+   :alt: Top, with an external transceiver: the forwarding logic, the byte
+         interface of byte, valid and error, the double-data-rate
+         stages and pads drawn dashed, RGMII drawn dashed, and the
+         external transceiver. Bottom, with an integrated transceiver:
+         the forwarding logic, the same byte interface and the
+         integrated transceiver.
+   :align: center
 
 The byte interface is the boundary between the port and the
 :term:`forwarding logic`. In the board configuration with integrated

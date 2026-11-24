@@ -146,3 +146,18 @@ Vias and stubs
 
 The series resistor on evampire's outputs depends on the output resistance
 of evampire's pad cell, discussed on :doc:`io-cells`.
+
+:numref:`fig-rgmii-board-trace` summarises the rules for one signal.
+
+.. graphviz:: board-trace.dot
+   :name: fig-rgmii-board-trace
+   :caption: One RGMII signal on the board, with the layout rules of the DP83867
+             guidelines.
+   :alt: One signal from left to right: the driver's output resistance, a
+         series resistor next to the driving pin, a 50 Ω trace and the
+         receiver. Notes say the resistance and resistor together
+         match 50 Ω; the trace is under 51 mm where possible and at
+         most 152 mm, with no vias or stubs and lengths matched within
+         11 ps, about 1.5 mm; and the DP83867 trims its own output to
+         about 50 Ω, from 35 Ω to 70 Ω.
+   :align: center

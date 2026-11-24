@@ -1,0 +1,49 @@
+// Two ways evampire could add its own clock delay: a delay line whose
+// length a multiplexer selects, calibrated by software, and a
+// delay-locked loop that adjusts a delay line to a fraction of the clock
+// period.
+//
+// Fixed grid, positions in inches. Top: calibrated delay line. Bottom:
+// delay-locked loop.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph delay_options {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true, height=0.4];
+    edge  [penwidth=1.4, arrowsize=0.6];
+
+    node [shape=plaintext, style="", width=3.6, height=0.25, fontsize=10];
+    h1 [pos="2.5,2.85!", label="Delay line calibrated by software"];
+    h2 [pos="2.5,1.05!", label="Delay-locked loop"];
+
+    node [shape=box, style=filled, fillcolor="#fff2cc", width=0.45];
+    d1 [pos="1.0,2.3!", label="d"]; d2 [pos="1.6,2.3!", label="d"];
+    d3 [pos="2.2,2.3!", label="d"]; d4 [pos="2.8,2.3!", label="d"];
+    mux [pos="2.2,1.55!", width=2.2, height=0.4, fillcolor="#dbe8f5",
+         label="multiplexer selects the length"];
+    sw [pos="4.5,1.55!", width=1.75, height=0.5, fillcolor="#ffffff",
+        label="setting from software,\nfound by a loopback test"];
+    in1 [pos="0.3,2.3!", shape=plaintext, style="", width=0.6,
+         label="clock in"];
+    out1 [pos="0.3,1.55!", shape=plaintext, style="", width=0.7,
+          label="clock out"];
+    in1 -> d1 -> d2 -> d3 -> d4;
+    d1 -> mux; d2 -> mux; d3 -> mux; d4 -> mux;
+    sw -> mux;
+    mux -> out1;
+
+    node [shape=box, style=filled, fillcolor="#fff2cc", width=2.0];
+    line2 [pos="1.6,0.5!", label="adjustable delay line"];
+    pd [pos="3.9,0.5!", width=1.5, height=0.5, fillcolor="#dbe8f5",
+        label="compare with a\nfraction of the period"];
+    in2 [pos="0.15,0.5!", shape=plaintext, style="", width=0.6,
+         label="clock in"];
+    out2 [pos="1.6,-0.15!", shape=plaintext, style="", width=0.7,
+          label="clock out"];
+    in2 -> line2 -> pd;
+    pd -> line2 [label="", constraint=false];
+    line2 -> out2;
+}

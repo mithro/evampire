@@ -259,6 +259,19 @@ The extra trace is usually folded into a meander, a zig-zag path. For
 reference, the same guidelines recommend RGMII traces shorter than 51 mm
 (2 inches), and at most 152 mm (6 inches) (see :doc:`electrical`).
 
+:numref:`fig-rgmii-meander-280` shows how such a trace looks beside the straight data traces.
+
+.. figure:: meander-280.svg
+   :name: fig-rgmii-meander-280
+   :alt: Top view of evampire on the left and the Ethernet transceiver on the
+         right. Three data traces run straight between them. The clock
+         trace runs in a zig-zag meander that adds about 280 mm of
+         extra length, 2 ns at 7.2 ps/mm. A note gives the recommended
+         total length of under 51 mm and at most 152 mm.
+
+   A board delay as a meander on the clock trace (schematic, not to
+   scale).
+
 .. _rgmii-transceiver-delays:
 
 Transceiver internal delays
@@ -402,6 +415,20 @@ Clock limits
 Table 2. At 10 and 100 Mbit/s the period scales to 400 ns and 40 ns, each
 ±10 %, and the duty cycle may be 40 % to 60 %. The period limit applies to
 each cycle, not to the average frequency.
+
+:numref:`fig-rgmii-clock-cycle` marks what each limit measures.
+
+.. figure:: clock-cycle.svg
+   :name: fig-rgmii-clock-cycle
+   :alt: One clock cycle on a time axis from 0 to 10 ns. An arrow spans the
+         period, 7.2 ns to 8.8 ns and 8.0 ns typical. A second arrow
+         spans the high time, 45 % to 55 % of the period, 3.6 ns to
+         4.4 ns at 8.0 ns, and a shaded band marks where the falling
+         edge may lie. Dashed lines at 20 % and 80 % of the swing mark
+         the rise and fall time, at most 0.75 ns.
+
+   One RGMII clock cycle with the limits of :numref:`tab-rgmii-clock`
+   (edge slope schematic).
 
 The RGMII specification gives TXC and RXC as ±50
 :wikipedia:`parts per million (ppm) <Parts-per_notation>` from nominal
