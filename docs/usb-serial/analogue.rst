@@ -134,8 +134,9 @@ specification requires in any case.
 Receivers
 ---------
 
-A full-speed device has three receivers ([USBSER-USB2]_ section 7.1.4.1,
-Figure 7‑24):
+A full-speed device has three receivers ([USBSER-USB2]_ section 7.1.4.1),
+shown in :numref:`fig-usbser-frontend`; :numref:`fig-usbser-receiver-levels`
+shows their input ranges:
 
 * A *differential receiver*, which decides J or K. It must resolve a
   difference of 200 mV (*VDI*) with both inputs anywhere from 0.8 V to
@@ -145,6 +146,18 @@ Figure 7‑24):
   :wikipedia:`hysteresis <Schmitt_trigger>`. Together they detect SE0.
 * The SE0 decision needs a filter: both lines can be low together for up to
   14 ns during a normal transition (:doc:`timing`).
+
+.. figure:: analogue/receiver-levels.svg
+   :name: fig-usbser-receiver-levels
+   :alt: Input voltage from 0 V to 3.6 V. For the differential receiver, a
+         box from 0.8 V to 2.5 V marks the common-mode range VCM, within
+         which a 200 mV difference, VDI, must be resolved as J or K. For the
+         single-ended receivers, a box from 0.8 V to 2.0 V marks where the
+         switching threshold lies; above it is high, below it low, and both
+         lines low after a 14 ns to 82 ns filter is SE0.
+   :align: center
+
+   Input voltage ranges of the differential and single-ended receivers.
 
 Each line, without its pull-up or pull-down, must present more than
 300 kΩ (*ZINP*). An upstream port with a detachable cable may have at most
