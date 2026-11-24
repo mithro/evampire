@@ -1,0 +1,20 @@
+Event,Snapback,Highest PAD before (V),Latched at (ns)
+HBM +0.5 kV,no,4.4,never
+HBM +1 kV,no,4.9,never
+HBM +2 kV,no,5.6,never
+HBM +4 kV,no,6.5,never
+HBM +8 kV,no,8.4,never
+IEC +2 kV,partly,10.9,0.64
+IEC +4 kV,yes,12.5,0.35
+IEC +6 kV,yes,13.5,0.30
+IEC +8 kV,yes,14.3,0.28
+IEC +15 kV,yes,16.5,0.24
+"HBM +2 kV, no clamp",partly,13.3,0.61
+"HBM +2 kV, diode R × 2",no,5.6,never
+"HBM +2 kV, ring 1 Ω",no,5.8,never
+"IEC +8 kV, 1× diodes, 1 pad",yes,14.3,0.28
+"IEC +8 kV, 1× diodes, 4 pads",yes,12.7,0.37
+"IEC +8 kV, 2× diodes, 1 pad",yes,12.7,0.32
+"IEC +8 kV, 2× diodes, 4 pads",yes,11.5,0.44
+"IEC +8 kV, 4× diodes, 1 pad",yes,12.1,0.35
+"IEC +8 kV, 4× diodes, 4 pads",yes,10.9,0.63

@@ -1,0 +1,6 @@
+Event,Clamp peak (A),Substrate part (A),Share (%)
+HBM +2 kV,1.24,0.00,0
+HBM +8 kV,4.98,0.09,2
+IEC +2 kV,6.03,2.50,42
+IEC +8 kV,19.70,11.80,60
+IEC +15 kV,43.76,34.06,78

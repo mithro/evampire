@@ -90,6 +90,9 @@ but not with the Ethernet or USB Power Delivery standards.
    board configurations.
 :doc:`usb-serial/index`
    The USB serial port carried on the USB Type-C data wires.
+:doc:`esd/index`
+   How the gf180mcu I/O cells protect the pins against electrostatic
+   discharge, with simulations of the foundry's cells.
 :doc:`standards`
    The standards that the pages cite, with links to each.
 :doc:`glossary`
@@ -106,5 +109,6 @@ but not with the Ethernet or USB Power Delivery standards.
    ethernet/index
    power/index
    usb-serial/index
+   esd/index
    standards
    glossary

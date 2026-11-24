@@ -419,7 +419,7 @@ gives a short description and a link to the full explanation.
    ESD
       A short high-voltage pulse from a charged person or object touching a
       pin (see :wikipedia:`Electrostatic_discharge` and
-      :doc:`power/usb-pd/cc-protection`).
+      :doc:`esd/index`).
 
    Extended power range
    EPR
@@ -463,6 +463,39 @@ gives a short description and a link to the full explanation.
       A laterally diffused MOS transistor: a transistor with an extended,
       lightly doped drain that holds off a higher drain voltage than a
       standard transistor (see :wikipedia:`LDMOS`).
+
+   Charged device model
+   CDM
+      The ESD test in which the chip itself is charged and then discharged
+      through one pin to ground, in under a nanosecond (see
+      :doc:`esd/events`).
+
+   Latch-up
+      A short circuit between a chip's supply and ground through the
+      parasitic thyristor formed by neighbouring N-wells and P-wells, which
+      persists until the power is removed (see :wikipedia:`Latch-up`).
+
+   Rail clamp
+      A circuit between a chip's supply ring and ground ring that turns on
+      during a fast ESD event and carries its current at a few volts (see
+      :doc:`esd/io-cells`).
+
+   Second breakdown current
+   It2
+      The current at which an ESD device fails by overheating in a
+      transmission line pulse test, usually given per micrometre of device
+      width (see :doc:`esd/io-cells`).
+
+   Snapback
+      The drop in voltage across an NMOS transistor when the parasitic
+      bipolar transistor formed by its drain, body and source turns on in
+      avalanche breakdown (see :doc:`esd/io-cells`).
+
+   Transmission line pulse
+   TLP
+      A measurement of an ESD device with rectangular pulses, typically
+      100 ns long, at rising current, recording the voltage and leakage after
+      each pulse (see :doc:`esd/io-cells`).
 
    MIM capacitor
       A metal-insulator-metal capacitor, built between two metal layers of a
