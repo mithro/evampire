@@ -59,7 +59,20 @@ range. :term:`PPS` is a programmable and :term:`AVS` an adjustable supply. :numr
 gives the condition for using each range. Currents above 3 A need a cable
 rated for 5 A (:pd:`Section 8.6.1.2.2`), which the source finds out with
 :term:`Discover Identity` (:ref:`usbpd-cables`). The rows are explained
-below.
+below, and :numref:`fig-usbpd-power-levels` draws their voltages.
+
+.. figure:: power-levels.svg
+   :name: fig-usbpd-power-levels
+   :alt: Chart of voltage from 0 to 55 V for each kind of supply. SPR
+         fixed: points at 5, 9, 15 and 20 V. SPR PPS: bars from 5 V to
+         11, 16 and 21 V. SPR AVS: bars from 9 V to 15 and 20 V. EPR fixed:
+         points at 28, 36 and 48 V. EPR AVS: bars from 15 V to 28, 36 and
+         48 V. The SPR region, up to 100 W, ends at 24 V; the EPR region
+         allows up to 240 W. Dashed lines mark the worst-case VBUS of
+         21.5 V, 22.15 V, 24 V and 50.9 V.
+
+   The voltages of each kind of supply, with the worst-case VBUS values
+   that circuits on VBUS must withstand.
 
 .. _usbpd-spr:
 
@@ -163,6 +176,33 @@ A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
    *tSourceEPRKeepAlive* (750 ms to 1000 ms) restarts the port with a
    :term:`Hard Reset` (:pd:`PD Sections 7.31.18.2 and 7.31.18.3 <7.31.18.2>`,
    :pd:`Table 7.10`; :ref:`usbpd-hard-reset`).
+
+:numref:`fig-usbpd-epr-keepalive` shows entry and the keep-alive timing.
+
+.. wavedrom::
+   :caption: Entering EPR mode and keeping it alive, ending in a Hard Reset
+             when the messages stop, schematic and not to scale.
+   :name: fig-usbpd-epr-keepalive
+   :alt: Timing diagram. The sink sends EPR_Mode; the source checks the
+         cable with Discover Identity, and the port enters EPR mode. The
+         sink sends EPR_Keep_Alive at least every tSinkEPRKeepAlive, 250 to
+         500 ms. When messages stop, the source waits tSourceEPRKeepAlive,
+         750 to 1000 ms, and then sends Hard Reset, which returns the port
+         to its defaults.
+
+   {"signal": [
+     {"name": "sink", "wave": "=..z......=..z...=..z.............",
+      "data": ["EPR_Mode", "EPR_Keep_Alive", "EPR_Keep_Alive"]},
+     {"name": "source", "wave": "z..=..z.......................=...",
+      "data": ["Discover Identity", "Hard Reset"]},
+     {"name": "mode", "wave": "=.....=.......................=...",
+      "data": ["SPR", "EPR mode", "defaults"]},
+     {"name": "sink timer", "wave": "x............=...x................",
+      "data": ["tSinkEPRKeepAlive"]},
+     {"name": "source timer", "wave": "x...................=.........x...",
+      "data": ["tSourceEPRKeepAlive 750–1000 ms, no message"]}
+   ],
+   "config": {"hscale": 1}}
 
 A power role swap is not allowed in EPR mode; the port leaves EPR mode
 first (:pd:`Section 7.10`; :ref:`usbpd-power-role-swap`).
