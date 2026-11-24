@@ -7,8 +7,9 @@ Usage: uv run docs/ethernet/rgmii/figures.py
 
 Writes timing-params.svg (what each skew, setup and hold parameter of
 tab-rgmii-timing measures) and timing-budget.svg (the setup and hold
-margins of the worked budget) next to this script. All values are those
-quoted on timing.rst.
+margins of the worked budget), from the values quoted on timing.rst, and
+speed-change.svg (TXC changing speed with a stretched phase, and a
+forbidden glitch), next to this script.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -232,6 +233,64 @@ def timing_budget():
     return svg(w, h, b)
 
 
+# ---------------------------------------------------------------------------
+# speed-change.svg
+# ---------------------------------------------------------------------------
+
+def speed_change():
+    """TXC changing from 125 MHz to 25 MHz: a stretched phase is allowed,
+    a glitch is not. Schematic stretch length; clock periods to scale."""
+    w, h = 660, 250
+    left, right, t_end = 150, 640, 120.0
+
+    def xs(t):
+        return left + t / t_end * (right - left)
+
+    def wave(y, edges, start_high=True):
+        lvl, t, pts = start_high, 0.0, []
+        for e in edges + [t_end]:
+            yy = y if lvl else y + 22
+            pts += [(xs(t), yy), (xs(e), yy)]
+            lvl, t = not lvl, e
+        return ('<polyline fill="none" stroke="%s" stroke-width="1.6" '
+                'points="%s"/>' % (CLOCK, " ".join(f"{a:.1f},{c:.1f}"
+                                                  for a, c in pts)))
+
+    fast = [4, 8, 12, 16, 20, 24]          # 125 MHz edges, ns
+    stretch_end = 52                       # end of the stretched high phase
+    slow = [stretch_end + 20 * k for k in range(1, 4) if
+            stretch_end + 20 * k < t_end]
+    good = fast + [stretch_end] + slow
+    bad = fast + [30, 31.5] + [stretch_end] + slow
+    b = []
+    b.append(text(left - 10, 46, "TXC, allowed", anchor="end"))
+    b.append(wave(30, good[:6] + [good[6]] + good[7:], True))
+    b.append(text(left - 10, 106, "TXC, not allowed", anchor="end"))
+    b.append(wave(90, bad, True))
+    b.append(text(xs(31) + 16, 84, "glitch", size=12, fill=ACCENT,
+                  weight="bold"))
+    b.append(f'<circle cx="{xs(30.75):.1f}" cy="101" r="14" fill="none" '
+             f'stroke="{ACCENT}" stroke-width="2"/>')
+    b.append(text(left - 10, 162, "TX_CTL", anchor="end"))
+    b.append(line(xs(0), 168, xs(t_end), 168, CLOCK, 1.6))
+    # Phase labels.
+    for t0, t1, lab in ((0, 24, "125 MHz"), (24, stretch_end,
+                                             "stretched phase"),
+                        (stretch_end, t_end, "25 MHz")):
+        b.append(line(xs(t0), 190, xs(t1), 190, GREY, 0.8))
+        b.append(line(xs(t0), 186, xs(t0), 194, GREY, 0.8))
+        b.append(text((xs(t0) + xs(t1)) / 2, 206, lab, anchor="middle",
+                      size=12, fill=GREY))
+    ya = 222
+    b.append(line(xs(0), ya, xs(t_end), ya))
+    for t in range(0, 121, 20):
+        b.append(line(xs(t), ya, xs(t), ya + 5))
+        b.append(text(xs(t), ya + 18, f"{t}", anchor="middle", size=11))
+    b.append(text(left - 10, ya + 18, "time (ns)", anchor="end", size=12))
+    return svg(w, h + 12, b)
+
+
 if __name__ == "__main__":
     (HERE / "timing-params.svg").write_text(timing_params())
     (HERE / "timing-budget.svg").write_text(timing_budget())
+    (HERE / "speed-change.svg").write_text(speed_change())
