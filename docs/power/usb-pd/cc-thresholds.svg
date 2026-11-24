@@ -5,96 +5,96 @@
 <rect x="58.0" y="58.0" width="600.0" height="400.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
 <line x1="58.0" y1="458.0" x2="658.0" y2="458.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="53.0" y1="458.0" x2="58.0" y2="458.0" stroke="#000000" stroke-width="1.0"/>
-<text x="50.0" y="462.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">0.0</text>
+<text x="50.0" y="462.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0.0</text>
 <line x1="58.0" y1="381.1" x2="658.0" y2="381.1" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="53.0" y1="381.1" x2="58.0" y2="381.1" stroke="#000000" stroke-width="1.0"/>
-<text x="50.0" y="385.1" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">0.5</text>
+<text x="50.0" y="385.1" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0.5</text>
 <line x1="58.0" y1="304.2" x2="658.0" y2="304.2" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="53.0" y1="304.2" x2="58.0" y2="304.2" stroke="#000000" stroke-width="1.0"/>
-<text x="50.0" y="308.2" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">1.0</text>
+<text x="50.0" y="308.2" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">1.0</text>
 <line x1="58.0" y1="227.2" x2="658.0" y2="227.2" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="53.0" y1="227.2" x2="58.0" y2="227.2" stroke="#000000" stroke-width="1.0"/>
-<text x="50.0" y="231.2" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">1.5</text>
+<text x="50.0" y="231.2" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">1.5</text>
 <line x1="58.0" y1="150.3" x2="658.0" y2="150.3" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="53.0" y1="150.3" x2="58.0" y2="150.3" stroke="#000000" stroke-width="1.0"/>
-<text x="50.0" y="154.3" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">2.0</text>
+<text x="50.0" y="154.3" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">2.0</text>
 <line x1="58.0" y1="73.4" x2="658.0" y2="73.4" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="53.0" y1="73.4" x2="58.0" y2="73.4" stroke="#000000" stroke-width="1.0"/>
-<text x="50.0" y="77.4" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">2.5</text>
-<text x="14.0" y="258.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 258.0)">CC voltage (V)</text>
-<text x="166.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#000000">Sink</text>
-<text x="166.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">Rd ± 10 %</text>
-<text x="276.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#000000">Sink</text>
-<text x="276.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">Rd ± 20 %</text>
-<text x="411.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#000000">Source</text>
-<text x="411.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">80 µA</text>
-<text x="516.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#000000">Source</text>
-<text x="516.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">180 µA</text>
-<text x="621.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#000000">Source</text>
-<text x="621.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">330 µA</text>
+<text x="50.0" y="77.4" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">2.5</text>
+<text x="14.0" y="258.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 258.0)">CC voltage (V)</text>
+<text x="166.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">Sink</text>
+<text x="166.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">Rd ± 10 %</text>
+<text x="276.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">Sink</text>
+<text x="276.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">Rd ± 20 %</text>
+<text x="411.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">Source</text>
+<text x="411.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">80 µA</text>
+<text x="516.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">Source</text>
+<text x="516.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">180 µA</text>
+<text x="621.0" y="32.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">Source</text>
+<text x="621.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">330 µA</text>
 <line x1="337.5" y1="58.0" x2="337.5" y2="458.0" stroke="#000000" stroke-width="1.0" stroke-dasharray="5,3"/>
 <rect x="135.0" y="415.5" width="26.0" height="42.5" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="135.0" y="363.8" width="26.0" height="51.5" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
-<text x="165.0" y="367.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">0.612</text>
-<text x="165.0" y="419.4" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">0.277</text>
+<text x="165.0" y="367.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">0.612</text>
+<text x="165.0" y="419.4" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">0.277</text>
 <rect x="135.0" y="343.4" width="26.0" height="20.3" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="135.0" y="278.9" width="26.0" height="64.3" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
-<text x="165.0" y="282.9" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">1.164</text>
-<text x="165.0" y="347.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">0.746</text>
+<text x="165.0" y="282.9" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">1.164</text>
+<text x="165.0" y="347.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">0.746</text>
 <rect x="135.0" y="247.5" width="26.0" height="31.2" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="135.0" y="143.8" width="26.0" height="103.5" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
-<text x="165.0" y="147.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">2.042</text>
-<text x="165.0" y="251.4" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">1.369</text>
-<text x="131.0" y="393.6" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">default</text>
-<text x="131.0" y="315.1" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">1.5 A</text>
-<text x="131.0" y="199.6" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">3.0 A</text>
-<text x="131.0" y="440.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">detach ≤ 0.276</text>
+<text x="165.0" y="147.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">2.042</text>
+<text x="165.0" y="251.4" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">1.369</text>
+<text x="131.0" y="393.6" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">default</text>
+<text x="131.0" y="315.1" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">1.5 A</text>
+<text x="131.0" y="199.6" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">3.0 A</text>
+<text x="131.0" y="440.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">detach ≤ 0.276</text>
 <circle cx="148.0" cy="393.4" r="3.2" fill="#000000"/>
 <circle cx="148.0" cy="313.4" r="3.2" fill="#000000"/>
 <circle cx="148.0" cy="196.5" r="3.2" fill="#000000"/>
 <rect x="245.0" y="419.8" width="26.0" height="38.2" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="245.0" y="122.5" width="26.0" height="297.2" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
-<text x="275.0" y="126.5" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">2.181</text>
-<text x="275.0" y="423.7" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">0.249</text>
-<text x="241.0" y="277.4" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">attached</text>
-<text x="241.0" y="442.9" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">detach ≤ 0.248</text>
+<text x="275.0" y="126.5" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">2.181</text>
+<text x="275.0" y="423.7" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">0.249</text>
+<text x="275.0" y="277.4" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">attached</text>
+<text x="241.0" y="442.9" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">detach ≤ 0.248</text>
 <rect x="380.0" y="443.2" width="26.0" height="4.9" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
 <rect x="380.0" y="418.0" width="26.0" height="22.2" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="376.0" y="422.0" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">0.260</text>
-<text x="376.0" y="444.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">0.116</text>
+<text x="376.0" y="422.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">0.260</text>
+<text x="376.0" y="444.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">0.116</text>
 <rect x="380.0" y="382.7" width="26.0" height="25.1" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="380.0" y="58.0" width="26.0" height="196.8" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="376.0" y="258.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">1.321</text>
-<text x="410.0" y="449.7" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">Ra</text>
-<text x="410.0" y="399.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">Rd</text>
-<text x="410.0" y="160.4" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">open</text>
+<text x="376.0" y="258.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">1.321</text>
+<text x="410.0" y="449.7" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Ra</text>
+<text x="410.0" y="399.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Rd</text>
+<text x="410.0" y="160.4" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">open</text>
 <rect x="485.0" y="424.8" width="26.0" height="11.1" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
 <rect x="485.0" y="354.2" width="26.0" height="67.8" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="481.0" y="358.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">0.675</text>
-<text x="481.0" y="426.0" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">0.234</text>
+<text x="481.0" y="358.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">0.675</text>
+<text x="481.0" y="426.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">0.234</text>
 <rect x="485.0" y="288.5" width="26.0" height="56.5" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="485.0" y="58.0" width="26.0" height="178.3" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="481.0" y="240.3" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">1.441</text>
-<text x="515.0" y="434.3" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">Ra</text>
-<text x="515.0" y="320.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">Rd</text>
-<text x="515.0" y="151.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">open</text>
+<text x="481.0" y="240.3" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">1.441</text>
+<text x="515.0" y="434.3" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Ra</text>
+<text x="515.0" y="320.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Rd</text>
+<text x="515.0" y="151.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">open</text>
 <rect x="590.0" y="397.1" width="26.0" height="20.3" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
 <rect x="590.0" y="322.8" width="26.0" height="69.2" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="586.0" y="326.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">0.879</text>
-<text x="586.0" y="396.0" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">0.429</text>
+<text x="586.0" y="326.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">0.879</text>
+<text x="586.0" y="396.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">0.429</text>
 <rect x="590.0" y="147.3" width="26.0" height="103.6" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
 <rect x="590.0" y="58.0" width="26.0" height="25.8" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="586.0" y="87.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#000000">2.432</text>
-<text x="620.0" y="411.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">Ra</text>
-<text x="620.0" y="203.1" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">Rd</text>
-<text x="620.0" y="74.9" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">open</text>
+<text x="586.0" y="87.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">2.432</text>
+<text x="620.0" y="411.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Ra</text>
+<text x="620.0" y="203.1" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Rd</text>
+<text x="620.0" y="74.9" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">open</text>
 <rect x="58.0" y="474.0" width="22.0" height="12.0" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
-<text x="88.0" y="484.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">CC voltage with Rd (sink: per advertised level)</text>
+<text x="88.0" y="484.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">CC voltage with Rd (sink: per advertised level)</text>
 <rect x="58.0" y="494.0" width="22.0" height="12.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
-<text x="88.0" y="504.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">CC voltage with Ra, at the nominal Rp current</text>
+<text x="88.0" y="504.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">CC voltage with Ra, at the nominal Rp current</text>
 <rect x="58.0" y="514.0" width="22.0" height="12.0" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="88.0" y="524.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">window in which a threshold must lie</text>
+<text x="88.0" y="524.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">window in which a threshold must lie</text>
 <circle cx="69.0" cy="540.0" r="3.2" fill="#000000"/>
-<text x="88.0" y="544.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">nominal CC voltage: 0.42 V, 0.94 V and 1.7 V</text>
-<text x="88.0" y="564.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#7f7f7f">Source Rd range: 5.1 kΩ ± 20 % at the nominal Rp current</text>
+<text x="88.0" y="544.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">nominal CC voltage: 0.42 V, 0.94 V and 1.7 V</text>
+<text x="88.0" y="564.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#7f7f7f">Source Rd range: 5.1 kΩ ± 20 % at the nominal Rp current</text>
 </svg>

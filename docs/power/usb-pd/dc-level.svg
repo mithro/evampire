@@ -1,63 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="372" viewBox="0 0 680 372">
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="408" viewBox="0 0 680 408">
 <title>CC signal on its DC level</title>
 <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
-<rect width="680" height="372" fill="#ffffff"/>
-<text x="60.0" y="30.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="bold" fill="#000000">Start of a packet</text>
-<line x1="60.0" y1="203.2" x2="340.0" y2="203.2" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="6,3"/>
-<line x1="60.0" y1="155.2" x2="340.0" y2="155.2" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="6,3"/>
-<line x1="60.0" y1="133.6" x2="340.0" y2="133.6" stroke="#7f7f7f" stroke-width="0.6" stroke-dasharray="2,2"/>
-<rect x="60.0" y="40.0" width="280.0" height="240.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
-<text x="380.0" y="30.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="bold" fill="#000000">End of a packet</text>
+<rect width="680" height="408" fill="#ffffff"/>
+<text x="75.0" y="30.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="start" font-weight="bold" fill="#000000">Start of a packet</text>
+<line x1="75.0" y1="203.2" x2="345.0" y2="203.2" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="6,3"/>
+<line x1="75.0" y1="155.2" x2="345.0" y2="155.2" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="6,3"/>
+<line x1="75.0" y1="133.6" x2="345.0" y2="133.6" stroke="#7f7f7f" stroke-width="0.6" stroke-dasharray="2,2"/>
+<rect x="75.0" y="40.0" width="270.0" height="240.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
+<text x="380.0" y="30.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="start" font-weight="bold" fill="#000000">End of a packet</text>
 <line x1="380.0" y1="203.2" x2="660.0" y2="203.2" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="6,3"/>
 <line x1="380.0" y1="155.2" x2="660.0" y2="155.2" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="6,3"/>
 <line x1="380.0" y1="133.6" x2="660.0" y2="133.6" stroke="#7f7f7f" stroke-width="0.6" stroke-dasharray="2,2"/>
 <rect x="380.0" y="40.0" width="280.0" height="240.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
-<line x1="55.0" y1="241.6" x2="60.0" y2="241.6" stroke="#000000" stroke-width="1.0"/>
-<text x="52.0" y="245.6" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">0</text>
-<line x1="55.0" y1="203.2" x2="60.0" y2="203.2" stroke="#000000" stroke-width="1.0"/>
-<text x="52.0" y="207.2" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">0.4</text>
-<line x1="55.0" y1="155.2" x2="60.0" y2="155.2" stroke="#000000" stroke-width="1.0"/>
-<text x="52.0" y="159.2" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">0.9</text>
-<line x1="55.0" y1="133.6" x2="60.0" y2="133.6" stroke="#000000" stroke-width="1.0"/>
-<text x="52.0" y="137.6" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">1.125</text>
-<line x1="55.0" y1="78.4" x2="60.0" y2="78.4" stroke="#000000" stroke-width="1.0"/>
-<text x="52.0" y="82.4" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">1.7</text>
-<text x="14.0" y="160.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 160.0)">CC voltage (V)</text>
-<polyline points="60.0,78.4 116.0,78.4 120.2,241.6 162.7,241.6 166.9,133.6 186.0,133.6 190.2,241.6 209.3,241.6 213.5,133.6 256.0,133.6 260.2,241.6 279.3,241.6 283.5,133.6 302.7,133.6 306.9,241.6 340.0,241.6" fill="none" stroke="#000000" stroke-width="2.0"/>
-<text x="64.2" y="70.4" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">idle, 3.0 A level</text>
-<text x="120.0" y="264.8" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">driven low: preamble</text>
+<line x1="70.0" y1="241.6" x2="75.0" y2="241.6" stroke="#000000" stroke-width="1.0"/>
+<text x="67.0" y="245.6" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0</text>
+<line x1="70.0" y1="203.2" x2="75.0" y2="203.2" stroke="#000000" stroke-width="1.0"/>
+<text x="67.0" y="207.2" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0.4</text>
+<line x1="70.0" y1="155.2" x2="75.0" y2="155.2" stroke="#000000" stroke-width="1.0"/>
+<text x="67.0" y="159.2" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0.9</text>
+<line x1="70.0" y1="133.6" x2="75.0" y2="133.6" stroke="#000000" stroke-width="1.0"/>
+<text x="67.0" y="137.6" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">1.125</text>
+<line x1="70.0" y1="78.4" x2="75.0" y2="78.4" stroke="#000000" stroke-width="1.0"/>
+<text x="67.0" y="82.4" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">1.7</text>
+<text x="14.0" y="160.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 160.0)">CC voltage (V)</text>
+<polyline points="75.0,78.4 129.0,78.4 133.1,241.6 174.0,241.6 178.1,133.6 196.5,133.6 200.6,241.6 219.0,241.6 223.1,133.6 264.0,133.6 268.1,241.6 286.5,241.6 290.6,133.6 309.0,133.6 313.1,241.6 345.0,241.6" fill="none" stroke="#000000" stroke-width="2.0"/>
+<text x="79.0" y="70.4" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">idle, 3.0 A level</text>
+<text x="133.0" y="264.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">driven low: preamble</text>
 <polyline points="380.0,133.6 393.0,133.6 395.3,241.6 405.9,241.6 408.3,133.6 431.9,133.6 434.2,241.6 444.8,241.6 447.1,133.6 457.8,133.6 460.1,241.6 488.9,241.6 490.8,210.9 492.8,186.0 494.7,165.8 496.7,149.3 498.6,136.0 500.6,125.2 502.5,116.4 504.4,109.2 506.4,103.4 508.3,98.7 510.3,94.9 512.2,91.8 514.2,89.3 516.1,87.2 518.1,85.6 520.0,84.2 521.9,83.1 523.9,82.2 525.8,81.5 527.8,80.9 529.7,80.5 531.7,80.1 533.6,79.8 535.6,79.5 537.5,79.3 539.4,79.1 541.4,79.0 543.3,78.9 545.3,78.8 547.2,78.7 660.0,78.4" fill="none" stroke="#000000" stroke-width="2.0"/>
 <line x1="457.8" y1="270.4" x2="636.7" y2="270.4" stroke="#000000" stroke-width="1.0" marker-end="url(#arr)" marker-start="url(#arr)"/>
-<text x="547.2" y="265.4" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">release by 23 µs (tEndDriveBMC)</text>
+<text x="547.2" y="265.4" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">release by 23 µs (tEndDriveBMC)</text>
 <line x1="457.8" y1="40.0" x2="457.8" y2="280.0" stroke="#000000" stroke-width="0.8" stroke-dasharray="4,3"/>
-<text x="461.8" y="184.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">low ≥ 1 µs</text>
-<text x="461.8" y="198.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">(tHoldLowBMC),</text>
-<text x="461.8" y="212.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">then released</text>
-<text x="453.8" y="54.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="end" font-weight="normal" fill="#000000">end of</text>
-<text x="453.8" y="68.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="end" font-weight="normal" fill="#000000">last bit</text>
-<line x1="60.0" y1="280.0" x2="60.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="60.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
-<line x1="130.0" y1="280.0" x2="130.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="130.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">5</text>
-<line x1="200.0" y1="280.0" x2="200.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="200.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
-<line x1="270.0" y1="280.0" x2="270.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="270.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">15</text>
-<line x1="340.0" y1="280.0" x2="340.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="340.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">20</text>
-<text x="200.0" y="316.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#000000">time (µs)</text>
+<text x="461.8" y="184.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">low ≥ 1 µs</text>
+<text x="461.8" y="198.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">(tHoldLowBMC),</text>
+<text x="461.8" y="212.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">then released</text>
+<text x="453.8" y="54.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="normal" fill="#000000">end of</text>
+<text x="453.8" y="68.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="normal" fill="#000000">last bit</text>
+<line x1="75.0" y1="280.0" x2="75.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="75.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
+<line x1="142.5" y1="280.0" x2="142.5" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="142.5" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">5</text>
+<line x1="210.0" y1="280.0" x2="210.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="210.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
+<line x1="277.5" y1="280.0" x2="277.5" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="277.5" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">15</text>
+<line x1="345.0" y1="280.0" x2="345.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="345.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">20</text>
+<text x="210.0" y="316.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">time (µs)</text>
 <line x1="380.0" y1="280.0" x2="380.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="380.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
+<text x="380.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
 <line x1="457.8" y1="280.0" x2="457.8" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="457.8" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
+<text x="457.8" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
 <line x1="535.6" y1="280.0" x2="535.6" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="535.6" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">20</text>
+<text x="535.6" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">20</text>
 <line x1="613.3" y1="280.0" x2="613.3" y2="285.0" stroke="#000000" stroke-width="1.0"/>
-<text x="613.3" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">30</text>
-<text x="520.0" y="316.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#000000">time (µs)</text>
-<text x="656.0" y="151.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#7f7f7f">1.5 A idle level</text>
-<text x="656.0" y="199.2" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#7f7f7f">default idle level</text>
-<text x="656.0" y="129.6" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="end" font-weight="normal" fill="#7f7f7f">vSwing 1.125 V</text>
-<text x="60.0" y="342.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">Shown at the 3.0 A level, idle 1.7 V. The ground offset moves the received signal by up to 250 mV:</text>
-<text x="60.0" y="360.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">down at the sink, up at the source. The release slope is schematic.</text>
+<text x="613.3" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">30</text>
+<text x="520.0" y="316.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">time (µs)</text>
+<text x="656.0" y="129.6" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">vSwing 1.125 V</text>
+<text x="25.0" y="342.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">Shown at the 3.0 A level, idle 1.7 V; dashed: the 0.4 V and 0.9 V idle levels.</text>
+<text x="25.0" y="360.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">Ground offset moves the received signal by up to 250 mV: down at the sink,</text>
+<text x="25.0" y="378.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">up at the source. The release slope is schematic.</text>
 </svg>

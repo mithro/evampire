@@ -2,55 +2,55 @@
 <title>USB PD packet layout</title>
 <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
 <rect width="680" height="400" fill="#ffffff"/>
-<text x="40.0" y="24.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="bold" fill="#000000">Message packet</text>
+<text x="40.0" y="24.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="start" font-weight="bold" fill="#000000">Message packet</text>
 <rect x="40.0" y="34.0" width="120.0" height="44.0" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="100.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">Preamble</text>
-<text x="100.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">64 bits</text>
+<text x="100.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">Preamble</text>
+<text x="100.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">64 bits</text>
 <rect x="160.0" y="34.0" width="80.0" height="44.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
-<text x="200.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">SOP</text>
-<text x="200.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">20 bits</text>
+<text x="200.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">SOP</text>
+<text x="200.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">20 bits</text>
 <rect x="240.0" y="34.0" width="90.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="285.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">Header</text>
-<text x="285.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">20 bits</text>
+<text x="285.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">Header</text>
+<text x="285.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">20 bits</text>
 <rect x="330.0" y="34.0" width="150.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="405.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">Data objects</text>
-<text x="405.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">0 to 7 × 40 bits</text>
+<text x="405.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">Data objects</text>
+<text x="405.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">0 to 7 × 40 bits</text>
 <rect x="480.0" y="34.0" width="90.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="525.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">CRC</text>
-<text x="525.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">40 bits</text>
+<text x="525.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">CRC</text>
+<text x="525.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">40 bits</text>
 <rect x="570.0" y="34.0" width="70.0" height="44.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
-<text x="605.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">EOP</text>
-<text x="605.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">5 bits</text>
+<text x="605.0" y="53.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">EOP</text>
+<text x="605.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">5 bits</text>
 <line x1="160.0" y1="90.0" x2="160.0" y2="96.0" stroke="#000000" stroke-width="1.0"/>
 <line x1="160.0" y1="96.0" x2="640.0" y2="96.0" stroke="#000000" stroke-width="1.0"/>
 <line x1="640.0" y1="96.0" x2="640.0" y2="90.0" stroke="#000000" stroke-width="1.0"/>
-<text x="400.0" y="111.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">5-bit symbols (4b5b and K-codes)</text>
+<text x="400.0" y="111.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">5-bit symbols (4b5b and K-codes)</text>
 <line x1="240.0" y1="124.0" x2="240.0" y2="130.0" stroke="#000000" stroke-width="1.0"/>
 <line x1="240.0" y1="130.0" x2="480.0" y2="130.0" stroke="#000000" stroke-width="1.0"/>
 <line x1="480.0" y1="130.0" x2="480.0" y2="124.0" stroke="#000000" stroke-width="1.0"/>
-<text x="360.0" y="145.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">covered by the CRC</text>
-<text x="40.0" y="182.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="bold" fill="#000000">Hard Reset or Cable Reset</text>
+<text x="360.0" y="145.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">covered by the CRC</text>
+<text x="40.0" y="182.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="start" font-weight="bold" fill="#000000">Hard Reset or Cable Reset</text>
 <rect x="40.0" y="192.0" width="120.0" height="44.0" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="100.0" y="211.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">Preamble</text>
-<text x="100.0" y="227.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">64 bits</text>
+<text x="100.0" y="211.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">Preamble</text>
+<text x="100.0" y="227.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">64 bits</text>
 <rect x="160.0" y="192.0" width="80.0" height="44.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
-<text x="200.0" y="211.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">4 K-codes</text>
-<text x="200.0" y="227.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">20 bits</text>
-<text x="40.0" y="276.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="bold" fill="#000000">Order on the wire: header of GoodCRC, bytes 41h 02h</text>
+<text x="200.0" y="211.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">4 K-codes</text>
+<text x="200.0" y="227.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">20 bits</text>
+<text x="40.0" y="276.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="start" font-weight="bold" fill="#000000">Order on the wire: header of GoodCRC, bytes 41h 02h</text>
 <rect x="40.0" y="286.0" width="150.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="115.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">byte 0, low: 1h</text>
-<text x="115.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">symbol 01001</text>
+<text x="115.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">byte 0, low: 1h</text>
+<text x="115.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">symbol 01001</text>
 <rect x="190.0" y="286.0" width="150.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="265.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">byte 0, high: 4h</text>
-<text x="265.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">symbol 01010</text>
+<text x="265.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">byte 0, high: 4h</text>
+<text x="265.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">symbol 01010</text>
 <rect x="340.0" y="286.0" width="150.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="415.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">byte 1, low: 2h</text>
-<text x="415.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">symbol 10100</text>
+<text x="415.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">byte 1, low: 2h</text>
+<text x="415.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">symbol 10100</text>
 <rect x="490.0" y="286.0" width="150.0" height="44.0" rx="0" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
-<text x="565.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#000000">byte 1, high: 0h</text>
-<text x="565.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#000000">symbol 11110</text>
+<text x="565.0" y="305.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">byte 1, high: 0h</text>
+<text x="565.0" y="321.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">symbol 11110</text>
 <line x1="40.0" y1="346.0" x2="640.0" y2="346.0" stroke="#000000" stroke-width="1.0" marker-end="url(#arr)"/>
-<text x="40.0" y="362.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">sent first</text>
-<text x="640.0" y="362.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="end" font-weight="normal" fill="#000000">sent last</text>
-<text x="40.0" y="386.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#000000">Symbols are written b4 to b0 and sent b0 first: 01001 goes out as 1, 0, 0, 1, 0.</text>
+<text x="40.0" y="362.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">sent first</text>
+<text x="640.0" y="362.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="normal" fill="#000000">sent last</text>
+<text x="40.0" y="386.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">Symbols are written b4 to b0 and sent b0 first: 01001 goes out as 1, 0, 0, 1, 0.</text>
 </svg>

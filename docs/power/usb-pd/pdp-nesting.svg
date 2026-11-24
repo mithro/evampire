@@ -3,16 +3,16 @@
 <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
 <rect width="680" height="224" fill="#ffffff"/>
 <rect x="160.0" y="30.0" width="300.0" height="26.0" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
-<text x="152.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">Port Maximum PDP</text>
-<text x="466.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">the most the port will ever provide</text>
+<text x="152.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">Port Maximum PDP</text>
+<text x="466.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">the most the port will ever provide</text>
 <rect x="160.0" y="74.0" width="216.0" height="26.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
-<text x="152.0" y="92.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">Port Present PDP</text>
-<text x="382.0" y="92.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">what it can provide now</text>
+<text x="152.0" y="92.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">Port Present PDP</text>
+<text x="382.0" y="92.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">what it can provide now</text>
 <rect x="160.0" y="118.0" width="150.0" height="26.0" rx="0" fill="#fbe5d6" stroke="#000000" stroke-width="1.0"/>
-<text x="152.0" y="136.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">present offer</text>
-<text x="316.0" y="136.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="start" font-weight="normal" fill="#000000">the power in Source_Capabilities</text>
+<text x="152.0" y="136.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">present offer</text>
+<text x="316.0" y="136.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">the power in Source_Capabilities</text>
 <line x1="265.0" y1="20.0" x2="265.0" y2="166.0" stroke="#548235" stroke-width="2.0" stroke-dasharray="6,3"/>
-<text x="265.0" y="184.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle" font-weight="normal" fill="#548235">Port Guaranteed PDP: provided on request</text>
+<text x="265.0" y="184.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#548235">Port Guaranteed PDP: provided on request</text>
 <line x1="160.0" y1="196.0" x2="460.0" y2="196.0" stroke="#000000" stroke-width="1.0" marker-end="url(#arr)"/>
-<text x="460.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="end" font-weight="normal" fill="#000000">power (schematic, not to scale)</text>
+<text x="460.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="normal" fill="#000000">power (schematic, not to scale)</text>
 </svg>
