@@ -115,6 +115,20 @@ voltages the transceiver is not connected to the cable at all, because the
 transformer blocks direct current. The power sourcing equipment therefore
 sees only the powered device's signature.
 
+:numref:`fig-magnetics-poe-detection` shows the path of the detection current. The capacitor-coupled case is :numref:`fig-magnetics-cap-signature`.
+
+.. graphviz:: poe-detection.dot
+   :name: fig-magnetics-poe-detection
+   :caption: Detection through standard magnetics: only the signature is seen.
+   :alt: The power sourcing equipment applies a detection voltage of 2.7 V to
+         10.1 V over the cable to the centre taps of the transformers
+         of pair 1 and pair 2. Between the centre taps sits the
+         powered device's signature, 23.7 kΩ to 26.3 kΩ and 50 nF to
+         120 nF. The transceiver connects to the other side of the
+         transformers by data only, and is not seen, because the
+         transformers block direct current.
+   :align: center
+
 Anything that replaces the transformer must keep the data circuits within
 the signature limits of :numref:`tbl-magnetics-poe-numbers`, including the
 capacitance and series inductance. :doc:`without-transformer` works out

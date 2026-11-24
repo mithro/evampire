@@ -1,0 +1,44 @@
+// Detection through standard magnetics: the power sourcing equipment's
+// detection voltage reaches the powered device's signature through the
+// cable-side centre taps, while the transformer blocks direct current, so
+// the transceiver is not seen.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph poe_detection {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+    pse [pos="0.5,1.2!", width=0.9, height=1.8, fillcolor="#fbe5d6",
+         label="power\nsourcing\nequipment:\ndetection\n2.7 V to\n10.1 V"];
+    x1 [pos="2.3,2.0!", width=1.1, height=0.6, fillcolor="#fff2cc",
+        label="transformer,\npair 1"];
+    x2 [pos="2.3,0.4!", width=1.1, height=0.6, fillcolor="#fff2cc",
+        label="transformer,\npair 2"];
+    sig [pos="2.3,1.2!", width=1.6, height=0.55, fillcolor="#e2efda",
+         label="signature: 23.7 kΩ to\n26.3 kΩ, 50 nF to 120 nF"];
+    phy [pos="4.4,1.2!", width=1.1, height=1.8, fillcolor="#dbe8f5",
+         label="transceiver:\nnot seen;\nthe transformer\nblocks direct\ncurrent"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a1 [pos="0.95,2.0!"]; a2 [pos="0.95,0.4!"];
+    t1 [pos="2.3,1.7!"]; t2 [pos="2.3,0.7!"];
+    c1 [pos="2.85,2.0!"]; d1 [pos="3.85,2.0!"];
+    c2 [pos="2.85,0.4!"]; d2 [pos="3.85,0.4!"];
+
+    a1 -- x1 [color="#c00000", penwidth=2];
+    a2 -- x2 [color="#c00000", penwidth=2];
+    t1 -- sig [color="#c00000", penwidth=2];
+    sig -- t2 [color="#c00000", penwidth=2];
+    c1 -- d1 [color="#1f4e79"];
+    c2 -- d2 [color="#1f4e79"];
+
+    node [shape=plaintext, style="", width=1.4, height=0.2, fontsize=9];
+    n1 [pos="1.4,2.45!", width=1.9, fontcolor="#c00000", label="cable, to the centre taps"];
+    n2 [pos="3.35,2.45!", fontcolor="#1f4e79", label="data only"];
+}

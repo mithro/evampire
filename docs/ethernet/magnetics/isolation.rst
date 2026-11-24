@@ -147,6 +147,18 @@ would need two parts in series: 5 nF at a 4000 V rating. Four such strings
 in parallel give 20 nF, so a port would need 64 capacitors. 33 nF to
 100 nF per wire needs more parts, or larger high-voltage capacitors.
 
+:numref:`fig-magnetics-hv-caps` compares the three arrangements.
+
+.. graphviz:: hv-caps.dot
+   :name: fig-magnetics-hv-caps
+   :caption: External high-voltage capacitors for one wire, from 10 nF 2000 V parts
+             in an 1812 package.
+   :alt: Three arrangements for one wire using 10 nF parts. One part: 10 nF,
+         which holds the 2250 V test, 8 parts per port. Two in
+         parallel: 20 nF, 16 parts per port. Four strings of two in
+         series: 20 nF at a 4000 V rating, 64 parts per port.
+   :align: center
+
 Capacitors certified for bridging insulation in mains equipment, class Y2
 under IEC 60384-14 ([MAG-IEC60384-14]_), are another option. The
 surface-mount parts cited here go up to 4.7 nF ([MAG-KEMETCAS]_, product
@@ -172,6 +184,24 @@ digital isolator carries 100 Mbit/s per channel across a barrier rated
 ([MAG-ISO7741]_, features). If only the line driver and receiver are on
 the cable-side die, the barrier carries the converters' samples, several
 times more data.
+
+:numref:`fig-magnetics-second-die` compares the two splits.
+
+.. graphviz:: second-die.dot
+   :name: fig-magnetics-second-die
+   :caption: Two ways to split the transceiver with a second die at cable
+             potential.
+   :alt: Top, the whole transceiver on the cable-side die: evampire's
+         forwarding logic exchanges the byte interface, 8 bits each
+         way at 125 MHz, 1 Gbit/s, across a dashed barrier with the
+         die holding the converters, signal processing, driver and
+         receiver, which connects to the cable. Bottom, only the line
+         driver and receiver on the cable-side die: evampire holds the
+         forwarding logic, signal processing and converters, and the
+         converter samples, several times more data, cross the
+         barrier. Power crosses too, from Power over Ethernet or an
+         isolated supply.
+   :align: center
 
 The cable-side die also needs power on its own side of the barrier. A port
 that takes Power over Ethernet can draw it from the cable; otherwise it

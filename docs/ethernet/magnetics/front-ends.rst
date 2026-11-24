@@ -97,6 +97,23 @@ confirmed by implementation. Coupling capacitors on the die, or a second
 die on the cable side, are further options described on
 :doc:`coupling-capacitors` and :doc:`isolation`.
 
+:numref:`fig-magnetics-arch-active` marks the three changes against :numref:`fig-magnetics-arch-capacitor`.
+
+.. graphviz:: arch-active.dot
+   :name: fig-magnetics-arch-active
+   :caption: One pair of the active front end, with the three changes from the
+             passive front end in red.
+   :alt: Block diagram like the passive front end, with the three changes in
+         red. The common-mode choke is gone, drawn as a dashed box,
+         replaced by common-mode feedback and termination on evampire.
+         The centre-tapped inductor is replaced by an external
+         high-voltage transistor, an active inductor, controlled from
+         evampire by a dashed line. Custom clamps on evampire take
+         part of the protection, and fewer external clamps remain. The
+         coupling capacitors, the common-mode termination to chassis
+         and the Power over Ethernet circuits are unchanged.
+   :align: center
+
 Circuit specifications
 ----------------------
 

@@ -169,6 +169,20 @@ termination, a coupling capacitor, or a resistor between two grounds. Such
 a part must withstand the voltage of the test that the port is qualified
 with.
 
+:numref:`fig-magnetics-barrier-parts` shows where such parts sit.
+
+.. graphviz:: barrier-parts.dot
+   :name: fig-magnetics-barrier-parts
+   :caption: Parts that bridge the isolation barrier of a port.
+   :alt: The equipment side, with the transceiver, signal ground and chassis,
+         on the left; the cable side, with the cable, centre taps and
+         termination resistors, on the right; a dashed isolation
+         barrier between. Three parts bridge it: the 1000 pF
+         termination capacitor to chassis, a coupling capacitor, and a
+         resistor between two grounds. Each withstands 2121 V peak in
+         the alternating test or 2250 V in the direct test.
+   :align: center
+
 These pages take a part as suitable when its maker states a withstand
 (test) voltage at least as high as that test voltage: 2121 V peak for the
 alternating test, or 2250 V for the direct test. Its rated working voltage

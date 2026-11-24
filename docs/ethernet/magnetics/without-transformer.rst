@@ -120,6 +120,21 @@ Active common-mode choke
    behind it notes a trade-off between loop stability and common-mode
    rejection ([MAG-US7965480]_).
 
+:numref:`fig-magnetics-cm-options` compares the three.
+
+.. graphviz:: cm-options.dot
+   :name: fig-magnetics-cm-options
+   :caption: Three options for common-mode rejection on a capacitor-coupled pair.
+   :alt: Three rows from the cable to the receiver. First, an external
+         common-mode choke, for example 200 µH and 42 dB, then the
+         coupling capacitor C_w and the receiver. Second, the coupling
+         capacitor and a receiver with a wide common-mode range, with
+         a block that senses the common-mode voltage and drives it
+         back to the bias point. Third, an active common-mode choke
+         that senses and cancels common-mode current, then the
+         coupling capacitor and the receiver.
+   :align: center
+
 The input range of a receiver built from gf180mcu devices is set by the
 devices at its input when the pins connect to them directly. A resistive
 or capacitive divider in front of the receiver extends the range by its
@@ -157,6 +172,18 @@ as a transformer's magnetising inductance does. The 80 µH minimum of
 pair ([MAG-GARDNER14]_, slide 4). The receiver's baseline-wander correction
 (:doc:`../phy-electrical/index`) absorbs whatever the capacitors and
 inductors remove; :doc:`gigabit-risk` estimates how much.
+
+:numref:`fig-magnetics-inductor-droop` shows the two high-pass elements; the capacitors alone are :numref:`fig-magnetics-cap-model`.
+
+.. graphviz:: inductor-droop.dot
+   :name: fig-magnetics-inductor-droop
+   :caption: A Power over Ethernet inductor across a capacitor-coupled pair.
+   :alt: The transceiver, a 100 Ω source, drives wires plus and minus through a
+         coupling capacitor C_w in each wire. An inductor of 80 µH or
+         more sits across the pair on the cable side, and the cable is
+         a 100 Ω load. A note says the series capacitors and the
+         inductor across the pair are two high-pass elements.
+   :align: center
 
 Common-mode termination and filtering
 -------------------------------------

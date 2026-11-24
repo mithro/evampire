@@ -1,0 +1,55 @@
+// Three arrangements of external high-voltage ceramic capacitors for one
+// wire, using 10 nF 2000 V parts in an 1812 package (4.5 mm x 3.2 mm).
+//
+// Fixed grid, positions in inches. One row per arrangement.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph hv_caps {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=8, pin=true, shape=box,
+           style=filled, fixedsize=true, width=0.45, height=0.25,
+           fillcolor="#fff2cc", label="10 nF"];
+    edge  [penwidth=1.3];
+
+    node [shape=plaintext, style="", width=2.8, height=0.4, fontsize=9,
+          fillcolor="none"];
+    t1 [pos="4.2,2.55!", label="one part: 10 nF, holds the\n2250 V test; 8 parts per port"];
+    t2 [pos="4.2,1.75!", label="two in parallel: 20 nF;\n16 parts per port"];
+    t3 [pos="4.2,0.55!", label="two in series, four strings: 20 nF\nat a 4000 V rating; 64 parts per port"];
+
+    node [shape=box, style=filled, width=0.45, height=0.25, fontsize=8,
+          fillcolor="#fff2cc", label="10 nF"];
+    a1 [pos="1.5,2.55!"];
+    b1 [pos="1.5,1.9!"]; b2 [pos="1.5,1.6!"];
+    s11 [pos="1.2,1.0!"]; s12 [pos="1.8,1.0!"];
+    s21 [pos="1.2,0.7!"]; s22 [pos="1.8,0.7!"];
+    s31 [pos="1.2,0.4!"]; s32 [pos="1.8,0.4!"];
+    s41 [pos="1.2,0.1!"]; s42 [pos="1.8,0.1!"];
+
+    node [shape=point, width=0.05, height=0.05, style=filled,
+          fillcolor="#000000", label=""];
+    i1 [pos="0.6,2.55!"]; o1 [pos="2.4,2.55!"];
+    i2 [pos="0.8,1.75!"]; o2 [pos="2.2,1.75!"];
+    i3 [pos="0.8,0.55!"]; o3 [pos="2.2,0.55!"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    w2a [pos="0.8,1.9!"]; w2b [pos="0.8,1.6!"];
+    e2a [pos="2.2,1.9!"]; e2b [pos="2.2,1.6!"];
+    w31 [pos="0.8,1.0!"]; w32 [pos="0.8,0.7!"]; w33 [pos="0.8,0.4!"];
+    w34 [pos="0.8,0.1!"];
+    e31 [pos="2.2,1.0!"]; e32 [pos="2.2,0.7!"]; e33 [pos="2.2,0.4!"];
+    e34 [pos="2.2,0.1!"];
+    c0 [pos="0.3,2.55!"]; c1 [pos="2.7,2.55!"];
+    c2 [pos="0.5,1.75!"]; c3 [pos="2.5,1.75!"];
+    c4 [pos="0.5,0.55!"]; c5 [pos="2.5,0.55!"];
+
+    c0 -- i1 -- a1 -- o1 -- c1;
+    c2 -- i2; o2 -- c3;
+    i2 -- w2a -- b1 -- e2a -- o2; i2 -- w2b -- b2 -- e2b -- o2;
+    c4 -- i3; o3 -- c5;
+    i3 -- w31 -- s11 -- s12 -- e31 -- o3;
+    i3 -- w32 -- s21 -- s22 -- e32 -- o3;
+    i3 -- w33 -- s31 -- s32 -- e33 -- o3;
+    i3 -- w34 -- s41 -- s42 -- e34 -- o3;
+}

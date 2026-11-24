@@ -290,7 +290,25 @@ of :doc:`events` or sit behind another isolation barrier
 (:doc:`isolation`). The area of one capacitor is its capacitance divided
 by the capacitance per area. A capacitor that must hold a voltage beyond
 one device's rating can be built as :math:`N` devices in series. Each must
-then be :math:`N` times larger, so the area grows as :math:`N^2`:
+then be :math:`N` times larger, so the area grows as :math:`N^2`.
+
+:numref:`fig-magnetics-cap-area` shows both effects.
+
+.. figure:: cap-area.svg
+   :name: fig-magnetics-cap-area
+   :alt: Left, capacitors of one, two and three devices in series, each device
+         N times larger, giving areas of 1, 4 and 9 times one device.
+         Right, a cross-section of the oxide between metal layers M1
+         and M5 with a MIM capacitor, two plates close together under
+         the top metal with a thin insulator, 2.0 fF/µm² and rated 6.6
+         V, 16 nF in 8.0 mm²; and a capacitor with plates on M1 and M5
+         across about 5 µm of oxide, 0.0069 fF/µm², 16 nF in about
+         2300 mm².
+
+   Series devices and the two kinds of on-chip capacitor (schematic, not
+   to scale).
+
+The area of one coupling capacitor is:
 
 .. math::
 
