@@ -70,12 +70,14 @@ implement. The Type 1 and Type 2 rows come from :clause:`33.2.6` and
 
 The rules for power sourcing equipment differ by type:
 
-* A Type 2 power sourcing equipment that sees class signature 4 in the
-  first class event may skip the second only if it implements Data Link
+* Type 2 power sourcing equipment implements 2-event Physical Layer
+  classification, Data Link Layer classification, or both
+  [POE-BT-BASELINE-0115]_. When the first class event shows class
+  signature 4, it may skip the second only if it implements Data Link
   Layer classification. It may then give class 0 power, 15.4 W at its
-  output, until mutual identification is complete (:clause:`33.2.6`). One
-  class event without Data Link Layer classification is not allowed for
-  Type 2 [POE-BT-STEWART-0316]_.
+  output, until mutual identification is complete (:clause:`33.2.6`,
+  [POE-BT-STEWART-0316]_). When the first shows class signature 0 to 3, it
+  treats the powered device as Type 1 and may stop there.
 * Type 3 and Type 4 power sourcing equipment must implement multiple-event
   Physical Layer classification, so it gives full class power without
   LLDP [POE-EA-BT]_ (Summary). It issues one class event only when the
@@ -157,7 +159,7 @@ shows class signature 4 [POE-BT-STEWART-0316]_, and a Type 1 powered device
 of class 0 gets 13 W from all of them. A powered device that requests
 class 5 to 8 shows class signature 4 in the first two class events
 (:numref:`tab-poe-request`), so Type 1 and Type 2 power sourcing equipment
-treats it as class 4.
+sees a class 4 powered device.
 
 Type 1 power sourcing equipment never gives more than 13 W, and Type 2
 equipment that issues one class event gives no more until LLDP raises the
