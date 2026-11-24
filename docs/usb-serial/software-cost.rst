@@ -392,8 +392,8 @@ endpoint, and a small state machine replies by itself
    :caption: State machine of the automatic handshakes.
    :alt: State diagram: from idle, a token is decoded for address, endpoint
          and CRC5; a token not for this device is ignored. A SETUP token
-         leads to receiving the 8-byte DATA0, always answered with ACK into
-         the SETUP buffer, with DATA1 next. An OUT token leads to receiving
+         leads to receiving the 8-byte DATA0: with a bad CRC no reply,
+         otherwise always ACK into the SETUP buffer, with DATA1 next. An OUT token leads to receiving
          DATA0 or DATA1: with a bad CRC no reply; when halted STALL; with no
          room NAK; with the same sequence bit as last time ACK and discard
          the copy; when ready ACK, mark the buffer full and toggle the bit.
