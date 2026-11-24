@@ -238,6 +238,19 @@ speeds, and must keep the minimum duty cycle. The clocks must not glitch
 holds TX_CTL low until it runs at the same speed as the transceiver, so
 evampire sends TXC at the new speed before it starts a frame.
 
+:numref:`fig-rgmii-speed-change` shows an allowed change and a glitch.
+
+.. figure:: speed-change.svg
+   :name: fig-rgmii-speed-change
+   :alt: Timing diagram with time from 0 to 120 ns. The allowed TXC runs
+         at 125 MHz, then holds high for a stretched phase, then runs at
+         25 MHz. The second TXC is the same but has a very short low pulse
+         inside the stretched phase, circled and marked as a glitch. TX_CTL
+         stays low throughout.
+
+   TXC changing from 125 MHz to 25 MHz with a stretched high phase, and the
+   glitch that is not allowed (stretch length schematic).
+
 .. _rgmii-in-band:
 
 In-band link status
@@ -267,7 +280,8 @@ both edges (:std:`RGMII 2.0 <rgmii-2-0>` section 3.4.1 and Table 4).
      - 0 for half duplex, 1 for full duplex
 
 With :numref:`tab-rgmii-in-band`, a gigabit full-duplex link that is up
-shows the nibble 1101 (0xD) between frames. While the link is down, the
+shows the nibble 1101 (0xD) between frames, as at the start of
+:numref:`fig-rgmii-frame-start`. While the link is down, the
 speed and duplex bits give the transceiver's own settings
 (:std:`RGMII 2.0 <rgmii-2-0>` section 3.4.1).
 

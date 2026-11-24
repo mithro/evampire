@@ -95,6 +95,26 @@ transceiver then sends an error on the cable, and the far end discards the
 frame. The frame is already being sent when the error arrives, so it cannot
 be dropped instead.
 
+:numref:`fig-rgmii-error-forward` shows the error passed on.
+
+.. wavedrom::
+   :name: fig-rgmii-error-forward
+   :alt: Timing diagram: RX_CTL is high except for one byte where it is high
+         then low, marking an error. A few clock cycles later TX_CTL is high
+         then low on the same byte.
+   :caption: An error received on RX_CTL and passed on, a few cycles later, on
+             TX_CTL.
+
+   { "signal": [
+       { "name": "RXC", "wave": "p.......", "period": 2, "phase": -0.5 },
+       { "name": "RX_CTL", "wave": "1....01........." },
+       {},
+       { "name": "TXC", "wave": "p.......", "period": 2, "phase": -0.5 },
+       { "name": "TX_CTL", "wave": "1..........01..." }
+     ],
+     "config": { "hscale": 1 }
+   }
+
 Open questions
 --------------
 

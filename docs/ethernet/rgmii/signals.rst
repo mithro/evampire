@@ -183,3 +183,30 @@ a "valid" or "enable" signal and an error signal, and the port has CRS and
 COL ([RGMII-DP83867]_ section 5 lists them). RGMII uses 12: 4 data bits, a
 clock and a control signal in each direction. The DP83867 datasheet gives
 the same counts ([RGMII-DP83867]_ section 7.4.1.1).
+
+:numref:`fig-rgmii-gmii-rgmii` sends the same three bytes over both.
+
+.. wavedrom::
+   :name: fig-rgmii-gmii-rgmii
+   :alt: Timing diagram in two groups. GMII: GTX_CLK at 125 MHz, TXD[7:0]
+         carrying 0x01, 0x23 and 0x45 one per clock cycle, and TX_EN high.
+         RGMII: TXC at the same frequency, TXD[3:0] carrying the nibbles 1, 0,
+         3, 2, 5 and 4 one per clock edge, and TX_CTL high.
+   :caption: The bytes 0x01, 0x23 and 0x45 sent over GMII, eight bits per rising
+             edge, and over RGMII, four bits per edge.
+
+   { "signal": [
+       ["GMII",
+         { "name": "GTX_CLK", "wave": "p....", "period": 2 },
+         { "name": "TXD[7:0]", "wave": "x.=.=.=.x.", "data": ["0x01", "0x23", "0x45"] },
+         { "name": "TX_EN", "wave": "0.1.....0." }
+       ],
+       {},
+       ["RGMII",
+         { "name": "TXC", "wave": "p....", "period": 2, "phase": -0.5 },
+         { "name": "TXD[3:0]", "wave": "x.======x.", "data": ["1", "0", "3", "2", "5", "4"] },
+         { "name": "TX_CTL", "wave": "0.1.....0." }
+       ]
+     ],
+     "config": { "hscale": 1 }
+   }

@@ -138,6 +138,37 @@ with the SFD [RGMII-KSZ9031]_ section 3.1.5. The UNH-IOL MAC test suite
 checks that a receiver accepts frames with a varied amount of preamble
 [RGMII-IOL-MAC]_ test 4.2.4.
 
+:numref:`fig-rgmii-preamble-shrink` shows a full, a shorter and a missing
+preamble.
+
+.. wavedrom::
+   :name: fig-rgmii-preamble-shrink
+   :alt: Three timing diagrams of RX_CTL and RXD at 1000 Mbit/s. With the full
+         preamble, RX_CTL rises and RXD carries many nibbles 5, then 5 and D.
+         With a shortened preamble, RX_CTL rises later and RXD carries 5, 5,
+         then 5 and D. With no preamble, RXD carries only 5 and D.
+   :caption: The start of a frame with a full, a shortened and no preamble; the
+             receiver finds the frame from the D that follows a 5.
+
+   { "signal": [
+       ["full",
+         { "name": "RX_CTL", "wave": "01........" },
+         { "name": "RXD[3:0]", "wave": "x=====2==x", "data": ["5", "5", "5", "5", "5", "more 5", "5", "D"] }
+       ],
+       {},
+       ["shorter",
+         { "name": "RX_CTL", "wave": "0....1...." },
+         { "name": "RXD[3:0]", "wave": "x....====x", "data": ["5", "5", "5", "D"] }
+       ],
+       {},
+       ["none",
+         { "name": "RX_CTL", "wave": "0......1.." },
+         { "name": "RXD[3:0]", "wave": "x......==x", "data": ["5", "D"] }
+       ]
+     ],
+     "config": { "hscale": 1 }
+   }
+
 The receiving logic therefore finds the start of a frame from the SFD, not
 by counting preamble bytes. A device that forwards frames sends a full
 preamble of seven bytes itself (:clause:`35.2.3.2.1`), whatever arrived.
@@ -154,6 +185,25 @@ frame and the start of the next preamble, at every speed up to
 :wikipedia:`interpacket gap <Interpacket_gap>`). At 1000 Mbit/s that is
 12 byte times, 96 ns. At 10 Mbit/s the ENC28J60 datasheet gives the same
 gap as 9.6 µs [RGMII-ENC28J60]_ register MABBIPG.
+
+:numref:`fig-rgmii-gap` shows the gap on the transmit signals.
+
+.. wavedrom::
+   :name: fig-rgmii-gap
+   :alt: Timing diagram: TXD carries the last FCS nibbles of frame N while
+         TX_CTL is high, then TX_CTL is low for the gap of 12 byte times or
+         more, drawn with a break, then TX_CTL rises and TXD carries the
+         preamble nibbles 5 of frame N+1.
+   :caption: The gap between two frames on TX_CTL and TXD, at least 12 byte times,
+             96 ns, at 1000 Mbit/s (the break shortens the drawing).
+
+   { "signal": [
+       { "name": "TX_CTL", "wave": "1..0..|....1..." },
+       { "name": "TXD[3:0]", "wave": "===x..|....===.", "data": ["FCS", "FCS", "FCS", "5", "5", "5"] },
+       { "name": "field", "wave": "4..2..|2...3...", "data": ["frame N", "gap", "12 byte times or more", "frame N+1"] }
+     ],
+     "config": { "hscale": 1 }
+   }
 
 The gap seen by a receiver can be shorter. At 1000 Mbit/s it can shrink to
 64 bit times, measured at the GMII, because of network delays, added

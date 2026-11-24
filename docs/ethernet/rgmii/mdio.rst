@@ -67,6 +67,27 @@ around the rising edge of MDC. When the transceiver drives MDIO, its data
 appears 0 ns to 300 ns after the rising edge, and evampire samples it at
 the next rising edge (:clause:`22.3.4`).
 
+:numref:`fig-rgmii-mdc-timing` shows the two cases.
+
+.. wavedrom::
+   :name: fig-rgmii-mdc-timing
+   :alt: Timing diagram: MDC with three rising edges. When evampire drives
+         MDIO, each bit changes during the low phase, at least 10 ns before
+         the rising edge, and holds at least 10 ns after it. When the
+         transceiver drives MDIO, each bit changes 0 ns to 300 ns after a
+         rising edge and is sampled at the next rising edge.
+   :caption: MDIO driven by evampire, changing well before each rising edge of
+             MDC, and driven by the transceiver, changing after each rising edge
+             (schematic, not to scale).
+
+   { "signal": [
+       { "name": "MDC", "wave": "l.h.l.h.l.h." },
+       { "name": "MDIO, evampire drives", "wave": "x=...=...=..", "data": ["bit", "bit", "bit"] },
+       { "name": "MDIO, transceiver drives", "wave": "x..=...=...=", "data": ["bit", "bit", "bit"] }
+     ],
+     "config": { "hscale": 2 }
+   }
+
 Many transceivers accept a faster MDC. The DP83867 accepts up to 25 MHz
 [RGMII-DP83867]_ section 6.8, and the KSZ9031RNX has been tested up to
 8.33 MHz [RGMII-KSZ9031]_ section 7. evampire keeps to 2.5 MHz or less, so

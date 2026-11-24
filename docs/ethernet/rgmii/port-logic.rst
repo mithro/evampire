@@ -35,6 +35,29 @@ phase that follows. Each flip-flop changes only while the multiplexer passes
 the other one, so the output changes only when the clock changes and cannot
 glitch.
 
+:numref:`fig-rgmii-tx-ddr-timing` shows the sequence for the bytes 0x01,
+0x23 and 0x45.
+
+.. wavedrom::
+   :name: fig-rgmii-tx-ddr-timing
+   :alt: Timing diagram: the internal clock; the byte register loading 0x01,
+         0x23, 0x45 and so on at each rising edge; flip-flop A loading the low
+         nibbles 1, 3, 5 at each falling edge; flip-flop B loading the high
+         nibbles 0, 2, 4 at each rising edge; and the pin, which carries A
+         while the clock is high and B while it is low: 1, 0, 3, 2, 5, 4.
+   :caption: The output stage of one TXD bit over time: each flip-flop changes
+             only while the multiplexer passes the other one.
+
+   { "signal": [
+       { "name": "clock (internal)", "wave": "p....", "period": 2 },
+       { "name": "byte register", "wave": "=.=.=.=.=.", "data": ["0x01", "0x23", "0x45", "0x67", "0x89"] },
+       { "name": "flip-flop A (low)", "wave": "x=.=.=.=.=", "data": ["1", "3", "5", "7", "9"] },
+       { "name": "flip-flop B (high)", "wave": "x.=.=.=.=.", "data": ["0", "2", "4", "6"] },
+       { "name": "TXD pin (mux)", "wave": "x.========", "data": ["1", "0", "3", "2", "5", "4", "7", "6"] }
+     ],
+     "config": { "hscale": 1 }
+   }
+
 TXC comes from the same structure, with flip-flop A fed a constant 1 and
 flip-flop B a constant 0. TXC then has the same delay from the internal clock
 as every TXD bit, which keeps the skew at the pins within the ±0.5 ns of
