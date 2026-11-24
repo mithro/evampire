@@ -17,6 +17,9 @@ dc-level.svg
 rx-margin.svg
     The measured BMC interval against the 0.75 UI decision point
     (software.rst).
+dead-battery.svg
+    The CC voltage of the dead-battery Rd path against the pull-up
+    current (analogue.rst).
 packet.svg
     The parts of a packet, a Hard Reset, and the order in which the
     nibbles and symbols are sent (packets.rst).
@@ -26,9 +29,8 @@ Every number comes from the page that shows the figure.
 SPDX-License-Identifier: Apache-2.0
 """
 
-from svgfig import (CABLE, FILL, GREY, INK, SNK, Plot, line, polyline, rect,
-                    svg,
-                    text, write)
+from svgfig import (CABLE, FILL, GREY, INK, SNK, SNK_INK, Plot, line,
+                    polyline, rect, svg, text, write)
 
 
 def bar(p, xc, w, lo, hi, fill, labels=True, size=10, side="right"):
@@ -300,8 +302,54 @@ def rx_margin():
     return svg(680, int(ly + 34), body, "Receive timing margin")
 
 
+def dead_battery():
+    """CC voltage of the dead-battery Rd path against the source's pull-up
+    current, V_CC = I_Rp x R_s + V_GS with the overdrive neglected
+    (analogue.rst)."""
+    p = Plot(60, 30, 590, 280, (0, 380), (0, 2.6))
+    r_s = 2.0e3
+    body = []
+    levels = [(64, 96, "default"), (165.6, 194.4, "1.5 A"),
+              (303.6, 356.4, "3.0 A")]
+    for lo, hi, name in levels:
+        body.append(rect(p.x(lo), p.top, p.x(hi) - p.x(lo), p.h, CABLE,
+                         "none"))
+        body.append(text(p.x((lo + hi) / 2), p.top + 14, name, 11,
+                         "middle"))
+    body.append(p.frame())
+    body += p.yticks([0, 0.5, 1.0, 1.32, 2.0, 2.181], "CC voltage (V)",
+                     fmt="{:g}", grid=False)
+    # Limits: 1.32 V up to the 1.5 A level, 2.181 V at the 3.0 A level.
+    body.append(line(p.x(0), p.y(1.32), p.x(194.4), p.y(1.32), INK, 2.0))
+    body.append(line(p.x(303.6), p.y(2.181), p.x(356.4), p.y(2.181), INK,
+                     2.0))
+    body.append(text(p.x(4), p.y(1.32) - 6, "limit 1.32 V", 11))
+    body.append(text(p.x(300), p.y(2.181) - 6, "limit 2.181 V", 11))
+    for vt, dash, lab in ((0.85, None, "standard NMOS, Vt 0.85 V"),
+                          (0.61, None, "standard NMOS, Vt 0.61 V"),
+                          (0.08, "6,3", "native NMOS, Vt 0.08 V")):
+        pts = [(i, i * 1e-6 * r_s + vt) for i in (0, 380)]
+        body.append(polyline(p.pts(pts), SNK_INK, 1.8, dash))
+        body.append(text(p.x(200), p.y(200e-6 * r_s + vt) - 9, lab, 10,
+                         rotate=-9.5))
+    for i in (194.4, 356.4):
+        v = i * 1e-6 * r_s + 0.85
+        body.append(f'<circle cx="{p.x(i):.1f}" cy="{p.y(v):.1f}" r="3.5" '
+                    f'fill="{INK}"/>')
+        body.append(text(p.x(i) - 6, p.y(v) - 24, f"{i:g} µA: {v:.1f} V", 11,
+                         "end"))
+    body += p.xticks([0, 50, 100, 150, 200, 250, 300, 350],
+                     "pull-up current I_Rp (µA)", grid=False)
+    y = p.bottom + 60
+    body.append(text(p.left, y, "R_s = 2.0 kΩ; overdrive neglected. Shaded: "
+                     "the pull-up current range of each level.", 12,
+                     fill=GREY))
+    return svg(680, int(y + 14), body, "Dead-battery Rd voltage")
+
+
 if __name__ == "__main__":
     write("cc-thresholds.svg", cc_thresholds())
     write("packet.svg", packet_layout())
     write("dc-level.svg", dc_level())
     write("rx-margin.svg", rx_margin())
+    write("dead-battery.svg", dead_battery())
