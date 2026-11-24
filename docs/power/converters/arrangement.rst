@@ -587,7 +587,17 @@ pump in nanometre-scale bulk CMOS reaches 36 V [CONV-ISMAIL2017]_ (Title).
 A single-inductor multiple-output converter shares one inductor between
 outputs by switching it to each in turn. Whether the outputs' interaction
 is acceptable for two USB Power Delivery ports, each with its own voltage
-tolerance, is an open question.
+tolerance, is an open question. :numref:`fig-conv-simo` shows the idea.
+
+.. graphviz:: simo.dot
+   :name: fig-conv-simo
+   :caption: A single-inductor converter with two outputs.
+   :alt: Schematic: the input feeds a half bridge of S1 and S2, whose node
+         drives the inductor L. The far end of the inductor connects through
+         output switch A to output 1 and through output switch B to output
+         2. The inductor's energy goes to output 1 in one part of the
+         period and to output 2 in another.
+   :align: center
 
 Open questions
 --------------
