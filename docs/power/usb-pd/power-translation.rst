@@ -125,7 +125,19 @@ The USB port reports its power as the Port Present PDP, the power it can
 supply at present, in 1 W steps rounded down (:pd:`Table 6.29`). The
 examples below set the Port Present PDP to :math:`P_\text{out}` rounded
 down to 1 W. With two output ports, :math:`P_\text{out}` is shared first
-(:ref:`usbpd-sharing`).
+(:ref:`usbpd-sharing`). :numref:`fig-usbpd-budget-chain` shows the steps
+from the class to the offers.
+
+.. graphviz:: budget-chain.dot
+   :name: fig-usbpd-budget-chain
+   :caption: From the granted Power over Ethernet class to the USB source
+             offers.
+   :alt: Chain of steps. The granted class sets P_Class,PD, which is
+         multiplied by the converter efficiency η, 81 to 97 %, and reduced
+         by P_board, the board's own use, to give P_out, the power left for
+         the output ports. P_out rounded down to 1 W is the Port Present
+         PDP, and the power rules turn it into source offers at up to 5, 9,
+         15 and 20 V.
 
 .. _usbpd-pd-power-rules:
 
@@ -362,9 +374,22 @@ With the same assumed :math:`\eta` = 0.900 and :math:`P_\text{board}` =
 
    P_\text{out} = 60\ \text{W} \times 0.900 - 3.10\ \text{W} = 50.9\ \text{W}
 
-The highest class whose :math:`P_\text{Class}` does not exceed 50.9 W is
-class 5 (45 W). A 9 V, 3 A contract (27 W) gives 21.2 W and class 3; a
-20 V, 5 A contract (100 W) gives 86.9 W and class 7. :doc:`../poe/index` explains how the power sourcing
+The highest class whose :math:`P_\text{Class}` does not exceed 50.9 W is
+class 5 (45 W). A 9 V, 3 A contract (27 W) gives 21.2 W and class 3; a 20 V,
+5 A contract (100 W) gives 86.9 W and class 7
+(:numref:`fig-usbpd-class-steps`).
+
+.. figure:: class-steps.svg
+   :name: fig-usbpd-class-steps
+   :alt: Staircase graph of the highest class, 0 to 8, against P_out from
+         0 to 100 W, with steps at 4, 6.7, 14, 30, 45, 60, 75 and 90 W.
+         Dots mark 21.2 W at class 3, 50.9 W at class 5 and 86.9 W at
+         class 7.
+
+   The highest Power over Ethernet class for the power left from a USB
+   contract, with the three worked examples.
+
+:doc:`../poe/index` explains how the power sourcing
 equipment assigns the class and how it changes the allocation later.
 
 Open questions

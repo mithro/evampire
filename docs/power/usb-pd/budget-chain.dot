@@ -1,0 +1,28 @@
+// How the Power over Ethernet class sets the USB offers, as a chain of
+// steps (power-translation.rst).
+//
+// Fixed grid (positions in inches): top row y=1.2 left to right, bottom
+// row y=0.35 right to left.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph budget_chain {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.5, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    cls  [pos="0.8,1.2!", label="granted class:\nP_Class,PD", fillcolor="#e2f0d9"];
+    eta  [pos="2.6,1.2!", label="× η, the converters\n(81 to 97 %)"];
+    brd  [pos="4.4,1.2!", label="− P_board,\nthe board's own use"];
+    out  [pos="6.2,1.2!", label="P_out, left for\nthe output ports",
+          fillcolor="#dbe8f5"];
+    pdp  [pos="6.2,0.3!", label="Port Present PDP:\nrounded down to 1 W",
+          width=1.6];
+    rule [pos="4.4,0.3!", label="power rules"];
+    off  [pos="2.5,0.3!", label="source offers,\nup to 5, 9, 15 and\n20 V as the PDP allows", height=0.62, width=1.75,
+          fillcolor="#fbe5d6"];
+
+    cls -> eta -> brd -> out -> pdp -> rule -> off;
+}
