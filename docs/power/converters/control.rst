@@ -83,7 +83,23 @@ compensation*, prevents it; the added slope must be at least half the
 inductor current's down-slope [CONV-SLUA101]_ (Sections 2.1 to 2.3,
 Equations 3 and 4) [CONV-LM5122]_ (Section 7.3.4). The boost duty cycles in
 :numref:`tab-conv-boost-duty` are mostly above 0.5, so a peak current-mode
-high-voltage converter needs it.
+high-voltage converter needs it. :numref:`fig-conv-subharmonic` shows a
+disturbance growing without the ramp and decaying with it.
+
+.. figure:: subharmonic.svg
+   :name: fig-conv-subharmonic
+   :alt: Two traces of inductor current over six switching periods at a
+         duty cycle of 0.6. (a) Without slope compensation, the current
+         rises to a fixed turn-off level each period; a small disturbance
+         alternates in sign and grows, giving long and short pulses
+         compared with the dashed steady state. (b) With a compensation
+         ramp of half the down-slope, the turn-off level falls during each
+         period, and the disturbed current returns to the steady state
+         within a period or two.
+   :align: center
+
+   Peak current-mode control at a duty cycle of 0.6, without and with
+   slope compensation (schematic units).
 
 Other schemes exist. *Average current-mode control* regulates the average
 rather than the peak inductor current, as in the TPS55289

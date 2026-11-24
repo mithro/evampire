@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="450" viewBox="0 0 560 450" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="560" height="450" fill="#ffffff"/>
+<line x1="60.0" y1="35.0" x2="60.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="60.0" y1="170.0" x2="60.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="60.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="140.0" y1="35.0" x2="140.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="140.0" y1="170.0" x2="140.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="140.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<line x1="220.0" y1="35.0" x2="220.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="220.0" y1="170.0" x2="220.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="220.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="300.0" y1="35.0" x2="300.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="300.0" y1="170.0" x2="300.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="300.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">3</text>
+<line x1="380.0" y1="35.0" x2="380.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="380.0" y1="170.0" x2="380.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="380.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">4</text>
+<line x1="460.0" y1="35.0" x2="460.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="460.0" y1="170.0" x2="460.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="460.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
+<line x1="540.0" y1="35.0" x2="540.0" y2="170.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="540.0" y1="170.0" x2="540.0" y2="175.0" stroke="#222222" stroke-width="1.2"/>
+<text x="540.0" y="186.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">6</text>
+<line x1="60.0" y1="170.0" x2="540.0" y2="170.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="60.0" y1="35.0" x2="60.0" y2="170.0" stroke="#222222" stroke-width="1.2"/>
+<text x="12.0" y="102.5" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 12.0 102.5)">iL</text>
+<text x="300.0" y="20.0" font-size="13" text-anchor="middle" font-weight="bold" fill="#222222" dominant-baseline="middle">(a) No slope compensation: the disturbance grows</text>
+<polyline points="60.0,150.7 108.0,92.9 140.0,150.7 188.0,92.9 220.0,150.7 268.0,92.9 300.0,150.7 348.0,92.9 380.0,150.7 428.0,92.9 460.0,150.7 508.0,92.9 540.0,150.7" fill="none" stroke="#777777" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/>
+<polyline points="60.0,147.8 105.6,92.9 140.0,155.1 191.6,92.9 220.0,144.2 262.6,92.9 300.0,160.5 356.1,92.9 380.0,136.1 415.8,92.9 460.0,172.7 526.2,92.9 540.0,117.8" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="60.0,92.9 140.0,92.9 140.0,92.9 140.0,92.9 220.0,92.9 220.0,92.9 220.0,92.9 300.0,92.9 300.0,92.9 300.0,92.9 380.0,92.9 380.0,92.9 380.0,92.9 460.0,92.9 460.0,92.9 460.0,92.9 540.0,92.9" fill="none" stroke="#c55a11" stroke-width="1.4" stroke-linejoin="round" stroke-dasharray="6 4"/>
+<line x1="60.0" y1="240.0" x2="60.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="60.0" y1="375.0" x2="60.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="60.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="140.0" y1="240.0" x2="140.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="140.0" y1="375.0" x2="140.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="140.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<line x1="220.0" y1="240.0" x2="220.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="220.0" y1="375.0" x2="220.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="220.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="300.0" y1="240.0" x2="300.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="300.0" y1="375.0" x2="300.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="300.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">3</text>
+<line x1="380.0" y1="240.0" x2="380.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="380.0" y1="375.0" x2="380.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="380.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">4</text>
+<line x1="460.0" y1="240.0" x2="460.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="460.0" y1="375.0" x2="460.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="460.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
+<line x1="540.0" y1="240.0" x2="540.0" y2="375.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="540.0" y1="375.0" x2="540.0" y2="380.0" stroke="#222222" stroke-width="1.2"/>
+<text x="540.0" y="391.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">6</text>
+<line x1="60.0" y1="375.0" x2="540.0" y2="375.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="60.0" y1="240.0" x2="60.0" y2="375.0" stroke="#222222" stroke-width="1.2"/>
+<text x="300.0" y="413.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">time (switching periods)</text>
+<text x="12.0" y="307.5" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 12.0 307.5)">iL</text>
+<text x="300.0" y="225.0" font-size="13" text-anchor="middle" font-weight="bold" fill="#222222" dominant-baseline="middle">(b) Compensation ramp of half the down-slope: it decays</text>
+<polyline points="60.0,355.7 108.0,297.9 140.0,355.7 188.0,297.9 220.0,355.7 268.0,297.9 300.0,355.7 348.0,297.9 380.0,355.7 428.0,297.9 460.0,355.7 508.0,297.9 540.0,355.7" fill="none" stroke="#777777" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/>
+<polyline points="60.0,352.8 106.6,296.6 140.0,357.0 188.6,298.4 220.0,355.2 267.7,297.6 300.0,355.9 348.1,298.0 380.0,355.6 428.0,297.8 460.0,355.8 508.0,297.9 540.0,355.7" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="60.0,254.5 140.0,326.8 140.0,254.5 140.0,254.5 220.0,326.8 220.0,254.5 220.0,254.5 300.0,326.8 300.0,254.5 300.0,254.5 380.0,326.8 380.0,254.5 380.0,254.5 460.0,326.8 460.0,254.5 460.0,254.5 540.0,326.8" fill="none" stroke="#c55a11" stroke-width="1.4" stroke-linejoin="round" stroke-dasharray="6 4"/>
+<text x="300.0" y="438.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">blue: disturbed current; grey dashed: steady state; orange: turn-off level</text>
+</svg>
