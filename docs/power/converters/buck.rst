@@ -91,7 +91,8 @@ This is called *volt-second balance*. For the buck converter it gives
 with the symbols in :numref:`tab-conv-sym-buck`. This holds when the
 switches and the inductor have no resistance and the inductor current never
 falls to zero (continuous conduction, below). Losses make the real duty
-cycle slightly larger.
+cycle slightly larger. :numref:`fig-conv-buck-balance` shows the balance
+for the worked example below: the two shaded areas are equal.
 
 .. list-table:: Symbols for the buck converter
    :name: tab-conv-sym-buck
@@ -167,9 +168,23 @@ current is :math:`I_\text{out} = 25.5 / 12 = 2.125` A and
 
 The ripple is 36 % of the load current; designers commonly choose 20 % to
 40 % [CONV-SLVA477]_ (Equation 6). The inductor current swings between
-:math:`2.125 - 0.383 = 1.742` A and :math:`2.125 + 0.383 = 2.508` A. The
+:math:`2.125 - 0.383 = 1.742` A and :math:`2.125 + 0.383 = 2.508` A
+(:numref:`fig-conv-buck-balance`). The
 peak, 2.508 A, is the current the switches, the inductor and the current
 limit must handle.
+
+.. figure:: buck-balance.svg
+   :name: fig-conv-buck-balance
+   :alt: Two traces over two 4 µs periods. The inductor voltage is +36 V for
+         the first 1 µs of each period and −12 V for the remaining 3 µs; the
+         shaded areas above and below zero are each 36 V·µs. The inductor
+         current rises from 1.742 A to 2.508 A while the voltage is positive
+         and falls back while it is negative, averaging 2.125 A, a ripple of
+         0.766 A.
+   :align: center
+
+   Inductor voltage and current of the buck worked example: 48 V to 12 V,
+   250 kHz, 47 µH and 2.125 A.
 
 The ripple is inversely proportional to :math:`L \, f_\text{sw}`, so a higher
 switching frequency allows a smaller inductor for the same ripple: 117.5 µH

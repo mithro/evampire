@@ -1,0 +1,158 @@
+# /// script
+# requires-python = ">=3.10"
+# ///
+"""Write the converter waveform figures as SVG files.
+
+Each function draws one figure from the worked examples on the converter
+pages. Run with:
+
+    uv run docs/power/converters/waves.py
+
+SPDX-License-Identifier: Apache-2.0
+"""
+
+import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+
+from svgplot import (Axes, Svg, BLUE, ORANGE, GREEN, RED, GREY, INK,  # noqa: E402
+                     FILL_BLUE, FILL_ORANGE, FILL_GREEN, FILL_GREY)
+
+HERE = pathlib.Path(__file__).parent
+
+# Buck worked example (buck.rst).
+VIN, VOUT, L_UH, FSW_KHZ = 48.0, 12.0, 47.0, 250.0
+T_US = 1000.0 / FSW_KHZ            # 4 µs
+D = VOUT / VIN                     # 0.25
+IOUT = 25.5 / 12.0                 # 2.125 A
+RISE = (VIN - VOUT) / L_UH         # A/µs while S1 is on
+FALL = VOUT / L_UH                 # A/µs while S2 is on
+RIPPLE = RISE * D * T_US           # 0.766 A
+
+
+def buck_balance():
+    """Inductor voltage and current of the buck example: volt-second balance."""
+    s = Svg(640, 400)
+    t_end = 2 * T_US
+    # Inductor voltage.
+    av = Axes(s, (110, 30, 560, 170), (0, t_end), (-20, 45))
+    av.frame(xticks=[0, 1, 2, 3, 4, 5, 6, 7, 8], yticks=[-12, 0, 36],
+             ylabel="vL (V)", grid=False)
+    s.line(av.X(0), av.Y(0), av.X(t_end), av.Y(0), stroke=GREY, dash="3 3")
+    pts = []
+    for k in range(2):
+        t0 = k * T_US
+        pts += [(t0, 36), (t0 + D * T_US, 36), (t0 + D * T_US, -12),
+                (t0 + T_US, -12)]
+    for k in range(2):
+        t0 = k * T_US
+        s.poly(av.P([(t0, 0), (t0, 36), (t0 + D * T_US, 36),
+                     (t0 + D * T_US, 0)]), stroke="none", fill=FILL_ORANGE,
+               close=True)
+        s.poly(av.P([(t0 + D * T_US, 0), (t0 + D * T_US, -12),
+                     (t0 + T_US, -12), (t0 + T_US, 0)]), stroke="none",
+               fill=FILL_BLUE, close=True)
+    s.poly(av.P(pts), stroke=BLUE)
+    s.text(av.X(0.5), av.Y(18), "+36 V\n× 1 µs", size=12)
+    s.text(av.X(2.5), av.Y(-6), "−12 V × 3 µs", size=12)
+    s.text(av.X(6.5), av.Y(22), "equal areas:\n36 V·µs each", size=12,
+           fill=ORANGE)
+    # Inductor current.
+    ai = Axes(s, (110, 215, 560, 340), (0, t_end), (1.5, 2.7))
+    ai.frame(xticks=[0, 1, 2, 3, 4, 5, 6, 7, 8], yticks=[1.742, 2.125, 2.508],
+             xlabel="time (µs), 250 kHz, period 4 µs", ylabel="iL (A)",
+             grid=False, yfmt=lambda v: f"{v:.3f}")
+    lo, hi = IOUT - RIPPLE / 2, IOUT + RIPPLE / 2
+    pts = []
+    for k in range(2):
+        t0 = k * T_US
+        pts += [(t0, lo), (t0 + D * T_US, hi)]
+    pts.append((t_end, lo))
+    s.poly(ai.P(pts), stroke=BLUE)
+    s.line(ai.X(0), ai.Y(IOUT), ai.X(t_end), ai.Y(IOUT), stroke=GREY,
+           dash="5 4")
+    s.text(ai.X(3.3), ai.Y(IOUT) - 9, "average = Iout", size=12,
+           fill=GREY)
+    s.line(ai.X(5), ai.Y(hi), ai.X(8) + 16, ai.Y(hi), stroke=GREY, width=1,
+           dash="2 3")
+    x = ai.X(8) + 12
+    s.line(x, ai.Y(lo), x, ai.Y(hi), arrow="both", width=1)
+    s.text(x + 6, ai.Y(IOUT), "ΔiL =\n0.766 A", size=12, anchor="start")
+    s.text(av.X(0.5), 22, "S1 on", size=12, fill=GREY)
+    s.text(av.X(2.5), 22, "S2 on", size=12, fill=GREY)
+    s.save(HERE / "buck-balance.svg")
+
+
+def conduction_modes():
+    """Inductor current in the four cases of the buck example."""
+    s = Svg(560, 470)
+    yr = (-0.8, 2.75)
+    panels = [
+        ("(a) continuous, Iout = 2.125 A", 10, IOUT, "ccm"),
+        ("(b) boundary, Iout = 0.383 A", 290, RIPPLE / 2, "ccm"),
+        ("(c) discontinuous, diode as S2", 10, None, "dcm"),
+        ("(d) synchronous S2 left on", 290, 0.17, "ccm"),
+    ]
+    for i, (title, x0, avg, kind) in enumerate(panels):
+        top = 30 if i < 2 else 255
+        a = Axes(s, (x0 + 55, top + 20, x0 + 255, top + 160), (0, 8), yr)
+        a.frame(xticks=[0, 4, 8], yticks=[0, 1, 2],
+                xlabel="time (µs)" if i >= 2 else "",
+                ylabel="iL (A)" if x0 == 10 else "", grid=True)
+        s.text(x0 + 145, top + 5, title, size=13, weight="bold")
+        s.line(a.X(0), a.Y(0), a.X(8), a.Y(0), stroke=INK, width=1.2)
+        if kind == "ccm":
+            lo, hi = avg - RIPPLE / 2, avg + RIPPLE / 2
+            pts = []
+            for k in range(2):
+                pts += [(k * T_US, lo), (k * T_US + D * T_US, hi)]
+            pts.append((8, lo))
+            if lo < 0:
+                # Shade the parts of each period with negative current.
+                t_up = -lo / RISE
+                polys = [[(0, 0), (0, lo), (t_up, 0)]]
+                for k in range(2):
+                    tz = k * T_US + D * T_US + hi / FALL
+                    te = (k + 1) * T_US
+                    if te + t_up <= 8:
+                        polys.append([(tz, 0), (te, lo), (te + t_up, 0)])
+                    else:
+                        polys.append([(tz, 0), (te, lo), (te, 0)])
+                for poly in polys:
+                    s.poly(a.P(poly), stroke="none", fill=FILL_ORANGE,
+                           close=True)
+                s.text(a.X(4.6), a.Y(-0.55), "negative: flows back",
+                       size=12, fill=ORANGE)
+            s.poly(a.P(pts), stroke=BLUE)
+            s.line(a.X(0), a.Y(avg), a.X(8), a.Y(avg), stroke=GREY,
+                   dash="5 4", width=1)
+        else:
+            # Same slopes, shorter on time: the current reaches zero and
+            # stays there until the next period (schematic load).
+            peak = 0.5
+            t_on = peak / RISE
+            t_off = peak / FALL
+            pts = []
+            for k in range(2):
+                t0 = k * T_US
+                pts += [(t0, 0), (t0 + t_on, peak), (t0 + t_on + t_off, 0)]
+            pts.append((8, 0))
+            s.poly(a.P(pts), stroke=BLUE)
+            t0 = t_on + t_off
+            s.rect(a.X(t0), a.Y(0.35), a.X(T_US) - a.X(t0), a.Y(0) - a.Y(0.35),
+                   fill=FILL_GREEN, stroke="none")
+            s.text((a.X(t0) + a.X(T_US)) / 2, a.Y(0.6), "iL = 0,\nvL = 0",
+                   size=11, fill=GREEN)
+    s.save(HERE / "conduction-modes.svg")
+
+
+FIGURES = {
+    "buck-balance": buck_balance,
+    "conduction-modes": conduction_modes,
+}
+
+if __name__ == "__main__":
+    names = sys.argv[1:] or list(FIGURES)
+    for n in names:
+        FIGURES[n]()
