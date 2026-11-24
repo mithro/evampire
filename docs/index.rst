@@ -77,24 +77,75 @@ and power-delivery standards that evampire implements. It is written for
 readers who are familiar with digital and analogue integrated circuit design
 but not with the Ethernet or USB Power Delivery standards.
 
+The chip
+--------
+
 :doc:`overview`
    What evampire does, in outline.
 :doc:`requirements`
    Every requirement the design meets, and the questions still open.
 :doc:`architecture/index`
    The blocks inside evampire and how frames move between them.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: The chip
+   :hidden:
+
+   overview
+   requirements
+   architecture/index
+
+Data interfaces
+---------------
+
 :doc:`ethernet/index`
    The Ethernet interfaces, from the chip's pins to the cable.
+:doc:`usb-serial/index`
+   The USB serial port carried on the USB Type-C data wires.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Data interfaces
+   :hidden:
+
+   ethernet/index
+   usb-serial/index
+
+Power
+-----
+
 :doc:`power/index`
    How power moves between Power over Ethernet and USB Type-C, and the
    board configurations.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Power
+   :hidden:
+
+   power/index
+
+Silicon
+-------
+
 :doc:`high-voltage/index`
    How a circuit can sit tens of volts above the chip's substrate.
-:doc:`usb-serial/index`
-   The USB serial port carried on the USB Type-C data wires.
 :doc:`esd/index`
    How the gf180mcu I/O cells protect the pins against electrostatic
    discharge, with simulations of the foundry's cells.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Silicon
+   :hidden:
+
+   high-voltage/index
+   esd/index
+
+Reference
+---------
+
 :doc:`standards`
    The standards that the pages cite, with links to each.
 :doc:`glossary`
@@ -102,16 +153,8 @@ but not with the Ethernet or USB Power Delivery standards.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
+   :caption: Reference
    :hidden:
 
-   overview
-   requirements
-   architecture/index
-   ethernet/index
-   power/index
-   high-voltage/index
-   usb-serial/index
-   esd/index
    standards
    glossary
