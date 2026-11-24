@@ -104,8 +104,22 @@ The host pulls each of D+ and D− to ground through 15 kΩ
 ([USBSER-USB2]_ section 7.1.5.1). With nothing attached both wires sit
 near 0 V. A full-speed device connects a 1.5 kΩ resistor from D+ to a
 3.0 V to 3.6 V supply; a low-speed device puts the same resistor on D−
-instead ([USBSER-USB2]_ section 7.1.5.1, Figure 7‑20). The host sees D+
-rise, and knows that a full-speed device is attached.
+instead ([USBSER-USB2]_ section 7.1.5.1). The host sees D+
+rise, and knows that a full-speed device is attached
+(:numref:`fig-usbser-connect`).
+
+.. graphviz:: signalling/connect.dot
+   :name: fig-usbser-connect
+   :caption: Connect detection: the host's pull-down resistors and the
+             device's switched pull-up on D+.
+   :alt: Schematic: in the host, D+ and D− each connect to ground through
+         15 kΩ. The cable carries D+ and D− to the device, evampire, where
+         they reach the driver and receivers. In the device a 1.5 kΩ ± 5 %
+         resistor and a switch connect D+ to a 3.0 V to 3.6 V supply; the
+         switch closes when VBUS is present. D+ sits near 0 V with no
+         device and at least 2.7 V, idle J, once the pull-up is on. A
+         low-speed device puts the pull-up on D− instead.
+   :align: center
 
 The pull-up must be switchable: the device must not drive current into D+
 when VBUS, the cable's power wire, is absent ([USBSER-USB2]_ section

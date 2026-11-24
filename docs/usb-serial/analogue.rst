@@ -128,7 +128,8 @@ Table 7‑7).
 Pull-up resistor
 ----------------
 
-The device announces itself with 1.5 kΩ ± 5 % from D+ to a supply of
+The device announces itself (:numref:`fig-usbser-connect`) with
+1.5 kΩ ± 5 % from D+ to a supply of
 3.0 V to 3.6 V (*RPU*, *VTERM*). It must be able to pull D+ from 0 V to
 2.0 V within 2.5 µs, and it must not supply current when VBUS is absent
 ([USBSER-USB2]_ section 7.1.5.1, Table 7‑7). With the host's 15 kΩ ± 5 %
