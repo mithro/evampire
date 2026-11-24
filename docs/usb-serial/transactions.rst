@@ -76,6 +76,20 @@ Data packets alternate between DATA0 and DATA1 on each endpoint. The
 receiver compares the PID with the one it expects, so that a data packet
 resent after a lost ACK is recognised as a copy and not stored twice. A
 SETUP transaction resets the sequence to DATA0 ([USBSER-USB2]_ section 8.6).
+:numref:`fig-usbser-retry` shows a lost ACK and a packet with an error.
+
+.. graphviz:: transactions/retry.dot
+   :name: fig-usbser-retry
+   :caption: A lost ACK, recovered with the DATA0/DATA1 sequence bit, and a
+             packet with an error, which gets no reply.
+   :alt: Sequence diagram. The host sends an OUT token and DATA1; the
+         device, expecting DATA1, stores the data and now expects DATA0. Its
+         ACK is lost. The host repeats the OUT token and DATA1; the device
+         sees DATA1 again, recognises a copy, does not store it twice, and
+         answers ACK. Below, the host sends an IN token with a bad CRC; the
+         device sends nothing, the host counts an error and retries, and
+         after three errors in a row it gives up the transfer.
+   :align: center
 
 Transfer types and packet sizes
 -------------------------------
