@@ -239,7 +239,8 @@ Near-end crosstalk comes from the transceiver's own transmitters on the
 other three pairs, so the transceiver knows exactly what caused it. Each
 receiver runs three more adaptive FIR filters, one for each other pair,
 that predict and subtract that crosstalk ([PHY-KSZ9031]_ section 3.2.5).
-With the two :term:`equalisers <equaliser>` (:ref:`phy-equalisation`), each receiver has
+With the two :term:`equalisers <equaliser>` of
+:ref:`the receiver page <phy-equalisation>`, each receiver has
 five adaptive filters, and the transceiver has twenty ([PHY-HEALEY]_
 slide 38). :numref:`fig-phy-next-cancellers` shows where the inputs of the
 four cancellers of one receiver come from.
