@@ -60,8 +60,60 @@ def boost_gain():
     s.save(HERE / "boost-gain.svg")
 
 
+def bode():
+    """Schematic loop gain: magnitude and phase against frequency."""
+    import cmath
+    import math
+    fc, fp = 25e3, 25e3 / math.tan(math.radians(35))  # 55 degree margin
+
+    def loop(f):
+        s = 1j * f
+        return 1 / (s / fc) / (1 + s / fp) * abs(1 + 1j * fc / fp)
+
+    fs = [10 ** (2 + k * 0.01) for k in range(401)]       # 100 Hz to 1 MHz
+    mag = [20 * math.log10(abs(loop(f))) for f in fs]
+    ph = [math.degrees(cmath.phase(loop(f))) for f in fs]
+    s = Svg(560, 470)
+    am = Axes(s, (80, 20, 530, 200), (1e2, 1e6), (-40, 60), xlog=True)
+    ap = Axes(s, (80, 250, 530, 400), (1e2, 1e6), (-180, 0), xlog=True)
+    for ax in (am, ap):
+        s.rect(ax.X(12.5e3), ax.y0, ax.X(50e3) - ax.X(12.5e3), ax.y1 - ax.y0,
+               fill=FILL_GREEN, stroke="none")
+        s.line(ax.X(250e3), ax.y0, ax.X(250e3), ax.y1, stroke=GREY,
+               dash="4 3")
+    ticks = [1e2, 1e3, 1e4, 1e5, 1e6]
+    lab = {1e2: "100 Hz", 1e3: "1 kHz", 1e4: "10 kHz", 1e5: "100 kHz",
+           1e6: "1 MHz"}
+    am.frame(xticks=ticks, yticks=[-40, -20, 0, 20, 40, 60],
+             ylabel="loop gain (dB)", xfmt=lambda v: lab[v])
+    ap.frame(xticks=ticks, yticks=[-180, -135, -90, -45, 0],
+             ylabel="phase (°)", xfmt=lambda v: lab[v],
+             xlabel="frequency (log scale)")
+    s.line(am.X(1e2), am.Y(0), am.X(1e6), am.Y(0), stroke=INK, width=1.4)
+    s.poly(am.P([(f, m) for f, m in zip(fs, mag) if m >= -40]), stroke=BLUE)
+    s.poly(ap.P(list(zip(fs, ph))), stroke=BLUE)
+    # Crossover and phase margin.
+    for ax in (am, ap):
+        s.line(ax.X(fc), ax.y0, ax.X(fc), ax.y1, stroke=ORANGE, width=1.2,
+               dash="2 2")
+    s.add(f'<circle cx="{am.X(fc):.1f}" cy="{am.Y(0):.1f}" r="4" '
+          f'fill="{ORANGE}"/>')
+    s.text(am.X(fc) - 8, am.Y(0) + 14, "crossover: gain = 1 (0 dB)", size=12,
+           anchor="end", fill=ORANGE)
+    x = ap.X(fc) - 10
+    s.line(x, ap.Y(-180), x, ap.Y(-125), arrow="both", width=1.2)
+    s.text(x - 6, ap.Y(-158), "phase margin 55°", size=12, anchor="end")
+    s.text((am.X(12.5e3) + am.X(50e3)) / 2, am.y0 + 12, "fsw/20 to fsw/5",
+           size=11, fill=GREEN)
+    s.text(am.X(250e3) + 4, am.Y(45), "fsw\n250 kHz", size=11,
+           anchor="start", fill=GREY)
+    s.text(ap.X(600), ap.Y(-120), "a phase of −180° at crossover\nwould oscillate", size=12, fill=RED)
+    s.save(HERE / "bode.svg")
+
+
 FIGURES = {
     "boost-gain": boost_gain,
+    "bode": bode,
 }
 
 if __name__ == "__main__":

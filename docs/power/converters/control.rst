@@ -149,12 +149,26 @@ Crossover frequency
 Phase margin
    How far the loop is from oscillating at the crossover frequency
    (see :wikipedia:`phase margin <Phase_margin>`), read from a
-   :wikipedia:`Bode plot <Bode_plot>`.
+   :wikipedia:`Bode plot <Bode_plot>` such as :numref:`fig-conv-bode`.
 
 The crossover frequency must be well below the switching frequency, because
 the duty cycle changes only once per period. The LM5122 data sheet places
 it between one twentieth and one fifth of the switching frequency
-[CONV-LM5122]_ (Section 8.1.1).
+[CONV-LM5122]_ (Section 8.1.1), 12.5 kHz to 50 kHz at 250 kHz.
+
+.. figure:: bode.svg
+   :name: fig-conv-bode
+   :alt: Bode plot from 100 Hz to 1 MHz. The loop gain falls at 20 dB per
+         decade from about 50 dB at 100 Hz and crosses 0 dB at 25 kHz,
+         inside a shaded band from 12.5 kHz to 50 kHz, one twentieth to one
+         fifth of the 250 kHz switching frequency. The phase starts at −90°
+         and falls towards −180°; at the crossover it is −125°, a phase
+         margin of 55° above −180°.
+   :align: center
+
+   Loop gain and phase of an illustrative compensated loop with a 25 kHz
+   crossover and a 55° phase margin; not a design of evampire's
+   converters.
 
 Right-half-plane zero of the boost converter
 --------------------------------------------
