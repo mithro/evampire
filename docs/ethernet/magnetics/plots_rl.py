@@ -35,8 +35,8 @@ def rl_mask():
     a, b, f = rl_axes(30)
     b.append(text(a.x(1.1), a.y(18), "16 dB from 1 MHz to 40 MHz", size=12,
                   fill=RED))
-    b.append(text(a.x(98), a.y(10.5),
-                  "10 − 20 log10(f / 80 MHz), 8.1 dB at 100 MHz", "end",
+    b.append(text(a.x(38), a.y(11.5),
+                  "then 10 − 20 log10(f / 80 MHz): 8.1 dB at 100 MHz", "end",
                   12, fill=RED))
     b.append(text(a.x(3), a.y(6), "not allowed", size=12, fill=RED))
     b.append(text(a.x(3), a.y(25), "allowed", size=12, fill=GREEN))

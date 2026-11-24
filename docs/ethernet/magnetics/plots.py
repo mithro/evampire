@@ -70,13 +70,14 @@ def cm_dm():
                   grid=False)
     b.append(poly(a2.pts(ts, lambda t: 2 * data(t)), INK, 2.2))
     b.append(poly(a2.pts(ts, cm), GREEN, 2.0, dash="6,4"))
-    b.append(text(a2.l, a2.t - 8,
-                  "Difference and average of the two wires", size=12,
+    b.append(text(a2.l, a2.t - 8, "Difference and average", size=12,
                   weight="bold"))
-    b.append(text(a2.x(8) - 6, a2.y(1.1), "difference: the data", "end",
-                  12))
-    b.append(text(a2.x(8) - 6, a2.y(-1.15),
-                  "average: the interference", "end", 12, fill=GREEN))
+    b.append(line(a2.x(3.0), a2.t - 12, a2.x(3.45), a2.t - 12, INK, 2.2))
+    b.append(text(a2.x(3.5), a2.t - 8, "difference: the data", size=12))
+    b.append(line(a2.x(5.55), a2.t - 12, a2.x(6.0), a2.t - 12, GREEN, 2.0,
+                  "6,4"))
+    b.append(text(a2.x(6.05), a2.t - 8, "average: interference", size=12,
+                  fill=GREEN))
     return svg(w, h, b)
 
 
@@ -110,11 +111,32 @@ def impulses():
     """Double-exponential impulses with the stated front and half time."""
     w, h = 640, 330
 
+    def times(a, bb):
+        """Front time and time to half value of exp(-t/a) - exp(-t/bb),
+        with the front defined from 30 % to 90 % and the virtual origin
+        as in the impulse-test definitions."""
+        n = 200000
+        tmax = 6 * a
+        dt = tmax / n
+        v = [math.exp(-k * dt / a) - math.exp(-k * dt / bb)
+             for k in range(n)]
+        pk = max(v)
+        ip = v.index(pk)
+        t30 = next(k for k in range(ip) if v[k] >= 0.3 * pk) * dt
+        t90 = next(k for k in range(ip) if v[k] >= 0.9 * pk) * dt
+        t50 = next(k for k in range(ip, n) if v[k] <= 0.5 * pk) * dt
+        front = (t90 - t30) / 0.6
+        origin = t30 - 0.3 * front
+        return front, t50 - origin
+
     def shape(t1, t2):
-        # exp(-t/a) - exp(-t/b), normalised to a peak of 1. For the
-        # 1.2/50 us impulse a = 68.2 us and b = 0.405 us give the stated
-        # front and half-value times; the same ratios are used for 10/700.
+        """exp(-t/a) - exp(-t/b), normalised to a peak of 1, with a and b
+        fitted so that the front and half-value times are t1 and t2."""
         a, bb = t2 / 0.733, t1 / 2.96
+        for _ in range(30):
+            f, h = times(a, bb)
+            bb *= t1 / f
+            a *= t2 / h
         ts = linspace(0, 1000, 4000)
         v = [math.exp(-t / a) - math.exp(-t / bb) for t in ts]
         peak = max(v)
@@ -180,7 +202,7 @@ def events():
         (6e-7, 5, "charged cable, up to 5 kV, over 600 ns", 60, 4,
          "start", RED),
         (50e-6, 4, "surge, 4 kV, 1.2/50 µs", 8, 4, "start", RED),
-        (50e-9, 2, "fast transient, 2 kV, 5/50 ns", -4, -12, "start", RED),
+        (50e-9, 2, "fast transient, 2 kV, 5/50 ns", -4, -28, "start", RED),
         (200e-9, 2, "human-body model, 2 kV, about 200 ns", 8, 30, "start",
          BLUE),
         (50e-6, 2.4, "isolation impulse, 2.4 kV, 50 µs", 8, 18, "start",
@@ -216,8 +238,8 @@ def cm_divider():
     b.append(dot(a.x(50), a.y(ratio(50)), RED))
     b.append(text(a.x(50) + 10, a.y(ratio(50)) + 5,
                   "50 Hz: 0.021 (about 2 %)", size=12, fill=RED))
-    b.append(text(a.x(3e3), a.y(0.6),
-                  "signal frequencies: almost all of it", size=12))
+    b.append(text(a.x(9e6), a.y(0.6),
+                  "signal frequencies: almost all of it", "end", 12))
     b.append(text(a.x(12), a.y(0.0016), "C_w = 33 nF per wire, R_cm = 1 kΩ",
                   size=12, fill=GREY))
     return svg(w, h, b)

@@ -58,7 +58,7 @@
 <circle cx="306.4" cy="175.6" r="4.5" fill="#c00000"/>
 <text x="314.4" y="179.6" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">surge, 4 kV, 1.2/50 µs</text>
 <circle cx="161.9" cy="237.8" r="4.5" fill="#c00000"/>
-<text x="157.9" y="225.8" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">fast transient, 2 kV, 5/50 ns</text>
+<text x="157.9" y="209.8" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">fast transient, 2 kV, 5/50 ns</text>
 <circle cx="190.9" cy="237.8" r="4.5" fill="#1f4e79"/>
 <text x="198.9" y="267.8" text-anchor="start" font-size="12" font-weight="normal" fill="#1f4e79">human-body model, 2 kV, about 200 ns</text>
 <circle cx="306.4" cy="225.3" r="4.5" fill="#7f7f7f"/>
