@@ -124,9 +124,22 @@ that the analogue blocks must meet.
      - :clause:`40.6.1.3.1`
 
 The return-loss limit falls from 16 dB at 40 MHz to
-:math:`10 - 20\log_{10}(100/80) = 8.1` dB at 100 MHz. The slave's
-unfiltered jitter, measured against the master's clock, is also less than
-1.4 ns (:clause:`40.6.1.2.5`).
+:math:`10 - 20\log_{10}(100/80) = 8.1` dB at 100 MHz
+(:numref:`fig-phy-int-return-loss`). The slave's unfiltered jitter,
+measured against the master's clock, is also less than 1.4 ns
+(:clause:`40.6.1.2.5`).
+
+.. figure:: return-loss.svg
+   :name: fig-phy-int-return-loss
+   :alt: Graph of return loss in dB from 0 to 25 against frequency from
+         1 MHz to 100 MHz on a log scale. The limit is flat at 16 dB from
+         1 MHz to 40 MHz, then falls along 10 minus 20 log10 of f over 80
+         to 8.1 dB at 100 MHz. The region below the line is shaded as not
+         allowed.
+   :align: center
+
+   The 1000BASE-T return-loss limit of :clause:`40.8.3.1`: a port's
+   return loss must stay above the line.
 
 .. _phy-int-slower-reqs:
 

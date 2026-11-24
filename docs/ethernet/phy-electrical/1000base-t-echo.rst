@@ -69,7 +69,24 @@ For example, at the Nyquist frequency :math:`f = 62.5` MHz:
 
 so at least 12 % of the transmitted voltage at that frequency reaches the
 far end. :numref:`tab-phy-channel-limits` gives the same calculation at
-other frequencies.
+other frequencies, and :numref:`fig-phy-channel-limits` plots the limits.
+
+.. figure:: channel-limits.svg
+   :name: fig-phy-channel-limits
+   :alt: Graph of loss in dB from 0 to 70 against frequency from 1 MHz to
+         100 MHz on a log scale. The insertion loss limit rises from about
+         2.5 dB at 1 MHz through 7.1 dB at 10 MHz and 18.7 dB at 62.5 MHz to
+         24.0 dB at 100 MHz. The NEXT loss limit falls from about 61 dB at
+         1 MHz through 43.9 dB at 10 MHz and 30.5 dB at 62.5 MHz to 27.1 dB
+         at 100 MHz. The ELFEXT limit falls from 57 dB to 17 dB, and the
+         power-sum ELFEXT limit 2.6 dB below it. The gap between the NEXT
+         and insertion loss curves is shaded as the margin, 11.8 dB at
+         62.5 MHz and 3.1 dB at 100 MHz. Dashed lines mark 31.25 MHz and
+         62.5 MHz.
+   :align: center
+
+   The 1000BASE-T channel limits of :clause:`40.7` against frequency, with
+   the near-end crosstalk margin shaded.
 
 .. list-table:: 1000BASE-T channel limits for a 100 m channel, from the
    formulas of :clause:`40.7`
@@ -117,7 +134,8 @@ crosstalk from one neighbouring pair by
 
    M(f) = L_\text{NEXT}(f) - L_\text{IL}(f)
 
-where :math:`M` is the margin in dB. At 62.5 MHz,
+where :math:`M` is the margin in dB, shaded in
+:numref:`fig-phy-channel-limits`. At 62.5 MHz,
 :math:`M = 30.5 - 18.7 = 11.8` dB; at 100 MHz, :math:`M = 27.1 - 24.0 =
 3.1` dB. There are three neighbouring pairs, and the transceiver's own
 transmission on the same pair, the echo, is larger still. The receiver
