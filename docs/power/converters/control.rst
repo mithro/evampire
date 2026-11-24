@@ -174,8 +174,8 @@ Right-half-plane zero of the boost converter
 --------------------------------------------
 
 When a boost converter's duty cycle increases, S2 conducts for less of each
-period, so less current reaches the output and the output first falls. In
-control terms this is a *right-half-plane zero*, at
+period, so less current reaches the output and the output first falls
+(:numref:`fig-conv-rhp-step`). In control terms this is a *right-half-plane zero*, at
 
 .. math::
 
@@ -188,6 +188,17 @@ control terms this is a *right-half-plane zero*, at
 below one third of it for the LM5177 [CONV-LM5177]_ (Section 7.3.8,
 Equation 7), one quarter in the LM5122 design example [CONV-LM5122]_
 (Section 8.2.2).
+
+.. figure:: rhp-step.svg
+   :name: fig-conv-rhp-step
+   :alt: Three traces against time. The boost duty cycle steps up at time
+         t0. The inductor current then rises gradually towards a new level.
+         The output voltage first dips below its starting value and then
+         rises as the inductor current grows.
+   :align: center
+
+   Response of a boost converter to a step increase of duty cycle
+   (schematic, with the dip enlarged).
 
 .. list-table:: Symbols for the right-half-plane zero
    :name: tab-conv-sym-rhp
