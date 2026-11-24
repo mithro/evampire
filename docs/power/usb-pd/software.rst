@@ -118,7 +118,24 @@ The relation neglects filter delay and noise. For the values above:
    T_\text{s,max} = (0.25 - 2 \times 0.07) \times 3.03\ \mu\text{s}
                   = 333\ \text{ns}
 
-A sampled receiver therefore takes at least 3.0 million samples per second.
+:numref:`fig-usbpd-rx-margin` shows how the edge displacement and the
+sampling error together fill the margin on each side of 0.75 UI.
+
+.. figure:: rx-margin.svg
+   :name: fig-usbpd-rx-margin
+   :alt: Number line of the measured interval from 0.2 to 1.3 UI, with a
+         dashed decision line at 0.75 UI. The half of a 1, nominal 0.5 UI,
+         spreads 0.36 to 0.64 UI from edge displacement and 0.25 to 0.75 UI
+         with the sampling error added. A whole 0, nominal 1 UI, spreads
+         0.86 to 1.14 UI from edge displacement and 0.75 to 1.25 UI with the
+         sampling error. The sampling error is up to 0.11 UI, 333 ns at
+         330 kbit/s.
+
+   The measured length of a BMC interval: edge displacement of 0.07 UI per
+   edge and a sampling error of 0.11 UI just reach the 0.75 UI decision
+   point.
+
+A sampled receiver therefore takes at least 3.0 million samples per second.
 For reference, the Chromium OS EC firmware times edges with a 2.4 MHz counter,
 417 ns per count ([USBPD-CROS-EC]_, ``pd_hw_init_rx()``). That is coarser than
 this bound, which assumes both edges of an interval displaced by the full
@@ -507,7 +524,22 @@ Hardware helpers
 ----------------
 
 The helpers below are generic microcontroller timer and serial features.
-None is specific to USB.
+None is specific to USB. :numref:`fig-usbpd-helpers` shows where each one
+sits between the analogue front end and the processor.
+
+.. graphviz:: helpers.dot
+   :name: fig-usbpd-helpers
+   :caption: The hardware helpers between the CC front end and the
+             processor; the dashed path is a USB-specific helper.
+   :alt: Block diagram. The CC comparator's edges go to a capture register
+         that copies a free-running counter; the timestamps pass through a
+         FIFO of depth D to the RISC-V processor. The processor sends edge
+         times to a compare register or FIFO, or a prepared message to a
+         shift register clocked at twice the bit rate; either drives the
+         BMC driver's data input. A dashed path shows a USB-specific helper
+         that decodes BMC, 4b5b and the CRC from the comparator, sends
+         GoodCRC to the driver by itself and passes messages to the
+         processor.
 
 Input capture
 ^^^^^^^^^^^^^
@@ -588,7 +620,8 @@ extension (:std:`RISC-V ISA <riscv-unpriv>`, see
 USB-specific helpers go further. For reference, the onsemi FUSB302B decodes
 BMC and 4B5B, checks the CRC, holds messages in a FIFO, and sends the GoodCRC
 reply by itself ([USBPD-FUSB302B]_, figure 12 and "PD Automatic Receive
-GoodCRC"). An automatic GoodCRC removes the 195 µs deadline from software.
+GoodCRC"); the dashed path of :numref:`fig-usbpd-helpers` is such a
+helper. An automatic GoodCRC removes the 195 µs deadline from software.
 
 Method comparison
 ^^^^^^^^^^^^^^^^^

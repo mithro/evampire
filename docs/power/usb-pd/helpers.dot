@@ -1,0 +1,47 @@
+// The hardware helpers that can sit between the CC analogue front end and
+// the processor, as described on software.rst. Solid boxes: generic timer
+// and serial features; dashed box: a USB-specific helper.
+//
+// Fixed grid (positions in inches):
+//   x=0.7  comparator and BMC driver
+//   x=2.4  counter, capture register, USB-specific decoder
+//   x=4.1  FIFO, compare register, shift register
+//   x=5.9  processor
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph helpers {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.3, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    cmp  [pos="0.7,2.9!", label="CC comparator", width=1.1,
+          fillcolor="#ffffff"];
+    drv  [pos="0.7,0.95!", label="BMC driver,\ndata input", width=1.1,
+          fillcolor="#ffffff"];
+
+    cnt  [pos="2.65,3.65!", label="free-running\ncounter"];
+    cap  [pos="2.65,2.9!", label="capture\nregister"];
+    fifo [pos="4.6,2.9!", label="FIFO of\ndepth D"];
+    auto [pos="2.65,1.95!", label="BMC, 4b5b and CRC\ndecoder, automatic\nGoodCRC",
+          width=1.6, height=0.62, style="rounded,filled,dashed"];
+    ocmp [pos="4.6,1.25!", label="compare register\nor FIFO", width=1.4];
+    shft [pos="4.6,0.45!", label="shift register,\n2 × bit rate", width=1.4];
+
+    cpu  [pos="6.45,1.95!", label="RISC-V\nprocessor", width=1.0, height=1.6,
+          fillcolor="#fbe5d6"];
+
+    cmp -> cap  [label="edges"];
+    cnt -> cap;
+    cap -> fifo [label="timestamps"];
+    fifo -> cpu;
+    cmp -> auto [style=dashed];
+    auto -> drv [style=dashed];
+    auto -> cpu [style=dashed, label="messages"];
+    cpu -> ocmp [label="edge times"];
+    ocmp -> drv;
+    cpu -> shft [label="prepared\nmessage"];
+    shft -> drv;
+}
