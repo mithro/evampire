@@ -47,7 +47,18 @@ Software-only baseline
 The minimum hardware is the analogue front end of :doc:`analogue` connected
 to plain processor-visible bits: D+ and D− receiver outputs as inputs; and
 driver enable, D+ level, D− level and pull-up enable as outputs. Everything
-else is software.
+else is software (:numref:`fig-usbser-baseline`).
+
+.. graphviz:: software-cost/baseline.dot
+   :name: fig-usbser-baseline
+   :caption: The software-only baseline: the analogue front end wired to
+             processor input and output bits.
+   :alt: Block diagram: the analogue front end, with the driver, receivers
+         and pull-up, connects to the processor through plain bits. Two
+         input bits carry the D+ and D− receiver outputs to the processor.
+         Four output bits carry driver enable, D+ level, D− level and
+         pull-up enable from the processor. All USB work is in software.
+   :align: center
 
 Reception
 ~~~~~~~~~
