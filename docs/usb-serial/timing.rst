@@ -71,7 +71,9 @@ Table 7‑4). :numref:`tab-usbser-jitter` gives the limits.
      - ± 9
      - Edges evampire must accept
 
-The source jitter includes the effect of the sender's frequency error. The
+:numref:`fig-usbser-bit-cell` draws these windows around the edges of one
+bit. The source jitter includes the effect of the sender's frequency
+error. The
 receiver must decode edges anywhere within a quarter of a bit time either
 side of the ideal position, and the specification notes that a receiver
 sampling four times per bit, with a simple digital phase-locked loop, can
@@ -104,6 +106,22 @@ has this margin against the receive jitter:
      - Receiver jitter to the next transition, 18.5 ns
        ([USBSER-USB2]_ Table 7‑9)
      - ns
+
+:numref:`fig-usbser-bit-cell` shows the sample in the middle of the bit and
+the margin on each side.
+
+.. figure:: timing/bit-cell.svg
+   :name: fig-usbser-bit-cell
+   :alt: One 83.33 ns bit with ideal edges at 0 ns and 83.33 ns. Around each
+         edge, windows show the sent limits TDJ1 ± 3.5 ns and TDJ2 ± 4 ns
+         for paired transitions, and the accepted limits TJR1 ± 18.5 ns and
+         TJR2 ± 9 ns for paired transitions. A dashed line marks the sample
+         at 41.67 ns, with a margin of 23.2 ns to the edge of each TJR1
+         window, at 18.5 ns and 64.83 ns.
+   :align: center
+
+   Edge windows of one full-speed bit and the margin of a sample taken in
+   its middle.
 
 If the sampling instants are set once, at the SYNC pattern, and then run
 freely, they drift against the sender's bits by:

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="330" viewBox="0 0 600 330" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="600" height="330" fill="#ffffff"/>
+<line x1="250.9" y1="260.0" x2="250.9" y2="265.0" stroke="#222222" stroke-width="1.2"/>
+<text x="250.9" y="276.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="307.1" y1="260.0" x2="307.1" y2="265.0" stroke="#222222" stroke-width="1.2"/>
+<text x="307.1" y="276.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">18.5</text>
+<line x1="377.5" y1="260.0" x2="377.5" y2="265.0" stroke="#222222" stroke-width="1.2"/>
+<text x="377.5" y="276.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">41.67</text>
+<line x1="447.9" y1="260.0" x2="447.9" y2="265.0" stroke="#222222" stroke-width="1.2"/>
+<text x="447.9" y="276.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">64.83</text>
+<line x1="504.1" y1="260.0" x2="504.1" y2="265.0" stroke="#222222" stroke-width="1.2"/>
+<text x="504.1" y="276.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">83.33</text>
+<line x1="175.0" y1="260.0" x2="580.0" y2="260.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="175.0" y1="40.0" x2="175.0" y2="260.0" stroke="#222222" stroke-width="1.2"/>
+<text x="377.5" y="298.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">time within one bit (ns)</text>
+<text x="167.0" y="73.0" font-size="12" text-anchor="end" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">sent TDJ1 ± 3.5 ns</text>
+<rect x="240.3" y="59.2" width="21.3" height="27.5" rx="0" fill="#dbe8f5" stroke="#1f4e79" stroke-width="1.0"/>
+<rect x="493.4" y="59.2" width="21.3" height="27.5" rx="0" fill="#dbe8f5" stroke="#1f4e79" stroke-width="1.0"/>
+<text x="167.0" y="117.0" font-size="12" text-anchor="end" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">sent paired TDJ2 ± 4 ns</text>
+<rect x="238.8" y="103.2" width="24.3" height="27.5" rx="0" fill="#dbe8f5" stroke="#1f4e79" stroke-width="1.0"/>
+<rect x="491.9" y="103.2" width="24.3" height="27.5" rx="0" fill="#dbe8f5" stroke="#1f4e79" stroke-width="1.0"/>
+<text x="167.0" y="161.0" font-size="12" text-anchor="end" font-weight="normal" fill="#c55a11" dominant-baseline="middle">accepted TJR1 ± 18.5 ns</text>
+<rect x="194.7" y="147.2" width="112.4" height="27.5" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<rect x="447.9" y="147.2" width="112.4" height="27.5" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<text x="167.0" y="205.0" font-size="12" text-anchor="end" font-weight="normal" fill="#c55a11" dominant-baseline="middle">accepted paired TJR2 ± 9 ns</text>
+<rect x="223.6" y="191.2" width="54.7" height="27.5" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<rect x="476.7" y="191.2" width="54.7" height="27.5" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<line x1="250.9" y1="30.0" x2="250.9" y2="260.0" stroke="#222222" stroke-width="1.6"/>
+<text x="250.9" y="22.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">ideal edge</text>
+<line x1="504.1" y1="30.0" x2="504.1" y2="260.0" stroke="#222222" stroke-width="1.6"/>
+<text x="504.1" y="22.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">ideal edge</text>
+<line x1="377.5" y1="40.0" x2="377.5" y2="260.0" stroke="#38761d" stroke-width="1.6" stroke-dasharray="5 3"/>
+<text x="377.5" y="22.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">sample at 41.67</text>
+<line x1="307.1" y1="240.8" x2="377.5" y2="240.8" stroke="#222222" stroke-width="1.1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<line x1="377.5" y1="240.8" x2="447.9" y2="240.8" stroke="#222222" stroke-width="1.1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<text x="377.5" y="228.8" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">23.2 ns margin on each side of the sample</text>
+<text x="300.0" y="318.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">one bit time = 83.33 ns at 12 Mbit/s</text>
+</svg>
