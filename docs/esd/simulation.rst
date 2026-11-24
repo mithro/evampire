@@ -26,7 +26,22 @@ stressed against ground. Every other pin floats, as on an unpowered chip.
 The core-side inputs of the pad (``A``, ``OE`` and the others) are tied
 low, which is where an unpowered core leaves them. The rings have no
 resistance in the main runs, and :doc:`results-hbm` shows the effect of
-1 Ω.
+1 Ω. :numref:`fig-esd-testbench` shows the circuit.
+
+.. figure:: figures/testbench.svg
+   :name: fig-esd-testbench
+   :alt: The generator drives PAD of the bi_t pad cell, which contains the
+         drivers, drain diodes and input protection, with its core inputs
+         A, OE and the others held low. The bi_t cell sits between the DVDD
+         ring and the DVSS ring. Each ring passes through a resistor of
+         0 ohm or 1 ohm to a DVDD pad and a DVSS pad, each holding a rail
+         clamp between the rings. The generator's return and the DVSS pad
+         connect to the tester ground. DVDD has no outside connection and
+         floats.
+   :width: 100%
+
+   The simulated circuit: three foundry pad cells on the DVDD and DVSS
+   rings, with the generator between PAD and the DVSS pad.
 
 The script :download:`sim/esd_sim.py <sim/esd_sim.py>` runs every test
 circuit. It uses four modules in the same folder:

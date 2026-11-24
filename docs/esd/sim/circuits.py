@@ -41,8 +41,9 @@ GREY = "#666666"
 
 
 def box(d, x0, y0, x1, y1, label=None, color="black", ls="-"):
-    d += (elm.Rect(corner1=(0, 0), corner2=(x1 - x0, y1 - y0)).at((x0, y0))
-          .color(color).linestyle(ls))
+    corners = [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
+    for p, q in zip(corners, corners[1:]):
+        d += elm.Line().at(p).to(q).color(color).linestyle(ls)
     if label:
         d += elm.Label().at(((x0 + x1) / 2, (y0 + y1) / 2)).label(
             label, color=color)
@@ -115,8 +116,61 @@ def testers():
         d.save(str(OUT / "testers.svg"))
 
 
+def clamp_cell(d, x, name):
+    """A supply pad cell holding a rail clamp between the two rings."""
+    box(d, x - 1.6, 0.6, x + 1.6, 5.4, color=CLAMP)
+    note(d, x - 0.1, 5.0, name, color=CLAMP, halign="center")
+    d += elm.Line().at((x + 1.5, 6)).to((x + 1.5, 4.6))
+    d += elm.Line().at((x + 1.5, 4.6)).to((x, 4.6))
+    d += elm.Line().at((x, 4.6)).to((x, 4.2))
+    d += elm.Line().at((x, 0)).to((x, 1.8))
+    box(d, x - 1.1, 1.8, x + 1.1, 4.2, "rail\nclamp", color=CLAMP)
+    d += elm.Dot().at((x + 1.5, 6))
+    d += elm.Dot().at((x, 0))
+
+
+def testbench():
+    with schemdraw.Drawing(show=False) as d:
+        # The DVDD and DVSS rings, with their resistance.
+        for y, name in ((6, "DVDD ring"), (0, "DVSS ring")):
+            d += elm.Line().at((1.6, y)).to((7.0, y)).linewidth(2.4)
+            d += (elm.Resistor().right().at((7.0, y)).to((9.6, y))
+                  .label("0 Ω or 1 Ω", loc="top" if y else "bottom"))
+            d += elm.Line().at((9.6, y)).to((17.4, y)).linewidth(2.4)
+            note(d, 17.6, y, name)
+        # The bidirectional pad cell.
+        box(d, 1.6, 0.6, 6.8, 5.4, color=CHIP)
+        note(d, 4.2, 5.0, "bi_t pad cell", color=CHIP, halign="center")
+        note(d, 4.2, 3.1, "drivers, drain\ndiodes, input\nprotection",
+             color=CHIP, halign="center")
+        note(d, 4.2, 1.3, "core inputs\nA, OE: low", color=GREY,
+             halign="center")
+        d += elm.Line().at((4.2, 5.4)).to((4.2, 6))
+        d += elm.Line().at((4.2, 0.6)).to((4.2, 0))
+        d += elm.Dot().at((4.2, 6))
+        d += elm.Dot().at((4.2, 0))
+        clamp_cell(d, 11.6, "DVDD pad")
+        clamp_cell(d, 15.4, "DVSS pad")
+        # The generator into PAD, returning to the grounded DVSS.
+        d += elm.Line().at((1.6, 3.0)).to((0.6, 3.0)).color(HOT)
+        d += elm.Dot(open=True).at((0.6, 3.0)).label("PAD", loc="top")
+        box(d, -4.0, 1.6, -0.6, 4.4, "HBM or\nIEC\ngenerator")
+        d += elm.Line().at((-0.6, 3.0)).to((0.6, 3.0)).color(HOT)
+        d += elm.Line().at((-2.3, 1.6)).to((-2.3, -1.2))
+        d += elm.Line().at((-2.3, -1.2)).to((15.4, -1.2))
+        d += elm.Line().at((15.4, 0)).to((15.4, -1.2))
+        d += elm.Ground().at((6.0, -1.2))
+        note(d, 6.4, -1.9, "tester ground on the DVSS pad", color=GREY)
+        note(d, 6.4, -2.7, "DVDD has no outside connection: it floats",
+             color=GREY)
+        extent(d, -4.0, 20.6, -3.2)
+        OUT.mkdir(exist_ok=True)
+        d.save(str(OUT / "testbench.svg"))
+
+
 def main():
     testers()
+    testbench()
 
 
 if __name__ == "__main__":

@@ -118,6 +118,6 @@ repeats the +2 kV human body model discharge with each changed.
 Doubling the drain diodes' resistance raises the pad by 0.2 V at the peak
 current. A ring resistance of 1 Ω raises it by 1.3 V: the current crosses
 the DVDD ring on its way to the clamps, while the DVSS pads are where the
-tester's ground connects. At the 29 A of an 8 kV IEC discharge, the same
+tester's ground connects (:numref:`fig-esd-testbench`). At the 29 A of an 8 kV IEC discharge, the same
 1 Ω would add 29 V, so a pad built for the IEC test needs a ring resistance
 far below 1 Ω (:doc:`higher-levels`).
