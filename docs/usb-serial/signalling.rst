@@ -12,7 +12,8 @@ Host and device
 
 USB connects one *host*, normally a computer, to one or more *devices*. The
 host starts every exchange: a device only sends when the host has asked
-it to in the packet before ([USBSER-USB2]_ section 8.4.1). A device never talks to another device.
+it to in the packet before ([USBSER-USB2]_ section 8.4.1), as in the
+transactions of :numref:`fig-usbser-transactions`. A device never talks to another device.
 
 The end of a cable at the host is the *downstream facing port* (DFP) and the
 end at the device is the *upstream facing port* (UFP). On a USB Type-C port

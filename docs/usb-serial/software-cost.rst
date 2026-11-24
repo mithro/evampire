@@ -130,8 +130,8 @@ The instruction rate needed while a packet arrives is:
 
 Three further needs come with it:
 
-* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle
-  of its bit (:doc:`timing`), and the sampling instant has to be corrected
+* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle
+  of its bit (:numref:`fig-usbser-bit-cell`), and the sampling instant has to be corrected
   from the edges, at least every 7 bit times. The loop therefore has to
   have a fixed, known duration of exactly one bit time, or measure edge
   times from a counter.
