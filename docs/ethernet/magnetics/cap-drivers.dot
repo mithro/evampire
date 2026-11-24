@@ -1,0 +1,69 @@
+// The two kinds of line driver working through coupling capacitors, with
+// no centre tap. Left: a voltage-mode driver sets its own common-mode
+// voltage. Right: a current-mode driver takes its supply through pull-up
+// resistors to 3.3 V on the chip side of the capacitors, as in the
+// capacitor-coupled DP83848 reference circuit; an inductor can replace
+// the resistors.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph cap_drivers {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+    node [shape=plaintext, style="", width=2.8, height=0.25, fontsize=10];
+    h1 [pos="1.35,3.1!", label="Voltage-mode driver"];
+    h2 [pos="4.75,3.1!", label="Current-mode driver"];
+
+    node [shape=box, style=filled, fontsize=9];
+    d1 [pos="0.5,1.4!", width=1.0, height=1.75, fillcolor="#dbe8f5",
+        label="driver with\nbuilt-in\ntermination;\nsets its own\ncommon mode"];
+    c1p [pos="1.75,2.0!", width=0.55, height=0.3, fillcolor="#fff2cc",
+         label="C_w"];
+    c1n [pos="1.75,0.8!", width=0.55, height=0.3, fillcolor="#fff2cc",
+         label="C_w"];
+    k1 [pos="2.6,1.4!", width=0.5, height=1.6, fillcolor="#fbe5d6",
+        label="cable"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a1 [pos="0.97,2.0!"]; a2 [pos="0.97,0.8!"];
+    b1 [pos="2.35,2.0!"]; b2 [pos="2.35,0.8!"];
+    a1 -- c1p -- b1;
+    a2 -- c1n -- b2;
+
+    node [shape=box, style=filled, fontsize=9];
+    d2 [pos="3.75,1.4!", width=0.95, height=1.6, fillcolor="#dbe8f5",
+        label="switched\ncurrent\nsinks"];
+    rail [pos="4.75,2.75!", width=1.0, height=0.25, fillcolor="#fbe5d6",
+          label="3.3 V supply"];
+    rail2 [pos="4.75,0.05!", width=1.0, height=0.25, fillcolor="#fbe5d6",
+           label="3.3 V supply"];
+    rp [pos="4.75,2.38!", width=0.35, height=0.3, fillcolor="#ffffff",
+        label="R"];
+    rn [pos="4.75,0.42!", width=0.35, height=0.3, fillcolor="#ffffff",
+        label="R"];
+    c2p [pos="5.65,2.0!", width=0.55, height=0.3, fillcolor="#fff2cc",
+         label="33 nF"];
+    c2n [pos="5.65,0.8!", width=0.55, height=0.3, fillcolor="#fff2cc",
+         label="33 nF"];
+    k2 [pos="6.45,1.4!", width=0.5, height=1.6, fillcolor="#fbe5d6",
+        label="cable"];
+    node [shape=plaintext, style="", width=2.6, height=0.2, fontsize=9];
+    n2 [pos="4.85,-0.3!", label="an inductor can replace the resistors"];
+
+    node [shape=point, width=0.07, height=0.07, style=filled,
+          fillcolor="#000000"];
+    jp [pos="4.75,2.0!"]; jn [pos="4.75,0.8!"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    e1 [pos="4.22,2.0!"]; e2 [pos="4.22,0.8!"];
+    f1 [pos="6.2,2.0!"];  f2 [pos="6.2,0.8!"];
+
+    e1 -- jp -- c2p -- f1;
+    e2 -- jn -- c2n -- f2;
+    jp -- rp -- rail [color="#c55a11"];
+    jn -- rn -- rail2 [color="#c55a11"];
+}

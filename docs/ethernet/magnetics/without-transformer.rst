@@ -28,7 +28,19 @@ Suppose the cable's common-mode voltage moves at mains frequency relative
 to the chip ground, and the chip holds each pair's common-mode node at its
 bias voltage through a resistance. For common-mode signals the two
 capacitors of the pair act in parallel, and form a divider with that
-resistance:
+resistance (:numref:`fig-magnetics-cm-divider-circuit`).
+
+.. graphviz:: cm-divider.dot
+   :name: fig-magnetics-cm-divider-circuit
+   :caption: The common-mode divider of one capacitor-coupled pair.
+   :alt: The cable's common-mode voltage V_cable drives the pair's two
+         coupling capacitors in parallel, 2 C_w, into the chip-side
+         common-mode node. A resistance R_cm joins that node to the bias
+         voltage, and V_chip appears across R_cm. The cable source and the
+         bias return to the chip ground.
+   :align: center
+
+The fraction that reaches the chip is:
 
 .. math::
 
@@ -74,6 +86,18 @@ This is an estimate: it treats the bias circuit as a plain resistance. For
 About 2 % of a mains-frequency ground difference reaches the chip. At
 signal frequencies the capacitors pass common-mode noise almost completely,
 so rejection there comes from the receiver and from a choke or termination.
+
+:numref:`fig-magnetics-cm-divider` shows the fraction against frequency.
+
+.. figure:: cm-divider.svg
+   :name: fig-magnetics-cm-divider
+   :alt: Graph of V_chip over V_cable on a log scale from 0.001 to 1
+         against frequency from 10 Hz to 10 MHz, for 33 nF per wire and
+         1 kΩ. The fraction rises with frequency, is 0.021 at 50 Hz, and is
+         close to 1 above about 10 kHz.
+
+   The fraction of the cable's common-mode voltage that reaches the chip,
+   for C_w = 33 nF and the assumed R_cm = 1 kΩ.
 
 Common-mode rejection options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,6 +179,23 @@ Active common-mode termination on evampire
    75 Ω, to common-mode signals at the chip side of the capacitors. Its
    bandwidth must reach the frequencies at which emissions are measured.
 
+:numref:`fig-magnetics-cap-termination` shows the external and the active
+termination.
+
+.. graphviz:: cap-termination.dot
+   :name: fig-magnetics-cap-termination
+   :caption: Common-mode termination of a capacitor-coupled pair, on the
+             cable side and on evampire; resistor values are open.
+   :alt: Left, external termination: two resistors R, one from each cable
+         wire, meet at a midpoint that forms the centre tap. A blocking
+         capacitor, fitted with Power over Ethernet, joins it to a
+         capacitor shared by the four pairs, which goes to chassis. The
+         coupling capacitors C_w then lead to the chip. Right, active
+         termination: behind the coupling capacitors, a common-mode
+         feedback loop on evampire connects to both wires and presents
+         about 75 Ω.
+   :align: center
+
 Protection behind the capacitors
 --------------------------------
 
@@ -189,6 +230,22 @@ each pair (:doc:`gigabit-risk`). A diode across each pair on the cable
 side, with no connection to ground, limits differential surges and does
 not affect the isolation.
 
+:numref:`fig-magnetics-cap-protection` shows where each part sits on one
+pair.
+
+.. graphviz:: cap-protection.dot
+   :name: fig-magnetics-cap-protection
+   :caption: Protection of one capacitor-coupled pair.
+   :alt: One pair from the RJ45 socket and cable to evampire. On the cable
+         side a diode across the pair, with no ground connection, limits
+         differential surges. Each wire then passes a coupling capacitor
+         C_w, which holds off a common-mode surge and passes a charge
+         C_w ΔV for a step ΔV. On the chip side external diodes to signal
+         ground and clamps on evampire, such as thyristor or parasitic
+         bipolar clamps, take the fast edge. All chip-side capacitance
+         across the pair, clamps included, fits a budget of about 12.8 pF.
+   :align: center
+
 Line drivers
 ------------
 
@@ -203,11 +260,41 @@ couples a current-mode DP83848 through 33 nF capacitors this way, with
 pull-up resistors to 3.3 V on each pin ([MAG-SNLA088]_, figure 5). An
 inductor can take the place of the resistors.
 
+:numref:`fig-magnetics-cap-drivers` shows both drivers.
+
+.. graphviz:: cap-drivers.dot
+   :name: fig-magnetics-cap-drivers
+   :caption: A voltage-mode and a current-mode line driver coupled through
+             capacitors, with no centre tap.
+   :alt: Left, a voltage-mode driver with built-in termination sets its
+         own common-mode voltage and drives the cable through a capacitor
+         C_w in each wire. Right, a current-mode driver of switched current
+         sinks; each wire has a pull-up resistor to a 3.3 V supply on the
+         chip side of a 33 nF capacitor, and an inductor can replace the
+         resistors.
+   :align: center
+
 Power over Ethernet current path
 --------------------------------
 
 The power must reach both wires of a pair equally without loading the
-data. Three options exist.
+data. Three options exist, drawn in :numref:`fig-magnetics-poe-paths`.
+
+.. graphviz:: poe-paths.dot
+   :name: fig-magnetics-poe-paths
+   :caption: Three ways to carry Power over Ethernet current on a
+             capacitor-coupled pair (schematic).
+   :alt: Three rows, each a pair from the cable through a coupling
+         capacitor C_w in each wire to the chip. In the first, a
+         centre-tapped inductor of 80 µH or more across the pair feeds
+         the power circuits from its tap; the current splits, half each
+         way, and only the leakage counts toward the 100 µH limit. In the
+         second, two separate inductors, one from each wire, meet and feed
+         the power circuits; each carries 0.474 A and the full inductance
+         is in the power path. In the third, an external pass transistor
+         controlled from evampire feeds the power circuits; it holds 57 V,
+         carries about 0.5 A and drops about 2 V, about 1 W.
+   :align: center
 
 Centre-tapped inductor across each pair
    One winding with a centre tap and no second winding: the cable-side
@@ -253,7 +340,23 @@ The coupling capacitors block direct current, so the data circuits do not
 change the signature resistance. They do add capacitance between the two
 pairs that carry power. If every chip-side node returns to one ground, the
 two capacitors of each pair are in parallel, :math:`2 C_\text{w}`, and the
-two pairs are joined through two such groups in series:
+two pairs are joined through two such groups in series
+(:numref:`fig-magnetics-cap-signature`):
+
+.. graphviz:: cap-signature.dot
+   :name: fig-magnetics-cap-signature
+   :caption: The coupling capacitors as seen by the detection source,
+             when every chip-side node returns to one chip ground.
+   :alt: The detection source of 2.7 V to 10.1 V sits across powered pair
+         1 and powered pair 2, with the powered device's signature of
+         23.7 kΩ to 26.3 kΩ and 50 nF to 120 nF between them. Each wire of
+         each pair also has a coupling capacitor C_w; the two of each pair
+         join, 2 C_w, and both groups go to the chip ground. The two
+         groups in series give C_extra = C_w, in parallel with the
+         signature.
+   :align: center
+
+The capacitance is:
 
 .. math::
 
