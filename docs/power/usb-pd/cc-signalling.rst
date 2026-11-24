@@ -686,9 +686,11 @@ the eyes.
 Edge-detecting receivers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The USB Implementers Forum publishes two receiver designs that detect edges
-instead of levels, and so need no change of levels with the power role
-([USBPD-BMCRX]_, Section 2). They are informative examples, not
+Edge-detecting receivers ignore the ground offset. A ground offset shifts
+the whole signal by a nearly constant voltage, and a difference between two
+nearby moments of the signal removes it. The USB Implementers Forum
+publishes two receiver designs that detect edges instead of levels, and so
+need no change of levels with the power role ([USBPD-BMCRX]_, Section 2). They are informative examples, not
 requirements ([USBPD-BMCRX]_, Section 1):
 
 * the *finite difference* receiver samples the filtered signal every
