@@ -121,7 +121,24 @@ An Ethernet cable holds four pairs of copper wires. The two wires of each
 pair are twisted around each other, which makes the pair a balanced
 :wikipedia:`transmission line <Transmission_line>` of 100 Ω characteristic
 impedance (:clause:`40.7.2.2`) and reduces the interference it picks up
-and radiates (:wikipedia:`twisted pair <Twisted_pair>`).
+and radiates (:wikipedia:`twisted pair <Twisted_pair>`). 1000BASE-T names
+the pairs A to D: pair A lands on contacts 1 and 2 of the :term:`RJ45`
+socket, B on 3 and 6, C on 4 and 5, and D on 7 and 8
+(:clause:`Table 40-12 <40>`, :numref:`fig-phy-cable`).
+
+.. figure:: cable.svg
+   :name: fig-phy-cable
+   :alt: An RJ45 plug face with contacts 1 to 8 on the left. Lines run
+         from contacts 1 and 2 to pair A, 3 and 6 to pair B, 4 and 5 to
+         pair C, and 7 and 8 to pair D. The four pairs run through a cable
+         jacket, each drawn as two wires twisted together, with a break to
+         show the length; an arrow above marks a link of up to 100 m. A
+         note says each pair has a differential impedance of 100 ohms and
+         its signal is the voltage of one wire minus the other, for pair A
+         contact 1 minus contact 2.
+   :align: center
+
+   The four twisted pairs of a cable and the RJ45 contacts they land on.
 
 1000BASE-T runs over Class D cabling built from Category 5 components, as
 specified in :std:`ISO/IEC 11801 <iso-iec-11801>` and :std:`TIA-568`
@@ -137,8 +154,9 @@ such a link (:clause:`40.6.1.3.1`).
 Cable impairments
 -----------------
 
-Four effects of the cable set the design of every transceiver.
-:doc:`1000base-t-echo` gives the size of each one for 1000BASE-T.
+Four effects of the cable set the design of every transceiver
+(:numref:`fig-phy-cable-effects`). :doc:`1000base-t-echo` gives the size
+of each one for 1000BASE-T.
 
 :term:`Insertion loss`
    The signal becomes smaller as it travels, and more so at high
@@ -165,3 +183,22 @@ Far-end crosstalk
 Losses are given in :wikipedia:`decibels <Decibel>` (dB). A loss of
 :math:`L` dB multiplies a voltage by :math:`10^{-L/20}`: 6 dB halves it and
 20 dB divides it by 10.
+
+.. figure:: impairments.svg
+   :name: fig-phy-cable-effects
+   :alt: Four panels. (a) Insertion loss: voltage against time from 0 to
+         64 ns with 8 ns symbol slots; a sent pulse of height 1 from 8 ns
+         to 16 ns arrives as a smooth pulse of height about 0.4 peaking
+         near 18 ns, whose shaded tail lasts past 48 ns, over later
+         symbols. (b) Return loss: a sender drives a line with a connector
+         part way along; a thick incident arrow goes towards the
+         connector and a thin reflected arrow comes back. (c) Near-end
+         crosstalk: a transmitter on pair B and a receiver on pair A at
+         the same end, with a thick coupling arrow from B to A. (d)
+         Far-end crosstalk: the transmitter on pair B is at the far end;
+         a thin coupling arrow from B to A there, then a dashed arrow
+         along pair A to the receiver.
+   :align: center
+
+   The four ways the cable changes the signal; the pulse shapes are
+   schematic, not to scale.

@@ -28,6 +28,25 @@ parts ([PHY-TUT98]_ slides 30 and 51):
   tails. Its input is the decided symbols rather than the noisy samples, so
   it adds no noise.
 
+:numref:`fig-phy-pulse-response` shows which part of a received pulse each
+equaliser removes.
+
+.. figure:: pulse-response.svg
+   :name: fig-phy-pulse-response
+   :alt: Graph of amplitude against time in symbol periods of 8 ns, from
+         minus 3 to 9. A smooth received pulse rises from about minus 1.2,
+         peaks at 1 at time 0 and decays over the following periods.
+         Stems mark its samples once per symbol period: a small one at
+         minus 1 in a blue precursor region labelled feed-forward
+         equaliser, the cursor of 1 at 0, and decreasing samples of about
+         0.7, 0.3, 0.13 and smaller from 1 to 8 in an orange postcursor
+         region labelled decision-feedback equaliser.
+   :align: center
+
+   A received symbol pulse sampled once per symbol period: the
+   feed-forward equaliser removes the precursor and the decision-feedback
+   equaliser the postcursor tail; the shape is schematic.
+
 The receive path also corrects *baseline wander*. The coupling
 transformers, or the coupling capacitors of a transformer-free connection
 (:doc:`../magnetics/index`), block DC, so a long run of symbols that does

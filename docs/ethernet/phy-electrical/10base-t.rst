@@ -14,7 +14,7 @@ Manchester coding
 
 10BASE-T uses one pair for each direction: pins 1 and 2 of the
 :term:`RJ45` socket to transmit and pins 3 and 6 to receive
-(:clause:`14.5.1`). It sends the data bits at 10 Mbit/s with
+(:clause:`14.5.1`, :numref:`fig-phy-cable`). It sends the data bits at 10 Mbit/s with
 :wikipedia:`Manchester coding <Manchester_code>`: each 100 ns bit is split
 into two halves at opposite levels, so every bit has a transition in its
 middle. A 1 bit goes from low to high in the middle of the bit and a 0 bit
