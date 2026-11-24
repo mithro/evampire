@@ -57,7 +57,22 @@ K-codes, with no header, data, CRC or EOP (:pd:`Section 5.3.1.2`,
 The header, the data and the CRC are sent least significant byte first, and
 the lower 4 bits (nibble) of each byte before the upper nibble
 (:pd:`Section 5.3.1.1`, :pd:`Figure 5.1`). This is
-:wikipedia:`little-endian <Endianness>` order.
+:wikipedia:`little-endian <Endianness>` order. :numref:`fig-usbpd-packet`
+shows the parts of a packet, a reset, and this order for one header.
+
+.. figure:: packet.svg
+   :name: fig-usbpd-packet
+   :alt: Three rows of boxes. Message packet: preamble 64 bits, SOP 20 bits,
+         header 20 bits, 0 to 7 data objects of 40 bits, CRC 40 bits and
+         EOP 5 bits; a bracket marks everything from SOP to EOP as 5-bit
+         symbols, and a second bracket marks the header and data objects as
+         covered by the CRC. Hard Reset or Cable Reset: preamble 64 bits and
+         four K-codes, 20 bits. Order on the wire for the GoodCRC header
+         41h 02h: nibble 1h as symbol 01001, then 4h as 01010, then 2h as
+         10100, then 0h as 11110; each symbol is sent bit b0 first.
+
+   The parts of a packet in the order they are sent, the shorter reset
+   packet, and the nibble and bit order of one header.
 
 .. _usbpd-4b5b:
 
@@ -78,7 +93,7 @@ Everything after the preamble is sent in 5-bit *symbols*, a
 A K-code cannot appear in data, so a receiver finds the start and end of a
 packet by matching symbols rather than by counting bits. The tables write
 each symbol from bit b4 down to bit b0, and bit b0 is sent first
-(:pd:`Figure 5.1`).
+(:pd:`Figure 5.1`; :numref:`fig-usbpd-packet`).
 
 .. list-table:: Data symbols (:pd:`Table 5.2`)
    :name: tab-usbpd-4b5b
