@@ -14,7 +14,19 @@ series between the input and the output and adjusts how hard it conducts so
 that the output stays at the set voltage. The transistor carries the full
 load current and drops the whole difference between the input and output
 voltages, so it turns that difference times the current into heat. A
-linear regulator can only make a voltage lower than its input.
+linear regulator can only make a voltage lower than its input. :numref:`fig-conv-linear`
+shows its parts.
+
+.. graphviz:: linear.dot
+   :name: fig-conv-linear
+   :caption: A linear regulator: a series pass transistor set by an
+             error amplifier.
+   :alt: Schematic: the input connects through a pass transistor to the
+         output and the load. A divider on the output feeds an error
+         amplifier with a reference, which drives the pass transistor's
+         gate. The pass transistor drops Vin − Vout and carries the load
+         current, so it turns (Vin − Vout) × Iout into heat.
+   :align: center
 
 The power lost in the transistor and the resulting efficiency, the fraction
 of the input power that reaches the load, are
