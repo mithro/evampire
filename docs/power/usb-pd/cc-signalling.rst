@@ -658,7 +658,8 @@ The specification requires a single-pole :wikipedia:`low-pass filter
 receiver's decision, analogue or digital (*tRxFilter*, :pd:`Table 5.11`).
 One common design follows it with a :term:`comparator` with
 :wikipedia:`hysteresis <Hysteresis>`, whose two switching levels sit inside
-the receive eye for the port's present role.
+the receive eye for the port's present role. The filter and comparator
+are the receive path of :numref:`fig-usbpd-cc-frontend`.
 
 For reference, the TI TPS65987D dual-role controller takes its switching
 levels and hysteresis from the receive masks ([USBPD-TPS65987D]_,
@@ -666,7 +667,21 @@ Section 8.3.1.5). As a sink it switches at 525 mV rising and 250 mV falling,
 and as a source at 875 mV rising and 600 mV falling (typical values,
 [USBPD-TPS65987D]_, Section 6.9). Both pairs sit inside the eye for their
 role, and the hysteresis of 275 mV is larger than the 165 mV of
-*vNoiseActive*.
+*vNoiseActive*. :numref:`fig-usbpd-rx-thresholds` places these levels in
+the eyes.
+
+.. figure:: rx-thresholds.svg
+   :name: fig-usbpd-rx-thresholds
+   :alt: Bar chart of voltage from 0 to 1 V for the three power roles. The
+         eye of a sinking port spans 0.2325 to 0.6425 V, of a port neither
+         sinking nor sourcing 0.2325 to 0.8925 V, and of a sourcing port
+         0.4825 to 0.8925 V. A grey band from 0.4825 to 0.6425 V lies inside
+         every eye. Arrows mark the reference switching levels: 250 mV
+         falling and 525 mV rising as a sink, 600 mV falling and 875 mV
+         rising as a source.
+
+   The receive eye for each power role, the band they share, and the
+   switching levels of a reference receiver.
 
 Edge-detecting receivers
 ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -304,7 +304,20 @@ Counter wait loop
 The processor computes the next edge time, waits in a
 :wikipedia:`busy-wait <Busy_waiting>` loop until a counter reaches it, and
 writes the output. The edge comes late by up to one loop iteration, so the
-iteration must fit in the 100 ns window:
+iteration must fit in the 100 ns window (:numref:`fig-usbpd-tx-edge`):
+
+.. figure:: tx-edge.svg
+   :name: fig-usbpd-tx-edge
+   :alt: Time axis from -150 to 150 ns around the ideal edge. A shaded
+         window runs from -50 to 50 ns, plus or minus 0.015 UI. The target
+         time from the counter is at -50 ns; wait-loop iterations 100 ns
+         apart make the edge land anywhere up to one iteration later, from
+         -50 to 50 ns.
+
+   A counter wait loop placing a transmitted edge: aimed at the start of
+   the window, it lands up to one iteration late.
+
+The rate the wait loop needs is:
 
 .. math::
 
@@ -462,6 +475,19 @@ The worst case is a message of seven data objects at the slowest bit rate,
 
    t_\text{busy} = 1589\ \mu\text{s} + 195\ \mu\text{s} + 552\ \mu\text{s}
                  = 2336\ \mu\text{s}
+
+:numref:`fig-usbpd-busy-time` shows this busy time.
+
+.. figure:: busy-time.svg
+   :name: fig-usbpd-busy-time
+   :alt: Time bar of 2336 µs with interrupts off: a received message of
+         1589 µs, a gap of at most 195 µs, and a GoodCRC of 552 µs. About
+         292 bytes of Ethernet traffic arrive meanwhile at 1 Mbit/s.
+         Decoding a stored message only in the gap would need 69 × 10⁶
+         instructions/s instead.
+
+   The time a polling processor is busy with the longest message and its
+   reply, at 270 kbit/s.
 
 During that time the processor does not service the Ethernet frame buffers or
 the transceiver configuration interface (:ref:`arch-microcontroller`,
