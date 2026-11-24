@@ -20,7 +20,8 @@ link. For reference, the TI DP83867 uses a 25 MHz reference of ±50 parts
 per million, plus ±50 parts per million for one year of ageing
 ([PHY-DP83867]_ Table 9‑2), and multiplies it up with a
 :wikipedia:`phase-locked loop <Phase-locked_loop>` (PLL). The same total of
-±100 parts per million fits the standard's limit.
+±100 parts per million fits the standard's limit
+(:numref:`fig-phy-int-clock-loop`).
 
 .. _phy-int-phase:
 
@@ -44,7 +45,33 @@ reference:
 
 The timing-recovery loop that decides the phase is digital. It works on
 the ADC samples, so it can be developed and checked on samples captured
-from a real cable before the chip exists.
+from a real cable before the chip exists. :numref:`fig-phy-int-clock-loop`
+shows the loop and :numref:`fig-phy-int-phase-steps` the phase steps.
+
+.. graphviz:: clock-loop.dot
+   :name: fig-phy-int-clock-loop
+   :caption: The clocks of one port: the PLL makes the 125 MHz symbol
+             clock, and the digital timing-recovery loop sets the ADC
+             sampling phase through the phase interpolator.
+   :alt: A 25 MHz crystal, plus or minus 50 ppm plus plus or minus 50 ppm
+         of ageing, feeds a PLL that multiplies by 5 to 125 MHz, plus or
+         minus 100 ppm. The PLL feeds a phase interpolator whose output is
+         the ADC sampling clock. The ADC's received samples go to digital
+         timing recovery, which sets the interpolator's phase, drawn
+         dashed. The transmitter takes its clock from the PLL in the
+         master and from the interpolator, dashed, in the slave.
+   :align: center
+
+.. figure:: phase-steps.svg
+   :name: fig-phy-int-phase-steps
+   :alt: A bar for one 8 ns symbol period with 64 tick marks below it.
+         A blue line marks the present sampling phase and a red line one
+         tick later marks the phase one step later. Text: 64 phases per
+         symbol give steps of 8 ns divided by 64, 125 ps; 256 phases would
+         give steps of 31 ps.
+   :align: center
+
+   One symbol period divided into 64 sampling phases of 125 ps.
 
 .. _phy-int-jitter:
 
@@ -90,7 +117,20 @@ With :math:`\sigma = 4.9` ps:
 
 which is about one twentieth of the 1.4 ns limit (estimate, for the
 reference example above; a gf180mcu PLL needs its own design and
-measurement).
+measurement). :numref:`fig-phy-int-jitter` draws the distribution.
+
+.. figure:: jitter.svg
+   :name: fig-phy-int-jitter
+   :alt: Graph of relative probability density on a log scale from 1e-14
+         to 1 against time error from −45 ps to 45 ps. A Gaussian curve
+         with sigma 4.9 ps peaks at 0. Dashed lines at about ±34 ps mark
+         7.03 sigma either side, and an arrow between them is labelled
+         Jpp = 2 × 7.03 × 4.9 ps = 69 ps. A note says the 1.4 ns limit is
+         about 20 times Jpp.
+   :align: center
+
+   Gaussian jitter of 4.9 ps rms and its peak-to-peak value at a tail
+   probability of 10⁻¹² each side.
 
 .. _phy-int-training-time:
 

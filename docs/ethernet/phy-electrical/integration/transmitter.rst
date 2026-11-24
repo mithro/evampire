@@ -196,7 +196,21 @@ temperature and process (estimate), with all other errors, such as
 package and pad capacitance, inside the same window. The gf180mcu
 unsalicided P+ polysilicon resistor varies ±20 % around its typical value
 ([PHY-GF180PDK]_ electrical parameters, resistors), so an untrimmed
-100 Ω resistor spans 80 Ω to 120 Ω, inside the window.
+100 Ω resistor spans 80 Ω to 120 Ω, inside the window
+(:numref:`fig-phy-int-termination`).
+
+.. figure:: termination.svg
+   :name: fig-phy-int-termination
+   :alt: Graph of return loss in dB from 0 to 40 against termination
+         impedance from 50 to 200 ohms. The curve peaks at 100 ohms and
+         falls faster below 100 ohms than above. It crosses a dashed 16 dB
+         line at 73 ohms and 138 ohms, the edges of a green window. A blue
+         band inside it marks the untrimmed resistor's range of 80 to
+         120 ohms.
+   :align: center
+
+   Return loss of a resistive termination on a 100 Ω line: the 16 dB
+   limit gives an asymmetric window of 73 Ω to 138 Ω.
 
 Whether that leaves
 enough of the window for the other errors depends on the error budget
