@@ -101,8 +101,9 @@ comes from the gf180mcu PDK and is not in this repository.
   outline, pads and wire hops that Graphviz can't draw. WaveDrom is rendered to SVG at build time
   (`render_using_wavedrompy`).
 - `docs/_static/custom.css` makes the page use the full window width (Furo
-  centres a fixed 46em column by default), puts a white panel behind
-  diagrams in dark mode and limits diagrams to the column width.
+  centres a fixed 46em column by default), sets figure and table captions
+  smaller and grey with a bold number, puts a white panel behind diagrams
+  in dark mode and limits diagrams to the column width.
   `diagram-links.js` adds an "Open diagram at full size" link that shows on
   narrow screens only.
 
