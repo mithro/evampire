@@ -24,7 +24,7 @@ graph cm_divider {
           label="bias\nvoltage"];
 
     node [shape=plaintext, style="", width=1.6, height=0.35, fontsize=9];
-    lnode [pos="3.05,1.2!", width=1.4, label="chip-side\ncommon-mode node"];
+    lnode [pos="3.25,1.25!", width=1.3, label="chip-side\ncommon-mode node"];
     lv [pos="3.75,0.38!", width=1.3, fontcolor="#c00000",
         label="V_chip across R_cm"];
     lg [pos="2.75,-0.15!", width=2.2, label="chip ground"];

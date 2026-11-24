@@ -34,9 +34,9 @@ graph cm_transformer {
     k1 -- k2 -- k3 -- k4 [style=dashed, color="#7f7f7f"];
 
     node [shape=plaintext, style="", height=0.2, fontsize=9];
-    l1 [pos="2.7,2.3!", width=3.6, fontcolor="#1f4e79",
+    l1 [pos="2.7,2.5!", width=3.6, fontcolor="#1f4e79",
         label="differential signal: passes"];
-    l2 [pos="2.7,2.1!", width=3.6, fontcolor="#c00000",
+    l2 [pos="2.7,2.3!", width=3.6, fontcolor="#c00000",
         label="common-mode voltage and direct current: blocked"];
     l3 [pos="2.7,0.4!", width=4.2, fontcolor="#7f7f7f",
         label="capacitance between the windings: passes some"];

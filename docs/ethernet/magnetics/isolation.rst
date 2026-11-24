@@ -219,7 +219,9 @@ Capacitors on evampire whose plates are the lowest and highest metal layers
 can hold off a high voltage across the oxide between them. Every part of
 the die that connects to the cable, including its bond pads, must then sit
 above that oxide. :doc:`coupling-capacitors` gives the die area such
-capacitors take.
+capacitors take. The lateral paths must hold the test voltage
+too: between the cable-side and chip-side pads, from the cable-side metal
+to the seal ring at the die edge, and across the package and bond wires.
 
 :numref:`fig-magnetics-die-barrier` shows the arrangement in cross-section.
 
@@ -236,7 +238,7 @@ capacitors take.
 
    An isolation capacitor between the lowest and highest metal layers,
    with everything connected to the cable on the top metal (schematic,
-   not to scale).
+   not to scale). Only the vertical path through the oxide is drawn.
 
 The oxide between the first and fifth metal layers of gf180mcu is four
 layers of 1.15 µm to 1.45 µm ([MAG-GF180]_, inter-layer specification),
