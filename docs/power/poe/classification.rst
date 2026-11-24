@@ -66,7 +66,8 @@ implement. The Type 1 and Type 2 rows come from :clause:`33.2.6` and
      - Required
    * - Type 3 or Type 4 dual-signature powered device
      - Class signatures on each pair set
-     - Required
+     - Required if it requests class 4 or higher on either pair set,
+       otherwise optional
 
 The rules for power sourcing equipment differ by type:
 
@@ -92,8 +93,9 @@ implements both 2-event class signatures and Data Link Layer
 classification [POE-BT-MUTUALID-PD]_. Until either has completed, it
 behaves as a Type 1 powered device and draws no more than 13 W.
 A single-signature Type 3 or Type 4 powered device that requests class 4
-or higher, and every dual-signature one, implements Data Link Layer
-classification [POE-BT-PDCLASS-0317]_.
+or higher, and a dual-signature one that requests class 4 or higher on
+either pair set, implements Data Link Layer classification
+[POE-BT-PDCLASS-0317]_.
 
 For reference, the TPS2373 data sheet states that every Type 3 and Type 4
 powered device does Data Link Layer classification [POE-TPS2373]_

@@ -44,11 +44,13 @@ Every powered device of class 4 and higher must support it
 
 :numref:`tab-poe-class-methods` lists which devices must support the
 exchange. Every Type 2 powered device must, and so must a Type 3 or Type 4
-powered device that requests class 4 or higher, and every dual-signature
-one. For single-signature classes 1 to 3 it is optional. It is optional for power sourcing equipment, except Type 2
-equipment that issues only one class event. A powered device of class 1 to
-3 that does not support it can have its power changed only by removing the
-power and classifying it again.
+powered device that requests class 4 or higher, on either pair set if it
+is a dual-signature device (:clause:`145.3.6`, :clause:`145.5`). For
+classes 1 to 3 it is optional. It is optional for power sourcing
+equipment, except Type 2 equipment that issues only one class event
+(:clause:`33.2.6.2`). A powered device of class 1 to 3 that does not
+support it can have its power changed only by removing the power and
+classifying it again.
 
 The allocated value sets the assigned class (:clause:`Table 145-12 <145>`),
 as in :numref:`tab-poe-dll-class`.
