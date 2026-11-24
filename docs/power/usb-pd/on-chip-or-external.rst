@@ -83,6 +83,21 @@ bipolar transistor with its base open. The
 :wikipedia:`gate oxide <Gate_oxide>` is the insulator between a
 transistor's gate and its channel. Each minimum breakdown is at or above the
 rating of the same device in :numref:`tab-usbpd-pdk-ratings`.
+:numref:`fig-usbpd-breakdown-sites` shows where each one occurs.
+
+.. figure:: breakdown-sites.svg
+   :name: fig-usbpd-breakdown-sites
+   :alt: Cross-section, not to scale, on a P substrate at 0 V, with six
+         numbered sites. A 6 V NMOS in a P-well: 1, the gate oxide, 7 V for
+         3.3 V devices and 12 V for 6 V devices; 2, the N+ to P-well
+         junction, 8.5 V; 3, the drain-to-source breakdown with the
+         transistor off, 8.5 V. 4, an N-well to the substrate, 10 V. 5, a
+         metal 1 track over field oxide between two N+ regions, which turns
+         on the path between them at 8.5 V. 6, the MIM capacitor dielectric,
+         10 V, or 20 V for the 1 fF/µm² type.
+
+   Where each documented breakdown occurs, with its minimum value,
+   schematic and not to scale.
 
 .. list-table:: Documented breakdown limits
    :name: tab-usbpd-pdk-breakdown
