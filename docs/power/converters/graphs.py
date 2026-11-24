@@ -233,12 +233,162 @@ def start_timeline():
     s.save(HERE / "start-timeline.svg")
 
 
+def linear_eff():
+    """Linear regulator efficiency against input voltage."""
+    s = Svg(560, 360)
+    a = Axes(s, (75, 20, 530, 290), (37, 57), (0, 100))
+    s.rect(a.x0, a.Y(96), a.x1 - a.x0, a.Y(90) - a.Y(96), fill=FILL_GREEN,
+           stroke="none")
+    a.frame(xticks=[37, 41, 45, 49, 53, 57], yticks=range(0, 101, 20),
+            xlabel="input voltage (V)", ylabel="efficiency (%)")
+    s.text(a.X(47), a.Y(93), "switching converters in other designs: "
+           "90 % to 96 %", size=11, fill=GREEN)
+    for vout, col in ((20, BLUE), (5, ORANGE)):
+        pts = [(v / 10, 100 * vout / (v / 10)) for v in range(370, 571, 5)]
+        s.poly(a.P(pts), stroke=col)
+        for vin in (37, 57):
+            e = 100 * vout / vin
+            s.add(f'<circle cx="{a.X(vin):.1f}" cy="{a.Y(e):.1f}" r="4" '
+                  f'fill="{col}"/>')
+            s.text(a.X(vin) + (8 if vin == 37 else -8), a.Y(e) - 12,
+                   f"{e:.1f} %", size=11, fill=col,
+                   anchor="start" if vin == 37 else "end")
+        s.text(a.X(47), a.Y(100 * vout / 47) + 14, f"linear, {vout} V out",
+               size=12, fill=col)
+    s.save(HERE / "linear-efficiency.svg")
+
+
+def fsw_tradeoff():
+    """Inductance and switching loss against switching frequency."""
+    s = Svg(560, 360)
+    a = Axes(s, (75, 20, 470, 290), (1e5, 3e6), (1, 200), xlog=True,
+             ylog=True)
+    labels = {1e5: "100 kHz", 2.5e5: "250 kHz", 1e6: "1 MHz", 2.2e6: "2.2 MHz"}
+    a.frame(xticks=list(labels), yticks=[1, 2, 5, 10, 20, 50, 100, 200],
+            xfmt=lambda v: labels[v], yfmt=lambda v: f"{v:g}",
+            xlabel="switching frequency (log scale)",
+            ylabel="inductance (µH)")
+    s.line(a.x1, a.y0, a.x1, a.y1)
+    for w in (0.1, 0.2, 0.5, 1, 2, 5, 10, 20):
+        s.line(a.x1, a.Y(w * 10), a.x1 + 5, a.Y(w * 10))
+        s.text(a.x1 + 8, a.Y(w * 10), f"{w:g}", size=12, anchor="start",
+               fill=ORANGE)
+    s.text(a.x1 + 52, (a.y0 + a.y1) / 2, "switching loss (W)", size=13,
+           rotate=90, fill=ORANGE)
+    lpts = [(1e5, 117.5), (2.5e5, 47), (6e5, 19.6), (2.2e6, 5.3)]
+    s.poly(a.P([(f, 11.75e6 / f) for f in (1e5, 2.2e6)]), stroke=BLUE)
+    for f, l in lpts:
+        s.add(f'<circle cx="{a.X(f):.1f}" cy="{a.Y(l):.1f}" r="4" '
+              f'fill="{BLUE}"/>')
+        s.text(a.X(f) + 6, a.Y(l) - 10, f"{l:g} µH", size=11, fill=BLUE,
+               anchor="start")
+    ppts = [(f, 10 * 0.51 * f / 2.5e5) for f in (1e5, 2.2e6)]
+    s.poly(a.P(ppts), stroke=ORANGE, dash="6 4")
+    s.add(f'<circle cx="{a.X(2.5e5):.1f}" cy="{a.Y(5.1):.1f}" r="4" '
+          f'fill="{ORANGE}"/>')
+    s.text(a.X(2.5e5) - 8, a.Y(5.1) - 10, "0.51 W", size=11, fill=ORANGE,
+           anchor="end")
+    s.text(a.X(2.8e5), a.Y(2.0), "inductance for 0.766 A ripple, ∝ 1/fsw",
+           size=11, fill=BLUE, anchor="start")
+    s.text(a.X(2.8e5), a.Y(1.4), "switching loss, ∝ fsw (dashed)",
+           size=11, fill=ORANGE, anchor="start")
+    s.save(HERE / "fsw-tradeoff.svg")
+
+
+def pass_through():
+    """Inputs at which a pass-through meets each output type."""
+    rows = [("Type 1", 37.0, 44.2), ("Type 2", 42.5, 50.2),
+            ("Type 3", 42.5, 50.2), ("Type 4", 41.2, 52.2)]
+    s = Svg(560, 270)
+    a = Axes(s, (90, 30, 540, 210), (35, 58), (0, 1))
+    a.frame(xticks=range(35, 58, 5), xlabel="powered device input voltage (V)",
+            grid=True)
+    h = (a.y1 - a.y0) / len(rows)
+    for i, (name, lo, th) in enumerate(rows):
+        yc = a.y0 + h * i + h / 2
+        s.rect(a.X(lo), yc - 11, a.X(th) - a.X(lo), 22, fill=FILL_ORANGE,
+               stroke=ORANGE)
+        s.rect(a.X(th), yc - 11, a.X(57) - a.X(th), 22, fill=FILL_GREEN,
+               stroke=GREEN)
+        s.text(a.x0 - 8, yc, name, size=12, anchor="end")
+        s.text(a.X(th), yc - 18, f"{th:g}", size=11, fill=GREEN)
+    s.text(a.X(39.5), 18, "regulated path", size=12, fill=ORANGE)
+    s.text(a.X(54.5), 18, "pass-through", size=12, fill=GREEN)
+    s.save(HERE / "pass-through.svg")
+
+
+def regions():
+    """Four-switch buck-boost duty cycle against conversion ratio."""
+    s = Svg(560, 360)
+    a = Axes(s, (75, 20, 530, 290), (0, 1.4), (0, 1))
+    s.rect(a.X(0.98), a.y0, a.X(1.02) - a.X(0.98), a.y1 - a.y0,
+           fill=FILL_GREY, stroke="none")
+    a.frame(xticks=[0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4],
+            yticks=[0, 0.2, 0.4, 0.6, 0.8, 1.0],
+            xfmt=lambda v: f"{v:.1f}", yfmt=lambda v: f"{v:.1f}",
+            xlabel="conversion ratio M = Vout / Vin", ylabel="duty cycle")
+    s.poly(a.P([(0, 0), (0.98, 0.98)]), stroke=BLUE)
+    s.poly(a.P([(1.02, 1 - 1 / 1.02)] + [(m / 100, 1 - 100 / m)
+                                       for m in range(105, 141, 5)]),
+           stroke=ORANGE)
+    s.text(a.X(0.45), a.Y(0.62), "buck region:\nDbuck = M (S4 on)", size=12,
+           fill=BLUE)
+    s.text(a.X(1.22), a.Y(0.45), "boost region:\nDboost = 1 − 1/M\n(S1 on)",
+           size=12, fill=ORANGE)
+    s.text(a.X(1.2), a.Y(0.85), "0.98 to 1.02: both\nhalf bridges switch",
+           size=11, fill=GREY)
+    pts = [(0.088, "57→5"), (0.135, "37→5"), (0.351, "57→20"),
+           (0.541, "37→20"), (0.842, "57→48")]
+    for m, lab in pts:
+        s.add(f'<circle cx="{a.X(m):.1f}" cy="{a.Y(m):.1f}" r="4" '
+              f'fill="{BLUE}"/>')
+        s.text(a.X(m) + 8, a.Y(m) + 8, lab, size=11, anchor="start")
+    s.add(f'<circle cx="{a.X(1.297):.1f}" cy="{a.Y(0.229):.1f}" r="4" '
+          f'fill="{ORANGE}"/>')
+    s.text(a.X(1.297), a.Y(0.229) + 16, "37→48: D = 0.229", size=11)
+    s.save(HERE / "regions.svg")
+
+
+def transition():
+    """Hard-switched transition: voltage and current overlap."""
+    s = Svg(560, 300)
+    a = Axes(s, (75, 30, 530, 230), (0, 100), (0, 60))
+    a.frame(xticks=[], yticks=[0, 2.125 * 10, 48], xlabel="time (schematic)",
+            ylabel="voltage, current",
+            yfmt=lambda v: {0: "0", 21.25: "2.125 A", 48: "48 V"}[v],
+            grid=False)
+    # Turn-on at 20..40 (tr) and turn-off at 60..80 (tf): current rises
+    # while voltage falls, and the reverse.
+    v = [(0, 48), (20, 48), (40, 0), (60, 0), (80, 48), (100, 48)]
+    i = [(0, 0), (20, 0), (40, 21.25), (60, 21.25), (80, 0), (100, 0)]
+    for t0, t1 in ((20, 40), (60, 80)):
+        tm = (t0 + t1) / 2
+        s.poly(a.P([(t0, 0), (tm, 10.6), (t1, 0)]), stroke="none",
+               fill=FILL_ORANGE, close=True)
+    s.poly(a.P(v), stroke=BLUE)
+    s.poly(a.P(i), stroke=GREEN)
+    s.text(a.X(8), a.Y(52), "switch voltage", size=11, fill=BLUE)
+    s.text(a.X(50), a.Y(25), "switch current", size=11, fill=GREEN)
+    s.text(a.X(30), a.Y(14), "tr", size=11)
+    s.text(a.X(70), a.Y(14), "tf", size=11)
+    s.text(a.X(50), a.Y(34), "shaded: energy\nlost in each\ntransition",
+           size=11, fill=ORANGE)
+    s.text(300, 282, "Psw = ½ × 48 V × 2.125 A × 40 ns × 250 kHz = 0.51 W",
+           size=12)
+    s.save(HERE / "transition.svg")
+
+
 FIGURES = {
     "boost-gain": boost_gain,
     "bode": bode,
     "ranges": ranges,
     "pse-template": pse_template,
     "start-timeline": start_timeline,
+    "linear-efficiency": linear_eff,
+    "fsw-tradeoff": fsw_tradeoff,
+    "pass-through": pass_through,
+    "regions": regions,
+    "transition": transition,
 }
 
 if __name__ == "__main__":
