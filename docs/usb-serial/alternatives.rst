@@ -93,7 +93,7 @@ A console over Ethernet
 -----------------------
 
 The processor already sends and receives Ethernet frames
-(:ref:`overview-processor-frames`). A console over the network needs no USB at all, but it
+(see :ref:`the home page <overview-processor-frames>`). A console over the network needs no USB at all, but it
 needs a working network and an address on it, which is what a configuration
 console is often used to set up.
 
