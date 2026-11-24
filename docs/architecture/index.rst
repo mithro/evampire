@@ -77,6 +77,19 @@ Rate-matching buffers
    between frames gives the buffer time to return to its centre point
    before the next frame starts. The size of the buffer sets the longest
    frame that can be forwarded (see :ref:`the forwarding requirements <req-forwarding>`).
+   :numref:`fig-rate-matching` shows the buffer's level across a frame.
+
+   .. figure:: rate-matching.svg
+      :name: fig-rate-matching
+      :alt: Graph of the buffer level from its centre, from minus 3 to plus 3
+            bytes, against bytes received from 0 to 12 000. During a frame of
+            10 000 bytes the level rises one byte every 5000 bytes with the
+            receive clock 200 ppm fast, reaching the slack of plus 2 bytes at the
+            frame's end, and falls the same way when it is 200 ppm slow. In the
+            gap after the frame it returns to the centre.
+
+      The rate-matching buffer's level across the longest frame, for a
+      slack of 2 bytes.
 
 .. _arch-output-selectors:
 
@@ -139,7 +152,17 @@ Preamble and checksum generator
    on to the frame, and ends with a 4-byte checksum (:clause:`3`; see also the frame structure on
    :doc:`../ethernet/rgmii/index`). This block adds both to frames from the
    processor, so that the processor only writes the addresses, type field
-   and payload.
+   and payload (:numref:`fig-frame-layout`).
+
+   .. figure:: frame-layout.svg
+      :name: fig-frame-layout
+      :alt: A bar of the fields of a frame on the wire, with their lengths in
+            bytes: preamble 7, SFD 1, destination 6, source 6, an optional VLAN
+            tag 4, type 2, payload 46 to 1500 and FCS 4. The preamble, SFD and FCS
+            are added by the preamble and checksum generator; the others are
+            written by the processor.
+
+      The fields of a frame, and which block writes each. Not to scale.
 
 .. _arch-microcontroller:
 

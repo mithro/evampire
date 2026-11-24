@@ -64,7 +64,7 @@ Added ESD behaviour
 The foundry netlists and models are written for normal operation. An ESD
 event drives the protection devices to amperes and into breakdown, which
 the models do not cover. :numref:`tab-esd-sim-physics` lists what the
-simulation adds.
+simulation adds, and :numref:`fig-esd-added` shows where each part sits.
 
 .. list-table:: Changes that add ESD behaviour
    :name: tab-esd-sim-physics
@@ -91,11 +91,24 @@ simulation adds.
        branch fitted to the TLP measurement of the grounded-gate PMOS
        stands in for it
 
+.. figure:: figures/added-esd.svg
+   :name: fig-esd-added
+   :alt: Schematic between DVDD and DVSS with PAD in the middle. The PMOS and
+         NMOS drivers come from the foundry netlist. Added for an ESD event:
+         a drain diode of 480 µm from PAD to DVDD and one of 304 µm from DVSS
+         to PAD, a current source from DVDD to PAD for the PMOS avalanche above
+         9.7 V, and a current source from PAD to DVSS for the NMOS snapback,
+         latched above 10.7 V.
+   :width: 100%
+
+   The pad with the parts the simulation adds for an ESD event.
+
 Model fault workarounds
 -----------------------
 
 The rest of the changes keep the foundry models from giving wrong results
-or stopping the simulator (:numref:`tab-esd-sim-faults`).
+or stopping the simulator (:numref:`tab-esd-sim-faults`,
+:numref:`fig-esd-sab-model`).
 
 .. list-table:: Changes that work around faults in the models
    :name: tab-esd-sim-faults
@@ -132,6 +145,18 @@ or stopping the simulator (:numref:`tab-esd-sim-faults`).
    * - Splits transistors wider than 100 µm
      - The model bins stop at 100 µm. The 4000 µm clamp transistor becomes
        40 transistors of 100 µm in parallel
+
+.. figure:: figures/sab-model.svg
+   :name: fig-esd-sab-model
+   :alt: Left, a silicide-blocked transistor built as a resistor for the
+         blocked drain, 60 ohm per square for N+ or 185 ohm per square for P+,
+         a core 6 V transistor with tiny junction areas and a lower junction
+         current limit, and a resistor for the blocked source. Right, a
+         4000 µm transistor drawn as 40 transistors of 100 µm in parallel.
+   :width: 100%
+
+   How the simulation builds a silicide-blocked transistor, and splits a
+   wide one.
 
 Without the resistor change, each 30 kΩ resistor of the rail clamp's
 timer simulates as about 160 Ω, its two contact resistances alone, so the

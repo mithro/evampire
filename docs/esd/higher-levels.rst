@@ -54,14 +54,50 @@ The voltage budget is the second limit. At 30 A, every 0.1 Ω between the
 pad and the grounded supply adds 3 V. The pad must stay below the output
 NMOS's 10.7 V trigger, if snapback is not to carry the current, and the
 input gates below their 12 V minimum oxide breakdown (:ref:`esd-limits`).
+:numref:`fig-esd-budget` shows how little resistance that leaves.
+
+.. figure:: figures/budget.svg
+   :name: fig-esd-budget
+   :alt: Graph of the voltage that 30 A develops across a series resistance
+         from 0 to 0.45 ohm: 3 V at 0.1 ohm, 6 V at 0.2 ohm and 9 V at
+         0.3 ohm, crossing the 10.7 V output NMOS trigger near 0.36 ohm and
+         the 12 V minimum oxide breakdown at 0.4 ohm. The diode and clamp
+         voltages add to it.
+
+   The voltage that resistance between the pad and the grounded supply
+   adds at 30 A.
 
 Wider diodes and more clamps
 ----------------------------
 
 :numref:`tab-esd-scaled` repeats the ±8 kV contact discharge with the pad's
 diodes widened, as if dedicated diodes were added beside the output
-drivers, and with more DVDD and DVSS pads, each with its rail clamp. The
-output NMOS and its snapback stay as they are.
+drivers, and with more DVDD and DVSS pads, each with its rail clamp
+(:numref:`fig-esd-scaled-pad`). The output NMOS and its snapback stay as
+they are. :numref:`fig-esd-scaled` plots the results.
+
+.. figure:: figures/scaled-pad.svg
+   :name: fig-esd-scaled-pad
+   :alt: Schematic of the bi_t pad between the DVDD and DVSS rings, with
+         dedicated diodes of 1, 2 or 4 times the drain diode width beside the
+         drain diodes, and one or four DVDD pads and as many DVSS pads along
+         the rings, each with its rail clamp.
+
+   The pad with dedicated diodes and more supply pads, as simulated.
+
+.. figure:: figures/scaled.svg
+   :name: fig-esd-scaled
+   :alt: Graph of the most stressed device as a fraction of its failure
+         current against diode width of 1, 2 and 4 times. Positive discharges
+         with one pad of each: 4.52, 3.43 and 3.04. Positive with four: 3.11,
+         2.43 and 2.01. Negative with four: 3.20, 1.61 and 0.80; with one, the
+         same values at 1 and 4 times and no result at 2 times. A star at 0.49
+         marks the positive four-pad case with a 500 ps NMOS trigger. A dotted
+         line marks the failure current.
+
+   Most stressed device against diode width and the number of supply
+   pads, for ±8 kV contact discharges.
+
 
 .. csv-table:: ±8 kV contact discharge with wider diodes and more supply
                pads: the diode width as a multiple of the standard pad's,
@@ -259,7 +295,20 @@ near :math:`14\ \text{V} + 25\ \text{A} \times 0.38\ \Omega = 23.5\ \text{V}`.
 10 Ω would then pass about
 :math:`(23.5\ \text{V} - 4\ \text{V}) / 10\ \Omega = 2\ \text{A}` to the
 pin. 30 A lies beyond the fitted range, so this is an extrapolation, and a
-TLP measurement of the suppressor at 30 A would replace it.
+TLP measurement of the suppressor at 30 A would replace it
+(:numref:`fig-esd-tvs`).
+
+.. figure:: figures/tvs.svg
+   :name: fig-esd-tvs
+   :alt: Graph of suppressor voltage against discharge current from 0 to
+         30 A. From the datasheet point of 14 V at 5 A a line of 0.38 ohm
+         slope runs through the fitted range of 10 A to 20 A, then dashed to
+         23.5 V at 30 A; a band shows slopes from 0.32 to 0.38 ohm. A second
+         axis gives the chip current through 10 ohm with the pad at 4 V: 1 A
+         at 5 A, about 2 A at 30 A.
+
+   The suppressor voltage extrapolated to 30 A, and the current it leaves
+   to the chip.
 
 .. _esd-open:
 

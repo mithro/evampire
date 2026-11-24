@@ -192,7 +192,20 @@ first inverter's switching voltage, so the clamp still turns on.
 A human body model discharge decays with a time constant of 150 ns, ten
 times shorter than 1.6 µs, so the clamp stays on for the whole event. A
 supply that rises much more slowly than 1.6 µs lets the timer node follow
-DVDD, so the clamp stays off in normal use.
+DVDD, so the clamp stays off in normal use (:numref:`fig-esd-clamp-timing`).
+
+.. figure:: figures/clamp-timing.svg
+   :name: fig-esd-clamp-timing
+   :alt: Two graphs of voltage. (a) In an ESD event DVDD jumps to 4.5 V within
+         nanoseconds and decays over 150 ns; the timer node rises only to
+         about 0.7 V to 0.9 V, far below DVDD through the peak current, so the
+         inverters hold the clamp on. (b) In a power-up over 100 µs, much slower
+         than the 1.6 µs time constant, the timer node follows DVDD and the
+         clamp gate stays at 0 V.
+
+   The rail clamp timer in a fast event and in a slow power-up, from the
+   hand estimate above with an illustrative DVDD. :numref:`fig-esd-hbm-pos`
+   shows a simulated event.
 
 Discharge paths
 ---------------
