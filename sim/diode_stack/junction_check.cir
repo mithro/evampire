@@ -1,0 +1,26 @@
+* Does the gf180mcu nfet_05v0 BSIM4 model break down its own drain junction?
+* Run (from this directory):  ngspice -b junction_check.cir   -> junction_check.dat
+*   i(VB)  : body current of an OFF nfet_05v0 whose drain is swept 0..40 V
+*   i(VJ)  : current in the PDK's separate N+ / P-substrate diode
+*            (diode_nd2ps_06v0, bv=11) of the same area, at the same voltage
+* Result with gf180mcuD (ngspice-47): i(VB) stays at ~nA (no breakdown),
+* while i(VJ) jumps to ~0.7 mA at 12 V.  The nfet model sets diomod=1,
+* BSIM4's junction model without breakdown, so junction breakdown must be
+* added to transistor circuits explicitly with the diode model.
+.include /foss/pdks/gf180mcuD/libs.tech/ngspice/design.ngspice
+.lib /foss/pdks/gf180mcuD/libs.tech/ngspice/sm141064.ngspice typical
+.lib /foss/pdks/gf180mcuD/libs.tech/ngspice/sm141064.ngspice diode_typical
+VD d 0 0
+VB b 0 0
+VJ dj d 0
+XM1 d 0 0 b nfet_05v0 w=10u l=0.6u ad=1.8e-12 as=1.8e-12 pd=20.36e-6 ps=20.36e-6
+D1 0 dj diode_nd2ps_06v0 area=1.8e-12 pj=20.36e-6
+.option gmin=1e-15
+.dc VD 0 40 1
+.control
+set wr_singlescale
+set wr_vecnames
+run
+wrdata junction_check.dat -i(VB) i(VJ)
+.endc
+.end

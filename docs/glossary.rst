@@ -7,6 +7,43 @@ gives a short description and a link to the full explanation.
 .. glossary::
    :sorted:
 
+   Avalanche breakdown
+      The sudden rise in current through a reverse-biased junction when the
+      field in its depletion region is strong enough for carriers to free
+      more carriers (see :wikipedia:`Avalanche_breakdown` and
+      :ref:`hv-junctions`).
+
+   Depletion region
+      The layer either side of a P-N junction that is emptied of free
+      carriers, across which a reverse-biased junction holds its voltage
+      (see :wikipedia:`Depletion_region` and :ref:`hv-junctions`).
+
+   Field plate
+      A conductor over the insulator beside a junction's edge, held at the
+      junction's voltage, which spreads the field and raises the breakdown
+      voltage of the edge (see :ref:`hv-grading`).
+
+   Floating field ring
+      A ring of doped silicon around a high-voltage junction, connected to
+      nothing, that takes part of the voltage as the depletion region
+      reaches it (see :ref:`hv-grading`).
+
+   RESURF
+      Reduced surface field: a thin, lightly doped layer depleted from below
+      as well as from its edge, so that the voltage falls evenly along the
+      surface (see :ref:`hv-grading`).
+
+   Silicon on insulator
+      SOI
+      A wafer with a layer of oxide under the silicon in which devices are
+      built, so that each device can be isolated by insulator on every side
+      (see :wikipedia:`Silicon_on_insulator` and :ref:`hv-dielectric`).
+
+   Substrate
+      The slab of silicon on which every device of a chip is built. In
+      gf180mcu it is P-type and held at the lowest voltage on the chip (see
+      :ref:`hv-substrate`).
+
    1000BASE-T
       Gigabit Ethernet over four twisted pairs, at 1000 Mbit/s
       (:clause:`40`). Every evampire port supports it (see
