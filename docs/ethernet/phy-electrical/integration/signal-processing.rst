@@ -32,22 +32,23 @@ so for them the clock is a trade between area and power,
 not a limit.
 
 .. wavedrom::
-   :caption: One filter copy at 125 MHz handles every symbol; two copies
-             at 62.5 MHz each handle alternate symbols, doing the same
-             work per 8 ns.
+   :caption: One filter copy at 125 MHz handles every symbol; two copies,
+             A and B, at 62.5 MHz each handle alternate symbols, doing the
+             same work per 8 ns.
    :name: fig-phy-int-parallel
-   :alt: Timing diagram of symbols n to n+7, one per 8 ns. Row "one copy,
-         125 MHz" handles each symbol in its own 8 ns slot. Rows "copy A,
-         62.5 MHz" and "copy B, 62.5 MHz" each take 16 ns per symbol: A
-         handles n, n+2, n+4 and n+6, and B handles n+1, n+3 and n+5.
+   :alt: Timing diagram of symbols n to n+7, one per 8 ns. Row "125 MHz",
+         one copy, handles each symbol in its own 8 ns slot. Rows "A,
+         62.5 MHz" and "B, 62.5 MHz", two copies, each take 16 ns per
+         symbol: A
+         handles n, n+2, n+4 and n+6, and B handles n+1, n+3, n+5 and n+7.
 
    { "signal": [
        { "name": "symbols", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
-       { "name": "one copy, 125 MHz", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
-       { "name": "copy A, 62.5 MHz", "wave": "=.=.=.=.", "data": ["n", "n+2", "n+4", "n+6"] },
-       { "name": "copy B, 62.5 MHz", "wave": "x=.=.=.=", "data": ["n+1", "n+3", "n+5"] }
+       { "name": "125 MHz", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
+       { "name": "A, 62.5 MHz", "wave": "=.=.=.=.", "data": ["n", "n+2", "n+4", "n+6"] },
+       { "name": "B, 62.5 MHz", "wave": "x=.=.=.=.", "data": ["n+1", "n+3", "n+5", "n+7"] }
      ],
-     "config": { "hscale": 2 }
+     "config": { "hscale": 1 }
    }
 
 .. _phy-int-reach-taps:

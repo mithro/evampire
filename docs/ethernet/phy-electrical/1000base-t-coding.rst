@@ -60,22 +60,15 @@ the symbols, so these pages use 62.5 MHz as the reference frequency. The
 transmitted spectrum is about 80 MHz wide (:clause:`40.7.1`), inside the
 100 MHz for which the cable is specified (:numref:`fig-phy-nyquist`).
 
-.. wavedrom::
-   :caption: The fastest symbol pattern changes level every 8 ns symbol
-             and repeats every 16 ns, a 62.5 MHz signal.
+.. figure:: nyquist.svg
    :name: fig-phy-nyquist
-   :alt: Timing diagram of eight 8 ns symbol slots and a line that
-         alternates high and low every slot. An arrow over two slots marks
-         one period of 16 ns, 62.5 MHz.
+   :alt: Timing diagram of eight 8 ns symbol slots alternating +2 and −2,
+         and the line voltage alternating high and low every slot. An arrow
+         over two slots marks one period of 16 ns, 62.5 MHz.
+   :align: center
 
-   { "signal": [
-       { "name": "symbol", "wave": "========", "data": ["+2", "−2", "+2", "−2", "+2", "−2", "+2", "−2"] },
-       { "name": "line", "wave": "hlhlhlhl" },
-       { "node": "..a.b" }
-     ],
-     "edge": ["a<->b 16 ns: 62.5 MHz"],
-     "config": { "hscale": 2 }
-   }
+   The fastest symbol pattern changes level every 8 ns symbol and
+   repeats every 16 ns, a 62.5 MHz signal.
 
 .. _phy-pam5:
 
@@ -304,26 +297,16 @@ Start-of-Stream delimiter and ends with two convolutional state reset code
 groups followed by a two-code-group End-of-Stream delimiter
 (:clause:`40.1.3.1`, :numref:`fig-phy-frame-delimiters`).
 
-.. wavedrom::
-   :caption: The code groups around one frame, one slot per 8 ns symbol
-             period: SSD is the Start-of-Stream delimiter, CSReset the
-             convolutional state reset and ESD the End-of-Stream
-             delimiter; the number of data code groups depends on the
-             frame.
+.. figure:: frame-delimiters.svg
    :name: fig-phy-frame-delimiters
-   :alt: Timing diagram of one row of code groups: two idle code groups
-         using only −2, 0 and +2, two SSD code groups, four data code
-         groups using all five levels, two CSReset code groups, two ESD
-         code groups, then idle again.
+   :alt: Timing diagram of code groups, one per 8 ns: two idle code groups
+         using only −2, 0 and +2, two SSD code groups, three data code groups
+         using all five levels, two CSReset code groups, two ESD code groups,
+         then idle again. The levels of the delimiters and resets are drawn
+         dashed, as not listed on these pages.
+   :align: center
 
-   { "signal": [
-       { "name": "code groups", "wave": "3.4.5...6.7.3.",
-         "data": ["idle", "SSD", "data, 5 levels", "CSReset", "ESD", "idle"] },
-       { "name": "levels", "wave": "3.x.5...x...3.",
-         "data": ["−2, 0, +2", "all five", "−2, 0, +2"] }
-     ],
-     "config": { "hscale": 1.6 }
-   }
-
-In :numref:`fig-phy-frame-delimiters` the hatched slots of the lower row
-are the delimiters and resets, whose levels these pages do not list.
+   The code groups around one frame: SSD is the Start-of-Stream
+   delimiter, CSReset the convolutional state reset and ESD the
+   End-of-Stream delimiter; the number of data code groups depends on the
+   frame.

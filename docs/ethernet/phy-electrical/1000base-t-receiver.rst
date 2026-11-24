@@ -122,12 +122,13 @@ section 3.4).
 
 .. wavedrom::
    :caption: Symbols sent together on the four pairs arrive at different
-             times, up to 50 ns apart, and the receiver realigns them; the
-             offsets are schematic.
+             times and the receiver realigns them; the offsets are drawn
+             smaller than the 50 ns, about six symbol periods, that the
+             standard allows.
    :name: fig-phy-pair-skew
    :alt: Timing diagram. Four rows, pair A to pair D as received, each
          carrying symbols n, n+1 and n+2, shifted by different fractions
-         of a symbol. A fifth row, after alignment, carries the code
+         of a symbol, less than the 50 ns allowed. A fifth row, after alignment, carries the code
          groups n, n+1 and n+2 in step.
 
    { "signal": [
