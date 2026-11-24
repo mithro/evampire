@@ -99,6 +99,10 @@ def choke_panel(x0, title, same_way, result):
             b.append(f'<ellipse cx="{cx}" cy="{lim}" rx="7" ry="22" '
                      f'fill="none" stroke="{col}" stroke-width="2"/>')
         b.append(text(x0 + 10, y - 8, label, "start", 12, fill=col))
+        # Dot marking the start of each winding (dot convention).
+        dy = -8 if y < 100 else 8
+        b.append(f'<circle cx="{x0 + 100}" cy="{top + dy}" r="4.5" '
+                 f'fill="{INK}"/>')
         # Current direction on the wire.
         right = (y < 100) or same_way
         xa, xb = (x0 + 240, x0 + 285) if right else (x0 + 285, x0 + 240)
@@ -123,7 +127,7 @@ def choke_panel(x0, title, same_way, result):
 
 
 def choke():
-    w, h = 640, 290
+    w, h = 640, 315
     b = []
     b += choke_panel(10, "Differential (data) current", False,
                      ["out on one wire, back on the other:",
@@ -131,7 +135,10 @@ def choke():
     b += choke_panel(330, "Common-mode current", True,
                      ["the same way on both wires:",
                       "the fluxes add, high impedance"])
-    b.append(line(320, 10, 320, h - 10, GREY, 0.8))
+    b.append(line(320, 10, 320, 275, GREY, 0.8))
+    b.append(text(320, 302, "● marks the start of each winding: current "
+                  "flowing into both dots makes flux in the same direction",
+                  size=12))
     return svg(w, h, b)
 
 
