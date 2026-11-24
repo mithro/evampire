@@ -304,4 +304,16 @@ coupling capacitor and a second inductor (or coupled windings). The SEPIC
 output is positive; the Ćuk output is negative. Both put the sum of input
 and output voltages across the switch, as the inverting buck-boost does
 [CONV-ERICKSON]_ (Chapter 6). For reference, the LM5155 boost controller
-also lists SEPIC and flyback applications [CONV-LM5155]_ (Features).
+also lists SEPIC and flyback applications [CONV-LM5155]_ (Features). :numref:`fig-conv-sepic-cuk` shows both.
+
+.. graphviz:: sepic-cuk.dot
+   :name: fig-conv-sepic-cuk
+   :caption: SEPIC and Ćuk converters.
+   :alt: Two schematics. (a) SEPIC: the input feeds L1 to a node with the
+         switch to ground; a coupling capacitor C1 leads to a second node
+         with L2 to ground and a diode to the positive output, with C and
+         the load. The switch blocks Vin + Vout. (b) Ćuk: the input feeds L1
+         to the switch node; C1 leads to a second node with a diode to
+         ground and L2 to the negative output, with C and the load. The
+         switch blocks Vin + |Vout|.
+   :align: center
