@@ -18,7 +18,25 @@ up an electric field, strongest at the junction itself
 field of silicon, about :math:`3 \times 10^5` V/cm [HV-IOFFE]_, carriers
 crossing the layer
 gain enough energy to free more carriers, and the current runs away. This
-is :term:`avalanche breakdown`.
+is :term:`avalanche breakdown`. :numref:`fig-hv-depletion` shows the
+charge, field and potential of a junction at that point.
+
+.. figure:: depletion.svg
+   :name: fig-hv-depletion
+   :alt: Four panels on one distance axis. (a) An N+ region at +300 V meets
+         a P region doped at 10 to the 15 per cubic centimetre, at 0 V. A
+         depletion region 20 µm wide, holding fixed ions only, lies almost
+         entirely in the P side. (b) The fixed charge: a thin, tall positive
+         block on the N+ side and a long, shallow negative block of
+         −1.6 × 10⁻⁴ C/cm³ across the 20 µm, of equal total charge. (c) The
+         field: a triangle peaking at the junction, where it reaches the
+         critical field of about 3 × 10⁵ V/cm; its area is the 300 V. (d)
+         The potential falls as a parabola from 300 V at the junction to
+         0 V at the edge of the depletion region, and is flat outside it.
+
+   A one-sided junction at breakdown, for P-side doping of
+   10\ :sup:`15` cm\ :sup:`-3`. The P side is to scale; the N+ side is
+   much thinner than drawn.
 
 When one side of the junction is much more heavily doped than the other,
 almost all of the depletion region lies in the lightly doped side, and that
@@ -197,6 +215,26 @@ is part of a cylinder, with a radius about equal to the well's depth. At a
 corner it is part of a sphere. The field lines crowd together at a curved
 edge, so the field there reaches the critical value at a lower voltage than
 under the flat bottom [HV-SZE-GIBBONS]_ [HV-SPIRITO]_ (slide 21).
+:numref:`fig-hv-curved-edge` shows the equipotentials around such a well,
+and where its straight sides and corners lie.
+
+.. figure:: curved-edge.svg
+   :name: fig-hv-curved-edge
+   :alt: Top, a cross-section of an N-well at +V in a P substrate at 0 V.
+         The implant enters through the drawn window and spreads down and
+         sideways, so the well has a flat bottom and a quarter-circle edge
+         whose radius equals its depth. Lines of equal potential lie flat
+         and well apart under the bottom, and bend round the curved edge,
+         where they crowd together; the field reaches its critical value
+         there first. Bottom, a plan view of the well: its straight sides
+         are cylindrical edges and its rounded corners spherical ones.
+         Breakdown at 10 to the 15 per cubic centimetre with a 1 µm edge
+         radius is 300 V for the flat bottom, 74 V along a side and 35 V at
+         a corner.
+
+   A diffused well in cross-section and in plan view. The equipotentials
+   are solved for an edge radius equal to the well's depth; the drawing is
+   not to scale for any particular well.
 
 Baliga and Ghandhi give the breakdown of cylindrical and spherical
 junctions as a fraction of the flat value, as a function of the radius

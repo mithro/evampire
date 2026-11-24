@@ -3,8 +3,9 @@ pages as SVG files.
 
 Usage: python figures.py OUTPUT-DIRECTORY
 
-Writes stack-section.svg, grading.svg and metal-gate.svg. The drawings are
-schematic: shapes and spacings are not to scale.
+Writes stack-section.svg, grading.svg and metal-gate.svg, and the figures
+of the modules it imports (fig_*.py). The cross-sections are
+schematic: shapes and spacings are not to scale unless a caption says so.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -12,48 +13,10 @@ SPDX-License-Identifier: Apache-2.0
 import pathlib
 import sys
 
-SUB = "#dbe8f5"        # P-type substrate
-NWELL = "#fbd9b5"      # N-type regions
-OXIDE = "#e8e8e8"      # insulator
-POLY = "#c9a0dc"       # polysilicon
-METAL = "#9aa5b1"      # metal
-INK = "#222222"
-DEPL = "#c0392b"       # depletion edge
-
-
-def svg(w, h, body):
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" '
-            f'height="{h}" viewBox="0 0 {w} {h}" font-family="sans-serif" '
-            f'font-size="13">\n<rect width="{w}" height="{h}" fill="white"/>\n'
-            + "\n".join(body) + "\n</svg>\n")
-
-
-def rect(x, y, w, h, fill, rx=0, stroke=INK, dash=None):
-    d = f' stroke-dasharray="{dash}"' if dash else ""
-    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" '
-            f'fill="{fill}" stroke="{stroke}"{d}/>')
-
-
-def text(x, y, s, anchor="middle", size=13, weight="normal", fill=INK):
-    return (f'<text x="{x}" y="{y}" text-anchor="{anchor}" '
-            f'font-size="{size}" font-weight="{weight}" fill="{fill}">{s}</text>')
-
-
-def line(x1, y1, x2, y2, stroke=INK, dash=None, width=1.5, marker=False):
-    d = f' stroke-dasharray="{dash}"' if dash else ""
-    m = ' marker-end="url(#arrow)"' if marker else ""
-    return (f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke}" '
-            f'stroke-width="{width}"{d}{m}/>')
-
-
-def path(d, stroke=DEPL, dash="6 4", fill="none", width=1.8):
-    return (f'<path d="{d}" stroke="{stroke}" stroke-width="{width}" '
-            f'stroke-dasharray="{dash}" fill="{fill}"/>')
-
-
-ARROW = ('<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
-         'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
-         f'<path d="M0,0 L10,5 L0,10 z" fill="{INK}"/></marker></defs>')
+from svgdraw import (ARROW, DEPL, INK, METAL, NWELL, OXIDE, POLY, SUB, line,
+                     path, rect, svg, text)
+import fig_edge
+import fig_junctions
 
 
 def stack_section():
@@ -216,6 +179,9 @@ def main(argv):
     (out / "stack-section.svg").write_text(stack_section(), encoding="utf-8")
     (out / "grading.svg").write_text(grading(), encoding="utf-8")
     (out / "metal-gate.svg").write_text(metal_gate(), encoding="utf-8")
+    for module in (fig_junctions, fig_edge):
+        for name, draw in module.FIGURES.items():
+            (out / name).write_text(draw(), encoding="utf-8")
     return 0
 
 
