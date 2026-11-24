@@ -140,6 +140,21 @@ Hampshire InterOperability Laboratory test suite [PHY-UNH25]_.
      -
      - +50
 
+:numref:`fig-phy-100base-tx-edges` draws the two edge-time limits as
+single-pole edges against the peak band.
+
+.. figure:: 100base-tx-edges.svg
+   :name: fig-phy-100base-tx-edges
+   :alt: Graph of differential voltage from 0 to 1.2 V against time from
+         minus 2 ns to 12 ns. Two exponential edges start at 0 ns: one
+         reaches 90 % at about 3.1 ns, a 10 % to 90 % time of 3 ns, and
+         the other at about 5.2 ns, a 10 % to 90 % time of 5 ns. Dashed
+         lines mark 10 % and 90 %, and a shaded band marks the peak of
+         0.95 V to 1.05 V.
+   :align: center
+
+   The fastest and slowest allowed 100BASE-TX edges, drawn as single-pole
+   responses, with dots at their 10 % and 90 % points.
 .. _phy-100base-tx-receiver:
 
 Receiver

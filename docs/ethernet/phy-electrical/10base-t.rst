@@ -89,8 +89,23 @@ While idle, the receiver must ignore any signal whose peak is below 300 mV
 after a 3-pole, 15 MHz low-pass filter, so that noise on a silent line is
 not taken for data (:clause:`14.3.1.3.2`). For reference, the Microchip
 KSZ9031 sets its squelch threshold at 300 mV ([PHY-KSZ9031]_ section
-3.1.5).
+3.1.5). :numref:`fig-phy-10base-t-levels` shows the transmitted peak bands
+and the idle threshold.
 
+.. figure:: 10base-t-levels.svg
+   :name: fig-phy-10base-t-levels
+   :alt: Two graphs of differential voltage against time from 0 to 500 ns.
+         Top, the transmitter: a Manchester waveform at plus and minus 2.5 V,
+         with shaded bands from 2.2 V to 2.8 V for 10BASE-T and from 1.54 V
+         to 1.96 V for 10BASE-Te, on both polarities. Bottom, the idle
+         receiver after the 15 MHz filter: noise of under 0.2 V stays inside
+         dashed thresholds at plus and minus 300 mV and is ignored; a
+         signal of plus and minus 0.9 V crosses them and is accepted.
+   :align: center
+
+   10BASE-T and 10BASE-Te peak levels at the transmitter, and the 300 mV
+   threshold of the idle receiver; the edge shapes and the received
+   amplitude are schematic.
 .. _phy-link-pulses:
 
 Link test pulses
@@ -107,3 +122,18 @@ A receiver that sees neither data nor a link test pulse for 50 ms to
 transmitting data (:clause:`14.2.1.7`). The link pulses are also the
 building blocks of :doc:`autonegotiation`, which replaces each single
 pulse with a burst of pulses that carries data.
+:numref:`fig-phy-link-pulses` shows the pulses and the link_loss time.
+
+.. figure:: link-pulses.svg
+   :name: fig-phy-link-pulses
+   :alt: Two graphs. Top, voltage against time from 0 to 240 ms: link test
+         pulses at 16, 40 and 64 ms, spaced 8 ms to 24 ms apart, then no
+         pulse; a shaded window from 50 ms to 150 ms after the last pulse
+         marks where link_loss declares the link failed. Bottom, one pulse
+         against time from minus 100 ns to 300 ns: a positive pulse about
+         100 ns wide with a peak of 2.5 V, inside a shaded band from
+         585 mV to 3.1 V.
+   :align: center
+
+   Link test pulses on a silent line, the link_loss time after the last
+   one, and one pulse enlarged; the pulse shape is schematic.

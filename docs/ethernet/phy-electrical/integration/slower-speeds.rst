@@ -29,7 +29,8 @@ Edge control
 
 For a single-pole (first-order) response with time constant
 :math:`\tau`, the output reaches 10 % of its final value at
-:math:`0.105\,\tau` and 90 % at :math:`2.303\,\tau`, so the
+:math:`0.105\,\tau` and 90 % at :math:`2.303\,\tau`
+(:numref:`fig-phy-100base-tx-edges`), so the
 :wikipedia:`rise time <Rise_time>` is :math:`t_\text{r} = 2.2\,\tau`. The
 :wikipedia:`cut-off frequency <Cutoff_frequency>` is
 :math:`f_\text{3dB} = 1/(2\pi\tau)`, so

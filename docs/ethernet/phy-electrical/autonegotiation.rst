@@ -40,7 +40,8 @@ pulse*, meaning 1, or no pulse, meaning 0. One burst therefore carries
    }
 
 :numref:`tab-phy-flp-timing` gives the timing. Each pulse has the shape of
-a 10BASE-T link test pulse (:clause:`Figure 14-13 <14>`).
+a 10BASE-T link test pulse (:clause:`Figure 14-13 <14>`,
+:numref:`fig-phy-link-pulses`).
 
 .. list-table:: Fast link pulse burst timing (:clause:`Table 28-1 <28>`)
    :name: tab-phy-flp-timing
