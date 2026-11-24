@@ -226,10 +226,28 @@ open, the host polls the bulk IN endpoint, and the device answers NAK each
 time it has nothing to send. How often a host does this depends on its
 controller.
 
-The upper bound comes from the packet lengths: a token, 2 bit
-times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
-polls fit in a 1 ms frame. At that rate the device spends essentially all
-its time receiving tokens and replying.
+The upper bound comes from the packet lengths: a token, 2 bit
+times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
+polls fit in a 1 ms frame (:numref:`fig-usbser-polls`). At that rate the
+device spends essentially all its time receiving tokens and replying.
+
+.. wavedrom::
+   :caption: Repeated IN polls answered with NAK (not to scale).
+   :name: fig-usbser-polls
+   :alt: Timing diagram: the host sends an IN token, there is a gap of 2
+         bit times, the device answers NAK, and after another 2 bit times
+         the host sends the next IN token. One poll takes 58 bit times,
+         4.83 µs, so up to 207 fit in a 1 ms frame.
+
+   {"signal": [
+     {"name": "host", "wave": "3...x.....3...x.....3...",
+      "data": ["IN token", "IN token", "IN token"]},
+     {"name": "device", "wave": "x.....5.x.........5.x...",
+      "data": ["NAK", "NAK"]},
+     {"name": "one poll", "wave": "4.........4.........4...",
+      "data": ["58 bit times, 4.83 µs", "next poll", "next"]}
+   ],
+   "config": {"hscale": 1.2}}
 
 Baseline summary
 ~~~~~~~~~~~~~~~~
