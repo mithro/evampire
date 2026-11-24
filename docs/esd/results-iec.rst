@@ -36,7 +36,8 @@ nanosecond.
    into PAD.
 
 The rail clamp turns on: its gate follows DVDD. At the first peak the
-current divides between two paths from the pad
+current divides between two paths from the pad, the main and second paths
+of the first panel of :numref:`fig-esd-paths`
 (:numref:`tab-esd-events-current`):
 
 * through the PMOS drain diode to DVDD and the rail clamps, 19.5 A

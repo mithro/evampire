@@ -335,3 +335,6 @@ schematic, :numref:`fig-esd-io-cell`.
 :download:`sim/tlp_plot.py <sim/tlp_plot.py>` plots the foundry's TLP
 measurements, :numref:`fig-esd-tlp-limits`, and needs neither ngspice nor
 the repositories.
+:download:`sim/circuits.py <sim/circuits.py>` and
+:download:`sim/paths.py <sim/paths.py>` draw the circuit diagrams, such as
+:numref:`fig-esd-testbench` and :numref:`fig-esd-paths`.

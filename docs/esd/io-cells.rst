@@ -182,7 +182,24 @@ Discharge paths
 ---------------
 
 An ESD test applies each polarity between a pin and each supply pin. With
-DVSS as the grounded pin, the paths are as in :numref:`tab-esd-paths`.
+DVSS as the grounded pin, the paths are as in :numref:`tab-esd-paths`
+and :numref:`fig-esd-paths`.
+
+.. figure:: figures/paths.svg
+   :name: fig-esd-paths
+   :alt: Four copies of the pad's protection between DVDD and DVSS, one
+         per discharge mode, with the current's path drawn thick. Positive,
+         PAD to DVSS: through the PMOS drain diode onto DVDD, the rail clamp
+         and DVSS to ground; above 10.7 V the output NMOS also snaps back
+         from PAD to DVSS. Negative, PAD to DVSS: from ground through the
+         NMOS drain diode to PAD. Positive, PAD to DVDD: through the PMOS
+         drain diode to the grounded DVDD. Negative, PAD to DVDD: from the
+         grounded DVDD through the rail clamp to DVSS and the NMOS drain
+         diode to PAD; above 9.7 V the PMOS drain also avalanches from DVDD
+         to PAD.
+   :width: 100%
+
+   The current path of each discharge mode through the bidirectional pad.
 
 .. list-table:: Current paths through the bidirectional pad
    :name: tab-esd-paths
