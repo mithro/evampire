@@ -166,6 +166,18 @@ computers may be attached at once, one on each port. The options are:
   block;
 * a serial port on one designated port only.
 
+:numref:`fig-usbser-two-ports` shows the three.
+
+.. graphviz:: usb-pd-roles/two-ports.dot
+   :name: fig-usbser-two-ports
+   :caption: Three ways to provide a serial port with two USB Type-C ports.
+   :alt: Three diagrams. (a) Each port has its own front end and USB
+         device, giving two serial ports. (b) Both ports connect through an
+         analogue switch on D+ and D−, or two front ends and a selector, to
+         one USB device. (c) Only port 1 has a front end and USB device;
+         port 2 has no USB data.
+   :align: center
+
 With the hardware split of :doc:`software-cost`, two USB devices double the
 buffers and the per-byte work but add no packet-level deadline. With a
 smaller split, each port's deadlines apply independently, and packets on
