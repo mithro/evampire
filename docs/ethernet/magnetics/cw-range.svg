@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="640" height="200" fill="white"/>
+<rect x="350.7" y="78" width="182.5" height="44" fill="#e2efda" stroke="none"/>
+<text x="442.0" y="140.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#548235">working range, 33 nF to 100 nF</text>
+<line x1="40.0" y1="100.0" x2="600.0" y2="100.0" stroke="#222222" stroke-width="1.5"/>
+<line x1="40.0" y1="100.0" x2="40.0" y2="106.0" stroke="#222222" stroke-width="1.0"/>
+<text x="40.0" y="120.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">5</text>
+<line x1="154.1" y1="100.0" x2="154.1" y2="106.0" stroke="#222222" stroke-width="1.0"/>
+<text x="154.1" y="120.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">10</text>
+<line x1="268.3" y1="100.0" x2="268.3" y2="106.0" stroke="#222222" stroke-width="1.0"/>
+<text x="268.3" y="120.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">20</text>
+<line x1="419.1" y1="100.0" x2="419.1" y2="106.0" stroke="#222222" stroke-width="1.0"/>
+<text x="419.1" y="120.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">50</text>
+<line x1="533.2" y1="100.0" x2="533.2" y2="106.0" stroke="#222222" stroke-width="1.0"/>
+<text x="533.2" y="120.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">100</text>
+<line x1="600.0" y1="100.0" x2="600.0" y2="106.0" stroke="#222222" stroke-width="1.0"/>
+<text x="600.0" y="120.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">150</text>
+<text x="600.0" y="160.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">C_w per wire (nF, log scale)</text>
+<line x1="152.5" y1="88.0" x2="152.5" y2="112.0" stroke="#c00000" stroke-width="2"/>
+<text x="152.5" y="82.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#c00000">return loss, 9.9</text>
+<line x1="231.5" y1="88.0" x2="231.5" y2="112.0" stroke="#c00000" stroke-width="2"/>
+<text x="231.5" y="66.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#c00000">droop, 16</text>
+<line x1="298.3" y1="88.0" x2="298.3" y2="112.0" stroke="#c00000" stroke-width="2"/>
+<text x="298.3" y="82.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#c00000">PoE 100BASE-TX τ, 24</text>
+<line x1="337.2" y1="88.0" x2="337.2" y2="112.0" stroke="#c00000" stroke-width="2"/>
+<text x="337.2" y="66.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#c00000">phase, 30.4</text>
+<line x1="474.5" y1="88.0" x2="474.5" y2="112.0" stroke="#c00000" stroke-width="2"/>
+<text x="474.5" y="82.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#c00000">like magnetics, 70</text>
+</svg>
