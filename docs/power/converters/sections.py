@@ -1,10 +1,10 @@
 # /// script
 # requires-python = ">=3.10"
 # ///
-"""Write hs-isolation.svg: cross-sections of three ways to float a
-high-side gate driver above the gf180mcu substrate.
-
-The drawing is schematic: shapes and spacings are not to scale. Run with:
+"""Write the figures of the integration page: hs-isolation.svg,
+cross-sections of three ways to float a high-side gate driver above the
+gf180mcu substrate (schematic, not to scale), and stack-width.svg, the
+total gate width of a stack of LDNMOS devices. Run with:
 
     uv run docs/power/converters/sections.py
 
@@ -16,7 +16,7 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 
-from svgplot import Svg, INK, RED, GREY  # noqa: E402
+from svgplot import Axes, Svg, INK, RED, GREY, BLUE, ORANGE  # noqa: E402
 
 HERE = pathlib.Path(__file__).parent
 
@@ -88,5 +88,30 @@ def main():
     s.save(HERE / "hs-isolation.svg")
 
 
+def stack_width():
+    """Total gate width of n series LDNMOS devices for 100 mΩ."""
+    w1 = 37.3                      # mm for one device at 100 mΩ
+    s = Svg(560, 340)
+    a = Axes(s, (80, 20, 530, 270), (0.5, 8.5), (0, 2500))
+    s.rect(a.X(0.5), a.y0, a.X(5.5) - a.X(0.5), a.y1 - a.y0, fill="#ececec",
+           stroke="none")
+    a.frame(xticks=range(1, 9), yticks=range(0, 2501, 500),
+            xlabel="devices in series, n", ylabel="total gate width (mm)")
+    s.text(a.X(3), a.y0 + 14, "fewer than 6 cannot block 57 V", size=11,
+           fill=GREY)
+    for n in range(1, 9):
+        tot = w1 * n * n
+        col = ORANGE if n == 6 else BLUE
+        s.rect(a.X(n) - 14, a.Y(tot), 28, a.Y(0) - a.Y(tot), fill=col,
+               stroke="none", opacity=0.8)
+    s.text(a.X(5.7), a.Y(1500), "n = 6: 224 mm each,\n1343 mm total",
+           size=11, fill=ORANGE, anchor="end")
+    s.text(a.X(1), a.Y(w1) - 10, "37.3", size=11)
+    s.text(a.X(2.3), a.Y(1800), "each device n times wider,\nso the total "
+           "grows as n²", size=11, fill=GREY)
+    s.save(HERE / "stack-width.svg")
+
+
 if __name__ == "__main__":
     main()
+    stack_width()

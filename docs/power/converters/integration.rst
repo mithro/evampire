@@ -297,10 +297,11 @@ an assumed :math:`a` of 2 µm to 5 µm the area is 0.07 mm² to 0.19 mm².
 Voltage
    The LDNMOS is rated 10 V and breaks down at 13.2 V minimum, so it
    cannot block 57 V alone. A series stack of :math:`n` devices shares the
-   voltage, at least :math:`\lceil 57 / 10 \rceil = 6`. For the same total
+   voltage, at least :math:`\lceil 57 / 10 \rceil = 6`
+   (:numref:`fig-conv-ldmos-stack`). For the same total
    resistance each device must be :math:`n` times wider, so the total width
-   grows as :math:`n^2`: 6 devices for 100 mΩ need 224 mm each, 1343 mm in
-   total. The LDNMOS body is tied to the substrate, so the upper devices of
+   grows as :math:`n^2` (:numref:`fig-conv-stack-width`): 6 devices for
+   100 mΩ need 224 mm each, 1343 mm in total. The LDNMOS body is tied to the substrate, so the upper devices of
    a stack need a custom device in an isolated well, with the same isolation
    question as the high-side driver.
 Current
@@ -315,6 +316,27 @@ Lower voltages
    evampire's own low-voltage supplies, converted from 6 V or less, are
    within the ratings of the standard thick-oxide devices, and a converter
    working below 10 V is within the LDMOS rating.
+
+.. graphviz:: ldmos-stack.dot
+   :name: fig-conv-ldmos-stack
+   :caption: A stack of six 10 V LDNMOS devices blocking 57 V.
+   :alt: Six LDNMOS devices in series from 57 V to ground, each rated
+         10 V and holding about 9.5 V when off. The bottom device has its
+         body tied to the substrate; the five above it, drawn dashed, need
+         bodies in isolated wells, the top one 47.5 V above the substrate,
+         which makes them custom devices.
+   :align: center
+
+.. figure:: stack-width.svg
+   :name: fig-conv-stack-width
+   :alt: Bar chart of total gate width against the number of series
+         devices n from 1 to 8 for a 100 mΩ switch: 37.3 mm for one device,
+         growing as n squared. Bars below 6 are shaded as unable to block
+         57 V; n = 6 is highlighted at 224 mm each, 1343 mm in total.
+   :align: center
+
+   Total gate width of a 100 mΩ LDNMOS stack against the number of
+   devices in series.
 
 .. _conv-custom:
 

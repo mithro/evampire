@@ -1,0 +1,39 @@
+// A series stack of six 10 V LDNMOS devices blocking 57 V; the five upper
+// devices sit in isolated wells because the LDNMOS body is tied to the
+// substrate.
+//
+// Fixed grid (positions in inches): the stack runs from 57 V at the top
+// (y=4.4) to ground at the bottom (y=0.1) along x=1.6.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph ldmos_stack {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=10, width=1.7, height=0.42,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    m6 [pos="1.6,3.75!", label="LDNMOS 6, ≤ 10 V", style="rounded,filled,dashed"];
+    m5 [pos="1.6,3.1!", label="LDNMOS 5, ≤ 10 V", style="rounded,filled,dashed"];
+    m4 [pos="1.6,2.45!", label="LDNMOS 4, ≤ 10 V", style="rounded,filled,dashed"];
+    m3 [pos="1.6,1.8!", label="LDNMOS 3, ≤ 10 V", style="rounded,filled,dashed"];
+    m2 [pos="1.6,1.15!", label="LDNMOS 2, ≤ 10 V", style="rounded,filled,dashed"];
+    m1 [pos="1.6,0.5!", label="LDNMOS 1, ≤ 10 V"];
+
+    node [shape=plaintext, style="", fontsize=10, width=1.6, height=0.2];
+    top [pos="1.6,4.55!", label="57 V (off state)"];
+    gnd [pos="1.6,-0.05!", label="ground"];
+    n1  [pos="4.3,3.1!", width=3.6, height=0.5,
+         label="dashed: body in an isolated well,\nwhose top one sits 47.5 V (5 × 9.5 V)\nabove the substrate (custom device)"];
+    n2  [pos="4.3,0.5!", width=3.6, height=0.35,
+         label="body tied to the substrate, as\nin the standard LDNMOS"];
+    n3  [pos="4.3,1.85!", width=3.6, height=0.35,
+         label="⌈57 / 10⌉ = 6 devices, each\nholding about 9.5 V when off"];
+
+    node [shape=point, width=0.01, height=0.01, label=""];
+    a [pos="1.6,4.4!"];  b [pos="1.6,0.1!"];
+
+    a -- m6 -- m5 -- m4 -- m3 -- m2 -- m1 -- b;
+}
