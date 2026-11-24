@@ -214,6 +214,22 @@ falls below half the ripple, :math:`I_\text{out} < \Delta I_L / 2`
 (0.383 A in the example), the current would fall below zero at the end of
 each period. With a diode as S2, the diode stops it at zero and the current
 stays at zero for part of the period: *discontinuous conduction mode*.
+:numref:`fig-conv-conduction-modes` compares the cases.
+
+.. figure:: conduction-modes.svg
+   :name: fig-conv-conduction-modes
+   :alt: Four panels of inductor current against time over 8 µs on the same
+         scale. (a) Continuous conduction at 2.125 A: a triangle wave
+         between 1.742 A and 2.508 A. (b) The boundary at 0.383 A: the
+         triangle just touches zero at the end of each period. (c)
+         Discontinuous conduction with a diode: the current rises, falls to
+         zero and stays at zero, with zero inductor voltage, until the next
+         period. (d) A synchronous S2 left on at light load: the triangle
+         dips below zero, and the negative part is shaded.
+   :align: center
+
+   Inductor current of the buck example at four loads and switch choices,
+   with the average dashed; panels (c) and (d) are schematic.
 
 The
 volt-second balance then has a third interval with no voltage across the
