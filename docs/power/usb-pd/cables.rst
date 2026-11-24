@@ -6,8 +6,8 @@ Cables and VCONN
 How a USB Type-C port powers the chip inside a marked cable, and how it asks
 that chip for the cable's rating before offering more than 3 A.
 
-A source must not offer more than its cable can carry
------------------------------------------------------
+Cable current rating
+--------------------
 
 Every standard USB Type-C cable carries at least 3 A at voltages above 5 V
 (:pd:`Section 8.6.1.2.2`). A cable rated for more than 3 A, and every cable
@@ -26,8 +26,8 @@ nor its supply.
 
 .. _usbpd-vconn:
 
-VCONN powers the e-marker from the unused CC pin
-------------------------------------------------
+VCONN and the e-marker
+----------------------
 
 The e-marker takes its power from :term:`VCONN`, a 3.0 V to 5.5 V supply that
 the source puts on the :term:`CC` pin not connected to the cable's CC wire
@@ -108,8 +108,8 @@ After detach the source discharges the VCONN pin through Rdch until it is
 below *vVCONNDischarge*, 0.8 V (:typec:`Section 4.5.2.2.6`;
 :typec:`Table 4-6 <x>`).
 
-The VCONN switch must charge the cable and then carry its load
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+VCONN switch current
+^^^^^^^^^^^^^^^^^^^^
 
 When VCONN turns on, the switch must charge the cable's capacitance to the
 lowest valid VCONN voltage within tVCONNON. A switch with a
@@ -177,12 +177,13 @@ They are reference examples, not requirements for evampire.
 
 The STUSB1602 limit is set in 50 mA steps; the other two are fixed.
 
-The circuit of the VCONN switch is on :ref:`usbpd-vconn-switch`.
+The circuit of the VCONN switch is described with the
+:ref:`analogue circuits <usbpd-vconn-switch>`.
 
 .. _usbpd-discover-identity:
 
-Discover Identity asks the cable for its rating
------------------------------------------------
+Discover Identity
+-----------------
 
 Discover Identity is a structured Vendor_Defined message
 (:pd:`Section 6.4.12.3`). Sent with the :term:`SOP′ <SOP>` start of packet,

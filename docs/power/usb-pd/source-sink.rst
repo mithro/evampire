@@ -1,7 +1,7 @@
 .. _usbpd-source-sink:
 
-What the source and the sink each do
-====================================
+Source and sink duties
+======================
 
 The steps a :term:`source` and a :term:`sink` each follow to set up and keep
 a power :term:`contract`, and how evampire's software builds its offer from
@@ -10,13 +10,13 @@ the :ref:`power budget <power-budget>`.
 The message exchange itself, and its time limits, are on
 :doc:`negotiation`.
 
-The source side
----------------
+Source side
+-----------
 
 .. _usbpd-switchable-rp:
 
-The source's Rp also controls who may transmit
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Collision avoidance with Rp
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A source presents a pull-up, :term:`Rp`, on the :term:`CC` wire. Its value
 has two meanings (:ref:`usbpd-resistor-advertisement`):
@@ -50,8 +50,8 @@ and, for the 1.5 A and 3.0 A levels, resistors within ± 5 %
 
 .. _usbpd-source-sequence:
 
-The source sequence from attach to contract
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Source sequence
+^^^^^^^^^^^^^^^
 
 After attach (the Attached.SRC state, :ref:`usbpd-attach-sequence`), the
 source:
@@ -92,8 +92,8 @@ capacitance therefore sits behind the source switch
 
 .. _usbpd-building-offer:
 
-The offer follows from the power budget
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Offer from the power budget
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The software on the processor decides what to offer from the
 :ref:`power budget <power-budget>`. The power it offers on one USB port
@@ -155,8 +155,8 @@ Which voltages and currents a source of a given Port Present PDP must offer
 is set by the specification's power rules; :doc:`power-translation` gives
 the rules and worked examples for each Power over Ethernet class.
 
-Lowering the offer: an Alert first, then new capabilities
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Offer reduction
+^^^^^^^^^^^^^^^
 
 When the input power changes, the source sends new Source_Capabilities, and
 the sink must request again. Before lowering its offer, the specification
@@ -172,8 +172,8 @@ protection (:ref:`usbpd-current-limit`) or a :term:`Hard Reset`
 
 .. _usbpd-current-limit:
 
-Over-current protection must not trip within the contract
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Over-current protection
+^^^^^^^^^^^^^^^^^^^^^^^
 
 A source must have over-current protection that does not trip while the
 sink draws a current that the contract allows (:pd:`Section 4.1.5.1`). The
@@ -188,8 +188,8 @@ limit sits in the source power path (:ref:`usbpd-power-path`).
 
 .. _usbpd-discharge:
 
-The source discharges VBUS after detach
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+VBUS discharge
+^^^^^^^^^^^^^^
 
 After detach, a source must bring VBUS below vSafe5V (maximum) within
 tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
@@ -200,8 +200,8 @@ the processor, does this (:ref:`usbpd-vbus-sensing`).
 
 .. _usbpd-sink-sequence:
 
-The sink sequence from attach to contract
------------------------------------------
+Sink side
+---------
 
 A sink:
 

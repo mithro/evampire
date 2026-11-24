@@ -1,7 +1,7 @@
 .. _usbpd-power-levels:
 
-Power levels and the messages that carry them
-=============================================
+Power levels and messages
+=========================
 
 The voltages and currents that :term:`USB Power Delivery` offers, and the
 format of the messages that carry the offers and requests.
@@ -63,11 +63,11 @@ below.
 
 .. _usbpd-spr:
 
-Fixed supplies from 5 V to 20 V give up to 100 W
--------------------------------------------------
+Fixed supplies
+--------------
 
 In the :term:`standard power range <SPR>` (SPR), a fixed supply is one of
-5 V, 9 V, 15 V and 20 V, at up to 3 A, or up to 5 A at 20 V
+5 V, 9 V, 15 V and 20 V, at up to 3 A, or up to 5 A at 20 V, which is 100 W
 (:pd:`Table 3.1`). Each offer is a :term:`power data object <PDO>` (PDO)
 holding a voltage and a maximum current (:ref:`usbpd-pdo`). Which voltages a
 source must offer, and at what current, depends on its power;
@@ -126,8 +126,8 @@ fixed-supply sum (:pd:`Table 6.45`); the parameter values in
 A sink must tolerate 24 V on VBUS without damage, as the specification
 recommends (*vSprMax*, :pd:`Table 4.8`).
 
-Programmable and adjustable supplies let the sink choose the voltage
---------------------------------------------------------------------
+Programmable and adjustable supplies
+------------------------------------
 
 A :term:`programmable power supply <PPS>` (PPS) is a supply whose voltage
 the sink sets in 20 mV steps (*vPpsStep*, :pd:`Table 4.7`) within 5 V to
@@ -145,8 +145,8 @@ SPR AVS (:pd:`Section 3.2.5.2`). Both are optional.
 
 .. _usbpd-epr:
 
-The extended power range adds 28 V, 36 V and 48 V, up to 240 W
----------------------------------------------------------------
+Extended power range
+--------------------
 
 A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
 48 V at up to 5 A, in the :term:`extended power range <EPR>` (EPR)
@@ -177,8 +177,8 @@ Cable electronics powered from VBUS must tolerate this 50.9 V
 
 .. _usbpd-messages:
 
-Every message starts with a 16-bit header
------------------------------------------
+Message header
+--------------
 
 Each message starts with a 16-bit header (:numref:`fig-usbpd-header`;
 :pd:`Section 6.2.1`, :pd:`Table 6.2`). There are three kinds of message
@@ -309,10 +309,10 @@ How long each message takes on the wire is given in
 
 .. _usbpd-pdo:
 
-Each offer is a 32-bit power data object
-----------------------------------------
+Power data objects
+------------------
 
-Source_Capabilities holds one to seven PDOs, with the 5 V fixed supply
+Each PDO is 32 bits long. Source_Capabilities holds one to seven PDOs, with the 5 V fixed supply
 first and the other fixed supplies in rising voltage order
 (:pd:`Section 6.4.1.1`). :numref:`fig-usbpd-pdo` shows a fixed-supply PDO.
 
@@ -349,8 +349,8 @@ For example, an offer of 9 V at 3 A has a voltage field of
 
 .. _usbpd-rdo:
 
-A request names one offer and a current
----------------------------------------
+Request data object
+-------------------
 
 The sink's Request holds one :term:`request data object <RDO>` (RDO)
 (:numref:`fig-usbpd-rdo`; :pd:`Section 6.4.2`).
