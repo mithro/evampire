@@ -218,8 +218,9 @@ TLP limits
 The gf180mcu design manual gives :term:`transmission line pulse <TLP>`
 (TLP) measurements of each ESD device. A TLP tester applies rectangular
 pulses 100 ns long with a 10 ns rise, at rising current, and measures the
-voltage, and the leakage current after each one, which the figures plot
-alongside ([ESD-GF180-DRM-14-4]_, [ESD-GF180-DRM-14-5-5]_). The current at
+voltage, and the leakage current after each one ([ESD-GF180-DRM-14-4]_,
+[ESD-GF180-DRM-14-5-5]_). :numref:`fig-esd-tlp-limits` plots the measured
+points of all four devices. The current at
 which the device fails, the :term:`second breakdown current`, scales with
 the device's width, so the manual gives it per micrometre
 (:numref:`tab-esd-limits`).
@@ -255,6 +256,23 @@ through the measured points after snapback meets zero current at 5.8 V,
 and the simulation uses that fit (:doc:`simulation`). The PMOS has no
 snapback: its current rises steadily above its avalanche voltage, to
 failure at about 14 V.
+
+.. figure:: figures/tlp-limits.svg
+   :name: fig-esd-tlp-limits
+   :alt: Two graphs of TLP current per micrometre of width against voltage
+         from 0 to 15 V. Top, the two diodes conduct forward from about
+         1 V and reach about 28 to 30 mA/µm by 4.5 to 5.5 V; they fail at
+         30 mA/µm at 6.7 V and 31 mA/µm at 6.9 V. Bottom, the grounded-gate
+         NMOS blocks to 10.7 V, snaps back to about 6.8 V and rises steeply,
+         its straight-line fit meeting zero current at 5.8 V; it fails at
+         7 mA/µm at 8 V. The grounded-gate PMOS avalanches at 9.7 V with no
+         snapback and fails at 5.3 mA/µm at 14.1 V. Dotted lines mark the
+         8.5 V minimum junction breakdown and the 12 V minimum gate oxide
+         breakdown.
+   :width: 100%
+
+   TLP measurements of the four 6 V ESD devices, with each device's
+   failure point, read from the gf180mcu design manual.
 
 The voltage that the protection reaches must stay below the limits of the
 circuits it protects (:numref:`tab-esd-breakdown`).

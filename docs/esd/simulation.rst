@@ -186,7 +186,7 @@ The design manual's 6 V grounded-gate NMOS triggers at 10.7 V
 ([ESD-GF180-DRM-14-5-5]_). The caption of its figure gives eight fingers
 (NF=8) of 25 µm (GW), so 200 µm of width. A straight line through its measured
 points after snapback gives the holding voltage and on-resistance
-(:numref:`tab-esd-gg-fit`). The fit stops before 1.42 A, the pulse after
+(:numref:`tab-esd-gg-fit`, :numref:`fig-esd-tlp-limits`). The fit stops before 1.42 A, the pulse after
 which the figure's leakage current jumps: the device had failed.
 
 .. csv-table:: Straight-line fit to the snapped-back grounded-gate NMOS
@@ -219,7 +219,7 @@ The design manual's 6 V grounded-gate PMOS avalanches at 9.7 V and has no
 snapback ([ESD-GF180-DRM-14-5-6]_). The caption of its figure gives twelve
 fingers (NF=12) of 25 µm, so 300 µm of width. A straight line through its
 measured points from 0.2 A to before 1.61 A, where its leakage jumps, gives
-:numref:`tab-esd-gp-fit`. The simulation puts a current source with this
+:numref:`tab-esd-gp-fit`. :numref:`fig-esd-tlp-limits` shows the points. The simulation puts a current source with this
 characteristic from DVDD to the pad, scaled to the 480 µm of the output
 PMOS, for discharges that pull the pad below DVDD.
 
@@ -316,3 +316,6 @@ It writes the figures to ``docs/esd/figures/`` and the tables to
 ngspice 44.2 and the two repositories at the commits above.
 :download:`sim/schematic.py <sim/schematic.py>` draws the pad's
 schematic, :numref:`fig-esd-io-cell`.
+:download:`sim/tlp_plot.py <sim/tlp_plot.py>` plots the foundry's TLP
+measurements, :numref:`fig-esd-tlp-limits`, and needs neither ngspice nor
+the repositories.
