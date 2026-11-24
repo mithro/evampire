@@ -147,7 +147,7 @@ freely, they drift against the sender's bits by:
      - Relative frequency difference between sender and receiver
      - (fraction)
 
-Two cases show what this means:
+Two cases show what this means (:numref:`fig-usbser-drift`):
 
 * *Correcting at every edge.* Bit stuffing guarantees an edge at least every
   7 bit times ([USBSER-USB2]_ section 7.1.9). With a host at the limit of
@@ -162,6 +162,16 @@ Two cases show what this means:
   :math:`\varepsilon \le 23.2\ \text{ns} / (636 \times 83.33\ \text{ns})
   = 437 \times 10^{-6}` (437 ppm), and any error in placing the first
   sample reduces this further.
+
+.. figure:: timing/drift.svg
+   :name: fig-usbser-drift
+   :alt: Graph of drift in ns against the number of bits since the last
+         correction, 0 to 700. A line for ε = 0.003 reaches 1.75 ns at 7
+         bits and 159 ns at 636 bits. A line for ε = 437 ppm reaches the
+         dashed 23.2 ns margin at 636 bits.
+   :align: center
+
+   Drift of a free-running sampling instant for the two cases above.
 
 A receiver therefore either corrects its sampling instant at each edge, or
 holds its clock within a few hundred parts per million of the host's (see

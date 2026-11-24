@@ -156,8 +156,36 @@ def eop():
     s.save(HERE / "eop.svg")
 
 
+def drift():
+    """Drift of a free-running sampling instant against the bit count."""
+    s = Svg(560, 330)
+    a = Axes(s, (75, 20, 530, 270), (0, 700), (0, 180))
+    a.frame(xticks=range(0, 701, 100), yticks=range(0, 181, 30),
+            xlabel="bits since the last correction, N", ylabel="drift (ns)")
+    s.line(a.X(0), a.Y(23.2), a.X(700), a.Y(23.2), stroke=RED, dash="5 3")
+    s.text(a.X(300), a.Y(23.2) - 9, "23.2 ns margin", size=11, fill=RED,
+           anchor="start")
+    for eps, col in ((0.003, BLUE), (437e-6, GREEN)):
+        s.poly(a.P([(0, 0), (700, 700 * TBIT * eps)]), stroke=col)
+    s.text(a.X(20), a.Y(168), "ε = 0.003: host at ± 0.05 %, device at "
+           "± 0.25 %", size=11, fill=BLUE, anchor="start")
+    s.text(a.X(20), a.Y(153), "ε = 437 ppm: the most a whole packet "
+           "allows", size=11, fill=GREEN, anchor="start")
+    for n, d in ((7, 1.75), (636, 159), (636, 23.2)):
+        s.add(f'<circle cx="{a.X(n):.1f}" cy="{a.Y(d):.1f}" r="4" '
+              f'fill="{INK}"/>')
+    s.text(a.X(7) + 8, a.Y(1.75) - 10, "7 bits: 1.75 ns", size=11,
+           anchor="start")
+    s.text(a.X(636) - 8, a.Y(159) - 6, "636 bits: 159 ns", size=11,
+           anchor="end")
+    s.text(a.X(630), a.Y(40), "636 bits at 437 ppm: 23.2 ns", size=11,
+           anchor="end", fill=GREEN)
+    s.save(HERE / "drift.svg")
+
+
 if __name__ == "__main__":
     HERE.mkdir(exist_ok=True)
     bit_cell()
     edge_placement()
     eop()
+    drift()
