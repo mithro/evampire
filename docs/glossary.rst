@@ -348,8 +348,9 @@ Glossary
       power to the pairs (:clause:`145.2.3`, see :ref:`ebat-pass-through`).
 
    ebat
-      A reduced variant of evampire, on its own die, that has the power
-      functions only, with no Ethernet data path (see :doc:`ebat/index`).
+      evampire with the Ethernet data functions removed, on its own die.
+      Its Power over Ethernet and USB Type-C functions are evampire's,
+      unchanged (see :doc:`ebat/index`).
 
    Return loss
       How much weaker, in decibels, a reflection is than the signal that

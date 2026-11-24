@@ -10,7 +10,7 @@ pass Ethernet data from one socket to another on wiring that bypasses ebat.
 Each board fits only the ports it needs
 ---------------------------------------
 
-ebat has the power ports of evampire (:ref:`req-ebat-ports`), and a board
+ebat has the power ports of evampire (:ref:`req-ebat-same-power`), and a board
 fits the ones its job needs. :numref:`tab-ebat-boards` lists four kinds of
 board. The operating modes are described on :ref:`power-modes`.
 
@@ -150,7 +150,7 @@ ebat:
   downstream device, below what ebat draws.
 
 In the first case, port B's built-in current and power limit
-(:ref:`req-ebat-power-control`) switches the port off when the downstream
+(:ref:`req-power-control`) switches the port off when the downstream
 device draws too much. Port B then detects and classifies the device
 again, the device can agree the same value over LLDP again, and the cycle
 can repeat. The frames do not pass through ebat, so ebat cannot

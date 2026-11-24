@@ -3,8 +3,8 @@
 ebat architecture
 =================
 
-This page shows the blocks inside ebat, says which evampire block each one
-is, and lists the evampire blocks and pins that ebat leaves out.
+This page shows the evampire blocks that ebat keeps, and lists the
+evampire blocks and pins that it leaves out.
 
 ebat is evampire's power and control blocks
 -------------------------------------------
@@ -38,9 +38,8 @@ circuits, blue blocks USB Type-C circuits, green blocks power monitoring
 and converter control, and the orange block the processor.
 
 The converters' power stages are drawn outside the chip, as in evampire's
-first version. In the full design most of them are on the chip
-(:numref:`tab-power-board-configs`), and which of the two ebat follows is
-an open question (:ref:`req-ebat-converters`).
+first version. Where they sit follows evampire's board configurations
+(:numref:`tab-power-board-configs`).
 
 Every block is an evampire block
 --------------------------------
@@ -75,10 +74,9 @@ describes it.
 The evampire block diagram (:numref:`fig-block-diagram`) draws the power
 blocks as one "Power negotiation, monitoring and limiting" block
 (:ref:`arch-power-negotiation`). ebat draws them separately, because they
-are all that is left. The power flow
-on a board is the same as on an evampire board
-(:numref:`fig-power-flow`), without the transceivers among the board
-supplies.
+are all that is left. The power flow on a board is the same as on an
+evampire board (:numref:`fig-power-flow`), without the transceivers among
+the board supplies.
 
 ebat leaves out the frame path and its clock
 --------------------------------------------
@@ -94,20 +92,20 @@ ebat does not have these blocks of evampire (:doc:`../architecture/index`):
 * the transceiver configuration interface.
 
 The 125 MHz reference clock drives only these blocks
-(:ref:`arch-clock`), so ebat does not need it. The processor's clock is
-an open question for ebat as it is for evampire.
+(:ref:`arch-clock`), so ebat does not need it.
 
 The USB serial port needs a bit clock within ± 0.25 % of 12 MHz. Of the
 three clock sources that the USB serial pages list, ebat does not have
 the first, a clock derived from the 125 MHz Ethernet reference. The two
-that remain are a local oscillator trimmed against the 1 ms start-of-frame tokens from
-the host, and a dedicated crystal (:doc:`../usb-serial/timing`).
+that remain are a local oscillator trimmed against the 1 ms start-of-frame
+tokens from the host, and a dedicated crystal
+(:doc:`../usb-serial/timing`).
 
-The processor handles no frames. Its work is the power negotiation
-on each port, the power budget and the USB serial port. The USB Power
-Delivery messages keep the processor busy with interrupts off for the
-length of each message (:doc:`../power/usb-pd/software`), and the serial
-port shares the processor with them as described on
+The processor handles no frames. Its work is the power negotiation on each
+port, the power budget and the USB serial port, as on evampire. The USB
+Power Delivery messages keep the processor busy with interrupts off for
+the length of each message (:doc:`../power/usb-pd/software`), and the
+serial port shares the processor with them as described on
 :doc:`../usb-serial/usb-pd-roles`.
 
 ebat needs 27 fewer pins than a first-version evampire
@@ -119,13 +117,3 @@ management interface and the 125 MHz reference clock, 27 pins in all
 evampire: the detection and classification connections of each Ethernet
 port, the configuration channel and D+ and D− wires of each USB Type-C
 port, and the converter control and measurement connections.
-
-Open questions
---------------
-
-* The processor's clock source and frequency.
-* Whether the USB serial port's clock is a trimmed local oscillator or a
-  dedicated crystal.
-* The number of power-side pins, which depends on the number of USB Type-C
-  ports and on how much of each converter is on the chip
-  (:ref:`req-ebat-converters`, :doc:`../power/converters/integration`).
