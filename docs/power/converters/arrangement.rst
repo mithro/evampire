@@ -571,6 +571,19 @@ switched-capacitor stage and a 10 MHz buck stage in 180 nm CMOS reaches 81 %
 peak efficiency from 5 V to 1 V [CONV-PILAWA2012]_ (Abstract), and a charge
 pump in nanometre-scale bulk CMOS reaches 36 V [CONV-ISMAIL2017]_ (Title).
 
+:numref:`fig-conv-sc-stage` shows one way to make the 4:1 division.
+
+.. graphviz:: sc-stage.dot
+   :name: fig-conv-sc-stage
+   :caption: A 4:1 switched-capacitor stage in series-parallel form; the
+             switches are not drawn.
+   :alt: Two phases. In phase 1 four capacitors in series sit across the
+         37 V to 57 V input, each charging to Vin/4. In phase 2 the same
+         four capacitors are in parallel across the output, which is Vin/4,
+         9.25 V to 14.25 V. Switches change the connections every period,
+         and a regulator follows for a fixed output.
+   :align: center
+
 A single-inductor multiple-output converter shares one inductor between
 outputs by switching it to each in turn. Whether the outputs' interaction
 is acceptable for two USB Power Delivery ports, each with its own voltage
