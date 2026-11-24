@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="380" viewBox="0 0 640 380" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="640" height="380" fill="white"/>
+<line x1="80.0" y1="20.0" x2="80.0" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="80.0" y1="300.0" x2="80.0" y2="305.0" stroke="#222222" stroke-width="1.0"/>
+<text x="80.0" y="319.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">1 ns</text>
+<line x1="176.4" y1="20.0" x2="176.4" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="176.4" y1="300.0" x2="176.4" y2="305.0" stroke="#222222" stroke-width="1.0"/>
+<text x="176.4" y="319.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">100 ns</text>
+<line x1="272.7" y1="20.0" x2="272.7" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="272.7" y1="300.0" x2="272.7" y2="305.0" stroke="#222222" stroke-width="1.0"/>
+<text x="272.7" y="319.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">10 µs</text>
+<line x1="369.1" y1="20.0" x2="369.1" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="369.1" y1="300.0" x2="369.1" y2="305.0" stroke="#222222" stroke-width="1.0"/>
+<text x="369.1" y="319.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">1 ms</text>
+<line x1="465.5" y1="20.0" x2="465.5" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="465.5" y1="300.0" x2="465.5" y2="305.0" stroke="#222222" stroke-width="1.0"/>
+<text x="465.5" y="319.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">100 ms</text>
+<line x1="561.8" y1="20.0" x2="561.8" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="561.8" y1="300.0" x2="561.8" y2="305.0" stroke="#222222" stroke-width="1.0"/>
+<text x="561.8" y="319.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">10 s</text>
+<line x1="80.0" y1="300.0" x2="610.0" y2="300.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="300.0" x2="80.0" y2="300.0" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="304.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="80.0" y1="268.9" x2="610.0" y2="268.9" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="268.9" x2="80.0" y2="268.9" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="272.9" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">1</text>
+<line x1="80.0" y1="237.8" x2="610.0" y2="237.8" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="237.8" x2="80.0" y2="237.8" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="241.8" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">2</text>
+<line x1="80.0" y1="206.7" x2="610.0" y2="206.7" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="206.7" x2="80.0" y2="206.7" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="210.7" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">3</text>
+<line x1="80.0" y1="175.6" x2="610.0" y2="175.6" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="175.6" x2="80.0" y2="175.6" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="179.6" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">4</text>
+<line x1="80.0" y1="144.4" x2="610.0" y2="144.4" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="144.4" x2="80.0" y2="144.4" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="148.4" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">5</text>
+<line x1="80.0" y1="113.3" x2="610.0" y2="113.3" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="113.3" x2="80.0" y2="113.3" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="117.3" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">6</text>
+<line x1="80.0" y1="82.2" x2="610.0" y2="82.2" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="82.2" x2="80.0" y2="82.2" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="86.2" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">7</text>
+<line x1="80.0" y1="51.1" x2="610.0" y2="51.1" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="51.1" x2="80.0" y2="51.1" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="55.1" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">8</text>
+<line x1="80.0" y1="20.0" x2="610.0" y2="20.0" stroke="#d9d9d9" stroke-width="1.0"/>
+<line x1="75.0" y1="20.0" x2="80.0" y2="20.0" stroke="#222222" stroke-width="1.0"/>
+<text x="72.0" y="24.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">9</text>
+<rect x="80" y="20" width="530" height="280" fill="none" stroke="#222222"/>
+<text x="345.0" y="338.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">time scale of the event (log scale)</text>
+<text x="34.0" y="160.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 34.0 160.0)">peak voltage (kV)</text>
+<circle cx="176.4" cy="51.1" r="4.5" fill="#c00000"/>
+<text x="184.4" y="55.1" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">system-level discharge, 8 kV, about 100 ns</text>
+<circle cx="213.9" cy="144.4" r="4.5" fill="#c00000"/>
+<text x="273.9" y="148.4" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">charged cable, up to 5 kV, over 600 ns</text>
+<circle cx="306.4" cy="175.6" r="4.5" fill="#c00000"/>
+<text x="314.4" y="179.6" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">surge, 4 kV, 1.2/50 µs</text>
+<circle cx="161.9" cy="237.8" r="4.5" fill="#c00000"/>
+<text x="157.9" y="225.8" text-anchor="start" font-size="12" font-weight="normal" fill="#c00000">fast transient, 2 kV, 5/50 ns</text>
+<circle cx="190.9" cy="237.8" r="4.5" fill="#1f4e79"/>
+<text x="198.9" y="267.8" text-anchor="start" font-size="12" font-weight="normal" fill="#1f4e79">human-body model, 2 kV, about 200 ns</text>
+<circle cx="306.4" cy="225.3" r="4.5" fill="#7f7f7f"/>
+<text x="314.4" y="243.3" text-anchor="start" font-size="12" font-weight="normal" fill="#7f7f7f">isolation impulse, 2.4 kV, 50 µs</text>
+<circle cx="599.3" cy="230.0" r="4.5" fill="#7f7f7f"/>
+<text x="599.3" y="216.0" text-anchor="end" font-size="12" font-weight="normal" fill="#7f7f7f">isolation tests, 2.1 kV and 2.25 kV, 60 s</text>
+<circle cx="599.3" cy="234.0" r="4.5" fill="#7f7f7f"/>
+<line x1="213.9" y1="144.4" x2="262.0" y2="144.4" stroke="#c00000" stroke-width="1.4" stroke-dasharray="4,3"/>
+</svg>
