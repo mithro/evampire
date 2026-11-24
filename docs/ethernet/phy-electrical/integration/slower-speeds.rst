@@ -78,7 +78,8 @@ Driver
 A driver with a matched resistive source needs
 :math:`V_\text{src} = 2\,V_\text{line}` (:ref:`phy-int-swing`), that is
 4.4 V to 5.6 V peak for 10BASE-T and 3.1 V to 3.9 V for 10BASE-Te. From a
-3.3 V supply a differential driver reaches at most ±3.3 V, so a matched
+3.3 V supply a differential driver reaches at most ±3.3 V
+(:numref:`fig-phy-int-10base-t-swing`), so a matched
 resistive-source driver at 3.3 V cannot reach the 10BASE-T level (estimate,
 from those numbers). Other options can:
 
@@ -96,6 +97,18 @@ from those numbers). Other options can:
 
 The link pulses that autonegotiation needs do not need this driver
 (:ref:`phy-int-autoneg`).
+
+.. figure:: ten-base-t-swing.svg
+   :name: fig-phy-int-10base-t-swing
+   :alt: Horizontal chart of the peak source voltage a matched driver
+         needs, twice the line voltage, from 0 to 6 V. 1000BASE-T at 1 V
+         on the line needs 2 V; 10BASE-Te needs 3.1 V to 3.9 V; 10BASE-T
+         needs 4.4 V to 5.6 V. A dashed line at 3.3 V marks what a
+         differential driver on a 3.3 V supply can reach.
+   :align: center
+
+   The source voltage a matched driver needs for each speed, against
+   the ±3.3 V that a 3.3 V supply allows.
 
 .. _phy-int-slower-questions:
 
