@@ -293,6 +293,18 @@ switching for a while and then retry, called *hiccup* mode: the LM5176,
 LM5177 and TPS55289 all offer it [CONV-LM5176]_ (Features)
 [CONV-LM5177]_ (Features) [CONV-TPS55289]_ (Features). The response times
 these protections need for evampire are worked out on :doc:`first-version`.
+:numref:`fig-conv-current-limit` shows both behaviours.
+
+.. figure:: current-limit.svg
+   :name: fig-conv-current-limit
+   :alt: Two timing diagrams. (a) Cycle-by-cycle limit: the inductor
+         current ramps up and down; during an overload its rise is steeper
+         and each on time ends when the current reaches the dashed limit.
+         (b) Hiccup: short bursts of switching separated by long off
+         intervals, each burst a retry.
+   :align: center
+
+   Cycle-by-cycle current limit and hiccup mode (schematic).
 
 .. _conv-dead-time:
 
