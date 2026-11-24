@@ -258,4 +258,20 @@ silent for break_link_timer and starts again (:clause:`28.3.2`). For
 1000BASE-T, the training described in :ref:`phy-master-slave` must finish
 inside that time. For reference, the TI DP83867 datasheet gives 2 s to 3 s
 as the typical time for autonegotiation with next pages to complete
-([PHY-DP83867]_ section 7.4.3.8).
+([PHY-DP83867]_ section 7.4.3.8). :numref:`fig-phy-startup` puts the
+timers on one time line.
+
+.. figure:: startup-timeline.svg
+   :name: fig-phy-startup
+   :alt: Time line from the autonegotiation result at 0 ms to 2600 ms,
+         after a shaded page exchange with bursts every 8 ms to 24 ms.
+         Bars from 0: the slave trains within maxwait_timer, 350 ms plus or
+         minus 5 ms; the master within 750 ms plus or minus 10 ms;
+         link_fail_inhibit_timer runs 750 ms to 1000 ms, by which the link
+         must be up. If it is not, the transceiver is silent for
+         break_link_timer, 1200 ms to 1500 ms, drawn from 1000 ms, and
+         then negotiation restarts.
+   :align: center
+
+   The 1000BASE-T start-up timers after autonegotiation; break_link_timer
+   is drawn from the latest expiry of link_fail_inhibit_timer.

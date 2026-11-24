@@ -100,7 +100,8 @@ Training time
 After autonegotiation, the slave must lock to the master's clock and both
 ends must train their equalisers and cancellers before the maxwait_timer
 expires: 350 ms ± 5 ms for a slave and 750 ms ± 10 ms for a master
-(:clause:`40.4.5.2`). The timing recovery and the adaptation of
+(:clause:`40.4.5.2`, :numref:`fig-phy-startup`). The timing recovery
+and the adaptation of
 :doc:`signal-processing` share this time.
 
 .. _phy-int-clock-questions:

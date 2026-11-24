@@ -91,7 +91,7 @@ standard defines optional alternative names in its Annex K.
 After autonegotiation both ends train their equalisers and cancellers on
 idle symbols. A slave must reach reliable reception within
 350 ms ± 5 ms and a master within 750 ms ± 10 ms, the *maxwait_timer*
-(:clause:`40.4.5.2`).
+(:clause:`40.4.5.2`, :numref:`fig-phy-startup`).
 
 .. _phy-pair-skew:
 
