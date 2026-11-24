@@ -281,7 +281,8 @@ no specified breakdown, and the device models use about 30 V.
 No documented gf180mcu junction is specified to hold the 57 V of Power over
 Ethernet to the substrate, let alone the isolation test. Stacking
 transistors divides a voltage between their drains, but not between a well
-and the substrate. Whether a custom structure holds more is open, and needs
+and the substrate. :numref:`fig-hv-stack-section` shows a stack in
+cross-section. Whether a custom structure holds more is open, and needs
 test structures. Until such a structure is shown, a cable wire reaches
 evampire only through one of the three barriers above.
 
@@ -297,6 +298,20 @@ Power over Ethernet input are described on
 :doc:`../../power/converters/buck-boost`, and the arrangement of the
 converters on :doc:`../../power/converters/index`.
 
+:numref:`fig-magnetics-poe-isolation` shows the two paths across the
+barrier.
+
+.. graphviz:: poe-isolation.dot
+   :name: fig-magnetics-poe-isolation
+   :caption: The data and the power crossing the isolation barrier
+             separately in a capacitor-coupled port.
+   :alt: The cable connects to the coupling capacitors, which straddle a
+         dashed isolation barrier and carry the data to evampire. The
+         cable also connects directly, with no winding, to the Power over
+         Ethernet input, which feeds an isolated converter that straddles
+         the barrier and supplies evampire.
+   :align: center
+
 Partial isolation
 -----------------
 
@@ -304,7 +319,8 @@ A board whose ports meet the isolation only in part, or not at all, can be
 used safely only where both ends of every cable share a ground, such as
 inside one piece of equipment or one rack. Connecting it between buildings,
 or to equipment on a different power system, exposes the chip to the
-ground differences and surges that the isolation exists to block. IEEE
+ground differences and surges that the isolation exists to block
+(:numref:`fig-magnetics-ground-loop`). IEEE
 802.3 makes no exception for equipment inside one enclosure ([MAG-POTTERF]_).
 
 Open questions

@@ -1,0 +1,44 @@
+// With capacitor-coupled data, the Power over Ethernet circuits connect to
+// the cable directly, so the power path needs its own isolation, for
+// example an isolated converter, while the data crosses through the
+// coupling capacitors.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph poe_isolation {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true, height=0.6];
+    edge  [penwidth=1.5, arrowsize=0.7];
+
+    cab [pos="0.4,0.9!", width=0.6, height=1.7, fillcolor="#fbe5d6",
+         label="cable"];
+    caps [pos="2.68,1.5!", width=1.3, fillcolor="#fff2cc",
+          label="coupling\ncapacitors"];
+    pd [pos="1.45,0.3!", width=1.1, fillcolor="#ffffff",
+        label="Power over\nEthernet input,\nno winding"];
+    conv [pos="2.9,0.3!", width=1.0, fillcolor="#e2efda",
+          label="isolated\nconverter"];
+    chip [pos="4.6,0.9!", width=1.1, height=1.7, fillcolor="#dbe8f5",
+          label="evampire\nand its\nsupply"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    c1 [pos="0.7,1.5!"]; c2 [pos="4.05,1.5!"];
+    p1 [pos="0.7,0.3!"]; p2 [pos="4.05,0.3!"];
+    b1 [pos="2.68,1.95!"]; b2 [pos="2.68,-0.15!"];
+
+    c1 -> caps [dir=both, color="#1f4e79"];
+    caps -> c2 [dir=both, color="#1f4e79"];
+    p1 -> pd [color="#c00000"];
+    pd -> conv [color="#c00000"];
+    conv -> p2 [color="#c00000"];
+    b1 -> b2 [dir=none, style=dashed, color="#7f7f7f", penwidth=1.2];
+
+    node [shape=plaintext, style="", width=1.6, height=0.2, fontsize=9];
+    lb [pos="2.68,2.1!", label="isolation barrier"];
+    ld [pos="3.75,1.65!", width=0.8, fontcolor="#1f4e79", label="data"];
+    lp [pos="3.8,0.45!", width=0.8, fontcolor="#c00000", label="power"];
+}
