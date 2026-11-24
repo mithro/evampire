@@ -519,6 +519,20 @@ For reference, in the TPS23753A [CONV-TPS23753A]_ (Section 8.4.6.1):
    winding takes over, and must not fall by more than the 3.3 V to 3.7 V
    hysteresis before then (Section 7.5, UVLO_1 and UVLO_H).
 
+:numref:`fig-conv-start-path` shows this start-up path.
+
+.. graphviz:: start-path.dot
+   :name: fig-conv-start-path
+   :caption: Start-up path of a powered-device input converter.
+   :alt: Block diagram: the 37 V to 57 V input feeds a current source of
+         2.5 mA to 6 mA, or a 28 kΩ resistor, which charges a hold
+         capacitor of at least 0.70 µF. The capacitor supplies a controller
+         with under-voltage lockout, which drives the gate of the input
+         converter power stage and turns the current source off at 8.65 V
+         to 9.3 V. An auxiliary winding or the converter output feeds back
+         to the hold capacitor and takes over after start-up.
+   :align: center
+
 The capacitor must hold the controller's load through the start-up:
 
 .. math::
