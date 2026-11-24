@@ -170,7 +170,8 @@ magnetics, :math:`\tau_\text{mag} = 7.0\ \mu\text{s}`:
 At exactly 16 nF the port meets the droop limit with no margin: 73.2 % of
 the voltage is left after 500 ns, against 73.1 % required. Its high-pass
 corner is 99.5 kHz, at the edge of the 1 Hz to 100 kHz range that the
-transmit templates assume (:clause:`40.6.1.2.3`, note 1).
+transmit templates assume (:clause:`40.6.1.2.3`, note 1). The two time
+constants are the curves of :numref:`fig-magnetics-droop`.
 
 100BASE-TX phase limit
 ----------------------
