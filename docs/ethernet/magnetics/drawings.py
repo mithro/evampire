@@ -10,7 +10,8 @@ Writes, next to this script:
 - choke.svg: currents and magnetic flux in a common-mode choke, for
   differential and common-mode current;
 - die-barrier.svg: cross-section of an isolation capacitor between the
-  lowest and highest metal layers of the evampire die.
+  lowest and highest metal layers of the evampire die;
+- embedded.svg: a transformer embedded in a circuit board.
 
 The drawings are schematic: shapes and spacings are not to scale.
 
@@ -173,6 +174,42 @@ def die_barrier():
     return svg(w, h, b)
 
 
+def embedded():
+    """Board-embedded transformer: a cross-section through one limb of the
+    core and a top view of the racetrack core with its two windings."""
+    w, h = 640, 300
+    lam, cop, fer = "#e2efda", "#c55a11", "#7f7f7f"
+    b = [text(150, 22, "Cross-section through one limb", weight="bold"),
+         text(470, 22, "Top view", weight="bold")]
+    # Cross-section: laminate, embedded core, one turn of copper and vias.
+    b.append(rect(20, 80, 260, 120, lam))
+    b.append(rect(95, 118, 110, 44, fer, rx=4))
+    b.append(text(150, 145, "ferrite core", size=12, fill="white"))
+    b.append(rect(70, 72, 160, 8, cop, stroke=cop))
+    b.append(rect(70, 200, 160, 8, cop, stroke=cop))
+    for x in (70, 222):
+        b.append(rect(x, 72, 8, 136, cop, stroke=cop))
+    b.append(text(150, 64, "top copper layer", size=12))
+    b.append(text(150, 226, "bottom copper layer", size=12))
+    b.append(text(150, 248, "vias join the two layers into a turn",
+                  size=12))
+    b.append(text(150, 266, "around the core", size=12))
+    b.append(text(25, 96, "laminate", "start", 11, fill=GREEN))
+    # Top view: racetrack core with turns on the two straight sides.
+    b.append(f'<rect x="360" y="70" width="220" height="130" rx="55" '
+             f'fill="none" stroke="{fer}" stroke-width="22"/>')
+    for k in range(6):
+        x = 410 + 24 * k
+        b.append(line(x, 48, x, 92, cop, 3))
+        b.append(line(x, 178, x, 222, BLUE, 3))
+    b.append(text(470, 40, "winding on one limb", size=12, fill=cop))
+    b.append(text(470, 240, "winding on the other limb", size=12, fill=BLUE))
+    b.append(text(470, 140, "racetrack-shaped", size=12))
+    b.append(text(470, 155, "ferrite core", size=12))
+    return svg(w, h, b)
+
+
 if __name__ == "__main__":
     (HERE / "choke.svg").write_text(choke())
     (HERE / "die-barrier.svg").write_text(die_barrier())
+    (HERE / "embedded.svg").write_text(embedded())
