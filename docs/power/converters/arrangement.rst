@@ -143,7 +143,8 @@ changes, giving 21.5 V and 50.9 V.
 Overlapping voltage ranges
 --------------------------
 
-:numref:`tab-conv-overlap` places the ranges side by side.
+:numref:`tab-conv-overlap` lists the ranges and :numref:`fig-conv-ranges`
+draws them on one voltage axis.
 
 .. list-table:: Voltage ranges at each kind of port
    :name: tab-conv-overlap
@@ -175,7 +176,22 @@ Overlapping voltage ranges
      - 15
      - 50.9
 
-Four overlaps follow from it:
+.. figure:: ranges.svg
+   :name: fig-conv-ranges
+   :alt: Horizontal bars on a 0 V to 60 V axis: powered device input 37 V
+         to 57 V; power sourcing equipment output 44 V to 57 V for Type 1,
+         50 V to 57 V for Types 2 and 3, and 52 V to 57 V for Type 4; USB
+         standard power range 5 V to 21.5 V; USB extended power range 48 V
+         fixed supply 45.6 V to 50.9 V; USB extended power range adjustable
+         15 V to 50.9 V. A grey band from 44 V to 57 V marks the shared
+         band. Circled numbers 1 to 4 mark the four overlaps listed in the
+         text.
+   :align: center
+
+   Voltage ranges at each kind of port, with the four overlaps numbered as
+   in the list below.
+
+Four overlaps follow from them:
 
 #. The powered device input and every power sourcing equipment output share
    the band from 44 V (Type 1) or 52 V (Type 4) up to 57 V. An input above

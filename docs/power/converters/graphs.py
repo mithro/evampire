@@ -111,9 +111,57 @@ def bode():
     s.save(HERE / "bode.svg")
 
 
+def ranges():
+    """Voltage ranges at each kind of port (tab-conv-overlap)."""
+    rows = [
+        ("Powered device input", 37, 57, BLUE),
+        ("Power sourcing equipment\noutput, Type 1", 44, 57, ORANGE),
+        ("Power sourcing equipment\noutput, Types 2 and 3", 50, 57, ORANGE),
+        ("Power sourcing equipment\noutput, Type 4", 52, 57, ORANGE),
+        ("USB standard power range", 5, 21.5, GREEN),
+        ("USB extended power range,\n48 V fixed supply", 45.6, 50.9, GREEN),
+        ("USB extended power range,\nadjustable", 15, 50.9, GREEN),
+    ]
+    h = 42
+    top = 40
+    s = Svg(600, top + h * len(rows) + 60)
+    a = Axes(s, (215, top, 580, top + h * len(rows)), (0, 60), (0, 1))
+    # Overlap 1: the shared Power over Ethernet band.
+    s.rect(a.X(44), a.y0, a.X(57) - a.X(44), a.y1 - a.y0, fill=FILL_GREY,
+           stroke="none")
+    a.frame(xticks=range(0, 61, 10), xlabel="voltage (V)", grid=True)
+    fills = {BLUE: FILL_BLUE, ORANGE: FILL_ORANGE, GREEN: FILL_GREEN}
+    for i, (name, lo, hi, col) in enumerate(rows):
+        yc = top + h * i + h / 2
+        s.rect(a.X(lo), yc - 11, a.X(hi) - a.X(lo), 22, fill=fills[col],
+               stroke=col, width=1.5)
+        s.text(a.x0 - 8, yc, name, size=12, anchor="end")
+        s.text(a.X(lo) - 4, yc, f"{lo:g}", size=11, anchor="end", fill=GREY)
+        s.text(a.X(hi) + 4, yc, f"{hi:g}", size=11, anchor="start", fill=GREY)
+
+    def mark(n, x, y):
+        s.add(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="9" fill="#ffffff" '
+              f'stroke="{INK}" stroke-width="1.2"/>')
+        s.text(x, y + 1, str(n), size=12, weight="bold")
+
+    mark(1, a.X(50.5), top - 14)
+    s.text(a.X(44) - 14, top - 14, "shared band 44–57 V", size=11,
+           anchor="end", fill=GREY)
+    y48 = top + h * 5 + h / 2
+    mark(2, a.X(45.6) - 40, y48)
+    yad = top + h * 6 + h / 2
+    mark(3, a.X(50.9) + 46, yad)
+    ysp = top + h * 4 + h / 2
+    mark(4, a.X(30), ysp)
+    s.text(a.X(30) + 14, ysp, "below every Power\nover Ethernet voltage",
+           size=11, anchor="start", fill=GREY)
+    s.save(HERE / "ranges.svg")
+
+
 FIGURES = {
     "boost-gain": boost_gain,
     "bode": bode,
+    "ranges": ranges,
 }
 
 if __name__ == "__main__":
