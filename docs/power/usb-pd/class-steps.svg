@@ -3,9 +3,6 @@
 <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
 <rect width="680" height="350" fill="#ffffff"/>
 <rect x="60.0" y="20.0" width="590.0" height="260.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
-<line x1="60.0" y1="280.0" x2="650.0" y2="280.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
-<line x1="55.0" y1="280.0" x2="60.0" y2="280.0" stroke="#000000" stroke-width="1.0"/>
-<text x="52.0" y="284.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">0</text>
 <line x1="60.0" y1="249.8" x2="650.0" y2="249.8" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
 <line x1="55.0" y1="249.8" x2="60.0" y2="249.8" stroke="#000000" stroke-width="1.0"/>
 <text x="52.0" y="253.8" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">1</text>
@@ -31,6 +28,7 @@
 <line x1="55.0" y1="38.1" x2="60.0" y2="38.1" stroke="#000000" stroke-width="1.0"/>
 <text x="52.0" y="42.1" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">8</text>
 <text x="14.0" y="150.0" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 150.0)">highest class</text>
+<text x="52.0" y="284.0" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="end" font-weight="normal" fill="#000000">none</text>
 <polyline points="60.0,280.0 83.6,280.0 83.6,249.8 99.5,249.8 99.5,219.5 142.6,219.5 142.6,189.3 237.0,189.3 237.0,159.1 325.5,159.1 325.5,128.8 414.0,128.8 414.0,98.6 502.5,98.6 502.5,68.4 591.0,68.4 591.0,38.1 650.0,38.1" fill="none" stroke="#548235" stroke-width="2.2"/>
 <text x="86.6" y="244.8" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">4 W</text>
 <text x="102.5" y="214.5" font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="start" font-weight="normal" fill="#000000">6.7 W</text>
