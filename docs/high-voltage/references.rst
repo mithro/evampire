@@ -33,8 +33,8 @@ gf180mcu process data
 
 .. [HV-SIM-STACK] evampire, `Ten 5 V transistors in series as diodes, swept
    to 100 V
-   <https://github.com/mithro/evampire/blob/main/sim/diode_stack/README.md>`__,
-   ngspice simulation with the gf180mcu models.
+   <https://github.com/mithro/evampire/blob/00e975d3034ed3f7643006b8ee08d09eb0bf707c/sim/diode_stack/README.md>`__,
+   commit 00e975d, ngspice simulation with the gf180mcu models.
 
 Semiconductor physics
 ---------------------
