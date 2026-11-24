@@ -298,7 +298,7 @@ End of packet
 -------------
 
 The end of packet has several rules that a receiver and a transmitter must
-follow ([USBSER-USB2]_ section 7.1.7.4.1, section 7.1.13.2.1, section 7.1.4.1,
+follow (:numref:`fig-usbser-eop`) ([USBSER-USB2]_ section 7.1.7.4.1, section 7.1.13.2.1, section 7.1.4.1,
 section 7.1.9.1, Table 7‑9):
 
 * A transmitter sends SE0 for 160 ns to 175 ns (*TFEOPT*, 1.92 to 2.10 bit
@@ -311,6 +311,22 @@ section 7.1.9.1, Table 7‑9):
 * The last bit before the end of packet can be stretched by hubs. A receiver
   must accept up to six bit times without a transition before the end of
   packet, without reporting a stuffing error.
+
+.. figure:: timing/eop.svg
+   :name: fig-usbser-eop
+   :alt: D+ and D− at the end of a packet. During the last bit, a K, D+ is
+         low and D− high. Both then go low for the SE0, sent for 160 ns to
+         175 ns (TFEOPT); D+ then goes high for one bit of J, after which
+         the transmitter releases the line and it stays at idle. An arrow
+         shows that the receiver accepts an SE0 from 82 ns (TFEOPR). A note
+         says that during a normal J/K change both lines may be low for up
+         to 14 ns (TFST), so the SE0 filter must be longer than 14 ns and
+         shorter than 82 ns, and that hubs may stretch the last bit to six
+         bit times.
+   :align: center
+
+   End of packet on D+ and D−, with the transmitter and receiver timing
+   rules (schematic).
 
 Clock accuracy and frame tracking
 ---------------------------------
