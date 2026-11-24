@@ -1,0 +1,33 @@
+// The three board situations of tab-usbser-roles: which way power flows
+// and which side is the USB host (DFP) and device (UFP).
+//
+// Fixed grid (positions in inches): one row per situation, other end on
+// the left (x=1.2), evampire on the right (x=5.2), result at x=7.0.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph roles {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+           fontname="Helvetica", fontsize=11, width=1.9, height=0.6,
+           fixedsize=true];
+    edge  [penwidth=2.2, arrowsize=0.8, fontname="Helvetica", fontsize=10];
+
+    c1 [pos="1.2,2.6!", label="Computer\nsource, DFP (host)"];
+    e1 [pos="4.6,2.6!", label="evampire\nsink, UFP (device)", fillcolor="#fbe5d6"];
+    r1 [pos="6.75,2.6!", width=1.2, label="works as\nattached", fillcolor="#e2f0d9"];
+    c2 [pos="1.2,1.5!", label="Laptop\nsink, UFP (device)"];
+    e2 [pos="4.6,1.5!", label="evampire\nsource, DFP", fillcolor="#fbe5d6"];
+    r2 [pos="6.75,1.5!", width=1.2, label="needs a data\nrole swap", fillcolor="#fbe5d6"];
+    c3 [pos="1.2,0.4!", label="Charger\nsource, no USB data"];
+    e3 [pos="4.6,0.4!", label="evampire\nsink, UFP", fillcolor="#fbe5d6"];
+    r3 [pos="6.75,0.4!", width=1.2, label="no host:\nnothing happens", fillcolor="#f2f2f2"];
+
+    node [shape=plaintext, style="", fontsize=10, width=0.9, height=0.2];
+    p1 [pos="2.9,2.78!", label="power"];
+    p2 [pos="2.9,1.68!", label="power"];
+    p3 [pos="2.9,0.58!", label="power"];
+
+    c1 -> e1;  e2 -> c2;  c3 -> e3;
+}

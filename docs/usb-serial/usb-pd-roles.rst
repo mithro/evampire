@@ -21,7 +21,7 @@ swap either role without changing the other (:typec:`Section 4.5.1.4`,
 
 evampire's serial port works only when the port's data role is UFP, so that
 the computer at the other end is the host. :numref:`tab-usbser-roles` lists
-the cases.
+the cases and :numref:`fig-usbser-roles` draws them.
 
 .. list-table:: Initial roles and what the serial port needs
    :name: tab-usbser-roles
@@ -44,6 +44,17 @@ the cases.
      - Sink
      - UFP
      - No host to talk to; nothing happens
+
+.. graphviz:: usb-pd-roles/roles.dot
+   :name: fig-usbser-roles
+   :caption: Power direction and initial data roles in the three situations
+             of :numref:`tab-usbser-roles`.
+   :alt: Three rows. A computer, source and DFP, powers evampire, sink and
+         UFP: the serial port works as attached. evampire, source and DFP,
+         powers a laptop, sink and UFP: a data role swap is needed. A
+         charger, source with no USB data, powers evampire, sink and UFP:
+         there is no host and nothing happens.
+   :align: center
 
 Data role swap
 --------------
