@@ -206,7 +206,19 @@ isolated flyback) from the Power over Ethernet input to the bus; a
 four-switch buck-boost from the bus to the USB port; a boost from the bus to
 the power sourcing equipment port. When the USB port is a sink, a switch
 connects VBUS to the bus, so the bus then follows the negotiated USB
-voltage.
+voltage (:numref:`fig-conv-separate`).
+
+.. graphviz:: separate.dot
+   :name: fig-conv-separate
+   :caption: Three separate converters around a power bus.
+   :alt: Block diagram: Ethernet port A feeds an input converter, a buck or
+         flyback, which feeds the power bus, whose voltage is open. The bus
+         feeds the board supplies, a boost converter to Ethernet port B's
+         power sourcing equipment switch, and a four-switch buck-boost to
+         the USB Type-C port of 5 V to 48 V. A dashed path from the USB port
+         through a VBUS switch, on when the USB port is a sink, feeds the
+         bus.
+   :align: center
 
 * Each converter is designed for one job and one direction.
 * "Ethernet in, USB out" passes through two converters (input, then USB),
