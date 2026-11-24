@@ -258,4 +258,28 @@ it easier for a receiver to lock on and train its filters before it can
 decode all five levels. A frame starts with a two-code-group
 Start-of-Stream delimiter and ends with two convolutional state reset code
 groups followed by a two-code-group End-of-Stream delimiter
-(:clause:`40.1.3.1`).
+(:clause:`40.1.3.1`, :numref:`fig-phy-frame-delimiters`).
+
+.. wavedrom::
+   :caption: The code groups around one frame, one slot per 8 ns symbol
+             period: SSD is the Start-of-Stream delimiter, CSReset the
+             convolutional state reset and ESD the End-of-Stream
+             delimiter; the number of data code groups depends on the
+             frame.
+   :name: fig-phy-frame-delimiters
+   :alt: Timing diagram of one row of code groups: two idle code groups
+         using only −2, 0 and +2, two SSD code groups, four data code
+         groups using all five levels, two CSReset code groups, two ESD
+         code groups, then idle again.
+
+   { "signal": [
+       { "name": "code groups", "wave": "3.4.5...6.7.3.",
+         "data": ["idle", "SSD", "data, 5 levels", "CSReset", "ESD", "idle"] },
+       { "name": "levels", "wave": "3.x.5...x...3.",
+         "data": ["−2, 0, +2", "all five", "−2, 0, +2"] }
+     ],
+     "config": { "hscale": 1.6 }
+   }
+
+In :numref:`fig-phy-frame-delimiters` the hatched slots of the lower row
+are the delimiters and resets, whose levels these pages do not list.
