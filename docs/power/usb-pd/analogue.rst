@@ -114,17 +114,30 @@ pin is then:
      - V
 
 The equation holds while the transistor conducts, with its gate at the CC
-voltage through a pull-up that carries no current. :math:`V_\text{CC}` must
-stay inside the source's Rd window at every pull-up current: at most 1.32 V
-for the default and 1.5 A levels, and at most 2.181 V for the 3.0 A level
-(:typec:`Table 4-37`).
+voltage through a pull-up that carries no current. The gate and the drain
+then sit at the same voltage, so :math:`V_\text{GS}` equals the drain-source
+voltage, which is positive while current flows: :math:`V_\text{GS}` is never
+below zero, even for a transistor whose threshold is.
+
+:math:`V_\text{CC}` must lie between the source's two thresholds at every
+pull-up current of its level, or the source reads Ra or an open pin and does
+not turn VBUS on. With a current-source Rp the window is above 0.260 V and
+below 1.321 V at the default level, above 0.675 V and below 1.441 V at
+1.5 A, and above 0.879 V and below 2.432 V at 3.0 A
+(:numref:`tab-usbpd-src-thresholds`, :typec:`Table 4-37`). This page
+keeps a margin below the upper thresholds: at most 1.32 V, the top of the
+voltage-clamp Rd (:typec:`Section 4.8.5`), at the default and 1.5 A levels,
+and at most 2.181 V, the top of the range for an Rd within ± 20 %
+(:typec:`Table 4-35`), at 3.0 A.
 
 For example, take a standard 6 V NMOS at its highest documented threshold,
 0.85 V ([USBPD-GF180-ELEC]_, Section 2.0), and :math:`R_\text{s}` =
 2.0 kΩ. At the highest 1.5 A pull-up current, 194.4 µA, the path gives
 :math:`194.4\ \mu\text{A} \times 2.0\ \text{k}\Omega + 0.85\ \text{V} = 1.2\ \text{V}`,
-with the overdrive neglected. At the 3.0 A level, 356.4 µA, it gives 1.6 V,
-inside the 2.181 V limit. :numref:`fig-usbpd-dead-battery` plots the
+with the overdrive neglected. At the 3.0 A level, 356.4 µA, it gives 1.6 V,
+inside the 2.181 V limit. At the lowest threshold, 0.61 V, and the lowest
+current of each level, 64 µA, 165.6 µA and 303.6 µA, it gives 0.74 V,
+0.94 V and 1.2 V, above the lower thresholds. :numref:`fig-usbpd-dead-battery` plots the
 equation over the range of pull-up currents.
 
 .. graphviz:: rd-paths.dot
@@ -135,32 +148,42 @@ equation over the range of pull-up currents.
          330 µA into the CC pin. One path is the trimmed Rd of 5.1 kΩ
          within 10 % in series with a switch to ground that is on once the
          chip is powered. The other is an NMOS, standard or native, above a
-         series resistor R_s of 2.0 kΩ in the example, to ground; the
-         NMOS gate is weakly pulled up from CC. Once powered, the gate is
-         pulled low, the path turns off and the pin presents at least
-         126 kΩ.
+         series resistor R_s, to ground: 2.0 kΩ for a standard NMOS or 4.1 to
+         5.9 kΩ for a native one; the
+         NMOS gate is weakly pulled up from CC. Once powered, the path is
+         turned off, by a gate at 0 V for a standard NMOS, and by a gate
+         below its source or a series switch for a native one; the pin then
+         presents at least 126 kΩ.
 
 .. figure:: dead-battery.svg
    :name: fig-usbpd-dead-battery
    :alt: Graph of CC voltage from 0 to 2.6 V against pull-up current from
-         0 to 380 µA, with R_s of 2.0 kΩ. Shaded bands mark the current
-         ranges of the default, 1.5 A and 3.0 A levels. Straight lines show
-         V_CC for a standard NMOS with threshold 0.85 V and 0.61 V, and a
-         native NMOS with threshold 0.08 V. A limit of 1.32 V applies up to
-         the 1.5 A level and 2.181 V at the 3.0 A level. Points mark
-         194.4 µA giving 1.2 V and 356.4 µA giving 1.6 V for the 0.85 V
-         threshold.
+         0 to 380 µA. Green boxes mark, for each level's current range, the
+         window between the source's thresholds: 0.260 to 1.321 V at 64 to
+         96 µA, 0.675 to 1.441 V at 165.6 to 194.4 µA, and 0.879 to
+         2.432 V at 303.6 to 356.4 µA, with dashed margin targets at 1.32 V,
+         1.32 V and 2.181 V. Lines for a standard NMOS with R_s of 2.0 kΩ
+         and threshold 0.61 V or 0.85 V pass through every window. A native
+         NMOS with 2.0 kΩ falls below every window; with 5.0 kΩ it passes
+         through all three.
 
    CC voltage of the dead-battery path against the source's pull-up current,
-   with the overdrive neglected.
+   against the source's thresholds, with the overdrive neglected.
 
 On chip, native transistor
    The PDK's 6 V :term:`native transistor` *nfet_06v0_nvt* has a
    :wikipedia:`threshold <Threshold_voltage>` of −0.32 V to 0.08 V
-   ([USBPD-GF180-ELEC]_, Section 4.0), which leaves the most room for
-   :math:`I_\text{Rp} \times R_\text{s}` in the Rd window. Its threshold can
-   be below zero, so turning it off needs its gate about 0.5 V below its
-   source. Off in this way, it :wikipedia:`leaks <Leakage_(electronics)>`
+   ([USBPD-GF180-ELEC]_, Section 4.0). With :math:`V_\text{GS}` between
+   0 V and 0.08 V, the resistor alone must lift the CC voltage above the
+   lower thresholds: :math:`R_\text{s}` above
+   :math:`0.675\ \text{V} / 165.6\ \mu\text{A} = 4.1\ \text{k}\Omega`.
+   The upper limits need :math:`R_\text{s}` below
+   :math:`(2.181\ \text{V} - 0.08\ \text{V}) / 356.4\ \mu\text{A}
+   = 5.9\ \text{k}\Omega`. A native transistor therefore needs about
+   4.1 kΩ to 5.9 kΩ; the 2.0 kΩ of the example is too small. Its threshold
+   can be below zero, so turning it off needs its gate about 0.5 V below its
+   source, or a switch in series: with its gate at 0 V, its source rises to
+   the threshold magnitude and the path still conducts. Off in this way, it :wikipedia:`leaks <Leakage_(electronics)>`
    up to 50 µA/µm at 6.6 V ([USBPD-GF180-ELEC]_, Section 4.0). Any leakage
    adds to the Rp current when the port presents Rp (:typec:`Table 4-27`,
    Note 2).

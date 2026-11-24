@@ -27,16 +27,16 @@ digraph rd_paths {
     g1   [pos="1.0,0.35!", label="GND", width=0.6, height=0.3,
           fillcolor="#ffffff"];
 
-    rs   [pos="3.2,1.15!", label="R_s, 2.0 kΩ\nin the example", width=1.4];
+    rs   [pos="3.2,1.15!", label="R_s: 2.0 kΩ standard,\n4.1 to 5.9 kΩ native", width=1.6];
     mn   [pos="3.2,1.95!", label="NMOS, standard\nor native",
           fillcolor="#f2f2f2"];
     g2   [pos="3.2,0.35!", label="GND", width=0.6, height=0.3,
           fillcolor="#ffffff"];
     pu   [pos="5.1,1.95!", label="weak pull-up\nfrom CC", width=1.2,
           fillcolor="#f2f2f2"];
-    off  [pos="5.1,0.45!", shape=plaintext, style="", width=1.9,
-          height=0.55, fontsize=9,
-          label="gate pulled low once\npowered: path off, pin\nat least 126 kΩ"];
+    off  [pos="5.1,0.3!", shape=plaintext, style="", width=1.9,
+          height=0.95, fontsize=9,
+          label="off once powered: gate\nat 0 V for a standard NMOS;\na native one needs its gate\nbelow its source or a\nseries switch. Off, the pin\npresents at least 126 kΩ"];
 
     rp -> cc [arrowhead=normal, dir=forward, label="  I_Rp"];
     cc -> j;
