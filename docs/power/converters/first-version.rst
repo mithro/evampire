@@ -1,5 +1,5 @@
-Controlling external power stages
-=================================
+External power stage control
+============================
 
 This page sets out what evampire provides to control converters whose gate
 drivers and power transistors are external parts, as in the first version
@@ -9,8 +9,8 @@ rates the control needs, how the converter sensing also serves power
 monitoring and limiting, the fault response times, and how the board starts
 before any software runs.
 
-What evampire provides
-----------------------
+Functions on evampire
+---------------------
 
 .. graphviz:: control-split.dot
    :name: fig-conv-control-split
@@ -60,8 +60,8 @@ parts bring them within evampire's input range: resistor dividers for
 voltages, and a sense resistor in the ground return (low-side sensing) or
 an external amplifier for currents.
 
-Software and hardware
----------------------
+Software and hardware division
+------------------------------
 
 Software on the processor makes every power decision once it is running
 (:ref:`requirements`). For the converters this means software:
@@ -282,8 +282,8 @@ simulation only [CONV-GF180-BUCK]_, and a three-level flying-capacitor
 buck converter has been designed in SkyWater 130 nm with open-source tools
 [CONV-MARIN2024]_ (Title).
 
-Sensing for control, protection and monitoring
-----------------------------------------------
+Sensing
+-------
 
 evampire measures the voltage and current of every power port and of the
 power bus, and enforces software-set current and power limits in hardware
@@ -408,15 +408,15 @@ across a 0.2 Ω sense resistor, about 1.0 A to 1.2 A [CONV-TPS23881]_
 
 .. _conv-start-up:
 
-Starting before software runs
+Start-up before software runs
 -----------------------------
 
 A board powered only from one port starts from nothing
 (:ref:`requirements`). Until software runs, the hardware alone must bring
 up the input converter and the supply that powers evampire.
 
-Power over Ethernet start
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Power over Ethernet start-up
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The steps before power is applied (detection, classification and the
 inrush period) are described on :doc:`../poe/index`; a built-in sequencer
@@ -546,8 +546,8 @@ For evampire the same structure needs, without software:
 Software then reads the measurements, may change the bus voltage, and
 negotiates more power where needed.
 
-USB start
-~~~~~~~~~
+USB start-up
+~~~~~~~~~~~~
 
 A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any USB Power
 Delivery negotiation, at the current its pull-up resistor advertises

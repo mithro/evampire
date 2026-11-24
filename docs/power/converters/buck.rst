@@ -1,5 +1,5 @@
-The buck converter
-==================
+Buck converter
+==============
 
 This page explains the step-down converter, called a
 :wikipedia:`buck converter <Buck_converter>`: its parts, how the ratio of
@@ -70,8 +70,8 @@ Between the two switches turning on there is a short gap, the *dead time*,
 when both are off. It prevents both switches being on at once, which would
 short the input to ground (:ref:`conv-dead-time`).
 
-The duty cycle sets the output voltage
---------------------------------------
+Duty cycle and output voltage
+-----------------------------
 
 In steady state the inductor current must end each period where it began,
 otherwise it would grow or shrink without limit. The current changes at a

@@ -1,9 +1,9 @@
-The boost converter
-===================
+Boost converter
+===============
 
 This page explains the step-up converter, called a
 :wikipedia:`boost converter <Boost_converter>`, in the same way as
-:doc:`buck`: its parts, its duty cycle, its inductor ripple and what limits
+:doc:`the buck converter <buck>`: its parts, its duty cycle, its inductor ripple and what limits
 it. On an evampire board the high-voltage converter, which produces the
 44 V to 57 V for a power sourcing equipment port, is a step-up converter
 (:ref:`power-flow`).
@@ -33,8 +33,8 @@ form) passes the inductor current to the output. Each period has two parts:
    :math:`V_\text{in} - V_\text{out}` across it, which is negative because
    the output is higher than the input, so its current falls.
 
-The duty cycle sets the output voltage
---------------------------------------
+Duty cycle and output voltage
+-----------------------------
 
 Volt-second balance on the inductor (:doc:`buck`) gives
 
@@ -108,9 +108,11 @@ used [CONV-SLVA372]_ (Equation 6), and the inductor current peaks at
 :math:`30 / 54 = 0.556` A: a boost converter draws more current from its
 input than it delivers, in the ratio of the voltages.
 
-Large step-up ratios need long on times
----------------------------------------
+Large step-up ratios
+--------------------
 
+A large step-up ratio needs a long on time: from :math:`1/(1-D)`, the
+duty cycle approaches 1 as the ratio grows.
 The USB Power Delivery source on the other end of the cable decides which
 input voltages are available (:doc:`../usb-pd/index`).
 :numref:`tab-conv-boost-duty` shows the duty cycle needed to reach 54 V from
@@ -160,8 +162,8 @@ boost converter [CONV-PMP7979]_. A large ratio can also be split between two
 stages, or made with a transformer or a switched-capacitor stage
 (:doc:`arrangement`).
 
-A short on a boost output bypasses the switches
------------------------------------------------
+Output short circuits
+---------------------
 
 In a boost converter there is always a path from the input, through the
 inductor and S2 (or its diode, or the body diode of a transistor), to the
@@ -176,8 +178,8 @@ four-switch buck-boost converter (:doc:`buck-boost`). This matters for the
 high-voltage converter, whose output goes to an Ethernet cable that a user
 can short (:doc:`first-version`).
 
-The boost converter is harder to control
-----------------------------------------
+Loop control
+------------
 
 When the duty cycle of a boost converter increases, the output first
 *falls*, because S2 conducts for a shorter time, and only rises once the

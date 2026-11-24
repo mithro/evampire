@@ -1,5 +1,5 @@
-References for the converter pages
-==================================
+References
+==========
 
 The sources cited on the voltage converter pages, grouped by kind. Each
 citation in the text gives the section, table or equation used. The

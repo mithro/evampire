@@ -1,5 +1,5 @@
-Controlling a converter
-=======================
+Converter control
+=================
 
 This page explains how a converter's switches are timed so that its output
 stays at the set voltage or current, and the circuits around the power
@@ -80,8 +80,8 @@ why fixed-frequency PWM is the usual choice at medium and high load. For
 evampire this is a trade-off to measure, not a fixed rule; the open
 questions on :doc:`arrangement` list it.
 
-The feedback loop and its compensation
---------------------------------------
+Feedback loop compensation
+--------------------------
 
 The output voltage is held by :wikipedia:`negative feedback
 <Negative_feedback>`: the controller measures the output, compares it with
@@ -108,8 +108,8 @@ the duty cycle changes only once per period. The LM5122 data sheet places
 it between one twentieth and one fifth of the switching frequency
 [CONV-LM5122]_ (Section 8.1.1).
 
-The boost converter's wrong-way response
-----------------------------------------
+Right-half-plane zero of the boost converter
+--------------------------------------------
 
 When a boost converter's duty cycle increases, S2 conducts for less of each
 period, so less current reaches the output and the output first falls. In

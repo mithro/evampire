@@ -8,8 +8,8 @@ buck-boost converter, the four-switch buck-boost converter used in most USB
 Power Delivery sources, and the isolated flyback converter used in many
 Power over Ethernet powered devices.
 
-The inverting buck-boost converter
-----------------------------------
+Inverting buck-boost converter
+------------------------------
 
 The basic :wikipedia:`buck-boost converter <Buck%E2%80%93boost_converter>`
 has one switch, one inductor and one diode. During the on time the switch
@@ -64,8 +64,8 @@ input and output voltages:
 for a 57 V Power over Ethernet input and a 48 V USB output, nearly twice the
 stress of the four-switch converter below.
 
-The four-switch buck-boost converter
-------------------------------------
+Four-switch buck-boost converter
+--------------------------------
 
 .. graphviz:: four-switch.dot
    :name: fig-conv-four-switch

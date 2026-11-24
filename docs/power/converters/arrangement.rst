@@ -1,5 +1,5 @@
-The converters in evampire and how to arrange them
-==================================================
+Converter arrangement
+=====================
 
 This page sets out the voltages and currents that evampire's three converter
 functions must handle in each operating mode (:ref:`power-modes`), where
@@ -140,8 +140,8 @@ Source: :pd:`Table 3.1`, :pd:`Table 4.2`, :pd:`Table 4.7` and
 be 5 % above its nominal voltage and VBUS may rise another 0.5 V during
 changes, giving 21.5 V and 50.9 V.
 
-Where the ranges overlap
-------------------------
+Overlapping voltage ranges
+--------------------------
 
 :numref:`tab-conv-overlap` places the ranges side by side.
 
@@ -195,8 +195,8 @@ A converter that goes from the Power over Ethernet input to a 48 V USB
 output has to step up at some inputs and down at others
 (:numref:`tab-conv-four-switch-modes`).
 
-Ways of arranging the converters
---------------------------------
+Arrangements
+------------
 
 Three separate converters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -255,8 +255,8 @@ LM5177 is a bidirectional four-switch controller from 3.5 V to 60 V that
 lists Power over Ethernet routers among its applications
 [CONV-LM5177]_ (Features, Applications).
 
-A power bus near the Power over Ethernet voltage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+High-voltage power bus
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. graphviz:: high-bus.dot
    :name: fig-conv-high-bus
@@ -291,8 +291,8 @@ The bus can be chosen so that some conversions disappear
 
 .. _conv-pass-through:
 
-Passing Power over Ethernet through
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Power over Ethernet pass-through
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A switch from the powered device input to the power sourcing equipment
 output loses only its resistance: an illustrative 0.1 Ω switch at the Type 4

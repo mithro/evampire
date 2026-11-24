@@ -1,13 +1,13 @@
-Why switching converters
-========================
+Linear and switching converters
+===============================
 
 This page compares the two ways of changing a DC voltage, the linear
 regulator and the switching converter, at the voltages and powers of
 evampire's power path. The converters themselves are described on
 :doc:`buck`, :doc:`boost` and :doc:`buck-boost`.
 
-Linear regulators turn the voltage difference into heat
--------------------------------------------------------
+Linear regulator losses
+-----------------------
 
 A :wikipedia:`linear regulator <Linear_regulator>` puts a transistor in
 series between the input and the output and adjusts how hard it conducts so
@@ -103,8 +103,8 @@ Power over Ethernet type. In the other direction, "USB in, Ethernet out",
 the output (44 V to 57 V) is above most USB input voltages, which a linear
 regulator cannot produce at all.
 
-Switching converters move energy in packets
--------------------------------------------
+Switching converter operation
+-----------------------------
 
 A :wikipedia:`switching converter <Switched-mode_power_supply>` uses
 transistors only as switches, fully on or fully off, and stores energy for
@@ -183,8 +183,8 @@ converters sets how much of the input power is left for the output ports;
 :ref:`power-translation` uses it as :math:`\eta`, and
 :doc:`arrangement` gives ranges for each way of arranging the converters.
 
-Where a linear regulator still fits
------------------------------------
+Uses for linear regulators
+--------------------------
 
 The efficiency of a linear regulator, :math:`V_\text{out} / V_\text{in}`, is
 high when the two voltages are close. Two places in evampire's power path

@@ -1,5 +1,5 @@
-Bringing converter parts onto evampire
-======================================
+On-chip converter parts
+=======================
 
 This page describes the steps by which more of each converter moves onto
 evampire, and what each step needs from the
@@ -15,8 +15,8 @@ board. Commercial parts and published chips appear below as reference
 examples of what has been built elsewhere, not as evidence of what a
 gf180mcu design will achieve.
 
-What the process documents
---------------------------
+Process documentation
+---------------------
 
 Three kinds of fact bear on each step, and they are kept apart here.
 
@@ -105,8 +105,8 @@ The breakdown of the deep n-well to the substrate, and of the field oxide
 under poly and metal to the substrate, are listed as open questions below;
 they decide how high above the substrate an isolated circuit can sit.
 
-First version: control only
----------------------------
+Control only
+------------
 
 evampire generates the PWM signals and senses the converters; external
 gate drivers switch external transistors (:doc:`first-version`). This
@@ -122,8 +122,8 @@ needs from the process only what evampire uses elsewhere:
 For reference, the UCC27211 half-bridge driver's inputs accept logic levels
 and tolerate −10 V to 20 V [CONV-UCC27211]_ (Features).
 
-Next step: gate drivers on chip
--------------------------------
+Gate drivers on chip
+--------------------
 
 A gate driver charges and discharges the power transistor's gate quickly.
 The current it must supply follows from the gate charge and the switching
@@ -221,8 +221,8 @@ Level shifter
    180 nm BiCMOS process with high-voltage devices, with 1.45 ns delay
    [CONV-LUTZ2018]_ and with 5 ns delay at 20 V/ns [CONV-WITTMANN2014]_.
 
-Later: power transistors on chip
---------------------------------
+Power transistors on chip
+-------------------------
 
 A power transistor's on-resistance falls with its width. From the
 documented linear current of the 10 V LDNMOS, 26.8 µA/µm at 6 V gate and
@@ -326,8 +326,8 @@ Isolated circuits above the substrate
    this. A gf180mcu structure for 57 V is established by test structures
    on a wafer.space run.
 
-What each step needs from the process
--------------------------------------
+Process needs of each step
+--------------------------
 
 :numref:`tab-conv-process-needs` lists what each integration step needs
 from the gf180mcu process.
