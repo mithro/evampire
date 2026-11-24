@@ -32,7 +32,19 @@ version, port A takes power and port B supplies it
 Module or integrated socket
 ---------------------------
 
-Magnetics come as a separate module or inside the RJ45 socket.
+Magnetics come as a separate module or inside the RJ45 socket
+(:numref:`fig-magnetics-module-socket`).
+
+.. graphviz:: module-socket.dot
+   :name: fig-magnetics-module-socket
+   :caption: Standard magnetics as a discrete module and inside an RJ45
+             socket.
+   :alt: Top, a discrete module: the transceiver, a four-channel magnetics
+         module and an ordinary RJ45 socket in a row, with the 75 Ω
+         resistors and the 1000 pF capacitor as separate parts. Bottom, an
+         integrated socket: the transceiver connects to a shielded RJ45
+         socket that contains the magnetics, the termination and the LEDs.
+   :align: center
 
 Discrete module
    All four channels in one surface-mount part, placed between the
