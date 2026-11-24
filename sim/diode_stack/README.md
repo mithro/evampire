@@ -168,9 +168,8 @@ agreement is by construction, not a check. A design has to work at 8.5 V. Neithe
 
 ### On a pin with ESD protection
 
-The ESD simulations (`docs/esd/`, on the `docs/esd` branch, PR 15, not yet
-merged) show the standard gf180mcu I/O cell holding its pad below about
-5.6 V for a +2 kV HBM discharge. A +8 kV IEC contact discharge takes the
+The ESD simulations (`docs/esd/`) show the standard gf180mcu I/O cell
+holding its pad below about 5.6 V for a +2 kV HBM discharge. A +8 kV IEC contact discharge takes the
 pad to a 15.6 V peak, and +15 kV to 21.8 V. Those IEC figures rest partly on
 the same model artefact as variant A here. At the +8 kV peak, 60 % of the
 rail clamps' terminal current is the nfet model's impact-ionisation term,
