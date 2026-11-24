@@ -1,7 +1,7 @@
 .. _phy-int-transmitter:
 
-Transmitter: DAC, line driver and cable connection
-==================================================
+Transmitter
+===========
 
 This page works out what the integrated transmitter needs: the linearity
 and swing of the DAC and line driver, the power it delivers into the cable,
@@ -10,8 +10,8 @@ transformers.
 
 .. _phy-int-linearity:
 
-The DAC and driver need about 7 bits of linearity
--------------------------------------------------
+DAC and driver linearity
+------------------------
 
 The peak distortion in test mode 4 must stay below 10 mV
 (:clause:`40.6.1.2.4`). An ideal
@@ -51,7 +51,8 @@ middle of the 0.67 V to 0.82 V range (:clause:`40.6.1.2.1`), and
 
 so the DAC and driver need at least 7 bits of linearity (estimate). With
 7 bits, :math:`e_\text{max} = 0.745/128 = 5.8` mV, which leaves about 4 mV
-for every other error. The 17 shaped levels of :ref:`phy-shaping` need at
+for every other error. The 17 levels of the
+:ref:`transmit shaping filter <phy-shaping>` need at
 least 5 bits of resolution, so linearity, not the number of levels, sets
 the DAC. A segmented current-steering DAC that drives the line directly,
 or a DAC followed by a linear amplifier, can meet it
@@ -59,8 +60,8 @@ or a DAC followed by a linear amplifier, can meet it
 
 .. _phy-int-swing:
 
-A matched driver generates twice the line voltage
--------------------------------------------------
+Driver swing
+------------
 
 A driver whose output impedance matches the 100 Ω line forms a
 :wikipedia:`voltage divider <Voltage_divider>` with the line, so half of
@@ -105,8 +106,8 @@ gigabit swing.
 
 .. _phy-int-driver-power:
 
-The line takes 5 mW per pair; real drivers use several times more
------------------------------------------------------------------
+Driver power
+------------
 
 Assume the five PAM-5 levels are equally likely. Scrambling makes the
 symbols look random, but the trellis code and idle patterns make the
@@ -149,8 +150,8 @@ these values are a lower reference, not a prediction.
 
 .. _phy-int-termination:
 
-The termination must stay between 73 Ω and 138 Ω
-------------------------------------------------
+Termination
+-----------
 
 Each pair must look like 100 Ω to the cable, with a return loss of at
 least 16 dB from 1 MHz to 40 MHz (:clause:`40.8.3.1`). For a resistive
@@ -206,8 +207,8 @@ digitally controlled output impedance covers 80 Ω to 130 Ω
 
 .. _phy-int-cable:
 
-The pins reach the cable through external parts, a second die or a barrier
---------------------------------------------------------------------------
+Connection to the cable
+-----------------------
 
 Besides the signal, the cable can carry voltage common to both wires of a
 pair, surges, electrostatic discharge and, on boards that use it,

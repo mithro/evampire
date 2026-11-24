@@ -1,7 +1,7 @@
 .. _phy-int:
 
-Integrating the transceiver on evampire
-=======================================
+Integrated transceiver
+======================
 
 These pages specify a 1000BASE-T :term:`Ethernet transceiver` built into
 evampire on the gf180mcu process: what each speed requires, what each block

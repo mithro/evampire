@@ -1,7 +1,7 @@
 .. _phy-int-slower:
 
-What 100BASE-TX and 10BASE-T add
-================================
+Slower speeds
+=============
 
 This page lists what the integrated gigabit transceiver needs in addition
 to support 100BASE-TX and 10BASE-T, which every port supports
@@ -10,8 +10,8 @@ to support 100BASE-TX and 10BASE-T, which every port supports
 
 .. _phy-int-100:
 
-100BASE-TX adds coding and edge control
----------------------------------------
+100BASE-TX blocks
+-----------------
 
 Coding
    4B5B, the 11-bit scrambler and MLT-3 (:doc:`../100base-tx`): digital
@@ -64,8 +64,8 @@ switched for 100BASE-TX, the gigabit driver produces the 100BASE-TX edges.
 
 .. _phy-int-10:
 
-10BASE-T adds Manchester coding and a higher-swing driver
----------------------------------------------------------
+10BASE-T blocks
+---------------
 
 Coding and receiver
    Manchester coding and decoding, and a comparator receiver for the

@@ -1,7 +1,7 @@
 .. _phy-int-reqs-page:
 
-What the integrated transceiver must do
-=======================================
+Requirements
+============
 
 This page lists the interface, the blocks and the requirements of one
 integrated 1000BASE-T port, and points to the limits of the slower
@@ -9,8 +9,8 @@ speeds.
 
 .. _phy-int-interface:
 
-The forwarding logic sees one byte per 8 ns in each direction
--------------------------------------------------------------
+Byte interface
+--------------
 
 The :term:`forwarding logic` exchanges one byte per 8 ns with each port in
 each direction, with a data-valid flag and an error flag: TX_EN and TX_ER
@@ -25,10 +25,11 @@ evampire's own clock, as with RGMII.
 
 .. _phy-int-blocks:
 
-One port has four analogue channels and shared logic
-----------------------------------------------------
+Blocks of one port
+------------------
 
-:numref:`tab-phy-int-blocks` lists the blocks of one port, with the number
+One port has four analogue channels, one for each pair, and logic shared
+by all four. :numref:`tab-phy-int-blocks` lists the blocks of one port, with the number
 of copies and the page that specifies each. :numref:`fig-phy-blocks` shows
 how they connect.
 
@@ -67,10 +68,11 @@ how they connect.
 
 .. _phy-int-1000-reqs:
 
-The 1000BASE-T requirements are set at the connector
-----------------------------------------------------
+1000BASE-T requirements
+-----------------------
 
-The standard tests the transmitter with four fixed *test modes*, patterns
+The standard sets the 1000BASE-T requirements at the connector. It tests
+the transmitter with four fixed *test modes*, patterns
 sent on command so that the output can be measured with no receiver
 (:clause:`40.6.1.1.2`). :numref:`tab-phy-int-reqs` lists the requirements
 that the analogue blocks must meet.
@@ -128,8 +130,8 @@ unfiltered jitter, measured against the master's clock, is also less than
 
 .. _phy-int-slower-reqs:
 
-The slower speeds have their own limits
----------------------------------------
+Slower-speed limits
+-------------------
 
 The integrated transceiver also supports the slower speeds, and meets
 the limits of :numref:`tab-phy-100base-tx` for 100BASE-TX and

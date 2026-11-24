@@ -1,7 +1,7 @@
 .. _phy-int-control:
 
-Control: link pulses, autonegotiation logic and registers
-=========================================================
+Control logic and registers
+===========================
 
 This page lists what a gigabit-only integrated transceiver needs for
 :doc:`../autonegotiation` and for software control: the link pulse driver
@@ -9,8 +9,8 @@ and receiver, the state machines and timers, and the management registers.
 
 .. _phy-int-autoneg:
 
-Autonegotiation needs a pulse driver, a comparator and state machines
----------------------------------------------------------------------
+Autonegotiation logic
+---------------------
 
 1000BASE-T requires autonegotiation (:clause:`40.5.1`), so even a
 gigabit-only transceiver needs:
@@ -71,8 +71,8 @@ timers.
 
 .. _phy-int-registers:
 
-The standard registers let the same software drive both configurations
-----------------------------------------------------------------------
+Management registers
+--------------------
 
 :clause:`22.2.4` defines a set of 16-bit registers that every transceiver
 provides, so the same software can control any of them. An integrated

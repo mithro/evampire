@@ -1,7 +1,7 @@
 .. _phy-int-dsp:
 
-Signal processing: work per symbol and the 8 ns decision loop
-=============================================================
+Signal processing
+=================
 
 This page states what the digital signal processing of one port must do
 each 8 ns symbol period, how that depends on cable reach, and the one loop
@@ -10,16 +10,16 @@ the logic: those are options on :doc:`cells`.
 
 .. _phy-int-work:
 
-The work is set per symbol, not per clock
------------------------------------------
+Work per symbol
+---------------
 
 Every 125 MBd symbol period (8 ns, :clause:`40.1.3`), for each of the four
 pairs, the receiver evaluates one echo canceller, three near-end crosstalk
 cancellers, a feed-forward equaliser and a decision-feedback equaliser, and
-takes one step of the trellis decoder. :ref:`phy-dsp-rate` gives the
-arithmetic: with the 802.3ab tutorial's tap counts, 880 taps, or
-:math:`1.1 \times 10^{11}` multiply-and-adds per second, plus about as
-many operations to adapt the coefficients. A published Broadcom analysis
+takes one step of the trellis decoder. With the 802.3ab tutorial's tap
+counts that is 880 taps, or :math:`1.1 \times 10^{11}` multiply-and-adds
+per second, plus about as many operations to adapt the coefficients
+(:ref:`phy-dsp-rate`). A published Broadcom analysis
 gives more than 150 × 10⁹ operations per second for a gigabit transceiver
 ([PHY-HATAMIAN98]_ abstract).
 
@@ -32,8 +32,8 @@ not a limit.
 
 .. _phy-int-reach-taps:
 
-Shorter cable means a shorter echo canceller
---------------------------------------------
+Echo canceller length and reach
+-------------------------------
 
 The echo canceller must span the round trip to the furthest reflection it
 cancels. The propagation delay of a link segment is at most 570 ns for
@@ -103,8 +103,8 @@ counts for each reach.
 
 .. _phy-int-shift-add:
 
-Most multiplications are shifts
--------------------------------
+Shift-and-add multiplication
+----------------------------
 
 The echo and crosstalk cancellers multiply a coefficient by a transmitted
 symbol. A PAM-5 symbol is one of −2, −1, 0, +1 and +2, so the product needs
@@ -116,8 +116,8 @@ samples.
 
 .. _phy-int-adapt-split:
 
-Adaptation can run slower than the filters
-------------------------------------------
+Coefficient adaptation rate
+---------------------------
 
 The filters must run every symbol, but their coefficients change slowly:
 they track the cable and temperature. One alternative splits the work.
@@ -162,8 +162,8 @@ training sequence answers it.
 
 .. _phy-int-decision-loop:
 
-The decision loop must close in one 8 ns symbol period
-------------------------------------------------------
+Decision loop
+-------------
 
 The decision-feedback equaliser subtracts the tails of symbols the receiver
 has already decided, and the trellis decoder's decisions depend on that

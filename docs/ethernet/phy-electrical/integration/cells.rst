@@ -10,11 +10,11 @@ processing. The choice of cells and supply is open.
 
 .. _phy-int-devices:
 
-gf180mcu has 3.3 V, 5 V, 6 V and 10 V transistors
--------------------------------------------------
+Transistors
+-----------
 
-:numref:`tab-phy-int-devices` gives typical values of the gf180mcu
-transistors from the PDK's electrical parameters ([PHY-GF180PDK]_).
+gf180mcu has 3.3 V, 5 V, 6 V and 10 V transistors.
+:numref:`tab-phy-int-devices` gives their typical values from the PDK's electrical parameters ([PHY-GF180PDK]_).
 
 .. list-table:: gf180mcu n-channel transistors, typical values
    :name: tab-phy-int-devices
@@ -59,8 +59,8 @@ transistors and stacked or drain-extended devices are also in scope
 
 .. _phy-int-cells:
 
-Three cell libraries exist, with different speeds
--------------------------------------------------
+Cell libraries
+--------------
 
 Three families of standard cells are available:
 
@@ -80,8 +80,8 @@ Three families of standard cells are available:
 
 .. _phy-int-logic-depth:
 
-Logic per 8 ns is set by the flip-flop and the carry delay
-----------------------------------------------------------
+Logic depth per 8 ns
+--------------------
 
 The time left for logic between two flip-flops in a period :math:`T` is
 
@@ -186,8 +186,8 @@ models. The OSU 12-track library gives the same timing as the 9-track one
 
 .. _phy-int-cell-options:
 
-The choice of cells and supply is open
---------------------------------------
+Cell and supply options
+-----------------------
 
 What the decision loop needs depends on its structure
 (:ref:`phy-int-decision-loop`): its logic depth in carry stages, to be
@@ -227,8 +227,8 @@ conditions:
 
 .. _phy-int-energy:
 
-Switching energy falls with the square of the supply
-----------------------------------------------------
+Switching energy
+----------------
 
 Charging a node of capacitance :math:`C` to voltage :math:`V` stores
 :math:`\tfrac{1}{2} C V^2` and dissipates as much again in the

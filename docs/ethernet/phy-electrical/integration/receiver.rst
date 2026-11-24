@@ -1,7 +1,7 @@
 .. _phy-int-receiver:
 
-Receiver: echo removal and the ADC
-==================================
+Receiver
+========
 
 This page works out what the integrated receiver needs before the digital
 filters: how the echo is shared between analogue and digital stages, and
@@ -11,8 +11,8 @@ the echo canceller.
 
 .. _phy-int-echo:
 
-Each stage removes part of the echo
------------------------------------
+Echo removal
+------------
 
 The receiver sees its own transmission at full size, while the far-end
 signal at 100 MHz can be as small as 6 % of its launched voltage over a
@@ -62,8 +62,8 @@ been shared.
 
 .. _phy-int-analogue-echo:
 
-An analogue echo canceller trades area and power against ADC bits and taps
---------------------------------------------------------------------------
+Analogue echo canceller
+-----------------------
 
 An analogue echo canceller is an analogue FIR filter fed with the sent
 symbols. For reference, Lee and Razavi's 0.4 µm design removes about
@@ -81,8 +81,8 @@ is settled by building both, or by simulating them, for gf180mcu.
 
 .. _phy-int-adc:
 
-The ADC needs about 7 effective bits at 100 m, fewer for shorter reach
-----------------------------------------------------------------------
+ADC resolution
+--------------
 
 An ideal :math:`N`-bit converter with full-scale range :math:`V_\text{FS}`
 has steps of :math:`q = V_\text{FS}/2^N`. Its rounding error is spread
@@ -197,8 +197,8 @@ is to be confirmed by simulation with channel models.
 
 .. _phy-int-adc-options:
 
-Several ADC architectures reach 7 bits at 125 MS/s
---------------------------------------------------
+ADC architectures
+-----------------
 
 :numref:`tab-phy-int-adcs` lists reference examples of 7-bit to 8-bit
 converters at 100 MS/s to 200 MS/s. The spurious-free dynamic range (SFDR)
@@ -269,8 +269,8 @@ Each needs a gf180mcu design and a test chip to set its power and area.
 
 .. _phy-int-analogue-alternatives:
 
-Analogue equalisers and filters are an alternative to a fast ADC
-----------------------------------------------------------------
+Analogue filters and equalisers
+-------------------------------
 
 Most of the echo canceller, the crosstalk cancellers and the equalisers
 can be built as analogue FIR filters or as an analogue decision-feedback

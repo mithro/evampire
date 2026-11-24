@@ -1,17 +1,17 @@
 .. _phy-int-clock:
 
-Clock recovery: reference clock, sampling phase and jitter
-==========================================================
+Clock recovery
+==============
 
 This page states what the integrated transceiver's clocks must do: the
 accuracy of the reference, the phase control of the ADC sampling clock in
-master and slave, and the jitter limits. :ref:`phy-master-slave` explains
-master and slave clocking.
+master and slave, and the jitter limits. :ref:`The receiver page <phy-master-slave>`
+explains master and slave clocking.
 
 .. _phy-int-reference:
 
-A 25 MHz crystal of ±50 ppm meets the ±100 ppm limit
-----------------------------------------------------
+Reference clock
+---------------
 
 The master's symbol rate must be 125 MHz ± 0.01 %, that is ±100 parts per
 million (:clause:`40.6.1.2.6`). Both ends of a link take their timing from
@@ -24,8 +24,8 @@ per million, plus ±50 parts per million for one year of ageing
 
 .. _phy-int-phase:
 
-Each receiver steers its sampling phase in small steps
-------------------------------------------------------
+Sampling phase
+--------------
 
 The slave recovers the master's clock and transmits with it; the master
 transmits with its own clock and still needs to sample its receiver at the
@@ -48,8 +48,8 @@ from a real cable before the chip exists.
 
 .. _phy-int-jitter:
 
-An rms jitter of 5 ps gives about 70 ps peak-to-peak
-----------------------------------------------------
+Jitter
+------
 
 The master's clock jitter must stay below 1.4 ns peak-to-peak unfiltered
 and 0.3 ns after a 5 kHz high-pass filter (:clause:`40.6.1.2.5`,
@@ -94,8 +94,8 @@ measurement).
 
 .. _phy-int-training-time:
 
-The receivers must train within 350 ms
---------------------------------------
+Training time
+-------------
 
 After autonegotiation, the slave must lock to the master's clock and both
 ends must train their equalisers and cancellers before the maxwait_timer
