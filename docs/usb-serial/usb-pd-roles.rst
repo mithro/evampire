@@ -107,7 +107,9 @@ current into D+ while VBUS is absent ([USBSER-USB2]_ section 7.1.5.1). On
 evampire the pull-up is switched by software when three conditions hold
 (:numref:`fig-usbser-pullup`):
 the port is attached, its data role is UFP, and VBUS is present, whether
-the other end or evampire supplies it.
+the other end or evampire supplies it. The one exception is a power role
+swap, during which VBUS is briefly absent but the pull-up stays connected,
+as described below.
 
 Two USB Power Delivery events change VBUS while the cable stays attached:
 
