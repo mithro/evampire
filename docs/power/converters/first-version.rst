@@ -547,20 +547,6 @@ with the symbols in :numref:`tab-conv-sym-start`. With the TPS23753A's
 and :math:`C_\text{hold} \ge 3.06 \times 10^{-3} \times 800 \times 10^{-6} / 3.5
 = 0.70` µF.
 
-.. figure:: start-timeline.svg
-   :name: fig-conv-start-timeline
-   :alt: Hold capacitor voltage against time, schematic. During the inrush
-         period the converter is held off and the voltage is zero. The
-         current source then charges the capacitor up to the turn-on
-         threshold band of 8.65 V to 9.3 V. The source turns off and the
-         converter starts with an 800 µs soft start, while the voltage
-         droops by less than the 3.3 V to 3.7 V hysteresis. A winding or
-         the output then takes over and the voltage rises again.
-   :align: center
-
-   Hold capacitor voltage through a powered-device start-up, with the
-   TPS23753A thresholds (schematic, not to scale).
-
 .. list-table:: Symbols for the start-up supply
    :name: tab-conv-sym-start
    :header-rows: 1
@@ -587,6 +573,20 @@ and :math:`C_\text{hold} \ge 3.06 \times 10^{-3} \times 800 \times 10^{-6} / 3.5
    * - :math:`R_\text{start}`
      - Start-up resistor, when a resistor replaces the current source
      - Ω
+
+.. figure:: start-timeline.svg
+   :name: fig-conv-start-timeline
+   :alt: Hold capacitor voltage against time, schematic. During the inrush
+         period the converter is held off and the voltage is zero. The
+         current source then charges the capacitor up to the turn-on
+         threshold band of 8.65 V to 9.3 V. The source turns off and the
+         converter starts with an 800 µs soft start, while the voltage
+         droops by less than the 3.3 V to 3.7 V hysteresis. A winding or
+         the output then takes over and the voltage rises again.
+   :align: center
+
+   Hold capacitor voltage through a powered-device start-up, with the
+   TPS23753A thresholds (schematic, not to scale).
 
 A plain resistor in place of the current source keeps dissipating after
 start-up. Sized for 1 mA at 37 V into a 9 V capacitor,
