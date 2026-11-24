@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="560" viewBox="0 0 480 560" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="560" fill="#ffffff"/>
+<text x="20.0" y="18.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">(a) Transmit shaping filter</text>
+<text x="30.0" y="60.0" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" font-style="italic">aₙ</text>
+<circle cx="70.0" cy="60.0" r="3.5" fill="#222222" stroke="none"/>
+<line x1="42.0" y1="60.0" x2="70.0" y2="60.0" stroke="#222222" stroke-width="1.2"/>
+<rect x="135.0" y="44.0" width="70.0" height="32.0" rx="5" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="170.0" y="60.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">× 0.75</text>
+<line x1="70.0" y1="60.0" x2="135.0" y2="60.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="135.0,60.0 127.6,56.9 127.6,63.1" fill="#222222"/>
+<line x1="70.0" y1="60.0" x2="70.0" y2="140.0" stroke="#222222" stroke-width="1.2"/>
+<rect x="82.0" y="123.0" width="96.0" height="34.0" rx="5" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="130.0" y="140.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">delay 8 ns</text>
+<line x1="70.0" y1="140.0" x2="82.0" y2="140.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="82.0,140.0 74.6,136.9 74.6,143.1" fill="#222222"/>
+<rect x="215.0" y="124.0" width="70.0" height="32.0" rx="5" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="250.0" y="140.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">× 0.25</text>
+<line x1="178.0" y1="140.0" x2="215.0" y2="140.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="215.0,140.0 207.6,136.9 207.6,143.1" fill="#222222"/>
+<text x="196.0" y="126.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" font-style="italic">aₙ₋₁</text>
+<circle cx="330" cy="60" r="16" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="330.0" y="60.0" font-size="16" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Σ</text>
+<line x1="205.0" y1="60.0" x2="314.0" y2="60.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="314.0,60.0 306.6,56.9 306.6,63.1" fill="#222222"/>
+<line x1="285.0" y1="140.0" x2="330.0" y2="140.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="330.0" y1="140.0" x2="330.0" y2="76.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="330.0,76.0 326.9,83.4 333.1,83.4" fill="#222222"/>
+<line x1="346.0" y1="60.0" x2="400.0" y2="60.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="400.0,60.0 392.6,56.9 392.6,63.1" fill="#222222"/>
+<text x="420.0" y="60.0" font-size="15" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" font-style="italic">yₙ</text>
+<text x="420.0" y="82.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">to DAC</text>
+<text x="20.0" y="196.0" font-size="14" text-anchor="start" font-weight="bold" fill="#222222" dominant-baseline="middle">(b) PAM-5 symbols and the shaped output</text>
+<line x1="62.0" y1="465.6" x2="462.0" y2="465.6" stroke="#c8c8c8" stroke-width="1"/>
+<line x1="62.0" y1="452.6" x2="462.0" y2="452.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="439.6" x2="462.0" y2="439.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="426.6" x2="462.0" y2="426.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="413.6" x2="462.0" y2="413.6" stroke="#c8c8c8" stroke-width="1"/>
+<line x1="62.0" y1="400.6" x2="462.0" y2="400.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="387.6" x2="462.0" y2="387.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="374.6" x2="462.0" y2="374.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="361.6" x2="462.0" y2="361.6" stroke="#c8c8c8" stroke-width="1"/>
+<line x1="62.0" y1="348.6" x2="462.0" y2="348.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="335.6" x2="462.0" y2="335.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="322.6" x2="462.0" y2="322.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="309.6" x2="462.0" y2="309.6" stroke="#c8c8c8" stroke-width="1"/>
+<line x1="62.0" y1="296.6" x2="462.0" y2="296.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="283.6" x2="462.0" y2="283.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="270.6" x2="462.0" y2="270.6" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="62.0" y1="257.6" x2="462.0" y2="257.6" stroke="#c8c8c8" stroke-width="1"/>
+<rect x="62.0" y="216.0" width="400.0" height="260.0" rx="0" fill="none" stroke="#222222" stroke-width="1.2"/>
+<line x1="62.0" y1="476.0" x2="62.0" y2="481.0" stroke="#222222" stroke-width="1.2"/>
+<text x="62.0" y="491.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="142.0" y1="476.0" x2="142.0" y2="481.0" stroke="#222222" stroke-width="1.2"/>
+<text x="142.0" y="491.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">16</text>
+<line x1="222.0" y1="476.0" x2="222.0" y2="481.0" stroke="#222222" stroke-width="1.2"/>
+<text x="222.0" y="491.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">32</text>
+<line x1="302.0" y1="476.0" x2="302.0" y2="481.0" stroke="#222222" stroke-width="1.2"/>
+<text x="302.0" y="491.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">48</text>
+<line x1="382.0" y1="476.0" x2="382.0" y2="481.0" stroke="#222222" stroke-width="1.2"/>
+<text x="382.0" y="491.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">64</text>
+<line x1="462.0" y1="476.0" x2="462.0" y2="481.0" stroke="#222222" stroke-width="1.2"/>
+<text x="462.0" y="491.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">80</text>
+<line x1="57.0" y1="465.6" x2="62.0" y2="465.6" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="465.6" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">−2</text>
+<line x1="57.0" y1="413.6" x2="62.0" y2="413.6" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="413.6" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">−1</text>
+<line x1="57.0" y1="361.6" x2="62.0" y2="361.6" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="361.6" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="57.0" y1="309.6" x2="62.0" y2="309.6" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="309.6" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<line x1="57.0" y1="257.6" x2="62.0" y2="257.6" stroke="#222222" stroke-width="1.2"/>
+<text x="54.0" y="257.6" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<text x="262.0" y="512.0" font-size="14" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Time (ns)</text>
+<text x="14.0" y="346.0" font-size="14" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 14.0 346.0)">Level</text>
+<polyline points="62.0,361.6 102.0,361.6 102.0,309.6 142.0,309.6 142.0,413.6 182.0,413.6 182.0,257.6 222.0,257.6 222.0,257.6 262.0,257.6 262.0,361.6 302.0,361.6 302.0,465.6 342.0,465.6 342.0,413.6 382.0,413.6 382.0,309.6 422.0,309.6 422.0,361.6 462.0,361.6" fill="none" stroke="#777777" stroke-width="2" stroke-linejoin="round" stroke-dasharray="6 4"/>
+<polyline points="62.0,361.6 102.0,361.6 102.0,322.6 142.0,322.6 142.0,387.6 182.0,387.6 182.0,296.6 222.0,296.6 222.0,257.6 262.0,257.6 262.0,335.6 302.0,335.6 302.0,439.6 342.0,439.6 342.0,426.6 382.0,426.6 382.0,335.6 422.0,335.6 422.0,348.6 462.0,348.6" fill="none" stroke="#1f4e79" stroke-width="2.6" stroke-linejoin="round"/>
+<circle cx="202.0" cy="296.6" r="4" fill="#c0392b" stroke="none"/>
+<line x1="202.0" y1="239.4" x2="202.0" y2="291.6" stroke="#c0392b" stroke-width="1.2"/>
+<text x="202.0" y="231.6" font-size="13" text-anchor="middle" font-weight="normal" fill="#c0392b" dominant-baseline="middle">+2 after −1 gives 1.25</text>
+<line x1="70.0" y1="528.0" x2="94.0" y2="528.0" stroke="#777777" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="100.0" y="528.0" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">symbol aₙ, five levels</text>
+<line x1="270.0" y1="528.0" x2="294.0" y2="528.0" stroke="#1f4e79" stroke-width="2.6"/>
+<text x="300.0" y="528.0" font-size="13" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">output yₙ</text>
+<text x="240.0" y="550.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">Grid lines: the 17 output levels, every 0.25</text>
+</svg>
