@@ -1,15 +1,15 @@
 .. _usbpd-packets:
 
-Packets on the configuration channel
-====================================
+Packet structure
+================
 
 How a :term:`USB Power Delivery` message is framed as a packet, coded into
 5-bit symbols and checked, and how long a packet takes to send. The
 electrical signal that carries the bits on the :term:`CC` wire is described
 on :doc:`cc-signalling`.
 
-A packet has five parts
------------------------
+Packet parts
+------------
 
 Every message travels on the CC wire as one packet. :numref:`tab-usbpd-packet`
 lists the parts in the order they are sent (:pd:`Section 5.3.1.1`,
@@ -61,8 +61,8 @@ the lower 4 bits (nibble) of each byte before the upper nibble
 
 .. _usbpd-4b5b:
 
-Data is sent as 5-bit symbols
------------------------------
+4b5b symbols
+------------
 
 Everything after the preamble is sent in 5-bit *symbols*, a
 :wikipedia:`4B5B` line code (:pd:`Section 5.3.1.1.2`, :pd:`Table 5.2`):
@@ -149,8 +149,8 @@ each symbol from bit b4 down to bit b0, and bit b0 is sent first
 
 .. _usbpd-sop:
 
-The start of a packet says who it is for
-----------------------------------------
+Start of packet
+---------------
 
 The four K-codes after the preamble form an *ordered set*. It says whether
 the packet goes to the port at the other end, to a cable plug, or is a reset
@@ -247,8 +247,8 @@ is on :ref:`usbpd-discover-identity`.
 
 .. _usbpd-crc:
 
-A CRC-32 protects the header and data
--------------------------------------
+CRC-32
+------
 
 The checksum is a 32-bit :wikipedia:`cyclic redundancy check
 <Cyclic_redundancy_check>` (CRC) over the header and data objects, not over
@@ -291,8 +291,8 @@ The EOP K-code ends the packet. It is not covered by the CRC
 
 .. _usbpd-durations:
 
-How long a packet takes to send
--------------------------------
+Packet durations
+----------------
 
 Software and hardware timing budgets depend on how long the line is busy
 with each packet. The packet length in bits, from :numref:`tab-usbpd-packet`,
@@ -351,7 +351,7 @@ The time to send the packet is:
      - µs
 
 The equations count only the packet. The idle time before and after it is
-set by the transmitter timing on :ref:`usbpd-transmitter`.
+set by the :ref:`transmitter timing <usbpd-transmitter>`.
 
 A GoodCRC message has no data objects, so it has 149 bits, and at the
 nominal 300 kbit/s it takes
