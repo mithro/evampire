@@ -242,6 +242,21 @@ the 250 kHz switching frequency. The high-voltage converter therefore
 corrects its output more slowly than a buck converter switching at the same
 frequency.
 
+:numref:`fig-conv-rhp-freq` shows how the zero moves down as the duty
+cycle rises, for the same load and inductor.
+
+.. figure:: rhp-freq.svg
+   :name: fig-conv-rhp-freq
+   :alt: Graph of the right-half-plane zero frequency, log scale from
+         1 kHz to 200 kHz, against boost duty cycle from 0 to 0.95. It falls
+         from about 155 kHz at D = 0 to 21.2 kHz at D = 0.630 and below
+         2 kHz near D = 0.9. A shaded band marks the 4 kHz to 5 kHz
+         crossover for D = 0.630.
+   :align: center
+
+   Right-half-plane zero of the boost example against duty cycle, with
+   the load and inductor held at 97.2 Ω and 100 µH.
+
 .. figure:: rhp-step.svg
    :name: fig-conv-rhp-step
    :alt: Three traces against time. The boost duty cycle steps up at time

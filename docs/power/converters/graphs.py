@@ -303,6 +303,34 @@ def transition():
     s.save(HERE / "transition.svg")
 
 
+def rhp_freq():
+    """Right-half-plane zero frequency against boost duty cycle."""
+    import math
+    k = 97.2 / (2 * math.pi * 100e-6)
+    s = Svg(560, 360)
+    a = Axes(s, (100, 20, 530, 290), (0, 0.95), (1e3, 2e5), ylog=True)
+    s.rect(a.x0, a.Y(5e3), a.x1 - a.x0, a.Y(4e3) - a.Y(5e3), fill=FILL_GREEN,
+           stroke="none")
+    labels = {1e3: "1", 2e3: "2", 5e3: "5", 1e4: "10", 2e4: "20",
+              5e4: "50", 1e5: "100", 2e5: "200"}
+    a.frame(xticks=[0, 0.2, 0.4, 0.6, 0.8], yticks=list(labels),
+            xfmt=lambda v: f"{v:.1f}", yfmt=lambda v: labels[v],
+            xlabel="boost duty cycle D", ylabel="fRHP (kHz, log scale)")
+    pts = [(d / 100, (1 - d / 100) ** 2 * k) for d in range(0, 96)]
+    s.poly(a.P([p for p in pts if p[1] >= 1e3]), stroke=BLUE)
+    f = (1 - 0.630) ** 2 * k
+    s.add(f'<circle cx="{a.X(0.63):.1f}" cy="{a.Y(f):.1f}" r="4" '
+          f'fill="{ORANGE}"/>')
+    s.text(a.X(0.63) + 8, a.Y(f) - 10, "D = 0.630: 21.2 kHz", size=11,
+           anchor="start", fill=ORANGE)
+    s.text(a.X(0.02), a.Y(4.5e3), "crossover about 4 kHz to 5 kHz at "
+           "D = 0.630", size=11, anchor="start", fill=GREEN)
+    s.text(a.X(0.02), a.Y(1.9e3), "fRHP = (1 − D)² Rload / (2π L)\n"
+           "Rload = 97.2 Ω, L = 100 µH", size=11, fill=GREY,
+           anchor="start")
+    s.save(HERE / "rhp-freq.svg")
+
+
 FIGURES = {
     "boost-gain": boost_gain,
     "bode": bode,
@@ -312,6 +340,7 @@ FIGURES = {
     "pass-through": pass_through,
     "regions": regions,
     "transition": transition,
+    "rhp-freq": rhp_freq,
 }
 
 if __name__ == "__main__":
