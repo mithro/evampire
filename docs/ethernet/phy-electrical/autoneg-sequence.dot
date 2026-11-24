@@ -6,20 +6,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 digraph autoneg {
-    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.8,
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.6,
            ranksep=0.28, newrank=true, splines=false];
     node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
            fontsize=10];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+    edge  [fontname="Helvetica", fontsize=11, arrowsize=0.7];
 
     e1 [shape=box, style="rounded,filled", fillcolor="#fbe5d6", label="End 1", width=1.0];
     e2 [shape=box, style="rounded,filled", fillcolor="#e2f0d9", label="End 2", width=1.0];
-    note_h [shape=plaintext, label="What happens", fontsize=10, fontname="Helvetica-Bold"];
+    note_h [shape=plaintext, label="What happens", fontsize=12, fontname="Helvetica-Bold"];
 
     a1; a2; a3; a4; a5; a6; a7; a8; a9;
     b1; b2; b3; b4; b5; b6; b7; b8; b9;
 
-    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    node [shape=plaintext, width=0, height=0, fontsize=11, fontcolor="#333333"];
     n1 [label="Each end repeats its base page\nin bursts 8 ms to 24 ms apart"];
     n2 [label=""];
     n3 [label="After at least 3 matching bursts,\neach end sets Acknowledge"];

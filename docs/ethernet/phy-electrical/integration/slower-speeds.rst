@@ -81,7 +81,7 @@ A driver with a matched resistive source needs
 3.3 V supply a differential driver reaches at most ±3.3 V
 (:numref:`fig-phy-int-10base-t-swing`), so a matched
 resistive-source driver at 3.3 V cannot reach the 10BASE-T level (estimate,
-from those numbers). Other options can:
+from those numbers). The options are:
 
 * an active termination, whose output impedance is set by feedback rather
   than a series resistor, so that less of the supply is lost in the source
@@ -93,7 +93,10 @@ from those numbers). Other options can:
 * an output stage on the gf180mcu 5 V, 6 V or 10 V transistors
   (:numref:`tab-phy-int-devices`), with a supply above 3.3 V;
 * 10BASE-Te, at 1.54 V to 1.96 V, which interoperates with 10BASE-T when
-  its cabling requirements are met (:clause:`14.1.1.1`).
+  its cabling requirements are met (:clause:`14.1.1.1`). Behind a matched
+  source it needs 3.1 V to 3.9 V, so a 3.3 V driver reaches it only at the
+  bottom of that range and only if its output swings to the supply rails
+  (estimate); otherwise it needs one of the options above.
 
 The link pulses that autonegotiation needs do not need this driver
 (:ref:`phy-int-autoneg`).
@@ -104,7 +107,8 @@ The link pulses that autonegotiation needs do not need this driver
          needs, twice the line voltage, from 0 to 6 V. 1000BASE-T at 1 V
          on the line needs 2 V; 10BASE-Te needs 3.1 V to 3.9 V; 10BASE-T
          needs 4.4 V to 5.6 V. A dashed line at 3.3 V marks what a
-         differential driver on a 3.3 V supply can reach.
+         differential driver on a 3.3 V supply could reach with no headroom
+         left for its output transistors.
    :align: center
 
    The source voltage a matched driver needs for each speed, against

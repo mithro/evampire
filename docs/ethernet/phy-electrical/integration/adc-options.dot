@@ -28,9 +28,9 @@ digraph adcs {
     p_s1 [pos="1.75,0.95!", label="Stage 1:\nfew bits, residue"];
     p_s2 [pos="3.25,0.95!", label="Stage 2:\nfew bits, residue"];
     p_sn [pos="4.75,0.95!", label="… last stage"];
-    p_x [pos="6.25,0.95!", width=1.3, label="Copies take\nturns at 125 MS/s",
-         fillcolor="#f2f2f2"];
-    p_in -> p_s1; p_s1 -> p_s2; p_s2 -> p_sn; p_sn -> p_x;
+    p_x [pos="6.25,0.95!", width=1.5, shape=plaintext, style="",
+         label="Several copies\ntake turns to\nreach 125 MS/s"];
+    p_in -> p_s1; p_s1 -> p_s2; p_s2 -> p_sn; 
 
     h3 [pos="1.0,0.25!", shape=plaintext, style="", width=2.3, height=0.25,
         fontsize=11, fontname="Helvetica-Bold", label="Successive approximation"];
@@ -38,7 +38,7 @@ digraph adcs {
     s_cmp [pos="1.75,-0.35!", label="One\ncomparator"];
     s_log [pos="3.25,-0.35!", label="Bit-by-bit\nlogic"];
     s_dac [pos="2.5,-1.05!", label="Capacitor DAC"];
-    s_x [pos="4.75,-0.35!", label="Copies take\nturns", fillcolor="#f2f2f2"];
+    s_x [pos="4.75,-0.35!", width=1.5, shape=plaintext, style="",
+         label="Several copies\ntake turns"];
     s_in -> s_cmp; s_cmp -> s_log; s_log -> s_dac; s_dac -> s_cmp;
-    s_log -> s_x;
 }

@@ -8,15 +8,15 @@ digraph bench {
     graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
            size="7.4,2.2"];
     node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
-           fontname="Helvetica", fontsize=11, width=1.9, height=0.8,
+           fontname="Helvetica", fontsize=11, width=2.1, height=0.9,
            fixedsize=true];
     edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
 
-    chip [pos="0.9,1.4!", label="Test chip: DAC,\ndriver, hybrid, ADC"];
+    chip [pos="1.0,1.4!", label="Test chip: DAC, driver,\nhybrid, ADC, link pulses\nand autonegotiation"];
     cable [pos="3.4,1.4!", width=1.6, height=0.5, label="Real cable",
            fillcolor="#ffffff"];
     phy [pos="5.8,1.4!", width=2.0, label="Commercial\ntransceiver", fillcolor="#f2f2f2"];
-    fpga [pos="0.9,0.0!", label="FPGA: signal\nprocessing", fillcolor="#dbe8f5"];
+    fpga [pos="1.0,0.0!", label="FPGA: signal\nprocessing", fillcolor="#dbe8f5"];
     pc [pos="5.8,0.0!", width=2.0, label="Reports what it\nreceives", shape=plaintext,
         style=""];
 

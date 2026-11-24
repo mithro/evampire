@@ -98,7 +98,7 @@ and the idle threshold.
          Top, the transmitter: a Manchester waveform at plus and minus 2.5 V,
          with shaded bands from 2.2 V to 2.8 V for 10BASE-T and from 1.54 V
          to 1.96 V for 10BASE-Te, on both polarities. Bottom, the idle
-         receiver after the 15 MHz filter: noise of under 0.2 V stays inside
+         receiver after the 15 MHz filter: noise of under 0.25 V stays inside
          dashed thresholds at plus and minus 300 mV and is ignored; a
          signal of plus and minus 0.9 V crosses them and is accepted.
    :align: center

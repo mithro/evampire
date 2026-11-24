@@ -81,7 +81,7 @@ timers. :numref:`fig-phy-int-control` shows how the blocks connect.
          arbitration state machine, which drives the transmit state
          machine and exchanges data with the next pages and seed source
          and with the management registers. Timers on one prescaled
-         26-bit counter feed the receive state machine.
+         26-bit counter feed all three state machines.
    :align: center
 
 .. _phy-int-registers:

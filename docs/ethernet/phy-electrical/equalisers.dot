@@ -10,7 +10,7 @@ digraph equalisers {
     node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
            fontname="Helvetica", fontsize=11, width=1.4, height=0.6,
            fixedsize=true];
-    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.5];
+    edge  [fontname="Helvetica", fontsize=11, arrowsize=0.7, penwidth=1.5];
 
     in   [pos="0.5,1.5!", width=0.9, label="Samples\nafter the\ncancellers",
           height=0.75, fillcolor="#ffffff"];
@@ -18,19 +18,21 @@ digraph equalisers {
     sub  [pos="3.6,1.5!", shape=circle, width=0.45, height=0.45,
           fillcolor="#ffffff", label="−", fontsize=16];
     dec  [pos="5.0,1.5!", label="Decision\n(trellis decoder)", fillcolor="#e2efda"];
-    out  [pos="6.6,1.5!", width=1.1, label="Decided\nsymbols", fillcolor="#ffffff"];
+    out  [pos="7.0,1.5!", width=1.1, label="Decided\nsymbols", fillcolor="#ffffff"];
     dfe  [pos="5.0,0.3!", width=1.9, label="Decision-feedback\nequaliser (FIR)"];
-    j    [pos="6.0,1.5!", shape=point, width=0.07];
+    j    [pos="6.3,1.5!", shape=point, width=0.07];
 
     in  -> ffe;
     ffe -> sub [label="+"];
     sub -> dec;
     dec -> j [arrowhead=none];
     j   -> out;
-    j2  [pos="6.0,0.3!", shape=point, width=0.01];
+    j2  [pos="6.3,0.3!", shape=point, width=0.01];
     j   -> j2 [arrowhead=none];
     j2  -> dfe;
     j3  [pos="3.6,0.3!", shape=point, width=0.01];
-    dfe -> j3 [arrowhead=none, label="  postcursor\n  tails"];
+    dfe -> j3 [arrowhead=none];
+    lt  [pos="3.0,0.8!", shape=plaintext, style="", width=1.0, height=0.35,
+         fontsize=11, label="postcursor\ntails"];
     j3  -> sub;
 }

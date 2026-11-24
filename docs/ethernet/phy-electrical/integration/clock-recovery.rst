@@ -115,8 +115,9 @@ With :math:`\sigma = 4.9` ps:
 
    J_\text{pp} = 2 \times 7.03 \times 4.9\ \text{ps} = 69\ \text{ps}
 
-which is about one twentieth of the 1.4 ns limit (estimate, for the
-reference example above; a gf180mcu PLL needs its own design and
+which is about one twentieth of the 1.4 ns unfiltered limit and about a
+quarter of the 0.3 ns limit after the 5 kHz high-pass filter (estimate,
+for the reference example above; a gf180mcu PLL needs its own design and
 measurement). :numref:`fig-phy-int-jitter` draws the distribution.
 
 .. figure:: jitter.svg
@@ -124,9 +125,11 @@ measurement). :numref:`fig-phy-int-jitter` draws the distribution.
    :alt: Graph of relative probability density on a log scale from 1e-14
          to 1 against time error from −45 ps to 45 ps. A Gaussian curve
          with sigma 4.9 ps peaks at 0. Dashed lines at about ±34 ps mark
-         7.03 sigma either side, and an arrow between them is labelled
-         Jpp = 2 × 7.03 × 4.9 ps = 69 ps. A note says the 1.4 ns limit is
-         about 20 times Jpp.
+         7.03 sigma either side, beyond each of which a tail holds a
+         probability of 1e-12, and an arrow between them is labelled
+         Jpp = 2 × 7.03 × 4.9 ps = 69 ps. A note says the 1.4 ns
+         unfiltered limit is about 20 times Jpp, and the 0.3 ns limit after
+         a 5 kHz high-pass filter about 4 times Jpp.
    :align: center
 
    Gaussian jitter of 4.9 ps rms and its peak-to-peak value at a tail

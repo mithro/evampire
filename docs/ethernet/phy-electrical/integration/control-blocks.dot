@@ -1,7 +1,8 @@
 // The control blocks of an integrated transceiver for autonegotiation:
 // the link pulse driver and comparator at the pins, the transmit, receive
 // and arbitration state machines, the next-page logic with its seed
-// source, the timers on one shared counter, and the registers.
+// source, the timers on one shared counter, which all three state
+// machines use, and the registers.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -31,5 +32,11 @@ digraph control {
     rx -> arb;
     np -> arb [dir=both];
     tim -> rx;
+    tim -> arb;
+    p1 [pos="3.75,-0.3!", shape=point, width=0.01];
+    p2 [pos="3.75,1.6!", shape=point, width=0.01];
+    tim -> p1 [arrowhead=none];
+    p1 -> p2 [arrowhead=none];
+    p2 -> tx;
     reg -> arb [dir=both];
 }

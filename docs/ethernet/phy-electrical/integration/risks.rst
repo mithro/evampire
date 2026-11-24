@@ -110,7 +110,8 @@ steps 4 to 6.
    :caption: The early-check bench: a test chip on a real cable to a
              commercial transceiver, with its ADC samples captured to an
              FPGA.
-   :alt: A test chip with the DAC, driver, hybrid and ADC connects through
+   :alt: A test chip with the DAC, driver, hybrid, ADC, link pulses and
+         autonegotiation connects through
          a real cable to a commercial transceiver, which reports what it
          receives. The test chip's captured ADC samples go to an FPGA that
          runs the signal processing.

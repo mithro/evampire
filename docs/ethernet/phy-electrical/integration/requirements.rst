@@ -21,17 +21,25 @@ logic is the same whether the transceiver is external or on the chip.
 
 On receive, the bytes are timed by the clock recovered from the cable, and
 the :ref:`rate-matching buffer <arch-rate-matching>` moves them onto
-evampire's own clock, as with RGMII (:numref:`fig-phy-int-byte-interface`).
+evampire's own clock, as with RGMII. On transmit, a slave sends on the
+clock it recovers from the master (:ref:`phy-master-slave`), not on
+evampire's clock, so the transmit bytes also cross clock domains, through
+a transmit buffer
+(:numref:`fig-phy-int-byte-interface`). A master needs the same buffer
+unless its symbol clock is evampire's own clock.
 
 .. graphviz:: byte-interface.dot
    :name: fig-phy-int-byte-interface
    :caption: The byte interface of one port, with the integrated
-             transceiver and with an external one over RGMII.
+             transceiver and with an external one over RGMII; both
+             directions cross between evampire's clock and the symbol
+             clock.
    :alt: Top, integrated transceiver: the forwarding logic sends TXD[7:0],
-         TX_EN and TX_ER to the integrated transceiver, one byte per 8 ns;
-         the transceiver sends RXD[7:0], RX_DV and RX_ER on the recovered
-         clock to the rate-matching buffer, which passes them to the
-         forwarding logic on evampire's clock. Bottom, external
+         TX_EN and TX_ER, one byte per 8 ns, through a transmit buffer to
+         the integrated transceiver; the transceiver sends RXD[7:0], RX_DV
+         and RX_ER through a receive rate-matching buffer to the
+         forwarding logic. Labels mark evampire's clock on the forwarding
+         logic side and the symbol clock on the transceiver side. Bottom, external
          transceiver: the forwarding logic exchanges the same signals with
          the RGMII block and buffer, which connects to the external
          transceiver through the RGMII pins.

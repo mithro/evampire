@@ -73,20 +73,21 @@ other frequencies, and :numref:`fig-phy-channel-limits` plots the limits.
 
 .. figure:: channel-limits.svg
    :name: fig-phy-channel-limits
-   :alt: Graph of loss in dB from 0 to 70 against frequency from 1 MHz to
-         100 MHz on a log scale. The insertion loss limit rises from about
-         2.5 dB at 1 MHz through 7.1 dB at 10 MHz and 18.7 dB at 62.5 MHz to
-         24.0 dB at 100 MHz. The NEXT loss limit falls from about 61 dB at
-         1 MHz through 43.9 dB at 10 MHz and 30.5 dB at 62.5 MHz to 27.1 dB
-         at 100 MHz. The ELFEXT limit falls from 57 dB to 17 dB, and the
-         power-sum ELFEXT limit 2.6 dB below it. The gap between the NEXT
-         and insertion loss curves is shaded as the margin, 11.8 dB at
-         62.5 MHz and 3.1 dB at 100 MHz. Dashed lines mark 31.25 MHz and
-         62.5 MHz.
+   :alt: Two graphs of loss in dB from 0 to 70 against frequency from
+         1 MHz to 100 MHz on a log scale. Top: the insertion loss limit
+         rises from about 2.5 dB at 1 MHz through 7.1 dB at 10 MHz and
+         18.7 dB at 62.5 MHz to 24.0 dB at 100 MHz. The NEXT loss limit
+         falls from about 61 dB at 1 MHz through 43.9 dB at 10 MHz and
+         30.5 dB at 62.5 MHz to 27.1 dB at 100 MHz. The gap between them is
+         shaded as the margin, 11.8 dB at 62.5 MHz and 3.1 dB at 100 MHz.
+         Dashed lines mark 31.25 MHz and 62.5 MHz. Bottom: the ELFEXT loss
+         limit, measured against the received signal, falls from 57 dB to
+         17 dB, and the power-sum limit runs 2.6 dB below it.
    :align: center
 
-   The 1000BASE-T channel limits of :clause:`40.7` against frequency, with
-   the near-end crosstalk margin shaded.
+   The 1000BASE-T channel limits of :clause:`40.7` against frequency:
+   insertion loss and NEXT loss with the margin between them shaded, and
+   ELFEXT loss, which is already relative to the received signal.
 
 .. list-table:: 1000BASE-T channel limits for a 100 m channel, from the
    formulas of :clause:`40.7`

@@ -290,10 +290,10 @@ Each needs a gf180mcu design and a test chip to set its power and area.
    :alt: Three sketches. Folding: the input goes to folding amplifiers
          and fine comparators, and directly to coarse comparators; both
          feed an encoder. Pipelined, time-interleaved: the input passes
-         stages that each resolve a few bits and pass on a residue, and
-         several copies take turns to reach 125 MS/s. Successive
+         stages that each resolve a few bits and pass on a residue; a note
+         says several copies take turns to reach 125 MS/s. Successive
          approximation: one comparator, bit-by-bit logic and a capacitor
-         DAC in a loop, with copies taking turns.
+         DAC in a loop; a note says several copies take turns.
    :align: center
 
 .. _phy-int-analogue-alternatives:

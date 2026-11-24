@@ -21,17 +21,27 @@ digraph resolution {
         label="Seeds equal?", fillcolor="#fbe5d6"];
 
     fault [pos="5.4,5.2!", label="Configuration fault", fillcolor="#f4cccc"];
-    manual [pos="5.4,3.05!", label="The set roles apply", fillcolor="#e2efda"];
+    manual [pos="5.4,2.95!", label="The set roles apply", fillcolor="#e2efda"];
     multi [pos="4.4,2.3!", label="Multiport end\nbecomes master", fillcolor="#e2efda"];
     seed [pos="4.4,1.0!", label="Larger seed\nbecomes master", fillcolor="#e2efda"];
     retry [pos="1.6,-0.2!", width=2.6, label="New seeds, negotiate again;\nfault after 7 failures"];
 
-    q1 -> q1b [label="yes"];
-    q1b -> fault [label=" yes"];
-    q1b -> manual [label=" no"];
-    q1 -> q2 [label=" no"];
-    q2 -> multi [label="yes"];
-    q2 -> q3 [label=" no"];
-    q3 -> seed [label="no"];
-    q3 -> retry [label=" yes"];
+    q1 -> q1b;
+    q1b -> fault;
+    q1b -> manual;
+    q1 -> q2;
+    q2 -> multi;
+    q2 -> q3;
+    q3 -> seed;
+    q3 -> retry;
+
+    node [shape=plaintext, style="", width=0.35, height=0.2, fontsize=10];
+    y1 [pos="3.2,4.15!", label="yes"];
+    y2 [pos="5.62,4.65!", label="yes"];
+    n2 [pos="5.6,3.4!", label="no"];
+    n1 [pos="1.42,3.3!", label="no"];
+    y3 [pos="3.1,2.45!", label="yes"];
+    n3 [pos="1.42,1.65!", label="no"];
+    n4 [pos="3.1,1.15!", label="no"];
+    y4 [pos="1.45,0.35!", label="yes"];
 }
