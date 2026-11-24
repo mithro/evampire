@@ -24,7 +24,7 @@ HERE = pathlib.Path(__file__).parent
 
 def pwm_resolution():
     """Edge placement of a counter, a delay line and dithering."""
-    s = Svg(600, 375)
+    s = Svg(600, 400)
     tr = (0, 56)
     ideal = 37.4
     rows = []
@@ -54,17 +54,17 @@ def pwm_resolution():
         x = rows[2][0].X(32 + k)
         s.line(x, 222, x, 230, stroke=BLUE, width=1)
     s.text(rows[2][0].X(36), 242, "taps 1 ns apart", size=10, fill=BLUE)
-    # Dithering: alternate periods end at 32 and 40 ns.
-    s.text(142, 290, "dithering:\nperiod 1, 2", size=12, anchor="end")
-    for j, (y0, edge) in enumerate(((268, 40), (300, 32))):
-        ax = Axes(s, (150, y0, 580, y0 + 22), tr, (0, 1))
+    # Dithering: two periods of 40 ns and one of 32 ns average 37.33 ns.
+    s.text(142, 296, "dithering:\nperiods 1, 2, 3", size=12, anchor="end")
+    for y0, edge in ((262, 40), (290, 40), (318, 32)):
+        ax = Axes(s, (150, y0, 580, y0 + 20), tr, (0, 1))
         square(s, ax, [(0, edge)], 0, 1, stroke=ORANGE)
-    s.text(365, 338, "periods ending at 40 ns and 32 ns alternate: 36 ns on "
-           "average", size=11, fill=ORANGE)
+    s.text(365, 360, "two periods ending at 40 ns, one at 32 ns: 37.33 ns on "
+           "average (−0.07 ns)", size=11, fill=ORANGE)
     for k in range(8):
         x = ck.X(8 * k)
-        s.line(x, 60, x, 325, stroke="#dddddd", width=1, dash="2 3")
-    s.text(365, 362, "time (ns), one 8 ns clock period per grid line",
+        s.line(x, 60, x, 345, stroke="#dddddd", width=1, dash="2 3")
+    s.text(365, 386, "time (ns), one 8 ns clock period per grid line",
            size=11, fill=GREY)
     s.save(HERE / "pwm-resolution.svg")
 

@@ -158,9 +158,9 @@ often combined:
 * a counter clocked faster;
 * a *delay line*: a chain of gates whose taps divide one counter clock into
   smaller steps (a 125 MHz counter with an 8-tap delay line has 1 ns steps);
-* *dithering*: alternating between two neighbouring duty cycles from one
-  period to the next, so that the average falls between them, at the cost
-  of a small ripple at a lower frequency.
+* *dithering*: mixing two neighbouring duty cycles from one period to the
+  next, in a pattern whose average falls between them, at the cost of a
+  small ripple at a lower frequency.
 
 :numref:`fig-conv-pwm-resolution` shows the three on a 125 MHz counter.
 
@@ -169,8 +169,9 @@ often combined:
    :alt: Timing diagram against a 125 MHz clock with 8 ns periods. An ideal
          PWM edge at 37.4 ns; a counter alone can only end the pulse at
          40 ns, 2.6 ns late; a counter with an 8-tap delay line, taps 1 ns
-         apart, ends it at 37 ns, 0.4 ns early; with dithering, periods
-         ending at 40 ns and 32 ns alternate, giving 36 ns on average.
+         apart, ends it at 37 ns, 0.4 ns early; with dithering, two periods
+         ending at 40 ns and one at 32 ns repeat, giving 37.33 ns on
+         average, 0.07 ns early.
    :align: center
 
    Placing a PWM edge with a 125 MHz counter, a delay line and dithering
