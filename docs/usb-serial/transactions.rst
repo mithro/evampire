@@ -14,7 +14,8 @@ Transactions
 A *transaction* is one exchange of up to three packets: a token from the
 host, then a data packet from whichever side sends data, then a handshake
 from the side that received it ([USBSER-USB2]_ section 8.5).
-:numref:`tab-usbser-transactions` lists the three kinds a serial port uses.
+:numref:`tab-usbser-transactions` lists the three kinds a serial port uses,
+and :numref:`fig-usbser-transactions` draws them.
 
 .. list-table:: Transactions of a full-speed device ([USBSER-USB2]_
    section 8.4.6, section 8.5)
@@ -38,6 +39,20 @@ from the side that received it ([USBSER-USB2]_ section 8.5).
      - IN
      - DATA0 or DATA1 from the device, or NAK or STALL in its place
      - ACK from the host
+
+.. graphviz:: transactions/transactions.dot
+   :name: fig-usbser-transactions
+   :caption: The packets of SETUP, OUT and IN transactions between the host
+             and the device.
+   :alt: Sequence diagram with host and device lanes. SETUP transaction:
+         the host sends a SETUP token and DATA0 with an 8-byte request; the
+         device always answers ACK. OUT transaction: the host sends an OUT
+         token and DATA0 or DATA1; the device answers ACK when it took the
+         data, NAK when it has no room yet, or STALL when the endpoint is
+         halted. IN transaction: the host sends an IN token; the device
+         answers DATA0 or DATA1, or NAK when no data is ready, or STALL;
+         after a data packet the host answers ACK.
+   :align: center
 
 The device's replies follow fixed rules ([USBSER-USB2]_ section 8.4.6):
 
