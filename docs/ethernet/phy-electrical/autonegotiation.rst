@@ -1,7 +1,7 @@
 .. _phy-autoneg:
 
-Agreeing on speed, duplex and the clock master
-==============================================
+Autonegotiation
+===============
 
 This page explains how two transceivers use :term:`autonegotiation`
 (:clause:`28`) to agree, before any data flows, on the speed, on whether
@@ -14,8 +14,8 @@ networks. 1000BASE-T requires autonegotiation (:clause:`40.5.1`).
 
 .. _phy-flp:
 
-Bursts of link pulses carry 16-bit pages
-----------------------------------------
+Fast link pulse bursts
+----------------------
 
 A transceiver that autonegotiates replaces each single
 :ref:`link test pulse <phy-link-pulses>` of 10BASE-T with a *fast link
@@ -70,8 +70,8 @@ a 10BASE-T link test pulse (:clause:`Figure 14-13 <14>`).
 
 .. _phy-base-page:
 
-The base page names the abilities
----------------------------------
+Base page
+---------
 
 The 16 bits of a burst form a *page*. The first, the *base page*, has the
 fields of :numref:`tab-phy-base-page` (:clause:`28.2.1.2`,
@@ -133,8 +133,8 @@ consecutive matching bursts from its partner, it sets the acknowledge bit
 
 .. _phy-next-pages:
 
-1000BASE-T abilities travel in next pages
------------------------------------------
+1000BASE-T next pages
+---------------------
 
 The base page has no bit for 1000BASE-T. A 1000BASE-T transceiver sets the
 next page bit and sends three more pages: a message page with message code
@@ -149,8 +149,8 @@ next page bit and sends three more pages: a message page with message code
 
 .. _phy-resolution:
 
-Both ends apply the same rules to the same information
-------------------------------------------------------
+Mode and master resolution
+--------------------------
 
 Each end compares its own abilities with its partner's and picks the
 highest mode both support (:clause:`28.2.3.3`). For the three speeds on
@@ -181,8 +181,8 @@ speed from the signal itself, which is called *parallel detection*
 
 .. _phy-autoneg-timers:
 
-Timers bound every step
------------------------
+Timers
+------
 
 :numref:`tab-phy-autoneg-timers` lists the main autonegotiation timers by
 their names in the standard.

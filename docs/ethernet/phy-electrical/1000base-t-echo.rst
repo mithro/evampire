@@ -1,7 +1,7 @@
 .. _phy-echo-page:
 
-1000BASE-T: the channel limits, echo and crosstalk
-==================================================
+1000BASE-T: channel, echo and crosstalk
+=======================================
 
 This page gives the size of the cable effects that 1000BASE-T must handle,
 and explains how a :term:`hybrid` and adaptive cancellers let one pair carry
@@ -10,8 +10,8 @@ both directions at once. The effects themselves are introduced in
 
 .. _phy-channel-limits:
 
-The standard limits loss and crosstalk as functions of frequency
-----------------------------------------------------------------
+Channel limits
+--------------
 
 :clause:`40.7` limits the link segment with three formulas of frequency.
 Each is a loss in decibels; a loss of :math:`L` dB multiplies a voltage by
@@ -105,8 +105,8 @@ other frequencies.
 
 .. _phy-next-margin:
 
-Near-end crosstalk from one pair comes within 3 dB of the signal
-----------------------------------------------------------------
+Near-end crosstalk margin
+-------------------------
 
 The wanted signal and the near-end crosstalk start from transmitters of the
 same size. The wanted signal is reduced by the insertion loss, and the
@@ -126,8 +126,8 @@ page describes.
 
 .. _phy-echo:
 
-The hybrid removes most of the transceiver's own signal
--------------------------------------------------------
+Hybrid
+------
 
 Each pair carries :math:`1000 / 4 = 250` Mbit/s in each direction at the
 same time (:clause:`40.1.3`). Both ends drive the same two wires, so the
@@ -180,8 +180,8 @@ to 27). In the Microchip KSZ9031 this stage is an analogue hybrid that
 
 .. _phy-echo-canceller:
 
-The echo canceller predicts and subtracts what the hybrid leaves
-----------------------------------------------------------------
+Echo canceller
+--------------
 
 The second stage is the echo canceller, a digital adaptive
 :wikipedia:`finite impulse response <Finite_impulse_response>` (FIR)
@@ -201,14 +201,14 @@ reach.
 
 .. _phy-crosstalk:
 
-Three more cancellers remove near-end crosstalk
------------------------------------------------
+Near-end crosstalk cancellers
+-----------------------------
 
 Near-end crosstalk comes from the transceiver's own transmitters on the
 other three pairs, so the transceiver knows exactly what caused it. Each
 receiver runs three more adaptive FIR filters, one for each other pair,
 that predict and subtract that crosstalk ([PHY-KSZ9031]_ section 3.2.5).
-With the :term:`equaliser` of :doc:`1000base-t-receiver`, each receiver has
+With the two :term:`equalisers <equaliser>` (:ref:`phy-equalisation`), each receiver has
 five adaptive filters, and the transceiver has twenty ([PHY-HEALEY]_
 slide 38).
 

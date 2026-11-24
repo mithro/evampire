@@ -1,7 +1,7 @@
 .. _phy-1000base-t-receiver:
 
-1000BASE-T: equalisers, clocking and the receiver's arithmetic
-==============================================================
+1000BASE-T: receiver and clocking
+=================================
 
 This page explains the rest of a 1000BASE-T receiver: the equalisers, the
 master and slave clocking that keeps the cancellers matched, the
@@ -10,8 +10,8 @@ arithmetic they do every symbol period.
 
 .. _phy-equalisation:
 
-Two equalisers undo the cable's spreading
------------------------------------------
+Equalisers
+----------
 
 An :term:`equaliser` is a filter whose response is the inverse of the
 cable's, so that cable and equaliser together pass all frequencies alike
@@ -36,8 +36,8 @@ not average to zero shifts the zero level. A slow feedback loop restores it
 
 .. _phy-master-slave:
 
-One end sets the clock for both directions
-------------------------------------------
+Master and slave clocking
+-------------------------
 
 The echo and near-end crosstalk cancellers are driven by the transceiver's
 own transmit symbols, while the ADC samples at the far end's symbol timing.
@@ -76,8 +76,8 @@ idle symbols. A slave must reach reliable reception within
 
 .. _phy-pair-skew:
 
-The receiver lines up the four pairs and corrects swaps
--------------------------------------------------------
+Pair skew and swaps
+-------------------
 
 The four pairs of a cable differ slightly in length and propagation speed,
 so symbols sent together arrive at different times. The standard allows up
@@ -96,10 +96,11 @@ described in :clause:`40.8.2`.
 
 .. _phy-blocks:
 
-A gigabit transceiver has a copy of the signal path for each pair
------------------------------------------------------------------
+Transceiver blocks
+------------------
 
-:numref:`fig-phy-blocks` puts the blocks of these pages together for one
+A gigabit transceiver has a copy of the signal path for each of the four
+pairs. :numref:`fig-phy-blocks` puts the blocks of these pages together for one
 pair, and :numref:`tab-phy-blocks` lists them with the page that explains
 each one.
 
@@ -170,8 +171,8 @@ DP83867 and the Microchip KSZ9031 ([PHY-DP83867]_ section 9.2.1.2;
 
 .. _phy-dsp-rate:
 
-The filters need about 10¹¹ multiply-and-adds per second
---------------------------------------------------------
+Arithmetic rate
+---------------
 
 Every 8 ns, for each of the four pairs, the receiver evaluates and adapts
 five filters and takes one step of the Viterbi decoder. Each tap does one

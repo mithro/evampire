@@ -1,7 +1,7 @@
 .. _phy-1000base-t-coding:
 
-1000BASE-T: four pairs, five levels and a trellis code
-======================================================
+1000BASE-T: PAM-5 and trellis coding
+====================================
 
 This page explains how 1000BASE-T (:clause:`40`) carries 1000 Mbit/s: all
 four pairs at once, five signal levels, a shaping filter, scrambling and an
@@ -10,8 +10,8 @@ carries both directions at the same time.
 
 .. _phy-1000-rate:
 
-Four pairs times 125 MBd times 2 bits gives 1000 Mbit/s
--------------------------------------------------------
+Data rate
+---------
 
 1000BASE-T sends on all four pairs at the same time, at 125 MBd on each
 (:clause:`40.1.3`). The data rate in one direction is
@@ -62,8 +62,8 @@ transmitted spectrum is about 80 MHz wide (:clause:`40.7.1`), inside the
 
 .. _phy-pam5:
 
-Five levels give room for a code
---------------------------------
+Five-level signalling
+---------------------
 
 Two bits per symbol need at least four levels. 1000BASE-T uses five, −2,
 −1, 0, +1 and +2, which is five-level
@@ -111,8 +111,8 @@ described below wins this back.
 
 .. _phy-shaping:
 
-A shaping filter makes 17 levels out of 5
------------------------------------------
+Transmit shaping filter
+-----------------------
 
 Each pair must be able to send fixed *test modes* on command, so that its
 output can be measured without a receiver (:clause:`40.6.1.1.2`). In test
@@ -157,8 +157,8 @@ Figure 7‑1).
 
 .. _phy-1000-scrambler:
 
-Scrambling makes the symbols look random
-----------------------------------------
+Scrambling
+----------
 
 Before coding, the data is combined by exclusive-OR with a pseudo-random
 sequence from a 33-bit linear feedback shift register, the *side-stream
@@ -185,15 +185,15 @@ exclusive-OR of the taps. Master and slave are explained in
 Scrambling makes the transmitted symbols uncorrelated over time, between
 the four pairs and between the two directions on each pair
 (:clause:`40.1.4`). This spreads the transmitted power across the band,
-and it lets the adaptive cancellers of :doc:`1000base-t-echo` tell the
+and it lets the :doc:`adaptive cancellers <1000base-t-echo>` tell the
 transceiver's own symbols apart from the far end's. The scrambler runs
 continuously, so the receiver locks its own copy to the incoming stream
 before any data arrives.
 
 .. _phy-trellis:
 
-The trellis code wins back the 6 dB
------------------------------------
+Trellis code
+------------
 
 A :term:`trellis code` adds redundancy with a small state machine in the
 transmitter, so that only some sequences of code groups are legal. In
@@ -217,8 +217,8 @@ loop.
 
 .. _phy-idle:
 
-Idle uses three levels and frames start and end with delimiters
----------------------------------------------------------------
+Idle and frame delimiters
+-------------------------
 
 Between frames the transmitter sends idle code groups whose symbols use
 only −2, 0 and +2 (:clause:`40.1.3`). The three widely spaced levels make

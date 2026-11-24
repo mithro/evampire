@@ -1,7 +1,7 @@
 .. _phy-job:
 
-What a transceiver does and what the cable does to the signal
-=============================================================
+Transceiver role and the cable
+==============================
 
 This page describes the job of an :term:`Ethernet transceiver`, the three
 speeds it handles, and the four ways a twisted-pair cable changes the signal
@@ -9,8 +9,8 @@ on its way.
 
 .. _phy-position:
 
-The transceiver sits between the forwarding logic and the cable
----------------------------------------------------------------
+Position of the transceiver
+---------------------------
 
 The IEEE 802.3 standard [PHY-8023]_ calls the logic that sends and receives
 whole :term:`frames <frame>` the :term:`media access controller (MAC)
@@ -56,8 +56,8 @@ support. This exchange is :term:`autonegotiation`
 
 .. _phy-speeds:
 
-A transceiver handles three speeds, each with its own coding
--------------------------------------------------------------
+The three speeds
+----------------
 
 A gigabit transceiver for twisted-pair cable normally supports three
 speeds, each defined in its own clauses of IEEE 802.3
@@ -114,8 +114,8 @@ Differential voltage
 
 .. _phy-cable:
 
-The cable is four twisted pairs specified up to 100 MHz
--------------------------------------------------------
+The cable
+---------
 
 An Ethernet cable holds four pairs of copper wires. The two wires of each
 pair are twisted around each other, which makes the pair a balanced
@@ -126,15 +126,16 @@ and radiates (:wikipedia:`twisted pair <Twisted_pair>`).
 1000BASE-T runs over Class D cabling built from Category 5 components, as
 specified in :std:`ISO/IEC 11801 <iso-iec-11801>` and :std:`TIA-568`
 (:clause:`40.7.1`, see :wikipedia:`Category 5 cable
-<Category_5_cable>`). The link transmission parameters are specified for a
+<Category_5_cable>`). Their transmission is specified up to 100 MHz
+(:clause:`40.7.2.1`). The link transmission parameters are specified for a
 link segment of up to at least 100 m (:clause:`40.7.2`). The receiver must reach a
 :wikipedia:`bit error ratio <Bit_error_rate>` below :math:`10^{-10}` over
 such a link (:clause:`40.6.1.3.1`).
 
 .. _phy-impairments:
 
-The cable changes the signal in four ways
------------------------------------------
+Cable impairments
+-----------------
 
 Four effects of the cable set the design of every transceiver.
 :doc:`1000base-t-echo` gives the size of each one for 1000BASE-T.

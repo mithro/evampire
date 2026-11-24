@@ -1,7 +1,7 @@
 .. _phy-100base-tx:
 
-100BASE-TX: 4B5B coding, scrambling and three levels
-====================================================
+100BASE-TX: 4B5B, scrambling and MLT-3
+======================================
 
 This page describes 100BASE-TX (:clause:`24` and :clause:`25`): how it
 codes the data, the three-level signal on the wire and what its receiver
@@ -16,8 +16,8 @@ twisted-pair signalling of the FDDI standard :std:`ANSI X3.263 <x3-263>`
 
 .. _phy-4b5b:
 
-4B5B coding turns every 4 data bits into 5 line bits
-----------------------------------------------------
+4B5B coding
+-----------
 
 The coding layer replaces each 4-bit group of data with a 5-bit code word
 from a fixed table, :wikipedia:`4B5B <4B5B>` (:clause:`24.2.2.1`,
@@ -55,8 +55,8 @@ which is why 100BASE-TX runs at 125 MBd, the same symbol rate as
 
 .. _phy-100base-tx-scrambler:
 
-A scrambler spreads the power over the band
--------------------------------------------
+Scrambling
+----------
 
 The code bits are combined, by exclusive-OR, with the output of an
 11-bit :wikipedia:`linear feedback shift register
@@ -71,8 +71,8 @@ receiver's descrambler locks to the scrambled idle code between frames
 
 .. _phy-mlt3:
 
-MLT-3 steps through three levels
---------------------------------
+MLT-3 coding
+------------
 
 The scrambled bits are sent with :wikipedia:`MLT-3 <MLT-3_encoding>`, a
 three-level code using −1, 0 and +1 [PHY-X3263]_. A 1 bit moves the output
@@ -102,9 +102,10 @@ channel loses about 13 dB at that frequency
 
 .. _phy-100base-tx-levels:
 
-The signal is ±1 V with edges of 3 ns to 5 ns
----------------------------------------------
+Signal levels and edges
+-----------------------
 
+A 100BASE-TX transmitter drives ±1 V with edges of 3 ns to 5 ns.
 :numref:`tab-phy-100base-tx` gives the main transmitter limits. They are
 set in :std:`ANSI X3.263 <x3-263>` and checked by the University of New
 Hampshire InterOperability Laboratory test suite [PHY-UNH25]_.
@@ -141,8 +142,8 @@ Hampshire InterOperability Laboratory test suite [PHY-UNH25]_.
 
 .. _phy-100base-tx-receiver:
 
-The receiver equalises, restores the baseline and recovers the clock
---------------------------------------------------------------------
+Receiver
+--------
 
 The receiver reverses the transmit steps and corrects what the cable did:
 

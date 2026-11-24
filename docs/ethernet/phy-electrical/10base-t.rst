@@ -1,7 +1,7 @@
 .. _phy-10base-t:
 
-10BASE-T: two levels and a clock in every bit
-=============================================
+10BASE-T: Manchester coding and link pulses
+===========================================
 
 This page describes 10BASE-T (:clause:`14`), the simplest of the three
 twisted-pair speeds: its coding, its signal levels and the link pulses that
@@ -9,8 +9,8 @@ show a cable is connected.
 
 .. _phy-manchester:
 
-Manchester coding puts a transition in the middle of every bit
---------------------------------------------------------------
+Manchester coding
+-----------------
 
 10BASE-T uses one pair for each direction: pins 1 and 2 of the
 :term:`RJ45` socket to transmit and pins 3 and 6 to receive
@@ -41,10 +41,12 @@ per bit, so the fundamental frequency lies between 5 MHz (alternating 1 and
 
 .. _phy-10base-t-levels:
 
-The signal is 2.2 V to 2.8 V and the receiver ignores less than 300 mV
-----------------------------------------------------------------------
+Signal levels
+-------------
 
-:numref:`tab-phy-10base-t` gives the main transmitter and receiver limits.
+A 10BASE-T transmitter drives a peak of 2.2 V to 2.8 V, and an idle
+receiver ignores signals below 300 mV. :numref:`tab-phy-10base-t` gives
+these and the other main transmitter and receiver limits.
 
 .. list-table:: 10BASE-T transmitter and receiver limits
    :name: tab-phy-10base-t
@@ -91,12 +93,12 @@ KSZ9031 sets its squelch threshold at 300 mV ([PHY-KSZ9031]_ section
 
 .. _phy-link-pulses:
 
-Link pulses show the cable is connected
----------------------------------------
+Link test pulses
+----------------
 
 Between frames the line is silent, except for a single positive
 *link test pulse* after every 16 ms ± 8 ms of silence
-(:clause:`14.2.1.1`). The pulse has to fit the template of
+(:clause:`14.2.1.1`), which shows the far end that the cable is connected. The pulse has to fit the template of
 :clause:`Figure 14-13 <14>`: its peak lies between 585 mV and 3.1 V, and it
 is about one bit time, 100 ns, wide.
 

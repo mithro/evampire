@@ -10,10 +10,11 @@ themselves and the transformer-free connection.
 
 .. _phy-driver-levels:
 
-The gigabit driver must produce 17 levels with 7-bit linearity
---------------------------------------------------------------
+Gigabit driver requirements
+---------------------------
 
-A 1000BASE-T driver sends the 17 shaped levels of :ref:`phy-shaping`, and
+A 1000BASE-T driver sends the 17 levels of the
+:ref:`transmit shaping filter <phy-shaping>`, and
 its peak distortion in test mode 4 must stay below 10 mV
 (:clause:`40.6.1.2.4`). :doc:`integration/transmitter` shows that this
 needs about 7 bits of linearity. Two ways to build it are in use:
@@ -31,12 +32,13 @@ but have their own amplitude and edge-shape limits
 
 .. _phy-centre-tap:
 
-The driver type decides how the centre tap is connected
--------------------------------------------------------
+Centre-tap connection
+---------------------
 
 On a board with magnetics, each pair connects to the cable through a
 transformer whose winding on the transceiver side is brought out at its
-midpoint, the *centre tap*. :numref:`fig-phy-centre-tap` compares the two
+midpoint, the *centre tap*. How the centre tap is connected depends on the
+type of driver, and :numref:`fig-phy-centre-tap` compares the two
 connections.
 
 .. graphviz:: centre-tap.dot
