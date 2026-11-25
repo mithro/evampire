@@ -1,0 +1,48 @@
+// States of a powered device during detection and classification, with
+// the input voltage thresholds that move it between them. Values from
+// powered-device.rst (IEEE 802.3 Tables 145-25 and 145-29, 145.3.6 and
+// 145.3.7).
+//
+// Fill colours: power circuits #fff2cc, the powered state #e2f0d9.
+// Fixed grid (positions in inches): states in a ring, notes outside.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pd_states {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=11, width=2.0, height=0.75,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    idle  [pos="1.2,3.4!", label="Idle: signature shown\ncount = 0\n(detection range)"];
+    cls   [pos="5.4,3.4!", label="Class event:\nclass current drawn"];
+    mark  [pos="5.4,0.9!", label="Mark: mark load,\ninvalid signature\ncount + 1"];
+    on    [pos="1.2,0.9!", label="Powered: isolation\nswitch on", fillcolor="#e2f0d9"];
+
+    note  [pos="5.4,4.6!", shape=plaintext, style="", width=2.8, height=0.6,
+           fontsize=10, label="First event longer than 75.5–87.5 ms:\nType 3 or 4 power sourcing equipment.\nAutoclass: signature 0 from that time."];
+
+    idle -> cls  [label="rises above a threshold\nin 10.1–14.5 V"];
+    cls  -> mark;
+    mark -> cls;
+    l_down [pos="6.55,2.15!", shape=plaintext, style="", width=1.1,
+            height=0.6, fontsize=10, label="falls into the\nmark range,\n6.9–10.1 V"];
+    l_up   [pos="4.35,2.15!", shape=plaintext, style="", width=1.1,
+            height=0.45, fontsize=10, label="rises above\n10.1–14.5 V"];
+    mark -> on   [label="rises past turn-on,\n30–42 V"];
+    mark -> idle [style=dashed];
+    l_reset [pos="2.75,2.05!", shape=plaintext, style="", width=1.6,
+             height=0.45, fontsize=10, label="falls below a threshold\nin 2.81–6.9 V: count lost"];
+    on   -> idle [style=dashed];
+    idle -> on;
+    cls  -> on;
+    l_off [pos="0.45,2.15!", shape=plaintext, style="", width=1.2, height=0.6,
+           fontsize=10, label="down: rises\npast turn-on;\nup: falls below\nturn-off (≥ 30 V)"];
+    l_cls [pos="3.4,1.5!", shape=plaintext, style="", width=1.4, height=0.45,
+           fontsize=10, label="rises past turn-on\nfrom a class event"];
+    nt [pos="3.3,-0.1!", shape=plaintext, style="", width=6.0, height=0.45,
+        fontsize=10, label="Turn-on from idle or a class event: Type 1 or 2 equipment that skips\nclassification or powers up straight after its last class event."];
+    note -> cls  [style=dotted, arrowhead=none];
+}

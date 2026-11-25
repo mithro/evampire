@@ -1,14 +1,14 @@
 .. _esd-io-cells:
 
-ESD protection inside the gf180mcu I/O cells
-============================================
+gf180mcu I/O cell protection
+============================
 
 This page describes the ESD protection built into the standard gf180mcu
 I/O cells, with the device sizes taken from the cells' netlists, and the
 limits of each protection device measured by the foundry.
 
-The library is rated for 2 kV human body model
-----------------------------------------------
+Library rating
+--------------
 
 The foundry I/O library, gf180mcu_fd_io, targets 2000 V
 :term:`human body model <Human body model>`, 200 V machine model and 500 V
@@ -27,12 +27,14 @@ uses three of them:
   contains a :term:`rail clamp`.
 * ``gf180mcu_fd_io__asig_5p0``, the analogue pad, which has diodes only.
 
-The protection has three parts
-------------------------------
+Protection structure
+--------------------
 
-:numref:`fig-esd-io-cell` shows the protection of the bidirectional pad
-and of the supply pads. Every pad sits on two rings of metal that run
-round the chip: DVDD and DVSS.
+The protection of the bidirectional pad has three parts: the output
+driver, the secondary protection of the input gates and the rail clamp.
+:numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
+Every pad sits on two rings of metal that run round the chip: DVDD and
+DVSS.
 
 .. figure:: figures/io-cell.svg
    :name: fig-esd-io-cell
@@ -51,12 +53,13 @@ round the chip: DVDD and DVSS.
    The ESD protection of gf180mcu_fd_io__bi_t, and the rail clamp in each
    DVDD and DVSS pad.
 
-The primary protection is the output driver
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Primary protection
+~~~~~~~~~~~~~~~~~~
 
 The pad has no separate primary diodes. The output transistors are the
 primary protection. Their drains connect to the pad, and each drain is a
-diffusion in a well, so it forms a diode with that well:
+diffusion in a well, so it forms a diode with that well
+(:numref:`fig-esd-driver-section`):
 
 * The PMOS drains (P+ in an N-well tied to DVDD) form a diode from the pad
   to DVDD. Four transistors of 80 µm and four of 40 µm give 480 µm of
@@ -77,8 +80,23 @@ grounded-gate NMOS. Above about 10.7 V the parasitic NPN transistor inside
 each one turns on and :term:`snaps back <Snapback>` to about 6 V
 (:ref:`esd-limits`).
 
-The secondary protection guards the input gates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: figures/driver-section.svg
+   :name: fig-esd-driver-section
+   :alt: Cross-section of the two output transistors. Left, a PMOS in an
+         N-well tied to DVDD: its P+ drain, connected to PAD and without
+         silicide for 2.78 µm beside the gate, forms a diode from PAD to
+         DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well tied
+         to DVSS: its N+ drain, connected to PAD and without silicide for
+         3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
+         all; its gate is 1.15 µm long. A parasitic NPN transistor inside
+         the NMOS, with the drain as collector, the P-well as base and the
+         source as emitter, triggers at 10.7 V and snaps back to about 6 V.
+
+   The output transistors in cross-section, whose drains are the pad's primary
+   protection, schematic and not to scale.
+
+Secondary protection
+~~~~~~~~~~~~~~~~~~~~
 
 The input buffer's transistor gates are reached through four 440 Ω
 polysilicon resistors in parallel, about 110 Ω, and two small diodes of
@@ -89,8 +107,8 @@ with the current: in the simulated +2 kV human body model discharge the pad
 reaches 5.6 V and the gates 5.4 V, and in the +8 kV IEC discharge the pad
 reaches 15.6 V and the gates 12.4 V (:numref:`tab-esd-events-voltage`).
 
-The rail clamp shorts DVDD to DVSS during a fast event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Rail clamp
+~~~~~~~~~~
 
 A positive discharge into the pad, with DVSS grounded, flows through the
 PMOS drain diode onto the DVDD ring. Nothing on DVDD would then let it
@@ -167,20 +185,52 @@ models instead.
 
 The estimate holds once the capacitors are in inversion. The timer node
 starts at DVSS, where the capacitors are depleted and the model gives only
-0.075 pF. The node therefore rises to about 0.7 V within some tens of
-nanoseconds, and only then charges at the 1.6 µs rate. 0.7 V is below the
+0.075 pF. The node therefore rises quickly to about 0.7 V, with a time
+constant of 360 kΩ × 0.075 pF = 27 ns, and only then charges at the
+1.6 µs rate. 0.7 V is below the
 first inverter's switching voltage, so the clamp still turns on.
 
 A human body model discharge decays with a time constant of 150 ns, ten
 times shorter than 1.6 µs, so the clamp stays on for the whole event. A
 supply that rises much more slowly than 1.6 µs lets the timer node follow
-DVDD, so the clamp stays off in normal use.
+DVDD, so the clamp stays off in normal use (:numref:`fig-esd-clamp-timing`).
+:numref:`fig-esd-hbm-pos` shows a whole simulated event.
 
-Each discharge mode uses a different path
------------------------------------------
+.. figure:: figures/clamp-timing.svg
+   :name: fig-esd-clamp-timing
+   :alt: Two graphs of voltage. (a) In the first 100 ns of an ESD event
+         DVDD jumps to 4.5 V within nanoseconds and decays with a 150 ns
+         time constant; the timer node rises only to about 0.7 V to 0.8 V,
+         far below DVDD, so the clamp gate follows DVDD and the clamp is
+         on. (b) In a power-up over 100 µs, much slower
+         than the 1.6 µs time constant, the timer node follows DVDD and the
+         clamp gate stays at 0 V.
+
+   The rail clamp timer in the first 100 ns of an ESD event and in a slow
+   power-up, from the hand estimate above with an illustrative DVDD.
+
+Discharge paths
+---------------
 
 An ESD test applies each polarity between a pin and each supply pin. With
-DVSS as the grounded pin, the paths are as in :numref:`tab-esd-paths`.
+DVSS as the grounded pin, the paths are as in :numref:`tab-esd-paths`
+and :numref:`fig-esd-paths`.
+
+.. figure:: figures/paths.svg
+   :name: fig-esd-paths
+   :alt: Four copies of the pad's protection between DVDD and DVSS, one
+         per discharge mode, with the current's path drawn thick. Positive,
+         PAD to DVSS: through the PMOS drain diode onto DVDD, the rail clamp
+         and DVSS to ground; above 10.7 V the output NMOS also snaps back
+         from PAD to DVSS. Negative, PAD to DVSS: from ground through the
+         NMOS drain diode to PAD. Positive, PAD to DVDD: through the PMOS
+         drain diode to the grounded DVDD. Negative, PAD to DVDD: from the
+         grounded DVDD through the rail clamp to DVSS and the NMOS drain
+         diode to PAD; above 9.7 V the PMOS drain also avalanches from DVDD
+         to PAD.
+   :width: 100%
+
+   The current path of each discharge mode through the bidirectional pad.
 
 .. list-table:: Current paths through the bidirectional pad
    :name: tab-esd-paths
@@ -210,14 +260,15 @@ circuit connected to it sees the full pad voltage.
 
 .. _esd-limits:
 
-The foundry measured each device's limit with TLP
--------------------------------------------------
+TLP limits
+----------
 
 The gf180mcu design manual gives :term:`transmission line pulse <TLP>`
 (TLP) measurements of each ESD device. A TLP tester applies rectangular
 pulses 100 ns long with a 10 ns rise, at rising current, and measures the
-voltage, and the leakage current after each one, which the figures plot
-alongside ([ESD-GF180-DRM-14-4]_, [ESD-GF180-DRM-14-5-5]_). The current at
+voltage, and the leakage current after each one ([ESD-GF180-DRM-14-4]_,
+[ESD-GF180-DRM-14-5-5]_). :numref:`fig-esd-tlp-limits` plots the measured
+points of all four devices. The current at
 which the device fails, the :term:`second breakdown current`, scales with
 the device's width, so the manual gives it per micrometre
 (:numref:`tab-esd-limits`).
@@ -253,6 +304,23 @@ through the measured points after snapback meets zero current at 5.8 V,
 and the simulation uses that fit (:doc:`simulation`). The PMOS has no
 snapback: its current rises steadily above its avalanche voltage, to
 failure at about 14 V.
+
+.. figure:: figures/tlp-limits.svg
+   :name: fig-esd-tlp-limits
+   :alt: Two graphs of TLP current per micrometre of width against voltage
+         from 0 to 15 V. Top, the two diodes conduct forward from about
+         1 V and reach about 28 to 30 mA/µm by 4.5 to 5.5 V; they fail at
+         30 mA/µm at 6.7 V and 31 mA/µm at 6.9 V. Bottom, the grounded-gate
+         NMOS blocks to 10.7 V, snaps back to about 6.8 V and rises steeply,
+         its straight-line fit meeting zero current at 5.8 V; it fails at
+         7 mA/µm at 8 V. The grounded-gate PMOS avalanches at 9.7 V with no
+         snapback and fails at 5.3 mA/µm at 14.1 V. Dotted lines mark the
+         8.5 V minimum junction breakdown and the 12 V minimum gate oxide
+         breakdown.
+   :width: 100%
+
+   TLP measurements of the four 6 V ESD devices, with each device's
+   failure point, read from the gf180mcu design manual.
 
 The voltage that the protection reaches must stay below the limits of the
 circuits it protects (:numref:`tab-esd-breakdown`).

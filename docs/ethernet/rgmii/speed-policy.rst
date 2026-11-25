@@ -1,5 +1,5 @@
-Keeping both ports at the same speed
-====================================
+Port speed policy
+=================
 
 How the processor sets up the two Ethernet transceivers so that ports A and
 B run at the same speed in full duplex, which cut-through forwarding needs.
@@ -7,8 +7,8 @@ The registers it uses are on :doc:`mdio`.
 
 .. _rgmii-same-speed:
 
-Cut-through forwarding works only at equal speeds
--------------------------------------------------
+Cut-through forwarding and link speed
+-------------------------------------
 
 evampire forwards frames
 :term:`cut-through <cut-through forwarding>`: it sends each byte out of the
@@ -21,12 +21,27 @@ almost all of it. A frame arriving at 100 Mbit/s cannot leave at
 By requirement, evampire stores no full frame on the forwarding path (see
 :ref:`req-memory`).
 
+:numref:`fig-rgmii-speed-buffer` shows both cases.
+
+.. figure:: speed-buffer.svg
+   :name: fig-rgmii-speed-buffer
+   :alt: Two graphs for a 1518-byte frame against time in microseconds. Left,
+         1000 Mbit/s in and 100 Mbit/s out: the bytes held rise to
+         about 1366, 90 % of the frame, at 12 µs and fall to zero at
+         about 121 µs. Right, 100 Mbit/s in and 1000 Mbit/s out: the
+         bytes the transmitter needs rise ten times faster than the
+         bytes that arrive, so it runs out after the first byte.
+
+   Bytes held, and bytes needed against bytes arrived, when the two
+   ports run at different speeds, for a 1518-byte frame.
+
 .. _rgmii-policy:
 
-Both ports link at the highest speed they share, in full duplex
----------------------------------------------------------------
+Speed set-up
+------------
 
-Every port supports 1000, 100 and 10 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
+Both ports link at the highest speed they share, in full duplex
+(:numref:`fig-rgmii-speed-policy`). Every port supports 1000, 100 and 10 Mbit/s (see :ref:`the transceiver requirements <req-transceivers>`).
 The processor sets up the transceivers as follows:
 
 #. It sets both transceivers to advertise 1000 Mbit/s full duplex
@@ -52,8 +67,8 @@ received and sent on any port whose link is up.
 
 .. _rgmii-slow-partner:
 
-A slower partner brings both ports down to its speed
-----------------------------------------------------
+Slower link partners
+--------------------
 
 If the two ports come up at different speeds, forwarding stays off. The
 processor removes the higher speeds from the faster port's advertisement
@@ -84,8 +99,8 @@ the restricted port, so both ports reach the highest speed they now share.
 
 .. _rgmii-error-forwarding:
 
-A forwarded frame with an error is passed on marked as an error
----------------------------------------------------------------
+Error forwarding
+----------------
 
 A forwarded frame that arrives with RX_CTL showing an error is passed on
 with TX_CTL showing an error on the same byte, that is high then low
@@ -93,6 +108,26 @@ with TX_CTL showing an error on the same byte, that is high then low
 transceiver then sends an error on the cable, and the far end discards the
 frame. The frame is already being sent when the error arrives, so it cannot
 be dropped instead.
+
+:numref:`fig-rgmii-error-forward` shows the error passed on.
+
+.. wavedrom::
+   :name: fig-rgmii-error-forward
+   :alt: Timing diagram: RX_CTL is high except for one byte where it is high
+         then low, marking an error. A few clock cycles later TX_CTL is high
+         then low on the same byte.
+   :caption: An error received on RX_CTL and passed on, a few cycles later, on
+             TX_CTL.
+
+   { "signal": [
+       { "name": "RXC", "wave": "p.....", "period": 2, "phase": -0.5 },
+       { "name": "RX_CTL", "wave": "1....01....." },
+       {},
+       { "name": "TXC", "wave": "p.....", "period": 2, "phase": -0.5 },
+       { "name": "TX_CTL", "wave": "1........01." }
+     ],
+     "config": { "hscale": 1 }
+   }
 
 Open questions
 --------------

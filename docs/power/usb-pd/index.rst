@@ -22,88 +22,29 @@ The pages quote two specifications, linked from the
 capacitances, *dc* duty cycles and *n* counts. The pages use the same names,
 so that each can be found in the specifications.
 
-How a USB Type-C port gets power
---------------------------------
-
-:doc:`type-c-power`
-   The source, the sink, the connector and the configuration channel wires.
-:doc:`resistor-advertisement`
-   How the source's pull-up tells the sink how much current it may draw at
-   5 V.
-:doc:`attach`
-   How two dual-role ports find each other and settle on who supplies power.
-:doc:`start-up`
-   The power a USB Type-C charger makes available before any negotiation.
-
-How the two ends agree on more power
-------------------------------------
-
-:doc:`power-levels`
-   The voltages and currents USB Power Delivery offers, and the messages that
-   carry offers and requests.
-:doc:`negotiation`
-   The message exchange that sets up a power contract, and its time limits.
-:doc:`source-sink`
-   What the source and the sink each do to set up and keep a contract.
-:doc:`cables`
-   How a port powers and queries the chip inside a marked cable.
-:doc:`role-changes`
-   Swapping the power role, the data role and VCONN, fast role swap, and
-   Hard Reset.
-
-How evampire uses the power
----------------------------
-
-:doc:`power-translation`
-   The USB source offers that fit the power granted by Power over Ethernet.
-:doc:`two-ports`
-   Sharing the power budget between two USB Type-C ports.
-:doc:`monitoring`
-   Measuring and limiting the power on each port.
-
-How the messages are carried
-----------------------------
-
-:doc:`packets`
-   How a message is framed, coded and checked.
-:doc:`cc-signalling`
-   The electrical signal on the configuration channel.
-
-What evampire needs to build it
--------------------------------
-
-:doc:`software`
-   What the processor must do to send and receive messages, and the
-   hardware helpers that reduce it.
-:doc:`analogue`
-   The analogue circuits for one port.
-:doc:`cc-protection`
-   Protecting the CC pins against a short to VBUS, and how that differs
-   from electrostatic discharge.
-:doc:`on-chip-or-external`
-   The gf180mcu voltage limits, and which circuits can be on the chip.
+:doc:`port-power`
+   The source, the sink and the configuration channel, the resistor
+   advertisement, attaching, and the power available at start-up.
+:doc:`contracts`
+   Power levels, negotiating a contract, what the source and the sink each
+   do, cables, and changing roles.
+:doc:`messages`
+   Packets and the electrical signal on the configuration channel.
+:doc:`power-use`
+   Offers from the Power over Ethernet budget, two ports, and monitoring the
+   power.
+:doc:`implementation`
+   The processor's work, the analogue circuits, CC protection and the
+   gf180mcu voltage limits.
 :doc:`references`
    The documents cited on these pages.
 
 .. toctree::
    :hidden:
 
-   type-c-power
-   resistor-advertisement
-   attach
-   start-up
-   power-levels
-   negotiation
-   source-sink
-   cables
-   role-changes
-   power-translation
-   two-ports
-   monitoring
-   packets
-   cc-signalling
-   software
-   analogue
-   cc-protection
-   on-chip-or-external
+   port-power
+   contracts
+   messages
+   power-use
+   implementation
    references

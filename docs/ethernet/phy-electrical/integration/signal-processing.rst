@@ -1,7 +1,7 @@
 .. _phy-int-dsp:
 
-Signal processing: work per symbol and the 8 ns decision loop
-=============================================================
+Integrated signal processing
+============================
 
 This page states what the digital signal processing of one port must do
 each 8 ns symbol period, how that depends on cable reach, and the one loop
@@ -10,30 +10,51 @@ the logic: those are options on :doc:`cells`.
 
 .. _phy-int-work:
 
-The work is set per symbol, not per clock
------------------------------------------
+Work per symbol
+---------------
 
 Every 125 MBd symbol period (8 ns, :clause:`40.1.3`), for each of the four
 pairs, the receiver evaluates one echo canceller, three near-end crosstalk
 cancellers, a feed-forward equaliser and a decision-feedback equaliser, and
-takes one step of the trellis decoder. :ref:`phy-dsp-rate` gives the
-arithmetic: with the 802.3ab tutorial's tap counts, 880 taps, or
-:math:`1.1 \times 10^{11}` multiply-and-adds per second, plus about as
-many operations to adapt the coefficients. A published Broadcom analysis
+takes one step of the trellis decoder. With the 802.3ab tutorial's tap
+counts that is 880 taps, or :math:`1.1 \times 10^{11}` multiply-and-adds
+per second, plus about as many operations to adapt the coefficients
+(:ref:`phy-dsp-rate`). A published Broadcom analysis
 gives more than 150 × 10⁹ operations per second for a gigabit transceiver
 ([PHY-HATAMIAN98]_ abstract).
 
 The logic can meet this at any clock and parallelism whose product gives
 880 taps every 8 ns: for example one copy of each filter at 125 MHz, or two
-copies at 62.5 MHz, each handling alternate symbols. Every filter except
+copies at 62.5 MHz, each handling alternate symbols
+(:numref:`fig-phy-int-parallel`). Every filter except
 the decision loop below can be pipelined and split into parallel paths,
 so for them the clock is a trade between area and power,
 not a limit.
 
+.. wavedrom::
+   :caption: One filter copy at 125 MHz handles every symbol; two copies,
+             A and B, at 62.5 MHz each handle alternate symbols, doing the
+             same work per 8 ns.
+   :name: fig-phy-int-parallel
+   :alt: Timing diagram of symbols n to n+7, one per 8 ns. Row "125 MHz",
+         one copy, handles each symbol in its own 8 ns slot. Rows "A,
+         62.5 MHz" and "B, 62.5 MHz", two copies, each take 16 ns per
+         symbol: A
+         handles n, n+2, n+4 and n+6, and B handles n+1, n+3, n+5 and n+7.
+
+   { "signal": [
+       { "name": "symbols", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
+       { "name": "125 MHz", "wave": "========", "data": ["n", "n+1", "n+2", "n+3", "n+4", "n+5", "n+6", "n+7"] },
+       { "name": "A, 62.5 MHz", "wave": "=.=.=.=.", "data": ["n", "n+2", "n+4", "n+6"] },
+       { "name": "B, 62.5 MHz", "wave": "x=.=.=.=.", "data": ["n+1", "n+3", "n+5", "n+7"] }
+     ],
+     "config": { "hscale": 1 }
+   }
+
 .. _phy-int-reach-taps:
 
-Shorter cable means a shorter echo canceller
---------------------------------------------
+Echo canceller length and reach
+-------------------------------
 
 The echo canceller must span the round trip to the furthest reflection it
 cancels. The propagation delay of a link segment is at most 570 ns for
@@ -66,8 +87,9 @@ cancels. The propagation delay of a link segment is at most 570 ns for
 For :math:`L = 100` m, :math:`N_\text{echo} \le 2 \times 5.7 \times 100 / 8
 = 143` taps; the tutorial's design point uses 120
 ([PHY-TUT98]_ slide 51), because reflections from the far end are weakened
-twice by the cable. :numref:`tab-phy-int-reach-taps` gives the upper bound
-at other reaches (estimate). The near-end crosstalk cancellers model
+twice by the cable. :numref:`tab-phy-int-reach-taps` and
+:numref:`fig-phy-int-reach` give the upper bound at other reaches
+(estimate). The near-end crosstalk cancellers model
 coupling close to the connector and do not scale with reach. The equalisers
 correct the cable's spreading, which grows with length, so their tap counts
 at 100 m are an upper bound for shorter reach.
@@ -103,8 +125,8 @@ counts for each reach.
 
 .. _phy-int-shift-add:
 
-Most multiplications are shifts
--------------------------------
+Shift-and-add multiplication
+----------------------------
 
 The echo and crosstalk cancellers multiply a coefficient by a transmitted
 symbol. A PAM-5 symbol is one of −2, −1, 0, +1 and +2, so the product needs
@@ -116,8 +138,8 @@ samples.
 
 .. _phy-int-adapt-split:
 
-Adaptation can run slower than the filters
-------------------------------------------
+Coefficient adaptation rate
+---------------------------
 
 The filters must run every symbol, but their coefficients change slowly:
 they track the cable and temperature. One alternative splits the work.
@@ -158,12 +180,25 @@ time each coefficient gets
 updates: 44 000 for :math:`K = 1000`. Whether that is enough for the
 adaptation to converge, and whether the error terms can be collected
 without moving 880 values every few symbols, is open; a simulation of the
-training sequence answers it.
+training sequence answers it. :numref:`fig-phy-int-adapt-split` shows the
+split.
+
+.. graphviz:: adapt-split.dot
+   :name: fig-phy-int-adapt-split
+   :caption: The filters run every symbol in hardware; an update engine
+             changes their coefficients K times less often.
+   :alt: Samples enter filters in hardware that run every 8 ns symbol and
+         output equalised samples. Error terms go down to an update
+         engine, in slower hardware or software, running K times less
+         often, which sends new coefficients back, drawn dashed. A note
+         gives, for K = 1000, 1.1 × 10^8 updates per second and 44 000
+         updates per coefficient in 350 ms.
+   :align: center
 
 .. _phy-int-decision-loop:
 
-The decision loop must close in one 8 ns symbol period
-------------------------------------------------------
+Decision loop
+-------------
 
 The decision-feedback equaliser subtracts the tails of symbols the receiver
 has already decided, and the trellis decoder's decisions depend on that

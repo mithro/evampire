@@ -6,8 +6,8 @@ specification [USBSER-USB2]_, and works out what each one requires of the
 circuit or the software that meets it. :doc:`software-cost` uses these
 figures.
 
-The bit time and its tolerance
-------------------------------
+Bit time and tolerance
+----------------------
 
 The bit time is the reciprocal of the bit rate:
 
@@ -37,8 +37,8 @@ which is 11.97 Mbit/s to 12.03 Mbit/s, or a bit time of 83.13 ns to
 ± 0.05 % ([USBSER-USB2]_ section 7.1.11). The tolerance covers every source
 of error: initial accuracy, supply, temperature and ageing.
 
-Edge timing: what is sent and what must be received
----------------------------------------------------
+Transmit and receive edge timing
+--------------------------------
 
 The sender's edges may deviate from their ideal positions by small amounts,
 and the receiver must cope with much larger deviations, because the signal
@@ -71,14 +71,16 @@ Table 7‑4). :numref:`tab-usbser-jitter` gives the limits.
      - ± 9
      - Edges evampire must accept
 
-The source jitter includes the effect of the sender's frequency error. The
+:numref:`fig-usbser-bit-cell` draws these windows around the edges of one
+bit. The source jitter includes the effect of the sender's frequency
+error. The
 receiver must decode edges anywhere within a quarter of a bit time either
 side of the ideal position, and the specification notes that a receiver
 sampling four times per bit, with a simple digital phase-locked loop, can
 meet this ([USBSER-USB2]_ section 7.1.15.1).
 
-Sampling margin in the receiver
--------------------------------
+Receiver sampling margin
+------------------------
 
 A receiver that takes one sample per bit, placed in the middle of the bit,
 has this margin against the receive jitter:
@@ -105,6 +107,22 @@ has this margin against the receive jitter:
        ([USBSER-USB2]_ Table 7‑9)
      - ns
 
+:numref:`fig-usbser-bit-cell` shows the sample in the middle of the bit and
+the margin on each side.
+
+.. figure:: timing/bit-cell.svg
+   :name: fig-usbser-bit-cell
+   :alt: One 83.33 ns bit with ideal edges at 0 ns and 83.33 ns. Around each
+         edge, windows show the sent limits TDJ1 ± 3.5 ns and TDJ2 ± 4 ns
+         for paired transitions, and the accepted limits TJR1 ± 18.5 ns and
+         TJR2 ± 9 ns for paired transitions. A dashed line marks the sample
+         at 41.67 ns, with a margin of 23.2 ns to the edge of each TJR1
+         window, at 18.5 ns and 64.83 ns.
+   :align: center
+
+   Edge windows of one full-speed bit and the margin of a sample taken in
+   its middle.
+
 If the sampling instants are set once, at the SYNC pattern, and then run
 freely, they drift against the sender's bits by:
 
@@ -129,7 +147,7 @@ freely, they drift against the sender's bits by:
      - Relative frequency difference between sender and receiver
      - (fraction)
 
-Two cases show what this means:
+Two cases show what this means (:numref:`fig-usbser-drift`):
 
 * *Correcting at every edge.* Bit stuffing guarantees an edge at least every
   7 bit times ([USBSER-USB2]_ section 7.1.9). With a host at the limit of
@@ -145,14 +163,24 @@ Two cases show what this means:
   = 437 \times 10^{-6}` (437 ppm), and any error in placing the first
   sample reduces this further.
 
+.. figure:: timing/drift.svg
+   :name: fig-usbser-drift
+   :alt: Graph of drift in ns against the number of bits since the last
+         correction, 0 to 700. A line for ε = 0.003 reaches 1.75 ns at 7
+         bits and 159 ns at 636 bits. A line for ε = 437 ppm reaches the
+         dashed 23.2 ns margin at 636 bits.
+   :align: center
+
+   Drift of a free-running sampling instant for the two cases above.
+
 A receiver therefore either corrects its sampling instant at each edge, or
 holds its clock within a few hundred parts per million of the host's (see
-`Clock accuracy and tracking the host's frames`_).
+`Clock accuracy and frame tracking`_).
 
 .. _usbser-placing-edges:
 
-Placing transmitted edges
--------------------------
+Transmit edge placement
+-----------------------
 
 A transmitter that changes its output only on the edges of a clock of
 frequency :math:`f_\text{tx}` can place each edge exactly when
@@ -187,10 +215,23 @@ As an example, evampire's existing 125 MHz reference (see
 periods last 80 ns or 88 ns, errors of −3.33 ns and +4.67 ns. The second
 is outside ± 3.5 ns, so edges timed from 125 MHz directly do not meet
 *TDJ1*. A clock that is a multiple of 12 MHz, such as 48 MHz, has no such
-error.
+error (:numref:`fig-usbser-edge-placement`).
 
-Inter-packet delay and the reply deadline
------------------------------------------
+.. figure:: timing/edge-placement.svg
+   :name: fig-usbser-edge-placement
+   :alt: Timing diagram from 0 ns to 250 ns. A 125 MHz clock ticks every
+         8 ns. Bits timed from it last 10 periods, 80 ns, ending 3.33 ns
+         early, inside the ± 3.5 ns window after the previous edge; or 11
+         periods, 88 ns, ending 4.67 ns late, outside the window. A 48 MHz
+         clock gives bits of exactly 4 periods, 83.33 ns, each ending in the
+         middle of its window.
+   :align: center
+
+   Transmitted bits timed from a 125 MHz clock and from a 48 MHz clock,
+   against the TDJ1 window.
+
+Inter-packet delay and reply deadline
+-------------------------------------
 
 The time between packets runs from the end of one packet to the start of
 the next ([USBSER-USB2]_ section 7.1.18.1). The end is the change from SE0
@@ -201,21 +242,28 @@ answering the host.
 
 .. wavedrom::
    :caption: The device must start its reply between 2 and 6.5 bit times
-             after the end of the host's packet.
+             after the end of the host's packet (not to scale).
    :name: fig-usbser-turnaround
    :alt: Timing diagram: the host sends a data packet ending with an end of
-         packet; after a gap of 2 to 6.5 bit times the device starts its
-         ACK handshake.
+         packet; after a gap of 2 to 6.5 bit times, 166.7 ns to 541.7 ns,
+         the device starts its ACK handshake. The 6.5 bit times split into
+         the receiver delay t_rx, the time to decide t_reply and the driver
+         delay t_tx. The host waits 16 to 18 bit times, 1.333 µs to 1.5 µs,
+         before it gives up.
 
    {"signal": [
-     {"name": "host", "wave": "3...5.x.....",
+     {"name": "host", "wave": "3...5.x.......",
       "data": ["DATA packet", "EOP"]},
-     {"name": "gap", "wave": "x.....4...x.",
+     {"name": "gap", "wave": "x.....4...x...",
       "data": ["2 to 6.5 bit times"]},
-     {"name": "device", "wave": "x.........3.",
-      "data": ["ACK"]}
+     {"name": "device", "wave": "x.........3...",
+      "data": ["ACK"]},
+     {"name": "inside 6.5", "wave": "x.....56.7x...",
+      "data": ["t_rx", "t_reply", "t_tx"]},
+     {"name": "host timeout", "wave": "x.....8.......",
+      "data": ["host waits 16 to 18 bit times, 1.333 µs to 1.5 µs"]}
    ],
-   "config": {"hscale": 2.5}}
+   "config": {"hscale": 1}}
 
 The limits are ([USBSER-USB2]_ section 7.1.18.1, section 7.1.19.1,
 Table 7‑14):
@@ -263,12 +311,12 @@ works out what this takes. The deadline applies to every token addressed to
 the device, including the IN tokens the host sends repeatedly when the
 device has nothing to send.
 
-The end of a packet
--------------------
+End of packet
+-------------
 
 The end of packet has several rules that a receiver and a transmitter must
-follow ([USBSER-USB2]_ section 7.1.7.4.1, section 7.1.13.2.1, section 7.1.4.1,
-section 7.1.9.1, Table 7‑9):
+follow (:numref:`fig-usbser-eop`) ([USBSER-USB2]_ section 7.1.7.4.1, section
+7.1.13.2.1, section 7.1.4.1, section 7.1.9.1, Table 7‑9):
 
 * A transmitter sends SE0 for 160 ns to 175 ns (*TFEOPT*, 1.92 to 2.10 bit
   times), then J for one bit time, then releases the line.
@@ -281,12 +329,28 @@ section 7.1.9.1, Table 7‑9):
   must accept up to six bit times without a transition before the end of
   packet, without reporting a stuffing error.
 
-Clock accuracy and tracking the host's frames
----------------------------------------------
+.. figure:: timing/eop.svg
+   :name: fig-usbser-eop
+   :alt: D+ and D− at the end of a packet. During the last bit, a K, D+ is
+         low and D− high. Both then go low for the SE0, sent for 160 ns to
+         175 ns (TFEOPT); D+ then goes high for one bit of J, after which
+         the transmitter releases the line and it stays at idle. An arrow
+         shows that the receiver accepts an SE0 from 82 ns (TFEOPR). A note
+         says that during a normal J/K change both lines may be low for up
+         to 14 ns (TFST), so the SE0 filter must be longer than 14 ns and
+         shorter than 82 ns, and that hubs may stretch the last bit to six
+         bit times.
+   :align: center
+
+   End of packet on D+ and D−, with the transmitter and receiver timing
+   rules (schematic).
+
+Clock accuracy and frame tracking
+---------------------------------
 
 The device's bit clock has to be within ± 0.25 % of 12 MHz to transmit, and
 its receiver needs either edge correction or a closer match
-(`Sampling margin in the receiver`_). Three sources can provide it:
+(`Receiver sampling margin`_). Three sources can provide it:
 
 * *A crystal-derived clock.* evampire already has a 125 MHz reference for
   Ethernet (:ref:`arch-clock`), and gigabit Ethernet requires that
@@ -297,6 +361,19 @@ its receiver needs either edge correction or a closer match
   ([USBSER-USB2]_ section 7.1.12, Table 7‑9). A device can count its own
   clock cycles between them and adjust its oscillator.
 * *A dedicated crystal* for USB, at the cost of a board part.
+
+:numref:`fig-usbser-clocks` shows the three.
+
+.. graphviz:: timing/clocks.dot
+   :name: fig-usbser-clocks
+   :caption: Three sources for the 48 MHz USB clock.
+   :alt: Three rows. (a) The 125 MHz Ethernet reference feeds a phase-locked
+         loop that makes the 48 MHz USB clock, within 100 ppm. (b) A
+         trimmable local oscillator makes the 48 MHz clock; a counter
+         counts its cycles between start-of-frame tokens, 48 000 per 1 ms
+         frame or 20.8 ppm per count, and trims the oscillator. (c) A
+         dedicated crystal makes the 48 MHz clock.
+   :align: center
 
 Counting a clock of frequency :math:`f` over one frame gives a resolution
 of:

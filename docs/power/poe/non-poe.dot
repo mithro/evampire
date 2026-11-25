@@ -1,0 +1,29 @@
+// What detection sees at a port without Power over Ethernet and at a
+// powered device. From power-sourcing.rst (IEEE 802.3 145.2.6).
+//
+// Fill colours: far-end equipment #fbe5d6, outcomes #e2f0d9 (powered)
+// and #f4cccc (no power). Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph non_poe {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=1.7, height=0.6, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10];
+
+    p1 [pos="0.9,1.8!", label="Detection\n2.8–10 V", fillcolor="#fff2cc", width=1.2];
+    e1 [pos="3.1,1.8!", label="Equipment without\nPower over Ethernet:\ncentre taps through\ncapacitors", height=0.9,
+        fillcolor="#fbe5d6", width=1.8];
+    o1 [pos="5.5,1.8!", label="open at DC:\nfails, no power", fillcolor="#f4cccc", width=1.5];
+    p1 -- e1 [label="measures"];
+    e1 -- o1 [style=dotted];
+
+    p2 [pos="0.9,0.4!", label="Detection\n2.8–10 V", fillcolor="#fff2cc", width=1.2];
+    e2 [pos="3.1,0.4!", label="Powered device:\n25 kΩ signature", fillcolor="#fbe5d6",
+        width=1.8];
+    o2 [pos="5.5,0.4!", label="valid: power\nmay be applied", fillcolor="#e2f0d9", width=1.5];
+    p2 -- e2 [label="measures"];
+    e2 -- o2 [style=dotted];
+}

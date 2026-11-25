@@ -1,0 +1,236 @@
+# /// script
+# requires-python = ">=3.10"
+# ///
+"""Draw the cross-sections for the USB Power Delivery implementation pages.
+Run with:
+
+    uv run docs/power/usb-pd/sections.py
+
+Writes:
+
+vertical-pnp.svg
+    The vertical PNP transistor (analogue.rst).
+deep-nwell.svg
+    A P-well inside a deep N-well, with the junction breakdowns
+    (on-chip-or-external.rst).
+custom-structures.svg
+    Four custom high-voltage structures (on-chip-or-external.rst).
+breakdown-sites.svg
+    Where each documented breakdown occurs (on-chip-or-external.rst).
+
+The drawings are schematic: shapes and spacings are not to scale. The
+colours follow docs/high-voltage/figures.py: blue for P-type, orange for
+N-type, grey for insulator, purple for polysilicon.
+
+SPDX-License-Identifier: Apache-2.0
+"""
+
+from svgfig import GREY, INK, line, rect, svg, text, write
+
+SUB = "#dbe8f5"        # P-type substrate
+PWELL = "#c6dbf0"      # P-well, a little darker than the substrate
+PPLUS = "#7fa7d6"      # P+ contact or emitter
+NWELL = "#fbd9b5"      # N-type well
+NPLUS = "#f4b183"      # N+ contact
+OXIDE = "#e8e8e8"      # insulator
+POLY = "#c9a0dc"       # polysilicon
+METAL = "#9aa5b1"      # metal
+
+
+def region(x, y, w, h, fill, label=None, size=12, ly=None):
+    out = [rect(x, y, w, h, fill)]
+    if label:
+        out.append(text(x + w / 2, ly if ly else y + h / 2 + 4, label, size,
+                        "middle"))
+    return out
+
+
+def leader(x0, y0, x1, y1, label, anchor="start", size=11):
+    dx = 4 if anchor == "start" else -4
+    return [line(x0, y0, x1, y1, INK, 0.8),
+            text(x1 + dx, y1 + 4, label, size, anchor)]
+
+
+def vertical_pnp():
+    body = []
+    body += region(20, 90, 600, 140, SUB, "P substrate: collector", 13,
+                   ly=215)
+    body += region(130, 90, 310, 90, NWELL)
+    body.append(text(395, 172, "N-well: base", 13, "middle"))
+    body += region(190, 90, 90, 24, PPLUS, "P+ emitter", 11)
+    body += region(360, 90, 60, 24, NPLUS, "N+", 11)
+    body += region(520, 90, 70, 24, PPLUS, "P+", 11)
+    for x, lab in ((235, "E"), (390, "B"), (555, "C, 0 V")):
+        body.append(line(x, 90, x, 58, INK, 1.4))
+        body.append(text(x, 50, lab, 13, "middle", "bold"))
+    body.append(line(235, 118, 235, 200, INK, 1.4, arrow="end"))
+    body.append(text(245, 140, "holes cross the base", 11))
+    body.append(text(245, 154, "to the substrate", 11))
+    body.append(text(20, 22, "VBE 0.63 to 0.83 V, current gain 0.8 to 2.4",
+                     13))
+    body.append(text(620, 22, "the collector is always the substrate", 12,
+                     "end", fill=GREY))
+    return svg(640, 245, body, "Vertical PNP cross-section")
+
+
+def deep_nwell():
+    body = []
+    body += region(20, 110, 640, 190, SUB)
+    body.append(text(30, 292, "P substrate, 0 V", 13))
+    body += region(80, 110, 410, 120, NWELL)
+    body.append(text(285, 222, "deep N-well", 12, "middle"))
+    body += region(150, 110, 270, 75, PWELL, "P-well", 12, ly=170)
+    body += region(95, 110, 40, 20, NPLUS, "N+", 11)
+    body += region(190, 110, 40, 20, PPLUS, "P+", 11)
+    body += region(290, 110, 40, 20, NPLUS, "N+", 11)
+    body += region(375, 110, 40, 20, NPLUS, "N+", 11)
+    body += region(330, 104, 45, 6, OXIDE)
+    body += region(330, 92, 45, 12, POLY)
+    body.append(text(352, 84, "NMOS in the P-well", 11, "middle"))
+    body += region(540, 110, 70, 60, NWELL, "N-well", 11, ly=145)
+    body += leader(115, 110, 115, 46, "")
+    body.append(text(120, 26, "N+ contact of the deep N-well:", 11))
+    body.append(text(120, 42, "tied to the 6 V supply by the design rules",
+                     11))
+    body += leader(420, 160, 470, 76, "")
+    body.append(text(474, 62, "P-well to deep N-well:", 11))
+    body.append(text(474, 78, "14.732 V in the models", 11))
+    body += leader(300, 230, 330, 262, "deep N-well to P substrate:", "start")
+    body.append(text(334, 282, "30.48 V in the models", 11))
+    body += leader(575, 170, 575, 196, "")
+    body.append(text(575, 214, "N-well to P substrate:", 11, "middle"))
+    body.append(text(575, 230, "10 V min, 14 V typical", 11, "middle"))
+    return svg(680, 310, body, "Deep N-well cross-section")
+
+
+def panel(ox, oy, title):
+    return [text(ox + 150, oy + 18, title, 13, "middle", "bold"),
+            rect(ox, oy + 100, 300, 110, SUB),
+            text(ox + 150, oy + 200, "P substrate, 0 V", 11, "middle")]
+
+
+def stacked(ox, oy):
+    b = panel(ox, oy, "Stacked transistors in isolated wells")
+    for k, v in enumerate(("V/3", "2V/3", "V")):
+        x = ox + 15 + k * 95
+        b += region(x, oy + 100, 80, 60, NWELL)
+        b += region(x + 12, oy + 100, 56, 32, PWELL)
+        b += region(x + 14, oy + 100, 12, 9, NPLUS)
+        b += region(x + 54, oy + 100, 12, 9, NPLUS)
+        b += region(x + 26, oy + 96, 28, 4, OXIDE)
+        b += region(x + 26, oy + 87, 28, 9, POLY)
+        b.append(text(x + 40, oy + 124, "NMOS", 10, "middle"))
+        b.append(text(x + 40, oy + 150, f"well at {v}", 10, "middle"))
+    b.append(text(ox + 150, oy + 48, "each transistor holds V/3", 11,
+                  "middle"))
+    b.append(text(ox + 150, oy + 64, "the top well holds V to the substrate",
+                  11, "middle"))
+    return b
+
+
+def drain_extended(ox, oy):
+    b = panel(ox, oy, "Drain-extended transistor")
+    b += region(ox + 20, oy + 100, 260, 50, PWELL)
+    b += region(ox + 130, oy + 100, 150, 55, NWELL)
+    b.append(text(ox + 205, oy + 145, "lightly doped drain", 10, "middle"))
+    b += region(ox + 40, oy + 100, 40, 18, NPLUS, "N+", 10)
+    b += region(ox + 230, oy + 100, 40, 18, NPLUS, "N+", 10)
+    b += region(ox + 80, oy + 92, 90, 8, OXIDE)
+    b += region(ox + 80, oy + 80, 90, 12, POLY, "gate", 10, ly=oy + 90)
+    for x, lab in ((ox + 60, "source"), (ox + 250, "drain, high V")):
+        b.append(line(x, oy + 100, x, oy + 70, INK, 1.2))
+        b.append(text(x, oy + 64, lab, 10, "middle"))
+    b.append(text(ox + 150, oy + 40, "the drift region spreads the voltage",
+                  11, "middle"))
+    return b
+
+
+def mim(ox, oy):
+    b = panel(ox, oy, "Series MIM capacitor")
+    b += region(ox + 20, oy + 76, 260, 24, OXIDE, "insulator", 10)
+    b += region(ox + 60, oy + 64, 180, 12, METAL)
+    b += region(ox + 60, oy + 56, 180, 8, "#ffffff")
+    b += region(ox + 80, oy + 44, 140, 12, METAL)
+    b.append(text(ox + 150, oy + 36, "top plate", 10, "middle"))
+    b += leader(ox + 240, oy + 70, ox + 262, oy + 52, "bottom plate", "start",
+                10)
+    b.append(text(ox + 150, oy + 150, "both plates sit on the insulator,", 10,
+                  "middle"))
+    b.append(text(ox + 150, oy + 164, "not on a junction", 10, "middle"))
+    return b
+
+
+def poly(ox, oy):
+    b = panel(ox, oy, "Polysilicon resistor on field oxide")
+    b += region(ox + 20, oy + 70, 260, 30, OXIDE, "field oxide", 10,
+                ly=oy + 94)
+    b += region(ox + 50, oy + 58, 200, 12, POLY)
+    for x, lab in ((ox + 60, "VBUS"), (ox + 240, "tap")):
+        b += region(x - 8, oy + 46, 16, 12, METAL)
+        b.append(text(x, oy + 40, lab, 10, "middle"))
+    b.append(text(ox + 150, oy + 150, "the oxide holds VBUS to the", 10,
+                  "middle"))
+    b.append(text(ox + 150, oy + 164, "substrate: no junction", 10,
+                  "middle"))
+    return b
+
+
+def custom_structures():
+    body = []
+    body += stacked(10, 10)
+    body += drain_extended(340, 10)
+    body += mim(10, 250)
+    body += poly(340, 250)
+    return svg(650, 470, body, "Custom high-voltage structures")
+
+
+def breakdown_sites():
+    """Where each documented breakdown occurs (on-chip-or-external.rst)."""
+    body = []
+    body += region(10, 170, 660, 110, SUB, "P substrate, 0 V", 12, ly=268)
+    # NMOS in a P-well.
+    body += region(20, 170, 220, 70, PWELL)
+    body += region(40, 170, 40, 18, NPLUS, "N+", 10)
+    body += region(170, 170, 40, 18, NPLUS, "N+", 10)
+    body += region(80, 162, 90, 8, OXIDE)
+    body += region(80, 150, 90, 12, POLY)
+    body.append(text(130, 232, "6 V NMOS in a P-well", 10, "middle"))
+    # N-well.
+    body += region(265, 170, 80, 60, NWELL, "N-well", 10, ly=206)
+    # Field-oxide parasitic transistor.
+    body += region(370, 170, 30, 18, NPLUS, "N+", 10)
+    body += region(480, 170, 30, 18, NPLUS, "N+", 10)
+    body += region(400, 155, 80, 15, OXIDE)
+    body += region(395, 143, 90, 12, METAL)
+    body.append(text(440, 210, "field oxide, metal 1 above", 10, "middle"))
+    # MIM capacitor on the insulator.
+    body += region(535, 150, 125, 20, OXIDE)
+    body += region(550, 140, 95, 10, METAL)
+    body += region(550, 134, 95, 6, "#ffffff")
+    body += region(560, 124, 75, 10, METAL)
+    body.append(text(597, 210, "MIM capacitor", 10, "middle"))
+    marks = [(125, 166, 40, "1"), (190, 188, 70, "2"), (150, 179, 100, "3"),
+             (330, 230, 130, "4"), (440, 162, 40, "5"), (597, 137, 70, "6")]
+    for x, y, ytop, n in marks:
+        body.append(line(x, y, x, ytop + 6, INK, 0.8))
+        body.append(f'<circle cx="{x}" cy="{ytop}" r="8" fill="#ffffff" '
+                    f'stroke="{INK}"/>')
+        body.append(text(x, ytop + 4, n, 10, "middle"))
+    notes = ["1 gate oxide, under the gate: 7 V (3.3 V), 12 V (6 V)",
+             "2 N+ to P-well: 8.5 V",
+             "3 BVDSS of the 6 V NMOS: 8.5 V",
+             "4 N-well to P substrate: 10 V",
+             "5 metal over field oxide turns on N+ to N+: 8.5 V",
+             "6 MIM dielectric: 10 V, or 20 V for 1 fF/µm²"]
+    for k, s in enumerate(notes):
+        body.append(text(10 + 340 * (k // 3), 300 + 16 * (k % 3), s, 11))
+    body.append(text(10, 352, "All values are documented minimums.", 11,
+                     fill=GREY))
+    return svg(680, 362, body, "Where each breakdown occurs")
+
+
+if __name__ == "__main__":
+    write("vertical-pnp.svg", vertical_pnp())
+    write("deep-nwell.svg", deep_nwell())
+    write("custom-structures.svg", custom_structures())
+    write("breakdown-sites.svg", breakdown_sites())

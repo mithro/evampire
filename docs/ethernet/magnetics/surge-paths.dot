@@ -1,0 +1,59 @@
+// The two kinds of surge at a standard port. A common-mode surge raises
+// the whole cable and is held off across the transformer; only a little
+// couples through the winding capacitance. A differential surge passes
+// through the transformer like a signal and is clamped by protection
+// diodes on the transceiver side.
+//
+// Fixed grid, positions in inches. Top: common-mode surge. Bottom:
+// differential surge.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph surge_paths {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.6];
+
+    node [shape=plaintext, style="", width=3.2, height=0.25, fontsize=10];
+    h1 [pos="2.7,3.3!", label="Common-mode surge: whole cable raised"];
+    h2 [pos="2.7,1.45!", label="Differential surge: between the two wires"];
+
+    // ---- Common mode. ----
+    node [shape=box, style=filled, fontsize=9];
+    t1 [pos="0.5,2.55!", width=0.9, height=0.9, fillcolor="#dbe8f5",
+        label="trans-\nceiver"];
+    d1 [pos="1.55,2.55!", width=0.8, height=0.9, fillcolor="#ffffff",
+        label="protection\ndiodes"];
+    x1 [pos="2.75,2.55!", width=0.9, height=0.9, fillcolor="#fff2cc",
+        label="trans-\nformer\nholds it off"];
+    c1 [pos="4.65,2.55!", width=1.0, height=0.9, fillcolor="#fbe5d6",
+        label="cable\nboth wires\nraised by\nthe surge"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    k1a [pos="4.4,2.0!"]; k1b [pos="1.55,2.0!"];
+    node [shape=plaintext, style="", width=3.2, height=0.35, fontsize=9];
+    n1 [pos="2.95,1.82!", fontcolor="#7f7f7f",
+        label="small coupling through the winding capacitance"];
+
+    t1 -- d1 -- x1;
+    x1 -- c1 [color="#c00000", penwidth=3.0];
+    c1 -- k1a -- k1b -- d1 [style=dashed, color="#7f7f7f"];
+
+    // ---- Differential. ----
+    node [shape=box, style=filled, fontsize=9];
+    t2 [pos="0.5,0.65!", width=0.9, height=0.9, fillcolor="#dbe8f5",
+        label="trans-\nceiver"];
+    d2 [pos="1.55,0.65!", width=0.8, height=0.9, fillcolor="#ffffff",
+        label="protection\ndiodes\nclamp it"];
+    x2 [pos="2.75,0.65!", width=0.9, height=0.9, fillcolor="#fff2cc",
+        label="trans-\nformer\npasses it"];
+    c2 [pos="4.65,0.65!", width=1.0, height=0.9, fillcolor="#fbe5d6",
+        label="cable\nsurge between\nthe wires"];
+    node [shape=plaintext, style="", width=1.6, height=0.2, fontsize=9];
+    n2 [pos="2.5,0.0!", fontcolor="#c55a11", width=3.4,
+        label="passes like a signal, clamped before the transceiver"];
+
+    t2 -- d2;
+    d2 -- x2 -- c2 [color="#c55a11", penwidth=3.0];
+}

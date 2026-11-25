@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="200" viewBox="0 0 660 200" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="660" height="200" fill="white"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect x="15" y="75" width="70" height="40" fill="#f2f2f2" stroke="#222222"/>
+<text x="50.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">preamble</text>
+<text x="50.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">7</text>
+<rect x="85" y="75" width="40" height="40" fill="#f2f2f2" stroke="#222222"/>
+<text x="105.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">SFD</text>
+<text x="105.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">1</text>
+<rect x="125" y="75" width="80" height="40" fill="#dbe8f5" stroke="#222222"/>
+<text x="165.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">destination</text>
+<text x="165.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">6</text>
+<rect x="205" y="75" width="70" height="40" fill="#dbe8f5" stroke="#222222"/>
+<text x="240.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">source</text>
+<text x="240.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">6</text>
+<rect x="275" y="75" width="80" height="40" fill="#ffffff" stroke="#222222" stroke-dasharray="4,3"/>
+<text x="315.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">VLAN tag</text>
+<text x="315.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">4, optional</text>
+<rect x="355" y="75" width="90" height="40" fill="#dbe8f5" stroke="#222222"/>
+<text x="400.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">length or type</text>
+<text x="400.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">2</text>
+<rect x="445" y="75" width="120" height="40" fill="#e2f0d9" stroke="#222222"/>
+<text x="505.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">payload</text>
+<text x="505.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">42 or 46 to 1500</text>
+<rect x="565" y="75" width="50" height="40" fill="#fbe5d6" stroke="#222222"/>
+<text x="590.0" y="92.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">FCS</text>
+<text x="590.0" y="107.0" text-anchor="middle" font-size="10" font-weight="normal" fill="#7f7f7f">4</text>
+<text x="15.0" y="31.0" text-anchor="start" font-size="12" font-weight="normal" fill="#7f7f7f">bytes, in the order sent:</text>
+<line x1="15.0" y1="71.0" x2="15.0" y2="63.0" stroke="#222222" stroke-width="1"/>
+<line x1="125.0" y1="71.0" x2="125.0" y2="63.0" stroke="#222222" stroke-width="1"/>
+<line x1="15.0" y1="63.0" x2="125.0" y2="63.0" stroke="#222222" stroke-width="1"/>
+<text x="70.0" y="57.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">lets the receiver lock on</text>
+<line x1="125.0" y1="119.0" x2="125.0" y2="127.0" stroke="#222222" stroke-width="1"/>
+<line x1="615.0" y1="119.0" x2="615.0" y2="127.0" stroke="#222222" stroke-width="1"/>
+<line x1="125.0" y1="127.0" x2="615.0" y2="127.0" stroke="#222222" stroke-width="1"/>
+<text x="370.0" y="142.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">frame: 64 to 1518 bytes, 1522 with one VLAN tag, at most 2000</text>
+<line x1="125.0" y1="159.0" x2="125.0" y2="167.0" stroke="#222222" stroke-width="1"/>
+<line x1="565.0" y1="159.0" x2="565.0" y2="167.0" stroke="#222222" stroke-width="1"/>
+<line x1="125.0" y1="167.0" x2="565.0" y2="167.0" stroke="#222222" stroke-width="1"/>
+<text x="345.0" y="182.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">covered by the FCS</text>
+</svg>

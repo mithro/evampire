@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="220" viewBox="0 0 480 220" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="220" fill="#ffffff"/>
+<text x="102.0" y="24.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">data bits</text>
+<rect x="110.0" y="10.0" width="89.0" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="154.5" y="24.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<rect x="199.0" y="10.0" width="89.0" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="243.5" y="24.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<rect x="288.0" y="10.0" width="89.0" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="332.5" y="24.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">3</text>
+<rect x="377.0" y="10.0" width="89.0" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="421.5" y="24.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">4</text>
+<text x="102.0" y="62.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">4-bit group</text>
+<rect x="110.0" y="48.0" width="356.0" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="288.0" y="62.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">4 data bits</text>
+<text x="102.0" y="100.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">code word</text>
+<rect x="110.0" y="86.0" width="356.0" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="288.0" y="100.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">5-bit code word</text>
+<text x="102.0" y="138.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">code bits</text>
+<rect x="110.0" y="124.0" width="71.2" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="145.6" y="138.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<rect x="181.2" y="124.0" width="71.2" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="216.8" y="138.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<rect x="252.4" y="124.0" width="71.2" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="288.0" y="138.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">3</text>
+<rect x="323.6" y="124.0" width="71.2" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="359.2" y="138.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">4</text>
+<rect x="394.8" y="124.0" width="71.2" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="430.4" y="138.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
+<line x1="110.0" y1="168.0" x2="466.0" y2="168.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="110.0" y1="168.0" x2="110.0" y2="173.0" stroke="#222222" stroke-width="1.2"/>
+<text x="110.0" y="183.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="199.0" y1="168.0" x2="199.0" y2="173.0" stroke="#222222" stroke-width="1.2"/>
+<text x="199.0" y="183.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">10</text>
+<line x1="288.0" y1="168.0" x2="288.0" y2="173.0" stroke="#222222" stroke-width="1.2"/>
+<text x="288.0" y="183.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
+<line x1="377.0" y1="168.0" x2="377.0" y2="173.0" stroke="#222222" stroke-width="1.2"/>
+<text x="377.0" y="183.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">30</text>
+<line x1="466.0" y1="168.0" x2="466.0" y2="173.0" stroke="#222222" stroke-width="1.2"/>
+<text x="466.0" y="183.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">40</text>
+<text x="288.0" y="202.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Time (ns)</text>
+</svg>

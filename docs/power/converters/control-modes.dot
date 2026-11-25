@@ -1,0 +1,92 @@
+// Voltage-mode and peak current-mode control loops, one above the other.
+//
+// Fixed grid (positions in inches): panel (a) has its main row at y=4.5,
+// inputs above at y=5.25 and the feedback return at y=3.7; panel (b) has its
+// main row at y=1.9, inputs above at y=2.6, the current sense at y=1.1 and
+// the feedback return at y=0.3. Edge labels are separate text nodes.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph control_modes {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,6.5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.35, height=0.55,
+           fixedsize=true];
+    edge  [arrowsize=0.7];
+
+    t_a  [pos="3.7,5.75!", shape=plaintext, style="", width=5.0, height=0.25,
+          fontsize=12, label="(a) Voltage-mode control: one loop"];
+    t_b  [pos="3.7,3.15!", shape=plaintext, style="", width=5.0, height=0.25,
+          fontsize=12, label="(b) Peak current-mode control: two loops"];
+
+    // Panel (a).
+    a_ref  [pos="0.8,5.25!", width=1.1, height=0.4, label="Reference",
+            fillcolor="#ffffff"];
+    a_ramp [pos="3.0,5.25!", width=1.3, height=0.4, label="Sawtooth ramp",
+            fillcolor="#ffffff"];
+    a_ea   [pos="0.8,4.50!", width=1.2, label="Error\namplifier"];
+    a_cmp  [pos="3.0,4.50!", label="PWM\ncomparator"];
+    a_drv  [pos="4.85,4.50!", width=1.0, label="Gate\ndriver"];
+    a_ps   [pos="6.55,4.50!", width=1.4, label="Power stage\n(switches, L, C)",
+            fillcolor="#dbe8f5"];
+    a_div  [pos="6.55,3.70!", width=1.4, height=0.45, label="Divider",
+            fillcolor="#ffffff"];
+
+    // Panel (b).
+    b_ref  [pos="0.8,2.65!", width=1.1, height=0.4, label="Reference",
+            fillcolor="#ffffff"];
+    b_slp  [pos="3.0,2.65!", width=1.3, height=0.4, label="Slope\ncompensation",
+            fillcolor="#ffffff"];
+    b_clk  [pos="4.85,2.65!", width=1.0, height=0.4, label="Clock",
+            fillcolor="#ffffff"];
+    b_ea   [pos="0.8,1.9!", width=1.2, label="Error\namplifier"];
+    b_cmp  [pos="3.0,1.9!", label="Current\ncomparator"];
+    b_lat  [pos="4.85,1.9!", width=1.0, label="Latch and\ngate driver"];
+    b_ps   [pos="6.55,1.9!", width=1.4, label="Power stage\n(switches, L, C)",
+            fillcolor="#dbe8f5"];
+    b_sns  [pos="4.85,1.1!", width=1.7, height=0.45,
+            label="Sense resistor (iL)", fillcolor="#ffffff"];
+    b_div  [pos="6.55,0.3!", width=1.4, height=0.45, label="Divider",
+            fillcolor="#ffffff"];
+
+    // Edge labels.
+    node  [shape=plaintext, style="", fontsize=10, width=0.9, height=0.3];
+    la_c  [pos="1.9,4.68!", label="control\nvoltage"];
+    la_p  [pos="3.93,4.68!", width=0.5, label="PWM"];
+    la_g  [pos="5.6,4.68!", width=0.5, label="gate"];
+    la_fb [pos="3.7,3.88!", width=1.6, label="output voltage, scaled"];
+    lb_c  [pos="1.9,2.08!", label="current\nlevel"];
+    lb_r  [pos="3.93,2.08!", width=0.5, label="reset"];
+    lb_s  [pos="5.15,2.3!", width=0.4, label="set"];
+    lb_in [pos="2.05,1.3!", width=1.6, fontcolor="#c55a11",
+           label="inner current loop,\nevery period"];
+    lb_fb [pos="3.7,0.48!", width=2.0, fontcolor="#1f4e79",
+           label="outer voltage loop"];
+
+    // Corners.
+    node  [shape=point, width=0.01, height=0.01, label=""];
+    a_c1  [pos="0.8,3.70!"];
+    b_c1  [pos="0.8,0.3!"];
+    b_c2  [pos="6.2,1.1!"];
+    b_pi  [pos="6.2,1.625!"];
+    b_pv  [pos="6.95,1.625!"];
+    b_pvd [pos="6.95,0.525!"];
+    b_c3  [pos="3.0,1.1!"];
+
+    // Panel (a) loop.
+    a_ref -> a_ea;  a_ramp -> a_cmp;  a_ea -> a_cmp;  a_cmp -> a_drv;
+    a_drv -> a_ps;  a_ps -> a_div;
+    a_div -> a_c1 [arrowhead=none];  a_c1 -> a_ea;
+
+    // Panel (b) loops.
+    b_ref -> b_ea;  b_slp -> b_cmp;  b_clk -> b_lat;  b_ea -> b_cmp;
+    b_cmp -> b_lat;  b_lat -> b_ps;
+    b_c2 -> b_sns [color="#c55a11", penwidth=1.6];
+    b_sns -> b_c3 [arrowhead=none, color="#c55a11", penwidth=1.6];
+    b_c3 -> b_cmp [color="#c55a11", penwidth=1.6];
+    b_pi -> b_c2 [arrowhead=none, color="#c55a11", penwidth=1.6];
+    b_pv -> b_pvd [color="#1f4e79", penwidth=1.6];
+    b_div -> b_c1 [arrowhead=none, color="#1f4e79", penwidth=1.6];
+    b_c1 -> b_ea [color="#1f4e79", penwidth=1.6];
+}

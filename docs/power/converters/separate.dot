@@ -1,0 +1,59 @@
+// Arrangement with three separate converters around a power bus: an input
+// converter from Ethernet port A, a four-switch buck-boost to the USB
+// Type-C port, and a boost to Ethernet port B. A switch joins VBUS to the
+// bus when the USB port is a sink.
+//
+// Fixed grid (positions in inches): column 1 (x=1.25) Ethernet ports and
+// board supplies, column 2 (x=3.8) input converter, bus and boost, column 3
+// (x=6.35) USB converter and port. Edge labels are separate text nodes.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph separate {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=2.2, height=0.65,
+           fixedsize=true];
+    edge  [arrowsize=0.8, penwidth=2.5];
+
+    port_a [pos="1.25,3.3!", label="Ethernet port A\npowered device front end",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
+    inc    [pos="3.8,3.3!", width=1.9, height=0.75,
+            label="Input converter\n(buck or flyback)", fillcolor="#fbe5d6"];
+    bus    [pos="3.8,1.9!", width=1.9, label="Power bus\n(voltage open)",
+            fillcolor="#dbe8f5", style="rounded,filled,bold"];
+    boost  [pos="3.8,0.5!", width=1.9, height=0.75,
+            label="Boost converter", fillcolor="#fbe5d6"];
+    port_b [pos="1.25,0.5!", label="Ethernet port B\npower sourcing\nequipment switch",
+            height=0.75, fillcolor="#ffffff", style="rounded,filled,dashed"];
+    supp   [pos="1.25,1.9!", width=1.7, label="Board supplies\n(evampire, others)"];
+    conv   [pos="6.35,1.9!", width=1.7, height=0.75,
+            label="Four-switch\nbuck-boost", fillcolor="#fbe5d6"];
+    usb    [pos="6.35,3.3!", width=1.7, label="USB Type-C port\n5 V to 48 V",
+            fillcolor="#ffffff", style="rounded,filled,dashed"];
+    vsw    [pos="6.35,0.5!", width=1.7, height=0.75,
+            label="VBUS switch\n(on when the USB\nport is a sink)", fillcolor="#e2f0d9"];
+
+    // Edge labels.
+    node   [shape=plaintext, style="", fontsize=10, width=0.9, height=0.35];
+    l_usb  [pos="5.1,2.1!", label="USB out"];
+    l_snk  [pos="5.1,1.0!", label="USB in"];
+
+    // Corner for the VBUS switch path, right of the USB column.
+    node   [shape=point, width=0.01, height=0.01, label=""];
+    k1     [pos="7.35,3.3!"];
+    k2     [pos="7.35,0.5!"];
+
+    port_a -> inc;
+    inc    -> bus;
+    bus    -> supp;
+    bus    -> boost;
+    boost  -> port_b;
+    bus    -> conv;
+    conv   -> usb;
+    usb    -> k1   [arrowhead=none, penwidth=1.5, style=dashed];
+    k1     -> k2   [arrowhead=none, penwidth=1.5, style=dashed];
+    k2     -> vsw  [penwidth=1.5, style=dashed];
+    vsw    -> bus  [penwidth=1.5, style=dashed];
+}

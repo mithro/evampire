@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="600" height="300" fill="#ffffff"/>
+<polyline points="120.0,50.0 120.0,50.0 120.0,20.0 304.0,20.0 304.0,50.0 580.0,50.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="120.0,110.0 350.0,110.0 350.0,80.0 580.0,80.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<rect x="304.0" y="15.0" width="46.0" height="40.0" rx="0" fill="#fbe5d6" fill-opacity="0.7" stroke="none" stroke-width="1.0"/>
+<rect x="304.0" y="75.0" width="46.0" height="40.0" rx="0" fill="#fbe5d6" fill-opacity="0.7" stroke="none" stroke-width="1.0"/>
+<rect x="304.0" y="135.0" width="46.0" height="100.0" rx="0" fill="#fbe5d6" fill-opacity="0.7" stroke="none" stroke-width="1.0"/>
+<polyline points="120.0,50.0 120.0,20.0 304.0,20.0 304.0,50.0 580.0,50.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="120.0,110.0 350.0,110.0 350.0,80.0 580.0,80.0" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="120.0,140.0 304.0,140.0 317.8,227.7 350.0,227.7 354.6,218.3 580.0,218.3" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
+<line x1="120.0" y1="218.3" x2="580.0" y2="218.3" stroke="#777777" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="112.0" y="28.5" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">high-side</text>
+<text x="112.0" y="41.5" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">gate</text>
+<text x="112.0" y="88.5" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">low-side</text>
+<text x="112.0" y="101.5" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">gate</text>
+<text x="112.0" y="178.5" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">switch</text>
+<text x="112.0" y="191.5" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">node</text>
+<text x="368.4" y="178.9" font-size="10" text-anchor="start" font-weight="normal" fill="#c55a11" dominant-baseline="middle">dead time: the body diode</text>
+<text x="368.4" y="190.9" font-size="10" text-anchor="start" font-weight="normal" fill="#c55a11" dominant-baseline="middle">of the low-side switch conducts,</text>
+<text x="368.4" y="202.9" font-size="10" text-anchor="start" font-weight="normal" fill="#c55a11" dominant-baseline="middle">node one diode drop below ground</text>
+<text x="212.0" y="132.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Vin</text>
+<text x="345.0" y="290.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#c0392b" dominant-baseline="middle">both gates high together would short the input to ground (shoot-through)</text>
+</svg>

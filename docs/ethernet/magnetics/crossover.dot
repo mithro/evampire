@@ -1,6 +1,7 @@
-// MDI and MDI-X at 10 and 100 Mbit/s: a straight-through cable joins the
-// transmitter at one end to the receiver at the other only when one end
-// uses the MDI assignment and the other end uses MDI-X.
+// MDI and MDI-X. Top, at 10 and 100 Mbit/s: a straight-through cable
+// joins the transmitter at one end to the receiver at the other only when
+// one end uses the MDI assignment and the other end uses MDI-X. Bottom, at
+// 1000 Mbit/s: MDI-X swaps pair A with pair B and pair C with pair D.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -26,4 +27,26 @@ digraph crossover {
 
     left:t  -> right:r [label="pair on pins 1, 2", color="#2e75b6"];
     left:r  -> right:t [dir=back, label="pair on pins 3, 6", color="#c55a11"];
+    left1000 [label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#dbe8f5">
+        <tr><td colspan="2"><b>MDI, 1000 Mbit/s</b></td></tr>
+        <tr><td>BI_DA</td><td port="p12" bgcolor="#ffffff">pins 1, 2</td></tr>
+        <tr><td>BI_DB</td><td port="p36" bgcolor="#ffffff">pins 3, 6</td></tr>
+        <tr><td>BI_DC</td><td port="p45" bgcolor="#ffffff">pins 4, 5</td></tr>
+        <tr><td>BI_DD</td><td port="p78" bgcolor="#ffffff">pins 7, 8</td></tr>
+      </table>>];
+
+    right1000 [label=<
+      <table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#e2efda">
+        <tr><td colspan="2"><b>MDI-X, 1000 Mbit/s</b></td></tr>
+        <tr><td port="p12" bgcolor="#ffffff">pins 1, 2</td><td>BI_DB</td></tr>
+        <tr><td port="p36" bgcolor="#ffffff">pins 3, 6</td><td>BI_DA</td></tr>
+        <tr><td port="p45" bgcolor="#ffffff">pins 4, 5</td><td>BI_DD</td></tr>
+        <tr><td port="p78" bgcolor="#ffffff">pins 7, 8</td><td>BI_DC</td></tr>
+      </table>>];
+
+    left1000:p12 -> right1000:p12 [dir=both, color="#2e75b6"];
+    left1000:p36 -> right1000:p36 [dir=both, color="#c55a11"];
+    left1000:p45 -> right1000:p45 [dir=both, color="#548235"];
+    left1000:p78 -> right1000:p78 [dir=both, color="#bf9000"];
 }

@@ -1,5 +1,5 @@
-References for the high-voltage pages
-=====================================
+References
+==========
 
 The sources cited on the high-voltage pages, grouped by kind. Each citation
 in the text gives the section, equation, table or slide used.
@@ -142,5 +142,5 @@ Products and application notes
    Infineon application note AN2019-12, version 2.0, 2019-09-25.
 
 .. [HV-ISO7741] Texas Instruments, `ISO774x quad-channel digital isolators
-   <https://www.ti.com/product/ISO7741>`__, product page and data sheet
+   <https://www.ti.com/product/ISO7741>`__, product page and datasheet
    SLLSEP4.

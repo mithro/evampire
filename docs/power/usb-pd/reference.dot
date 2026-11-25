@@ -1,0 +1,23 @@
+// One voltage reference feeding the three CC circuits whose accuracy
+// depends on it, with the tolerances quoted on analogue.rst.
+//
+// Fixed grid (positions in inches): reference at x=0.9, the three users
+// at x=3.6, one per row.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph reference {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=2.2, height=0.5,
+           fixedsize=true];
+    edge  [arrowsize=0.7];
+
+    ref [pos="0.9,1.2!", label="voltage reference\n(bandgap, from the\nvertical PNP)",
+         width=1.5, height=0.7, fillcolor="#dbe8f5"];
+    drv [pos="3.6,2.0!", label="BMC driver level:\n1.125 V ± 6.7 %"];
+    rp  [pos="3.6,1.2!", label="Rp currents, 1.5 A and\n3.0 A levels: ± 8 %"];
+    thr [pos="3.6,0.4!", label="comparator thresholds:\ninside their windows"];
+
+    ref -> drv; ref -> rp; ref -> thr;
+}

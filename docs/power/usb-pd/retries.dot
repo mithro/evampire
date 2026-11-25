@@ -1,0 +1,55 @@
+// A message whose GoodCRC is lost: two retries with the same MessageID,
+// then Soft_Reset, then Hard Reset (negotiation.rst). Time runs from top to
+// bottom, not to scale.
+//
+// Fixed grid (positions in inches): sender at x=0.8, receiver at x=3.8,
+// notes at x=5.9; one row per attempt from y=3.6 down to y=0.5.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph retries {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=point, width=0.05, color="#555555", label=""];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    snd [pos="0.8,4.3!", shape=box, style="rounded,filled",
+         fillcolor="#f2f2f2", fontname="Helvetica", fontsize=10, width=1.0,
+         height=0.4, label="Sender"];
+    rcv [pos="3.8,4.3!", shape=box, style="rounded,filled",
+         fillcolor="#f2f2f2", fontname="Helvetica", fontsize=10, width=1.0,
+         height=0.4, label="Receiver"];
+    s0 [pos="0.8,0.2!", width=0.01]; r0 [pos="3.8,0.2!", width=0.01];
+
+    s1 [pos="0.8,3.6!"]; x1 [pos="3.1,3.6!"];
+    s2 [pos="0.8,2.8!"]; x2 [pos="3.1,2.8!"];
+    s3 [pos="0.8,2.0!"]; x3 [pos="3.1,2.0!"];
+    s4 [pos="0.8,1.2!"]; r4 [pos="3.8,1.2!"];
+    s5 [pos="0.8,0.5!"]; r5 [pos="3.8,0.5!"];
+
+    node [shape=plaintext, width=0.4, height=0.2, fontname="Helvetica",
+          fontsize=9, fontcolor="#c00000"];
+    l1 [pos="3.3,3.6!", label="lost"];
+    l2 [pos="3.3,2.8!", label="lost"];
+    l3 [pos="3.3,2.0!", label="lost"];
+
+    node [width=2.0, height=0.2, fontcolor="#000000"];
+    m1 [pos="1.95,3.72!", label="message, MessageID n"];
+    m2 [pos="1.95,2.92!", label="same message, MessageID n"];
+    m3 [pos="1.95,2.12!", label="same message, MessageID n"];
+    m4 [pos="2.3,1.32!", label="Soft_Reset"];
+    m5 [pos="2.3,0.62!", label="Hard Reset"];
+
+    node [width=2.0, height=0.5, fontcolor="#333333"];
+    n1 [pos="5.9,3.6!", label="no GoodCRC within\ntReceive, 0.9 to 1.1 ms"];
+    n2 [pos="5.9,2.8!", label="first retry, within\ntRetry, 195 µs"];
+    n3 [pos="5.9,2.0!", label="second and last retry\n(nRetryCount = 2)"];
+    n4 [pos="5.9,1.2!", label="resets the protocol;\nVBUS unchanged"];
+    n5 [pos="5.9,0.5!", label="only if Soft_Reset fails:\nVBUS changes"];
+
+    edge [arrowhead=none, style=dashed, color="#999999"];
+    snd -> s0; rcv -> r0;
+
+    edge [arrowhead=normal, style=solid, color="#000000"];
+    s1 -> x1; s2 -> x2; s3 -> x3; s4 -> r4;
+    s5 -> r5 [style=dashed];
+}

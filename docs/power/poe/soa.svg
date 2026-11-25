@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="328" viewBox="0 0 680 328">
+<title>Switch operating point</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="328" fill="#ffffff"/>
+<rect x="70.0" y="20.0" width="470.0" height="260.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
+<line x1="70.0" y1="280.0" x2="540.0" y2="280.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="280.0" x2="70.0" y2="280.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="284.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0.1</text>
+<line x1="70.0" y1="150.0" x2="540.0" y2="150.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="150.0" x2="70.0" y2="150.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="154.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">1</text>
+<line x1="70.0" y1="20.0" x2="540.0" y2="20.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="20.0" x2="70.0" y2="20.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="24.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">10</text>
+<text x="14.0" y="150.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 150.0)">switch current (A)</text>
+<line x1="70.0" y1="20.0" x2="70.0" y2="280.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="70.0" y1="280.0" x2="70.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="70.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">1</text>
+<line x1="305.0" y1="20.0" x2="305.0" y2="280.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="305.0" y1="280.0" x2="305.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="305.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
+<line x1="482.6" y1="20.0" x2="482.6" y2="280.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="482.6" y1="280.0" x2="482.6" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="482.6" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">57</text>
+<line x1="540.0" y1="20.0" x2="540.0" y2="280.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="540.0" y1="280.0" x2="540.0" y2="285.0" stroke="#000000" stroke-width="1.0"/>
+<text x="540.0" y="298.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">100</text>
+<text x="305.0" y="316.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">voltage across the switch (V)</text>
+<polyline points="247.6,20.0 305.0,51.7 375.7,90.9 469.3,142.6 540.0,181.7" fill="none" stroke="#c55a11" stroke-width="1.6"/>
+<text x="282.2" y="55.1" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#c55a11">57 W</text>
+<circle cx="482.6" cy="150.0" r="5" fill="#c00000"/>
+<text x="474.6" y="168.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#c00000">short at the current limit:</text>
+<text x="474.6" y="182.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#c00000">57 V, 1.0 A for 75 ms, 4.3 J</text>
+<text x="550.0" y="40.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">The switch's</text>
+<text x="550.0" y="55.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">safe operating</text>
+<text x="550.0" y="70.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">area for 75 ms</text>
+<text x="550.0" y="85.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">must contain</text>
+<text x="550.0" y="100.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">this point.</text>
+</svg>

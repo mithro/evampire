@@ -1,0 +1,27 @@
+// The surge protection options: an external suppressor alone, or an
+// external pre-clamp followed by an on-chip fine clamp. From
+// hv-options.rst.
+//
+// Fill colours: external parts #ffffff, on-chip parts #dbe8f5, the cable
+// #fbe5d6. Fixed grid (positions in inches): one row per option.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph surge_split {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10, width=1.5, height=0.5, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.6, penwidth=1.8];
+
+    c1 [pos="0.8,1.5!", label="Cable surge\n1.5 J", fillcolor="#fbe5d6", width=1.1];
+    t1 [pos="2.7,1.5!", label="External suppressor\ntakes the energy", fillcolor="#ffffff", width=1.7];
+    p1 [pos="4.8,1.5!", label="Port circuits", fillcolor="#dbe8f5"];
+    c1 -> t1; t1 -> p1;
+
+    c2 [pos="0.8,0.4!", label="Cable surge\n1.5 J", fillcolor="#fbe5d6", width=1.1];
+    t2 [pos="2.7,0.4!", label="External pre-clamp:\nmost of the energy", fillcolor="#ffffff", width=1.7];
+    f2 [pos="4.8,0.4!", label="On-chip fine clamp:\nthe rest", fillcolor="#dbe8f5"];
+    p2 [pos="6.6,0.4!", label="Port circuits", fillcolor="#dbe8f5", width=1.2];
+    c2 -> t2; t2 -> f2; f2 -> p2;
+}

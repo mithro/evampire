@@ -3,7 +3,7 @@ References
 
 The datasheets, application notes, test suites and design libraries cited
 on the RGMII pages. Standards, such as IEEE 802.3, the RGMII specification
-and the JEDEC logic-level standards, are listed on :doc:`../../standards`.
+and the JEDEC logic-level standards, are listed on the :doc:`standards page <../../standards>`.
 
 Ethernet transceivers and controllers
 -------------------------------------

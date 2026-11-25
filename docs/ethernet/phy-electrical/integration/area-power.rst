@@ -1,7 +1,7 @@
 .. _phy-int-area-power:
 
-Area and power: illustrations from published designs
-====================================================
+Area and power
+==============
 
 This page adds up area and power for one integrated 1000BASE-T port from
 the reference examples and assumptions of the other pages. The result is
@@ -14,8 +14,8 @@ needs (:ref:`the transceiver requirements <req-transceivers>`).
 
 .. _phy-int-dsp-power:
 
-Signal-processing power scales with gates, activity and supply
---------------------------------------------------------------
+Signal-processing power
+-----------------------
 
 The power of logic that does a fixed amount of work per symbol is
 
@@ -56,7 +56,7 @@ leakage. The inputs are assumptions:
   design point is 330 000 gates, and its layout study 400 000
   ([PHY-TUT98]_ slides 51 and 61). The low value takes 330 000 and
   replaces its 158 000-gate decoder by the 79 000-gate look-ahead decoder
-  of :ref:`phy-int-decision-loop`: :math:`330\,000 - 79\,000 = 251\,000`.
+  of the :ref:`decision loop <phy-int-decision-loop>`: :math:`330\,000 - 79\,000 = 251\,000`.
 * :math:`\alpha` from 0.1 to 0.2, an assumed activity for datapath logic.
 * :math:`E` of 154 fJ at 3.3 V and 41.6 fJ at 1.8 V.
 
@@ -77,11 +77,13 @@ The area of :math:`N_\text{gates}` gates, each the area
 
 .. _phy-int-totals:
 
-One port: about 0.7 W to 2.2 W and 7 mm² to 13 mm² at 3.3 V
------------------------------------------------------------
+Totals for one port
+-------------------
 
-:numref:`tab-phy-int-area-power` adds the parts. Each range spans the
-reference examples or assumptions named in its source column.
+One port comes to about 0.7 W to 2.2 W and 7 mm² to 13 mm² at 3.3 V
+(estimate). :numref:`tab-phy-int-area-power` adds the parts. Each range spans the
+reference examples or assumptions named in its source column, and
+:numref:`fig-phy-int-area-power` draws the ranges.
 
 .. list-table:: Illustration of the area and power of one port (estimate)
    :name: tab-phy-int-area-power
@@ -118,6 +120,18 @@ reference examples or assumptions named in its source column.
      - 6.6 to 12.8
      - 0.32 to 1.1
 
+.. figure:: area-power.svg
+   :name: fig-phy-int-area-power
+   :alt: Two sets of horizontal range bars for one port. Area in mm²: 4
+         ADCs 2.1 to 4.1, 4 DACs and drivers 0.52 to 0.64, PLL and
+         interpolator 0.065, signal processing at 3.3 V 3.9 to 8.1, total
+         at 3.3 V 6.6 to 12.8. Power in W: 0.088 to 0.48, 0.096 to 0.15,
+         0.004, 0.48 to 1.5, and a total of 0.67 to 2.2.
+   :align: center
+
+   The area and power ranges of :numref:`tab-phy-int-area-power` by part
+   (estimate).
+
 Not estimated, for want of a gigabit reference example in a comparable
 process: the receive amplifiers and filters, the hybrids, the protection,
 the clock distribution, the leakage, and the optional analogue echo
@@ -131,11 +145,11 @@ in the :ref:`power budget <power-budget>`.
 
 .. _phy-int-whole-chips:
 
-Whole transceivers in other processes use 0.45 W to 3.1 W
----------------------------------------------------------
+Whole transceivers in other processes
+-------------------------------------
 
 :numref:`tab-phy-int-chips` lists the power of whole gigabit transceivers
-as reference examples.
+as reference examples: 0.45 W to 3.1 W per port.
 
 .. list-table:: Reference examples: power of one 1000BASE-T port
    :name: tab-phy-int-chips

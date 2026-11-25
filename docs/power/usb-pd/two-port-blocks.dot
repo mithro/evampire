@@ -1,0 +1,38 @@
+// The circuits of a two-port board: each USB Type-C port has its own power
+// path, current limit and CC circuits; slow measurements share one ADC and
+// both ports share the processor (two-ports.rst).
+//
+// Fixed grid (positions in inches): port A at y=2.4, port B at y=0.9;
+// columns x=0.6 board power bus, 2.0 power path, 3.55 connector, 5.1 CC
+// circuits and shared ADC, 6.65 processor.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph two_port_blocks {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.2, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    bus [pos="0.55,1.65!", label="board\npower\nbus", width=0.8, height=2.1,
+         style="rounded,filled,bold", fillcolor="#dbe8f5"];
+    ppa [pos="2.0,2.4!", label="power path and\ncurrent limit A"];
+    ppb [pos="2.0,0.9!", label="power path and\ncurrent limit B"];
+    ca  [pos="3.55,2.4!", label="port A\nconnector", width=0.95,
+         fillcolor="#ffffff"];
+    cb  [pos="3.55,0.9!", label="port B\nconnector", width=0.95,
+         fillcolor="#ffffff"];
+    cca [pos="5.1,2.4!", label="CC circuits A"];
+    ccb [pos="5.1,0.9!", label="CC circuits B"];
+    adc [pos="5.1,1.65!", label="shared ADC\nthrough a mux", width=1.2];
+    cpu [pos="6.65,1.65!", label="processor:\nboth\nnegotiations", width=1.1,
+         height=2.1, fillcolor="#dbe8f5"];
+
+    bus -> ppa [dir=both, penwidth=2]; bus -> ppb [dir=both, penwidth=2];
+    ppa -> ca [dir=both, penwidth=2];
+    ppb -> cb [dir=both, penwidth=2];
+    ca -> cca [dir=both]; cb -> ccb [dir=both];
+    ca -> adc [label="slow levels"]; cb -> adc;
+    cca -> cpu [dir=both]; ccb -> cpu [dir=both]; adc -> cpu;
+}

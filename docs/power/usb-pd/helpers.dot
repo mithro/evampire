@@ -1,0 +1,54 @@
+// The hardware helpers that can sit between the CC analogue front end and
+// the processor, as described on software.rst. Solid boxes: generic timer
+// and serial features; dashed box: a USB-specific helper.
+//
+// Fixed grid (positions in inches):
+//   x=0.7  comparator and BMC driver
+//   x=2.65 counter, capture register, USB-specific decoder
+//   x=4.4 to 4.85  FIFO, compare register, shift register
+//   x=6.75 processor
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph helpers {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.3, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    cmp  [pos="0.7,2.9!", label="CC comparator", width=1.1,
+          fillcolor="#ffffff"];
+    drv  [pos="0.7,0.95!", label="BMC driver,\ndata input", width=1.1,
+          fillcolor="#ffffff"];
+
+    cnt  [pos="2.65,3.65!", label="free-running\ncounter"];
+    cap  [pos="2.65,2.9!", label="capture\nregister"];
+    fifo [pos="4.85,2.9!", label="FIFO of\ndepth D"];
+    auto [pos="2.65,1.95!", label="BMC, 4b5b and CRC\ndecoder, automatic\nGoodCRC",
+          width=1.6, height=0.62, style="rounded,filled,dashed"];
+    ocmp [pos="4.4,1.25!", label="compare register\nor FIFO", width=1.4];
+    shft [pos="4.4,0.45!", label="shift register,\n2 × bit rate", width=1.4];
+
+    cpu  [pos="6.75,1.95!", label="RISC-V\nprocessor", width=1.0, height=1.6,
+          fillcolor="#fbe5d6"];
+
+    node [shape=plaintext, style="", fontsize=9, width=0.8, height=0.2];
+    le [pos="1.7,3.03!", label="edges"];
+    lt [pos="3.75,3.03!", label="timestamps"];
+    lm [pos="4.7,2.08!", label="messages"];
+    lo [pos="5.6,1.6!", label="edge times"];
+    lp [pos="5.75,0.5!", label="prepared message", width=1.2];
+
+    cmp -> cap;
+    cnt -> cap;
+    cap -> fifo;
+    fifo -> cpu;
+    cmp -> auto [style=dashed];
+    auto -> drv [style=dashed];
+    auto -> cpu [style=dashed];
+    cpu -> ocmp;
+    ocmp -> drv;
+    cpu -> shft;
+    shft -> drv;
+}

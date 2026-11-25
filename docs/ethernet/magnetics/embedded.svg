@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="640" height="300" fill="white"/>
+<defs><marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker><marker id="b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e79"/></marker><marker id="o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c55a11"/></marker><marker id="r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c00000"/></marker></defs>
+<text x="150.0" y="22.0" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Cross-section through one limb</text>
+<text x="470.0" y="22.0" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Top view</text>
+<rect x="20.0" y="80.0" width="260.0" height="120.0" rx="0" fill="#e2efda" stroke="#222222"/>
+<rect x="95.0" y="118.0" width="110.0" height="44.0" rx="4" fill="#7f7f7f" stroke="#222222"/>
+<text x="150.0" y="145.0" text-anchor="middle" font-size="12" font-weight="normal" fill="white">ferrite core</text>
+<rect x="70.0" y="72.0" width="160.0" height="8.0" rx="0" fill="#c55a11" stroke="#c55a11"/>
+<rect x="70.0" y="200.0" width="160.0" height="8.0" rx="0" fill="#c55a11" stroke="#c55a11"/>
+<rect x="70.0" y="72.0" width="8.0" height="136.0" rx="0" fill="#c55a11" stroke="#c55a11"/>
+<rect x="222.0" y="72.0" width="8.0" height="136.0" rx="0" fill="#c55a11" stroke="#c55a11"/>
+<text x="150.0" y="64.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">top copper layer</text>
+<text x="150.0" y="226.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">bottom copper layer</text>
+<text x="150.0" y="248.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">vias join the two layers into a turn</text>
+<text x="150.0" y="266.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">around the core</text>
+<text x="25.0" y="96.0" text-anchor="start" font-size="11" font-weight="normal" fill="#548235">laminate</text>
+<rect x="360" y="70" width="220" height="130" rx="55" fill="none" stroke="#7f7f7f" stroke-width="22"/>
+<line x1="410.0" y1="48.0" x2="410.0" y2="92.0" stroke="#c55a11" stroke-width="3"/>
+<line x1="410.0" y1="178.0" x2="410.0" y2="222.0" stroke="#1f4e79" stroke-width="3"/>
+<line x1="434.0" y1="48.0" x2="434.0" y2="92.0" stroke="#c55a11" stroke-width="3"/>
+<line x1="434.0" y1="178.0" x2="434.0" y2="222.0" stroke="#1f4e79" stroke-width="3"/>
+<line x1="458.0" y1="48.0" x2="458.0" y2="92.0" stroke="#c55a11" stroke-width="3"/>
+<line x1="458.0" y1="178.0" x2="458.0" y2="222.0" stroke="#1f4e79" stroke-width="3"/>
+<line x1="482.0" y1="48.0" x2="482.0" y2="92.0" stroke="#c55a11" stroke-width="3"/>
+<line x1="482.0" y1="178.0" x2="482.0" y2="222.0" stroke="#1f4e79" stroke-width="3"/>
+<line x1="506.0" y1="48.0" x2="506.0" y2="92.0" stroke="#c55a11" stroke-width="3"/>
+<line x1="506.0" y1="178.0" x2="506.0" y2="222.0" stroke="#1f4e79" stroke-width="3"/>
+<line x1="530.0" y1="48.0" x2="530.0" y2="92.0" stroke="#c55a11" stroke-width="3"/>
+<line x1="530.0" y1="178.0" x2="530.0" y2="222.0" stroke="#1f4e79" stroke-width="3"/>
+<text x="470.0" y="40.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#c55a11">winding on one limb</text>
+<text x="470.0" y="240.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#1f4e79">winding on the other limb</text>
+<text x="470.0" y="140.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">racetrack-shaped</text>
+<text x="470.0" y="155.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">ferrite core</text>
+</svg>

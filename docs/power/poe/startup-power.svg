@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="266" viewBox="0 0 680 266">
+<title>Power at each step</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="266" fill="#ffffff"/>
+<rect x="190.0" y="20.0" width="440.0" height="176.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
+<text x="182.0" y="35.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">detection, offset current</text>
+<rect x="234.5" y="25.0" width="50.5" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="290.0" y="35.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">0.032–0.12</text>
+<text x="182.0" y="57.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">detection, signature</text>
+<rect x="317.3" y="47.0" width="104.4" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="426.7" y="57.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">0.28–4.3</text>
+<text x="182.0" y="79.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">mark event</text>
+<rect x="386.3" y="69.0" width="120.7" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="512.0" y="79.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">1.7–40</text>
+<text x="182.0" y="101.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">class event, signature 0</text>
+<rect x="468.2" y="91.0" width="66.2" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="539.4" y="101.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">14.5–82</text>
+<text x="182.0" y="123.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">class event, signature 1</text>
+<rect x="552.3" y="113.0" width="24.1" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="581.4" y="123.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">131–246</text>
+<text x="182.0" y="145.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">class event, signature 2</text>
+<rect x="576.6" y="135.0" width="19.4" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="600.9" y="145.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">247–410</text>
+<text x="182.0" y="167.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">class event, signature 3</text>
+<rect x="592.7" y="157.0" width="18.7" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="616.4" y="167.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">377–615</text>
+<text x="182.0" y="189.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">class event, signature 4</text>
+<rect x="605.2" y="179.0" width="20.9" height="12.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="631.1" y="189.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#7f7f7f">522–902</text>
+<line x1="190.0" y1="20.0" x2="190.0" y2="196.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="190.0" y1="196.0" x2="190.0" y2="201.0" stroke="#000000" stroke-width="1.0"/>
+<text x="190.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0.01</text>
+<line x1="278.0" y1="20.0" x2="278.0" y2="196.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="278.0" y1="196.0" x2="278.0" y2="201.0" stroke="#000000" stroke-width="1.0"/>
+<text x="278.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0.1</text>
+<line x1="366.0" y1="20.0" x2="366.0" y2="196.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="366.0" y1="196.0" x2="366.0" y2="201.0" stroke="#000000" stroke-width="1.0"/>
+<text x="366.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">1</text>
+<line x1="454.0" y1="20.0" x2="454.0" y2="196.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="454.0" y1="196.0" x2="454.0" y2="201.0" stroke="#000000" stroke-width="1.0"/>
+<text x="454.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
+<line x1="542.0" y1="20.0" x2="542.0" y2="196.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="542.0" y1="196.0" x2="542.0" y2="201.0" stroke="#000000" stroke-width="1.0"/>
+<text x="542.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">100</text>
+<line x1="630.0" y1="20.0" x2="630.0" y2="196.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="630.0" y1="196.0" x2="630.0" y2="201.0" stroke="#000000" stroke-width="1.0"/>
+<text x="630.0" y="214.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">1000</text>
+<text x="410.0" y="232.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">power (mW)</text>
+<text x="10.0" y="254.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#7f7f7f">Reset: 0 mW. Each bar runs from the lowest voltage and current of the step to the highest.</text>
+</svg>

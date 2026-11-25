@@ -1,0 +1,48 @@
+// Three ways to reject common-mode noise on a capacitor-coupled pair: an
+// external common-mode choke, a receiver with a wide common-mode range and
+// a common-mode feedback loop, and an active common-mode choke.
+//
+// Fixed grid, positions in inches. One row per option.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph cm_options {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true, height=0.55];
+    edge  [penwidth=1.5, arrowsize=0.6];
+
+    node [shape=plaintext, style="", width=4.4, height=0.22, fontsize=10];
+    h1 [pos="2.6,3.2!", label="External common-mode choke"];
+    h2 [pos="2.6,2.1!", label="Wide-range receiver with common-mode feedback"];
+    h3 [pos="2.6,0.8!", label="Active common-mode choke"];
+
+    node [shape=box, style=filled, height=0.55];
+    k1 [pos="0.4,2.7!", width=0.6, fillcolor="#fbe5d6", label="cable"];
+    ch [pos="1.6,2.7!", width=1.4, fillcolor="#e2efda",
+         label="choke, for example\n200 µH, 42 dB"];
+    c1 [pos="3.1,2.7!", width=0.7, fillcolor="#fff2cc", label="C_w"];
+    r1 [pos="4.4,2.7!", width=1.1, fillcolor="#dbe8f5", label="receiver"];
+    k1 -> ch -> c1 -> r1 [dir=none];
+
+    k2 [pos="0.4,1.6!", width=0.6, fillcolor="#fbe5d6", label="cable"];
+    c2 [pos="1.6,1.6!", width=0.7, fillcolor="#fff2cc", label="C_w"];
+    r2 [pos="4.4,1.6!", width=1.1, fillcolor="#dbe8f5",
+         label="receiver, wide\ncommon-mode\nrange"];
+    fb [pos="2.9,1.2!", width=1.8, height=0.4, fillcolor="#dbe8f5",
+         label="sense common mode,\ndrive it back to bias"];
+    jf [pos="2.9,1.6!", shape=point, width=0.07, height=0.07,
+        fillcolor="#000000"];
+    k2 -> c2 [dir=none];
+    c2 -> jf [dir=none];
+    jf -> r2 [dir=none];
+    jf -> fb [dir=both, style=dashed];
+
+    k3 [pos="0.4,0.3!", width=0.6, fillcolor="#fbe5d6", label="cable"];
+    ac [pos="1.6,0.3!", width=1.6, fillcolor="#dbe8f5",
+         label="sense and cancel\ncommon-mode current"];
+    c3 [pos="3.1,0.3!", width=0.7, fillcolor="#fff2cc", label="C_w"];
+    r3 [pos="4.4,0.3!", width=1.1, fillcolor="#dbe8f5", label="receiver"];
+    k3 -> ac -> c3 -> r3 [dir=none];
+}

@@ -1,0 +1,40 @@
+// An external USB-to-serial bridge chip on the board: D+ and D- go to the
+// bridge, which talks to a UART on evampire; the CC wires and USB Power
+// Delivery stay on evampire.
+//
+// Fixed grid (positions in inches): connector at x=0.8, bridge at x=3.2,
+// evampire at x=5.9.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph bridge {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.6,
+           fixedsize=true];
+    edge  [penwidth=1.6, arrowsize=0.7, dir=both, fontname="Helvetica",
+           fontsize=10];
+
+    conn  [pos="0.8,1.2!", width=1.3, height=2.0, label="USB Type-C\nreceptacle",
+           fillcolor="#ffffff", style="rounded,filled,dashed"];
+    br    [pos="3.2,1.75!", width=1.7, label="USB-to-UART\nbridge chip",
+           fillcolor="#fbe5d6"];
+    evu   [pos="5.9,1.75!", width=1.6, label="UART", fillcolor="#fbe5d6"];
+    evc   [pos="5.9,0.6!", width=1.6, label="CC and USB Power\nDelivery", fillcolor="#fbe5d6"];
+    chip_l [pos="5.9,2.62!", shape=plaintext, style="", width=1.0, height=0.25,
+            fontsize=12, fontcolor="#1f4e79", label="evampire"];
+    chip  [pos="5.9,1.25!", width=1.95, height=2.4, label="",
+           style="rounded,bold", color="#1f4e79", fontcolor="#1f4e79",
+           fillcolor="none", fontsize=12];
+
+    node  [shape=plaintext, style="", fontsize=10, width=0.8, height=0.2];
+    l1 [pos="1.9,1.93!", label="D+, D−"];
+    l2 [pos="4.55,1.93!", label="TX, RX"];
+    l3 [pos="3.2,0.78!", width=1.2, label="CC1, CC2"];
+    node  [shape=point, width=0.01, height=0.01, label=""];
+    k1 [pos="1.45,1.75!"];
+    k2 [pos="1.45,0.6!"];
+
+    k1 -> br [dir=both];  br -> evu;  k2 -> evc;
+}

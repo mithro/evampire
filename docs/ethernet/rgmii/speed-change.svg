@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="262" viewBox="0 0 660 262" font-family="Helvetica, Arial, sans-serif" font-size="13">
+<rect width="660" height="262" fill="white"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<text x="140.0" y="46.0" text-anchor="end" font-size="13" font-weight="normal" fill="#222222">TXC, allowed</text>
+<polyline fill="none" stroke="#1f4e79" stroke-width="1.6" points="150.0,30.0 166.3,30.0 166.3,52.0 182.7,52.0 182.7,30.0 199.0,30.0 199.0,52.0 215.3,52.0 215.3,30.0 231.7,30.0 231.7,52.0 248.0,52.0 248.0,30.0 362.3,30.0 362.3,52.0 444.0,52.0 444.0,30.0 525.7,30.0 525.7,52.0 607.3,52.0 607.3,30.0 640.0,30.0"/>
+<text x="140.0" y="106.0" text-anchor="end" font-size="13" font-weight="normal" fill="#222222">TXC, not allowed</text>
+<polyline fill="none" stroke="#1f4e79" stroke-width="1.6" points="150.0,90.0 166.3,90.0 166.3,112.0 182.7,112.0 182.7,90.0 199.0,90.0 199.0,112.0 215.3,112.0 215.3,90.0 231.7,90.0 231.7,112.0 248.0,112.0 248.0,90.0 272.5,90.0 272.5,112.0 278.6,112.0 278.6,90.0 362.3,90.0 362.3,112.0 444.0,112.0 444.0,90.0 525.7,90.0 525.7,112.0 607.3,112.0 607.3,90.0 640.0,90.0"/>
+<text x="292.6" y="84.0" text-anchor="start" font-size="12" font-weight="bold" fill="#c00000">glitch</text>
+<circle cx="275.6" cy="101" r="14" fill="none" stroke="#c00000" stroke-width="2"/>
+<text x="140.0" y="162.0" text-anchor="end" font-size="13" font-weight="normal" fill="#222222">TX_CTL</text>
+<line x1="150.0" y1="168.0" x2="640.0" y2="168.0" stroke="#1f4e79" stroke-width="1.6"/>
+<line x1="150.0" y1="190.0" x2="248.0" y2="190.0" stroke="#7f7f7f" stroke-width="0.8"/>
+<line x1="150.0" y1="186.0" x2="150.0" y2="194.0" stroke="#7f7f7f" stroke-width="0.8"/>
+<text x="199.0" y="206.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#7f7f7f">125 MHz</text>
+<line x1="248.0" y1="190.0" x2="362.3" y2="190.0" stroke="#7f7f7f" stroke-width="0.8"/>
+<line x1="248.0" y1="186.0" x2="248.0" y2="194.0" stroke="#7f7f7f" stroke-width="0.8"/>
+<text x="305.2" y="206.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#7f7f7f">stretched phase</text>
+<line x1="362.3" y1="190.0" x2="640.0" y2="190.0" stroke="#7f7f7f" stroke-width="0.8"/>
+<line x1="362.3" y1="186.0" x2="362.3" y2="194.0" stroke="#7f7f7f" stroke-width="0.8"/>
+<text x="501.2" y="206.0" text-anchor="middle" font-size="12" font-weight="normal" fill="#7f7f7f">25 MHz</text>
+<line x1="150.0" y1="222.0" x2="640.0" y2="222.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="150.0" y1="222.0" x2="150.0" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="150.0" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">0</text>
+<line x1="231.7" y1="222.0" x2="231.7" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="231.7" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">20</text>
+<line x1="313.3" y1="222.0" x2="313.3" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="313.3" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">40</text>
+<line x1="395.0" y1="222.0" x2="395.0" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="395.0" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">60</text>
+<line x1="476.7" y1="222.0" x2="476.7" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="476.7" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">80</text>
+<line x1="558.3" y1="222.0" x2="558.3" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="558.3" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">100</text>
+<line x1="640.0" y1="222.0" x2="640.0" y2="227.0" stroke="#222222" stroke-width="1.2"/>
+<text x="640.0" y="240.0" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">120</text>
+<text x="140.0" y="240.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">time (ns)</text>
+</svg>

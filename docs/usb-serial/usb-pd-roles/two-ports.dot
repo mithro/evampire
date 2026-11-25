@@ -1,0 +1,44 @@
+// Three ways to give two USB Type-C ports a serial port.
+//
+// Fixed grid (positions in inches): one row per option; ports at x=0.7,
+// front ends at x=2.6, digital blocks at x=4.6.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph two_ports {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4.5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.3, height=0.42,
+           fixedsize=true];
+    edge  [arrowsize=0.6, penwidth=1.3, arrowhead=none];
+
+    t1 [pos="3.0,4.3!", shape=plaintext, style="", width=6.0, height=0.2,
+        fontsize=11, label="(a) A front end and a USB device per port: two serial ports"];
+    p1a [pos="0.7,3.85!", width=0.9, label="port 1", fillcolor="#ffffff"];
+    p1b [pos="0.7,3.3!", width=0.9, label="port 2", fillcolor="#ffffff"];
+    f1a [pos="2.6,3.85!", label="front end", fillcolor="#fbe5d6"];
+    f1b [pos="2.6,3.3!", label="front end", fillcolor="#fbe5d6"];
+    d1a [pos="4.6,3.85!", label="USB device", fillcolor="#dbe8f5"];
+    d1b [pos="4.6,3.3!", label="USB device", fillcolor="#dbe8f5"];
+
+    t2 [pos="3.0,2.7!", shape=plaintext, style="", width=6.0, height=0.2,
+        fontsize=11, label="(b) One USB device switched to one port at a time"];
+    p2a [pos="0.7,2.25!", width=0.9, label="port 1", fillcolor="#ffffff"];
+    p2b [pos="0.7,1.7!", width=0.9, label="port 2", fillcolor="#ffffff"];
+    sw2 [pos="2.6,1.975!", height=0.97, label="analogue switch\non D+ and D−,\nor two front ends\nand a selector",
+         fillcolor="#fbe5d6"];
+    d2  [pos="4.6,1.975!", label="USB device", fillcolor="#dbe8f5"];
+
+    t3 [pos="3.0,1.1!", shape=plaintext, style="", width=6.0, height=0.2,
+        fontsize=11, label="(c) A serial port on one designated port only"];
+    p3a [pos="0.7,0.65!", width=0.9, label="port 1", fillcolor="#ffffff"];
+    p3b [pos="0.7,0.1!", width=0.9, label="port 2", fillcolor="#ffffff"];
+    f3a [pos="2.6,0.65!", label="front end", fillcolor="#fbe5d6"];
+    d3  [pos="4.6,0.65!", label="USB device", fillcolor="#dbe8f5"];
+    n3  [pos="2.6,0.1!", shape=plaintext, style="", label="no USB data"];
+
+    p1a -> f1a -> d1a;  p1b -> f1b -> d1b;
+    p2a -> sw2;  p2b -> sw2;  sw2 -> d2;
+    p3a -> f3a -> d3;
+}

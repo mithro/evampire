@@ -1,0 +1,47 @@
+// The software-only baseline: the analogue front end wired straight to
+// processor input and output bits, with no USB logic between them.
+//
+// Fixed grid (positions in inches): front end at x=0.9, the bits at
+// x=3.35, the processor at x=5.9.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph baseline {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.36,
+           fixedsize=true];
+    edge  [arrowsize=0.6, penwidth=1.3];
+
+    fe   [pos="0.9,1.3!", width=1.3, height=3.1, label="Analogue\nfront end\n(driver,\nreceivers,\npull-up)",
+          fillcolor="#fbe5d6"];
+    cpu  [pos="5.9,1.3!", width=1.3, height=3.1, label="RISC-V\nprocessor:\nall USB work\nin software",
+          fillcolor="#fbe5d6"];
+
+    i1 [pos="3.35,2.6!", label="D+ receiver output", fillcolor="#dbe8f5"];
+    i2 [pos="3.35,2.1!", label="D− receiver output", fillcolor="#dbe8f5"];
+    o1 [pos="3.35,1.4!", label="driver enable", fillcolor="#e2f0d9"];
+    o2 [pos="3.35,0.95!", label="D+ level", fillcolor="#e2f0d9"];
+    o3 [pos="3.35,0.5!", label="D− level", fillcolor="#e2f0d9"];
+    o4 [pos="3.35,0.05!", label="pull-up enable", fillcolor="#e2f0d9"];
+
+    node [shape=plaintext, style="", fontsize=10, width=1.2, height=0.2];
+    li [pos="3.35,2.95!", label="input bits"];
+    lo [pos="3.35,1.75!", label="output bits"];
+
+    node [shape=point, width=0.01, height=0.01, label=""];
+    a1 [pos="1.55,2.6!"];  b1 [pos="5.25,2.6!"];
+    a2 [pos="1.55,2.1!"];  b2 [pos="5.25,2.1!"];
+    a3 [pos="1.55,1.4!"];  b3 [pos="5.25,1.4!"];
+    a4 [pos="1.55,0.95!"]; b4 [pos="5.25,0.95!"];
+    a5 [pos="1.55,0.5!"];  b5 [pos="5.25,0.5!"];
+    a6 [pos="1.55,0.05!"]; b6 [pos="5.25,0.05!"];
+
+    a1 -> i1 [arrowhead=none];  i1 -> b1;
+    a2 -> i2 [arrowhead=none];  i2 -> b2;
+    b3 -> o1 [arrowhead=none];  o1 -> a3;
+    b4 -> o2 [arrowhead=none];  o2 -> a4;
+    b5 -> o3 [arrowhead=none];  o3 -> a5;
+    b6 -> o4 [arrowhead=none];  o4 -> a6;
+}

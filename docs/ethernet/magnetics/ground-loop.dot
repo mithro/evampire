@@ -1,0 +1,66 @@
+// Two pieces of equipment in different buildings whose grounds differ by
+// a voltage. Without isolation the difference drives a current through
+// both transceivers and the cable; with a transformer at each port the
+// loop is broken.
+//
+// Fixed grid, positions in inches. Top: without isolation. Bottom: with
+// transformers.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph ground_loop {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.6];
+
+    node [shape=plaintext, style="", width=3.0, height=0.25, fontsize=10];
+    h1 [pos="2.6,3.95!", label="Without isolation"];
+    h2 [pos="2.6,1.75!", label="With a transformer at each port"];
+
+    // ---- Without isolation. ----
+    node [shape=box, style=filled, width=1.1, height=0.5, fontsize=9,
+          fillcolor="#dbe8f5"];
+    a1 [pos="0.6,3.35!", label="transceiver\nbuilding 1"];
+    b1 [pos="4.6,3.35!", label="transceiver\nbuilding 2"];
+    node [fillcolor="#ffffff", width=1.0, height=0.4];
+    ga1 [pos="0.6,2.45!", label="ground 1"];
+    gb1 [pos="4.6,2.45!", label="ground 2"];
+    v1 [pos="2.6,2.45!", width=1.1, height=0.45, fillcolor="#fbe5d6",
+        label="ΔV between\nthe grounds"];
+    node [shape=plaintext, style="", width=1.6, height=0.2, fontsize=9];
+    lc1 [pos="2.6,3.5!", label="cable"];
+    li1 [pos="2.6,2.95!", width=2.4, fontcolor="#c00000",
+         label="current flows around the loop"];
+
+    a1 -- b1 [color="#c00000", penwidth=2.2];
+    a1 -- ga1 [color="#c00000", penwidth=2.2];
+    b1 -- gb1 [color="#c00000", penwidth=2.2];
+    ga1 -- v1 -- gb1 [color="#c00000", penwidth=2.2];
+
+    // ---- With transformers. ----
+    node [shape=box, style=filled, width=1.1, height=0.5, fontsize=9,
+          fillcolor="#dbe8f5"];
+    a2 [pos="0.6,1.15!", label="transceiver\nbuilding 1"];
+    b2 [pos="4.6,1.15!", label="transceiver\nbuilding 2"];
+    node [fillcolor="#fff2cc", width=0.75, height=0.5];
+    xa [pos="1.65,1.15!", label="trans-\nformer"];
+    xb [pos="3.55,1.15!", label="trans-\nformer"];
+    node [fillcolor="#ffffff", width=1.0, height=0.4];
+    ga2 [pos="0.6,0.25!", label="ground 1"];
+    gb2 [pos="4.6,0.25!", label="ground 2"];
+    v2 [pos="2.6,0.25!", width=1.1, height=0.45, fillcolor="#fbe5d6",
+        label="ΔV between\nthe grounds"];
+    node [shape=plaintext, style="", width=1.6, height=0.2, fontsize=9];
+    lc2 [pos="2.6,1.3!", label="cable"];
+    li2 [pos="2.6,0.75!", width=3.2,
+         label="no current: each transformer breaks the loop"];
+
+    a2 -- xa;
+    xa -- xb;
+    xb -- b2;
+    a2 -- ga2 [color="#7f7f7f"];
+    b2 -- gb2 [color="#7f7f7f"];
+    ga2 -- v2 -- gb2 [color="#7f7f7f"];
+}

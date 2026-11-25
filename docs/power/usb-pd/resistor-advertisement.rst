@@ -1,7 +1,7 @@
 .. _usbpd-resistor-advertisement:
 
-The source advertises its current with a pull-up
-================================================
+Current advertisement with Rp
+=============================
 
 How the source's pull-up and the sink's pull-down on the
 :term:`configuration channel` tell each end what is attached and how much
@@ -16,8 +16,8 @@ ends are described on :doc:`type-c-power`.
 
 .. _usbpd-cc-voltages:
 
-The pull-up and pull-down form a divider whose voltage gives the level
-----------------------------------------------------------------------
+CC voltage divider
+------------------
 
 The source connects a :wikipedia:`pull-up <Pull-up_resistor>`, :term:`Rp`,
 to each CC pin. The sink connects a pull-down, :term:`Rd`, to each of its CC
@@ -26,8 +26,22 @@ pins. When a cable joins them, Rp and Rd form a
 voltage across Rd tells the sink which of three current levels the source
 offers.
 
-Rp is a resistor to 5 V, a resistor to 3.3 V or a current source. Its value
+Rp is a resistor to 5 V, a resistor to 3.3 V or a current source. Its value
 sets the advertised level (:numref:`tab-usbpd-rp`).
+:numref:`fig-usbpd-rp-divider` shows the divider for each kind of Rp.
+
+.. graphviz:: rp-divider.dot
+   :name: fig-usbpd-rp-divider
+   :caption: The three kinds of source pull-up, each forming a divider with
+             the sink's 5.1 kΩ Rd on the CC wire; each Rp has one value per
+             advertised level.
+   :alt: Three columns. In each, a source supply feeds an Rp, which meets the
+         CC wire; the CC wire goes to the sink's Rd of 5.1 kΩ to ground. The
+         first Rp is a resistor of 56, 22 or 10 kΩ to a 5 V supply (4.75 to
+         5.5 V); the second a resistor of 36, 12 or 4.7 kΩ to a 3.3 V supply
+         (3.135 to 3.465 V); the third a current source of 80, 180 or 330 µA
+         from a 1.7 to 5.5 V supply. The CC voltage for the default, 1.5 A and
+         3.0 A levels is about 0.4 V, 0.9 V and 1.7 V.
 
 .. list-table:: Nominal source pull-up (Rp) for each level (:typec:`Table 4-27`)
    :name: tab-usbpd-rp
@@ -90,8 +104,8 @@ only detect that a source is attached. A sink without power may present a
 and stops USB Power Delivery messages until the sink switches to a resistor
 (:typec:`Table 4-28`, note 1; :ref:`usbpd-dead-battery`).
 
-The CC voltage follows from the divider
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CC voltage calculation
+^^^^^^^^^^^^^^^^^^^^^^
 
 With a resistor Rp, the CC voltage is set by the divider. With a
 current-source Rp, it is the current times Rd:
@@ -168,8 +182,8 @@ a sink reads the level without knowing how the source made it: about 0.4 V,
 
 .. _usbpd-cc-states:
 
-Each end names what it sees on a CC pin
----------------------------------------
+CC pin states
+-------------
 
 The attach rules on :doc:`attach` are written in terms of the state of each
 CC pin (:numref:`tab-usbpd-cc-states`). A source sees a sink's Rd, nothing,
@@ -206,8 +220,8 @@ the SNK states. The voltages that separate the states follow.
 
 .. _usbpd-sink-thresholds:
 
-The sink compares the CC voltage with three thresholds
-------------------------------------------------------
+Sink thresholds
+---------------
 
 The sink has to tell four ranges apart: no source, and the three advertised
 levels. :typec:`Section 4.11.3.1.1` gives the method: work out the lowest
@@ -248,18 +262,36 @@ for an Rd within ± 10 % is :numref:`tab-usbpd-sink-thresholds`.
 Each "threshold" row gives the window in which the sink's threshold must
 lie. A sink therefore needs, on each CC pin, one threshold for attach and
 one for each of the two level boundaries. For an Rd within ± 20 %, the CC
-voltage of an attached source is 0.249 V to 2.181 V, and the detach
-threshold lies at or below 0.248 V (:typec:`Table 4-35`).
+voltage of an attached source is 0.249 V to 2.181 V, and the detach threshold lies at or below 0.248 V (:typec:`Table 4-35`).
+:numref:`fig-usbpd-cc-thresholds` draws these ranges and windows, and the
+source's, on one voltage scale.
+
+.. figure:: cc-thresholds.svg
+   :name: fig-usbpd-cc-thresholds
+   :alt: Vertical bar chart of CC voltage from 0 to 2.6 V. Sink with Rd
+         within 10 %: detach at or below 0.276 V; default 0.277 to 0.612 V;
+         threshold window 0.613 to 0.745 V; 1.5 A 0.746 to 1.164 V; window
+         1.165 to 1.368 V; 3.0 A 1.369 to 2.042 V; nominal points at 0.42,
+         0.94 and 1.7 V. Sink with Rd within 20 %: detach at or below
+         0.248 V, attached 0.249 to 2.181 V. Source at 80, 180 and 330 µA:
+         Ra-to-Rd threshold windows 0.116 to 0.260 V, 0.234 to 0.675 V and
+         0.429 to 0.879 V; open thresholds at or above 1.321, 1.441 and
+         2.432 V; the Ra range lies below each window and the Rd range
+         between the window and the open threshold.
+
+   CC voltage ranges and threshold windows at a sink and at a source with a
+   current-source Rp (Ra and Rd ranges at the nominal Rp current).
 
 .. _usbpd-source-thresholds:
 
-The source compares the CC voltage with two thresholds for each level
----------------------------------------------------------------------
+Source thresholds
+-----------------
 
 The source has to tell Rd, Ra and an open pin apart. It knows which Rp it
 is presenting, so it needs one pair of thresholds for each level it uses.
 For a current-source Rp, the specification's example is
-:numref:`tab-usbpd-src-thresholds`.
+:numref:`tab-usbpd-src-thresholds`, drawn on the right of
+:numref:`fig-usbpd-cc-thresholds`.
 
 .. list-table:: Thresholds at a source with a current-source Rp (:typec:`Table 4-37`)
    :name: tab-usbpd-src-thresholds

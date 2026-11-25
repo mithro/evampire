@@ -9,8 +9,8 @@ described on :doc:`../../power/poe/index`.
 
 .. _magnetics-poe-current:
 
-The current enters at a centre tap and splits between two wires
----------------------------------------------------------------
+Current through the centre taps
+-------------------------------
 
 Power over Ethernet sends direct current on the data pairs. The
 :term:`power sourcing equipment` puts one polarity on both wires of one
@@ -105,8 +105,8 @@ same detection signature ([MAG-EA8023BT]_, tables 15 and 16).
 
 .. _magnetics-poe-detection:
 
-The transformer hides the data circuits from detection
-------------------------------------------------------
+Detection and classification
+----------------------------
 
 Before it switches power on, power sourcing equipment detects a powered
 device by its signature resistance and capacitance, measured between 2.7 V
@@ -114,6 +114,20 @@ and 10.1 V, and then classifies it (:clause:`Table 145-21 <145>`). At direct
 voltages the transceiver is not connected to the cable at all, because the
 transformer blocks direct current. The power sourcing equipment therefore
 sees only the powered device's signature.
+
+:numref:`fig-magnetics-poe-detection` shows the path of the detection current. The capacitor-coupled case is :numref:`fig-magnetics-cap-signature`.
+
+.. graphviz:: poe-detection.dot
+   :name: fig-magnetics-poe-detection
+   :caption: Detection through standard magnetics: only the signature is seen.
+   :alt: The power sourcing equipment applies a detection voltage of 2.7 V to
+         10.1 V over the cable to the centre taps of the transformers
+         of pair 1 and pair 2. Between the centre taps sits the
+         powered device's signature, 23.7 kΩ to 26.3 kΩ and 50 nF to
+         120 nF. The transceiver connects to the other side of the
+         transformers by data only, and is not seen, because the
+         transformers block direct current.
+   :align: center
 
 Anything that replaces the transformer must keep the data circuits within
 the signature limits of :numref:`tbl-magnetics-poe-numbers`, including the

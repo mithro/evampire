@@ -1,0 +1,37 @@
+// What fast role swap would need on evampire, for each role
+// (role-changes.rst; PD Section 10 values as quoted there).
+//
+// Fixed grid (positions in inches): initial-source panel at x=0.2 to 3.3,
+// initial-sink panel at x=3.6 to 6.9.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph frs_blocks {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.55, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    node [shape=plaintext, style="", height=0.3, fontsize=12, width=2.8];
+    t1 [pos="1.8,3.3!", label="As the initial source (signals)"];
+    t2 [pos="5.7,3.3!", label="As the initial sink (responds)"];
+
+    node [shape=box, style="rounded,filled", fontsize=10, width=1.55,
+          height=0.55];
+    det [pos="0.85,2.5!", label="detect loss of the\nEthernet supply"];
+    pd  [pos="2.75,2.5!", label="CC pull-down,\nat most 5 Ω", fillcolor="#fbe5d6"];
+    sto [pos="0.85,1.4!", label="stored energy:\nruns the board until\nVBUS returns",
+         height=0.62];
+    vb1 [pos="2.75,1.4!", label="VBUS path off;\nat most 500 mA\nuntil tSnkFRSwap",
+         height=0.62];
+
+    cmp [pos="4.85,2.5!", label="CC comparator,\n490 to 550 mV", fillcolor="#dbe8f5"];
+    tmr [pos="6.55,2.5!", label="timer: low for\n30 to 50 µs"];
+    cnv [pos="6.55,1.4!", label="source converter,\nalready running", fillcolor="#e2f0d9"];
+    vb2 [pos="4.85,1.4!", label="VBUS at 5 V within\n150 µs of vSafe5V", width=1.6];
+
+    det -> pd;
+    det -> vb1;
+    cmp -> tmr; tmr -> cnv [label="start"]; cnv -> vb2;
+}

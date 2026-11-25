@@ -1,5 +1,5 @@
-Bringing converter parts onto evampire
-======================================
+On-chip converter parts
+=======================
 
 This page describes the steps by which more of each converter moves onto
 evampire, and what each step needs from the
@@ -7,7 +7,18 @@ evampire, and what each step needs from the
 version keeps the gate drivers and power transistors external
 (:ref:`requirements`, :doc:`first-version`). The full design moves the
 gate drivers on chip, and then the power transistors
-(:numref:`tab-power-board-configs`).
+(:numref:`tab-power-board-configs`). :numref:`fig-conv-integration-steps`
+shows the three steps.
+
+.. graphviz:: integration-steps.dot
+   :name: fig-conv-integration-steps
+   :caption: The three integration steps, with the evampire die outlined.
+   :alt: Three rows of the same chain: PWM and sensing, gate driver, power
+         transistors and inductor. In row (a) the die outline encloses only
+         the PWM and sensing, and the other three blocks are external. In
+         row (b) it encloses the PWM and sensing and the gate driver. In row
+         (c) it encloses everything except the inductor.
+   :align: center
 
 The steps are explored by building and measuring them: a design simulated
 with the gf180mcu models, then test structures on a wafer.space run, then a
@@ -15,8 +26,8 @@ board. Commercial parts and published chips appear below as reference
 examples of what has been built elsewhere, not as evidence of what a
 gf180mcu design will achieve.
 
-What the process documents
---------------------------
+Process documentation
+---------------------
 
 Three kinds of fact bear on each step, and they are kept apart here.
 
@@ -105,8 +116,8 @@ The breakdown of the deep n-well to the substrate, and of the field oxide
 under poly and metal to the substrate, are listed as open questions below;
 they decide how high above the substrate an isolated circuit can sit.
 
-First version: control only
----------------------------
+Control only
+------------
 
 evampire generates the PWM signals and senses the converters; external
 gate drivers switch external transistors (:doc:`first-version`). This
@@ -122,8 +133,8 @@ needs from the process only what evampire uses elsewhere:
 For reference, the UCC27211 half-bridge driver's inputs accept logic levels
 and tolerate −10 V to 20 V [CONV-UCC27211]_ (Features).
 
-Next step: gate drivers on chip
--------------------------------
+Gate drivers on chip
+--------------------
 
 A gate driver charges and discharges the power transistor's gate quickly.
 The current it must supply follows from the gate charge and the switching
@@ -195,6 +206,8 @@ High-side drivers
    another isolation structure: a deep n-well, if its breakdown is high
    enough; more than one junction in series; or devices built in
    polysilicon, which has no junction to the substrate.
+   :numref:`fig-conv-hs-isolation` compares the standard n-well with two
+   of these.
 
    For reference, a
    36 V charge pump has been built in nanometre-scale bulk CMOS
@@ -202,6 +215,23 @@ High-side drivers
    in low-voltage bulk CMOS [CONV-KER2007]_ (Title). For a lower switch
    node, such as a converter running
    from a bus of 6 V or less, the standard devices suffice.
+
+.. figure:: hs-isolation.svg
+   :name: fig-conv-hs-isolation
+   :alt: Three schematic cross-sections over a P-type substrate at 0 V. (a)
+         A standard n-well holding the driver at up to 62 V: the junction
+         to the substrate, marked red, holds up to 62 V against a documented
+         breakdown of 10 V minimum. (b) A deep n-well at up to 62 V
+         enclosing a p-well at the 57 V switch node and an n-well at the
+         62 V driver supply; the inner junctions hold about 5 V, and the
+         deep n-well to substrate junction, whose breakdown is an open
+         question, holds the full voltage. (c) Polysilicon devices at 57 V
+         to 62 V on field oxide, with no junction to the substrate; the
+         field oxide holds the voltage.
+   :align: center
+
+   Ways to float a high-side driver 57 V to 62 V above the substrate
+   (schematic, not to scale); stacking junctions in series is a fourth.
 
 Bootstrap supply
    The bootstrap diode blocks the input voltage while the switch node is
@@ -221,8 +251,8 @@ Level shifter
    180 nm BiCMOS process with high-voltage devices, with 1.45 ns delay
    [CONV-LUTZ2018]_ and with 5 ns delay at 20 V/ns [CONV-WITTMANN2014]_.
 
-Later: power transistors on chip
---------------------------------
+Power transistors on chip
+-------------------------
 
 A power transistor's on-resistance falls with its width. From the
 documented linear current of the 10 V LDNMOS, 26.8 µA/µm at 6 V gate and
@@ -265,14 +295,15 @@ an assumed :math:`a` of 2 µm to 5 µm the area is 0.07 mm² to 0.19 mm².
      - none
 
 Voltage
-   The LDNMOS is rated 10 V and breaks down at 13.2 V minimum, so it
-   cannot block 57 V alone. A series stack of :math:`n` devices shares the
-   voltage, at least :math:`\lceil 57 / 10 \rceil = 6`. For the same total
-   resistance each device must be :math:`n` times wider, so the total width
-   grows as :math:`n^2`: 6 devices for 100 mΩ need 224 mm each, 1343 mm in
-   total. The LDNMOS body is tied to the substrate, so the upper devices of
-   a stack need a custom device in an isolated well, with the same isolation
-   question as the high-side driver.
+   The LDNMOS is rated 10 V and breaks down at 13.2 V minimum, so it cannot
+   block 57 V alone. A series stack of :math:`n` devices shares the voltage,
+   at least :math:`\lceil 57 / 10 \rceil = 6`
+   (:numref:`fig-conv-ldmos-stack`). For the same total resistance each
+   device must be :math:`n` times wider, so the total width grows as
+   :math:`n^2` (:numref:`fig-conv-stack-width`): 6 devices for 100 mΩ need
+   224 mm each, 1343 mm in total. The LDNMOS body is tied to the substrate,
+   so the upper devices of a stack need a custom device in an isolated well,
+   with the same isolation question as the high-side driver.
 Current
    At 85 °C, the Type 4 power sourcing equipment current of 1.731 A needs
    105 µm of 30 kÅ top metal, 828 µm of a lower metal, or 2985 contacts;
@@ -285,6 +316,27 @@ Lower voltages
    evampire's own low-voltage supplies, converted from 6 V or less, are
    within the ratings of the standard thick-oxide devices, and a converter
    working below 10 V is within the LDMOS rating.
+
+.. graphviz:: ldmos-stack.dot
+   :name: fig-conv-ldmos-stack
+   :caption: A stack of six 10 V LDNMOS devices blocking 57 V.
+   :alt: Six LDNMOS devices in series from 57 V to ground, each rated
+         10 V and holding about 9.5 V when off. The bottom device has its
+         body tied to the substrate; the five above it, drawn dashed, need
+         bodies in isolated wells, the top one 47.5 V above the substrate,
+         which makes them custom devices.
+   :align: center
+
+.. figure:: stack-width.svg
+   :name: fig-conv-stack-width
+   :alt: Bar chart of total gate width against the number of series
+         devices n from 1 to 8 for a 100 mΩ switch: 37.3 mm for one device,
+         growing as n squared. Bars below 6 are shaded as unable to block
+         57 V; n = 6 is highlighted at 224 mm each, 1343 mm in total.
+   :align: center
+
+   Total gate width of a 100 mΩ LDNMOS stack against the number of
+   devices in series.
 
 .. _conv-custom:
 
@@ -326,8 +378,8 @@ Isolated circuits above the substrate
    this. A gf180mcu structure for 57 V is established by test structures
    on a wafer.space run.
 
-What each step needs from the process
--------------------------------------
+Process needs of each step
+--------------------------
 
 :numref:`tab-conv-process-needs` lists what each integration step needs
 from the gf180mcu process.

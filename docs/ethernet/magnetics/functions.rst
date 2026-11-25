@@ -1,5 +1,5 @@
-What each part of the magnetics does
-====================================
+Functions of the magnetics
+==========================
 
 This page lists the jobs that the :term:`magnetics` of a standard port do,
 which part does each job, and which requirement of IEEE 802.3 or of other
@@ -44,7 +44,7 @@ way of meeting them ([MAG-ENT98]_, section 2.1).
      - product immunity tests
    * - :ref:`Biasing the line driver <magnetics-driver-bias>`
      - circuit-side centre tap
-     - the transceiver's data sheet
+     - the transceiver's datasheet
    * - :ref:`Carrying Power over Ethernet current <magnetics-poe-current>`
      - cable-side centre taps
      - :clause:`Table 145-16 <145>`
@@ -60,8 +60,8 @@ Power over Ethernet on :doc:`poe`. The other jobs are described below.
 
 .. _magnetics-isolation:
 
-Isolation keeps ground differences off the transceiver
-------------------------------------------------------
+Galvanic isolation
+------------------
 
 :term:`Galvanic isolation` means that no conducting path joins two
 circuits: no direct current can flow between them, and a large voltage
@@ -70,6 +70,21 @@ cable can be in different buildings, powered from different parts of the
 mains wiring. Their ground voltages can differ, by much more during a fault
 or a nearby lightning strike. Without isolation, that difference would
 drive current along the cable and through both transceivers.
+
+:numref:`fig-magnetics-ground-loop` shows the loop, and how a transformer
+at each port breaks it.
+
+.. graphviz:: ground-loop.dot
+   :name: fig-magnetics-ground-loop
+   :caption: A ground difference between two buildings, without isolation
+             and with a transformer at each port.
+   :alt: Top, without isolation: transceivers in building 1 and building 2
+         are joined by the cable, and each is connected to its own ground.
+         The two grounds differ by ΔV, and a current flows around the loop
+         through both transceivers and the cable, drawn in red. Bottom, the
+         same with a transformer between each transceiver and the cable: no
+         current flows, because each transformer breaks the loop.
+   :align: center
 
 Every twisted-pair Ethernet port must be isolated from the rest of the
 equipment, including its frame ground (:clause:`14.3.1.1`,
@@ -113,8 +128,23 @@ apart (:std:`Annex J.1 <802.3>`). The impulses for a Power over Ethernet
 port are 60 s apart (:clause:`145.4.1`). The 1500 V rms test has a peak of
 2121 V.
 
+:numref:`fig-magnetics-impulses` draws the two impulse shapes against the
+peak of the alternating test.
+
+.. figure:: impulses.svg
+   :name: fig-magnetics-impulses
+   :alt: Graph of voltage in kilovolts against time from 0 to 1000 µs. The
+         1.2/50 µs impulse rises almost at once to 2.4 kV and has decayed
+         to near zero by 300 µs. The 10/700 µs impulse rises to 1.5 kV and
+         is still above 0.5 kV at 1000 µs. A dashed line marks 2121 V, the
+         peak of the 1500 V rms test.
+
+   The two impulse tests of :numref:`tbl-magnetics-hipot`, drawn as double
+   exponentials with the stated front and half-value times.
+
 The port passes when there is no insulation breakdown during the test, and
-the resistance afterwards is at least 2 MΩ, measured at 500 V. Annex J.1
+the resistance afterwards is at least 2 MΩ, measured at 500 V.
+:std:`Annex J.1 <802.3>`
 counts as breakdown a current that rises rapidly and without control. A
 steady current through a capacitor is therefore not breakdown, which
 matters for ports coupled through capacitors (:doc:`isolation`).
@@ -131,8 +161,8 @@ Environment A relaxes only the isolation between the power circuits of
 different ports. It keeps the isolation between each port and the
 equipment.
 
-Parts across the barrier must withstand the test voltage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parts across the barrier
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any part connected between the cable side and the equipment side bridges
 the isolation. Examples are the capacitor to chassis in the common-mode
@@ -140,16 +170,30 @@ termination, a coupling capacitor, or a resistor between two grounds. Such
 a part must withstand the voltage of the test that the port is qualified
 with.
 
+:numref:`fig-magnetics-barrier-parts` shows where such parts sit.
+
+.. graphviz:: barrier-parts.dot
+   :name: fig-magnetics-barrier-parts
+   :caption: Parts that bridge the isolation barrier of a port.
+   :alt: The equipment side, with the transceiver, signal ground and chassis,
+         on the left; the cable side, with the cable, centre taps and
+         termination resistors, on the right; a dashed isolation
+         barrier between. Three parts bridge it: the 1000 pF
+         termination capacitor to chassis, a coupling capacitor, and a
+         resistor between two grounds. Each withstands 2121 V peak in
+         the alternating test or 2250 V in the direct test.
+   :align: center
+
 These pages take a part as suitable when its maker states a withstand
 (test) voltage at least as high as that test voltage: 2121 V peak for the
 alternating test, or 2250 V for the direct test. Its rated working voltage
-can be lower. Magnetics data sheets state the isolation of the whole part,
+can be lower. Magnetics datasheets state the isolation of the whole part,
 most often 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
 
 .. _magnetics-common-mode:
 
-The transformer rejects common-mode voltage and blocks DC
----------------------------------------------------------
+Common-mode rejection and DC blocking
+-------------------------------------
 
 Any voltage on a pair has two parts. The :term:`differential-mode voltage`
 is the difference between the two wires, and carries the data. The
@@ -162,9 +206,24 @@ Each side of the transformer can therefore sit at its own voltage. The
 transceiver stays near its own supply, and the cable sits wherever the far
 end, a ground difference or Power over Ethernet puts it.
 
+:numref:`fig-magnetics-cm-transformer` summarises what crosses the
+transformer.
+
+.. graphviz:: cm-transformer.dot
+   :name: fig-magnetics-cm-transformer
+   :caption: What a transformer passes and blocks on one pair.
+   :alt: The transceiver side, near its own supply, joins a transformer by
+         the two wires of a pair, and the transformer joins the cable side,
+         which sits at the far end's voltage, a ground difference or the
+         Power over Ethernet voltage. The differential signal passes; the
+         common-mode voltage and direct current are blocked. A dashed path
+         around the transformer marks the capacitance between the windings,
+         which passes some high-frequency common mode.
+   :align: center
+
 Real transformers pass some common-mode signal through the capacitance
-between their windings at high frequencies, which is why a choke is added
-(:ref:`magnetics-choke`). Data sheets give the rejection as "common-mode
+between their windings at high frequencies, which is why a
+:ref:`choke <magnetics-choke>` is added. Datasheets give the rejection as "common-mode
 rejection": for example 33 dB to 43 dB from 30 MHz to 100 MHz for the Pulse
 H5007NL ([MAG-PULSE]_, electrical table), and 30 dB to 35 dB for the Bel
 0826-1G1T-23-F ([MAG-BEL]_, electrical table).
@@ -175,10 +234,22 @@ only a small differential voltage: the ratio must exceed
 :math:`34 - 19.2 \log_{10}(f / 50\ \text{MHz})` dB from 1 MHz to 100 MHz.
 This is 66.6 dB at 1 MHz and 28.2 dB at 100 MHz.
 
+:numref:`fig-magnetics-balance` plots the limit.
+
+.. figure:: balance.svg
+   :name: fig-magnetics-balance
+   :alt: Graph of impedance balance in decibels against frequency on a
+         log scale from 1 MHz to 100 MHz. The limit falls in a straight
+         line from 66.6 dB at 1 MHz to 28.2 dB at 100 MHz, and the region
+         above it is shaded as required.
+
+   The impedance-balance limit of :clause:`40.8.3.2`,
+   34 − 19.2 log10(f / 50 MHz) dB.
+
 .. _magnetics-cm-termination:
 
-The termination absorbs common-mode currents
---------------------------------------------
+Common-mode termination
+-----------------------
 
 Each pair, taken as a whole, also forms a transmission line with every
 other pair. Common-mode currents travel along these lines. If the ends are
@@ -234,16 +305,42 @@ capacitor is nearly an open circuit and keeps the isolation. It sits across
 the isolation barrier, so it must withstand the test voltage
 (:ref:`magnetics-isolation`).
 
+:numref:`fig-magnetics-zc` plots the impedance against frequency.
+
+.. figure:: zc.svg
+   :name: fig-magnetics-zc
+   :alt: Graph of the impedance magnitude of a 1000 pF capacitor in ohms
+         against frequency, both on log scales, from 10 Hz to 100
+         MHz. The straight line falls from 3.2 MΩ at 50 Hz to 5.3
+         Ω at 30 MHz.
+
+   Impedance of the 1000 pF termination capacitor.
+
 .. _magnetics-choke:
 
-The choke filters common-mode noise
------------------------------------
+Common-mode choke
+-----------------
 
 A :term:`common-mode choke` is two windings on one core, one in each wire
 of a pair. The data current flows out on one wire and back on the other,
 so the magnetic fields of the two windings cancel and the data sees almost
 no inductance. A common-mode current flows the same way on both wires, the
 fields add, and it sees a high impedance.
+
+:numref:`fig-magnetics-choke` shows the two cases.
+
+.. figure:: choke.svg
+   :name: fig-magnetics-choke
+   :alt: Two drawings of a ring core with wire plus wound on its top limb
+         and wire minus wound on its bottom limb. Top, differential
+         current flows right on wire plus and left on wire minus; the flux
+         arrows of the two windings go round the core in opposite
+         directions and cancel. Bottom, common-mode current flows right on
+         both wires; the flux arrows go round the core the same way and
+         add.
+
+   Flux in a common-mode choke for differential and for common-mode
+   current (schematic, not to scale).
 
 Noise from the board couples equally onto both traces of a pair and becomes
 common-mode voltage, and so does any imbalance in the transmitter. An
@@ -262,10 +359,23 @@ low-impedance path to the termination. Parts with a transformer, choke and
 autotransformer on each pair are sold as "12-core", and those without the
 autotransformer as "8-core" ([MAG-ENT98]_, sections 3.3 to 3.6).
 
+:numref:`fig-magnetics-core-variants` compares the two.
+
+.. graphviz:: core-variants.dot
+   :name: fig-magnetics-core-variants
+   :caption: One channel of 8-core and of 12-core magnetics, with the
+             choke on the cable side; the autotransformer's position along
+             the pair is schematic.
+   :alt: Top, 8-core: transceiver, transformer, common-mode choke and RJ45
+         in a row. Bottom, 12-core: the same row, with an autotransformer
+         across the pair, centre tapped, connected between the choke and
+         the RJ45.
+   :align: center
+
 .. _magnetics-surge:
 
-Surges pass the transformer only as differential signals
---------------------------------------------------------
+Surge paths
+-----------
 
 A common-mode surge raises the whole cable in voltage against the
 equipment. It appears across the transformer's isolation, which holds it
@@ -274,6 +384,20 @@ the winding capacitance. A differential surge, between the wires of a
 pair, passes through the transformer like a signal and is clamped by
 protection diodes.
 
+:numref:`fig-magnetics-surge-paths` shows both paths.
+
+.. graphviz:: surge-paths.dot
+   :name: fig-magnetics-surge-paths
+   :caption: The paths of a common-mode and a differential surge through a
+             standard port.
+   :alt: Top, a common-mode surge raises both cable wires; the transformer
+         holds it off, and only a small coupling through the winding
+         capacitance, drawn dashed, reaches the protection diodes. Bottom,
+         a differential surge between the two wires passes through the
+         transformer like a signal and is clamped by the protection diodes
+         before the transceiver.
+   :align: center
+
 Texas Instruments places these diodes on the transceiver side of the
 magnetics, because on the cable side large common-mode voltages can make
 them conduct and fail ([MAG-SNLA387]_, section 2, "ESD Device Selection and Layout"). The sizes of these
@@ -281,8 +405,8 @@ events are given on :doc:`events`.
 
 .. _magnetics-driver-bias:
 
-The circuit-side centre tap biases the line driver
---------------------------------------------------
+Line driver bias
+----------------
 
 How the circuit-side centre tap is connected depends on the kind of line
 driver in the transceiver (:numref:`fig-magnetics-centre-tap-bias`, and
@@ -318,8 +442,8 @@ transformer, as described on :doc:`without-transformer`.
 
 .. _magnetics-identical:
 
-Four identical channels let any pair carry any direction
---------------------------------------------------------
+Identical channels
+------------------
 
 Automatic MDI/MDI-X configuration (:doc:`cable`) can swap pair A with pair
 B and pair C with pair D. Each channel of the magnetics can therefore end up

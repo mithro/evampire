@@ -1,20 +1,20 @@
 .. _usbpd-packets:
 
-Packets on the configuration channel
-====================================
+Packet structure
+================
 
 How a :term:`USB Power Delivery` message is framed as a packet, coded into
 5-bit symbols and checked, and how long a packet takes to send. The
-electrical signal that carries the bits on the :term:`CC` wire is described
-on :doc:`cc-signalling`.
+:doc:`electrical signal <cc-signalling>` that carries the bits on the
+:term:`CC` wire has its own page.
 
-A packet has five parts
------------------------
+Packet parts
+------------
 
-Every message travels on the CC wire as one packet. :numref:`tab-usbpd-packet`
-lists the parts in the order they are sent (:pd:`Section 5.3.1.1`,
+Every message travels on the CC wire as one packet, which has six parts.
+:numref:`tab-usbpd-packet` lists the parts in the order they are sent (:pd:`Section 5.3.1.1`,
 :pd:`Figure 5.1`). Each bit of the packet is then sent with
-:term:`biphase mark coding <Biphase mark coding>` (:ref:`usbpd-bmc`).
+:ref:`biphase mark coding <usbpd-bmc>`.
 
 .. list-table:: Parts of a packet, in the order they are sent
    :name: tab-usbpd-packet
@@ -57,12 +57,27 @@ K-codes, with no header, data, CRC or EOP (:pd:`Section 5.3.1.2`,
 The header, the data and the CRC are sent least significant byte first, and
 the lower 4 bits (nibble) of each byte before the upper nibble
 (:pd:`Section 5.3.1.1`, :pd:`Figure 5.1`). This is
-:wikipedia:`little-endian <Endianness>` order.
+:wikipedia:`little-endian <Endianness>` order. :numref:`fig-usbpd-packet`
+shows the parts of a packet, a reset, and this order for one header.
+
+.. figure:: packet.svg
+   :name: fig-usbpd-packet
+   :alt: Three rows of boxes. Message packet: preamble 64 bits, SOP 20 bits,
+         header 20 bits, 0 to 7 data objects of 40 bits, CRC 40 bits and
+         EOP 5 bits; a bracket marks everything from SOP to EOP as 5-bit
+         symbols, and a second bracket marks the header and data objects as
+         covered by the CRC. Hard Reset or Cable Reset: preamble 64 bits and
+         four K-codes, 20 bits. Order on the wire for the GoodCRC header
+         41h 02h: nibble 1h as symbol 01001, then 4h as 01010, then 2h as
+         10100, then 0h as 11110; each symbol is sent bit b0 first.
+
+   The parts of a packet in the order they are sent, the shorter reset
+   packet, and the nibble and bit order of one header.
 
 .. _usbpd-4b5b:
 
-Data is sent as 5-bit symbols
------------------------------
+4b5b symbols
+------------
 
 Everything after the preamble is sent in 5-bit *symbols*, a
 :wikipedia:`4B5B` line code (:pd:`Section 5.3.1.1.2`, :pd:`Table 5.2`):
@@ -78,7 +93,7 @@ Everything after the preamble is sent in 5-bit *symbols*, a
 A K-code cannot appear in data, so a receiver finds the start and end of a
 packet by matching symbols rather than by counting bits. The tables write
 each symbol from bit b4 down to bit b0, and bit b0 is sent first
-(:pd:`Figure 5.1`).
+(:pd:`Figure 5.1`; :numref:`fig-usbpd-packet`).
 
 .. list-table:: Data symbols (:pd:`Table 5.2`)
    :name: tab-usbpd-4b5b
@@ -149,8 +164,8 @@ each symbol from bit b4 down to bit b0, and bit b0 is sent first
 
 .. _usbpd-sop:
 
-The start of a packet says who it is for
-----------------------------------------
+Start of packet
+---------------
 
 The four K-codes after the preamble form an *ordered set*. It says whether
 the packet goes to the port at the other end, to a cable plug, or is a reset
@@ -219,6 +234,17 @@ Hard Reset
 Cable Reset
    The cable plugs only.
 
+:numref:`fig-usbpd-sop-targets` shows where each receiver sits along the
+cable.
+
+.. graphviz:: sop-targets.dot
+   :name: fig-usbpd-sop-targets
+   :caption: The receivers along a marked cable, with the ordered set that
+             addresses each.
+   :alt: A chain from the sending port, the VCONN Source, through the near
+         cable plug, addressed by SOP′, the cable, and the far cable plug,
+         addressed by SOP″, to the far port, addressed by SOP.
+
 :numref:`fig-usbpd-preamble-sop` shows the end of the preamble and the first
 Sync-1 symbol on the wire, sent bit b0 first.
 
@@ -247,8 +273,8 @@ is on :ref:`usbpd-discover-identity`.
 
 .. _usbpd-crc:
 
-A CRC-32 protects the header and data
--------------------------------------
+CRC-32
+------
 
 The checksum is a 32-bit :wikipedia:`cyclic redundancy check
 <Cyclic_redundancy_check>` (CRC) over the header and data objects, not over
@@ -291,8 +317,8 @@ The EOP K-code ends the packet. It is not covered by the CRC
 
 .. _usbpd-durations:
 
-How long a packet takes to send
--------------------------------
+Packet durations
+----------------
 
 Software and hardware timing budgets depend on how long the line is busy
 with each packet. The packet length in bits, from :numref:`tab-usbpd-packet`,
@@ -351,7 +377,7 @@ The time to send the packet is:
      - µs
 
 The equations count only the packet. The idle time before and after it is
-set by the transmitter timing on :ref:`usbpd-transmitter`.
+set by the :ref:`transmitter timing <usbpd-transmitter>`.
 
 A GoodCRC message has no data objects, so it has 149 bits, and at the
 nominal 300 kbit/s it takes

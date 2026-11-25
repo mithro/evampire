@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" font-family="sans-serif" font-size="13">
+<rect width="640" height="640" fill="white"/>
+<text x="20" y="24" text-anchor="start" font-size="14" font-weight="bold" fill="#222222">(a) Above threshold, W/L = 10, V<tspan dy="4" font-size="0.75em">DS</tspan><tspan dy="-4"> </tspan>= 1 V</text>
+<rect x="90" y="40" width="500" height="230" rx="0" fill="none" stroke="#222222"/>
+<line x1="90.0" y1="40" x2="90.0" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="90.0" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="173.3" y1="40" x2="173.3" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="173.3" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">10</text>
+<line x1="256.7" y1="40" x2="256.7" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="256.7" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="340.0" y1="40" x2="340.0" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="340.0" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">30</text>
+<line x1="423.3" y1="40" x2="423.3" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="423.3" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="506.7" y1="40" x2="506.7" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="506.7" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">50</text>
+<line x1="590.0" y1="40" x2="590.0" y2="270" stroke="#dddddd" stroke-width="1"/>
+<text x="590.0" y="287" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">60</text>
+<line x1="90" y1="270.0" x2="590" y2="270.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="274.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="90" y1="231.7" x2="590" y2="231.7" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="235.7" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">100</text>
+<line x1="90" y1="193.3" x2="590" y2="193.3" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="197.3" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">200</text>
+<line x1="90" y1="155.0" x2="590" y2="155.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="159.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">300</text>
+<line x1="90" y1="116.7" x2="590" y2="116.7" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="120.7" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">400</text>
+<line x1="90" y1="78.3" x2="590" y2="78.3" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="82.3" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">500</text>
+<line x1="90" y1="40.0" x2="590" y2="40.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="44.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">600</text>
+<text x="340.0" y="308" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">gate voltage V<tspan dy="4" font-size="0.75em">G</tspan><tspan dy="-4"> </tspan>(V)</text>
+<text x="40" y="155.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 40 155.0)">drain current (µA)</text>
+<polyline points="190.0,267.8 195.0,265.1 200.0,262.4 205.0,259.7 210.0,257.0 215.0,254.3 220.0,251.6 225.0,248.9 230.0,246.2 235.0,243.5 240.0,240.8 245.0,238.1 250.0,235.4 255.0,232.7 260.0,230.0 265.0,227.3 270.0,224.6 275.0,221.9 280.0,219.2 285.0,216.5 290.0,213.8 295.0,211.1 300.0,208.5 305.0,205.8 310.0,203.1 315.0,200.4 320.0,197.7 325.0,195.0 330.0,192.3 335.0,189.6 340.0,186.9 345.0,184.2 350.0,181.5 355.0,178.8 360.0,176.1 365.0,173.4 370.0,170.7 375.0,168.0 380.0,165.3 385.0,162.6 390.0,159.9 395.0,157.2 400.0,154.5 405.0,151.8 410.0,149.1 415.0,146.5 420.0,143.8 425.0,141.1 430.0,138.4 435.0,135.7 440.0,133.0 445.0,130.3 450.0,127.6 455.0,124.9 460.0,122.2 465.0,119.5 470.0,116.8 475.0,114.1 480.0,111.4 485.0,108.7 490.0,106.0 495.0,103.3 500.0,100.6 505.0,97.9 510.0,95.2 515.0,92.5 520.0,89.8 525.0,87.1 530.0,84.5 535.0,81.8 540.0,79.1 545.0,76.4 550.0,73.7 555.0,71.0 560.0,68.3 565.0,65.6 570.0,62.9 575.0,60.2 580.0,57.5 585.0,54.8 590.0,52.1" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+<circle cx="565.0" cy="65.6" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
+<text x="557.0" y="57.6" text-anchor="end" font-size="12" font-weight="normal" fill="#c0392b">Metal1: 533 µA at 57 V</text>
+<polyline points="368.3,269.2 371.1,268.7 373.9,268.2 376.6,267.7 379.4,267.2 382.2,266.7 385.0,266.1 387.7,265.6 390.5,265.1 393.3,264.6 396.0,264.1 398.8,263.6 401.6,263.1 404.4,262.5 407.1,262.0 409.9,261.5 412.7,261.0 415.4,260.5 418.2,260.0 421.0,259.5 423.8,258.9 426.5,258.4 429.3,257.9 432.1,257.4 434.8,256.9 437.6,256.4 440.4,255.9 443.1,255.3 445.9,254.8 448.7,254.3 451.5,253.8 454.2,253.3 457.0,252.8 459.8,252.3 462.5,251.7 465.3,251.2 468.1,250.7 470.9,250.2 473.6,249.7 476.4,249.2 479.2,248.6 481.9,248.1 484.7,247.6 487.5,247.1 490.2,246.6 493.0,246.1 495.8,245.6 498.6,245.0 501.3,244.5 504.1,244.0 506.9,243.5 509.6,243.0 512.4,242.5 515.2,242.0 518.0,241.4 520.7,240.9 523.5,240.4 526.3,239.9 529.0,239.4 531.8,238.9 534.6,238.4 537.4,237.8 540.1,237.3 542.9,236.8 545.7,236.3 548.4,235.8 551.2,235.3 554.0,234.8 556.8,234.2 559.5,233.7 562.3,233.2 565.1,232.7 567.8,232.2 570.6,231.7 573.4,231.2 576.1,230.6 578.9,230.1 581.7,229.6 584.5,229.1 587.2,228.6 590.0,228.1" stroke="#2e86de" stroke-width="2.5" fill="none"/>
+<circle cx="565.0" cy="232.7" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.8"/>
+<text x="557.0" y="224.7" text-anchor="end" font-size="12" font-weight="normal" fill="#2e86de">Metal3: 97 µA at 57 V</text>
+<polyline points="569.2,269.6 569.4,269.5 569.7,269.5 569.9,269.5 570.2,269.4 570.5,269.4 570.7,269.4 571.0,269.4 571.2,269.3 571.5,269.3 571.8,269.3 572.0,269.2 572.3,269.2 572.6,269.2 572.8,269.2 573.1,269.1 573.3,269.1 573.6,269.1 573.9,269.1 574.1,269.0 574.4,269.0 574.6,269.0 574.9,268.9 575.2,268.9 575.4,268.9 575.7,268.9 575.9,268.8 576.2,268.8 576.5,268.8 576.7,268.7 577.0,268.7 577.2,268.7 577.5,268.7 577.8,268.6 578.0,268.6 578.3,268.6 578.5,268.6 578.8,268.5 579.1,268.5 579.3,268.5 579.6,268.4 579.8,268.4 580.1,268.4 580.4,268.4 580.6,268.3 580.9,268.3 581.1,268.3 581.4,268.2 581.7,268.2 581.9,268.2 582.2,268.2 582.4,268.1 582.7,268.1 583.0,268.1 583.2,268.1 583.5,268.0 583.8,268.0 584.0,268.0 584.3,267.9 584.5,267.9 584.8,267.9 585.1,267.9 585.3,267.8 585.6,267.8 585.8,267.8 586.1,267.7 586.4,267.7 586.6,267.7 586.9,267.7 587.1,267.6 587.4,267.6 587.7,267.6 587.9,267.6 588.2,267.5 588.4,267.5 588.7,267.5 589.0,267.4 589.2,267.4 589.5,267.4 589.7,267.4 590.0,267.3" stroke="#2e8b57" stroke-width="2.5" fill="none"/>
+<circle cx="565.0" cy="270.0" r="4" fill="#2e8b57" stroke="#222222" stroke-width="0.8"/>
+<line x1="565.0" y1="212.7" x2="565.0" y2="265.0" stroke="#2e8b57" stroke-width="1"/>
+<text x="561.0" y="208.7" text-anchor="end" font-size="12" font-weight="normal" fill="#2e8b57">Metal5: at threshold at 57 V</text>
+<text x="20" y="360" text-anchor="start" font-size="14" font-weight="bold" fill="#222222">(b) Below threshold</text>
+<rect x="90" y="380" width="500" height="200" rx="0" fill="none" stroke="#222222"/>
+<line x1="90.0" y1="380" x2="90.0" y2="580" stroke="#dddddd" stroke-width="1"/>
+<text x="90.0" y="597" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-5</text>
+<line x1="190.0" y1="380" x2="190.0" y2="580" stroke="#dddddd" stroke-width="1"/>
+<text x="190.0" y="597" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-4</text>
+<line x1="290.0" y1="380" x2="290.0" y2="580" stroke="#dddddd" stroke-width="1"/>
+<text x="290.0" y="597" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-3</text>
+<line x1="390.0" y1="380" x2="390.0" y2="580" stroke="#dddddd" stroke-width="1"/>
+<text x="390.0" y="597" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-2</text>
+<line x1="490.0" y1="380" x2="490.0" y2="580" stroke="#dddddd" stroke-width="1"/>
+<text x="490.0" y="597" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-1</text>
+<line x1="590.0" y1="380" x2="590.0" y2="580" stroke="#dddddd" stroke-width="1"/>
+<text x="590.0" y="597" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="90" y1="580.0" x2="590" y2="580.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="584.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">10⁻⁴</text>
+<line x1="90" y1="480.0" x2="590" y2="480.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="484.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">10⁻²</text>
+<line x1="90" y1="380.0" x2="590" y2="380.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="384.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">1</text>
+<text x="340.0" y="618" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">V<tspan dy="4" font-size="0.75em">G</tspan><tspan dy="-4"> </tspan>− V<tspan dy="4" font-size="0.75em">T</tspan><tspan dy="-4"> </tspan>(V)</text>
+<text x="40" y="480.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 40 480.0)">current ÷ current at threshold</text>
+<polyline points="370.0,580.0 372.7,577.5 375.5,575.0 378.2,572.5 381.0,570.0 383.8,567.5 386.5,565.0 389.2,562.5 392.0,560.0 394.7,557.5 397.5,555.0 400.2,552.5 403.0,550.0 405.8,547.5 408.5,545.0 411.2,542.5 414.0,540.0 416.8,537.5 419.5,535.0 422.2,532.5 425.0,530.0 427.8,527.5 430.5,525.0 433.2,522.5 436.0,520.0 438.8,517.5 441.5,515.0 444.2,512.5 447.0,510.0 449.8,507.5 452.5,505.0 455.2,502.5 458.0,500.0 460.8,497.5 463.5,495.0 466.2,492.5 469.0,490.0 471.8,487.5 474.5,485.0 477.2,482.5 480.0,480.0 482.8,477.5 485.5,475.0 488.2,472.5 491.0,470.0 493.7,467.5 496.5,465.0 499.2,462.5 502.0,460.0 504.8,457.5 507.5,455.0 510.2,452.5 513.0,450.0 515.8,447.5 518.5,445.0 521.2,442.5 524.0,440.0 526.8,437.5 529.5,435.0 532.2,432.5 535.0,430.0 537.8,427.5 540.5,425.0 543.2,422.5 546.0,420.0 548.8,417.5 551.5,415.0 554.2,412.5 557.0,410.0 559.8,407.5 562.5,405.0 565.2,402.5 568.0,400.0 570.8,397.5 573.5,395.0 576.2,392.5 579.0,390.0 581.8,387.5 584.5,385.0 587.2,382.5 590.0,380.0" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+<text x="400.0" y="530.0" text-anchor="end" font-size="12" font-weight="normal" fill="#c0392b">Metal1, 550 mV per decade</text>
+<polyline points="90.0,476.2 96.2,475.0 102.5,473.8 108.8,472.5 115.0,471.3 121.2,470.1 127.5,468.9 133.8,467.7 140.0,466.5 146.2,465.3 152.5,464.1 158.8,462.9 165.0,461.7 171.2,460.5 177.5,459.3 183.8,458.1 190.0,456.9 196.2,455.7 202.5,454.5 208.8,453.3 215.0,452.1 221.2,450.9 227.5,449.7 233.8,448.5 240.0,447.3 246.2,446.1 252.5,444.9 258.8,443.7 265.0,442.5 271.2,441.3 277.5,440.1 283.8,438.9 290.0,437.7 296.2,436.5 302.5,435.3 308.8,434.1 315.0,432.9 321.2,431.7 327.5,430.5 333.8,429.3 340.0,428.1 346.2,426.9 352.5,425.7 358.8,424.5 365.0,423.3 371.2,422.1 377.5,420.9 383.8,419.7 390.0,418.5 396.2,417.3 402.5,416.1 408.8,414.9 415.0,413.7 421.2,412.5 427.5,411.2 433.8,410.0 440.0,408.8 446.2,407.6 452.5,406.4 458.8,405.2 465.0,404.0 471.2,402.8 477.5,401.6 483.8,400.4 490.0,399.2 496.2,398.0 502.5,396.8 508.8,395.6 515.0,394.4 521.2,393.2 527.5,392.0 533.8,390.8 540.0,389.6 546.2,388.4 552.5,387.2 558.8,386.0 565.0,384.8 571.2,383.6 577.5,382.4 583.8,381.2 590.0,380.0" stroke="#2e8b57" stroke-width="2.5" fill="none"/>
+<text x="584" y="373.8" text-anchor="end" font-size="12" font-weight="normal" fill="#2e8b57">Metal5, 2.6 V per decade</text>
+</svg>

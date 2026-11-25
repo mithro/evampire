@@ -1,0 +1,51 @@
+// The two Rd paths on one CC pin: the trimmed Rd used once the board is
+// powered, and the dead-battery path that works with no supply. Values
+// from analogue.rst (Type-C Section 4.8.5, Tables 4-28 and 4-30).
+//
+// Fixed grid (positions in inches): x=1.0 trimmed path, x=3.2 dead-battery
+// path (transistor above its source resistor R_s), x=5.1 its gate pull-up; y=3.9 source Rp down to y=0.35 ground.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph rd_paths {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+           fontname="Helvetica", fontsize=10, width=1.6, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowhead=none];
+
+    rp   [pos="2.1,3.9!", label="source Rp:\n80, 180 or 330 µA",
+          fillcolor="#fbe5d6"];
+    cc   [pos="2.1,3.05!", label="CC pin", width=0.9, fillcolor="#ffffff"];
+    j    [pos="2.1,2.55!", shape=point, width=0.08, label="", style=filled,
+          fillcolor="#000000"];
+
+    rd   [pos="1.0,1.95!", label="Rd 5.1 kΩ ± 10 %,\ntrimmed"];
+    sw   [pos="1.0,1.15!", label="switch, on once\nthe chip is powered",
+          fillcolor="#f2f2f2"];
+    g1   [pos="1.0,0.35!", label="GND", width=0.6, height=0.3,
+          fillcolor="#ffffff"];
+
+    rs   [pos="3.2,1.15!", label="R_s: 2.0 kΩ standard,\n4.1 to 5.9 kΩ native", width=1.6];
+    mn   [pos="3.2,1.95!", label="NMOS, standard\nor native",
+          fillcolor="#f2f2f2"];
+    g2   [pos="3.2,0.35!", label="GND", width=0.6, height=0.3,
+          fillcolor="#ffffff"];
+    pu   [pos="5.1,1.95!", label="weak pull-up\nfrom CC", width=1.2,
+          fillcolor="#f2f2f2"];
+    off  [pos="5.1,0.3!", shape=plaintext, style="", width=1.9,
+          height=0.95, fontsize=9,
+          label="off once powered: gate\nat 0 V for a standard NMOS;\na native one needs its gate\nbelow its source or a\nseries switch. Off, the pin\npresents at least 126 kΩ"];
+
+    rp -> cc [arrowhead=normal, dir=forward, label="  I_Rp"];
+    cc -> j;
+    j -> rd; rd -> sw; sw -> g1;
+    j -> mn; mn -> rs; rs -> g2;
+    k  [pos="5.1,3.05!", shape=point, width=0.01, label=""];
+    cc -> k [style=dashed];
+    k -> pu [style=dashed];
+    pu -> mn [style=dashed];
+    gl [pos="4.25,2.08!", shape=plaintext, style="", width=0.4, height=0.2,
+        fontsize=9, label="gate"];
+}

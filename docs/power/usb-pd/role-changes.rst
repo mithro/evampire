@@ -1,14 +1,14 @@
 .. _usbpd-role-changes:
 
-Changing roles while connected
-==============================
+Role changes
+============
 
 How two connected USB Type-C ports exchange the power role, the data role
 and the VCONN supply without unplugging, and how a Hard Reset returns both
 to their starting state.
 
-Each swap changes one thing
----------------------------
+Kinds of swap
+-------------
 
 When a cable is plugged in, the port that ends up with :term:`Rp` is the
 :term:`source`, supplies :term:`VCONN` and is the USB host side; the port
@@ -50,8 +50,8 @@ it before it may send PR_Swap (:pd:`Section 7.10`).
 
 .. _usbpd-power-role-swap:
 
-A power role swap exchanges source and sink
--------------------------------------------
+Power role swap
+---------------
 
 In a power role swap, the source turns VBUS off and changes its Rp to Rd,
 and the sink then changes its Rd to Rp and turns VBUS on.
@@ -73,7 +73,8 @@ same whichever port asked (:pd:`Section 4.3.3`).
          changes Rd to Rp, turns VBUS on to 5 V, and starts its own PS_RDY
          within 280 ms; the new sink waits up to 390 to 480 ms. The new sink
          answers GoodCRC, and at least 20 ms later the new source sends
-         Source_Capabilities.
+         Source_Capabilities. A port whose wait for PS_RDY runs out goes to
+         ErrorRecovery.
    :align: center
 
 .. list-table:: Power role swap time limits (:pd:`PD Tables 4.7 <x>`,
@@ -136,27 +137,40 @@ VBUS may fall and rise faster than the normal slew-rate limit during a swap
 treat this as a detach (:pd:`Section 7.10`). The USB data connection stays
 up through the swap (:pd:`Section 4.3`).
 
-The initial sink must run from something other than VBUS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Supply for the initial sink
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 From tSnkSwapStdby until the new source has VBUS up, the initial sink may
 draw at most 2.5 mA. A board built around evampire can therefore swap from
 sink to source only while it is powered from another input, such as
 :term:`Power over Ethernet`. That input is also what it then supplies VBUS
-from.
+from (:numref:`fig-usbpd-swap-power`).
 
-A swap that fails ends in ErrorRecovery
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. graphviz:: swap-power.dot
+   :name: fig-usbpd-swap-power
+   :caption: Power on the board before, during and after a swap from sink
+             to source; bold arrows show power.
+   :alt: Three panels, each with a Power over Ethernet input, the board
+         power bus and the USB port. Before: power flows into the bus from
+         both the Ethernet input and the USB port, which is a sink with the
+         partner supplying VBUS. During the swap: the bus runs from the
+         Ethernet input, and the USB port draws at most 2.5 mA from VBUS.
+         After: the Ethernet input feeds the bus, which feeds the USB port
+         as a source, with evampire supplying VBUS.
+
+Failed swaps
+^^^^^^^^^^^^
 
 If the expected PS_RDY does not arrive within tPSSourceOff or tPSSourceOn,
 the waiting port goes to the Type-C ErrorRecovery state
+(:numref:`fig-usbpd-prswap`, right-hand notes)
 (:pd:`PD Sections 7.31.5.2 <x>` and :pd:`7.31.5.3 <x>`). It removes its
-terminations, both ports see a detach, and attach starts again (see
-:ref:`usbpd-error-recovery`). A board that was running from VBUS at that
+terminations, both ports see a detach, and attach starts again, as
+described for :ref:`ErrorRecovery <usbpd-error-recovery>`. A board that was running from VBUS at that
 moment loses its power.
 
-The power budget changes direction
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Power budget after a swap
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After a swap the board's input and output change places. The software
 updates the :ref:`power budget <power-budget>`. When the board becomes the
@@ -185,10 +199,20 @@ message whose bit claims the same role as its own goes to ErrorRecovery
 A DR_Swap message exchange swaps DFP and UFP and nothing else: VBUS, the CC
 resistors and VCONN stay as they are (:pd:`PD Sections 6.3.9 <x>` and
 :pd:`7.12.1 <x>`; :typec:`Table 4-13 <x>`). Either port may send DR_Swap,
-and the other answers Accept, Reject or Wait. The swap counts as a detach
+and the other answers Accept, Reject or Wait
+(:numref:`fig-usbpd-dr-swap`). The swap counts as a detach
 and re-attach for any USB data connection between the two ports
 (:pd:`Section 7.12.1`). A Hard Reset returns the data roles to DFP for the
 port with Rp and UFP for the port with Rd (:pd:`Section 7.1.3`).
+
+.. graphviz:: dr-swap.dot
+   :name: fig-usbpd-dr-swap
+   :caption: DR_Swap exchanges the data roles and nothing else.
+   :alt: Sequence diagram. Port A is the source and DFP, port B the sink and
+         UFP. Port A sends DR_Swap, port B answers GoodCRC, then Accept, and
+         port A answers GoodCRC. Afterwards port A is the source and UFP,
+         and port B the sink and DFP. VBUS, the source's Rp, the sink's Rd
+         and VCONN are unchanged.
 
 evampire's USB serial port works only as UFP, so a board that supplies power
 as source may need DR_Swap to become UFP. :doc:`/usb-serial/usb-pd-roles`
@@ -197,8 +221,8 @@ end refuses.
 
 .. _usbpd-vconn-swap:
 
-VCONN_Swap moves the VCONN Source
----------------------------------
+VCONN_Swap
+----------
 
 The *VCONN Source* is the port that supplies VCONN to the cable plugs (see
 :ref:`usbpd-vconn`). After attach it is the source. A power role swap does
@@ -218,7 +242,32 @@ is connected before the old one is disconnected. The steps are
 #. After Accept, the new VCONN Source turns VCONN on and sends PS_RDY
    within *tVconnSourceOn* (50 ms).
 #. The old VCONN Source turns VCONN off within *tVconnSourceOff* (25 ms) of
-   the end of that PS_RDY. For those 25 ms both ports supply VCONN.
+   the end of that PS_RDY. Both ports supply VCONN from the moment the new
+   VCONN Source turns it on until the old one turns it off, up to 50 ms plus
+   25 ms.
+
+:numref:`fig-usbpd-vconn-swap` shows the order.
+
+.. wavedrom::
+   :caption: VCONN_Swap, make-before-break, schematic and not to scale.
+   :name: fig-usbpd-vconn-swap
+   :alt: Timing diagram. The messages VCONN_Swap and Accept are followed by
+         an idle line. After Accept the new VCONN Source turns VCONN on and
+         sends PS_RDY within tVconnSourceOn, at most 50 ms. The old VCONN
+         Source keeps VCONN on until up to tVconnSourceOff, 25 ms, after the
+         end of PS_RDY. Both supply VCONN from the new source's turn-on to
+         the old source's turn-off. VCONN at the cable stays on throughout.
+
+   {"signal": [
+     {"name": "messages", "wave": "=..=.z..=.z...", "data": ["VCONN_Swap", "Accept", "PS_RDY"]},
+     {"name": "new source", "wave": "0.....1......."},
+     {"name": "tVconnSourceOn", "wave": "x....=..x.....", "data": ["≤ 50 ms"]},
+     {"name": "tVconnSourceOff", "wave": "x.........=.x.", "data": ["≤ 25 ms"]},
+     {"name": "old source", "wave": "1...........0."},
+     {"name": "overlap", "wave": "x.....=.....x.", "data": ["both supply VCONN"]},
+     {"name": "VCONN at cable", "wave": "1............."}
+   ],
+   "config": {"hscale": 1}}
 
 A port that cannot supply VCONN answers Reject or Not_Supported. If the
 port that sent VCONN_Swap is not the VCONN Source and gets Not_Supported, it
@@ -229,8 +278,8 @@ UFP, before asking for it back (:pd:`Table 7.10`).
 
 .. _usbpd-fast-role-swap:
 
-A fast role swap keeps power flowing when the source loses its supply
----------------------------------------------------------------------
+Fast role swap
+--------------
 
 A :term:`fast role swap <Fast role swap>` (FRS) is a power role swap that
 starts with a signal on the CC wire instead of an exchange of messages, so
@@ -238,8 +287,8 @@ that it completes within microseconds. It is made for *charge-through
 accessories*: a hub that powers a laptop from a wall supply and itself
 runs from the laptop when the wall supply is removed (:pd:`Section 10.1`).
 
-The source signals by pulling CC low; the sink takes over VBUS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fast role swap signal
+^^^^^^^^^^^^^^^^^^^^^
 
 :numref:`fig-usbpd-frs` shows the signal and the hand-over of VBUS.
 
@@ -292,8 +341,8 @@ A low of 30 µs cannot be part of a message: no level of a
 During a contract the idle CC level is set by the 1.5 A or 3.0 A Rp, well
 above vFRSwapCableTx (see :ref:`usbpd-cc-voltages`).
 
-Fast role swap works only when the sink was prepared for it
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sink preparation
+^^^^^^^^^^^^^^^^
 
 The initial sink responds to the signal only after it has an explicit
 contract, has read the source's Sink_Capabilities, and found a fast role
@@ -301,8 +350,8 @@ swap current set in them. While prepared, it ignores VBUS-based detach
 detection (:pd:`Section 10.2`). After the swap, the accessory must run at
 5 V on 15 W or less (:pd:`Section 10.1`).
 
-What fast role swap would need on evampire
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fast role swap on evampire
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The case for evampire is a board that supplies a laptop from Power over
 Ethernet and loses the Ethernet supply. With FRS the laptop could take over
@@ -319,14 +368,28 @@ As the port that responds (initial sink):
    30 µs to 50 µs; and a source converter that delivers 5 V within 150 µs,
    which means it is already running.
 
+:numref:`fig-usbpd-frs-blocks` shows the blocks for each role.
+
+.. graphviz:: frs-blocks.dot
+   :name: fig-usbpd-frs-blocks
+   :caption: The blocks fast role swap would need on evampire, as the port
+             that signals and as the port that responds.
+   :alt: Two panels. As the initial source: a detector for the loss of the
+         Ethernet supply drives a CC pull-down of at most 5 Ω and turns the
+         VBUS path off, after which the board draws at most 500 mA until
+         tSnkFRSwap; stored energy runs the board until VBUS returns. As the
+         initial sink: a CC comparator at 490 to 550 mV feeds a timer for a
+         low of 30 to 50 µs, which starts a source converter that is already
+         running, giving VBUS at 5 V within 150 µs of vSafe5V.
+
 For reference, the TPS65987D turns its VBUS path on within 150 µs for a
 fast role swap and has a 5 Ω pull-down and a 490 mV to 550 mV detection
 threshold ([USBPD-TPS65987D]_, Sections 6.7 and 6.8).
 
 .. _usbpd-hard-reset:
 
-A Hard Reset returns both power supplies to their defaults
-----------------------------------------------------------
+Hard Reset
+----------
 
 A :term:`Hard Reset` is a special signal, not a message, that either port
 sends when communication has failed (:pd:`PD Sections 4.4 <x>` and

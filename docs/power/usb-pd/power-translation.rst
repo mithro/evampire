@@ -1,20 +1,20 @@
 .. _usbpd-power-translation:
 
-Turning Power over Ethernet power into USB offers
-=================================================
+USB offers from Power over Ethernet
+===================================
 
 How evampire's software turns the power granted by
 :term:`Power over Ethernet` into valid :term:`USB Power Delivery` source
 offers, and, in the other direction, a USB contract into a Power over
 Ethernet :term:`class`.
 
-The :ref:`power-translation` requirement sets out this translation. The
+The :ref:`power translation <power-translation>` section sets out this translation. The
 page covers the "Ethernet in, USB out" mode first
 (:ref:`power-modes`). :doc:`../poe/index` explains how a class is detected
 and granted.
 
-The class sets the power at the input
--------------------------------------
+Input power from the class
+--------------------------
 
 A :term:`powered device` of a given class may draw up to a fixed average
 power at its input (:numref:`tab-usbpd-class-power`). That power,
@@ -125,12 +125,24 @@ The USB port reports its power as the Port Present PDP, the power it can
 supply at present, in 1 W steps rounded down (:pd:`Table 6.29`). The
 examples below set the Port Present PDP to :math:`P_\text{out}` rounded
 down to 1 W. With two output ports, :math:`P_\text{out}` is shared first
-(:ref:`usbpd-sharing`).
+(:ref:`usbpd-sharing`). :numref:`fig-usbpd-budget-chain` shows the steps
+from the class to the offers.
+
+.. graphviz:: budget-chain.dot
+   :name: fig-usbpd-budget-chain
+   :caption: From the granted Power over Ethernet class to the USB source
+             offers.
+   :alt: Chain of steps. The granted class sets P_Class,PD, which is
+         multiplied by the converter efficiency η, 81 to 97 %, and reduced
+         by P_board, the board's own use, to give P_out, the power left for
+         the output ports. P_out rounded down to 1 W is the Port Present
+         PDP, and the power rules turn it into source offers at up to 5, 9,
+         15 and 20 V.
 
 .. _usbpd-pd-power-rules:
 
-The power rules fix the offers for each power
----------------------------------------------
+Power rules
+-----------
 
 The USB Power Delivery specification sets which fixed voltages a source
 offers, and at what current, from its power
@@ -192,7 +204,22 @@ Each fixed offer's maximum current is (:pd:`Section 3.2.4`):
      - Nominal voltage of the offer
      - V
 
-The current may be rounded up or down to 10 mA (:pd:`Section 3.2.1`,
+:numref:`fig-usbpd-offer-currents` plots the equation for each voltage.
+
+.. figure:: offer-currents.svg
+   :name: fig-usbpd-offer-currents
+   :alt: Graph of maximum current from 0 to 5.4 A against Port Present PDP
+         from 0 to 100 W. The 5 V offer rises from 0 and reaches 3 A at
+         15 W. The 9 V offer starts at 15 W and reaches 3 A at 27 W. The
+         15 V offer starts at 27 W and reaches 3 A at 45 W. The 20 V offer
+         starts at 45 W and reaches 3 A at 60 W, the limit with a 3 A
+         cable; with a 5 A cable it rises to 5 A at 100 W. Grey lines mark
+         the worked examples at 8, 19, 42 and 61 W.
+
+   The maximum current of each fixed offer against the Port Present PDP,
+   from where the offer becomes required.
+
+The current may be rounded up or down to 10 mA (:pd:`Section 3.2.1`,
 item 1). The examples round down, so that no offer exceeds the Port
 Present PDP. These further rules apply:
 
@@ -318,8 +345,8 @@ When the Power over Ethernet grant changes, for example after a Data Link
 Layer reallocation (:clause:`145.5`), the software recomputes the offers
 and sends new Source_Capabilities (:ref:`usbpd-building-offer`).
 
-A USB contract sets the highest Power over Ethernet class
----------------------------------------------------------
+Class from a USB contract
+-------------------------
 
 In the "USB in, Ethernet out" mode the translation runs the other way. The
 input power is the power of the USB contract, its voltage times its
@@ -362,9 +389,22 @@ With the same assumed :math:`\eta` = 0.900 and :math:`P_\text{board}` =
 
    P_\text{out} = 60\ \text{W} \times 0.900 - 3.10\ \text{W} = 50.9\ \text{W}
 
-The highest class whose :math:`P_\text{Class}` does not exceed 50.9 W is
-class 5 (45 W). A 9 V, 3 A contract (27 W) gives 21.2 W and class 3; a
-20 V, 5 A contract (100 W) gives 86.9 W and class 7. :doc:`../poe/index` explains how the power sourcing
+The highest class whose :math:`P_\text{Class}` does not exceed 50.9 W is
+class 5 (45 W). A 9 V, 3 A contract (27 W) gives 21.2 W and class 3; a 20 V,
+5 A contract (100 W) gives 86.9 W and class 7
+(:numref:`fig-usbpd-class-steps`).
+
+.. figure:: class-steps.svg
+   :name: fig-usbpd-class-steps
+   :alt: Staircase graph of the highest class, from none to 8, against P_out
+         from 0 to 100 W, with steps at 4, 6.7, 14, 30, 45, 60, 75 and 90 W.
+         Dots mark 21.2 W at class 3, 50.9 W at class 5 and 86.9 W at
+         class 7.
+
+   The highest Power over Ethernet class for the power left from a USB
+   contract, with the three worked examples.
+
+:doc:`../poe/index` explains how the power sourcing
 equipment assigns the class and how it changes the allocation later.
 
 Open questions

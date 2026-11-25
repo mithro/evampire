@@ -1,9 +1,9 @@
-The boost converter
-===================
+Boost converter
+===============
 
 This page explains the step-up converter, called a
 :wikipedia:`boost converter <Boost_converter>`, in the same way as
-:doc:`buck`: its parts, its duty cycle, its inductor ripple and what limits
+:doc:`the buck converter <buck>`: its parts, its duty cycle, its inductor ripple and what limits
 it. On an evampire board the high-voltage converter, which produces the
 44 V to 57 V for a power sourcing equipment port, is a step-up converter
 (:ref:`power-flow`).
@@ -33,8 +33,8 @@ form) passes the inductor current to the output. Each period has two parts:
    :math:`V_\text{in} - V_\text{out}` across it, which is negative because
    the output is higher than the input, so its current falls.
 
-The duty cycle sets the output voltage
---------------------------------------
+Duty cycle and output voltage
+-----------------------------
 
 Volt-second balance on the inductor (:doc:`buck`) gives
 
@@ -107,12 +107,29 @@ used [CONV-SLVA372]_ (Equation 6), and the inductor current peaks at
 :math:`1.5 + 0.252 = 1.752` A. The output current is only
 :math:`30 / 54 = 0.556` A: a boost converter draws more current from its
 input than it delivers, in the ratio of the voltages.
+:numref:`fig-conv-boost-waves` shows the waveforms of this example.
 
-Large step-up ratios need long on times
----------------------------------------
+.. figure:: boost-waves.svg
+   :name: fig-conv-boost-waves
+   :alt: Waveforms over two 4 µs periods. The S1 gate is high for the
+         first 2.52 µs of each period and the S2 gate for the rest. The
+         switch node is at 0 V while S1 is on and at 54 V while S2 is on.
+         The inductor current rises from 1.248 A to 1.752 A while S1 is on
+         and falls back while S2 is on, averaging 1.500 A. The S2 current
+         is zero while S1 is on and follows the inductor current while S2
+         is on, averaging 0.556 A, the output current.
+   :align: center
 
-The USB Power Delivery source on the other end of the cable decides which
-input voltages are available (:doc:`../usb-pd/index`).
+   Idealised waveforms of the boost worked example: 20 V to 54 V,
+   250 kHz, 100 µH and 30 W.
+
+Large step-up ratios
+--------------------
+
+A large step-up ratio needs a long on time: from :math:`1/(1-D)`, the
+duty cycle approaches 1 as the ratio grows.
+The :doc:`USB Power Delivery <../usb-pd/index>` source on the other end of
+the cable decides which input voltages are available.
 :numref:`tab-conv-boost-duty` shows the duty cycle needed to reach 54 V from
 each fixed USB Power Delivery voltage.
 
@@ -146,6 +163,23 @@ each fixed USB Power Delivery voltage.
      - 0.111
      - 1.12
 
+:numref:`fig-conv-boost-gain` plots these points on the gain curve, which
+steepens as :math:`D` approaches 1.
+
+.. figure:: boost-gain.svg
+   :name: fig-conv-boost-gain
+   :alt: Graph of voltage gain against duty cycle from 0 to 1. The curve
+         1 over (1 minus D) starts at 1, passes 2 at D = 0.5 and rises
+         steeply above D = 0.8. Points mark 48 V in at D = 0.111 (gain
+         1.12), 36 V at 0.333 (1.50), 28 V at 0.481 (1.93), 20 V at 0.630
+         (2.70), 15 V at 0.722 (3.60), 9 V at 0.833 (6.00) and 5 V at 0.907
+         (10.80). Shaded bands mark the LM5155 maximum duty-cycle ranges of
+         80 % to 90 % and 90 % to 96 %.
+   :align: center
+
+   Boost voltage gain against duty cycle, with the fixed USB voltages of
+   :numref:`tab-conv-boost-duty` raised to 54 V.
+
 At high duty cycles the off time, during which all the energy is passed to
 the output, becomes short. The current in S2 and the output capacitor then
 comes in short, high pulses, and the losses in the parts' resistances rise.
@@ -160,24 +194,39 @@ boost converter [CONV-PMP7979]_. A large ratio can also be split between two
 stages, or made with a transformer or a switched-capacitor stage
 (:doc:`arrangement`).
 
-A short on a boost output bypasses the switches
------------------------------------------------
+Output short circuits
+---------------------
 
 In a boost converter there is always a path from the input, through the
 inductor and S2 (or its diode, or the body diode of a transistor), to the
 output. If the output is short-circuited, current flows along that path
 whatever the switches do, limited only by the source and the resistance of
-the path. Turning S1 off does not stop it.
+the path. Turning S1 off does not stop it
+(:numref:`fig-conv-boost-short`, panel a).
+
+.. graphviz:: boost-short.dot
+   :name: fig-conv-boost-short
+   :caption: Fault current in a boost converter with a shorted output, and
+             a series switch that blocks it.
+   :alt: Two schematics. (a) The boost power stage with S1 off and a short
+         circuit in place of the load: a thick red path runs from the input
+         through the inductor, through the body diode of S2, through the
+         short and back along ground to the input. (b) The same stage with
+         a series switch, off, between the output capacitor and the short,
+         with its body diode pointing back towards the capacitor, so no
+         path remains from the input to the short.
+   :align: center
 
 Stopping it needs a switch in
 series with the input or the output that can block current, or a converter
 in which a series switch is part of the power stage, such as the
-four-switch buck-boost converter (:doc:`buck-boost`). This matters for the
+four-switch buck-boost converter (:doc:`buck-boost`). Panel b of
+:numref:`fig-conv-boost-short` shows a switch in the output. This matters for the
 high-voltage converter, whose output goes to an Ethernet cable that a user
 can short (:doc:`first-version`).
 
-The boost converter is harder to control
-----------------------------------------
+Loop control
+------------
 
 When the duty cycle of a boost converter increases, the output first
 *falls*, because S2 conducts for a shorter time, and only rises once the

@@ -1,0 +1,41 @@
+// The byte interface between the forwarding logic and a port, with an
+// external transceiver over RGMII and with an integrated transceiver.
+// Parts needed only with an external transceiver are drawn dashed.
+//
+// Fixed grid, positions in inches. Top: external. Bottom: integrated.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph byte_interface {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true, height=0.55];
+    edge  [penwidth=1.5, arrowsize=0.6, dir=both];
+
+    node [shape=plaintext, style="", width=3.6, height=0.25, fontsize=10];
+    h1 [pos="2.9,1.95!", label="External transceiver"];
+    h2 [pos="2.9,0.75!", label="Integrated transceiver"];
+
+    node [shape=box, style=filled, height=0.55];
+    f1 [pos="0.6,1.4!", width=1.0, fillcolor="#dbe8f5",
+        label="forwarding\nlogic"];
+    b1 [pos="1.9,1.4!", width=1.0, fillcolor="#ffffff",
+        label="byte, valid,\nerror"];
+    d1 [pos="3.2,1.4!", width=1.0, fillcolor="#ffffff", style="filled,dashed",
+        label="DDR stages\nand pads"];
+    p1 [pos="5.0,1.4!", width=1.2, fillcolor="#f2f2f2",
+        label="external\ntransceiver"];
+    f1 -> b1 -> d1;
+    d1 -> p1 [style=dashed];
+    rg [pos="4.05,1.55!", shape=plaintext, style="", width=0.6,
+        height=0.2, label="RGMII"];
+
+    f2 [pos="0.6,0.2!", width=1.0, fillcolor="#dbe8f5",
+        label="forwarding\nlogic"];
+    b2 [pos="1.9,0.2!", width=1.0, fillcolor="#ffffff",
+        label="byte, valid,\nerror"];
+    p2 [pos="3.6,0.2!", width=1.6, fillcolor="#f2f2f2",
+        label="integrated\ntransceiver"];
+    f2 -> b2 -> p2;
+}

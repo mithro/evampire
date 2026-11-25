@@ -1,15 +1,15 @@
 .. _esd-simulation:
 
-How the ESD simulation is built
-===============================
+ESD simulation set-up
+=====================
 
 This page describes the circuit simulation behind :doc:`results-hbm` and
 :doc:`results-iec`: what is
 simulated, which foundry models it uses, what it adds to them and why, and
 what it cannot show.
 
-The simulated chip is three foundry cells
------------------------------------------
+Simulated circuit
+-----------------
 
 The simulation runs in :wikipedia:`ngspice <Ngspice>` ([ESD-NGSPICE]_)
 with the typical-corner gf180mcu device models at 27 °C
@@ -26,7 +26,22 @@ stressed against ground. Every other pin floats, as on an unpowered chip.
 The core-side inputs of the pad (``A``, ``OE`` and the others) are tied
 low, which is where an unpowered core leaves them. The rings have no
 resistance in the main runs, and :doc:`results-hbm` shows the effect of
-1 Ω.
+1 Ω. :numref:`fig-esd-testbench` shows the circuit.
+
+.. figure:: figures/testbench.svg
+   :name: fig-esd-testbench
+   :alt: The generator drives PAD of the bi_t pad cell, which contains the
+         drivers, drain diodes and input protection, with its core inputs
+         A, OE and the others held low. The bi_t cell sits between the DVDD
+         ring and the DVSS ring. Each ring passes through a resistor of
+         0 ohm or 1 ohm to a DVDD pad and a DVSS pad, each holding a rail
+         clamp between the rings. The generator's return and the DVSS pad
+         connect to the tester ground. DVDD has no outside connection and
+         floats.
+   :width: 100%
+
+   The simulated circuit: three foundry pad cells on the DVDD and DVSS
+   rings, with the generator between PAD and the DVSS pad.
 
 The script :download:`sim/esd_sim.py <sim/esd_sim.py>` runs every test
 circuit. It uses four modules in the same folder:
@@ -43,13 +58,13 @@ circuit. It uses four modules in the same folder:
 :download:`sim/spice.py <sim/spice.py>` holds the paths, the foundry
 figures and the code that runs ngspice.
 
-Four changes add the behaviour of an ESD event
------------------------------------------------
+Added ESD behaviour
+-------------------
 
 The foundry netlists and models are written for normal operation. An ESD
 event drives the protection devices to amperes and into breakdown, which
 the models do not cover. :numref:`tab-esd-sim-physics` lists what the
-simulation adds.
+simulation adds, and :numref:`fig-esd-added` shows where each part sits.
 
 .. list-table:: Changes that add ESD behaviour
    :name: tab-esd-sim-physics
@@ -76,11 +91,24 @@ simulation adds.
        branch fitted to the TLP measurement of the grounded-gate PMOS
        stands in for it
 
-Six changes work around faults in the models under ngspice
-----------------------------------------------------------
+.. figure:: figures/added-esd.svg
+   :name: fig-esd-added
+   :alt: Schematic between DVDD and DVSS with PAD in the middle. The PMOS and
+         NMOS drivers come from the foundry netlist. Added for an ESD event:
+         a drain diode of 480 µm from PAD to DVDD and one of 304 µm from DVSS
+         to PAD, a current source from DVDD to PAD for the PMOS avalanche above
+         9.7 V, and a current source from PAD to DVSS for the NMOS snapback,
+         latched above 10.7 V.
+   :width: 100%
+
+   The pad with the parts the simulation adds for an ESD event.
+
+Model fault workarounds
+-----------------------
 
 The rest of the changes keep the foundry models from giving wrong results
-or stopping the simulator (:numref:`tab-esd-sim-faults`).
+or stopping the simulator (:numref:`tab-esd-sim-faults`,
+:numref:`fig-esd-sab-model`).
 
 .. list-table:: Changes that work around faults in the models
    :name: tab-esd-sim-faults
@@ -118,6 +146,18 @@ or stopping the simulator (:numref:`tab-esd-sim-faults`).
      - The model bins stop at 100 µm. The 4000 µm clamp transistor becomes
        40 transistors of 100 µm in parallel
 
+.. figure:: figures/sab-model.svg
+   :name: fig-esd-sab-model
+   :alt: Left, a silicide-blocked transistor built as a resistor for the
+         blocked drain, 60 ohm per square for N+ or 185 ohm per square for P+,
+         a core 6 V transistor with tiny junction areas and a lower junction
+         current limit, and a resistor for the blocked source. Right, a
+         4000 µm transistor drawn as 40 transistors of 100 µm in parallel.
+   :width: 100%
+
+   How the simulation builds a silicide-blocked transistor, and splits a
+   wide one.
+
 Without the resistor change, each 30 kΩ resistor of the rail clamp's
 timer simulates as about 160 Ω, its two contact resistances alone, so the
 360 kΩ chain becomes about 1.9 kΩ. The clamp then turns off within 30 ns
@@ -136,8 +176,8 @@ pulse's first peak. :numref:`tab-esd-solver` lists the events that needed
 another setting or a shorter run, with the time each reached. A run that
 ends before its stop time without an error message counts as stalled.
 
-The diodes are fitted to the foundry's measurements
----------------------------------------------------
+Diode fit
+---------
 
 The gf180mcu design manual plots TLP measurements of a 6 V N+/P-well diode
 and a 6 V P+/N-well diode ([ESD-GF180-DRM-14-5-7]_,
@@ -179,14 +219,14 @@ also crosses the silicide-blocked drain and the well under the channel, so
 the real drain diode has more resistance than the scaled test diode.
 :doc:`results-hbm` shows what doubling it changes.
 
-The snapback branch follows the TLP measurement
------------------------------------------------
+Snapback branch fit
+-------------------
 
 The design manual's 6 V grounded-gate NMOS triggers at 10.7 V
 ([ESD-GF180-DRM-14-5-5]_). The caption of its figure gives eight fingers
 (NF=8) of 25 µm (GW), so 200 µm of width. A straight line through its measured
 points after snapback gives the holding voltage and on-resistance
-(:numref:`tab-esd-gg-fit`). The fit stops before 1.42 A, the pulse after
+(:numref:`tab-esd-gg-fit`, :numref:`fig-esd-tlp-limits`). The fit stops before 1.42 A, the pulse after
 which the figure's leakage current jumps: the device had failed.
 
 .. csv-table:: Straight-line fit to the snapped-back grounded-gate NMOS
@@ -212,14 +252,14 @@ that overshot 10.7 V. The script stops if a latch fires with its filtered
 voltage more than 10 mV below 10.7 V. :numref:`tab-esd-trigger` gives when
 each snapback latched.
 
-The PMOS avalanche branch follows the TLP measurement
-------------------------------------------------------
+PMOS avalanche branch fit
+-------------------------
 
 The design manual's 6 V grounded-gate PMOS avalanches at 9.7 V and has no
 snapback ([ESD-GF180-DRM-14-5-6]_). The caption of its figure gives twelve
 fingers (NF=12) of 25 µm, so 300 µm of width. A straight line through its
 measured points from 0.2 A to before 1.61 A, where its leakage jumps, gives
-:numref:`tab-esd-gp-fit`. The simulation puts a current source with this
+:numref:`tab-esd-gp-fit`. :numref:`fig-esd-tlp-limits` shows the points. The simulation puts a current source with this
 characteristic from DVDD to the pad, scaled to the 480 µm of the output
 PMOS, for discharges that pull the pad below DVDD.
 
@@ -228,11 +268,12 @@ PMOS, for discharges that pull the pad below DVDD.
    :file: sim/results/ggpmos-fit.csv
    :header-rows: 1
 
-The test generators are checked against their standards
--------------------------------------------------------
+Test generators
+---------------
 
 Each generator is a charged capacitor that discharges through a resistor
-and the inductance of its wiring into the pin:
+and the inductance of its wiring into the pin, as in
+:numref:`fig-esd-testers`:
 
 * Human body model: 100 pF and 1500 Ω ([ESD-ESDA-P5]_), with 5 µH, which
   sets a rise time within the 2 ns to 10 ns that the ESD Association gives.
@@ -272,8 +313,8 @@ discharge a little before the current reaches its peak. The rise time of
 ([ESD-TB505]_, Figure 2) and a rise of less than 1 ns ([ESD-TB505]_,
 "Pulse Rise Time").
 
-The simulation cannot show heating or failure
----------------------------------------------
+Simulation limits
+-----------------
 
 The device models do not include self-heating, and so cannot show a device
 failing. The results judge survival instead by comparing the peak current
@@ -316,3 +357,15 @@ It writes the figures to ``docs/esd/figures/`` and the tables to
 ngspice 44.2 and the two repositories at the commits above.
 :download:`sim/schematic.py <sim/schematic.py>` draws the pad's
 schematic, :numref:`fig-esd-io-cell`.
+:download:`sim/tlp_plot.py <sim/tlp_plot.py>` plots the foundry's TLP
+measurements, :numref:`fig-esd-tlp-limits`, and needs neither ngspice nor
+the repositories.
+:download:`sim/circuits.py <sim/circuits.py>` and
+:download:`sim/paths.py <sim/paths.py>` draw the circuit diagrams, such as
+:numref:`fig-esd-testbench` and :numref:`fig-esd-paths`.
+:download:`sim/sections.py <sim/sections.py>` draws the cross-section,
+:numref:`fig-esd-driver-section`.
+:download:`sim/plots.py <sim/plots.py>` and
+:download:`sim/model_figs.py <sim/model_figs.py>` draw the remaining
+graphs and diagrams, such as :numref:`fig-esd-clamp-timing` and
+:numref:`fig-esd-added`.

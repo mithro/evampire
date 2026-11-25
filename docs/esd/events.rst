@@ -1,14 +1,14 @@
 .. _esd-events:
 
-ESD tests and what reaches the pin
-==================================
+ESD tests
+=========
 
 This page describes the electrostatic discharge (ESD) tests that chips and
 products are rated against. It then shows why a test at thousands of volts
 leaves only a few volts on a pin whose protection conducts.
 
-The chip tests and the product test differ
-------------------------------------------
+Chip and product tests
+----------------------
 
 An ESD rating names a test and a voltage. The voltage is the voltage to
 which the tester charges a capacitor, which then discharges through a
@@ -42,7 +42,27 @@ The human body model values are from the ESD Association
 Renesas TB505 ([ESD-TB505]_, Figure 1). In the charged device model the
 chip itself is the charged capacitor. The discharge often lasts less than
 1 ns, with a peak of several tens of amperes ([ESD-ESDA-P5]_, "Charged
-Device Model (CDM) Testing").
+Device Model (CDM) Testing"). :numref:`fig-esd-testers` draws each tester as
+a circuit.
+
+.. figure:: figures/testers.svg
+   :name: fig-esd-testers
+   :alt: Three circuits. Human body model at 2 kV: a 100 pF capacitor
+         discharges through a 1500 ohm resistor, 5 µH of wiring and a
+         switch into the pin of a chip whose other pin is grounded; about
+         1990 V lies across the resistor and about 10 V on the pin, with
+         1.33 A flowing. The IEC tester: a 150 pF capacitor discharges
+         through 330 ohm and 2 µH, and a fast branch of 6 pF, 200 ohm and
+         120 nH, fitted to the first peak, discharges in parallel with it,
+         through a switch and a metal tip into the pin, with a first peak
+         of 3.75 A per kilovolt, 30 A at 8 kV; in contact discharge the tip
+         touches the pin first, and in air discharge a spark jumps as it
+         approaches. Charged device model: the chip itself is charged
+         through its capacitance to its surroundings, and discharges when a
+         pin touches ground, in under 1 ns at tens of amperes.
+
+   The three ESD testers as circuits, with the wiring inductances and the IEC
+   tester's fast branch used in the simulation.
 
 The human body model and charged device model rate a chip for handling in
 a factory with ESD controls. :std:`IEC 61000-4-2` rates a finished product
@@ -83,11 +103,11 @@ contact discharge. Some parts also quote ±15 kV human body model, such as
 the bus pins of the TRS3232E ([ESD-TRS3232E]_, section 5.2). The name of
 the test, not the voltage, says how severe it is.
 
-The test voltage appears across the resistor, not the pin
----------------------------------------------------------
+Current into the pin
+--------------------
 
 At the moment of discharge, the tester's capacitor, its resistor and the
-pin form one loop. The protection on the pin starts to conduct at a few
+pin form one loop (:numref:`fig-esd-testers`). The protection on the pin starts to conduct at a few
 volts. From then on, the pin voltage is small, and almost the whole test
 voltage lies across the tester's resistor. The resistor therefore sets the
 current:
@@ -134,8 +154,8 @@ is higher still: 3.75 A per kilovolt, 30 A at 8 kV ([ESD-TB505]_,
 Figure 2). An IEC contact discharge at 2 kV gives a higher peak current
 than a human body model test at 8 kV ([ESD-TND410]_, Table 3).
 
-The protection's job is to carry the current
---------------------------------------------
+Role of the protection
+----------------------
 
 A kilovolt test does not put kilovolts on the chip. It puts amperes through
 the chip for a short time, and the chip survives if two conditions hold:
@@ -152,8 +172,8 @@ This is how a process whose transistors are rated for 5 V survives a
 that do this, and :doc:`results-hbm` and :doc:`results-iec` simulate
 them.
 
-Most of the stored energy stays in the tester
----------------------------------------------
+Energy of a discharge
+---------------------
 
 The energy stored in the tester's capacitor bounds the energy any test can
 deliver:

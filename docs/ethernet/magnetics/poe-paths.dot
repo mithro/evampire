@@ -1,0 +1,81 @@
+// Three ways to carry Power over Ethernet current on a capacitor-coupled
+// pair, each beside the coupling capacitors that carry the data: a
+// centre-tapped inductor, two separate inductors, or an active inductor
+// built from an external pass transistor controlled from evampire.
+//
+// Fixed grid, positions in inches. One row per option.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph poe_paths {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+
+    // ---- Centre-tapped inductor across the pair. ----
+    t0 [pos="2.2,4.60!", shape=plaintext, style="", width=4.4, height=0.22, fontsize=10, label="Centre-tapped inductor across the pair"];
+    cab0 [pos="0.25,3.80!", width=0.45, height=1.2, fillcolor="#fbe5d6", label="cable"];
+    pw0 [pos="2.4,3.80!", width=0.75, height=0.5, fillcolor="#ffffff", label="power\ncircuits"];
+    cp0 [pos="3.3,4.30!", width=0.5, height=0.28, fillcolor="#fff2cc", label="C_w"];
+    cn0 [pos="3.3,3.30!", width=0.5, height=0.28, fillcolor="#fff2cc", label="C_w"];
+    ch0 [pos="4.1,3.80!", width=0.6, height=1.2, fillcolor="#dbe8f5", label="chip"];
+    no0 [pos="5.35,3.80!", shape=plaintext, style="", width=1.7, height=0.6, fontsize=9, label="I splits, I/2 each way;\nonly the leakage counts\ntoward the 100 µH limit"];
+    ct0 [pos="1.25,3.80!", width=1.0, height=0.7, fillcolor="#e2efda", label="centre-tapped\ninductor,\n80 µH or more\nacross the pair"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a0 [pos="0.48,4.30!"]; b0 [pos="0.48,3.30!"];
+    e0 [pos="3.8,4.30!"]; f0 [pos="3.8,3.30!"];
+    m0 [pos="1.25,3.80!"];
+    node [shape=point, width=0.07, height=0.07, style=filled, fillcolor="#000000"];
+    jp0 [pos="1.25,4.30!"]; jn0 [pos="1.25,3.30!"];
+    node [shape=box, style=filled, fixedsize=true];
+    a0 -- jp0 -- cp0 -- e0;
+    b0 -- jn0 -- cn0 -- f0;
+    jp0 -- ct0 -- jn0 [color="#548235"];
+    ct0 -- pw0 [color="#c00000", penwidth=2.2];
+
+    // ---- Two separate inductors. ----
+    t1 [pos="2.2,2.95!", shape=plaintext, style="", width=4.4, height=0.22, fontsize=10, label="Two separate inductors"];
+    cab1 [pos="0.25,2.15!", width=0.45, height=1.2, fillcolor="#fbe5d6", label="cable"];
+    pw1 [pos="2.4,2.15!", width=0.75, height=0.5, fillcolor="#ffffff", label="power\ncircuits"];
+    cp1 [pos="3.3,2.65!", width=0.5, height=0.28, fillcolor="#fff2cc", label="C_w"];
+    cn1 [pos="3.3,1.65!", width=0.5, height=0.28, fillcolor="#fff2cc", label="C_w"];
+    ch1 [pos="4.1,2.15!", width=0.6, height=1.2, fillcolor="#dbe8f5", label="chip"];
+    no1 [pos="5.35,2.15!", shape=plaintext, style="", width=1.7, height=0.6, fontsize=9, label="0.474 A in each;\nthe full inductance\nis in the power path"];
+    la1 [pos="1.25,2.43!", width=0.8, height=0.32, fillcolor="#e2efda", label="inductor"];
+    lb1 [pos="1.25,1.87!", width=0.8, height=0.32, fillcolor="#e2efda", label="inductor"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a1 [pos="0.48,2.65!"]; b1 [pos="0.48,1.65!"];
+    e1 [pos="3.8,2.65!"]; f1 [pos="3.8,1.65!"];
+    m1 [pos="1.25,2.15!"];
+    node [shape=point, width=0.07, height=0.07, style=filled, fillcolor="#000000"];
+    jp1 [pos="1.25,2.65!"]; jn1 [pos="1.25,1.65!"];
+    node [shape=box, style=filled, fixedsize=true];
+    a1 -- jp1 -- cp1 -- e1;
+    b1 -- jn1 -- cn1 -- f1;
+    jp1 -- la1 -- m1 -- lb1 -- jn1 [color="#548235"];
+    m1 -- pw1 [color="#c00000", penwidth=2.2];
+
+    // ---- Active inductor. ----
+    t2 [pos="2.2,1.30!", shape=plaintext, style="", width=4.4, height=0.22, fontsize=10, label="Active inductor"];
+    cab2 [pos="0.25,0.50!", width=0.45, height=1.2, fillcolor="#fbe5d6", label="cable"];
+    pw2 [pos="2.4,0.50!", width=0.75, height=0.5, fillcolor="#ffffff", label="power\ncircuits"];
+    cp2 [pos="3.3,1.00!", width=0.5, height=0.28, fillcolor="#fff2cc", label="C_w"];
+    cn2 [pos="3.3,0.00!", width=0.5, height=0.28, fillcolor="#fff2cc", label="C_w"];
+    ch2 [pos="4.1,0.50!", width=0.6, height=1.2, fillcolor="#dbe8f5", label="chip"];
+    no2 [pos="5.35,0.50!", shape=plaintext, style="", width=1.7, height=0.6, fontsize=9, label="holds 57 V, carries\nabout 0.5 A, drops\nabout 2 V: about 1 W"];
+    ai2 [pos="1.25,0.50!", width=1.0, height=0.7, fillcolor="#fbe5d6", label="external pass\ntransistor,\ncontrolled from\nevampire"];
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a2 [pos="0.48,1.00!"]; b2 [pos="0.48,0.00!"];
+    e2 [pos="3.8,1.00!"]; f2 [pos="3.8,0.00!"];
+    m2 [pos="1.25,0.50!"];
+    node [shape=point, width=0.07, height=0.07, style=filled, fillcolor="#000000"];
+    jp2 [pos="1.25,1.00!"]; jn2 [pos="1.25,0.00!"];
+    node [shape=box, style=filled, fixedsize=true];
+    a2 -- jp2 -- cp2 -- e2;
+    b2 -- jn2 -- cn2 -- f2;
+    jp2 -- ai2 -- jn2 [color="#548235"];
+    ai2 -- pw2 [color="#c00000", penwidth=2.2];
+}

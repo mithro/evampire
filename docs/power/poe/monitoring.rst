@@ -1,14 +1,14 @@
 .. _poe-monitoring:
 
-Monitoring and limiting power
-=============================
+Power monitoring and limits
+===========================
 
 This page lists what evampire's built-in power monitoring and limiting must
 measure and enforce on a Power over Ethernet port, and how fast each limit
 must act.
 
-Software sets the limits and hardware enforces them
----------------------------------------------------
+Limits and enforcement
+----------------------
 
 evampire measures the voltage and current of every power port and of the
 board's power bus, so the software can read the power through each of them
@@ -16,10 +16,23 @@ at any time (:ref:`req-power-control`). The software sets a current and
 power limit for each port. Built-in hardware enforces the limits, switches
 a port off by itself when a fault is too fast for the software, and then
 reports the fault. The same measurements serve the converters
-(:doc:`../converters/index`).
+(:doc:`../converters/index`). :numref:`fig-poe-measure-points` shows where
+the measurements and limits sit.
 
-The standard sets the accuracy needed
--------------------------------------
+.. graphviz:: measure-points.dot
+   :name: fig-poe-measure-points
+   :caption: The measurement and limit points on each power port and on
+             the internal power bus.
+   :alt: Diagram. Ethernet port A, Ethernet port B and the USB Type-C ports
+         each connect to the internal power bus through a block that
+         measures voltage and current, enforces a limit and trips fast on
+         a fault. The bus has its own voltage, current and limit block. The
+         software on evampire sets each limit, reads each measurement and
+         receives each fault report; the link is drawn once.
+   :align: center
+
+Measurement accuracy
+--------------------
 
 :numref:`tab-poe-accuracy` collects the measurement accuracy derived on
 :doc:`power-sourcing` from the bands in which the standard allows either
@@ -52,11 +65,12 @@ On a powered-device port the software checks that the board stays within
 its assigned class. The standard measures the powered device's average
 power over a sliding 1 s window (:clause:`145.3.8.2`).
 
-The limits act on four time scales
-----------------------------------
+Limits on a powered port
+------------------------
 
 :numref:`tab-poe-limits` lists the limits that apply while a power sourcing
-equipment port is powered, from the fastest to the slowest
+equipment port is powered, on time scales from 10 µs to 4 s, from the
+fastest to the slowest
 (:clause:`145.2.10.8` to :clause:`145.2.10.13`).
 
 .. list-table:: Limits on a powered port, fastest first
@@ -134,11 +148,28 @@ Between 10 µs and 8.2 ms the template follows a fixed energy limit:
      - Highest allowed current of a pair set
      - A
 
-At 10 µs this gives 50 A, at 1 ms 5 A, and at 8.2 ms 1.75 A, where the
-template joins the flat 1.75 A section.
+At 10 µs this gives 50 A, at 1 ms 5 A, and at 8.2 ms 1.75 A, where the
+template joins the flat 1.75 A section. :numref:`fig-poe-template` draws
+the template with the limits of :numref:`tab-poe-limits`.
 
-The switch's safe operating area sets the fastest response
-----------------------------------------------------------
+.. figure:: template.svg
+   :name: fig-poe-template
+   :alt: Log-log graph of pair set current, 0.1 to 100 A, against time
+         since the current rose, 1 µs to 10 s. The template is flat at 50 A
+         to 10 µs, falls as the square root of K over t through 5 A at
+         1 ms to 1.75 A at 8.2 ms, stays at 1.75 A to 75 ms, then is 1.3 A
+         to 4 s for Type 4 or 0.85 A for Type 3. A dashed box marks the
+         current limit of 0.4 to 1.005 A, held for at least 6 or 10 ms and
+         ended by 75 ms. A band from 50 to 75 ms marks the overload
+         removal window. Shading shows hardware acting before 50 ms and
+         software, with a hardware backstop, after it.
+   :align: center
+
+   The upper current template of one pair set, with the current limit and
+   the overload removal window.
+
+Switch safe operating area
+--------------------------
 
 The fast fault comparator must keep the current inside the template and the
 switch inside its :wikipedia:`safe operating area <Safe_operating_area>`.
@@ -172,21 +203,35 @@ almost the whole supply voltage across it:
      - Power and energy in the switch
      - W, J
 
-A switch rated for 57 W for 75 ms needs no faster software. The response
-time of the comparator then follows from how fast the current rises in a
+A switch rated for 57 W for 75 ms needs no faster software
+(:numref:`fig-poe-soa`).
+
+.. figure:: soa.svg
+   :name: fig-poe-soa
+   :alt: Log-log graph of switch current, 0.1 to 10 A, against the voltage
+         across the switch, 1 to 100 V, with a line of constant 57 W. A
+         point marks a short at the current limit: 57 V and 1.0 A for
+         75 ms, 4.3 J. A note says that the switch's safe operating area
+         for 75 ms must contain this point.
+   :align: center
+
+   The operating point of the switch in a short at the current limit.
+
+The response time of the comparator then follows from how fast the current rises in a
 short, which the cable and port inductance set, and from the switch's peak
 current rating. For reference, the TPS23881 turns its switch off within
 0.9 µs of a short-circuit threshold of about 1.0 A to 1.2 A
 [POE-TPS23881]_ (Electrical Characteristics). Faults in the converters have
 their own response times (:ref:`conv-fault-times`).
 
-The supply must stay steady and quiet
--------------------------------------
+Supply voltage, ripple and noise
+--------------------------------
 
 The port voltage must stay above 45.3 V (Type 3) or 48.4 V (Type 4) through
 transients of 30 µs to 250 µs, and inside the output range for longer
 ones (:clause:`145.2.10.3`). Its ripple and noise must stay below the
-limits of :numref:`tab-poe-ripple` (:clause:`Table 145-16 <145>`, item 4).
+limits of :numref:`tab-poe-ripple` (:clause:`Table 145-16 <145>`, item 4),
+drawn in :numref:`fig-poe-ripple`.
 
 .. list-table:: Ripple and noise limits at the power sourcing equipment
    :name: tab-poe-ripple
@@ -205,9 +250,20 @@ limits of :numref:`tab-poe-ripple` (:clause:`Table 145-16 <145>`, item 4).
    * - 150 kHz
      - 500 kHz
      - 0.15
-   * - 500 kHz
-     - 1 MHz
+   * - 500 kHz
+     - 1 MHz
      - 0.1
+
+.. figure:: ripple.svg
+   :name: fig-poe-ripple
+   :alt: Graph of ripple and noise in volts peak to peak, 0 to 0.6, against
+         frequency, 10 Hz to 1 MHz on a log scale. The limit steps down
+         from 0.5 Vpp below 500 Hz to 0.2 Vpp up to 150 kHz, 0.15 Vpp up to
+         500 kHz and 0.1 Vpp up to 1 MHz. The region above the limit is
+         shaded as not allowed.
+   :align: center
+
+   The ripple and noise limit at the power sourcing equipment output.
 
 Open questions
 --------------

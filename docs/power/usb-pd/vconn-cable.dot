@@ -1,0 +1,62 @@
+// A source powering the e-marker of a marked cable through VCONN on the CC
+// pin that does not meet the CC wire. Values from cables.rst (Type-C
+// Tables 4-5, 4-6, 4-24, 4-29 and 4-32).
+//
+// Fixed grid (positions in inches):
+//   y=2.6  the CC path: Rp, CC1 pin, plug CC contact, far end
+//   y=1.3  the VCONN path: supply, switch, CC2 pin, plug VCONN contact
+//   y=0.45 discharge resistor, Ra and the e-marker
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph vconn_cable {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.1, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10];
+
+    src  [label="Source port", labelloc=t, fontsize=12, pos="1.65,1.6!",
+          width=3.1, height=2.9, style="rounded,dashed", fillcolor="none",
+          color="#c55a11", fontcolor="#c55a11"];
+    plug [label="Near cable plug", labelloc=t, fontsize=12, pos="4.5,1.6!",
+          width=2.2, height=2.9, style="rounded,dashed", fillcolor="none",
+          color="#2e75b6", fontcolor="#2e75b6"];
+
+    rp   [pos="0.8,2.6!", label="Rp", width=0.8, fillcolor="#fbe5d6"];
+    cc1  [pos="2.75,2.6!", label="CC1 pin", width=0.75, fillcolor="#ffffff"];
+    sup  [pos="0.75,1.3!", label="VCONN supply\n3.0 to 5.5 V", width=1.25,
+          fillcolor="#fbe5d6"];
+    sw   [pos="1.75,1.3!", label="switch", width=0.6, fillcolor="#fbe5d6"];
+    j    [pos="2.25,1.3!", shape=point, width=0.08, label="", style=filled,
+          fillcolor="#000000"];
+    cc2  [pos="2.75,1.3!", label="CC2 pin", width=0.75, fillcolor="#ffffff"];
+    rdch [pos="1.85,0.45!", label="Rdch 30 to 6120 Ω\nto GND, after detach",
+          width=1.75, fillcolor="#fbe5d6"];
+
+    pcc  [pos="4.5,2.6!", label="CC contact", width=1.1,
+          fillcolor="#dbe8f5"];
+    pvc  [pos="4.5,1.3!", label="VCONN contact", width=1.25,
+          fillcolor="#dbe8f5"];
+    ra   [pos="4.05,0.45!", label="Ra 0.8 to 1.2 kΩ\nto GND", width=1.2, fontsize=10,
+          fillcolor="#dbe8f5"];
+    emk  [pos="5.1,0.45!", label="e-marker", width=0.8,
+          fillcolor="#dbe8f5"];
+
+    far  [pos="6.75,2.6!", label="Far plug and\nsink (Rd)", width=1.2,
+          fillcolor="#e2f0d9"];
+    note [pos="6.75,1.3!", shape=plaintext, style="", width=1.6, height=0.6,
+          fontsize=10, label="VCONN on within\ntVCONNON, 2 ms,\nof VBUS at 5 V"];
+
+    rp -- cc1;
+    cc1 -- pcc;
+    pcc -- far [penwidth=2.5, color="#2e75b6", label="CC wire"];
+    sup -- sw;
+    sw -- j;
+    j -- cc2;
+    j -- rdch;
+    cc2 -- pvc;
+    pvc -- ra;
+    pvc -- emk;
+}

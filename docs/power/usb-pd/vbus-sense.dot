@@ -1,0 +1,44 @@
+// VBUS sensing and discharge, on chip and on the board, side by side.
+// Values from analogue.rst.
+//
+// Fixed grid (positions in inches): on-chip panel at x=0.2 to 3.2,
+// board panel at x=3.5 to 6.5; y=3.2 VBUS down to y=0.45 ground.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph vbus_sense {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.3, height=0.5,
+           fixedsize=true];
+    edge  [arrowsize=0.7];
+
+    chip [label="On chip", labelloc=b, fontsize=12, pos="1.7,1.55!",
+          width=3.0, height=2.5, style="rounded,dashed", fillcolor="none",
+          color="#1f4e79", fontcolor="#1f4e79"];
+    brd  [label="External: board, then chip", labelloc=b, fontsize=12,
+          pos="5.0,1.55!", width=3.0, height=2.5, style="rounded,dashed",
+          fillcolor="none", color="#555555", fontcolor="#555555"];
+
+    v1  [pos="1.7,3.2!", label="VBUS: up to 21.5 V,\n22.15 V with PPS", width=1.8,
+         fillcolor="#fbe5d6"];
+    div [pos="0.95,2.2!", label="polysilicon divider:\n333 squares, 1 MΩ,\n21.5 µA at 21.5 V",
+         width=1.45, height=0.62];
+    dis [pos="2.45,2.2!", label="discharge switch:\ncustom, holds VBUS",
+         width=1.45, height=0.62];
+    adc [pos="0.95,1.2!", label="ADC or\ncomparator", width=1.1];
+    g1  [pos="2.45,1.2!", label="GND", width=0.6, height=0.3,
+         fillcolor="#ffffff"];
+
+    v2  [pos="5.0,3.2!", label="VBUS", width=0.9, fillcolor="#fbe5d6"];
+    top [pos="4.3,2.2!", label="top resistor:\n855 to 920 kΩ\n(TUSB320)",
+         width=1.2, height=0.62];
+    dt  [pos="5.75,2.2!", label="discharge\ntransistor", width=1.1];
+    pin [pos="4.3,1.2!", label="sense pin:\nat most 4 V", width=1.1];
+    g2  [pos="5.75,1.2!", label="GND", width=0.6, height=0.3,
+         fillcolor="#ffffff"];
+
+    v1 -> div; v1 -> dis; div -> adc; dis -> g1;
+    v2 -> top; v2 -> dt; top -> pin; dt -> g2;
+}

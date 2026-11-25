@@ -1,0 +1,46 @@
+// Linear regulator: a series pass transistor between input and output,
+// set by an error amplifier that compares the divided output with a
+// reference.
+//
+// Fixed grid (positions in inches): the top row (y=2.0) carries the input,
+// the pass transistor and the output; the bottom row (y=0.2) is ground.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph linear {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.5"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.0, height=0.5,
+           fixedsize=true];
+    edge  [penwidth=1.5];
+
+    vin   [pos="0.5,1.1!", shape=circle, width=0.75, label="Input\nVin",
+           fillcolor="#ffffff"];
+    pass  [pos="2.3,2.0!", width=1.9, height=0.6,
+           label="pass transistor: drops\nVin − Vout, carries Iout",
+           fillcolor="#fbe5d6"];
+    ea    [pos="2.3,0.95!", width=1.5, height=0.5,
+           label="error amplifier\nand reference", fillcolor="#fbe5d6"];
+    div   [pos="4.3,1.1!", width=0.9, label="divider", fillcolor="#ffffff"];
+    load  [pos="5.6,1.1!", width=0.8, label="Load", fillcolor="#ffffff"];
+
+    node  [shape=plaintext, style="", fontsize=10, width=0.9, height=0.2];
+    out_l [pos="4.9,2.2!", width=1.2, label="Vout, below Vin"];
+    g_l   [pos="2.6,1.48!", width=0.5, label="gate"];
+    h_l   [pos="2.3,2.5!", width=3.0, fontcolor="#c0392b",
+           label="heat = (Vin − Vout) × Iout"];
+
+    node  [shape=point, width=0.06, height=0.06, label="", style=filled,
+           fillcolor=black];
+    in_t  [pos="0.5,2.0!"];
+    out   [pos="4.3,2.0!", width=0.09, height=0.09];
+    out_t [pos="5.6,2.0!"];
+    g0    [pos="0.5,0.2!"];
+    g2    [pos="4.3,0.2!", width=0.09, height=0.09];
+    g3    [pos="5.6,0.2!"];
+
+    vin -- in_t;  in_t -- pass;  pass -- out;  out -- out_t;  out_t -- load;
+    out -- div;  div -- g2;  load -- g3;  vin -- g0;  g0 -- g2 -- g3;
+    div -- ea [style=dashed];  ea -- pass;
+}

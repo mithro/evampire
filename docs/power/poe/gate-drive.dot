@@ -1,0 +1,33 @@
+// Three ways to drive the gate of an external switch from evampire, with
+// the gate voltages of two controllers as reference examples. From
+// hv-options.rst.
+//
+// Fill colours: evampire #dbe8f5, drivers #fff2cc, external parts
+// #ffffff. Fixed grid (positions in inches): one row per option.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph gate_drive {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10, width=1.6, height=0.5, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.6];
+
+    e1 [pos="0.9,2.4!", label="evampire 6 V devices", fillcolor="#dbe8f5"];
+    m1 [pos="4.9,2.4!", label="MOSFET specified\nat ≤ 6 V gate drive", fillcolor="#ffffff"];
+    e1 -> m1 [label="direct: up to 6 V"];
+
+    e2 [pos="0.9,1.4!", label="evampire", fillcolor="#dbe8f5"];
+    d2 [pos="2.9,1.4!", label="Stacked or\nbootstrapped driver", fillcolor="#fff2cc"];
+    m2 [pos="4.9,1.4!", label="MOSFET needing\na higher gate drive", fillcolor="#ffffff"];
+    e2 -> d2; d2 -> m2;
+
+    e3 [pos="0.9,0.4!", label="evampire", fillcolor="#dbe8f5"];
+    d3 [pos="2.9,0.4!", label="External driver", fillcolor="#ffffff"];
+    m3 [pos="4.9,0.4!", label="MOSFET needing\na higher gate drive", fillcolor="#ffffff"];
+    e3 -> d3; d3 -> m3;
+
+    n [pos="6.75,1.4!", shape=plaintext, style="", width=1.6, height=0.8,
+       fontsize=9, label="reference gate\nvoltages: TPS23881\n10–12.5 V,\nLT4275 10–18 V"];
+}
