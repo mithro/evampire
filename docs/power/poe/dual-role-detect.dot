@@ -1,0 +1,40 @@
+// Why a port that can take either role disconnects the path it is not
+// using. From dual-role.rst. Fixed grid (positions in inches): left panel
+// x=0-3.4, right x=3.8-7.2.
+//
+// Fill colours: far-end equipment #fbe5d6, power circuits #fff2cc,
+// outcomes #f4cccc (invalid). Dashed edges are measurements.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph dual_role_detect {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, penwidth=1.6];
+
+    t1 [pos="1.7,3.6!", shape=plaintext, style="", width=3.3, fontsize=12,
+        label="Port as a powered device"];
+    t2 [pos="5.5,3.6!", shape=plaintext, style="", width=3.3, fontsize=12,
+        label="Port as power sourcing equipment"];
+
+    r1 [pos="0.8,2.9!", label="Remote power\nsourcing equipment", fillcolor="#fbe5d6"];
+    c1 [pos="1.7,2.0!", shape=point, width=0.08];
+    s1 [pos="0.8,1.1!", label="Own signature\n24.9 kΩ"];
+    d1 [pos="2.6,1.1!", label="Own idle sourcing\nload 80–190 kΩ"];
+    o1 [pos="1.7,0.2!", label="seen: 19.0–22.0 kΩ,\nbelow 23.7 kΩ: fails", width=2.2,
+        fillcolor="#f4cccc"];
+    r1 -- c1 [style=dashed, label="  measures"];
+    c1 -- s1; c1 -- d1;
+
+    r2 [pos="4.6,2.9!", label="Own power\nsourcing channels"];
+    c2 [pos="5.5,2.0!", shape=point, width=0.08];
+    s2 [pos="4.6,1.1!", label="Remote powered\ndevice signature", fillcolor="#fbe5d6"];
+    d2 [pos="6.4,1.1!", label="Own signature\n24.9 kΩ"];
+    o2 [pos="5.5,0.2!", label="two signatures in parallel:\nwrong resistance", width=2.3,
+        fillcolor="#f4cccc"];
+    r2 -- c2 [style=dashed, label="  measures"];
+    c2 -- s2; c2 -- d2;
+}
