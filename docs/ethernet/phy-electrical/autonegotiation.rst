@@ -1,7 +1,7 @@
 .. _phy-autoneg:
 
-Agreeing on speed, duplex and the clock master
-==============================================
+Autonegotiation
+===============
 
 This page explains how two transceivers use :term:`autonegotiation`
 (:clause:`28`) to agree, before any data flows, on the speed, on whether
@@ -14,8 +14,8 @@ networks. 1000BASE-T requires autonegotiation (:clause:`40.5.1`).
 
 .. _phy-flp:
 
-Bursts of link pulses carry 16-bit pages
-----------------------------------------
+Fast link pulse bursts
+----------------------
 
 A transceiver that autonegotiates replaces each single
 :ref:`link test pulse <phy-link-pulses>` of 10BASE-T with a *fast link
@@ -40,7 +40,8 @@ pulse*, meaning 1, or no pulse, meaning 0. One burst therefore carries
    }
 
 :numref:`tab-phy-flp-timing` gives the timing. Each pulse has the shape of
-a 10BASE-T link test pulse (:clause:`Figure 14-13 <14>`).
+a 10BASE-T link test pulse (:clause:`Figure 14-13 <14>`,
+:numref:`fig-phy-link-pulses`).
 
 .. list-table:: Fast link pulse burst timing (:clause:`Table 28-1 <28>`)
    :name: tab-phy-flp-timing
@@ -70,12 +71,34 @@ a 10BASE-T link test pulse (:clause:`Figure 14-13 <14>`).
 
 .. _phy-base-page:
 
-The base page names the abilities
----------------------------------
+Base page
+---------
 
 The 16 bits of a burst form a *page*. The first, the *base page*, has the
-fields of :numref:`tab-phy-base-page` (:clause:`28.2.1.2`,
-:clause:`Figure 28-7 <28>`).
+fields of :numref:`tab-phy-base-page` and :numref:`fig-phy-base-page`
+(:clause:`28.2.1.2`, :clause:`Figure 28-7 <28>`).
+
+.. wavedrom::
+   :caption: The 16 bits of the base page, drawn as two rows of 8 bits
+             with D0 at the right of the lower row.
+   :name: fig-phy-base-page
+   :alt: Bit-field diagram of the base page: bits D0 to D4 the selector,
+         00001 for Ethernet; D5 to D11 the technology abilities A0 to A6;
+         D12 extended next page; D13 remote fault; D14 acknowledge; D15
+         next page.
+
+   {"reg": [
+     {"name": "Selector", "bits": 5, "attr": "00001"},
+     {"name": "Abilities A0 to A6", "bits": 7},
+     {"name": "XNP", "bits": 1},
+     {"name": "RF", "bits": 1},
+     {"name": "Ack", "bits": 1},
+     {"name": "NP", "bits": 1}
+   ],
+   "config": {"hspace": 380, "bits": 16, "lanes": 2}}
+
+In :numref:`fig-phy-base-page`, XNP is extended next page, RF remote
+fault, Ack acknowledge and NP next page.
 
 .. list-table:: Fields of the base page
    :name: tab-phy-base-page
@@ -129,12 +152,28 @@ fields of :numref:`tab-phy-base-page` (:clause:`28.2.1.2`,
 
 Each end repeats its page. Once it has received at least three
 consecutive matching bursts from its partner, it sets the acknowledge bit
-(:clause:`28.2.1.2.5`).
+(:clause:`28.2.1.2.5`). :numref:`fig-phy-autoneg-sequence` shows the whole
+exchange.
+
+.. graphviz:: autoneg-sequence.dot
+   :name: fig-phy-autoneg-sequence
+   :caption: Two 1000BASE-T transceivers exchange the base page and then
+             the 1000BASE-T next pages; both ends send at the same time,
+             drawn here one after the other.
+   :alt: Sequence diagram between end 1 and end 2, time running down.
+         Each sends its base page with the next page bit set, repeated in
+         bursts 8 ms to 24 ms apart. After at least 3 matching bursts each
+         sends the base page with acknowledge set. Each then sends a
+         message page with code 8 and unformatted pages 1 and 2, carrying
+         1000BASE-T half and full duplex, port type, manual master or
+         slave, and an 11-bit seed. Finally both ends pick the highest
+         common mode and the master and start link_fail_inhibit_timer.
+   :align: center
 
 .. _phy-next-pages:
 
-1000BASE-T abilities travel in next pages
------------------------------------------
+1000BASE-T next pages
+---------------------
 
 The base page has no bit for 1000BASE-T. A 1000BASE-T transceiver sets the
 next page bit and sends three more pages: a message page with message code
@@ -147,10 +186,12 @@ next page bit and sends three more pages: a message page with message code
 * whether the end is configured by hand as master or as slave;
 * an 11-bit random number, the *seed*.
 
+The lower half of :numref:`fig-phy-autoneg-sequence` shows these pages.
+
 .. _phy-resolution:
 
-Both ends apply the same rules to the same information
-------------------------------------------------------
+Mode and master resolution
+--------------------------
 
 Each end compares its own abilities with its partner's and picks the
 highest mode both support (:clause:`28.2.3.3`). For the three speeds on
@@ -161,7 +202,7 @@ ends reach the same answer because they apply the same rules to the same
 pages.
 
 For 1000BASE-T the master is chosen by these rules
-(:clause:`40.5.2`, :clause:`Table 40-5 <40>`):
+(:clause:`40.5.2`, :clause:`Table 40-5 <40>`, :numref:`fig-phy-resolution`):
 
 #. An end configured as master becomes master, and one configured as slave
    becomes slave. If both are configured to the same role, the link fails
@@ -172,6 +213,18 @@ For 1000BASE-T the master is chosen by these rules
    seeds both ends draw new seeds and negotiate again; after seven failed
    attempts a configuration fault is declared.
 
+.. graphviz:: resolution.dot
+   :name: fig-phy-resolution
+   :caption: The master and slave resolution that both ends apply to the
+             same next pages.
+   :alt: Flowchart. Either end set by hand? If yes: both set to the same
+         role? If yes, configuration fault; if no, the set roles apply.
+         If no end is set by hand: one multiport and one single-port? If
+         yes, the multiport end becomes master. If no: seeds equal? If
+         no, the larger seed becomes master; if yes, both draw new seeds
+         and negotiate again, with a fault after 7 failures.
+   :align: center
+
 .. _phy-autoneg-parallel:
 
 A partner that does not autonegotiate sends 10BASE-T link pulses or the
@@ -181,8 +234,8 @@ speed from the signal itself, which is called *parallel detection*
 
 .. _phy-autoneg-timers:
 
-Timers bound every step
------------------------
+Timers
+------
 
 :numref:`tab-phy-autoneg-timers` lists the main autonegotiation timers by
 their names in the standard.
@@ -217,4 +270,20 @@ silent for break_link_timer and starts again (:clause:`28.3.2`). For
 1000BASE-T, the training described in :ref:`phy-master-slave` must finish
 inside that time. For reference, the TI DP83867 datasheet gives 2 s to 3 s
 as the typical time for autonegotiation with next pages to complete
-([PHY-DP83867]_ section 7.4.3.8).
+([PHY-DP83867]_ section 7.4.3.8). :numref:`fig-phy-startup` puts the
+timers on one time line.
+
+.. figure:: startup-timeline.svg
+   :name: fig-phy-startup
+   :alt: Time line from the autonegotiation result at 0 ms to 2600 ms,
+         after a shaded page exchange with bursts every 8 ms to 24 ms.
+         Bars from 0: the slave trains within maxwait_timer, 350 ms plus or
+         minus 5 ms; the master within 750 ms plus or minus 10 ms;
+         link_fail_inhibit_timer runs 750 ms to 1000 ms, by which the link
+         must be up. If it is not, the transceiver is silent for
+         break_link_timer, 1200 ms to 1500 ms, drawn from 1000 ms, and
+         then negotiation restarts.
+   :align: center
+
+   The 1000BASE-T start-up timers after autonegotiation; break_link_timer
+   is drawn from the latest expiry of link_fail_inhibit_timer.

@@ -1,20 +1,37 @@
 .. _poe-pd-side:
 
-What a powered device must do
-=============================
+Powered device requirements
+===========================
 
 This page lists what the end that receives power, port A on a
 first-version board, must do at each step of the sequence on
 :doc:`sequence`.
 
-Accept either polarity on either pair set
------------------------------------------
+Polarity bridges
+----------------
 
-The powered device does not know which pair set will carry power or which
-pair will be positive (:doc:`basics`). It therefore puts a
+The powered device accepts either polarity on either pair set, because it
+does not know which pair set will carry power or which pair will be
+positive (:doc:`basics`). It therefore puts a
 :wikipedia:`full-wave bridge rectifier <Diode_bridge>` on each pair set and
 joins the two outputs. The joined outputs are the positive and negative
-inputs of the rest of the circuit.
+inputs of the rest of the circuit, VDD and VSS
+(:numref:`fig-poe-bridges`).
+
+.. figure:: bridges.svg
+   :name: fig-poe-bridges
+   :alt: Schematic of two diode bridges. Bridge A takes the centre taps of
+         pins 1, 2 and pins 3, 6 (Mode A), and bridge B those of pins 4, 5
+         and pins 7, 8 (Mode B). Each bridge has two legs of two diodes.
+         The bridge outputs join into a VDD bus and a VSS bus, which feed
+         the signature, class and switch block. The current path with pins
+         1, 2 positive is highlighted: from pins 1, 2 through the upper
+         diode of the first leg to VDD, through the load to VSS, and back
+         through the lower diode of the second leg to pins 3, 6.
+   :align: center
+
+   Two polarity bridges joined into VDD and VSS, with the current path
+   when pins 1, 2 are positive.
 
 A bridge of ordinary diodes loses two diode drops. A bridge of
 :wikipedia:`Schottky diodes <Schottky_diode>` loses less but leaks more
@@ -24,14 +41,14 @@ item 18, and :clause:`145.3.8.8`). A bridge of
 :wikipedia:`MOSFETs <MOSFET>` switched on as rectifiers loses less again.
 
 The bridge also adds series resistance and an offset voltage during
-detection. For reference, the LT4275 controller data sheet allows up to
+detection. For reference, the LT4275 controller datasheet allows up to
 1.1 kΩ for the bridge [POE-LT4275]_ (Applications Information). A MOSFET
 bridge must not conduct backwards during detection, because a
 single-signature powered device must show an invalid signature on one
 pair set while 3.7 V to 57 V is applied to the other (:clause:`145.3.5`).
 
-Show a 25 kΩ detection signature
---------------------------------
+Detection signature
+-------------------
 
 Over the whole range of 2.7 V to 10.1 V at its input, a powered device
 shows a valid :term:`detection signature` when (:clause:`Table 145-21 <145>`):
@@ -44,7 +61,22 @@ shows a valid :term:`detection signature` when (:clause:`Table 145-21 <145>`):
 
 To make sure it is not detected, for example during a mark event or when it
 refuses power, the powered device shows less than 12 kΩ or more than 45 kΩ,
-or more than 10 µF (:clause:`Table 145-22 <145>`).
+or more than 10 µF (:clause:`Table 145-22 <145>`).
+:numref:`fig-poe-pd-signature` shows valid and invalid signatures as lines
+of voltage against current.
+
+.. figure:: pd-signature.svg
+   :name: fig-poe-pd-signature
+   :alt: Graph of voltage at the powered device input, 0 to 12 V, against
+         current, 0 to 500 µA. The detection range from 2.7 V to 10.1 V is
+         shaded. A 24.9 kΩ resistor is a straight line through the origin,
+         and the same resistor with a 1.9 V offset is a parallel line
+         starting at 1.9 V. Dotted lines of 12 kΩ and 45 kΩ mark the
+         invalid signatures below and above. A note gives the valid slope,
+         23.7 to 26.3 kΩ, and offset, at most 1.9 V.
+   :align: center
+
+   Valid and invalid detection signatures over the detection range.
 
 The signature is usually a resistor across the bridge output. The valid
 window is about 25 kΩ ± 5 %, which is the whole error budget for the
@@ -136,8 +168,8 @@ larger than 0.12 µF, so it must stay disconnected during detection. The
 
 .. _poe-class-signature:
 
-Draw a class signature current during each class event
-------------------------------------------------------
+Class signature
+---------------
 
 During each class event the powered device draws one of five class
 signature currents (:clause:`Table 145-24 <145>`), listed in
@@ -178,7 +210,7 @@ The example resistors are those of the TPS2372 [POE-TPS2372]_
 (Application and Implementation). :numref:`tab-poe-request` shows which signatures a powered
 device shows for each class it requests (:clause:`Table 145-26 <145>`).
 The first signature is used in class events 1 and 2, the second from class
-event 3 on.
+event 3 on, as :numref:`fig-poe-class-events` shows for classes 4 and 8.
 
 .. list-table:: Class signatures for each requested class
    :name: tab-poe-request
@@ -248,11 +280,12 @@ holds 2.5 V across the class resistor (as the TPS2378 does
      - Part dissipated in the regulator
      - W
 
-The rest, 0.11 W, is in the class resistor. The regulator dissipates about
+:numref:`fig-poe-class-regulator` shows the regulator. The rest,
+0.11 W, is in the class resistor. The regulator dissipates about
 0.8 W for the length of each class event, up to 105 ms for the first.
 
-Recognise mark events and resets
---------------------------------
+Mark events and resets
+----------------------
 
 Between class events the voltage falls into the mark range, 6.9 V to
 10.1 V at the powered device. The powered device then draws 0.25 mA to
@@ -265,7 +298,31 @@ Characteristics).
 
 When the input falls below a threshold between 2.81 V and 6.9 V, the
 powered device forgets the events it has counted
-(:clause:`Table 145-25 <145>`, item 5).
+(:clause:`Table 145-25 <145>`, item 5). :numref:`fig-poe-pd-states` shows
+these states and the thresholds between them.
+
+.. graphviz:: pd-states.dot
+   :name: fig-poe-pd-states
+   :caption: The states of a powered device during detection and
+             classification, and the input voltages that move it between
+             them.
+   :alt: State diagram with four states. Idle shows the signature with a
+         count of 0. A rise above a threshold between 10.1 and 14.5 V moves
+         it to a class event, where it draws the class current. A fall into
+         the mark range, 6.9 to 10.1 V, moves it to mark, where it adds the
+         mark load and counts the event; a rise above 10.1 to 14.5 V starts
+         the next class event. From mark, a rise past the turn-on voltage,
+         30 to 42 V, turns the isolation switch on, and a fall below a
+         threshold between 2.81 and 6.9 V returns it to idle and loses the
+         count. A rise past the turn-on voltage also turns the switch on
+         directly from idle or from a class event, for Type 1 or Type 2
+         equipment that skips classification or powers up straight after
+         its last class event. From powered, a fall below the turn-off
+         voltage of at least 30 V returns it to idle. A note on the class event state
+         says that a first event longer than 75.5 to 87.5 ms identifies
+         Type 3 or 4 power sourcing equipment, and that autoclass drops to
+         signature 0 from that time.
+   :align: center
 
 A first class event longer than 75.5 ms to 87.5 ms tells the powered
 device that the power sourcing equipment is Type 3 or Type 4
@@ -285,8 +342,8 @@ powered device drew more than class 1 power during the measurement, it then
 draws no more than the measured power, unless it negotiates more over
 LLDP, up to its requested class (:clause:`145.3.8.2`).
 
-Turn on with hysteresis
------------------------
+Turn-on hysteresis
+------------------
 
 The powered device draws no load current until its input passes a turn-on
 voltage between 30 V and 42 V, and turns off again when the input falls
@@ -313,17 +370,30 @@ examples.
      - 31
 
 The values are from [POE-TPS2372]_ and [POE-LT4275]_ (Electrical
-Characteristics).
+Characteristics). :numref:`fig-poe-hysteresis` draws both as loops.
+
+.. figure:: hysteresis.svg
+   :name: fig-poe-hysteresis
+   :alt: Graph of the load switch state, off or on, against input voltage
+         from 25 to 45 V, with the region where turn-on is allowed, 30 to
+         42 V, shaded. The TPS2372 turns on as the voltage rises past
+         38.1 V and off as it falls past 32 V. The LT4275 turns on at 35 V
+         and off at 31 V. Arrows show that the switch follows the lower
+         path while the voltage rises and the upper path while it falls.
+   :align: center
+
+   Turn-on hysteresis of two controllers, typical values.
 
 .. _poe-pd-inrush:
 
-Limit the inrush current and the start-up power
------------------------------------------------
+Inrush current and start-up power
+---------------------------------
 
-After turn-on the powered device charges its input capacitor. It draws less
-than 0.4 A for classes 1 to 6, or 0.8 A for classes 7 and 8, until 80 ms
-after turn-on (:clause:`Table 145-29 <145>`, items 4 and 7, and
-:clause:`145.3.8.3`).
+After turn-on the powered device charges its input capacitor, while the
+power sourcing equipment limits the current for at least 50 ms. From 50 ms
+until 80 ms after turn-on, the powered device draws less than 0.4 A for
+classes 1 to 6, or 0.8 A for classes 7 and 8 (:clause:`Table 145-29 <145>`,
+items 4 and 7, and :clause:`145.3.8.3`).
 
 From 50 ms after turn-on until 80 ms, the powered device's power limit is
 that of class 3, 13 W, or of its requested class if that is lower
@@ -373,13 +443,30 @@ The model assumes the capacitor starts empty, the load stays off until the
 capacitor is charged, and the current stays at the limit. It ignores the
 time the input takes to rise to the turn-on voltage. A 100 µF capacitor is
 then charged before the power sourcing equipment ends its inrush period,
-50 ms at the earliest. Only then does the controller let the input converter
-start (:doc:`pd-controller`).
+50 ms at the earliest. Only then does the controller let the input converter
+start (:doc:`pd-controller`). :numref:`fig-poe-inrush-pd` shows the
+example against the time limits.
 
-Keep drawing the maintain power signature
------------------------------------------
+.. figure:: inrush-pd.svg
+   :name: fig-poe-inrush-pd
+   :alt: Two graphs against time after turn-on, 0 to 100 ms. The capacitor
+         voltage rises linearly from 0 to 57 V, charged at 41 ms. The
+         current is 140 mA, the charging limit, until 41 ms, and then
+         falls as the load is still off. A shaded region from 50 to 80 ms
+         shows that the powered device must draw less than 0.4 A, or 0.8 A
+         for classes 7 and 8, in that window. Dashed lines mark 50 ms, the earliest end of the power
+         sourcing equipment's inrush period, and 80 ms, from which class
+         power is allowed.
+   :align: center
 
-:doc:`sequence` gives the minimum current and pulse timing. A board that
+   Charging a 100 µF input capacitor at 140 mA after turn-on, against the
+   limits on the powered device.
+
+Maintain power signature
+------------------------
+
+:doc:`sequence` gives the minimum current and pulse timing
+(:numref:`fig-poe-mps`). A board that
 always draws a steady power meets it if the current stays above the
 minimum at the highest input voltage, where the current is smallest:
 
@@ -441,8 +528,8 @@ real design makes the pulses longer than 7 ms.
 
 .. _poe-pd-dll:
 
-Take part in Data Link Layer classification
--------------------------------------------
+Data Link Layer classification
+------------------------------
 
 Once the link is up, a Type 2 powered device, and a Type 3 or Type 4
 powered device that requests class 4 or higher, must also take part in
@@ -455,8 +542,8 @@ user an active indication if it is underpowered (:clause:`145.3.6`). It
 stays within the assigned class until the exchange raises the allocation
 (:ref:`poe-demotion`).
 
-An alternative: accept passive power as a fallback input
---------------------------------------------------------
+Passive power as a fallback input
+---------------------------------
 
 Some equipment puts a fixed 24 V or 48 V on the cable with no detection or
 classification, called
@@ -470,6 +557,19 @@ voltage is at least 30 V. Accepting 24 V needs a second input path with a
 lower turn-on voltage. A passive source gives no class, so the software
 cannot know the power available and would start from the lowest assumption.
 Whether evampire accepts passive input is an open question.
+:numref:`fig-poe-passive-input` shows the two paths.
+
+.. graphviz:: passive-input.dot
+   :name: fig-poe-passive-input
+   :caption: A standard powered-device path beside a passive input path,
+             an alternative for a fallback input.
+   :alt: Diagram. A standard source with detection and classification and
+         a passive source at a fixed 24 V or 48 V both feed the bridges.
+         The bridges feed the powered-device path, which turns on at 30 to
+         42 V and knows its class, and a passive path with a lower turn-on
+         voltage and no class. Both paths feed the input converter and the
+         power bus.
+   :align: center
 
 Open questions
 --------------

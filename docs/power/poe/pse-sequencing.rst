@@ -1,16 +1,17 @@
 .. _poe-pse-sequencing:
 
-Supplying power, sequenced in software
-======================================
+Software-sequenced power sourcing
+=================================
 
 This page describes the circuit blocks of a power sourcing equipment port
 whose detection and classification are sequenced by evampire's software,
 the timing that the software must meet, and the 44 V to 57 V supply.
 
-Software runs the sequence; hardware does the fast parts
---------------------------------------------------------
+Software and hardware roles
+---------------------------
 
-Software on evampire's processor runs the steps of :doc:`power-sourcing`:
+Software on evampire's processor runs the steps of the
+:doc:`power sourcing equipment requirements <power-sourcing>`:
 it sets each test voltage or current, reads the measurements, decides, and
 switches the power on (:ref:`req-power-control`). Once the link is up it
 also answers LLDP power requests (:doc:`lldp`,
@@ -23,7 +24,8 @@ channel.
 .. graphviz:: pse-controller.dot
    :name: fig-poe-pse-channel
    :caption: One power sourcing equipment channel, with the switch in the
-             negative pair and the sequence run by evampire's software.
+             negative pair and the sequence run by evampire's software; red
+             outlines mark the blocks that see the full port voltage.
    :alt: Block diagram. The high-voltage converter feeds the positive pairs
          of the port. The negative pairs pass through a power MOSFET switch
          and a sense resistor. A detection and class source applies test
@@ -32,7 +34,11 @@ channel.
          millivolts across the sense resistor. The comparator can turn the
          gate drive off directly. The software on evampire reads both
          measurements, steps the detection and class source, and sets the
-         current limit of the gate drive and current-limit loop.
+         current limit of the gate drive and current-limit loop. Port
+         protection, a 0.1 µF 100 V capacitor, a suppressor of at least
+         58 V and a fuse of at least 60 V DC, sits across the port. The
+         switch and the detection and class source are outlined in red
+         because they see up to 57 V.
    :align: center
 
 With the switch in the negative pair, the sense resistor, the
@@ -71,8 +77,8 @@ Switch and sense resistor
    1 % sense resistor for the TPS23881 [POE-TPS23881]_ (Application and
    Implementation).
 
-The software has millisecond deadlines
---------------------------------------
+Software timing
+---------------
 
 The steps have time windows of a few milliseconds and longer
 (:numref:`tab-poe-step-times`). :numref:`tab-poe-sw-timing` lists the
@@ -113,10 +119,11 @@ windows that the software must place its actions in.
      - 400
 
 The windows come from :clause:`Table 145-14 <145>` and
-:clause:`Table 145-16 <145>`. The narrowest is 6 ms wide. An action placed
-in the middle of it with a timing error of up to ± 1 ms leaves 2 ms of
-margin on each side, so a timer resolution and a response latency of 1 ms
-or better meet every window. This is an estimate of the need; the
+:clause:`Table 145-16 <145>`, and :numref:`fig-poe-step-times` places them
+in the sequence. The narrowest is 6 ms wide. An action placed in the middle
+of it with a timing error of up to ± 1 ms leaves 2 ms of margin on each
+side (:numref:`fig-poe-action-window`), so a timer resolution and a response
+latency of 1 ms or better meet every window. This is an estimate of the need; the
 processor that meets it is open (:ref:`requirements-open-questions`).
 
 Each measurement is read after the port settles: at least 6 ms into a class
@@ -124,6 +131,18 @@ event (:clause:`Table 145-14 <145>`, item 7), and after the detection
 voltage settles to within 1 % (:clause:`145.2.6.2`). The software takes a
 few readings per step, so its measurement rate is tens to hundreds of
 readings per second per port.
+
+.. figure:: action-window.svg
+   :name: fig-poe-action-window
+   :alt: Time line from 0 to 14 ms after a mark event starts. The window
+         from 6 to 12 ms is shaded. An action is aimed at 9 ms with an error
+         of plus or minus 1 ms, leaving a 2 ms margin from 6 to 8 ms and
+         from 10 to 12 ms. Before 6 ms is too early and after 12 ms too
+         late.
+   :align: center
+
+   Ending a mark event: an action aimed at the centre of the 6 ms window
+   with an error of ± 1 ms.
 
 For reference, commercial controllers do the same in firmware. The TPS23881
 runs its sequences on an internal processor whose firmware the host loads
@@ -166,8 +185,8 @@ ports, one for each pair set. The LTC4279 runs a port without a host processor
 [POE-LTC4279]_; the LTC4291-1 and LTC4292 pair carries its host link
 across a transformer [POE-LTC4291]_.
 
-The supply sits inside the output range
----------------------------------------
+Port supply
+-----------
 
 The port needs a supply inside the output range of its type
 (:numref:`tab-poe-pse-voltage`). A value near 54 V, as in the TPS23881
@@ -176,16 +195,31 @@ drop in the switch and sense resistor, and below 57 V for tolerance
 [POE-TPS23881]_ (Application and Implementation). On an evampire board the
 high-voltage converter makes it from the power bus
 (:doc:`../converters/index`). Its ripple and noise must stay within the
-limits on :doc:`monitoring`.
+limits on :doc:`monitoring`. :numref:`fig-poe-supply-voltages` places the
+supply in the output ranges.
 
 For reference, the TPS23881 examples put a 0.1 µF, 100 V capacitor and a
 transient-voltage suppressor of at least 58 V standoff on each port, and a
-fuse rated for at least 60 V DC [POE-TPS23881]_ (Application and
-Implementation). The port capacitance during detection is limited to
+fuse rated for at least 60 V DC [POE-TPS23881]_ (Application and
+Implementation), drawn in :numref:`fig-poe-pse-channel`. The port capacitance during detection is limited to
 520 nF (:clause:`Table 145-7 <145>`).
 
-Two alternatives for the supply
--------------------------------
+Supply alternatives
+-------------------
+
+:numref:`fig-poe-supply-options` shows the two alternatives.
+
+.. graphviz:: supply-options.dot
+   :name: fig-poe-supply-options
+   :caption: Two alternatives for the supply of a power sourcing port.
+   :alt: Two rows. In the first, a power bus held at 18 V feeds a
+         switched-capacitor converter with a ratio of 3, which gives a 54 V
+         port supply for classes 1 and 2. In the second, a USB extended
+         power range source at a fixed 48 V feeds the port through a switch
+         with no converter, giving 45.1 to 50.9 V: above the 44 V minimum
+         of Type 1, but as low as 45.1 V, so it cannot be relied on to
+         reach the 50 V of Types 2 to 4.
+   :align: center
 
 A switched-capacitor supply for low classes
    Classes 1 and 2 need at most 6.7 W at the power sourcing equipment
@@ -219,11 +253,27 @@ A 48 V USB supply used directly
         - Lowest 48 V supply voltage at the source
         - V
 
-   45.1 V is above the 44 V minimum of Type 1 power sourcing equipment but
-   below the 50 V of Types 2 to 4. During a peak current the source may
+   The highest value is :math:`48\ \text{V} \times 1.05 + 0.5\ \text{V} =
+   50.9\ \text{V}`. The supply can be as low as 45.1 V, above the 44 V
+   minimum of Type 1 power sourcing equipment but below the 50 V of Types 2
+   to 4, so it cannot be relied on to reach 50 V. During a peak current the source may
    fall to 90 %, 43.2 V (:pd:`Table 4.7`), and the USB cable and the switch
    drop more. So a 48 V input could feed a Type 1 port without a converter
-   only if those drops and peaks are excluded; this is an open question.
+   only if those drops and peaks are excluded; this is an open question
+   (:numref:`fig-poe-supply-voltages`).
+
+.. figure:: supply-voltages.svg
+   :name: fig-poe-supply-voltages
+   :alt: Chart of voltage from 40 to 60 V. The output range is 44 to 57 V
+         for Type 1 and 50 to 57 V for Types 2 to 4, with dashed lines at
+         44, 50 and 52 V. A mark at 54 V shows a supply near 54 V. A 48 V
+         USB supply runs from 45.1 V to 50.9 V around 48 V nominal, so it
+         cannot be relied on to reach 50 V, and falls to 43.2 V at a peak,
+         below the 44 V Type 1 minimum.
+   :align: center
+
+   A supply near 54 V inside the output range, and a 48 V USB supply used
+   directly against the Type 1 and Types 2 to 4 minimums.
 
 Open questions
 --------------

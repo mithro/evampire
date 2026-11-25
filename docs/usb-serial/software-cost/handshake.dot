@@ -1,0 +1,50 @@
+// State machine of the automatic handshakes: after a token for this
+// device, the reply depends only on per-endpoint flags that software sets
+// (buffer ready, data ready, halted) and the DATA0/DATA1 sequence bit.
+//
+// Fixed grid (positions in inches): idle and token decode in the centre
+// column (x=3.6); the SETUP, OUT and IN branches in three columns
+// (x=1.1, 3.6, 6.1). Every branch returns to idle.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph handshake {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,6"];
+    node  [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+           fontname="Helvetica", fontsize=10, width=2.0, height=0.5,
+           fixedsize=true];
+    edge  [arrowsize=0.7, penwidth=1.3, fontname="Helvetica", fontsize=10];
+
+    idle  [pos="3.6,5.5!", width=1.6, label="Idle", fillcolor="#dbe8f5",
+           style="rounded,filled,bold"];
+    tok   [pos="3.6,4.6!", width=2.2, label="Token decode: address,\nendpoint and CRC5"];
+    ign   [pos="6.35,4.6!", width=1.9, label="not for this device:\nignore, back to idle",
+           fillcolor="#ffffff"];
+
+    setup [pos="1.1,3.5!", width=1.8, label="SETUP: receive the\n8-byte DATA0"];
+    out   [pos="3.6,3.5!", width=1.8, label="OUT: receive\nDATA0 or DATA1"];
+    in    [pos="6.1,3.5!", width=1.8, label="IN: check the\nendpoint flags"];
+
+    s_r   [pos="1.1,2.1!", width=1.8, height=0.95,
+           label="bad CRC: no reply\ngood CRC: always ACK,\ninto the SETUP buffer;\nnext data is DATA1"];
+    o_r   [pos="3.6,2.0!", width=2.2, height=1.15,
+           label="bad CRC: no reply\nhalted: STALL\nno room: NAK\nsame bit as last: ACK,\ndiscard the copy\nready: ACK, buffer full,\ntoggle the bit"];
+    i_r   [pos="6.1,2.35!", width=1.8, height=0.75,
+           label="halted: STALL\nno data: NAK\ndata ready: send\nDATA0 or DATA1"];
+    i_w   [pos="6.1,1.05!", width=1.8, height=0.75,
+           label="wait for the host:\nACK: toggle the bit,\nbuffer empty; none:\nkeep data for retry"];
+
+    node  [shape=plaintext, style="", fontsize=10, width=1.0, height=0.2];
+    ret   [pos="3.6,0.25!", width=3.6, fontcolor="#1f4e79",
+           label="each branch then returns to idle"];
+    l_s   [pos="2.15,4.15!", width=0.6, label="SETUP"];
+    l_o   [pos="3.85,4.07!", width=0.5, label="OUT"];
+    l_i   [pos="5.05,4.15!", width=0.4, label="IN"];
+
+    idle -> tok;
+    tok -> ign;
+    tok -> setup;  tok -> out;  tok -> in;
+    setup -> s_r;  out -> o_r;  in -> i_r;
+    i_r -> i_w [label=" after data", fontsize=9];
+}

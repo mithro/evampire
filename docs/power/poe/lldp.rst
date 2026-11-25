@@ -1,14 +1,14 @@
 .. _poe-lldp:
 
-Negotiating power over LLDP
+Power negotiation over LLDP
 ===========================
 
 This page describes how the two ends of a cable change the power
 allocation after the Ethernet link is up, and how evampire takes part as a
 powered device and as power sourcing equipment.
 
-Classification sets the first allocation
-----------------------------------------
+First allocation
+----------------
 
 :term:`Physical Layer classification` (:doc:`sequence`) gives a powered
 device its first power allocation, in fixed steps, before the link is up.
@@ -18,8 +18,8 @@ After the link is up, the two ends can change the allocation in steps of
 used, the Data Link Layer value takes precedence (:clause:`145.2.8`).
 :doc:`classification` compares the two methods.
 
-The frames are LLDP frames
---------------------------
+LLDP frames
+-----------
 
 The frames belong to the Link Layer Discovery Protocol, :term:`LLDP`
 (:std:`IEEE 802.1AB <802.1AB>`). Each is a small frame sent only to the
@@ -29,18 +29,36 @@ device at the other end of the cable, to the destination address
 (:clause:`79.3.2`). The MDI, the medium dependent interface, is the
 connection to the cable, here the RJ45 socket.
 
-The field's main entries are:
+The field's two main entries are the *PD requested power value* and the
+*PSE allocated power value* (:clause:`79.3.2`). Every frame carries both:
 
-* the power the powered device requests;
-* the power the power sourcing equipment allocates;
-* copies of the other end's last values, so each end can see that the
-  other has received its value.
+* in a frame from the powered device, the requested value is its own and
+  the allocated value is a copy of the last one it received;
+* in a frame from the power sourcing equipment, the allocated value is its
+  own and the requested value is a copy of the last one it received.
 
-Values are in units of 0.1 W, so 255 means 25.5 W
-(:clause:`Table 145-12 <145>`).
+The copies let each end see that the other has received its value
+(:clause:`145.5.5`).
 
-Powered devices that request class 4 or higher must support it
----------------------------------------------------------------
+Values are in units of 0.1 W, so 255 means 25.5 W
+(:clause:`Table 145-12 <145>`). :numref:`fig-poe-lldp-field` shows where
+the field sits in a frame.
+
+.. graphviz:: lldp-field.dot
+   :name: fig-poe-lldp-field
+   :caption: The two power fields of the Power via MDI entry inside an
+             LLDP frame, with the field lengths not to scale.
+   :alt: Diagram of an LLDP frame: destination address 01-80-C2-00-00-0E,
+         source address, EtherType 0x88CC, other entries including Power
+         via MDI, and the frame check sequence. The Power via MDI entry is
+         expanded into two fields, the PD requested power value and the PSE
+         allocated power value. Notes say that each end fills one with its
+         own value and the other with a copy of the value it last received,
+         and that the powers are in units of 0.1 W, so 255 means 25.5 W.
+   :align: center
+
+Devices that support LLDP
+-------------------------
 
 :numref:`tab-poe-class-methods` lists which devices must support the
 exchange: every Type 2 powered device, and every powered device that
@@ -87,8 +105,8 @@ as in :numref:`tab-poe-dll-class`.
 On 2-pair power the allocation is at most 255, 25.5 W
 (:clause:`Table 145-41 <145>`).
 
-The two ends take turns
------------------------
+Exchange rules
+--------------
 
 The rules of :clause:`145.5.2` and :clause:`145.5.5` are:
 
@@ -103,11 +121,29 @@ The rules of :clause:`145.5.2` and :clause:`145.5.5` are:
 * Values above 71.3 W are used only after both ends are in sync
   (:clause:`145.5.4`).
 
-Deadlines of seconds let the software meet them without
-special hardware.
+:numref:`fig-poe-lldp-exchange` shows an exchange in which the powered
+device asks for more power. Deadlines of seconds let the software meet them
+without special hardware.
 
-LLDP frames on evampire go only to the processor
-------------------------------------------------
+.. graphviz:: lldp-exchange.dot
+   :name: fig-poe-lldp-exchange
+   :caption: A powered device raising its allocation over LLDP, with the
+             rule that applies at each step; the powers are an example.
+   :alt: Sequence diagram between power sourcing equipment and a powered
+         device. The power sourcing equipment sends its first frame,
+         allocated 25.5 W, within 10 s of enabling the exchange. The
+         powered device sends requested 51 W with an echo of 25.5 W; while
+         out of sync it keeps its request and draw. Within 10 s the power
+         sourcing equipment answers allocated 51 W with an echo of 51 W,
+         which it may do only while in sync. The powered device answers
+         requested 51 W, echo 51 W: the copies match, both ends are in
+         sync, and the powered device may draw 51 W; values above 71.3 W
+         are used only after sync. Finally the power sourcing equipment
+         may lower the allocation at any time.
+   :align: center
+
+LLDP frames on evampire
+-----------------------
 
 evampire forwards every frame between ports A and B, except LLDP frames,
 which it delivers only to its processor (:ref:`req-forwarding`).
@@ -129,8 +165,8 @@ these frames is described in :ref:`arch-address-filter`.
          processor.
    :align: center
 
-The software takes both roles
------------------------------
+Software in both roles
+----------------------
 
 evampire takes part in the exchange in both roles
 (:ref:`req-poe-classification`).
@@ -147,4 +183,24 @@ the same value. It also sets the current and power limits of the port to
 match (:doc:`monitoring`).
 
 When the power on port A falls, the software lowers the allocation on port
-B first (:ref:`power budget <power-budget>`).
+B first (:ref:`power budget <power-budget>`), as
+:numref:`fig-poe-lldp-roles` shows. It answers on port A within 10 s,
+without waiting for the answer on port B, which has its own 10 s limit
+(:clause:`145.5.2`). Until that answer arrives, the downstream powered
+device may still draw its old allocation, so the software keeps it in the
+budget, and removes power from port B if the new allocation on port A
+cannot cover it (:doc:`sharing`).
+
+.. graphviz:: lldp-roles.dot
+   :name: fig-poe-lldp-roles
+   :caption: evampire as a powered device on port A and power sourcing
+             equipment on port B, lowering port B first.
+   :alt: Sequence diagram with three lifelines: upstream power sourcing
+         equipment, evampire as a powered device on port A and power
+         sourcing equipment on port B, and a downstream powered device. The
+         upstream equipment lowers the allocation on port A. evampire at
+         once lowers the allocation on port B, then answers on port A
+         within 10 s. The downstream powered device answers on port B
+         within its own 10 s; until then it may draw its old
+         allocation.
+   :align: center

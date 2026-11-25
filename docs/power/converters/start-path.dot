@@ -1,0 +1,51 @@
+// Start-up path of a powered-device converter: a current source from the
+// high-voltage input charges a hold capacitor that powers the controller
+// until the converter's own winding or output takes over.
+//
+// Fixed grid (positions in inches): the input and start-up path on the top
+// row (y=2.4), the hold capacitor and controller on the middle row (y=1.3),
+// the hand-over path along the bottom (y=0.25).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph start_path {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.65,
+           fixedsize=true];
+    edge  [arrowsize=0.7, penwidth=1.5];
+
+    vin   [pos="0.75,2.4!", width=1.2, label="Input\n37 V to 57 V", fillcolor="#ffffff",
+           style="rounded,filled,dashed"];
+    src   [pos="2.7,2.4!", width=1.9, label="Current source\n2.5 mA to 6 mA\n(or a 28 kΩ resistor)",
+           fillcolor="#fbe5d6"];
+    chold [pos="2.7,1.15!", width=1.6, label="Hold capacitor\nChold ≥ 0.70 µF",
+           fillcolor="#dbe8f5"];
+    ctrl  [pos="4.75,1.15!", width=1.6, label="Controller with\nunder-voltage\nlockout",
+           fillcolor="#fbe5d6"];
+    conv  [pos="6.65,1.15!", width=1.3, label="Input converter\npower stage",
+           fillcolor="#fbe5d6"];
+    aux   [pos="6.65,2.4!", width=1.3, label="Auxiliary winding\nor output",
+           fillcolor="#ffffff"];
+
+    // Edge labels.
+    node  [shape=plaintext, style="", fontsize=10, width=1.0, height=0.3];
+    l_sup [pos="3.7,1.35!", width=0.6, label="supply"];
+    l_g   [pos="5.7,1.35!", width=0.6, label="gate"];
+    l_off [pos="4.1,1.95!", width=1.6, label="source off at\n8.65 V to 9.3 V"];
+    l_tk  [pos="4.75,0.12!", width=2.0, label="takes over after start-up"];
+
+    node  [shape=point, width=0.01, height=0.01, label=""];
+    k1    [pos="7.6,2.4!"];
+    k2    [pos="7.6,0.3!"];
+    k3    [pos="2.7,0.3!"];
+    k4    [pos="4.75,2.4!"];
+
+    vin  -> src;  src -> chold;  chold -> ctrl;  ctrl -> conv;
+    conv -> aux;
+    ctrl -> k4 [arrowhead=none, style=dashed];
+    k4   -> src [style=dashed];
+    aux  -> k1 [arrowhead=none];  k1 -> k2 [arrowhead=none];
+    k2   -> k3 [arrowhead=none];  k3 -> chold;
+}

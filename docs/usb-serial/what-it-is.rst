@@ -1,12 +1,12 @@
-What a USB serial port is
-=========================
+USB serial port basics
+======================
 
 This page describes what a computer sees when evampire's processor is
 attached as a USB serial port, and what the port is for. How the bits get
 there is on the following pages.
 
-A serial port, seen from the computer
--------------------------------------
+The computer's view
+-------------------
 
 A :wikipedia:`serial port <Serial_port>` is a channel that carries a stream
 of bytes in each direction between a computer and a device. On a computer it
@@ -15,10 +15,24 @@ Linux, that a terminal program or a script can open, write to and read
 from. The interface comes from the
 :wikipedia:`UART <Universal_asynchronous_receiver-transmitter>`, a serial
 line with its own connector; a USB device can present the same interface
-to programs without any UART behind it.
+to programs without any UART behind it (:numref:`fig-usbser-stack`).
 
-The communications device class and the abstract control model
----------------------------------------------------------------
+.. graphviz:: what-it-is/stack.dot
+   :name: fig-usbser-stack
+   :caption: The layers between a terminal program and evampire's firmware,
+             beside a UART serial line.
+   :alt: Two columns of layers. USB serial port: terminal program or
+         script, COM3 or /dev/ttyACM0, the operating system's CDC-ACM
+         driver, the USB host controller, the USB cable with D+ and D−, and
+         evampire's USB device and firmware. UART serial line: terminal
+         program or script, COM1 or /dev/ttyS0, the operating system's
+         serial driver, the computer's UART, the serial line with TX and
+         RX, and the device's UART and firmware. A note says programs see
+         the same interface.
+   :align: center
+
+Communications device class
+---------------------------
 
 USB defines *device classes*: standard descriptions of a kind of device,
 so that one driver in the operating system works with every device of that
@@ -34,10 +48,11 @@ A CDC-ACM device has two interfaces: a communications interface, through
 which the host sets the line parameters and receives status notifications,
 and a data interface with one channel in each direction for the bytes
 ([USBSER-CDC]_ section 3.4). :doc:`transactions` lists the descriptors and
-endpoints in detail.
+endpoints in detail, and :numref:`fig-usbser-descriptors` shows how they
+nest.
 
-Why no custom driver is needed
-------------------------------
+Operating system drivers
+------------------------
 
 The common operating systems include a driver that binds to a CDC-ACM
 interface by its class codes:
@@ -55,8 +70,8 @@ open. The class codes have to be exactly these: Windows does not load
 ``usbser.sys`` automatically when the subclass is not 02h
 ([USBSER-WIN-USBSER]_).
 
-What the serial port is used for
---------------------------------
+Uses of the serial port
+-----------------------
 
 The serial port gives the firmware on evampire's processor a text channel
 to a computer: a console for status and diagnostic messages, and a way to

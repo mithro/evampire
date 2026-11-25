@@ -1,0 +1,49 @@
+// The byte interface between the forwarding logic and one port: with the
+// integrated transceiver (top) and with an external transceiver over
+// RGMII (bottom). Left of the buffers the bytes run on evampire's clock;
+// right of them, on the transceiver's symbol clock, which a slave
+// recovers from the cable. Both directions therefore cross clock domains.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph byteif {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.6"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.62,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=11, arrowsize=0.7, penwidth=1.5];
+
+    t1 [pos="3.35,4.2!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=12, fontname="Helvetica-Bold", label="Integrated transceiver"];
+    fl1 [pos="0.75,2.85!", width=1.2, label="Forwarding\nlogic", fillcolor="#dbe8f5"];
+    tb1 [pos="3.35,3.45!", width=1.5, label="Transmit\nbuffer"];
+    rm1 [pos="3.35,2.25!", width=1.5, label="Receive rate-\nmatching buffer"];
+    ph1 [pos="5.95,2.85!", width=1.7, height=0.9, label="Integrated\ntransceiver",
+         fillcolor="#fbe5d6"];
+
+    fl1 -> tb1;
+    tb1 -> ph1;
+    ph1 -> rm1;
+    rm1 -> fl1;
+    l1 [pos="3.35,3.92!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=11, label="TXD[7:0], TX_EN, TX_ER: one byte per 8 ns"];
+    l2 [pos="3.35,1.78!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=11, label="RXD[7:0], RX_DV, RX_ER"];
+    c1 [pos="1.1,1.78!", shape=plaintext, style="", width=1.4, height=0.25,
+        fontsize=11, fontcolor="#555555", label="evampire's clock"];
+    c2 [pos="5.75,1.78!", shape=plaintext, style="", width=1.8, height=0.25,
+        fontsize=11, fontcolor="#555555", label="symbol clock"];
+
+    t2 [pos="3.35,1.15!", shape=plaintext, style="", width=4.0, height=0.25,
+        fontsize=12, fontname="Helvetica-Bold", label="External transceiver"];
+    fl2 [pos="0.75,0.4!", width=1.2, label="Forwarding\nlogic", fillcolor="#dbe8f5"];
+    rg2 [pos="3.35,0.4!", width=1.5, label="RGMII block\nand buffer"];
+    ph2 [pos="5.95,0.4!", width=1.7, label="External\ntransceiver", fillcolor="#ffffff"];
+    fl2 -> rg2 [dir=both];
+    rg2 -> ph2 [dir=both];
+    l4 [pos="2.0,0.67!", shape=plaintext, style="", width=1.2, height=0.25,
+        fontsize=11, label="same signals"];
+    l5 [pos="4.65,0.67!", shape=plaintext, style="", width=1.0, height=0.25,
+        fontsize=11, label="RGMII pins"];
+}

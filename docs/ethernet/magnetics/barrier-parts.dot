@@ -1,0 +1,44 @@
+// Parts that bridge the isolation barrier of a standard port: the
+// termination capacitor to chassis, a coupling capacitor and a resistor
+// between two grounds. Each must withstand the test voltage.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph barrier_parts {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+    node [shape=plaintext, style="", width=2.0, height=0.25, fontsize=10];
+    hl [pos="1.0,2.75!", label="equipment side"];
+    hr [pos="4.4,2.75!", label="cable side"];
+    hb [pos="2.7,2.75!", width=1.2, fontcolor="#7f7f7f",
+        label="isolation barrier"];
+
+    node [shape=box, style=filled, height=0.45];
+    eq [pos="0.8,1.35!", width=1.1, height=2.4, fillcolor="#dbe8f5",
+        label="transceiver,\nsignal ground,\nchassis"];
+    cb [pos="4.6,1.35!", width=1.1, height=2.4, fillcolor="#fbe5d6",
+        label="cable,\ncentre taps,\ntermination\nresistors"];
+    p1 [pos="2.7,2.2!", width=1.4, fillcolor="#fff2cc",
+        label="1000 pF termination\ncapacitor to chassis"];
+    p2 [pos="2.7,1.35!", width=1.4, fillcolor="#fff2cc",
+        label="coupling capacitor"];
+    p3 [pos="2.7,0.5!", width=1.4, fillcolor="#fff2cc",
+        label="resistor between\ntwo grounds"];
+    nt [pos="2.7,-0.15!", shape=plaintext, style="", width=4.6,
+        height=0.35, label="each withstands the test: 2121 V peak (alternating)\nor 2250 V (direct)"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    b1 [pos="2.7,2.6!"]; b2 [pos="2.7,0.15!"];
+    l1 [pos="1.35,2.2!"]; r1 [pos="4.05,2.2!"];
+    l2 [pos="1.35,1.35!"]; r2 [pos="4.05,1.35!"];
+    l3 [pos="1.35,0.5!"]; r3 [pos="4.05,0.5!"];
+
+    b1 -- b2 [style=dashed, color="#7f7f7f", penwidth=1.2];
+    l1 -- p1 -- r1; l2 -- p2 -- r2; l3 -- p3 -- r3;
+}

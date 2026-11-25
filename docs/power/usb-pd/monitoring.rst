@@ -1,14 +1,14 @@
 .. _usbpd-monitoring:
 
-Monitoring and limiting the power on each port
-==============================================
+Port power monitoring and limits
+================================
 
 What evampire must measure and limit on each USB Type-C port and on the
 board's power bus, derived from the USB Power Delivery rules. The circuits
 that do it are an open choice.
 
-The requirement
----------------
+Measurement and limit requirement
+---------------------------------
 
 evampire measures the voltage and current of every power port and of the
 board's power bus, and enforces current and power limits that software sets
@@ -23,12 +23,28 @@ board's power bus, and enforces current and power limits that software sets
   board itself uses (the :math:`P_\text{board}` of the
   :ref:`power budget <power-budget>`).
 
+:numref:`fig-usbpd-measure-points` shows where each quantity is measured
+and how the limits act.
+
+.. graphviz:: measure-points.dot
+   :name: fig-usbpd-measure-points
+   :caption: The measurements and limits on one USB Type-C port and on the
+             board's power bus; bold arrows carry power.
+   :alt: Block diagram. Power flows in both directions from the board power
+         bus through a VBUS current sense, which measures both directions,
+         and the power switch or converter to the USB Type-C connector. A
+         VBUS voltage sense at the connector and the current sense feed
+         limit comparators whose thresholds software sets; the comparators
+         switch the power switch off and send an interrupt and its cause to
+         the processor, which writes the limits. The bus voltage and current
+         are measured and read by the processor.
+
 The converter pages already sense the same quantities for control and
 protection; :ref:`conv-protection` and :ref:`conv-fault-times` cover the
 converter side. This page covers what USB Power Delivery adds.
 
-What USB Power Delivery asks of the measurements
-------------------------------------------------
+Measurement ranges and steps
+----------------------------
 
 The ranges come from the largest voltages and currents a port can see; the
 steps from the finest limits it must check (:numref:`tab-usbpd-meas`).
@@ -87,11 +103,14 @@ measuring them.
 
 .. _usbpd-limiting:
 
-Hardware enforces the limits that software sets
------------------------------------------------
+Hardware limits
+---------------
 
-A source's over-current limit must not trip below the contract
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Software sets each limit, and hardware enforces it without waiting for the
+processor.
+
+Over-current limit
+^^^^^^^^^^^^^^^^^^
 
 A source must have over-current protection, a
 :wikipedia:`current limit <Current_limiting>` that switches the port off.
@@ -138,10 +157,24 @@ the sink must reach the new current before the shortest *tSrcTransition*
 (25 ms) ends, and the source lowers its limit only after tSrcTransition
 (:pd:`Section 4.5.1.3`). When the current goes up, the sink may draw the new
 current as soon as it has the PS_RDY, so the source raises its limit before
-it sends PS_RDY.
+it sends PS_RDY. :numref:`fig-usbpd-current-limit` shows both orders.
 
-A PPS source limits the current instead of switching off
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. figure:: current-limit.svg
+   :name: fig-usbpd-current-limit
+   :alt: Graph of current from 0 to 4 A against time from -50 to 400 ms.
+         The contract is lowered from 3 A to 1.5 A at the first Accept: the
+         sink current falls at once, and the limit setting, with a 10 %
+         tolerance band, falls from 3.3 A to 1.7 A only after
+         tSrcTransition, 25 ms, before PS_RDY. The contract is then raised
+         back to 3 A at a second Accept: the limit rises to 3.3 A before
+         PS_RDY, and the sink current rises after PS_RDY.
+
+   The source's current-limit setting and the sink current when the
+   contract is lowered and raised, with a 10 % limit tolerance; event times
+   are examples.
+
+PPS current limit
+^^^^^^^^^^^^^^^^^
 
 A source with a :term:`programmable power supply <PPS>` offer has a
 current-limit mode. If the sink draws more than the operating current in
@@ -156,10 +189,24 @@ settles within *tPpsCLProgramSettle* (250 ms). If VBUS falls below
 *vPpsShutdown* (85 % to 95 % of the offer's minimum voltage), the source may
 send a Hard Reset and must discharge VBUS to vSafe0V. A PPS source's current
 limit is therefore a regulation loop, part of the converter control, with a
-measurement accurate to ±150 mA.
+measurement accurate to ±150 mA. :numref:`fig-usbpd-pps-limit` shows the
+resulting VBUS against current.
 
-Over-voltage limits sit above the allowed tolerance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. figure:: pps-limit.svg
+   :name: fig-usbpd-pps-limit
+   :alt: Graph of VBUS from 0 to 10 V against VBUS current from 0 to 3 A,
+         for a 5 V to 11 V PPS offer with 9 V and 2 A requested. VBUS stays
+         at 9 V up to 2 A. Above that, the current is held within 150 mA
+         of 2 A while VBUS falls, down to the vPpsShutdown band at 85 to
+         95 % of 5 V, below which the source may send Hard Reset. A dashed
+         line at 1 A marks iPpsCLMin, the lowest limit setting; settings
+         are in 50 mA steps.
+
+   VBUS against current for a PPS source in current limit, for an example
+   request of 9 V and 2 A.
+
+Over-voltage limit
+^^^^^^^^^^^^^^^^^^
 
 A sink must have over-voltage protection that does not act on any voltage
 the contract allows, *vSrcNew* plus *vSrcValid* (:pd:`Section 4.2.9.3`).
@@ -222,12 +269,25 @@ the time available is
    t_\text{OVP} \le \frac{2.5\ \text{V}}{30\ \text{mV}/\mu\text{s}}
                 = 83\ \mu\text{s}
 
+:numref:`fig-usbpd-ovp-ramp` shows this time budget.
+
+.. figure:: ovp-ramp.svg
+   :name: fig-usbpd-ovp-ramp
+   :alt: Graph of VBUS from 19.5 to 25 V against time from -60 to 120 µs.
+         VBUS rises from 20 V at 30 mV/µs, crosses 21.0 V (20 V plus 5 %),
+         then 21.5 V, the lowest the over-voltage threshold may be, at 0 µs,
+         and reaches 24 V, what an SPR sink tolerates, 83 µs later.
+
+   The time an over-voltage protection has on a 20 V contract when VBUS
+   rises at 30 mV/µs.
+
 A faulty source can make VBUS rise faster, so this is an upper bound.
 
-Faults switch the port off in hardware and are then reported
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fault response
+^^^^^^^^^^^^^^
 
-:numref:`tab-usbpd-fault-times` lists the events, the response each needs
+A fault switches the port off in hardware, and the processor then reports
+it. :numref:`tab-usbpd-fault-times` lists the events, the response each needs
 and where the limit comes from.
 
 .. list-table:: Response needed for each event
@@ -268,15 +328,28 @@ After the hardware has switched a port off, it records which limit acted and
 interrupts the processor. The software then carries out what USB Power
 Delivery asks of a source whose protection has acted (:pd:`Section 4.1.5.1`):
 
-#. It attempts to send Hard Reset (see :ref:`usbpd-hard-reset`), and then,
+#. It attempts to send :ref:`Hard Reset <usbpd-hard-reset>`, and then,
    if a contract was in place, an Alert message reporting the event.
 #. It brings VBUS down within the times in
    :numref:`tab-usbpd-fault-times`.
 #. It may then resume default 5 V operation and must negotiate again. How
    and when is the source's choice.
 
-If the Hard Reset does not clear the fault, the port goes to ErrorRecovery
-(:pd:`Section 7.1.3`; see :ref:`usbpd-error-recovery`).
+If the Hard Reset does not clear the fault, the port goes to
+:ref:`ErrorRecovery <usbpd-error-recovery>` (:pd:`Section 7.1.3`).
+:numref:`fig-usbpd-fault-flow` shows the whole response.
+
+.. graphviz:: fault-flow.dot
+   :name: fig-usbpd-fault-flow
+   :caption: The response to a fault on a source port: hardware first, then
+             software.
+   :alt: Flow chart. A fault, a short, an overload or an over-voltage,
+         makes the hardware switch the port off, record the cause and
+         interrupt the processor. Software sends Hard Reset, then an Alert
+         if a contract was in place. VBUS falls to vSafe5V within 275 ms and
+         to vSafe0V within 650 ms, and the port resumes 5 V and negotiates
+         again. If the fault is not cleared, the port goes to
+         ErrorRecovery.
 
 The Alert message carries one bit for each kind of event (:pd:`Table 6.25`):
 
@@ -287,8 +360,8 @@ The Alert message carries one bit for each kind of event (:pd:`Table 6.25`):
 * *Operating Condition Change*: a temperature warning, or a PPS source
   moving between constant-voltage and current-limit operation.
 
-The circuits are an open choice
--------------------------------
+Circuit options
+---------------
 
 The needs above can be met in several ways, and the choice is open:
 
@@ -299,13 +372,29 @@ The needs above can be met in several ways, and the choice is open:
 * a combination: comparators for the fast limits, an ADC for monitoring and
   the slow limits.
 
+:numref:`fig-usbpd-limit-options` shows the three options side by side,
+with the two ways to sense the current described below.
+
+.. graphviz:: limit-options.dot
+   :name: fig-usbpd-limit-options
+   :caption: The three ways to build the limits, and the two ways to sense
+             the current.
+   :alt: Three panels. Comparator per limit: a DAC sets the threshold of a
+         comparator, which acts within one comparator delay. ADC and digital
+         compare: an ADC sampled at a rate set by the fault times, with the
+         limits compared in digital logic. Combination: comparators for the
+         fast limits and an ADC for monitoring and the slow limits. Below,
+         current sensing by either a series shunt resistor or the drop
+         across the power switch.
+
 The current can be sensed with a series resistor, a
 :wikipedia:`shunt <Shunt_(electrical)>`, or across the power switch itself. For reference, the TPS65987D senses the forward voltage drop of its
 internal switches to latch them off at about 10 A, and disables a path in
 hardware when VBUS crosses over- and under-voltage thresholds that firmware
-sets ([USBPD-TPS65987D]_, Sections 6.7 and 8.3.3.1). The VBUS
-divider and discharge are described on :ref:`usbpd-vbus-sensing`, and the
-power path on :ref:`usbpd-power-path`.
+sets ([USBPD-TPS65987D]_, Sections 6.7 and 8.3.3.1). The
+:ref:`VBUS divider and discharge <usbpd-vbus-sensing>` and the
+:ref:`power path <usbpd-power-path>` are described with the analogue
+circuits.
 
 Open questions
 --------------

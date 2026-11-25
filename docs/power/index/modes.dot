@@ -1,0 +1,45 @@
+// The three operating modes of a board built around evampire, each drawn
+// around the internal power bus. From power/index.rst and
+// requirements.rst.
+//
+// Fill colours: input port #fbe5d6, output port #e2f0d9, unused port
+// #ffffff, the bus #dbe8f5. Bold arrows carry power. Fixed grid
+// (positions in inches): one panel per mode, side by side.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph modes {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#ffffff",
+           fontname="Helvetica", fontsize=10, width=1.0, height=0.45,
+           fixedsize=true];
+    edge  [penwidth=2.4, arrowsize=0.7];
+
+    t1 [pos="1.15,2.55!", shape=plaintext, style="", width=2.2, height=0.3,
+        fontsize=11, label="Ethernet in, USB out"];
+    a1 [pos="0.55,1.85!", label="Ethernet A\nPD", fillcolor="#fbe5d6"];
+    b1 [pos="1.75,1.85!", label="Ethernet B", fontcolor="#888888"];
+    u1 [pos="1.15,0.25!", label="USB-C\nsource", fillcolor="#e2f0d9"];
+    p1 [pos="1.15,1.05!", label="power bus", width=1.6, height=0.35,
+        fillcolor="#dbe8f5"];
+    a1 -> p1; p1 -> u1;
+
+    t2 [pos="3.6,2.55!", shape=plaintext, style="", width=2.2, height=0.3,
+        fontsize=11, label="USB in, Ethernet out"];
+    a2 [pos="3.0,1.85!", label="Ethernet A", fontcolor="#888888"];
+    b2 [pos="4.2,1.85!", label="Ethernet B\nPSE", fillcolor="#e2f0d9"];
+    u2 [pos="3.6,0.25!", label="USB-C\nsink", fillcolor="#fbe5d6"];
+    p2 [pos="3.6,1.05!", label="power bus", width=1.6, height=0.35,
+        fillcolor="#dbe8f5"];
+    u2 -> p2; p2 -> b2;
+
+    t3 [pos="6.05,2.55!", shape=plaintext, style="", width=2.4, height=0.3,
+        fontsize=11, label="Ethernet in, Ethernet out"];
+    a3 [pos="5.45,1.85!", label="Ethernet A\nPD", fillcolor="#fbe5d6"];
+    b3 [pos="6.65,1.85!", label="Ethernet B\nPSE", fillcolor="#e2f0d9"];
+    u3 [pos="6.05,0.25!", label="USB-C", fontcolor="#888888"];
+    p3 [pos="6.05,1.05!", label="power bus", width=1.6, height=0.35,
+        fillcolor="#dbe8f5"];
+    a3 -> p3; p3 -> b3;
+}

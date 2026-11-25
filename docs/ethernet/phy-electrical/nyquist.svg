@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="200" viewBox="0 0 480 200" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="200" fill="#ffffff"/>
+<text x="102.0" y="30.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">symbol</text>
+<rect x="110.0" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="132.2" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">+2</text>
+<rect x="154.5" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="176.8" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">−2</text>
+<rect x="199.0" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="221.2" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">+2</text>
+<rect x="243.5" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="265.8" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">−2</text>
+<rect x="288.0" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="310.2" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">+2</text>
+<rect x="332.5" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="354.8" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">−2</text>
+<rect x="377.0" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="399.2" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">+2</text>
+<rect x="421.5" y="16.0" width="44.5" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="443.8" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">−2</text>
+<text x="102.0" y="80.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">line</text>
+<polyline points="110.0,64.0 154.5,64.0 154.5,96.0 199.0,96.0 199.0,64.0 243.5,64.0 243.5,96.0 288.0,96.0 288.0,64.0 332.5,64.0 332.5,96.0 377.0,96.0 377.0,64.0 421.5,64.0 421.5,96.0 466.0,96.0" fill="none" stroke="#1f4e79" stroke-width="2.4" stroke-linejoin="round"/>
+<line x1="199.0" y1="118.0" x2="288.0" y2="118.0" stroke="#222222" stroke-width="1.2"/>
+<polygon points="288.0,118.0 280.6,114.9 280.6,121.1" fill="#222222"/>
+<polygon points="199.0,118.0 206.4,121.1 206.4,114.9" fill="#222222"/>
+<text x="243.5" y="132.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">one period: 16 ns, 62.5 MHz</text>
+<line x1="110.0" y1="146.0" x2="466.0" y2="146.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="110.0" y1="146.0" x2="110.0" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="110.0" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="154.5" y1="146.0" x2="154.5" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="154.5" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">8</text>
+<line x1="199.0" y1="146.0" x2="199.0" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="199.0" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">16</text>
+<line x1="243.5" y1="146.0" x2="243.5" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="243.5" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">24</text>
+<line x1="288.0" y1="146.0" x2="288.0" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="288.0" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">32</text>
+<line x1="332.5" y1="146.0" x2="332.5" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="332.5" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">40</text>
+<line x1="377.0" y1="146.0" x2="377.0" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="377.0" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">48</text>
+<line x1="421.5" y1="146.0" x2="421.5" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="421.5" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">56</text>
+<line x1="466.0" y1="146.0" x2="466.0" y2="151.0" stroke="#222222" stroke-width="1.2"/>
+<text x="466.0" y="161.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">64</text>
+<text x="288.0" y="180.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Time (ns)</text>
+</svg>

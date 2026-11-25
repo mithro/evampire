@@ -5,8 +5,8 @@ This page gives a high-level view of the blocks inside evampire and how
 frames move between them. The :doc:`../ethernet/index` and
 :doc:`../power/index` pages describe each external interface in detail.
 
-The blocks form a forwarding path and a processor path
-------------------------------------------------------
+Forwarding and processor paths
+------------------------------
 
 :numref:`fig-block-diagram` shows the blocks inside evampire. The two
 forwarding paths run down the left-hand side, and the processor's path to
@@ -35,8 +35,8 @@ outline are outside the chip. Blue blocks are the RGMII interfaces, grey
 blocks the forwarding path, green blocks the processor's frame path, and
 orange blocks the processor and its control interfaces.
 
-Each block has one job
-----------------------
+Blocks
+------
 
 .. _arch-rgmii:
 
@@ -62,8 +62,12 @@ RGMII interfaces A and B
 Rate-matching buffers
    Received data arrives on the clock that the transceiver recovers from the
    cable, which is set by the crystal at the far end of the cable.
-   Transmitted data leaves on evampire's own 125 MHz clock. These two clocks
-   have the same nominal frequency but are not identical. Gigabit Ethernet
+   Over RGMII, transmitted data leaves on evampire's own 125 MHz clock. An
+   integrated transceiver in the slave role transmits on its recovered
+   clock instead, so it needs a transmit buffer as well
+   (:doc:`../ethernet/phy-electrical/integration/requirements`). The receive
+   and transmit clocks have the same nominal frequency but are not
+   identical. Gigabit Ethernet
    allows each end to be up to 100
    :wikipedia:`parts per million <Parts-per_notation>` away from 125 MHz
    (:clause:`40`, see :doc:`../ethernet/phy-electrical/index`), so the two
@@ -77,6 +81,20 @@ Rate-matching buffers
    between frames gives the buffer time to return to its centre point
    before the next frame starts. The size of the buffer sets the longest
    frame that can be forwarded (see :ref:`the forwarding requirements <req-forwarding>`).
+   :numref:`fig-rate-matching` shows the buffer's level across a frame.
+
+   .. figure:: rate-matching.svg
+      :name: fig-rate-matching
+      :alt: Graph of the buffer level from its centre, from minus 3 to plus 3
+            bytes, against time in byte times from 0 to 12 000. During a frame of
+            10 000 bytes the level rises one byte every 5000 bytes with the
+            receive clock 200 ppm fast, reaching the slack of plus 2 bytes at the
+            frame's end, and falls the same way when it is 200 ppm slow. In the
+            gap after the frame, drawn not to scale, it returns to the
+            centre.
+
+      The rate-matching buffer's level across the longest frame, for a
+      slack of 2 bytes.
 
 .. _arch-output-selectors:
 
@@ -89,8 +107,33 @@ Output selectors A and B
 
    The forwarding path has no full-frame storage. A forwarded frame that
    starts arriving while a processor frame is being sent on the same port is
-   therefore dropped. The share of the forwarded link's time taken by
-   dropped frames is roughly
+   therefore dropped, as :numref:`fig-output-selector` shows. The share of
+   the forwarded link's time taken by dropped frames is roughly
+
+   .. wavedrom::
+      :name: fig-output-selector
+      :alt: Timing diagram of output selector B. Port A receives frame 1,
+            then after a gap frame 2 and later frame 3. Port B sends frame 1
+            a few cycles after it arrives. A processor frame waits until
+            frame 1 has been sent and then starts in the gap. Frame 2 starts
+            arriving while the processor frame is being sent, so it is
+            dropped. Frame 3 arrives after the processor frame and is
+            forwarded.
+      :caption: Output selector B placing a processor frame in a gap, and
+                dropping a forwarded frame that starts during it, schematic
+                and not to scale.
+
+      { "signal": [
+          { "name": "A receives", "wave": "x3..x.4..x.5..",
+            "data": ["frame 1", "frame 2", "frame 3"] },
+          { "name": "processor waits", "wave": "0.1..0........" },
+          { "name": "B sends", "wave": "x.3..6...x..5.",
+            "data": ["frame 1", "processor frame", "frame 3"] },
+          { "name": "frame 2", "wave": "x.....9..x....",
+            "data": ["dropped"] }
+        ],
+        "config": { "hscale": 1 }
+      }
 
    .. math::
 
@@ -139,7 +182,18 @@ Preamble and checksum generator
    on to the frame, and ends with a 4-byte checksum (:clause:`3`; see also the frame structure on
    :doc:`../ethernet/rgmii/index`). This block adds both to frames from the
    processor, so that the processor only writes the addresses, type field
-   and payload.
+   and payload (:numref:`fig-frame-layout`).
+
+   .. figure:: frame-layout.svg
+      :name: fig-frame-layout
+      :alt: The fields of a frame on the wire in two rows, with their lengths
+            in bytes: preamble 7, SFD 1, destination 6, source 6, an optional
+            VLAN tag 4, type 2, payload 42 or 46 to 1500, at least 42 with a
+            VLAN tag and 46 without, and FCS 4. The preamble, SFD and FCS
+            are added by the preamble and checksum generator; the others are
+            written by the processor.
+
+      The fields of a frame and which block writes each, not to scale.
 
 .. _arch-microcontroller:
 
@@ -190,8 +244,8 @@ Clock and reset
    transceiver, is discussed on :doc:`../ethernet/rgmii/index`. The processor's
    clock is an open question (see :ref:`requirements-open-questions`).
 
-Each data path passes through a fixed sequence of blocks
---------------------------------------------------------
+Data paths
+----------
 
 .. list-table:: Blocks on each data path, in order
    :name: tab-data-paths
@@ -214,6 +268,7 @@ Each data path passes through a fixed sequence of blocks
        generator, output selector A or B or both, RGMII interface A or B or
        both
 
-:numref:`tab-data-paths` lists the blocks on each path. The delay from one
+:numref:`tab-data-paths` lists the blocks of :numref:`fig-block-diagram`
+on each path. The delay from one
 external port to the other is a fixed small number of clock cycles. A frame
 copied to the processor is also forwarded to the other port as usual.

@@ -41,15 +41,26 @@ RV32I, the 32-bit base RISC-V instruction set, not measurements. The
 :doc:`/power/usb-pd/software` page uses the same method for the
 configuration channel.
 
-Baseline: only input and output bits
-------------------------------------
+Software-only baseline
+----------------------
 
-The minimum hardware is the analogue front end of :doc:`analogue` connected
+The minimum hardware is the :doc:`analogue front end <analogue>` connected
 to plain processor-visible bits: D+ and D− receiver outputs as inputs; and
 driver enable, D+ level, D− level and pull-up enable as outputs. Everything
-else is software.
+else is software (:numref:`fig-usbser-baseline`).
 
-Receiving
+.. graphviz:: software-cost/baseline.dot
+   :name: fig-usbser-baseline
+   :caption: The software-only baseline: the analogue front end wired to
+             processor input and output bits.
+   :alt: Block diagram: the analogue front end, with the driver, receivers
+         and pull-up, connects to the processor through plain bits. Two
+         input bits carry the D+ and D− receiver outputs to the processor.
+         Four output bits carry driver enable, D+ level, D− level and
+         pull-up enable from the processor. All USB work is in software.
+   :align: center
+
+Reception
 ~~~~~~~~~
 
 For each bit the software has to take a sample at the right moment, undo
@@ -130,11 +141,11 @@ The instruction rate needed while a packet arrives is:
 
 Three further needs come with it:
 
-* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle
-  of its bit (:doc:`timing`), and the sampling instant has to be corrected
-  from the edges, at least every 7 bit times. The loop therefore has to
-  have a fixed, known duration of exactly one bit time, or measure edge
-  times from a counter.
+* *Sample timing.* Each sample has to land within ± 23.2 ns of the middle of
+  its bit (:numref:`fig-usbser-bit-cell`), and the sampling instant has to
+  be corrected from the edges, at least every 7 bit times. The loop
+  therefore has to have a fixed, known duration of exactly one bit time, or
+  measure edge times from a counter.
 * *Sample rate.* One sample per bit is 12 million samples per second, if the
   sampling instant is kept centred. A receiver that finds the edges by
   oversampling four times per bit needs 48 million samples per second
@@ -143,7 +154,7 @@ Three further needs come with it:
   a packet loses the packet. Interrupts stay off from the SYNC to the end of
   the reply.
 
-Transmitting
+Transmission
 ~~~~~~~~~~~~
 
 To send, the software takes each bit, inserts a stuffed bit after six ones,
@@ -176,8 +187,8 @@ The edges must also meet the ± 3.5 ns source jitter limit. A loop of fixed
 length places them exactly only if :math:`f_\text{clk}` is a whole multiple
 of 12 MHz, or at least 286 MHz (:ref:`usbser-placing-edges`).
 
-The reply deadline
-~~~~~~~~~~~~~~~~~~
+Reply deadline
+~~~~~~~~~~~~~~
 
 After the end of each packet addressed to the device, the software has to
 start the reply within :math:`t_\text{reply}`, at most 541.7 ns
@@ -217,8 +228,8 @@ its own address and endpoints, so it can prepare the 16 bits that follow
 the PID (address, endpoint and CRC5) for each endpoint it serves, and
 compare the received bits with that list.
 
-Waiting for the next packet
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Idle time between packets
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The host may send a token at any moment, so software has to watch the line
 continuously while it is connected. While a terminal program has the port
@@ -226,13 +237,31 @@ open, the host polls the bulk IN endpoint, and the device answers NAK each
 time it has nothing to send. How often a host does this depends on its
 controller.
 
-The upper bound comes from the packet lengths: a token, 2 bit
+The upper bound comes from the packet lengths: a token, 2 bit
 times, a NAK and 2 bit times take 58 bit times, 4.83 µs, so at most 207
-polls fit in a 1 ms frame. At that rate the device spends essentially all
-its time receiving tokens and replying.
+polls fit in a 1 ms frame (:numref:`fig-usbser-polls`). At that rate the
+device spends essentially all its time receiving tokens and replying.
 
-Summary of the baseline
-~~~~~~~~~~~~~~~~~~~~~~~
+.. wavedrom::
+   :caption: Repeated IN polls answered with NAK (not to scale).
+   :name: fig-usbser-polls
+   :alt: Timing diagram: the host sends an IN token, there is a gap of 2
+         bit times, the device answers NAK, and after another 2 bit times
+         the host sends the next IN token. One poll takes 58 bit times,
+         4.83 µs, so up to 207 fit in a 1 ms frame.
+
+   {"signal": [
+     {"name": "host", "wave": "3.x...3.x...",
+      "data": ["IN token", "IN token"]},
+     {"name": "device", "wave": "x..5.x...5.x",
+      "data": ["NAK", "NAK"]},
+     {"name": "one poll", "wave": "4.....4.....",
+      "data": ["58 bit times, 4.83 µs", "next poll"]}
+   ],
+   "config": {"hscale": 1}}
+
+Baseline summary
+~~~~~~~~~~~~~~~~
 
 With only input and output bits, the processor needs about
 :math:`123 \times 10^{6}` instructions per second while receiving and about
@@ -242,10 +271,12 @@ to the end of the reply, and transmits from a clock that is a multiple of
 12 MHz.
 When a bulk IN endpoint is being polled, this applies most of the time.
 
-Hardware helpers, in order of what they remove
-----------------------------------------------
+Hardware helpers
+----------------
 
-Each helper below takes one part of the baseline into hardware.
+Each helper below takes one part of the baseline into hardware, in the
+order in which they are added, so each step removes the largest remaining
+load.
 :numref:`fig-usbser-blocks` shows them together and
 :numref:`tab-usbser-split` summarises what remains for software after each
 step.
@@ -262,8 +293,8 @@ step.
          trims the clock.
    :align: center
 
-1. Receive deserialiser
-~~~~~~~~~~~~~~~~~~~~~~~
+Receive deserialiser
+~~~~~~~~~~~~~~~~~~~~
 
 The deserialiser samples D+ and D−, recovers the bit timing from the edges,
 detects SYNC and end of packet, undoes NRZI, removes stuffed bits, flags
@@ -284,8 +315,27 @@ what the specification suggests and what the TinyFPGA bootloader,
 ValentyUSB and the ulixxe ``usb_cdc`` core do ([USBSER-TINYFPGA]_,
 ``usb_fs_rx.v``; [USBSER-VALENTYUSB]_, ``rx/clock.py``;
 [USBSER-ULIXXE]_). The alternative is one sample per bit at a phase set
-from the SYNC and corrected at each edge, from a clock that is a multiple
-of 12 MHz; it needs fewer fast flip-flops but a finer phase adjustment.
+from the SYNC and corrected at each edge, from a clock that is a multiple of
+12 MHz; it needs fewer fast flip-flops but a finer phase adjustment.
+:numref:`fig-usbser-sampling` compares the two.
+
+.. wavedrom::
+   :caption: Oversampling at four times the bit rate against one sample per
+             bit (not to scale).
+   :name: fig-usbser-sampling
+   :alt: Timing diagram over three bits. A 48 MHz clock has four periods per
+         bit; the oversampling receiver samples on every one and follows
+         the edges with a state machine. The other receiver takes one
+         sample per bit in the middle of each bit, at a phase set from the
+         SYNC pattern and corrected at each edge.
+
+   {"signal": [
+     {"name": "line", "wave": "3...4...3...",
+      "data": ["bit: J", "K", "J"]},
+     {"name": "48 MHz samples", "wave": "pppppppppppp"},
+     {"name": "one per bit", "wave": "0.10..10..10"}
+   ],
+   "config": {"hscale": 1}}
 
 The sampling logic runs at 48 MHz or more in the oversampling case. On
 gf180mcu, a D flip-flop of the 7-track standard cell library has a
@@ -296,8 +346,8 @@ typical corner, 5 V and 25 °C ([USBSER-GF180-SC]_, cell
 :wikipedia:`current-mode logic <Current-mode_logic>`, are an option for a
 higher oversampling rate.
 
-2. Transmit serialiser
-~~~~~~~~~~~~~~~~~~~~~~
+Transmit serialiser
+~~~~~~~~~~~~~~~~~~~
 
 The serialiser takes bytes from a FIFO, sends SYNC, inserts stuffed bits,
 applies NRZI, drives J, K and SE0, and ends with the end of packet. It runs
@@ -310,8 +360,8 @@ from a clock that is a multiple of 12 MHz.
   :math:`D \times 666.7` ns ahead for a FIFO of :math:`D` bytes, or the
   whole packet loaded before it starts.
 
-3. CRC5 and CRC16 in hardware
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hardware CRC5 and CRC16
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A CRC16 register on the receive and transmit byte streams, and a CRC5 check
 on received tokens, is a few dozen flip-flops and exclusive-or gates.
@@ -321,13 +371,13 @@ on received tokens, is a few dozen flip-flops and exclusive-or gates.
   second; the CRC check moves out of the reply deadline.
 * *Leaves:* the reply deadline itself.
 
-4. Automatic handshakes
-~~~~~~~~~~~~~~~~~~~~~~~
+Automatic handshakes
+~~~~~~~~~~~~~~~~~~~~
 
 Per endpoint, the software sets flags such as "buffer ready to receive",
 "data ready to send" and "halted". A token decoder matches the address and
 endpoint, and a small state machine replies by itself
-([USBSER-USB2]_ section 8.4.6):
+([USBSER-USB2]_ section 8.4.6, :numref:`fig-usbser-handshake`):
 
 * to OUT data with a good CRC and a ready buffer: ACK, and the buffer is
   marked full; with no ready buffer: NAK; when halted: STALL;
@@ -335,6 +385,22 @@ endpoint, and a small state machine replies by itself
   with no data: NAK;
 * to SETUP: always ACK, into a buffer reserved for the 8-byte request;
 * the DATA0/DATA1 sequence bit per endpoint.
+
+.. graphviz:: software-cost/handshake.dot
+   :name: fig-usbser-handshake
+   :caption: State machine of the automatic handshakes.
+   :alt: State diagram: from idle, a token is decoded for address, endpoint
+         and CRC5; a token not for this device is ignored. A SETUP token
+         leads to receiving the 8-byte DATA0: with a bad CRC no reply,
+         otherwise always ACK into the SETUP buffer, with DATA1 next. An OUT token leads to receiving
+         DATA0 or DATA1: with a bad CRC no reply; when halted STALL; with no
+         room NAK; with the same sequence bit as last time ACK and discard
+         the copy; when ready ACK, mark the buffer full and toggle the bit.
+         An IN token checks the endpoint flags: when halted STALL; with no
+         data NAK; with data ready send DATA0 or DATA1, then wait for the
+         host: on ACK toggle the bit and mark the buffer empty, with no ACK
+         keep the data for a retry. Each branch returns to idle.
+   :align: center
 
 * *Removes:* the reply deadline and all per-packet work. Software is
   involved only when a buffer has been filled or emptied, and a late answer
@@ -347,8 +413,8 @@ This is the split of the eptri interface of ValentyUSB, which answers NAK
 until the processor arms an endpoint's buffer and adds the CRC16 to IN
 packets itself ([USBSER-VALENTYUSB]_, ``cpu/eptri.py``).
 
-5. Frame timer
-~~~~~~~~~~~~~~
+Frame timer
+~~~~~~~~~~~
 
 A counter that latches the local clock count at each start-of-frame token
 lets software, or a small control loop, trim an oscillator against the
@@ -358,14 +424,27 @@ from a crystal.
 Packet buffers
 ~~~~~~~~~~~~~~
 
-From step 4 on, packets are held in buffers that the processor reads and
-writes. A serial port with 64-byte packets needs one 64-byte buffer per direction
-of each bulk endpoint, or two, so that the hardware fills one while the
-software works on the other. It also needs an 8-byte buffer for SETUP, and
-buffers of the chosen sizes for endpoint 0 and the interrupt endpoint.
+Once automatic handshakes are added, packets are held in buffers that the
+processor reads and writes. A serial port with 64-byte packets needs one
+64-byte buffer per direction of each bulk endpoint, or two, so that the
+hardware fills one while the software works on the other. It also needs an
+8-byte buffer for SETUP, and buffers of the chosen sizes for endpoint 0 and
+the interrupt endpoint (:numref:`fig-usbser-buffers`).
 
-Summary of the steps
---------------------
+.. graphviz:: software-cost/buffers.dot
+   :name: fig-usbser-buffers
+   :caption: Two 64-byte buffers per bulk direction and the SETUP buffer
+             between the USB hardware and the processor.
+   :alt: Block diagram: the deserialiser, serialiser and automatic
+         handshakes fill bulk OUT buffer A while the processor reads bulk
+         OUT buffer B; the hardware sends from bulk IN buffer A while the
+         processor fills bulk IN buffer B; an 8-byte SETUP buffer passes
+         from the hardware to the processor. The roles of A and B swap
+         after each packet.
+   :align: center
+
+Summary of the helpers
+----------------------
 
 .. list-table:: What software has to do after each hardware step
    (instruction counts are estimates)
@@ -398,24 +477,25 @@ Summary of the steps
      - Data rate
      - Request, 50 ms
 
-Working plan for the split
---------------------------
+Chosen split
+------------
 
-The plan is to build steps 1 to 4 in hardware: the receive deserialiser,
-the transmit serialiser, the CRC, and automatic handshakes with packet
-buffers. Software does everything else: enumeration, the descriptors, the
-CDC-ACM requests, moving the serial data, and the policy of when to connect
-and disconnect. With this split, USB places no packet-level deadline on the
-processor, so it can serve USB, USB Power Delivery and Ethernet duties in
-any order (see :doc:`usb-pd-roles`).
+The chosen split builds the first four helpers in hardware: the receive
+deserialiser, the transmit serialiser, the CRC, and automatic handshakes
+with packet buffers. Software does everything else: enumeration, the
+descriptors, the CDC-ACM requests, moving the serial data, and the policy of
+when to connect and disconnect. With this split, USB places no packet-level
+deadline on the processor, so it can serve USB, USB Power Delivery and
+Ethernet duties in any order (see :doc:`usb-pd-roles`).
 
-Smaller splits remain options and depend on the processor. Without step 4,
-the processor has to meet the reply deadline,
+Smaller splits remain options and depend on the processor. Without automatic
+handshakes, the processor has to meet the reply deadline,
 :math:`f_\text{clk}/\text{CPI} \ge N_\text{reply}/t_\text{reply}`, and be
-free at the end of every packet for the device. Without steps 1 and 2, it
-needs the rates of the baseline. Another option is a small programmable
-state machine in place of fixed logic for steps 1 and 2, as the RP2040's
-programmable I/O does in Pico-PIO-USB ([USBSER-PICO-PIO-USB]_).
+free at the end of every packet for the device. Without the deserialiser and
+serialiser, it needs the rates of the baseline. Another option is a small
+programmable state machine in place of fixed logic for the deserialiser and
+serialiser, as the RP2040's programmable I/O does in Pico-PIO-USB
+([USBSER-PICO-PIO-USB]_).
 
 Reference implementations
 -------------------------
@@ -482,7 +562,7 @@ Open questions
 --------------
 
 * The processor core, its clock :math:`f_\text{clk}` and its CPI, which set
-  whether a smaller split than steps 1 to 4 is enough.
+  whether a smaller split than the first four helpers meets the deadlines.
 * The measured instruction counts, by writing the receive, transmit and
   reply code and running it on the chosen core or an FPGA model of it.
 * Fixed logic or a small programmable state machine for the serialiser and

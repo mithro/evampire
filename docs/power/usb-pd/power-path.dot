@@ -1,0 +1,30 @@
+// The power path of one dual-role port: a sink switch and a source
+// converter, each blocking reverse current (analogue.rst).
+//
+// Fixed grid (positions in inches): VBUS at x=0.6, paths at x=2.5, board
+// bus at x=4.4, evampire control between the two paths.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph power_path {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
+           fontname="Helvetica", fontsize=10, width=1.7, height=0.62,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.8];
+
+    vb  [pos="0.6,1.45!", label="VBUS:\nat most\n10 µF when\nnot sourcing",
+         width=1.0, height=2.0, fillcolor="#ffffff"];
+    snk [pos="2.5,2.1!", label="sink switch,\nblocks reverse current",
+         fillcolor="#e2f0d9"];
+    src [pos="2.5,0.8!", label="source converter:\ncurrent limit, blocks\nreverse current",
+         fillcolor="#fbe5d6"];
+    bus [pos="4.4,1.45!", label="board\npower bus", width=1.0, height=2.0,
+         style="rounded,filled,bold", fillcolor="#dbe8f5"];
+    ev  [pos="2.5,1.45!", label="evampire: control,\nlimit setting", width=1.4,
+         height=0.42, fontsize=9, fillcolor="#dbe8f5"];
+
+    vb -> snk [penwidth=2.5]; snk -> bus [penwidth=2.5];
+    bus -> src [penwidth=2.5]; src -> vb [penwidth=2.5];
+    ev -> snk [style=dashed]; ev -> src [style=dashed];
+}

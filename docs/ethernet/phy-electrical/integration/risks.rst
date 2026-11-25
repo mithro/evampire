@@ -1,7 +1,7 @@
 .. _phy-int-risks:
 
-Design risks and the order of work
-==================================
+Risks and order of work
+=======================
 
 This page lists the main risks of the integrated 1000BASE-T transceiver,
 how each can be checked before the whole transceiver exists, the
@@ -10,8 +10,8 @@ block can be checked on its own.
 
 .. _phy-int-risk-table:
 
-Each risk can be checked early
-------------------------------
+Risks and early checks
+----------------------
 
 An :wikipedia:`FPGA <Field-programmable_gate_array>` (field-programmable
 gate array), a reprogrammable logic chip, can run the signal processing on
@@ -31,7 +31,7 @@ real cable samples before it is built in silicon.
        chosen reach, choice of cells and supply
      - Synthesis and power estimation for gf180mcu; FPGA run on captured
        cable samples
-   * - The 8 ns decision loop (:ref:`phy-int-decision-loop`)
+   * - The 8 ns :ref:`decision loop <phy-int-decision-loop>`
      - Look-ahead, pipelined decoder, faster cells for the loop only
      - Static timing of the loop at the slow corner after synthesis and
        layout
@@ -43,7 +43,7 @@ real cable samples before it is built in silicon.
      - Replica hybrid on the coupled pins, analogue echo canceller
      - Echo measured on a test chip with a real cable and the chosen
        isolation route
-   * - Clock recovery and training time (:doc:`clock-recovery`)
+   * - :doc:`Clock recovery <clock-recovery>` and training time
      - PLL and phase interpolator; digital timing recovery
      - Jitter of a test-chip PLL; timing recovery on an FPGA
    * - Line driver linearity and swing (:doc:`transmitter`)
@@ -52,8 +52,8 @@ real cable samples before it is built in silicon.
 
 .. _phy-int-alternatives:
 
-Some approaches others dropped may suit evampire
-------------------------------------------------
+Alternatives to the usual approaches
+------------------------------------
 
 :numref:`tab-phy-int-alternatives` lists approaches that the reference
 designs did not use, why, and whether the reason applies to evampire.
@@ -83,8 +83,8 @@ designs did not use, why, and whether the reason applies to evampire.
 
 .. _phy-int-order:
 
-The blocks can be built and checked in this order
--------------------------------------------------
+Order of work
+-------------
 
 #. Reference clock and PLL, checked alone by measuring frequency and
    jitter.
@@ -102,4 +102,17 @@ The blocks can be built and checked in this order
    :ref:`RGMII block <arch-rgmii>`, checked with the forwarding logic.
 
 The 100BASE-TX and 10BASE-T blocks of :doc:`slower-speeds` reuse
-steps 3, 5 and 6.
+steps 3, 5 and 6. :numref:`fig-phy-int-test-bench` shows the bench for
+steps 4 to 6.
+
+.. graphviz:: test-bench.dot
+   :name: fig-phy-int-test-bench
+   :caption: The early-check bench: a test chip on a real cable to a
+             commercial transceiver, with its ADC samples captured to an
+             FPGA.
+   :alt: A test chip with the DAC, driver, hybrid, ADC, link pulses and
+         autonegotiation connects through
+         a real cable to a commercial transceiver, which reports what it
+         receives. The test chip's captured ADC samples go to an FPGA that
+         runs the signal processing.
+   :align: center

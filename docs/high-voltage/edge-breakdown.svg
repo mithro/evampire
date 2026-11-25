@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="380" viewBox="0 0 640 380" font-family="sans-serif" font-size="13">
+<rect width="640" height="380" fill="white"/>
+<rect x="90" y="30" width="520" height="290" rx="0" fill="none" stroke="#222222"/>
+<line x1="142.0" y1="30" x2="142.0" y2="320" stroke="#dddddd" stroke-width="1"/>
+<text x="142.0" y="337" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0.5</text>
+<line x1="228.7" y1="30" x2="228.7" y2="320" stroke="#dddddd" stroke-width="1"/>
+<text x="228.7" y="337" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">1</text>
+<line x1="315.3" y1="30" x2="315.3" y2="320" stroke="#dddddd" stroke-width="1"/>
+<text x="315.3" y="337" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">1.5</text>
+<line x1="402.0" y1="30" x2="402.0" y2="320" stroke="#dddddd" stroke-width="1"/>
+<text x="402.0" y="337" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">2</text>
+<line x1="488.7" y1="30" x2="488.7" y2="320" stroke="#dddddd" stroke-width="1"/>
+<text x="488.7" y="337" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">2.5</text>
+<line x1="575.3" y1="30" x2="575.3" y2="320" stroke="#dddddd" stroke-width="1"/>
+<text x="575.3" y="337" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">3</text>
+<line x1="90" y1="320.0" x2="610" y2="320.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="324.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="90" y1="276.1" x2="610" y2="276.1" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="280.1" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">50</text>
+<line x1="90" y1="232.1" x2="610" y2="232.1" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="236.1" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">100</text>
+<line x1="90" y1="188.2" x2="610" y2="188.2" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="192.2" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">150</text>
+<line x1="90" y1="144.2" x2="610" y2="144.2" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="148.2" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">200</text>
+<line x1="90" y1="100.3" x2="610" y2="100.3" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="104.3" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">250</text>
+<line x1="90" y1="56.4" x2="610" y2="56.4" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="60.4" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">300</text>
+<text x="350.0" y="358" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">radius of the edge (µm)</text>
+<text x="40" y="175.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 40 175.0)">breakdown voltage (V)</text>
+<line x1="90" y1="56.1" x2="610" y2="56.1" stroke="#222222" stroke-width="1.3" stroke-dasharray="6 4"/>
+<text x="604" y="50.1" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">flat bottom, 300 V</text>
+<line x1="90" y1="307.7" x2="610" y2="307.7" stroke="#666666" stroke-width="1.3" stroke-dasharray="6 4"/>
+<text x="604" y="301.7" text-anchor="end" font-size="12" font-weight="normal" fill="#666666">published N-well breakdown, 14 V typical</text>
+<polyline points="90.0,294.7 96.5,291.8 103.0,289.1 109.5,286.6 116.0,284.2 122.5,282.0 129.0,279.9 135.5,277.8 142.0,275.9 148.5,274.0 155.0,272.2 161.5,270.4 168.0,268.7 174.5,267.1 181.0,265.5 187.5,264.0 194.0,262.5 200.5,261.1 207.0,259.7 213.5,258.3 220.0,257.0 226.5,255.7 233.0,254.4 239.5,253.2 246.0,252.0 252.5,250.8 259.0,249.6 265.5,248.5 272.0,247.4 278.5,246.3 285.0,245.2 291.5,244.2 298.0,243.2 304.5,242.2 311.0,241.2 317.5,240.2 324.0,239.3 330.5,238.3 337.0,237.4 343.5,236.5 350.0,235.6 356.5,234.8 363.0,233.9 369.5,233.1 376.0,232.3 382.5,231.4 389.0,230.6 395.5,229.9 402.0,229.1 408.5,228.3 415.0,227.6 421.5,226.8 428.0,226.1 434.5,225.4 441.0,224.6 447.5,223.9 454.0,223.3 460.5,222.6 467.0,221.9 473.5,221.2 480.0,220.6 486.5,219.9 493.0,219.3 499.5,218.7 506.0,218.1 512.5,217.4 519.0,216.8 525.5,216.2 532.0,215.6 538.5,215.1 545.0,214.5 551.5,213.9 558.0,213.4 564.5,212.8 571.0,212.3 577.5,211.7 584.0,211.2 590.5,210.6 597.0,210.1 603.5,209.6 610.0,209.1" stroke="#c0392b" stroke-width="2.2" fill="none"/>
+<circle cx="142.0" cy="276.1" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
+<circle cx="228.7" cy="255.0" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
+<circle cx="402.0" cy="229.5" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
+<circle cx="575.3" cy="211.9" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.8"/>
+<text x="606.0" y="199.1" text-anchor="end" font-size="13" font-weight="normal" fill="#c0392b">straight side (cylinder)</text>
+<polyline points="90.0,310.9 96.5,309.6 103.0,308.4 109.5,307.2 116.0,306.0 122.5,304.9 129.0,303.8 135.5,302.7 142.0,301.7 148.5,300.6 155.0,299.6 161.5,298.7 168.0,297.7 174.5,296.8 181.0,295.9 187.5,295.0 194.0,294.1 200.5,293.2 207.0,292.4 213.5,291.5 220.0,290.7 226.5,289.9 233.0,289.1 239.5,288.3 246.0,287.5 252.5,286.7 259.0,285.9 265.5,285.2 272.0,284.4 278.5,283.7 285.0,283.0 291.5,282.3 298.0,281.6 304.5,280.9 311.0,280.2 317.5,279.5 324.0,278.8 330.5,278.1 337.0,277.5 343.5,276.8 350.0,276.1 356.5,275.5 363.0,274.9 369.5,274.2 376.0,273.6 382.5,273.0 389.0,272.4 395.5,271.8 402.0,271.2 408.5,270.6 415.0,270.0 421.5,269.4 428.0,268.8 434.5,268.2 441.0,267.6 447.5,267.1 454.0,266.5 460.5,266.0 467.0,265.4 473.5,264.9 480.0,264.3 486.5,263.8 493.0,263.2 499.5,262.7 506.0,262.2 512.5,261.6 519.0,261.1 525.5,260.6 532.0,260.1 538.5,259.6 545.0,259.1 551.5,258.6 558.0,258.1 564.5,257.6 571.0,257.1 577.5,256.6 584.0,256.1 590.5,255.6 597.0,255.2 603.5,254.7 610.0,254.2" stroke="#2e86de" stroke-width="2.2" fill="none"/>
+<circle cx="142.0" cy="301.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.8"/>
+<circle cx="228.7" cy="289.2" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.8"/>
+<circle cx="402.0" cy="270.8" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.8"/>
+<circle cx="575.3" cy="256.7" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.8"/>
+<text x="606.0" y="244.2" text-anchor="end" font-size="13" font-weight="normal" fill="#2e86de">corner (sphere)</text>
+<text x="98" y="84" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">substrate doped at 10¹⁵ cm⁻³</text>
+</svg>

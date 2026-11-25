@@ -53,7 +53,7 @@ gives a short description and a link to the full explanation.
       The exchange of link pulse bursts by which the two transceivers on a
       twisted-pair Ethernet cable agree on speed, duplex mode and, for
       1000BASE-T, which end is master (:clause:`28`, see
-      :doc:`ethernet/phy-electrical/autonegotiation` and
+      :doc:`the autonegotiation page <ethernet/phy-electrical/autonegotiation>` and
       :wikipedia:`Autonegotiation`).
 
    Baseline wander

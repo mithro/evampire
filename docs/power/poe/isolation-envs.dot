@@ -1,0 +1,45 @@
+// The two isolation environments of IEEE 802.3 145.4.1.1, for a board with
+// two Ethernet ports. From isolation.rst.
+//
+// Fill colours: Ethernet ports #fbe5d6, protective ground #dbe8f5.
+// Dashed red outlines are isolated domains; each outline edge is a
+// barrier. Fixed grid (positions in inches): Environment A on the left,
+// B on the right.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph isolation_envs {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=1.3, height=0.5, fixedsize=true];
+
+    ta [pos="1.6,3.5!", shape=plaintext, style="", width=3.0, fontsize=12,
+        label="Environment A: one building"];
+    tb [pos="5.6,3.5!", shape=plaintext, style="", width=3.0, fontsize=12,
+        label="Environment B: across buildings"];
+
+    da [pos="1.6,2.3!", label="one shared cable-side domain", labelloc=b,
+        width=3.0, height=1.6, style="rounded,dashed", color="#c00000",
+        fontcolor="#c00000", fontsize=10];
+    a1 [pos="0.9,2.5!", label="Port A", fillcolor="#fbe5d6"];
+    b1 [pos="2.3,2.5!", label="Port B", fillcolor="#fbe5d6"];
+    g1 [pos="1.6,0.5!", label="Protective ground and\naccessible conductors",
+        fillcolor="#dbe8f5", width=2.4, height=0.55];
+
+    d1 [pos="4.85,2.3!", label="domain A", labelloc=b, width=1.5, height=1.6,
+        style="rounded,dashed", color="#c00000", fontcolor="#c00000",
+        fontsize=10];
+    d2 [pos="6.35,2.3!", label="domain B", labelloc=b, width=1.5, height=1.6,
+        style="rounded,dashed", color="#c00000", fontcolor="#c00000",
+        fontsize=10];
+    a2 [pos="4.85,2.5!", label="Port A", fillcolor="#fbe5d6", width=1.1];
+    b2 [pos="6.35,2.5!", label="Port B", fillcolor="#fbe5d6", width=1.1];
+    g2 [pos="5.6,0.5!", label="Protective ground and\naccessible conductors",
+        fillcolor="#dbe8f5", width=2.4, height=0.55];
+
+    n1 [pos="1.6,1.15!", shape=plaintext, style="", width=3.0, height=0.3,
+        fontsize=10, label="isolated from ground, not from each other"];
+    n2 [pos="5.6,1.15!", shape=plaintext, style="", width=3.0, height=0.3,
+        fontsize=10, label="isolated from ground and from each other"];
+}

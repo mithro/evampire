@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="440" viewBox="0 0 600 440" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="600" height="440" fill="#ffffff"/>
+<rect x="463.7" y="30.0" width="14.4" height="270.0" rx="0" fill="#fbe5d6" stroke="none" stroke-width="1.0"/>
+<line x1="80.0" y1="30.0" x2="80.0" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="80.0" y1="300.0" x2="80.0" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="80.0" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1 µs</text>
+<line x1="161.7" y1="30.0" x2="161.7" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="161.7" y1="300.0" x2="161.7" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="161.7" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">10 µs</text>
+<line x1="243.3" y1="30.0" x2="243.3" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="243.3" y1="300.0" x2="243.3" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="243.3" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">100 µs</text>
+<line x1="325.0" y1="30.0" x2="325.0" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="325.0" y1="300.0" x2="325.0" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="325.0" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1 ms</text>
+<line x1="406.7" y1="30.0" x2="406.7" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="406.7" y1="300.0" x2="406.7" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="406.7" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">10 ms</text>
+<line x1="488.3" y1="30.0" x2="488.3" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="488.3" y1="300.0" x2="488.3" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="488.3" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">100 ms</text>
+<line x1="570.0" y1="30.0" x2="570.0" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="570.0" y1="300.0" x2="570.0" y2="305.0" stroke="#222222" stroke-width="1.2"/>
+<text x="570.0" y="316.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">1 s</text>
+<line x1="80.0" y1="300.0" x2="570.0" y2="300.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="300.0" x2="80.0" y2="300.0" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="300.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">0.5</text>
+<line x1="80.0" y1="264.7" x2="570.0" y2="264.7" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="264.7" x2="80.0" y2="264.7" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="264.7" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">1</text>
+<line x1="80.0" y1="229.4" x2="570.0" y2="229.4" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="229.4" x2="80.0" y2="229.4" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="229.4" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">2</text>
+<line x1="80.0" y1="182.7" x2="570.0" y2="182.7" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="182.7" x2="80.0" y2="182.7" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="182.7" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
+<line x1="80.0" y1="147.3" x2="570.0" y2="147.3" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="147.3" x2="80.0" y2="147.3" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="147.3" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">10</text>
+<line x1="80.0" y1="112.0" x2="570.0" y2="112.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="112.0" x2="80.0" y2="112.0" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="112.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
+<line x1="80.0" y1="65.3" x2="570.0" y2="65.3" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="65.3" x2="80.0" y2="65.3" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="65.3" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">50</text>
+<line x1="80.0" y1="30.0" x2="570.0" y2="30.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="75.0" y1="30.0" x2="80.0" y2="30.0" stroke="#222222" stroke-width="1.2"/>
+<text x="72.0" y="30.0" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">100</text>
+<line x1="80.0" y1="300.0" x2="570.0" y2="300.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="80.0" y1="30.0" x2="80.0" y2="300.0" stroke="#222222" stroke-width="1.2"/>
+<text x="325.0" y="338.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">time (log scale)</text>
+<text x="32.0" y="165.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle" transform="rotate(-90 32.0 165.0)">current (A, log scale)</text>
+<polyline points="80.0,65.3 161.7,65.3" fill="none" stroke="#c0392b" stroke-width="2.0" stroke-linejoin="round"/>
+<polyline points="161.7,65.3 399.6,236.2" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/>
+<polyline points="399.6,236.2 478.1,236.2" fill="none" stroke="#c0392b" stroke-width="2.0" stroke-linejoin="round"/>
+<circle cx="161.7" cy="65.3" r="4" fill="#c0392b"/>
+<circle cx="399.6" cy="236.2" r="4" fill="#c0392b"/>
+<text x="169.7" y="53.3" font-size="12" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">50 A up to 10 µs</text>
+<text x="391.6" y="250.2" font-size="12" text-anchor="end" font-weight="normal" fill="#c0392b" dominant-baseline="middle">1.75 A by 8.2 ms</text>
+<text x="282.3" y="131.5" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">shape between these</text>
+<text x="282.3" y="144.5" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">points: see the source</text>
+<text x="161.7" y="264.7" font-size="12" text-anchor="start" font-weight="normal" fill="#222222" dominant-baseline="middle">port current must stay below the red line</text>
+<text x="470.9" y="39.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">overload:</text>
+<text x="470.9" y="52.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">remove</text>
+<text x="470.9" y="65.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">50–75 ms</text>
+<text x="72.0" y="370.0" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">Type 3</text>
+<line x1="80.0" y1="370.0" x2="406.7" y2="370.0" stroke="#38761d" stroke-width="5"/>
+<line x1="406.7" y1="370.0" x2="478.1" y2="370.0" stroke="#777777" stroke-width="1.5"/>
+<line x1="478.1" y1="362.0" x2="478.1" y2="378.0" stroke="#c0392b" stroke-width="2.5"/>
+<text x="402.7" y="359.0" font-size="11" text-anchor="end" font-weight="normal" fill="#38761d" dominant-baseline="middle">10 ms</text>
+<text x="72.0" y="395.0" font-size="11" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">Type 4</text>
+<line x1="80.0" y1="395.0" x2="388.5" y2="395.0" stroke="#38761d" stroke-width="5"/>
+<line x1="388.5" y1="395.0" x2="478.1" y2="395.0" stroke="#777777" stroke-width="1.5"/>
+<line x1="478.1" y1="387.0" x2="478.1" y2="403.0" stroke="#c0392b" stroke-width="2.5"/>
+<text x="384.5" y="384.0" font-size="11" text-anchor="end" font-weight="normal" fill="#38761d" dominant-baseline="middle">6 ms</text>
+<text x="484.1" y="375.5" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">power removed</text>
+<text x="484.1" y="388.5" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">by 75 ms</text>
+<text x="80.0" y="425.0" font-size="11" text-anchor="start" font-weight="normal" fill="#777777" dominant-baseline="middle">In current limit, from the start of the fault, power must stay on (green), then be removed by 75 ms.</text>
+</svg>

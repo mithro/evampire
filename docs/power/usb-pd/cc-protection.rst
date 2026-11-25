@@ -1,7 +1,7 @@
 .. _usbpd-cc-protection:
 
-Protecting the CC pins from a VBUS short
-========================================
+CC protection against VBUS shorts
+=================================
 
 What a short from :term:`VBUS` to a :term:`CC` pin does, why the
 :term:`ESD` protection of a pin does not cover it, and the ways to protect
@@ -20,7 +20,7 @@ Section 3). VBUS reaches 21.5 V with fixed :term:`SPR` supplies, 22.15 V with 
 
 The short also rings. The cable's inductance and the capacitance on the pin
 form a resonant circuit, and an :wikipedia:`RLC circuit <RLC_circuit>` with
-little damping, driven by a step, overshoots to about twice the step. TI
+little damping, driven by a step, overshoots to about twice the step (:numref:`fig-usbpd-cc-ringing`). TI
 gives ringing up to twice the settled voltage, and more than 44 V on a 20 V
 port when capacitors lose capacitance under the voltage
 ([USBPD-TPD8S300A]_, Section 8.3.1). Infineon gives the same factor of two,
@@ -31,10 +31,22 @@ affect the pin when it carries VCONN (:typec:`Section 4.11.3.3`,
 :typec:`Table 4-40`). Any clamp on evampire's CC pins therefore starts to
 conduct above 5.5 V.
 
+.. figure:: cc-ringing.svg
+   :name: fig-usbpd-cc-ringing
+   :alt: Graph of CC voltage from 0 to 55 V against time in periods of
+         the ringing, from 0 to 4. A 20 V step rings up to about 38 V,
+         about twice the step, and decays slowly around 20 V. Dashed lines
+         mark 50.9 V for EPR, 44 V reported for a 20 V port, 22.15 V for
+         SPR with PPS, 5.5 V for the highest VCONN and 2.9 V for the lowest
+         allowed clamp.
+
+   An illustrative 20 V short ringing on a CC pin, against the voltages
+   that matter for protection.
+
 .. _usbpd-esd:
 
-Why ESD protection does not cover a VBUS short
-----------------------------------------------
+ESD protection and VBUS shorts
+------------------------------
 
 Every I/O pad has protection against electrostatic discharge. The gf180mcu
 I/O library targets 2000 V in the :wikipedia:`human-body model
@@ -94,7 +106,17 @@ A connector pin of a finished product also faces the system-level test of
 constant :math:`330\ \Omega \times 150\ \text{pF} = 50\ \text{ns}`. The
 peak equation does not apply here: the IEC waveform has a faster and higher
 first peak, 30 A at 8 kV, which rises in less than 1 ns ([USBPD-TB505]_,
-page 1 and Figure 2).
+page 1 and Figure 2). :numref:`fig-usbpd-esd-networks` shows the two
+test networks.
+
+.. graphviz:: esd-networks.dot
+   :name: fig-usbpd-esd-networks
+   :caption: The two ESD test networks: a charged capacitor discharged
+             through a series resistor into the pin.
+   :alt: Two rows. HBM at 2 kV: a 100 pF capacitor charged to 2000 V
+         discharges through 1.5 kΩ into the pin under test. IEC at 8 kV: a
+         150 pF capacitor charged to 8000 V discharges through 330 Ω into
+         the pin under test.
 
 A VBUS short is a power supply. A source must not trip its over-current
 protection for any current its contract allows (:pd:`Section 4.1.5.1`), so
@@ -179,14 +201,27 @@ events.
 
 The durations are three time constants for the ESD tests, and the assumed
 1 s for the short. No clamp sized for ESD absorbs the short, so the short is
-either blocked or diverted at a low voltage.
+either blocked or diverted at a low voltage. :numref:`fig-usbpd-esd-short`
+shows the three currents on one time scale.
+
+.. figure:: esd-short.svg
+   :name: fig-usbpd-esd-short
+   :alt: Log-log graph of current from 0.01 to 100 A against time from
+         1 ns to 3 s. The IEC 8 kV test starts at 30 A and decays with a
+         50 ns time constant; the HBM 2 kV test starts at 1.33 A and decays
+         with 150 ns; both are gone before 1 µs. The VBUS short holds 3 A
+         until 1 s.
+
+   Current into a pin for the two ESD tests and for a 3 A VBUS short of
+   1 s; the ESD currents are drawn as single exponentials.
 
 .. _usbpd-cc-blocking:
 
-Blocking the short is the conventional approach
------------------------------------------------
+Blocking switch
+---------------
 
-A series switch on each CC pin holds off the full VBUS voltage, and the
+The conventional protection is a series switch on each CC pin, which holds
+off the full VBUS voltage, and the
 ringing unless a clamp limits it. It opens within tens of nanoseconds, so
 that the circuits behind it see only a short overshoot, which their own ESD
 clamps absorb. TI designs the TPD8S300A so that the stress on the protected
@@ -199,7 +234,22 @@ limit the ringing to about 30 V, and its switches tolerate 30 V
 short to a 48 V VBUS, with a response below 60 ns [USBPD-NX48P0407]_. VBUS
 itself is protected at board level, for example with a :term:`TVS` diode
 ([USBPD-TPS25750]_, Section 10.2.3.2.2). :numref:`tab-usbpd-cc-ratings`
-compares the CC ratings of commercial parts.
+compares the CC ratings of commercial parts, and the left half of
+:numref:`fig-usbpd-cc-protect-options` shows the arrangement.
+
+.. graphviz:: cc-protect-options.dot
+   :name: fig-usbpd-cc-protect-options
+   :caption: The two ways to protect a CC pin from a VBUS short: block it
+             with a series switch, or divert it with a crowbar.
+   :alt: Two panels. Blocking switch: VBUS shorts to the CC contact; VBUS
+         has a TVS diode to ground; on the CC line a diode clamp to ground
+         limits the ringing to about 30 V, and a 30 V series switch that
+         opens in 70 ns above 5.75 to 6.2 V protects the evampire CC pin and
+         its ESD clamps. Crowbar: a far-end source with over-current
+         protection and 10 to 120 µF on VBUS shorts onto the CC contact,
+         rated 0.5 A or more; the current flows through the board trace
+         into a crowbar to ground that triggers above 5.5 V and holds about
+         0.5 V, in front of the evampire CC circuits.
 
 .. list-table:: CC pin voltage ratings of commercial parts
    :name: tab-usbpd-cc-ratings
@@ -249,11 +299,12 @@ without an external protector.
 
 .. _usbpd-cc-crowbar:
 
-A crowbar is an alternative to blocking
----------------------------------------
+Crowbar
+-------
 
 A :wikipedia:`crowbar <Crowbar_(circuit)>` on each CC pin turns on when the
-pin passes a trigger voltage and pulls it close to 0 V. The short's current
+pin passes a trigger voltage and pulls it close to 0 V (right half of
+:numref:`fig-usbpd-cc-protect-options`). The short's current
 then flows through the crowbar at a low voltage, and the source's
 over-current protection switches VBUS off. The crowbar dissipates:
 
@@ -310,13 +361,43 @@ The crowbar has these costs:
   specification leaves its threshold and response time to the applicable
   safety standards (:pd:`Section 4.1.5.1`). A source that limits its current
   without switching off keeps the crowbar dissipating.
-* It does not clear the fault. A source that has switched off tries to
-  resume (:pd:`Section 4.1.5.1`), and the crowbar fires again for as long as
-  CC stays shorted to VBUS.
+* It does not clear the fault. A source whose protection has acted should
+  resume USB default operation, at vSafe5V, and negotiate again
+  (:pd:`Section 4.1.5.1`). That 5 V is below the trigger, and with CC
+  shorted to VBUS no message can pass, so the port stays at 5 V and the
+  crowbar does not fire again (:numref:`fig-usbpd-crowbar-timing`). CC then
+  sits at VBUS, within the 5.5 V the CC circuits already withstand.
+* A source that instead restores its previous voltage fires the crowbar
+  again on each retry, as VBUS rises through the trigger. The capacitance
+  is then charged only to about 6 V, so each firing releases
+  :math:`0.5 \times C_\text{BUS} \times (6\ \text{V})^{2}`, 0.18 mJ
+  to 2.2 mJ for 10 µF to 120 µF.
 * The short's current flows through the CC contact, whose rating is at
   least 0.5 A (:typec:`Section 3.7.8.4`), and through its board trace.
 * Its trigger sits above 5.5 V, so that it never fires on VCONN, and below
   the voltage the CC circuits withstand.
+
+.. wavedrom::
+   :caption: A crowbar firing once on a VBUS short during a 20 V contract;
+             the source then returns at vSafe5V, below the trigger,
+             schematic and not to scale.
+   :name: fig-usbpd-crowbar-timing
+   :alt: Timing diagram. A short appears during a 20 V contract and stays.
+         The CC pin rises past the trigger and the crowbar turns on, holding
+         the pin near 0 V; the VBUS capacitance discharges 2.3 to 28 mJ into
+         it. The source's over-current protection switches VBUS off, the pin
+         falls to 0 V and the crowbar releases. The source resumes at
+         vSafe5V; CC sits at about 5 V, below the trigger, and the crowbar
+         stays off.
+
+   {"signal": [
+     {"name": "short", "wave": "0..1.........."},
+     {"name": "source VBUS", "wave": "=.....=..=....", "data": ["20 V contract", "off", "vSafe5V"]},
+     {"name": "CC pin", "wave": "=..==.=..=....", "data": ["≤ 5.5 V", "rises", "near 0 V", "0 V", "5 V: below trigger"]},
+     {"name": "crowbar", "wave": "0...1.0......."},
+     {"name": "C_BUS energy", "wave": "x...=..x......", "data": ["2.3–28 mJ"]}
+   ],
+   "config": {"hscale": 1}}
 
 The choice between blocking and a crowbar is decided by the behaviour of the
 far-end source's protection, the on-voltage and area of a crowbar device in
@@ -329,8 +410,8 @@ Options for evampire
 On-chip blocking switch
    A custom high-voltage switch on each CC pin: stacked transistors in
    isolated wells, each holding part of the voltage, or a drain-extended
-   transistor (:ref:`conv-custom`). It also passes
-   the BMC signal, the Rp and Rd currents and VCONN, and keeps the
+   transistor (:ref:`conv-custom`; :numref:`fig-usbpd-custom-structures`).
+   It also passes the BMC signal, the Rp and Rd currents and VCONN, and keeps the
    dead-battery Rd visible without power (:ref:`usbpd-rd-circuit`). Its
    connector side sits at the full VBUS voltage above the substrate. An
    N-well holds at least 10 V to the substrate, below 21.5 V. A deep N-well

@@ -1,0 +1,50 @@
+// Data Link Layer classification between power sourcing equipment and a
+// powered device that asks for more power. Time runs from top to bottom;
+// not to scale. Rules from lldp.rst (IEEE 802.3 145.5.2, 145.5.4 and
+// 145.5.5). The powers are an example.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph lldp_exchange {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=1.4,
+           ranksep=0.3, newrank=true, splines=false];
+    node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    a [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+       label="Power sourcing\nequipment", width=1.2];
+    b [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+       label="Powered\ndevice", width=1.2];
+    nh [shape=plaintext, label="Rule", fontsize=10,
+        fontname="Helvetica-Bold"];
+
+    a1; a2; a3; a4; a5;
+    b1; b2; b3; b4; b5;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    n1 [label="First frame within 10 s\nof enabling the exchange"];
+    n2 [label="PD asks for more;\nout of sync, it keeps\nits request and draw"];
+    n3 [label="Answer within 10 s;\nraising is allowed\nonly while in sync"];
+    n4 [label="Copies match: in sync.\nThe PD may now draw\n51 W. Above 71.3 W\nonly after sync"];
+    n5 [label="The PSE may lower\nthe allocation at\nany time"];
+
+    { rank=same; a; b; nh; }
+    { rank=same; a1; b1; n1; }
+    { rank=same; a2; b2; n2; }
+    { rank=same; a3; b3; n3; }
+    { rank=same; a4; b4; n4; }
+    { rank=same; a5; b5; n5; }
+
+    edge [arrowhead=none, style=dashed, color="#999999", weight=100];
+    a -> a1 -> a2 -> a3 -> a4 -> a5;
+    b -> b1 -> b2 -> b3 -> b4 -> b5;
+    nh -> n1 -> n2 -> n3 -> n4 -> n5 [style=invis];
+
+    edge [arrowhead=normal, style=solid, color="#000000", weight=0];
+    a1 -> b1 [label="allocated 25.5 W"];
+    b2 -> a2 [label="requested 51 W,\necho 25.5 W"];
+    a3 -> b3 [label="allocated 51 W,\necho 51 W"];
+    b4 -> a4 [label="requested 51 W,\necho 51 W"];
+    a5 -> b5 [label="allocated lower value"];
+}

@@ -1,7 +1,7 @@
 .. _usbpd-cc-signalling:
 
-The signal on the configuration channel
-=======================================
+Electrical signal on the CC wire
+================================
 
 The electrical signal that carries :term:`USB Power Delivery` messages on the
 :term:`CC` wire: how each bit is coded, the bit rate, the transmitter, the
@@ -16,8 +16,8 @@ the :term:`sink` use the same signalling.
 
 .. _usbpd-bmc:
 
-Each bit is sent with biphase mark coding
------------------------------------------
+Biphase mark coding
+-------------------
 
 Bits are sent with :term:`biphase mark coding <Biphase mark coding>` (BMC),
 a version of Manchester coding (:pd:`Section 5.3.3`; see
@@ -57,8 +57,8 @@ a bit time in a row mean a ``1``. BMC is also close to DC balanced: each
 
 .. _usbpd-bit-rate:
 
-The bit rate is 270 kbit/s to 330 kbit/s
-----------------------------------------
+Bit rate
+--------
 
 The bit rate *fBitRate* is 300 kbit/s nominal and may be anywhere from
 270 kbit/s to 330 kbit/s (:pd:`Table 5.9`). The time of one bit is the
@@ -120,13 +120,14 @@ packet.
 
 .. _usbpd-transmitter:
 
-The transmitter drives 0 V to vSwing, then lets go
---------------------------------------------------
+Transmitter
+-----------
 
 The transmitter is a slew-rate limited
 :wikipedia:`three-state <Three-state_logic>` driver. While it sends, it
 drives the CC wire between 0 V and *vSwing*; at all other times it is high
-impedance (:pd:`Section 5.3.4`, item 1). :numref:`tab-usbpd-tx` lists its
+impedance (:pd:`Section 5.3.4`, item 1; on-chip design in
+:numref:`fig-usbpd-cc-frontend`). :numref:`tab-usbpd-tx` lists its
 limits. The nominal *vSwing* is 1.125 V, and the low level stays within
 -0.075 V to 0.075 V (the transmit mask, :pd:`Table 5.7`).
 
@@ -197,8 +198,8 @@ limits. The nominal *vSwing* is 1.125 V, and the low level stays within
 
 .. _usbpd-tx-mask:
 
-The waveform must stay out of the transmit mask
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Transmit mask
+~~~~~~~~~~~~~
 
 The transmitted waveform must stay out of a *transmit mask*, measured at the
 output of a model of the worst cable and receiver load, for every Rp and Rd
@@ -250,8 +251,8 @@ before the next edge.
 
 .. _usbpd-edge-placement:
 
-Each edge crosses the mid level within about 0.015 UI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Edge placement
+^^^^^^^^^^^^^^
 
 The inner mask of each bit reaches the mid level, 0.5625 V, at 0.015 UI and
 at 0.985 UI, and for a ``1`` also at 0.485 UI and 0.515 UI (*X1Tx*,
@@ -286,15 +287,16 @@ At 300 kbit/s the window is
 figure is a target for transmitter design, to be confirmed by measuring a
 transmitter against the mask.
 
-Edges take at least 300 ns
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Rise and fall times
+~~~~~~~~~~~~~~~~~~~
 
 The 300 ns minimum rise and fall time limits
 :wikipedia:`crosstalk <Crosstalk>` from the CC wire into the other wires of
 the cable, such as the USB 2.0 data pair. The slope can be set by the
 driver design or by an RC filter at the driver output (:pd:`Section 5.3.4`,
 item 1). The mask sets the opposite limit: an edge must not be so slow that
-it enters the inner mask.
+it enters the inner mask. :numref:`fig-usbpd-tx-mask` draws both limits:
+the fastest allowed edge and the slowest RC edge that stays out.
 
 *Assumption:* the edge has the shape of the step response of a first-order
 :wikipedia:`RC circuit <RC_circuit>` with :wikipedia:`time constant
@@ -424,8 +426,8 @@ mask at every allowed swing and bit rate. This is an estimate, to be
 confirmed by simulating the driver with the load model of
 :pd:`Section 5.3.4.3`.
 
-The output impedance holds the line against noise
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Output impedance
+~~~~~~~~~~~~~~~~
 
 *zDriver* is the driver's :wikipedia:`output impedance <Output_impedance>`,
 its output resistance in parallel with any shunt capacitance. Its limits
@@ -437,13 +439,13 @@ disconnected within *tInterFrameGap* after the packet, leaving no more than
 A transmitter must also survive its output being shorted to ground for up
 to 120 µs (*tFRSwapTx*, :pd:`Table 10.1`; :pd:`Section 5.3.4.10`). This
 happens when the source pulls CC low to signal a
-:term:`fast role swap <Fast role swap>`, in which the sink takes over as
-source because the source is losing its own power (:ref:`usbpd-fast-role-swap`).
+:ref:`fast role swap <usbpd-fast-role-swap>`, in which the sink takes over
+as source because the source is losing its own power.
 
 .. _usbpd-dc-level:
 
-The signal starts and ends at the Rp/Rd level
----------------------------------------------
+DC level
+--------
 
 When neither end transmits, the CC wire sits at the level set by Rp and Rd,
 about 0.4 V, 0.9 V or 1.7 V for the three Rp values
@@ -468,7 +470,23 @@ it lets go, the wire returns to the level set by Rp and Rd
 
 :numref:`fig-usbpd-preamble-start` shows the start of a packet and
 :numref:`fig-usbpd-message-end` shows the end, after the EOP symbol that
-closes every packet.
+closes every packet. Both draw the idle level at mid level.
+:numref:`fig-usbpd-dc-level` draws the start and end on the real voltage
+scale, at the 3.0 A level, where the idle level is above vSwing.
+
+.. figure:: dc-level.svg
+   :name: fig-usbpd-dc-level
+   :alt: Two graphs of CC voltage against time in microseconds. Start of a
+         packet: the line idles at 1.7 V, the 3.0 A level, then the
+         transmitter drives it to 0 V and sends the preamble between 0 V and
+         vSwing, 1.125 V. End of a packet: after the last bit the line is
+         driven low, held low for at least 1 µs (tHoldLowBMC), then released
+         and rises back to 1.7 V; the release comes within 23 µs
+         (tEndDriveBMC) of the end of the last bit. Dashed lines mark the
+         idle levels of 0.4 V and 0.9 V for the other Rp values.
+
+   The BMC signal starting and ending at the Rp/Rd level of the 3.0 A
+   advertisement, with the other idle levels dashed.
 
 .. wavedrom::
    :caption: Start of a packet: the line idles at the Rp/Rd level, drawn at
@@ -512,8 +530,8 @@ allow for this shift.
 
 .. _usbpd-receiver:
 
-The receiver must accept the receive masks
-------------------------------------------
+Receiver
+--------
 
 The :ref:`PD specification <usb-pd-specification>` does not fix the
 receiver's switching levels. It gives *receive masks*: regions that the
@@ -632,15 +650,16 @@ USB 2.0 data pair and the :term:`SBU` wires. A receiver must treat any
 signal smaller than *vNoiseIdle* on an idle line as noise
 (:pd:`Section 5.3.4.2`, item 5).
 
-A filter and a comparator with hysteresis is one common receiver
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Filter and comparator receivers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The specification requires a single-pole :wikipedia:`low-pass filter
 <Low-pass_filter>` with a time constant of at least 100 ns in front of the
 receiver's decision, analogue or digital (*tRxFilter*, :pd:`Table 5.11`).
 One common design follows it with a :term:`comparator` with
 :wikipedia:`hysteresis <Hysteresis>`, whose two switching levels sit inside
-the receive eye for the port's present role.
+the receive eye for the port's present role. The filter and comparator
+are the receive path of :numref:`fig-usbpd-cc-frontend`.
 
 For reference, the TI TPS65987D dual-role controller takes its switching
 levels and hysteresis from the receive masks ([USBPD-TPS65987D]_,
@@ -648,14 +667,30 @@ Section 8.3.1.5). As a sink it switches at 525 mV rising and 250 mV falling,
 and as a source at 875 mV rising and 600 mV falling (typical values,
 [USBPD-TPS65987D]_, Section 6.9). Both pairs sit inside the eye for their
 role, and the hysteresis of 275 mV is larger than the 165 mV of
-*vNoiseActive*.
+*vNoiseActive*. :numref:`fig-usbpd-rx-thresholds` places these levels in
+the eyes.
 
-Edge-detecting receivers ignore the ground offset
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: rx-thresholds.svg
+   :name: fig-usbpd-rx-thresholds
+   :alt: Bar chart of voltage from 0 to 1 V for the three power roles. The
+         eye of a sinking port spans 0.2325 to 0.6425 V, of a port neither
+         sinking nor sourcing 0.2325 to 0.8925 V, and of a sourcing port
+         0.4825 to 0.8925 V. A grey band from 0.4825 to 0.6425 V lies inside
+         every eye. Arrows mark the reference switching levels: 250 mV
+         falling and 525 mV rising as a sink, 600 mV falling and 875 mV
+         rising as a source.
 
-The USB Implementers Forum publishes two receiver designs that detect edges
-instead of levels, and so need no change of levels with the power role
-([USBPD-BMCRX]_, Section 2). They are informative examples, not
+   The receive eye for each power role, the band they share, and the
+   switching levels of a reference receiver.
+
+Edge-detecting receivers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Edge-detecting receivers ignore the ground offset. A ground offset shifts
+the whole signal by a nearly constant voltage, and a difference between two
+nearby moments of the signal removes it. The USB Implementers Forum
+publishes two receiver designs that detect edges instead of levels, and so
+need no change of levels with the power role ([USBPD-BMCRX]_, Section 2). They are informative examples, not
 requirements ([USBPD-BMCRX]_, Section 1):
 
 * the *finite difference* receiver samples the filtered signal every
@@ -667,17 +702,50 @@ requirements ([USBPD-BMCRX]_, Section 1):
   ([USBPD-BMCRX]_, Sections 4.1 and 4.2).
 
 Both use thresholds of about ±0.2 V on the difference
-([USBPD-BMCRX]_, Section 3.3).
+([USBPD-BMCRX]_, Section 3.3). :numref:`fig-usbpd-edge-receivers` shows the
+two signal chains.
 
-A transmitter waits for an idle line
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. graphviz:: edge-receivers.dot
+   :name: fig-usbpd-edge-receivers
+   :caption: The two edge-detecting receivers, which compare a difference
+             rather than the signal level.
+   :alt: Two block chains. Finite-difference receiver: CC, low-pass filter,
+         sample every 50 ns, subtract the sample taken 300 to 500 ns
+         earlier, compare with plus and minus 0.2 V, giving a rising or
+         falling edge. Subtraction receiver: CC feeds two low-pass filters
+         with time constants of 200 ns and 300 ns; their outputs are
+         subtracted, and the difference is compared with plus and minus
+         0.2 V, giving a rising or falling edge.
+
+Idle-line detection
+~~~~~~~~~~~~~~~~~~~
 
 The receiver also tells the transmitter when the line is free. The line is
 busy when *nTransitionCount* edges arrive within *tTransitionWindow*, and
 idle after *tTransitionWindow* without them (:pd:`Section 5.2.2.1`). A
 transmitter checks that the line is idle immediately before it starts
-(:pd:`Section 5.2.2`, item 5), and then waits *tInterFrameGap* before the
-preamble (:pd:`Section 5.3.4.9`, item 2).
+(:pd:`Section 5.2.2`, item 5), and starts its preamble no sooner than
+*tInterFrameGap* after the end of the previous packet
+(:pd:`Section 5.3.4.9`, item 2). :numref:`fig-usbpd-idle` shows
+the order.
+
+.. wavedrom::
+   :caption: Busy and idle detection before a transmitter starts, schematic
+            and not to scale; tTransitionWindow is 12 µs to 20 µs.
+   :name: fig-usbpd-idle
+   :alt: Timing diagram. Edges on the CC wire, three or more within
+         tTransitionWindow, mark the line busy. After the last edge, a
+         window of tTransitionWindow, 12 to 20 µs, with no edges marks it
+         idle. The transmitter starts its preamble no sooner than
+         tInterFrameGap, 25 µs, after the end of the previous packet.
+
+   {"signal": [
+     {"name": "CC", "wave": "010101z...0101"},
+     {"name": "line", "wave": "=........==...", "data": ["busy", "idle", "sending"]},
+     {"name": "no edges", "wave": "x....=...x....", "data": ["tTransitionWindow"]},
+     {"name": "gap", "wave": "x....=....x...", "data": ["tInterFrameGap 25 µs"]}
+   ],
+   "config": {"hscale": 1}}
 
 Open questions
 --------------

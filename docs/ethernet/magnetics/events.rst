@@ -7,8 +7,8 @@ without a transformer must survive all of them and keep the signal intact.
 It is a reference page; the jobs of the transformer are described on
 :doc:`functions`.
 
-The signals and Power over Ethernet are continuous
---------------------------------------------------
+Continuous voltages
+-------------------
 
 :numref:`tbl-magnetics-continuous` lists what is present on a working
 link all the time.
@@ -42,11 +42,13 @@ link all the time.
 Power over Ethernet also carries up to 0.948 A on each pair
 (:doc:`poe`).
 
-Tests and disturbances are short
---------------------------------
+Tests and disturbances
+----------------------
 
 :numref:`tbl-magnetics-events` lists the tests and the disturbances that
-the port meets from time to time. Each is described below the table.
+the port meets from time to time. Unlike the continuous voltages above,
+each lasts a limited time, from a few nanoseconds to the 60 s of the
+isolation tests. Each is described below the table.
 
 .. list-table:: Tests and disturbances at an Ethernet port
    :name: tbl-magnetics-events
@@ -120,8 +122,26 @@ Which level a product must pass is set by the product standard for its
 market, not by IEEE 802.3. The tables give level 4, the highest
 standard level, as the design limit.
 
-The energy and current of each event
-------------------------------------
+:numref:`fig-magnetics-events` places the events by peak voltage and time
+scale. The current waveforms of the human-body model and the system-level
+discharge, which set the time scales drawn for them, are in
+:numref:`fig-esd-sources`.
+
+.. figure:: events.svg
+   :name: fig-magnetics-events
+   :alt: Graph of peak voltage in kilovolts against the time scale of the
+         event on a log axis from 1 ns to 100 s. The system-level discharge
+         is at 8 kV and about 100 ns; the charged cable at up to 5 kV and
+         over 600 ns; the surge at 4 kV and 50 µs; the fast transient at
+         2 kV and 50 ns; the human-body model at 2 kV and about 200 ns; the
+         isolation impulse at 2.4 kV and 50 µs; and the isolation tests at
+         2.1 kV and 2.25 kV for 60 s.
+
+   The tests and disturbances of :numref:`tbl-magnetics-events`, by peak
+   voltage and time scale.
+
+Event energy and current
+------------------------
 
 The energy of a capacitor-discharge test is the energy stored in the test
 capacitor, and its peak current is the test voltage divided by the source
@@ -172,14 +192,15 @@ For the human-body model at 2 kV and the system-level discharge at 8 kV:
 
    I_\text{IEC} &= \frac{8\ \text{kV}}{330\ \Omega} = 24\ \text{A}
 
-The standard system-level current waveform at 8 kV has a first peak of
-about 30 A, shaped by the generator rather than by this resistance alone
-([MAG-SLVA711]_, figure 1). The surge at level 4 drives
+The standard system-level current waveform at 8 kV has a first peak of
+about 30 A, shaped by the generator rather than by this resistance alone
+([MAG-SLVA711]_; the simulated waveform is the right-hand graph of
+:numref:`fig-esd-sources`). The surge at level 4 drives
 :math:`4\ \text{kV} / 42\ \Omega = 96\ \text{A}` into a short circuit
 ([MAG-SLVA711]_, table 4).
 
-The kind of event decides the protection
-----------------------------------------
+Protection for each kind of event
+---------------------------------
 
 Short, low-energy events
    The human-body model is the kind of event that on-chip protection is

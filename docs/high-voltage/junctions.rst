@@ -1,14 +1,14 @@
 .. _hv-junctions:
 
-How a junction holds voltage
-============================
+Junction breakdown
+==================
 
 This page explains how a reverse-biased P-N junction holds a voltage, why
 the doping on its lightly doped side sets how much, and why the curved
 edges of a well break down long before its flat bottom.
 
-The voltage sits across the depletion region
---------------------------------------------
+The depletion region
+--------------------
 
 A reverse-biased junction holds its voltage across a
 :term:`depletion region`, a layer on both sides of the junction emptied of
@@ -18,7 +18,25 @@ up an electric field, strongest at the junction itself
 field of silicon, about :math:`3 \times 10^5` V/cm [HV-IOFFE]_, carriers
 crossing the layer
 gain enough energy to free more carriers, and the current runs away. This
-is :term:`avalanche breakdown`.
+is :term:`avalanche breakdown`. :numref:`fig-hv-depletion` shows the
+charge, field and potential of a junction at that point.
+
+.. figure:: depletion.svg
+   :name: fig-hv-depletion
+   :alt: Four panels on one distance axis, to scale on the P side; the N+
+         side is much thinner than drawn. (a) An N+ region at +300 V meets
+         a P region doped at 10 to the 15 per cubic centimetre, at 0 V. A
+         depletion region 20 µm wide, holding fixed ions only, lies almost
+         entirely in the P side. (b) The fixed charge: a thin, tall positive
+         block on the N+ side and a long, shallow negative block of
+         −1.6 × 10⁻⁴ C/cm³ across the 20 µm, of equal total charge. (c) The
+         field: a triangle peaking at the junction, where it reaches the
+         critical field of about 3 × 10⁵ V/cm; its area is the 300 V. (d)
+         The potential falls as a parabola from 300 V at the junction to
+         0 V at the edge of the depletion region, and is flat outside it.
+
+   A one-sided junction at breakdown for P-side doping of 10\ :sup:`15` cm\
+   :sup:`-3`, with the P side to scale.
 
 When one side of the junction is much more heavily doped than the other,
 almost all of the depletion region lies in the lightly doped side, and that
@@ -59,14 +77,16 @@ For :math:`N = 10^{15}\ \text{cm}^{-3}`:
      &= 2.67 \times 10^{10} \times 7.50 \times 10^{-14} \\
      &= 2.0 \times 10^{-3}\ \text{cm} = 20\ \text{µm}
 
-Lighter doping holds more and needs more room
----------------------------------------------
+Doping and breakdown voltage
+----------------------------
 
 Lighter doping spreads the same charge over a wider layer, so the field
 reaches its critical value only at a higher voltage. The price is width:
 the depletion region needs room to spread
 (:numref:`tab-hv-flat-breakdown`). A junction meant to hold a high voltage
-needs that much lightly doped silicon on one side of it.
+needs that much lightly doped silicon on one side of it. In
+:numref:`fig-hv-depletion`, lighter doping makes the field triangle
+shallower and wider.
 
 .. list-table:: Breakdown of a flat silicon junction against doping
    :name: tab-hv-flat-breakdown
@@ -91,13 +111,28 @@ needs that much lightly doped silicon on one side of it.
 
 The values come from the two equations above
 (:download:`calc.py <calc.py>`,
-section 1).
+section 1). :numref:`fig-hv-doping-breakdown` plots both equations across
+the range.
 
-The gf180mcu substrate is lightly doped
----------------------------------------
+.. figure:: doping-breakdown.svg
+   :name: fig-hv-doping-breakdown
+   :alt: Two log-log graphs against doping from 10 to the 14 to 10 to the
+         17 per cubic centimetre. Top, breakdown voltage falls from 1690 V
+         through 300 V and 53 V to 9 V; the gf180mcu estimate of 1.2 to 5.3
+         times 10 to the 15 is shaded, where the flat junction holds about
+         90 V to 270 V, above a line at 57 V, the most on an Ethernet
+         cable, and far above the published N-well breakdown of 14 V
+         typical. Bottom, the depletion width at
+         breakdown falls from 150 µm through 20 µm and 2.7 µm to 0.36 µm.
 
-The gf180mcu documents give the substrate's type but not its doping. The
-doping can be estimated from the junction capacitance in the PDK's models,
+   Breakdown voltage and depletion width of a flat junction against
+   doping, with the gf180mcu substrate estimate shaded.
+
+gf180mcu substrate doping
+-------------------------
+
+The gf180mcu substrate is lightly doped, but the gf180mcu documents give
+only its type, not its doping. The doping can be estimated from the junction capacitance in the PDK's models,
 because the width of a depletion region, and so its capacitance per area,
 depends on the doping of its lightly doped side. For a junction much more
 heavily doped on one side, the capacitance per area at zero bias is
@@ -148,6 +183,20 @@ voltage, with a slope of :math:`2/(q \varepsilon_\text{Si} N)`. Applied to
 the model between 2 V and 10 V, that slope gives
 :math:`5.3 \times 10^{15}\ \text{cm}^{-3}`. The models of other junctions
 to the same substrate give other values (:numref:`tab-hv-doping-estimates`).
+:numref:`fig-hv-cv-doping` shows the model's curve, the abrupt line
+matched at zero bias, and the straight line fitted between 2 V and 10 V.
+
+.. figure:: cv-doping.svg
+   :name: fig-hv-cv-doping
+   :alt: Graph of 1/C squared against reverse voltage from 0 to 10 V for the
+         6 V N-well model with grading 0.31. The model curve rises and bends
+         over. A dashed abrupt-junction line for 1.2 times 10 to the 15 per
+         cubic centimetre, matched at 0 V, rises far more steeply. A dashed
+         straight line through the model at 2 V and 10 V, the shaded fitting
+         window, has the slope of 5.3 times 10 to the 15.
+
+   1/C² of the 6 V N-well junction model against reverse voltage, with
+   the two abrupt-junction estimates of the doping.
 
 .. list-table:: Substrate doping estimated from the junction models
                [HV-GF180-MODELS]_
@@ -183,13 +232,14 @@ surface in the 6 V area (:doc:`metal-gate`). A capacitance measurement on a
 large N-well test structure would give the doping profile directly.
 
 At :math:`1.2 \times 10^{15}` to :math:`5.3 \times 10^{15}\ \text{cm}^{-3}`,
-a flat junction to the substrate would hold about 90 V to 270 V. The
+a flat junction to the substrate would hold about 90 V to 270 V
+(:numref:`fig-hv-doping-breakdown`). The
 published breakdown of the N-well to the substrate is 10 V minimum and
 14 V typical [HV-GF180-EP-5]_. The flat bottom of the well is not what
 breaks down.
 
-Curved edges break down first
------------------------------
+Breakdown at curved edges
+-------------------------
 
 A well is made by implanting dopant at the surface and letting it diffuse
 down and sideways, so its edges are curved. Along a straight side the edge
@@ -197,6 +247,25 @@ is part of a cylinder, with a radius about equal to the well's depth. At a
 corner it is part of a sphere. The field lines crowd together at a curved
 edge, so the field there reaches the critical value at a lower voltage than
 under the flat bottom [HV-SZE-GIBBONS]_ [HV-SPIRITO]_ (slide 21).
+:numref:`fig-hv-curved-edge` shows the equipotentials around such a well,
+solved for an edge radius equal to the well's depth, and where its
+straight sides and corners lie.
+
+.. figure:: curved-edge.svg
+   :name: fig-hv-curved-edge
+   :alt: Top, a cross-section of an N-well at +V in a P substrate at 0 V.
+         The implant enters through the drawn window and spreads down and
+         sideways, so the well has a flat bottom and a quarter-circle edge
+         whose radius equals its depth. Lines of equal potential lie flat
+         and well apart under the bottom, and bend round the curved edge,
+         where they crowd together; the field reaches its critical value
+         there first. Bottom, a plan view of the well: its straight sides
+         are cylindrical edges and its rounded corners spherical ones.
+         Breakdown at 10 to the 15 per cubic centimetre with a 1 µm edge
+         radius is 300 V for the flat bottom, 74 V along a side and 35 V at
+         a corner.
+
+   A diffused well in cross-section and in plan view.
 
 Baliga and Ghandhi give the breakdown of cylindrical and spherical
 junctions as a fraction of the flat value, as a function of the radius
@@ -231,14 +300,27 @@ junction of 10 µm radius, against about 320 V for a flat one
 
 The values come from
 :download:`calc.py <calc.py>`,
-section 3. The published 14 V is lower again than the corner values, so the
+section 3, and :numref:`fig-hv-edge-breakdown` plots them. The published
+14 V is lower again than the corner values, so the
 field at the edge of a gf180mcu N-well is higher than curvature alone
 explains. A more heavily doped layer at the surface beside the well, or an
 edge sharper than 0.5 µm, would do it. Breakdown measurements on test wells
 with different corner shapes and spacings would show which.
 
-What this means for a design
-----------------------------
+.. figure:: edge-breakdown.svg
+   :name: fig-hv-edge-breakdown
+   :alt: Graph of breakdown voltage from 0 to 330 V against edge radius
+         from 0.2 µm to 3.2 µm, for a substrate doped at 10 to the 15 per
+         cubic centimetre. A straight side rises from 50 V at 0.5 µm to
+         123 V at 3 µm; a corner from 21 V to 72 V. A dashed line marks the
+         flat bottom at 300 V, and another the published N-well breakdown
+         of 14 V typical, below both curves.
+
+   Breakdown of the curved edges of a well against their radius, against
+   the flat bottom and the published N-well breakdown.
+
+Design consequences
+-------------------
 
 The substrate's light doping is enough, in principle, for a junction that
 holds well over 57 V. What limits a drawn well is its edges. Three things
@@ -250,3 +332,18 @@ raise the breakdown of an edge:
   substrate takes the depletion region.
 * Spreading the voltage over a wider part of the surface, which is the
   subject of :doc:`grading`.
+
+:numref:`fig-hv-edge-remedies` shows the first two.
+
+.. figure:: edge-remedies.svg
+   :name: fig-hv-edge-remedies
+   :alt: Top, two plan views of the corner of a well: a square drawn corner
+         diffuses to a corner whose radius is about the well depth, while a
+         rounded drawn corner gives a larger radius and a higher breakdown.
+         Bottom, two cross-sections: a P+ region at 0 V close to the well
+         squeezes the depletion region and raises the field, while a P+
+         region set back lets the lightly doped substrate take the depletion.
+
+   Two geometric remedies for early breakdown at a well edge, rounding the
+   drawn corner and keeping P+ away from the edge, schematic.
+

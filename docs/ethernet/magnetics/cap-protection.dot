@@ -1,0 +1,54 @@
+// Protection of one capacitor-coupled pair. The coupling capacitors hold
+// off a common-mode surge; the fast edge that passes them is clamped on
+// the chip side by external diodes, clamps on evampire, or both. A diode
+// across the pair on the cable side, with no ground connection, limits
+// differential surges.
+//
+// Fixed grid, positions in inches. Top row: wire +. Bottom row: wire -.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph cap_protection {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+    cab [pos="0.4,1.0!", width=0.7, height=1.7, fillcolor="#fbe5d6",
+         label="RJ45\nand\ncable"];
+    dd [pos="1.3,1.0!", width=0.75, height=0.55, fillcolor="#ffffff",
+        label="diode\nacross\nthe pair"];
+    cp [pos="2.4,1.75!", width=0.6, height=0.35, fillcolor="#fff2cc",
+        label="C_w"];
+    cn [pos="2.4,0.25!", width=0.6, height=0.35, fillcolor="#fff2cc",
+        label="C_w"];
+    ext [pos="3.55,1.0!", width=0.95, height=0.55, fillcolor="#ffffff",
+         label="external\ndiodes to\nsignal ground"];
+    chip [pos="5.2,1.0!", width=1.4, height=1.7, fillcolor="#dbe8f5",
+          label="evampire\n\nclamps on the\nchip, for example\nthyristor (SCR)\nor parasitic\nbipolar"];
+
+    node [shape=point, width=0.01, height=0.01, style=invis];
+    a1 [pos="0.75,1.75!"]; a2 [pos="0.75,0.25!"];
+    d1 [pos="1.3,1.75!"];  d2 [pos="1.3,0.25!"];
+    e1 [pos="3.55,1.75!"]; e2 [pos="3.55,0.25!"];
+    f1 [pos="4.5,1.75!"];  f2 [pos="4.5,0.25!"];
+    node [shape=point, width=0.07, height=0.07, style=filled,
+          fillcolor="#000000"];
+    j1 [pos="1.3,1.75!"]; j2 [pos="1.3,0.25!"];
+    k1 [pos="3.55,1.75!"]; k2 [pos="3.55,0.25!"];
+
+    a1 -- j1 -- cp -- k1 -- f1;
+    a2 -- j2 -- cn -- k2 -- f2;
+    j1 -- dd -- j2 [color="#c55a11"];
+    k1 -- ext -- k2 [color="#1f4e79"];
+
+    node [shape=plaintext, style="", height=0.2, fontsize=9];
+    t1 [pos="1.3,2.35!", width=2.0, fontcolor="#c55a11",
+        label="cable side: no ground,\nlimits differential surges"];
+    t2 [pos="2.4,1.05!", width=1.2, label="C_w holds off\nthe common-\nmode surge;\na step ΔV\npasses C_w ΔV"];
+    t3 [pos="3.55,2.35!", width=2.0, fontcolor="#1f4e79",
+        label="chip side: clamps the\nfast edge that passes"];
+    t4 [pos="3.0,-0.25!", width=5.0,
+        label="budget for all chip-side capacitance across the pair, clamps included: about 12.8 pF"];
+}

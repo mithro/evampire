@@ -1,5 +1,5 @@
-The management interface (MDIO)
-===============================
+Management interface (MDIO)
+===========================
 
 How evampire reads the status of each Ethernet transceiver and changes its
 settings over the two-wire management interface, and which registers it
@@ -8,8 +8,8 @@ uses. The interface and its standard registers are defined in
 
 .. _rgmii-mdio-wires:
 
-Two wires reach every transceiver
----------------------------------
+MDC and MDIO wires
+------------------
 
 Each transceiver has a few dozen 16-bit registers. They report its status,
 such as whether a cable is connected and at what speed, and control its
@@ -35,10 +35,26 @@ pins sampled at power-up [RGMII-DP83867]_ section 7.4.2,
 [RGMII-KSZ9031]_ section 3.10. evampire drives both of its transceivers from
 one pair of pins, with the two transceivers set to different addresses.
 
+:numref:`fig-rgmii-mdio-bus` shows the two wires shared by evampire's two
+transceivers.
+
+.. graphviz:: mdio-bus.dot
+   :name: fig-rgmii-mdio-bus
+   :caption: MDC and MDIO shared by the transceivers of ports A and B, with
+             the pull-up resistor on MDIO.
+   :alt: evampire on the left drives MDC, in blue, to transceiver A and
+         transceiver B on the right. MDIO, in red, joins evampire's
+         three-state driver to the three-state MDIO pin of each
+         transceiver, and a pull-up resistor connects it to VDDIO: 2.2 kΩ
+         for the DP83867, 1.0 kΩ to 4.7 kΩ for the KSZ9031RNX. Each
+         transceiver takes its address from strap pins; one pair of wires
+         reaches up to 32 transceivers.
+   :align: center
+
 .. _rgmii-mdc-rate:
 
-MDC runs at up to 2.5 MHz, with no lower limit
-----------------------------------------------
+MDC clock rate
+--------------
 
 MDC has a minimum period of 400 ns, that is at most 2.5 MHz, and minimum
 high and low times of 160 ns each (:clause:`22.2.2.13`). It has no maximum
@@ -50,6 +66,27 @@ When evampire drives MDIO, it gives at least 10 ns of setup and hold time
 around the rising edge of MDC. When the transceiver drives MDIO, its data
 appears 0 ns to 300 ns after the rising edge, and evampire samples it at
 the next rising edge (:clause:`22.3.4`).
+
+:numref:`fig-rgmii-mdc-timing` shows the two cases.
+
+.. wavedrom::
+   :name: fig-rgmii-mdc-timing
+   :alt: Timing diagram: MDC with three rising edges. When evampire drives
+         MDIO, each bit changes during the low phase, at least 10 ns before
+         the rising edge, and holds at least 10 ns after it. When the
+         transceiver drives MDIO, each bit changes 0 ns to 300 ns after a
+         rising edge and is sampled at the next rising edge.
+   :caption: MDIO driven by evampire, changing well before each rising edge of
+             MDC, and driven by the transceiver, changing after each rising edge
+             (schematic, not to scale).
+
+   { "signal": [
+       { "name": "MDC", "wave": "l.h.l.h.l.h." },
+       { "name": "MDIO from evampire", "wave": "x=...=...=..", "data": ["bit", "bit", "bit"] },
+       { "name": "MDIO from transceiver", "wave": "x..=...=...=", "data": ["bit", "bit", "bit"] }
+     ],
+     "config": { "hscale": 1 }
+   }
 
 Many transceivers accept a faster MDC. The DP83867 accepts up to 25 MHz
 [RGMII-DP83867]_ section 6.8, and the KSZ9031RNX has been tested up to
@@ -85,10 +122,10 @@ than that.
 
 .. _rgmii-mdio-frame:
 
-Each access is one 64-bit management frame
-------------------------------------------
+Management frame
+----------------
 
-Every access is one frame with the fields of
+Every access is one 64-bit frame with the fields of
 :numref:`tab-rgmii-mdio-frame` (:clause:`22.2.4.5`,
 :clause:`Table 22-12 <22>`). The bits are sent from left to right, and
 each address and the data are sent most significant bit first
@@ -179,8 +216,8 @@ break marks bits that are not drawn.
 
 .. _rgmii-mdio-software:
 
-Software can drive the two wires directly
------------------------------------------
+Software-driven MDIO
+--------------------
 
 MDC has no maximum period, so software can drive MDC and MDIO as
 general-purpose pins (:wikipedia:`bit banging <Bit_banging>`) at any speed
@@ -190,12 +227,13 @@ does the same work without the processor.
 
 .. _rgmii-registers:
 
-evampire uses seven of the standard registers
----------------------------------------------
+Registers used by evampire
+--------------------------
 
 Registers 0 to 15 are defined by IEEE 802.3, and registers 16 to 31 are
 specific to each manufacturer (:clause:`Table 22-6 <22>`).
-:numref:`tab-rgmii-registers` lists the standard registers evampire uses.
+evampire uses eight of them, registers 0 to 5, 9 and 10, which
+:numref:`tab-rgmii-registers` lists in seven rows.
 
 :wikipedia:`Autonegotiation <Autonegotiation>` (:clause:`28`) is the
 exchange, at link start-up, in which the two transceivers on a cable tell

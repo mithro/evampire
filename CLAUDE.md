@@ -64,9 +64,65 @@ uv run python docs/index/overview.py docs/index/overview.svg
 uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline.svg
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
-uv run python docs/high-voltage/figures.py docs/high-voltage  # cross-sections
+uv run python docs/high-voltage/figures.py docs/high-voltage  # every high-voltage figure
+uv run python docs/architecture/figures.py docs/architecture
 uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
+uv run docs/esd/sim/tlp_plot.py
+uv run docs/esd/sim/circuits.py
+uv run docs/esd/sim/paths.py
+uv run python docs/esd/sim/sections.py
+uv run docs/esd/sim/plots.py
+uv run docs/esd/sim/model_figs.py
+uv run docs/ethernet/rgmii/figures.py
+uv run docs/ethernet/magnetics/plots.py
+uv run docs/ethernet/magnetics/drawings.py
+uv run docs/ethernet/phy-electrical/cable_figures.py
+uv run docs/ethernet/phy-electrical/channel_graphs.py
+uv run docs/ethernet/phy-electrical/coding_graphs.py
+uv run docs/ethernet/phy-electrical/driver_figures.py
+uv run docs/ethernet/phy-electrical/signal_graphs.py
+uv run docs/ethernet/phy-electrical/startup_timeline.py
+uv run docs/ethernet/phy-electrical/timing_figures.py
+uv run docs/ethernet/phy-electrical/integration/int_graphs.py
+uv run docs/power/converters/waves.py
+uv run docs/power/converters/control_waves.py
+uv run docs/power/converters/fv_figures.py
+uv run docs/power/converters/graphs.py
+uv run docs/power/converters/sections.py
+uv run docs/power/poe/drawings_pairs.py
+uv run docs/power/poe/drawings_pd.py
+uv run docs/power/poe/drawings_hv.py
+uv run docs/power/poe/graphs_sequence.py
+uv run docs/power/poe/graphs_signature.py
+uv run docs/power/poe/graphs_limits.py
+uv run docs/power/poe/graphs_power.py
+uv run docs/power/poe/graphs_budget.py
+uv run docs/power/usb-pd/graphs_cc.py
+uv run docs/power/usb-pd/graphs_levels.py
+uv run docs/power/usb-pd/graphs_power.py
+uv run docs/power/usb-pd/graphs_protection.py
+uv run docs/power/usb-pd/graphs_signal.py
+uv run docs/power/usb-pd/sections.py
+uv run docs/usb-serial/figures.py
+uv run docs/usb-serial/sequences.py        # writes the sequence .dot files
+uv run docs/usb-serial/timing_figs.py
 ```
+
+Each script's docstring names the files it writes. These modules are
+helpers that the scripts above import, so run the script, not the helper:
+
+- `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
+- `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
+  `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
+- `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
+  and `drawings_cap.py`;
+- `svgplot.py` in `docs/ethernet/phy-electrical/`,
+  `docs/power/converters/` and `docs/usb-serial/`, and `svgfig.py` in
+  `docs/power/usb-pd/` and `docs/power/poe/`.
+
+`FONT_SCALE` in `docs/power/usb-pd/svgfig.py` sets the text size of every
+USB Power Delivery graph. Every script reproduces its committed files byte
+for byte, so a rerun that changes a file means its inputs changed.
 
 The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
 the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
@@ -96,6 +152,14 @@ comes from the gf180mcu PDK and is not in this repository.
   roles, modes, the budget, translation, sharing, and the board
   configurations table (`tab-power-board-configs`). Pages link to that table
   rather than restating the configurations.
+- The sidebar nests the way the index pages do. The root `index.rst` has one
+  captioned `toctree` per group of topics (The chip, Data interfaces, Power,
+  Silicon, Reference). Sphinx shows captions only for the root page, so a
+  topic with more than about seven pages groups them under small group
+  pages instead (for example `power/poe/fundamentals.rst`). A group page
+  opens with one sentence, lists its pages with one line each, and holds
+  the `toctree` for them; the topic index lists the groups. A new page goes
+  into the group page that fits it.
 - Each topic has its own `references.rst`. Citation keys carry a per-topic
   prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `ESD-`, `HV-`,
   `USBSER-`)
@@ -107,8 +171,6 @@ comes from the gf180mcu PDK and is not in this repository.
 - `docs/requirements.rst` is the single list of requirements (`req-*`
   labels). `docs/standards.rst` has one entry per standard that the roles
   link to.
-- `docs/_ext/` holds the Sphinx extensions written for this site.
-  `conf.py` adds the folder to the import path.
 - Diagrams are Graphviz `.dot` files next to the page, rendered as SVG.
   Prefer `layout=neato` with pinned `pos` and `splines=false`. Free layouts
   come out too wide to read. The front-page block diagram is the one
@@ -156,22 +218,23 @@ publish copies of them, or quote from them at length.
   design with no history or changelog. Don't invent terms: use the
   standard's names.
 - **Plain sentences:** at most 45 words each.
+- **Headings:** short noun phrases in sentence case with no end
+  punctuation, usually 2 to 6 words ("Breakdown at curved edges", not
+  "Curved edges break down first"). Page titles must read well in the
+  sidebar. Keep "Open questions" and "References". A heading is never the
+  only place a fact is stated: the section's text states it.
+- **Diagrams:** every section that describes a layout, a set of
+  connections, a sequence, a change of state, a waveform or how one
+  quantity depends on another has its own figure. Never send the reader to
+  a standard, datasheet or other site for a picture; redraw it from the
+  numbers on the page and cite the source of the numbers.
 - **Each fact in one place:** link to it instead of restating it.
 - **Page shape:** each page opens with one sentence saying what it covers.
   A page that leaves design decisions open ends with one "Open questions"
   section, which lists them all. Explanatory pages with nothing open have
   none.
-- **Numbering:** every figure and table has a caption, a label, a
-  `:numref:` reference and `:alt:` text. The label is its identifier:
-  `docs/_ext/stable_ids.py` replaces Sphinx's running number with the label,
-  less its `fig-` or `tab-` prefix, so `tab-poe-pairs` is captioned
-  "Table poe-pairs:" and linked as "Table poe-pairs", and adding a table
-  renumbers nothing. Start a label with
-  `fig-` or `tab-` and the topic's prefix, and keep it short, since readers
-  see it. Renaming a label changes the identifier readers see. Label
-  diagrams with the `:name:` option; a `.. _label:` line before a captioned
-  `graphviz` or `wavedrom` directive does not reach the figure, and the
-  build reports it.
+- **Numbering:** every figure and table is numbered, referenced with
+  `:numref:`, and has `:alt:` text.
 - **Equations:** each equation has a Symbol/Meaning/Unit table and a worked
   example. Split long equations over aligned lines so they fit a 400 px
   screen.

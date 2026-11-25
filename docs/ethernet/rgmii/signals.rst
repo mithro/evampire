@@ -6,8 +6,8 @@ to the older MII and GMII interfaces.
 
 .. _rgmii-what:
 
-RGMII connects the forwarding logic to an external Ethernet transceiver
------------------------------------------------------------------------
+Role of RGMII
+-------------
 
 An Ethernet port is split between two jobs:
 
@@ -51,8 +51,8 @@ one port; evampire has one such interface for port A and one for port B
 
 .. _rgmii-six-signals:
 
-Six signals carry the data in each direction
---------------------------------------------
+Signals in each direction
+-------------------------
 
 Each direction has a clock, a control signal and four data bits
 (:std:`RGMII 2.0 <rgmii-2-0>` Table 1). The transmitting chip sends its
@@ -113,14 +113,14 @@ Transceiver datasheets use other names for the same pins, listed in
      - RD[3:0]
 
 How the clock, control and data signals carry bytes at each speed is
-described on :doc:`data`. Each transceiver also has a slower management
-interface, MDC and MDIO, for reading its status and changing its settings
-(see :doc:`mdio`).
+described on :doc:`data`. Each transceiver also has a slower
+:doc:`management interface <mdio>`, MDC and MDIO, for reading its status
+and changing its settings.
 
 .. _rgmii-full-duplex:
 
-Full duplex needs no carrier-sense or collision wires
------------------------------------------------------
+Full and half duplex
+--------------------
 
 A link runs in
 :wikipedia:`full duplex <Duplex_(telecommunications)>`, where both ends may
@@ -134,8 +134,8 @@ section 3.4.2). evampire runs its links in full duplex only (see
 
 .. _rgmii-mii-gmii:
 
-RGMII carries the same information as GMII on half the wires
-------------------------------------------------------------
+MII, GMII and RGMII
+-------------------
 
 RGMII is a reduced form of two interfaces defined in IEEE 802.3
 (:wikipedia:`media-independent interface <Media-independent_interface>`):
@@ -183,3 +183,33 @@ a "valid" or "enable" signal and an error signal, and the port has CRS and
 COL ([RGMII-DP83867]_ section 5 lists them). RGMII uses 12: 4 data bits, a
 clock and a control signal in each direction. The DP83867 datasheet gives
 the same counts ([RGMII-DP83867]_ section 7.4.1.1).
+
+:numref:`fig-rgmii-gmii-rgmii` sends the same three bytes over both.
+
+.. wavedrom::
+   :name: fig-rgmii-gmii-rgmii
+   :alt: Timing diagram in two groups. GMII: GTX_CLK at 125 MHz, TXD[7:0]
+         carrying 0x01, 0x23 and 0x45 one per clock cycle, and TX_EN high.
+         RGMII: TXC at the same frequency, drawn after the 2 ns clock
+         delay so that each edge falls in the middle of a nibble, TXD[3:0]
+         carrying the nibbles 1, 0, 3, 2, 5 and 4 one per clock edge, and
+         TX_CTL high.
+   :caption: The bytes 0x01, 0x23 and 0x45 sent over GMII, eight bits per rising
+             edge, and over RGMII, four bits per edge, with TXC drawn after
+             the 2 ns delay.
+
+   { "signal": [
+       ["GMII",
+         { "name": "GTX_CLK", "wave": "p....", "period": 2 },
+         { "name": "TXD[7:0]", "wave": "x.=.=.=.x.", "data": ["0x01", "0x23", "0x45"] },
+         { "name": "TX_EN", "wave": "0.1.....0." }
+       ],
+       {},
+       ["RGMII",
+         { "name": "TXC + 2 ns", "wave": "p....", "period": 2, "phase": -0.5 },
+         { "name": "TXD[3:0]", "wave": "x.======x.", "data": ["1", "0", "3", "2", "5", "4"] },
+         { "name": "TX_CTL", "wave": "0.1.....0." }
+       ]
+     ],
+     "config": { "hscale": 1 }
+   }

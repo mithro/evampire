@@ -22,8 +22,8 @@ USB specifications
    `USB Power Delivery download
    <https://www.usb.org/document-library/usb-power-delivery>`__.
 
-Datasheets of USB Type-C and USB Power Delivery parts
------------------------------------------------------
+Datasheets
+----------
 
 .. [USBPD-TPS65987D] Texas Instruments, `TPS65987D USB Type-C and USB PD
    Controller with Integrated Source and Sink Power Path
@@ -89,8 +89,8 @@ High-voltage devices in standard CMOS
    <https://link.springer.com/book/9780792382348>`__, Kluwer Academic
    Publishers, 1999.
 
-Processor used as a reference example
--------------------------------------
+Reference processor
+-------------------
 
 .. [USBPD-PICORV32] YosysHQ, `PicoRV32: a size-optimised RISC-V CPU
    <https://github.com/YosysHQ/picorv32>`__, README, section "Cycles per

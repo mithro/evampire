@@ -11,8 +11,10 @@ Host and device
 ---------------
 
 USB connects one *host*, normally a computer, to one or more *devices*. The
-host starts every exchange: a device only sends when the host has asked
-it to in the packet before ([USBSER-USB2]_ section 8.4.1). A device never talks to another device.
+host starts every exchange: a device only sends when the host has asked it
+to in the packet before ([USBSER-USB2]_ section 8.4.1), as in the
+transactions of :numref:`fig-usbser-transactions`. A device never talks to
+another device.
 
 The end of a cable at the host is the *downstream facing port* (DFP) and the
 end at the device is the *upstream facing port* (UFP). On a USB Type-C port
@@ -21,8 +23,8 @@ described in :ref:`power-roles`. :doc:`usb-pd-roles` explains how they
 combine. evampire acts only as a device, so its port must be in the UFP
 data role for the serial port to work.
 
-The D+ and D− wires on a USB Type-C connector
----------------------------------------------
+D+ and D− on the USB Type-C connector
+-------------------------------------
 
 USB 2.0 data travels on one pair of wires, D+ and D−. They are driven with
 opposite levels most of the time, so the information is in the difference
@@ -56,8 +58,8 @@ described in :doc:`analogue`.
          connects the D+ pin to 3.3 V.
    :align: center
 
-Speeds, and why full speed is used
-----------------------------------
+USB speeds
+----------
 
 USB 2.0 has three speeds (:numref:`tab-usbser-speeds`).
 
@@ -96,15 +98,29 @@ Full speed is the speed that fits the requirement:
   only after a handshake during reset ([USBSER-USB2]_ section 7.1.7.5), so
   a full-speed device works on every USB 2.0 host.
 
-How a device announces itself
------------------------------
+Connect detection
+-----------------
 
 The host pulls each of D+ and D− to ground through 15 kΩ
 ([USBSER-USB2]_ section 7.1.5.1). With nothing attached both wires sit
 near 0 V. A full-speed device connects a 1.5 kΩ resistor from D+ to a
 3.0 V to 3.6 V supply; a low-speed device puts the same resistor on D−
-instead ([USBSER-USB2]_ section 7.1.5.1, Figure 7‑20). The host sees D+
-rise, and knows that a full-speed device is attached.
+instead ([USBSER-USB2]_ section 7.1.5.1). The host sees D+
+rise, and knows that a full-speed device is attached
+(:numref:`fig-usbser-connect`).
+
+.. graphviz:: signalling/connect.dot
+   :name: fig-usbser-connect
+   :caption: Connect detection: the host's pull-down resistors and the
+             device's switched pull-up on D+.
+   :alt: Schematic: in the host, D+ and D− each connect to ground through
+         15 kΩ. The cable carries D+ and D− to the device, evampire, where
+         they reach the driver and receivers. In the device a 1.5 kΩ ± 5 %
+         resistor and a switch connect D+ to a 3.0 V to 3.6 V supply; the
+         switch closes when VBUS is present. D+ sits near 0 V with no
+         device and at least 2.7 V, idle J, once the pull-up is on. A
+         low-speed device puts the pull-up on D− instead.
+   :align: center
 
 The pull-up must be switchable: the device must not drive current into D+
 when VBUS, the cable's power wire, is absent ([USBSER-USB2]_ section
@@ -166,13 +182,35 @@ full speed only.
    "config": {"hscale": 1.5}}
 
 A device also recognises some states by how long they last
-([USBSER-USB2]_ Table 7‑2, section 7.1.7.5, section 7.1.7.6):
+([USBSER-USB2]_ Table 7‑2, section 7.1.7.5, section 7.1.7.6;
+:numref:`fig-usbser-long-states`):
 
 * *Reset:* SE0 for more than 2.5 µs. The device then returns to its
   default state with address 0.
 * *Suspend:* idle for more than 3 ms. The device must then reduce its
   current from VBUS. The host normally prevents this by sending a packet
   every millisecond (see :doc:`transactions`).
+
+.. wavedrom::
+   :caption: Line states recognised by their length: reset and suspend,
+             and the start-of-frame packets that keep a device out of
+             suspend (not to scale).
+   :name: fig-usbser-long-states
+   :alt: Timing diagram with three rows. Reset: after idle, SE0 for more
+         than 2.5 µs, then idle. Suspend: after a packet, idle for more than
+         3 ms, after which the device is suspended. Normal operation: a
+         start-of-frame packet every 1 ms, with idle between, so the idle
+         time never reaches 3 ms.
+
+   {"signal": [
+     {"name": "reset", "wave": "2.3.....2.",
+      "data": ["idle", "SE0 longer than 2.5 µs", "idle"]},
+     {"name": "suspend", "wave": "5.2.....4.",
+      "data": ["packet", "idle longer than 3 ms", "suspended"]},
+     {"name": "normal", "wave": "5.2..5.2..",
+      "data": ["SOF", "idle, under 1 ms", "SOF", "idle"]}
+   ],
+   "config": {"hscale": 1.4}}
 
 NRZI coding and bit stuffing
 ----------------------------
@@ -210,8 +248,8 @@ error and ignores the packet ([USBSER-USB2]_ section 7.1.9.1).
    ],
    "config": {"hscale": 2}}
 
-Start, packet identifier and end of a packet
---------------------------------------------
+Packet start, identifier and end
+--------------------------------
 
 Every packet has the same frame (:numref:`fig-usbser-packet`):
 
@@ -262,6 +300,21 @@ kinds:
   ([USBSER-USB2]_ section 8.4.4).
 * *Handshake* packets are only a PID. They report whether data was accepted
   ([USBSER-USB2]_ section 8.4.5).
+
+:numref:`fig-usbser-packets` shows the fields of each kind, with the
+start-of-frame token, in the order they are sent.
+
+.. figure:: signalling/packets.svg
+   :name: fig-usbser-packets
+   :alt: Four rows of fields, sent from left to right. Token (OUT, IN,
+         SETUP): SYNC 8 bits, PID 8 bits, ADDR 7 bits, ENDP 4 bits, CRC5 5
+         bits, EOP. Start of frame: SYNC, PID, an 11-bit frame number,
+         CRC5, EOP. Data (DATA0, DATA1): SYNC, PID, 0 to 1023 bytes of data,
+         CRC16 16 bits, EOP. Handshake (ACK, NAK, STALL): SYNC, PID, EOP.
+   :align: center
+
+   Fields of the full-speed packet kinds, in the order sent; widths are
+   proportional to the bits except for the data field.
 
 .. list-table:: Packet identifiers used by a full-speed device
    ([USBSER-USB2]_ section 8.3.1, Table 8‑1)
@@ -315,8 +368,8 @@ specification; on the wire bit 0 goes first. The other identifiers in the
 specification (DATA2, MDATA, NYET, PRE, ERR, SPLIT, PING) are used only at
 high speed or between hubs, and a full-speed device ignores them.
 
-Checksums: CRC5 and CRC16
--------------------------
+CRC5 and CRC16 checksums
+------------------------
 
 Token and data packets end with a
 :wikipedia:`cyclic redundancy check <Cyclic_redundancy_check>` (CRC), a
@@ -333,7 +386,17 @@ inverted, most significant bit first. A receiver that runs the same register
 over the whole packet, CRC included, ends with a fixed value when there is
 no error: ``01100`` for CRC5 and ``1000000000001101`` for CRC16
 ([USBSER-USB2]_ section 8.3.5.1, section 8.3.5.2). The PID has its own check
-and is not covered.
+and is not covered. :numref:`fig-usbser-crc5` shows the CRC5 register.
+
+.. graphviz:: signalling/crc5.dot
+   :name: fig-usbser-crc5
+   :caption: The CRC5 shift register for the generator polynomial
+             x⁵ + x² + 1.
+   :alt: Shift register of five stages, c0 to c4. Each data bit is XORed
+         with c4; the result, the feedback, enters c0 and is also XORed into
+         the input of c2, between c1 and c2. The register starts at 11111;
+         over a good token, CRC included, it ends at 01100.
+   :align: center
 
 A packet with a wrong PID check, CRC, bit stuffing or length is ignored and
 gets no reply ([USBSER-USB2]_ section 8.3.1, section 8.4.1). The sender

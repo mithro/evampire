@@ -29,10 +29,10 @@ digraph pr_swap {
     n4  [label="Within 195 µs"];
     n5  [label="Sink cuts its current\nto 2.5 mA within 15 ms"];
     n6  [label="After at least 25 ms;\nat 0.8 V within 650 ms;\nRp changed to Rd"];
-    n7  [label="Starts within 690 ms\n(other side waits\n750-920 ms)"];
+    n7  [label="Starts within 690 ms\n(other side waits\n750-920 ms; without\nit, ErrorRecovery)"];
     n8  [label="Within 195 µs"];
     n9  [label="Rd changed to Rp;\nVBUS at 5 V"];
-    n10 [label="Starts within 280 ms\n(other side waits\n390-480 ms)"];
+    n10 [label="Starts within 280 ms\n(other side waits\n390-480 ms; without\nit, ErrorRecovery)"];
     n11 [label="Within 195 µs"];
     n12 [label="At least 20 ms later"];
 

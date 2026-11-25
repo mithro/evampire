@@ -1,0 +1,27 @@
+// Which part of evampire answers each step of the sequence on a board
+// powered from its powered-device port. From startup.rst and
+// requirements.rst.
+//
+// Fill colours: steps answered before the processor runs #fff2cc, steps
+// handled by software #dbe8f5. Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph sequencer {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=1.45, height=0.6, fixedsize=true];
+    edge  [arrowsize=0.7, penwidth=1.6];
+
+    d  [pos="0.8,1.6!", label="Detection:\nsignature", fillcolor="#fff2cc"];
+    c  [pos="2.4,1.6!", label="Class and\nmark events", fillcolor="#fff2cc"];
+    i  [pos="4.0,1.6!", label="Turn-on and\ninrush", fillcolor="#fff2cc"];
+    b  [pos="5.6,1.6!", label="Processor\nstarts", fillcolor="#dbe8f5"];
+    l  [pos="7.2,1.6!", label="Reads the class;\nLLDP exchange", fillcolor="#dbe8f5"];
+    d -> c -> i -> b -> l;
+    s  [pos="2.4,0.5!", shape=box, style="rounded,dashed", width=4.6, height=0.45,
+        fontname="Helvetica", fontsize=11, label="built-in start-up sequencer, without the processor"];
+    w  [pos="6.4,0.5!", shape=box, style="rounded,dashed", width=2.8, height=0.45,
+        fontname="Helvetica", fontsize=11, label="software on the processor"];
+}

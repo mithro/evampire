@@ -1,0 +1,46 @@
+// The cancellers of the receiver of pair A. The transceiver's own
+// transmitter on pair A drives the echo canceller, and its transmitters on
+// pairs B, C and D each drive one near-end crosstalk canceller. All four
+// predictions are subtracted from the ADC samples. Far-end crosstalk comes
+// from the other end's symbols and has no canceller.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph nextcancellers {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3.4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=11, width=1.3, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.4];
+
+    ta [pos="0.7,3.0!", label="Own symbols,\npair A", fillcolor="#f2f2f2"];
+    tb [pos="0.7,2.2!", label="Own symbols,\npair B", fillcolor="#f2f2f2"];
+    tc [pos="0.7,1.4!", label="Own symbols,\npair C", fillcolor="#f2f2f2"];
+    td [pos="0.7,0.6!", label="Own symbols,\npair D", fillcolor="#f2f2f2"];
+
+    ea [pos="2.6,3.0!", width=1.5, label="Echo canceller"];
+    nb [pos="2.6,2.2!", width=1.5, label="NEXT canceller"];
+    nc [pos="2.6,1.4!", width=1.5, label="NEXT canceller"];
+    nd [pos="2.6,0.6!", width=1.5, label="NEXT canceller"];
+
+    sub [pos="4.5,1.8!", shape=circle, width=0.45, height=0.45,
+         fillcolor="#ffffff", label="−", fontsize=16];
+    adc [pos="4.5,3.2!", width=1.6, label="Pair A ADC samples", fillcolor="#ffffff"];
+    fext [pos="6.4,3.2!", width=1.6, label="Far-end crosstalk:\nno canceller",
+          fillcolor="#ffffff", style="rounded,dashed,filled"];
+    eq [pos="6.3,1.8!", width=1.8, label="Equaliser and\ndecoder, pair A",
+        fillcolor="#e2efda"];
+
+    ta -> ea;
+    tb -> nb;
+    tc -> nc;
+    td -> nd;
+    ea -> sub;
+    nb -> sub;
+    nc -> sub;
+    nd -> sub;
+    adc -> sub [label=" +"];
+    fext -> adc [style=dashed, label=" "];
+    sub -> eq;
+}

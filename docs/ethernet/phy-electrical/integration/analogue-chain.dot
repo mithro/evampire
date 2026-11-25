@@ -1,0 +1,28 @@
+// Two ways to build the receive chain after the hybrid: digital filters
+// after a fast ADC (top), or analogue filters and an analogue
+// decision-feedback equaliser before a coarse ADC or comparators (bottom).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph analoguechain {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,2.4"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+           fontname="Helvetica", fontsize=10, width=1.4, height=0.62,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7, penwidth=1.4];
+
+    t1 [pos="0.9,2.25!", shape=plaintext, style="", width=1.8, height=0.25,
+        fontsize=11, fontname="Helvetica-Bold", label="Digital filters"];
+    d_h [pos="0.6,1.7!", width=0.9, label="Hybrid", fillcolor="#ffffff"];
+    d_adc [pos="2.2,1.7!", width=1.6, label="ADC, about 7\neffective bits"];
+    d_f [pos="4.6,1.7!", width=2.6, label="Digital echo, NEXT,\nFFE and DFE filters", fillcolor="#dbe8f5"];
+    d_h -> d_adc; d_adc -> d_f;
+
+    t2 [pos="1.0,0.95!", shape=plaintext, style="", width=2.0, height=0.25,
+        fontsize=11, fontname="Helvetica-Bold", label="Analogue filters"];
+    a_h [pos="0.6,0.4!", width=0.9, label="Hybrid", fillcolor="#ffffff"];
+    a_f [pos="2.6,0.4!", width=2.4, label="Analogue FIR filters\nand analogue DFE"];
+    a_adc [pos="5.0,0.4!", width=1.8, label="Coarse ADC or\ncomparators", fillcolor="#dbe8f5"];
+    a_h -> a_f; a_f -> a_adc;
+}

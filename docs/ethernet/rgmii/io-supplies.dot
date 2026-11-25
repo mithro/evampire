@@ -1,0 +1,34 @@
+// The three choices of I/O cell and how each relates the I/O supply to the
+// core supply.
+//
+// Fixed grid, positions in inches.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph io_supplies {
+    graph [layout=neato, splines=false, outputorder=edgesfirst,
+           fontname="Helvetica", fontsize=10];
+    node  [fontname="Helvetica", fontsize=9, pin=true, shape=box,
+           style=filled, fixedsize=true];
+    edge  [penwidth=1.5];
+
+    node [shape=plaintext, style="", width=1.9, height=0.4, fontsize=10];
+    t1 [pos="0.95,2.25!", label="gf180mcu_fd_io\n(foundry)"];
+    t2 [pos="3.05,2.25!", label="gf180mcu_ocd_io\n(community)"];
+    t3 [pos="5.15,2.25!", label="custom I/O cell"];
+
+    node [shape=box, style=filled, width=1.5, height=0.45];
+    io1 [pos="0.95,1.55!", fillcolor="#fbe5d6", label="I/O supply\n5 V or 3.3 V"];
+    co1 [pos="0.95,0.55!", fillcolor="#dbe8f5", label="core supply"];
+    io2 [pos="3.05,1.55!", fillcolor="#fbe5d6", label="I/O supply"];
+    co2 [pos="3.05,0.55!", fillcolor="#dbe8f5", label="core supply"];
+    io3 [pos="5.15,1.55!", fillcolor="#fbe5d6",
+         label="I/O supply: any,\nwithin device ratings"];
+    co3 [pos="5.15,0.55!", fillcolor="#dbe8f5", label="core supply"];
+
+    io1 -- co1 [penwidth=3, color="#c00000"];
+    node [shape=plaintext, style="", width=1.9, height=0.35, fontsize=9];
+    l1 [pos="1.6,1.05!", width=1.0, fontcolor="#c00000", label="connected\ntogether"];
+    l2 [pos="3.05,1.05!", label="separate; I/O supply\nat least the core supply"];
+    l3 [pos="5.15,1.05!", label="separate"];
+}

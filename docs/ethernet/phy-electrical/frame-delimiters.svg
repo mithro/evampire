@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="200" viewBox="0 0 480 200" font-family="Helvetica, Arial, sans-serif">
+<rect width="480" height="200" fill="#ffffff"/>
+<text x="102.0" y="30.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">code groups</text>
+<rect x="110.0" y="16.0" width="54.8" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="137.4" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">idle</text>
+<rect x="164.8" y="16.0" width="54.8" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="192.2" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">SSD</text>
+<rect x="219.5" y="16.0" width="82.2" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="260.6" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">data</text>
+<rect x="301.7" y="16.0" width="54.8" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="329.1" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">CSReset</text>
+<rect x="356.5" y="16.0" width="54.8" height="28.0" rx="0" fill="#fbe5d6" stroke="#222222" stroke-width="1.0"/>
+<text x="383.8" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">ESD</text>
+<rect x="411.2" y="16.0" width="54.8" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="438.6" y="30.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">idle</text>
+<text x="102.0" y="72.0" font-size="13" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">levels</text>
+<rect x="110.0" y="58.0" width="54.8" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="137.4" y="72.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">−2, 0, +2</text>
+<rect x="164.8" y="58.0" width="54.8" height="28.0" rx="0" fill="#ffffff" stroke="#222222" stroke-width="1.0" stroke-dasharray="4 3"/>
+<rect x="219.5" y="58.0" width="82.2" height="28.0" rx="0" fill="#dbe8f5" stroke="#222222" stroke-width="1.0"/>
+<text x="260.6" y="72.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">all five</text>
+<rect x="301.7" y="58.0" width="54.8" height="28.0" rx="0" fill="#ffffff" stroke="#222222" stroke-width="1.0" stroke-dasharray="4 3"/>
+<rect x="356.5" y="58.0" width="54.8" height="28.0" rx="0" fill="#ffffff" stroke="#222222" stroke-width="1.0" stroke-dasharray="4 3"/>
+<rect x="411.2" y="58.0" width="54.8" height="28.0" rx="0" fill="#f2f2f2" stroke="#222222" stroke-width="1.0"/>
+<text x="438.6" y="72.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">−2, 0, +2</text>
+<line x1="110.0" y1="104.0" x2="466.0" y2="104.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="110.0" y1="104.0" x2="110.0" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="110.0" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="164.8" y1="104.0" x2="164.8" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="164.8" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">16</text>
+<line x1="219.5" y1="104.0" x2="219.5" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="219.5" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">32</text>
+<line x1="274.3" y1="104.0" x2="274.3" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="274.3" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">48</text>
+<line x1="329.1" y1="104.0" x2="329.1" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="329.1" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">64</text>
+<line x1="383.8" y1="104.0" x2="383.8" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="383.8" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">80</text>
+<line x1="438.6" y1="104.0" x2="438.6" y2="109.0" stroke="#222222" stroke-width="1.2"/>
+<text x="438.6" y="119.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">96</text>
+<text x="288.0" y="138.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">Time (ns), one code group per 8 ns</text>
+<text x="240.0" y="180.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">Dashed: levels not listed on these pages</text>
+</svg>

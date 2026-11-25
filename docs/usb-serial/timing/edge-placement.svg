@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="345" viewBox="0 0 600 345" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="600" height="345" fill="#ffffff"/>
+<line x1="110.0" y1="270.0" x2="110.0" y2="275.0" stroke="#222222" stroke-width="1.2"/>
+<text x="110.0" y="286.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">0</text>
+<line x1="263.0" y1="270.0" x2="263.0" y2="275.0" stroke="#222222" stroke-width="1.2"/>
+<text x="263.0" y="286.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">83.33</text>
+<line x1="416.0" y1="270.0" x2="416.0" y2="275.0" stroke="#222222" stroke-width="1.2"/>
+<text x="416.0" y="286.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">166.67</text>
+<line x1="569.0" y1="270.0" x2="569.0" y2="275.0" stroke="#222222" stroke-width="1.2"/>
+<text x="569.0" y="286.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">250</text>
+<line x1="110.0" y1="270.0" x2="580.0" y2="270.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="110.0" y1="30.0" x2="110.0" y2="270.0" stroke="#222222" stroke-width="1.2"/>
+<text x="345.0" y="308.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">time (ns)</text>
+<text x="102.0" y="68.4" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">125 MHz</text>
+<line x1="110.0" y1="62.4" x2="110.0" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="124.7" y1="62.4" x2="124.7" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="139.4" y1="62.4" x2="139.4" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="154.1" y1="62.4" x2="154.1" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="168.8" y1="62.4" x2="168.8" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="183.4" y1="62.4" x2="183.4" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="198.1" y1="62.4" x2="198.1" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="212.8" y1="62.4" x2="212.8" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="227.5" y1="62.4" x2="227.5" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="242.2" y1="62.4" x2="242.2" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="256.9" y1="62.4" x2="256.9" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="271.6" y1="62.4" x2="271.6" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="286.2" y1="62.4" x2="286.2" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="300.9" y1="62.4" x2="300.9" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="315.6" y1="62.4" x2="315.6" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="330.3" y1="62.4" x2="330.3" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="345.0" y1="62.4" x2="345.0" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="359.7" y1="62.4" x2="359.7" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="374.4" y1="62.4" x2="374.4" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="389.1" y1="62.4" x2="389.1" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="403.8" y1="62.4" x2="403.8" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="418.4" y1="62.4" x2="418.4" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="433.1" y1="62.4" x2="433.1" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="447.8" y1="62.4" x2="447.8" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="462.5" y1="62.4" x2="462.5" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="477.2" y1="62.4" x2="477.2" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="491.9" y1="62.4" x2="491.9" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="506.6" y1="62.4" x2="506.6" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="521.2" y1="62.4" x2="521.2" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="535.9" y1="62.4" x2="535.9" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="550.6" y1="62.4" x2="550.6" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="565.3" y1="62.4" x2="565.3" y2="74.4" stroke="#222222" stroke-width="1"/>
+<line x1="580.0" y1="62.4" x2="580.0" y2="74.4" stroke="#222222" stroke-width="1"/>
+<text x="102.0" y="114.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">bits from</text>
+<text x="102.0" y="128.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">125 MHz</text>
+<rect x="256.6" y="104.2" width="12.9" height="34.0" rx="0" fill="#e2f0d9" fill-opacity="0.8" stroke="none" stroke-width="1.0"/>
+<rect x="403.4" y="104.2" width="12.9" height="34.0" rx="0" fill="#f4cccc" fill-opacity="0.8" stroke="none" stroke-width="1.0"/>
+<rect x="110.0" y="110.2" width="146.9" height="22.0" rx="0" fill="#ffffff" stroke="#38761d" stroke-width="1.6"/>
+<text x="183.4" y="121.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">10 periods: 80 ns</text>
+<rect x="256.9" y="110.2" width="161.6" height="22.0" rx="0" fill="#ffffff" stroke="#c0392b" stroke-width="1.6"/>
+<text x="337.7" y="121.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#c0392b" dominant-baseline="middle">11 periods: 88 ns</text>
+<text x="252.9" y="157.2" font-size="11" text-anchor="end" font-weight="normal" fill="#38761d" dominant-baseline="middle">−3.33 ns: inside</text>
+<text x="424.4" y="157.2" font-size="11" text-anchor="start" font-weight="normal" fill="#c0392b" dominant-baseline="middle">+4.67 ns: outside</text>
+<text x="102.0" y="195.6" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">48 MHz</text>
+<line x1="110.0" y1="189.6" x2="110.0" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="148.2" y1="189.6" x2="148.2" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="186.5" y1="189.6" x2="186.5" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="224.7" y1="189.6" x2="224.7" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="263.0" y1="189.6" x2="263.0" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="301.2" y1="189.6" x2="301.2" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="339.5" y1="189.6" x2="339.5" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="377.7" y1="189.6" x2="377.7" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="416.0" y1="189.6" x2="416.0" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="454.2" y1="189.6" x2="454.2" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="492.5" y1="189.6" x2="492.5" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="530.7" y1="189.6" x2="530.7" y2="201.6" stroke="#222222" stroke-width="1"/>
+<line x1="569.0" y1="189.6" x2="569.0" y2="201.6" stroke="#222222" stroke-width="1"/>
+<text x="102.0" y="234.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">bits from</text>
+<text x="102.0" y="248.2" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">48 MHz</text>
+<rect x="256.6" y="224.2" width="12.9" height="34.0" rx="0" fill="#e2f0d9" fill-opacity="0.8" stroke="none" stroke-width="1.0"/>
+<rect x="110.0" y="230.2" width="153.0" height="22.0" rx="0" fill="#ffffff" stroke="#38761d" stroke-width="1.6"/>
+<text x="186.5" y="241.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">4 periods: 83.33 ns</text>
+<rect x="409.6" y="224.2" width="12.9" height="34.0" rx="0" fill="#e2f0d9" fill-opacity="0.8" stroke="none" stroke-width="1.0"/>
+<rect x="263.0" y="230.2" width="153.0" height="22.0" rx="0" fill="#ffffff" stroke="#38761d" stroke-width="1.6"/>
+<text x="339.5" y="241.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">4 periods: 83.33 ns</text>
+<rect x="562.6" y="224.2" width="12.9" height="34.0" rx="0" fill="#e2f0d9" fill-opacity="0.8" stroke="none" stroke-width="1.0"/>
+<rect x="416.0" y="230.2" width="153.0" height="22.0" rx="0" fill="#ffffff" stroke="#38761d" stroke-width="1.6"/>
+<text x="492.5" y="241.2" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">4 periods: 83.33 ns</text>
+<text x="345.0" y="334.0" font-size="11" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">shaded: previous edge + 83.33 ns ± 3.5 ns (TDJ1)</text>
+</svg>

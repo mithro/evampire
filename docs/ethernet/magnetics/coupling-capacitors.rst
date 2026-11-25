@@ -1,17 +1,33 @@
-Coupling capacitors in place of a transformer
-=============================================
+Coupling capacitors
+===================
 
 This page describes the ports that already connect to twisted-pair cable
 without a transformer, and works out the size of the capacitors that carry
 the data in their place. :doc:`without-transformer` covers the other jobs
 of the transformer, and :doc:`isolation` covers isolation.
 
-Several kinds of port already work without transformers
--------------------------------------------------------
+Transformer-free ports in use
+-----------------------------
 
 These ports are reference examples of the techniques. Each was built in
 another process or product; whether the same works for evampire is
 established only by building it.
+
+:numref:`fig-magnetics-ref-ports` draws three of them for one pair.
+
+.. graphviz:: ref-ports.dot
+   :name: fig-magnetics-ref-ports
+   :caption: Three reference front ends without a transformer, for one
+             pair (schematic).
+   :alt: Three rows from the transceiver to the cable. First, the
+         capacitor-coupled DP83848: a 33 nF capacitor in each wire.
+         Second, single-pair automotive and industrial Ethernet: a 100 nF
+         capacitor in each wire, a common-mode choke, and two 1 kΩ
+         resistors from the wires to a midpoint with 4.7 nF to ground.
+         Third, power over one pair: a capacitor in each wire carries the
+         data, and an inductor from each wire carries the direct current
+         to the power circuits.
+   :align: center
 
 Capacitor-coupled 10 and 100 Mbit/s
    Texas Instruments documents its DP83848 transceiver connected through a
@@ -52,8 +68,8 @@ Capacitor coupling is therefore shown for gigabit Ethernet over a full
 cable in one vendor report. :doc:`gigabit-risk` works through what else
 can limit it.
 
-The data path becomes a capacitor in each wire
-----------------------------------------------
+Data path model
+---------------
 
 Replacing the transformer with a capacitor in each wire turns the data path
 into a series capacitor instead of a parallel inductor.
@@ -91,8 +107,8 @@ around the loop, so the pair sees half the capacitance of one:
 The model leaves out the capacitance from each wire to ground, which
 :doc:`gigabit-risk` treats separately.
 
-Return loss needs at least 9.9 nF
----------------------------------
+Return-loss limit
+-----------------
 
 A 1000BASE-T port must have at least 16 dB of return loss from 1 MHz
 (:doc:`matching-and-droop`). The capacitors add a reactance in series with
@@ -144,8 +160,24 @@ With :math:`Z_0 = 100\ \Omega`:
 The capacitors alone then use the whole 16 dB budget, so real
 capacitors must be larger.
 
-Droop needs at least 16 nF
---------------------------
+:numref:`fig-magnetics-rl-caps` shows the return loss of the port for
+several capacitor values against the limit.
+
+.. figure:: rl-caps.svg
+   :name: fig-magnetics-rl-caps
+   :alt: Graph of return loss in decibels against frequency from 1 MHz to
+         100 MHz, with the 1000BASE-T limit shaded below 16 dB.
+         Each capacitor value gives a straight line rising with
+         frequency. At 1 MHz, 9.9 nF gives 16 dB, exactly on the
+         limit; 16 nF about 20 dB; 33 nF about 26 dB; 70 nF about
+         33 dB; and 100 nF about 36 dB.
+
+   Return loss of a capacitor-coupled port with an otherwise perfect
+   100 Ω termination, for several values of the capacitor in each
+   wire.
+
+Droop limit
+-----------
 
 The series capacitor forms a high-pass filter with the source and load
 resistances in series:
@@ -170,10 +202,11 @@ magnetics, :math:`\tau_\text{mag} = 7.0\ \mu\text{s}`:
 At exactly 16 nF the port meets the droop limit with no margin: 73.2 % of
 the voltage is left after 500 ns, against 73.1 % required. Its high-pass
 corner is 99.5 kHz, at the edge of the 1 Hz to 100 kHz range that the
-transmit templates assume (:clause:`40.6.1.2.3`, note 1).
+transmit templates assume (:clause:`40.6.1.2.3`, note 1). The two time
+constants are the curves of :numref:`fig-magnetics-droop`.
 
-100BASE-TX sets a phase limit
------------------------------
+100BASE-TX phase limit
+----------------------
 
 The 100BASE-TX transmitter must look resistive within a
 phase angle of 3° from 2 MHz to 80 MHz (:std:`ANSI X3.263 <X3.263>`, as
@@ -200,8 +233,8 @@ can instead meet an equivalent time constant above 2.4 µs
 Whether a port without a transformer can use this route in place of the
 inductance requirement is an open question below.
 
-The results give a working range
---------------------------------
+Working range
+-------------
 
 :numref:`tbl-magnetics-cap-size` collects the limits.
 
@@ -235,15 +268,47 @@ above the droop limit with margin, and near the behaviour of standard
 magnetics. :doc:`gigabit-risk` shows what each value means for the
 received signal, and :doc:`isolation` how many high-voltage parts it takes.
 
-Capacitors on the chip cost area
---------------------------------
+:numref:`fig-magnetics-cw-range` places the limits on one axis.
+
+.. figure:: cw-range.svg
+   :name: fig-magnetics-cw-range
+   :alt: A log axis of the capacitor in each wire from 5 nF to 150 nF, with
+         lower limits marked at 9.9 nF for return loss, 16 nF for
+         droop, 24 nF for the 100BASE-TX time constant with Power
+         over Ethernet, 30.4 nF for the 100BASE-TX phase angle,
+         and 70 nF for the same corner as standard magnetics. The
+         working range from 33 nF to 100 nF is shaded.
+
+   The limits of :numref:`tbl-magnetics-cap-size` and the working
+   range.
+
+On-chip capacitor area
+----------------------
 
 The capacitors can also be built on evampire, if they hold the voltages
 of :doc:`events` or sit behind another isolation barrier
 (:doc:`isolation`). The area of one capacitor is its capacitance divided
 by the capacitance per area. A capacitor that must hold a voltage beyond
 one device's rating can be built as :math:`N` devices in series. Each must
-then be :math:`N` times larger, so the area grows as :math:`N^2`:
+then be :math:`N` times larger, so the area grows as :math:`N^2`.
+
+:numref:`fig-magnetics-cap-area` shows both effects.
+
+.. figure:: cap-area.svg
+   :name: fig-magnetics-cap-area
+   :alt: Left, capacitors of one, two and three devices in series, each device
+         N times larger, giving areas of 1, 4 and 9 times one device.
+         Right, a cross-section of the oxide between metal layers M1
+         and M5 with a MIM capacitor, two plates close together under
+         the top metal with a thin insulator, 2.0 fF/µm² and rated 6.6
+         V, 16 nF in 8.0 mm²; and a capacitor with plates on M1 and M5
+         across about 5 µm of oxide, 0.0069 fF/µm², 16 nF in about
+         2300 mm².
+
+   Series devices and the two kinds of on-chip capacitor (schematic, not
+   to scale).
+
+The area of one coupling capacitor is:
 
 .. math::
 

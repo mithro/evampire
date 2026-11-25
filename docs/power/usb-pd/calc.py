@@ -189,5 +189,38 @@ print("== SPR and EPR worst-case VBUS (PD Table 4.7: vSrcNew max, vSrcValid max)
 for v in (20.0, 48.0):
     print(f"  {v:g} V x 1.05 + 0.5 V = {v*1.05+0.5:.2f} V")
 
-print("== Dead-battery Rd voltage with the 3.0 A Rp current (Type-C Tables 4-27, 4-28) ==")
-print(f"  356 uA x 6.12 kOhm = {356e-6*6.12e3:.2f} V (Type-C Table 4-28 limit 2.18 V)")
+print("== Dead-battery Rd path (analogue.rst; Type-C Tables 4-27, 4-37) ==")
+# Range a source with a current-source Rp reads as Rd (Type-C Table 4-37,
+# vCCCur-Rd connect thresholds), with the Rp current range of each level
+# (Type-C Table 4-27: 80 uA +-20 %, 180 and 330 uA +-8 %).
+LEVELS = (("default", 64e-6, 96e-6, 0.261, 1.32),
+          ("1.5 A", 165.6e-6, 194.4e-6, 0.676, 1.32),
+          ("3.0 A", 303.6e-6, 356.4e-6, 0.88, 2.181))
+for name, ilo, ihi, vlo, vhi in LEVELS:
+    print(f"  {name:8s} I_Rp {ilo*1e6:.1f} to {ihi*1e6:.1f} uA, "
+          f"V_CC range {vlo} to {vhi} V")
+R_STD = 2.0e3
+for name, ilo, ihi, vlo, vhi in LEVELS:
+    print(f"  standard, 2.0 kOhm, {name}: Vt 0.61 V at {ilo*1e6:.1f} uA -> "
+          f"{ilo*R_STD+0.61:.3f} V; Vt 0.85 V at {ihi*1e6:.1f} uA -> "
+          f"{ihi*R_STD+0.85:.3f} V")
+r_lo = max(vlo / ilo for _, ilo, ihi, vlo, vhi in LEVELS)
+r_hi = min((vhi - 0.08) / ihi for _, ilo, ihi, vlo, vhi in LEVELS)
+print(f"  native, V_GS 0 to 0.08 V: R_s from {r_lo/1e3:.2f} to "
+      f"{r_hi/1e3:.2f} kOhm")
+margin = 1.32 - (194.4e-6 * R_STD + 0.85)
+print(f"  margin at 1.5 A, standard example: {margin*1e3:.0f} mV; beta for "
+      f"that overdrive = {2*194.4e-6/margin**2*1e3:.0f} mA/V^2 "
+      f"(at 80 mV: {2*194.4e-6/0.08**2*1e3:.0f} mA/V^2)")
+print(f"  source above the P-well at 356.4 uA: standard 2.0 kOhm "
+      f"{356.4e-6*R_STD:.2f} V, native 5.9 kOhm {356.4e-6*5.9e3:.2f} V")
+
+print("== Crowbar energy (cc-protection.rst; PD Table 4.7 cSrcBulk) ==")
+for v, label in ((21.5, "at 21.5 V, first firing"),
+                 (6.0, "at a 6 V trigger, retry by a source that restores "
+                       "its old voltage")):
+    print(f"  {label}: {0.5*10e-6*v*v*1e3:.2f} to {0.5*120e-6*v*v*1e3:.1f} mJ")
+
+print("== VCONN ramp and load (Type-C Tables 4-5, 4-6) ==")
+print(f"  ramp: 15 mA charging + iRaDetect 10 mA = {15+10} mA")
+print(f"  75 mW at 3.0 V = {75/3:.0f} mA; 20 mW at 3.0 V = {20/3:.1f} mA")

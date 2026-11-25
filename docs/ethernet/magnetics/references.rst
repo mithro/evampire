@@ -3,7 +3,7 @@ References
 
 The documents cited on the magnetics pages, grouped by kind. Each page
 gives the section, table or slide at the point where it cites a document.
-Standards are listed on :doc:`../../standards`.
+Standards are listed on the :doc:`standards page <../../standards>`.
 
 IEEE 802.3 working group documents
 ----------------------------------
@@ -114,7 +114,7 @@ Application notes
    lines
    <https://www.tdk-electronics.tdk.com/download/3260192/b438406d129a91cd76ebd99fb612b98e/download-presentation.pdf>`__.
 
-Data sheets
+Datasheets
 -----------
 
 .. [MAG-KSZ9031] Microchip, `KSZ9031RNX gigabit Ethernet transceiver with

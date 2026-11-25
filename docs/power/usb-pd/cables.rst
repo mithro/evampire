@@ -6,8 +6,8 @@ Cables and VCONN
 How a USB Type-C port powers the chip inside a marked cable, and how it asks
 that chip for the cable's rating before offering more than 3 A.
 
-A source must not offer more than its cable can carry
------------------------------------------------------
+Cable current rating
+--------------------
 
 Every standard USB Type-C cable carries at least 3 A at voltages above 5 V
 (:pd:`Section 8.6.1.2.2`). A cable rated for more than 3 A, and every cable
@@ -26,8 +26,8 @@ nor its supply.
 
 .. _usbpd-vconn:
 
-VCONN powers the e-marker from the unused CC pin
-------------------------------------------------
+VCONN and the e-marker
+----------------------
 
 The e-marker takes its power from :term:`VCONN`, a 3.0 V to 5.5 V supply that
 the source puts on the :term:`CC` pin not connected to the cable's CC wire
@@ -35,10 +35,23 @@ the source puts on the :term:`CC` pin not connected to the cable's CC wire
 :term:`Ra`, on that pin. The source supplies VCONN on the pin that shows Ra,
 or on the unused pin whatever it shows, within *tVCONNON* (2 ms) of VBUS
 reaching 5 V (:typec:`Section 4.5.2.2.9.1`; :typec:`Table 4-32 <x>`).
+:numref:`fig-usbpd-vconn-cable` shows the two paths.
+
+.. graphviz:: vconn-cable.dot
+   :name: fig-usbpd-vconn-cable
+   :caption: A source supplying VCONN to the e-marker in the near cable plug,
+             through the CC pin that does not meet the CC wire.
+   :alt: Schematic. In the source port, Rp connects to the CC1 pin, which
+         meets the plug's CC contact and the CC wire to the far plug and the
+         sink's Rd. A VCONN supply of 3.0 to 5.5 V connects through a switch
+         to the CC2 pin, with a discharge resistor Rdch of 30 to 6120 Ω to
+         ground used after detach. CC2 meets the plug's VCONN contact, which
+         holds Ra, 0.8 to 1.2 kΩ to ground, and the e-marker. VCONN turns on
+         within tVCONNON, 2 ms, of VBUS reaching 5 V.
 
 The port that supplies VCONN is the *VCONN Source*. After attach it is the
-source; the two ports can exchange the job with a VCONN_Swap (see
-:ref:`usbpd-vconn-swap`).
+source; the two ports can exchange the job with a
+:ref:`VCONN_Swap <usbpd-vconn-swap>`.
 
 evampire's USB Type-C ports carry USB 2.0 data on D+ and D− (see
 :ref:`req-usb-serial`) and no SuperSpeed pairs. :numref:`tab-usbpd-vconn-when`
@@ -91,10 +104,14 @@ marked cable must meet.
      - none
      - 20
      - mW
-   * - The same, in the first *tRaWeaken*
+   * - The same, in the first *tRaWeaken* (21 ms to 1.2 s)
      - none
      - 75
      - mW
+   * - Current drawn while VCONN is below 3.0 V, *iRaDetect*
+     - none
+     - 10
+     - mA
    * - E-marker ready after VCONN, *teMarkerReady*
      - none
      - 50
@@ -108,8 +125,8 @@ After detach the source discharges the VCONN pin through Rdch until it is
 below *vVCONNDischarge*, 0.8 V (:typec:`Section 4.5.2.2.6`;
 :typec:`Table 4-6 <x>`).
 
-The VCONN switch must charge the cable and then carry its load
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+VCONN switch current
+^^^^^^^^^^^^^^^^^^^^
 
 When VCONN turns on, the switch must charge the cable's capacitance to the
 lowest valid VCONN voltage within tVCONNON. A switch with a
@@ -141,21 +158,42 @@ least:
      - Turn-on time, tVCONNON, 2 ms (:typec:`Table 4-32`)
      - s
 
-The equation assumes the cable draws no other current while it charges.
-With the limits above:
+The equation counts only the current that charges the capacitance. With
+the limits above:
 
 .. math::
 
    I_\text{inrush} = \frac{10\ \mu\text{F} \times 3.0\ \text{V}}{2\ \text{ms}}
                    = 15\ \text{mA}
 
-Once charged, the cable draws its operating power. The 100 mW a source must
-supply is :math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest
-valid VCONN voltage. A VCONN switch for evampire therefore needs a current
-limit of at least 33 mA. Sources with SuperSpeed data must supply 1 W to
+While VCONN is below 3.0 V the cable may also draw up to *iRaDetect*,
+10 mA, so the switch supplies up to 15 mA plus 10 mA, 25 mA, during the
+ramp. Once VCONN is valid, a passive marked cable draws at most 75 mW in
+the first tRaWeaken, 25 mA at 3.0 V, and 20 mW after it
+(:numref:`tab-usbpd-vconn`). The source must also be able to supply
+100 mW, which is
+:math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest valid
+VCONN voltage. A VCONN switch for evampire therefore needs a current limit of
+at least 33 mA, which also covers the 25 mA of the ramp
+(:numref:`fig-usbpd-vconn-inrush`). Sources with SuperSpeed data must supply 1 W to
 1.5 W (:typec:`Table 4-4`), and the controllers in
 :numref:`tab-usbpd-vconn-parts`, built for those, have much higher limits.
 They are reference examples, not requirements for evampire.
+
+.. figure:: vconn-inrush.svg
+   :name: fig-usbpd-vconn-inrush
+   :alt: Two graphs against time after VCONN is switched on, 0 to 4 ms.
+         VCONN rises linearly from 0 to 3.0 V, the lowest valid VCONN, by
+         tVCONNON at 2 ms. While it rises, the switch supplies up to 25 mA:
+         15 mA to charge 10 µF, drawn dashed, plus up to 10 mA, iRaDetect,
+         drawn by the cable. The cable then draws at most 75 mW, 25 mA, in
+         the first tRaWeaken, and at most 20 mW, 6.7 mA, after it. A dashed line at 33 mA marks the
+         100 mW the source must be able to supply.
+
+   The VCONN switch charging a marked cable at a constant current, then
+   carrying its load, against the 100 mW a source must be able to supply;
+   the length of the 75 mW period, tRaWeaken, is 21 ms to 1.2 s and is
+   drawn shorter.
 
 .. list-table:: VCONN current limits of commercial USB PD controllers
    :name: tab-usbpd-vconn-parts
@@ -177,17 +215,18 @@ They are reference examples, not requirements for evampire.
 
 The STUSB1602 limit is set in 50 mA steps; the other two are fixed.
 
-The circuit of the VCONN switch is on :ref:`usbpd-vconn-switch`.
+The circuit of the VCONN switch is described with the
+:ref:`analogue circuits <usbpd-vconn-switch>`.
 
 .. _usbpd-discover-identity:
 
-Discover Identity asks the cable for its rating
------------------------------------------------
+Discover Identity
+-----------------
 
 Discover Identity is a structured Vendor_Defined message
-(:pd:`Section 6.4.12.3`). Sent with the :term:`SOP′ <SOP>` start of packet,
+(:pd:`Section 6.4.12.3`). Sent with the SOP′ :ref:`start of packet <usbpd-sop>`,
 it goes to the cable plug nearest the sender instead of to the port at the
-far end (see :ref:`usbpd-sop`). The e-marker answers with an ACK that
+far end. The e-marker answers with an ACK that
 carries a *Cable VDO*, a 32-bit :term:`VDO` describing the cable
 (:pd:`Table 6.45`). :numref:`fig-usbpd-discover-identity` shows the
 exchange.

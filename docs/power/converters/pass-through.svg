@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="270" viewBox="0 0 560 270" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<rect width="560" height="270" fill="#ffffff"/>
+<line x1="90.0" y1="30.0" x2="90.0" y2="210.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="90.0" y1="210.0" x2="90.0" y2="215.0" stroke="#222222" stroke-width="1.2"/>
+<text x="90.0" y="226.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">35</text>
+<line x1="187.8" y1="30.0" x2="187.8" y2="210.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="187.8" y1="210.0" x2="187.8" y2="215.0" stroke="#222222" stroke-width="1.2"/>
+<text x="187.8" y="226.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">40</text>
+<line x1="285.7" y1="30.0" x2="285.7" y2="210.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="285.7" y1="210.0" x2="285.7" y2="215.0" stroke="#222222" stroke-width="1.2"/>
+<text x="285.7" y="226.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">45</text>
+<line x1="383.5" y1="30.0" x2="383.5" y2="210.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="383.5" y1="210.0" x2="383.5" y2="215.0" stroke="#222222" stroke-width="1.2"/>
+<text x="383.5" y="226.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">50</text>
+<line x1="481.3" y1="30.0" x2="481.3" y2="210.0" stroke="#e4e4e4" stroke-width="1"/>
+<line x1="481.3" y1="210.0" x2="481.3" y2="215.0" stroke="#222222" stroke-width="1.2"/>
+<text x="481.3" y="226.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">55</text>
+<line x1="90.0" y1="210.0" x2="540.0" y2="210.0" stroke="#222222" stroke-width="1.2"/>
+<line x1="90.0" y1="30.0" x2="90.0" y2="210.0" stroke="#222222" stroke-width="1.2"/>
+<text x="315.0" y="248.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">powered device input voltage (V)</text>
+<rect x="129.1" y="41.5" width="140.9" height="22.0" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<rect x="270.0" y="41.5" width="250.4" height="22.0" rx="0" fill="#e2f0d9" stroke="#38761d" stroke-width="1.0"/>
+<text x="82.0" y="52.5" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">Type 1</text>
+<text x="270.0" y="34.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">44.2</text>
+<rect x="236.7" y="86.5" width="150.7" height="22.0" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<rect x="387.4" y="86.5" width="133.0" height="22.0" rx="0" fill="#e2f0d9" stroke="#38761d" stroke-width="1.0"/>
+<text x="82.0" y="97.5" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">Type 2</text>
+<text x="387.4" y="79.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">50.2</text>
+<rect x="236.7" y="131.5" width="150.7" height="22.0" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<rect x="387.4" y="131.5" width="133.0" height="22.0" rx="0" fill="#e2f0d9" stroke="#38761d" stroke-width="1.0"/>
+<text x="82.0" y="142.5" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">Type 3</text>
+<text x="387.4" y="124.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">50.2</text>
+<rect x="211.3" y="176.5" width="215.2" height="22.0" rx="0" fill="#fbe5d6" stroke="#c55a11" stroke-width="1.0"/>
+<rect x="426.5" y="176.5" width="93.9" height="22.0" rx="0" fill="#e2f0d9" stroke="#38761d" stroke-width="1.0"/>
+<text x="82.0" y="187.5" font-size="12" text-anchor="end" font-weight="normal" fill="#222222" dominant-baseline="middle">Type 4</text>
+<text x="426.5" y="169.5" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">52.2</text>
+<text x="178.0" y="18.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#c55a11" dominant-baseline="middle">regulated path</text>
+<text x="471.5" y="18.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">pass-through</text>
+</svg>

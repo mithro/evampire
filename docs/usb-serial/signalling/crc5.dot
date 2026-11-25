@@ -1,0 +1,53 @@
+// CRC5 shift register for the generator polynomial x^5 + x^2 + 1, in the
+// form that shifts one data bit in per clock: the feedback (input bit XOR
+// the last stage c4) enters stage c0 and is XORed into stage c2.
+//
+// Fixed grid (positions in inches): the register runs left to right along
+// y=1.0; c4 returns to the input XOR along y=1.8; the feedback tap to the
+// x^2 XOR runs along y=0.35.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph crc5 {
+    graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
+           size="7.4,3"];
+    node  [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+           fontname="Helvetica", fontsize=11, width=0.55, height=0.5,
+           fixedsize=true];
+    edge  [arrowsize=0.6, penwidth=1.4];
+
+    xi [pos="1.0,1.0!", shape=circle, width=0.32, label="⊕", fontsize=14,
+        fillcolor="#fbe5d6"];
+    c0 [pos="2.0,1.0!", label="c0"];
+    c1 [pos="2.9,1.0!", label="c1"];
+    x2 [pos="3.7,1.0!", shape=circle, width=0.32, label="⊕", fontsize=14,
+        fillcolor="#fbe5d6"];
+    c2 [pos="4.5,1.0!", label="c2"];
+    c3 [pos="5.4,1.0!", label="c3"];
+    c4 [pos="6.3,1.0!", label="c4"];
+
+    node [shape=plaintext, style="", fontsize=10, width=1.2, height=0.2];
+    in_l  [pos="0.2,1.2!", width=0.8, label="data bit in"];
+    fb_l  [pos="2.6,0.18!", width=1.4, fontcolor="#c55a11",
+           label="feedback = data ⊕ c4"];
+    init  [pos="3.7,-0.25!", width=5.0,
+           label="starts at 11111; over a good token, CRC included, it ends at 01100"];
+
+    node [shape=point, width=0.01, height=0.01, label=""];
+    kin [pos="0.0,1.0!"];
+    k1  [pos="6.85,1.0!"];
+    k2  [pos="6.85,1.8!"];
+    k3  [pos="1.0,1.8!"];
+    j   [pos="1.45,1.0!", width=0.07, height=0.07, style=filled, fillcolor=black];
+    t1  [pos="1.45,0.35!"];
+    t2  [pos="3.7,0.35!"];
+
+    kin -> xi;
+    c4 -> k1 [arrowhead=none];  k1 -> k2 [arrowhead=none];
+    k2 -> k3 [arrowhead=none];  k3 -> xi;
+    xi -> j [arrowhead=none];  j -> c0;
+    j -> t1 [arrowhead=none, color="#c55a11"];
+    t1 -> t2 [arrowhead=none, color="#c55a11"];
+    t2 -> x2 [color="#c55a11"];
+    c0 -> c1;  c1 -> x2;  x2 -> c2;  c2 -> c3;  c3 -> c4;
+}
