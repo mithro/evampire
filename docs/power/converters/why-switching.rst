@@ -134,9 +134,9 @@ commercial converters at similar voltages reach the following efficiencies:
 
 * the TPS55289 four-switch buck-boost converter is specified at 96 %
   efficiency converting 12 V to 20 V at 3 A [CONV-TPS55289]_ (Features);
-* the LM5177 data sheet's design example assumes 95 % efficiency for a
+* the LM5177 datasheet's design example assumes 95 % efficiency for a
   four-switch buck-boost converter [CONV-LM5177]_ (Section 8.2.2.4);
-* the LM5176 data sheet's design example assumes 90 % efficiency
+* the LM5176 datasheet's design example assumes 90 % efficiency
   [CONV-LM5176]_ (Section 8.2.2.4).
 
 These are illustrations from other designs, not evampire values.

@@ -1,5 +1,5 @@
-Fundamentals
-============
+Power over Ethernet fundamentals
+================================
 
 These pages explain how an Ethernet cable carries power and the steps before
 the power is switched on.

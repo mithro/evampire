@@ -2,7 +2,7 @@ Interface specification
 =======================
 
 These pages explain RGMII itself, as the specifications and the transceiver
-data sheets define it.
+datasheets define it.
 
 :doc:`signals`
    What RGMII is, its six signals in each direction, and how it relates to

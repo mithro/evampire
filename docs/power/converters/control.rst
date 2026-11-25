@@ -166,7 +166,7 @@ Phase margin
    :wikipedia:`Bode plot <Bode_plot>` such as :numref:`fig-conv-bode`.
 
 The crossover frequency must be well below the switching frequency, because
-the duty cycle changes only once per period. The LM5122 data sheet places
+the duty cycle changes only once per period. The LM5122 datasheet places
 it between one twentieth and one fifth of the switching frequency
 [CONV-LM5122]_ (Section 8.1.1), 12.5 kHz to 50 kHz at 250 kHz.
 

@@ -23,20 +23,20 @@ Powered-device controllers
 
 .. [POE-TPS2372] Texas Instruments, `TPS2372 High-Power PoE PD Interface
    with Automatic MPS and Autoclass
-   <https://www.ti.com/lit/ds/symlink/tps2372.pdf>`__, data sheet SLUSCM4B,
+   <https://www.ti.com/lit/ds/symlink/tps2372.pdf>`__, datasheet SLUSCM4B,
    revised 2018-11.
 
 .. [POE-TPS2373] Texas Instruments, `TPS2373 High-Power PoE PD Interface
    with Advanced Startup <https://www.ti.com/lit/ds/symlink/tps2373.pdf>`__,
-   data sheet SLUSCD1C, revised 2018-11.
+   datasheet SLUSCD1C, revised 2018-11.
 
 .. [POE-TPS2378] Texas Instruments, `TPS2378 IEEE 802.3at PoE Powered Device
-   Controller <https://www.ti.com/lit/ds/symlink/tps2378.pdf>`__, data sheet
+   Controller <https://www.ti.com/lit/ds/symlink/tps2378.pdf>`__, datasheet
    SLVSB99C, revised 2015-07.
 
 .. [POE-TPS23753A] Texas Instruments, `TPS23753A IEEE 802.3 PoE Interface
    and Converter Controller with Enhanced ESD Immunity
-   <https://www.ti.com/lit/ds/symlink/tps23753a.pdf>`__, data sheet
+   <https://www.ti.com/lit/ds/symlink/tps23753a.pdf>`__, datasheet
    SLVS933D, revised 2020-12.
 
 .. [POE-LT4275] Analog Devices, `LT4275 LTPoE++/PoE+/PoE PD Controller
@@ -46,15 +46,15 @@ Powered-device controllers
 .. [POE-LTC4269-1] Analog Devices, `LTC4269-1 IEEE 802.3at High Power PD and
    Synchronous No-Opto Flyback Controller
    <https://www.analog.com/en/products/ltc4269-1.html>`__, product page and
-   data sheet.
+   datasheet.
 
 .. [POE-NCP1096] onsemi, `NCP1096 PoE-PD Interface Controller
-   <https://www.onsemi.com/pdf/datasheet/ncp1096-d.pdf>`__, data sheet
+   <https://www.onsemi.com/pdf/datasheet/ncp1096-d.pdf>`__, datasheet
    NCP1096/D.
 
 .. [POE-PD70224] Microchip, `PD70224 IdealBridge Dual MOSFET-Bridge
    Rectifier <https://www.microchip.com/en-us/product/pd70224>`__, product
-   page and data sheet DS00003575D, listed as not recommended for new
+   page and datasheet DS00003575D, listed as not recommended for new
    designs.
 
 Power sourcing equipment controllers
@@ -62,7 +62,7 @@ Power sourcing equipment controllers
 
 .. [POE-TPS23881] Texas Instruments, `TPS23881 Type-4 4-Pair 8-Channel PoE 2
    PSE Controller with SRAM and 200 mΩ RSENSE
-   <https://www.ti.com/lit/ds/symlink/tps23881.pdf>`__, data sheet SLVSF02E,
+   <https://www.ti.com/lit/ds/symlink/tps23881.pdf>`__, datasheet SLVSF02E,
    revised 2023-05.
 
 .. [POE-TPS2388] Texas Instruments, `TPS2388 8-Channel PoE PSE Controller
@@ -71,16 +71,16 @@ Power sourcing equipment controllers
 
 .. [POE-TPS23861] Texas Instruments, `TPS23861 IEEE 802.3at Quad Port Power
    over Ethernet PSE Controller
-   <https://www.ti.com/lit/ds/symlink/tps23861.pdf>`__, data sheet.
+   <https://www.ti.com/lit/ds/symlink/tps23861.pdf>`__, datasheet.
 
 .. [POE-LTC4291] Analog Devices, `LTC4291-1/LTC4292 4-Port IEEE 802.3bt PoE
    PSE Controller <https://www.analog.com/en/products/ltc4291-1.html>`__,
-   product page and data sheet.
+   product page and datasheet.
 
 .. [POE-LTC4279] Analog Devices, `LTC4279 Single Port PoE/PoE+/LTPoE++ PSE
    Controller
    <https://www.analog.com/media/en/technical-documentation/data-sheets/4279fa.pdf>`__,
-   data sheet 4279fa.
+   datasheet 4279fa.
 
 .. [POE-SI3474] Skyworks Solutions, `Si3474 Data Sheet: Up to four 802.3bt
    or eight 802.3at Ethernet Port PoE PSE Controllers

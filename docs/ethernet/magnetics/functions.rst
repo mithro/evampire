@@ -44,7 +44,7 @@ way of meeting them ([MAG-ENT98]_, section 2.1).
      - product immunity tests
    * - :ref:`Biasing the line driver <magnetics-driver-bias>`
      - circuit-side centre tap
-     - the transceiver's data sheet
+     - the transceiver's datasheet
    * - :ref:`Carrying Power over Ethernet current <magnetics-poe-current>`
      - cable-side centre taps
      - :clause:`Table 145-16 <145>`
@@ -186,7 +186,7 @@ with.
 These pages take a part as suitable when its maker states a withstand
 (test) voltage at least as high as that test voltage: 2121 V peak for the
 alternating test, or 2250 V for the direct test. Its rated working voltage
-can be lower. Magnetics data sheets state the isolation of the whole part,
+can be lower. Magnetics datasheets state the isolation of the whole part,
 most often 1500 V rms for 60 s ([MAG-PULSE]_, [MAG-WURTH]_, [MAG-BEL]_).
 
 .. _magnetics-common-mode:
@@ -222,7 +222,7 @@ transformer.
 
 Real transformers pass some common-mode signal through the capacitance
 between their windings at high frequencies, which is why a choke is added
-(:ref:`magnetics-choke`). Data sheets give the rejection as "common-mode
+(:ref:`magnetics-choke`). Datasheets give the rejection as "common-mode
 rejection": for example 33 dB to 43 dB from 30 MHz to 100 MHz for the Pulse
 H5007NL ([MAG-PULSE]_, electrical table), and 30 dB to 35 dB for the Bel
 0826-1G1T-23-F ([MAG-BEL]_, electrical table).

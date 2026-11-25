@@ -30,7 +30,7 @@ processor makes every power decision once it is running
    The voltages the process can hold, isolation from the cable, and the
    on-chip and external options for each function.
 :doc:`references`
-   The data sheets, papers and other sources cited on these pages.
+   The datasheets, papers and other sources cited on these pages.
 
 .. toctree::
    :hidden:

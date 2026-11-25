@@ -28,11 +28,11 @@ so that each can be found in the specifications.
 :doc:`contracts`
    Power levels, negotiating a contract, what the source and the sink each
    do, cables, and changing roles.
+:doc:`messages`
+   Packets and the electrical signal on the configuration channel.
 :doc:`power-use`
    Offers from the Power over Ethernet budget, two ports, and monitoring the
    power.
-:doc:`messages`
-   Packets and the electrical signal on the configuration channel.
 :doc:`implementation`
    The processor's work, the analogue circuits, CC protection and the
    gf180mcu voltage limits.
@@ -44,7 +44,7 @@ so that each can be found in the specifications.
 
    port-power
    contracts
-   power-use
    messages
+   power-use
    implementation
    references

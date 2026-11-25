@@ -1,5 +1,5 @@
-Ports without transformers
-==========================
+Ports without magnetics
+=======================
 
 These pages explain how an Ethernet port can do the jobs of the magnetics
 without coupling transformers.

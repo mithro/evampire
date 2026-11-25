@@ -1,5 +1,5 @@
-Implementation on evampire
-==========================
+USB Power Delivery in evampire
+==============================
 
 These pages cover what evampire needs to build USB Power Delivery.
 

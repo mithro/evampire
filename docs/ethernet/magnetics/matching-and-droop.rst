@@ -120,7 +120,7 @@ Droop
 A transformer cannot pass direct current, and passes low frequencies
 poorly. The reason is its
 magnetising inductance (see :wikipedia:`Transformer`): the
-inductance of one winding with the other left open, given in data sheets as
+inductance of one winding with the other left open, given in datasheets as
 the open-circuit inductance. This inductance sits across the signal path
 and shunts low frequencies away.
 
@@ -275,7 +275,7 @@ Gigabit magnetics are specified at 350 µH because the same parts serve
 100BASE-TX. 100BASE-TX takes its electrical specification from the FDDI
 twisted-pair standard, :std:`ANSI X3.263 <X3.263>` (:clause:`25`). Its
 section 9.1.7 requires at least 350 µH at the transmitter with any direct
-bias current from 0 mA to 8 mA ([MAG-LAW]_, slide 3). Data sheets therefore
+bias current from 0 mA to 8 mA ([MAG-LAW]_, slide 3). Datasheets therefore
 give the inductance at 100 kHz, 100 mV and 8 mA of bias
 ([MAG-KSZ9031]_, section 12).
 
@@ -290,7 +290,7 @@ Targets for a transformer-free port
 Whatever replaces the transformer must give a time constant of at least the
 1000BASE-T minimum, :math:`\tau_\text{min} = 1.6\ \mu\text{s}`. Standard
 magnetics give :math:`\tau_\text{mag} = 7.0\ \mu\text{s}`. Link partners'
-transceivers are designed for magnetics of this kind (their data sheets ask
+transceivers are designed for magnetics of this kind (their datasheets ask
 for them: [MAG-KSZ9031]_, section 12; [MAG-DP83867]_, section 9.2),
 so matching :math:`\tau_\text{mag}` asks nothing new of their receivers.
 :doc:`coupling-capacitors` turns both values into capacitor sizes.
