@@ -1,25 +1,45 @@
 .. _poe-limits:
 
-What the process can hold
-=========================
+Process voltage limits
+======================
 
 The gf180mcu process has three kinds of voltage limit, and a circuit
 connected to the cable must survive four kinds of electrical stress.
 
-The cable voltage is far above the standard devices' ratings
-------------------------------------------------------------
+Cable voltage and device ratings
+--------------------------------
 
-Every circuit on :doc:`powered-device` and :doc:`power-sourcing` handles up
+Every circuit of a :doc:`powered device <powered-device>` and of
+:doc:`power sourcing equipment <power-sourcing>` handles up
 to 57 V, plus surges. The standard transistors of
 `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_ are rated for 3.3 V,
 5 V or 6 V. A rating is not the only limit: evampire uses custom devices
 wherever a function needs them (:ref:`req-process`), so a function with no
 ready-made high-voltage device is a design task, not an impossibility.
 The three kinds of limit are the ratings, the breakdown voltages and the
-reach of custom structures.
+reach of custom structures. :numref:`fig-poe-ratings` sets the ratings and
+breakdown voltages against the cable voltage.
 
-Ratings are the guaranteed operating limits
--------------------------------------------
+.. figure:: ratings.svg
+   :name: fig-poe-ratings
+   :alt: Horizontal bar chart of voltage from 0 to 100 V. For each
+         gf180mcu device, a bar shows its rating and further bars its
+         breakdown voltages, minimum and up to typical: 3.3 V transistors
+         rated 3.63 V with gate oxide breakdown 7 to 8.8 V; 5 V transistors
+         rated 5.5 V; 6 V transistors rated 6.6 V with gate oxide 12 to
+         16 V, N+ to p-well 8.5 to 11 V and P+ to n-well 8.5 to 10.5 V;
+         n-well to substrate 10 to 14 V; 10 V LDMOS rated 10 V with drain
+         to source 13.2 to 14.5 V; vertical PNP 10 to 15 V; MIM 1 fF/µm²
+         rated 20 V with breakdown 20 to 40 V; MIM 1.5 and 2 fF/µm² 10 to
+         24 V. Dashed lines mark the 57 V cable voltage and the 95 V
+         suppressor limit, far above every bar.
+   :align: center
+
+   Ratings and breakdown voltages of standard gf180mcu devices against the
+   cable voltage.
+
+Ratings
+-------
 
 The ratings are the continuous limits the foundry guarantees for long life
 (:numref:`tab-poe-gf180-ratings`).
@@ -46,8 +66,8 @@ The 10 V LDMOS transistors are drain-extended, and their well shares the
 substrate potential [POE-GF180-LDMOS]_. The 1.5 fF/µm² and 2 fF/µm² MIM
 options are for 6 V use [POE-GF180-MIM]_.
 
-Breakdown voltages are the physical limits
-------------------------------------------
+Breakdown voltages
+------------------
 
 The physical limits are the voltages at which a layer or junction breaks
 down. They are higher than the ratings, and a design must stay below them
@@ -95,19 +115,38 @@ which every device fails. The typical MIM values are 24 V to 30 V across the
 1.5 fF/µm² and 2 fF/µm² options. The breakdown of the deep n-well to the
 substrate, and of the field oxide and inter-metal dielectric under a node at
 high voltage, needs gf180mcu simulation, a test structure or foundry data
-(:ref:`poe-limits-open`).
+(:ref:`poe-limits-open`). :numref:`fig-poe-limits-section` shows where each
+of these limits sits.
+
+.. figure:: limits-section.svg
+   :name: fig-poe-limits-section
+   :alt: Schematic cross-section of a p-type substrate with a 6 V NMOS in a
+         p-well, a 6 V PMOS in an n-well and an isolated NMOS in a p-well
+         inside a deep n-well, separated by field oxide, with metal layers,
+         a MIM capacitor and inter-metal dielectric above. Numbered markers
+         place each limit: 1 gate oxide, 7 V for 3.3 V devices and 12 V for
+         6 V devices; 2 N+ to p-well, 8.5 V; 3 P+ to n-well, 8.5 V; 4
+         n-well to substrate, 10 V; 5 the vertical PNP of P+, n-well and
+         substrate, 10 V; 9 MIM, 20 V or 10 V by option. Open markers show
+         the undocumented limits: 6 deep n-well to substrate, 7 field oxide
+         under a metal line at high voltage and 8 inter-metal dielectric.
+   :align: center
+
+   Where each breakdown sits, with minimum values and open markers for the
+   undocumented ones, in a schematic not to scale without the LDMOS.
 
 Metal carries the current, within electromigration limits of 2.09 mA per µm
 of width for Metal 1 to the second-top layer and 16.52 mA per µm for the
 30 kÅ top metal at 85 °C, and 0.58 mA per contact or via
 [POE-GF180-DRM-EM]_.
 
-For ESD, the PDK gives transmission-line pulse data for a 5 V or 6 V
-grounded-gate NMOS: it starts to conduct at about 10.7 V, holds about
-6.2 V, and fails at about 7 mA per µm of width [POE-GF180-ESD]_.
+For ESD, the PDK gives transmission-line pulse data for a 5 V or 6 V
+grounded-gate NMOS: it starts to conduct at about 10.7 V, holds about
+6.2 V, and fails at about 7 mA per µm of width [POE-GF180-ESD]_.
+:numref:`fig-esd-tlp-limits` plots the measured curves.
 
-Custom structures reach further
--------------------------------
+Custom structures
+-----------------
 
 Published work shows low-voltage CMOS switching or generating several times
 its device rating (:numref:`tab-poe-hv-cmos`). These are reference examples
@@ -149,31 +188,52 @@ from other processes, not evidence for gf180mcu.
 Two points limit how directly these carry over. The SOI results rely on a
 buried oxide that isolates every transistor from the substrate, and
 gf180mcu is bulk silicon. In bulk silicon the top of a stack sits at the
-full voltage relative to the substrate, so some junction or dielectric must
-hold that voltage continuously.
+full voltage relative to the substrate (:numref:`fig-hv-stack-section`), so
+some junction or dielectric must hold that voltage continuously.
+:numref:`fig-hv-oxide-isolation` compares bulk silicon with a buried
+oxide.
 
 The bulk results above did this by stacking two junctions between the
-circuit and the substrate, or by building devices in polysilicon on the
-field oxide, and reached 28 V to 36 V [POE-Ker2007]_ [POE-Ismail2017]_. In
+circuit and the substrate (:numref:`fig-hv-dnw-stack`), or by building
+devices in polysilicon on the field oxide (:numref:`fig-hv-poly-on-fox`),
+and reached 28 V to 36 V [POE-Ker2007]_ [POE-Ismail2017]_. In
 gf180mcu, whether a structure can hold 57 V plus a surge margin to the
 substrate depends on the breakdowns that need test structures. No
 documented limit rules it out.
 
 .. _poe-stresses:
 
-Four kinds of stress reach the cable side
------------------------------------------
+Stresses on the cable side
+--------------------------
 
-The four stresses differ by orders of magnitude in duration and energy.
-That decides whether a clamp can absorb a stress or a structure must block
-it.
+Four kinds of stress reach a circuit on the cable side. They differ by
+orders of magnitude in duration and energy
+(:numref:`fig-poe-stresses`). That decides whether a clamp can absorb a
+stress or a structure must block it.
+
+.. figure:: stresses.svg
+   :name: fig-poe-stresses
+   :alt: Log-log chart of voltage, 10 V to 10 kV, against duration, 10 ns
+         to 10 thousand seconds. Human body model ESD, 2 kV on 100 pF with
+         a 150 ns time constant and 0.2 mJ, is marked clamp. A 1500 V surge
+         through 40 Ω with a 462 µs time constant, 1.5 J in a clamp held at
+         90 V, is marked clamp. The isolation test, 1500 V rms or 2250 V DC
+         for 60 s or ten 1500 V impulses, is marked block. Continuous operation at 57 V while
+         powered is marked block.
+   :align: center
+
+   The four stresses on the cable side by duration and voltage: the same
+   10/700 µs impulse is clamped as a surge but blocked in the isolation
+   test, and continuous operation is drawn at an arbitrary long duration.
 
 ESD during handling
 ~~~~~~~~~~~~~~~~~~~
 
 The human body model used for chip ESD ratings is a 100 pF capacitor
 discharged through 1500 Ω, with a rise time of 2 ns to 10 ns
-[POE-ESDA-HBM]_ (:std:`JS-001 <js-001>`). For a 2 kV rating:
+[POE-ESDA-HBM]_ (:std:`JS-001 <js-001>`). :numref:`fig-esd-testers` draws
+the tester circuit and :numref:`fig-esd-sources` its current. For a 2 kV
+rating:
 
 .. math::
 
@@ -258,7 +318,21 @@ effective output resistance of 40 Ω. The test levels of
 
 The generator's short-circuit current has a 5 µs front and a 320 µs time to
 half value [POE-SLUA736]_. The estimate treats it as a single exponential
-decay and ignores the front. The energy is about 7000 times the HBM energy,
+decay and ignores the front; :numref:`fig-poe-surge` draws the current with
+its front.
+
+.. figure:: surge.svg
+   :name: fig-poe-surge
+   :alt: Graph of clamp current, 0 to 40 A, against time, 0 to 1500 µs. The
+         current rises to a 35 A peak after a 5 µs front and decays to half
+         its peak, 17.5 A, at 320 µs. A note gives the 1500 V generator with
+         40 Ω output resistance into a 90 V clamp, about 1.5 J in the clamp.
+   :align: center
+
+   The current of a 1500 V, 10/700 µs surge into a 90 V clamp, with a front
+   and decay that match the stated times.
+
+The energy is about 7000 times the HBM energy,
 for a pulse thousands of times longer. The 90 V clamp is below the 95 V
 limit that Texas Instruments gives for a port suppressor [POE-TPS23881]_
 (Application and Implementation).
@@ -268,7 +342,8 @@ Isolation test
 
 The isolation required by :clause:`145.4.1` is tested with high voltages
 between the cable conductors and other accessible conductors.
-:doc:`isolation` describes it. This stress must be blocked, not clamped: a
+:doc:`isolation` describes it and :numref:`fig-poe-isolation-test` shows
+where the voltage is applied. This stress must be blocked, not clamped: a
 clamp across the isolation barrier would fail the test.
 
 Continuous operation

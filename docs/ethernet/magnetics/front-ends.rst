@@ -17,8 +17,9 @@ Passive front end
 
 :numref:`fig-magnetics-arch-capacitor` shows one pair of the passive
 front end. High-voltage capacitors carry the data and block direct
-voltage. A centre-tapped inductor across the pair carries the Power over
-Ethernet current to the power circuits (:doc:`../../power/poe/index`). An
+voltage. A centre-tapped inductor across the pair carries the
+:doc:`Power over Ethernet <../../power/poe/index>` current to the power
+circuits. An
 optional common-mode choke and a cable-side termination handle common-mode
 noise, and clamps protect the chip-side nodes. On evampire, the line
 driver terminates the line, the receiver takes the signal, and a feedback

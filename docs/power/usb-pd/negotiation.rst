@@ -15,7 +15,7 @@ the source turns :term:`VBUS` on at 5 V and the two ends exchange four
 messages:
 
 #. Source_Capabilities: the source lists what it can supply, as
-   :term:`power data objects <PDO>` (:ref:`usbpd-pdo`).
+   :ref:`power data objects <usbpd-pdo>`.
 #. Request: the sink picks one item and states the current it will draw
    (:ref:`usbpd-rdo`).
 #. Accept: the source agrees. It can also answer Reject, or Wait if it can
@@ -92,8 +92,8 @@ When all three attempts fail, the sender sends Soft_Reset
 (:pd:`Section 7.32.2`). Soft_Reset is a control message that resets the
 message counters and protocol state of both ends without changing VBUS;
 the two ends then negotiate the contract again (:pd:`Section 7.1.1`). If
-Soft_Reset also fails, the port sends a :term:`Hard Reset`, which does
-change VBUS (:pd:`Section 7.1.1`; :ref:`usbpd-hard-reset`). One missed
+Soft_Reset also fails, the port sends a :ref:`Hard Reset <usbpd-hard-reset>`,
+which does change VBUS (:pd:`Section 7.1.1`). One missed
 GoodCRC therefore costs only a repeated message.
 :numref:`fig-usbpd-retries` shows the whole sequence.
 

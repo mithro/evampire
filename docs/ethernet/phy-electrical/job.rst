@@ -40,8 +40,8 @@ integrated one uses an on-chip byte interface
 
 When a cable is plugged in, the transceivers at its two ends exchange a
 short description of what each can do and choose the fastest speed both
-support. This exchange is :term:`autonegotiation`
-(:clause:`28`, see :doc:`autonegotiation`). After that, the transceiver:
+support. This exchange is
+:doc:`autonegotiation <autonegotiation>` (:clause:`28`). After that, the transceiver:
 
 * takes bytes from the forwarding logic, adds structure that lets the far
   end find its clock and the frame boundaries, and turns them into a

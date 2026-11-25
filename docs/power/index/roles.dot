@@ -1,0 +1,36 @@
+// The names of the two ends of a powered cable in each standard, and a
+// USB Type-C power role swap. From power/index.rst.
+//
+// Fill colours: the end that supplies power #fbe5d6, the end that
+// receives it #e2f0d9. Bold arrows carry power. Fixed grid (positions in
+// inches): one row per cable.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph roles {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10, width=1.7, height=0.5, fixedsize=true];
+    edge  [penwidth=2.4, arrowsize=0.7, fontname="Helvetica", fontsize=9];
+
+    h1 [pos="0.2,2.75!", shape=plaintext, style="", width=0.1, height=0.2,
+        label=""];
+    l1 [pos="3.3,3.1!", shape=plaintext, style="", width=3.0, height=0.25,
+        fontsize=11, label="Power over Ethernet: fixed while connected"];
+    s1 [pos="1.3,2.6!", label="Power sourcing\nequipment (PSE)", fillcolor="#fbe5d6"];
+    r1 [pos="5.3,2.6!", label="Powered device\n(PD)", fillcolor="#e2f0d9"];
+    s1 -> r1 [label="power over the Ethernet cable"];
+
+    l2 [pos="3.3,1.85!", shape=plaintext, style="", width=3.0, height=0.25,
+        fontsize=11, label="USB Power Delivery: before a role swap"];
+    s2 [pos="1.3,1.35!", label="Source\n(dual-role port 1)", fillcolor="#fbe5d6"];
+    r2 [pos="5.3,1.35!", label="Sink\n(dual-role port 2)", fillcolor="#e2f0d9"];
+    s2 -> r2 [label="power over VBUS"];
+
+    l3 [pos="3.3,0.6!", shape=plaintext, style="", width=3.0, height=0.25,
+        fontsize=11, label="after a role swap, cable still connected"];
+    s3 [pos="1.3,0.1!", label="Sink\n(dual-role port 1)", fillcolor="#e2f0d9"];
+    r3 [pos="5.3,0.1!", label="Source\n(dual-role port 2)", fillcolor="#fbe5d6"];
+    r3 -> s3 [label="power over VBUS"];
+}

@@ -1,0 +1,28 @@
+// The open idea of a hold-up capacitor for the start-up sequencer, behind
+// a diode or switch so that it stays out of the detection signature. From
+// startup.rst (IEEE 802.3 Table 145-21).
+//
+// Fill colours: power circuits #fff2cc, the open part #ffffff dashed.
+// Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph holdup {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    br  [pos="0.8,1.0!", label="Bridge outputs", width=1.3];
+    sig [pos="2.7,1.9!", label="Signature 25 kΩ;\nport capacitance\n0.05–0.12 µF", height=0.7];
+    dio [pos="2.7,0.4!", label="Diode or switch", fillcolor="#ffffff",
+         style="rounded,dashed"];
+    cap [pos="4.6,0.4!", label="Hold-up capacitor", fillcolor="#ffffff",
+         style="rounded,dashed"];
+    seq [pos="6.3,0.4!", label="Sequencer\nsupply", width=1.2];
+    br -> sig; br -> dio; dio -> cap; cap -> seq;
+    n [pos="5.2,1.7!", shape=plaintext, style="", width=2.6, height=0.4,
+       fontsize=10, label="open: whether the capacitor can stay\nhidden from detection"];
+}

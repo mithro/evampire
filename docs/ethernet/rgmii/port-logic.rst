@@ -457,7 +457,7 @@ duplex are read over MDIO. A handshake that holds the nibble stable while
 it is copied is the alternative if the whole nibble is needed.
 
 The rate-matching buffer absorbs the difference of up to 200 ppm between
-the receive and transmit clocks. :ref:`req-forwarding` relates the buffer's
+the receive and transmit clocks. :ref:`The frame forwarding requirement <req-forwarding>` relates the buffer's
 slack to the longest frame it can forward. The buffer also holds up to
 7 bytes more, because the transmitter sends a full preamble even when a
 shorter one arrived (see :doc:`frames`).

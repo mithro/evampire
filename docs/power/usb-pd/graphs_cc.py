@@ -305,18 +305,16 @@ def rx_margin():
 def dead_battery():
     """CC voltage of the dead-battery Rd path against the source's pull-up
     current, V_CC = I_Rp x R_s + V_GS with the overdrive neglected, against
-    the source's thresholds (analogue.rst; Type-C Table 4-37)."""
+    the range a source reads as Rd (analogue.rst; Type-C Table 4-37)."""
     p = Plot(60, 30, 590, 300, (0, 380), (0, 2.6))
     body = []
     # (current range, lower threshold, upper threshold, margin, name)
-    levels = [(64, 96, 0.260, 1.321, 1.32, "default"),
-              (165.6, 194.4, 0.675, 1.441, 1.32, "1.5 A"),
-              (303.6, 356.4, 0.879, 2.432, 2.181, "3.0 A")]
-    for lo, hi, vlo, vhi, vm, name in levels:
+    levels = [(64, 96, 0.261, 1.32, "default"),
+              (165.6, 194.4, 0.676, 1.32, "1.5 A"),
+              (303.6, 356.4, 0.88, 2.181, "3.0 A")]
+    for lo, hi, vlo, vhi, name in levels:
         body.append(rect(p.x(lo), p.y(vhi), p.x(hi) - p.x(lo),
                          p.y(vlo) - p.y(vhi), SNK, "none"))
-        body.append(line(p.x(lo), p.y(vm), p.x(hi), p.y(vm), SNK_INK, 1.2,
-                         "4,2"))
         body.append(text(p.x((lo + hi) / 2), p.top + 14, name, 11,
                          "middle"))
     body.append(p.frame())
@@ -341,11 +339,10 @@ def dead_battery():
         body.append(line(x0, yy - 4, x0 + 30, yy - 4, col, 1.8, dash))
         body.append(text(x0 + 36, yy, lab, 12))
     y += 40
-    body.append(text(p.left, y, "Green: the window between the source's "
-                     "Ra and open thresholds.", 12, fill=GREY))
-    body.append(text(p.left, y + 18, "Dashed: the margin targets. Native "
-                     "lines with V_GS = 0; overdrive neglected.", 12,
-                     fill=GREY))
+    body.append(text(p.left, y, "Green: the range a source reads as Rd "
+                     "(Type-C Table 4-37).", 12, fill=GREY))
+    body.append(text(p.left, y + 18, "Native lines with V_GS = 0; overdrive "
+                     "and body effect neglected.", 12, fill=GREY))
     return svg(680, int(y + 30), body, "Dead-battery Rd voltage")
 
 if __name__ == "__main__":

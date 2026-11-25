@@ -5,16 +5,16 @@ Packet structure
 
 A :term:`USB Power Delivery` message is framed as a packet, coded into
 5-bit symbols and checked, and its length sets how long the packet takes to
-send. The electrical signal that carries the bits on the :term:`CC` wire is
-described on :doc:`cc-signalling`.
+send. The :doc:`electrical signal <cc-signalling>` that carries the bits on
+the :term:`CC` wire is covered separately.
 
 Packet parts
 ------------
 
-Every message travels on the CC wire as one packet. :numref:`tab-usbpd-packet`
-lists the parts in the order they are sent (:pd:`Section 5.3.1.1`,
+Every message travels on the CC wire as one packet, which has six parts.
+:numref:`tab-usbpd-packet` lists the parts in the order they are sent (:pd:`Section 5.3.1.1`,
 :pd:`Figure 5.1`). Each bit of the packet is then sent with
-:term:`biphase mark coding <Biphase mark coding>` (:ref:`usbpd-bmc`).
+:ref:`biphase mark coding <usbpd-bmc>`.
 
 .. list-table:: Parts of a packet, in the order they are sent
    :name: tab-usbpd-packet

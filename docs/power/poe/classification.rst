@@ -1,15 +1,15 @@
 .. _poe-classification:
 
-Physical Layer and Data Link Layer classification
-=================================================
+Classification methods
+======================
 
 A powered device obtains its power through two classification methods.
 Each type must implement a set of them, each combination of the two ends
 gives a different power, and evampire uses both methods in each of its
 roles.
 
-There are two classification methods
-------------------------------------
+The two methods
+---------------
 
 The standard gives the two ends of a cable two ways to agree the power:
 
@@ -22,10 +22,25 @@ The standard gives the two ends of a cable two ways to agree the power:
    allocation in steps of 0.1 W (:doc:`lldp`).
 
 Both also give :term:`mutual identification`: each end learns the type of
-the other (:clause:`33.2.6`, :clause:`145.2.8`).
+the other (:clause:`33.2.6`, :clause:`145.2.8`). :numref:`fig-poe-class-methods`
+shows where each acts.
 
-Each type implements a set of methods
--------------------------------------
+.. figure:: class-methods.svg
+   :name: fig-poe-class-methods
+   :alt: Graph of the allocation at the powered device against time, in
+         three phases: class events, power on, and link up with LLDP
+         frames. The allocation is zero during the class events, then
+         25.5 W, class 4, from Physical Layer classification when the power
+         comes on, and later rises to 51 W through Data Link Layer
+         classification, set in steps of 0.1 W.
+   :align: center
+
+   Physical Layer classification sets the first allocation and Data Link
+   Layer classification changes it once the link is up; the example is a
+   class 6 powered device first given class 4.
+
+Methods by type
+---------------
 
 :numref:`tab-poe-class-methods` lists the methods that each type must
 implement. The Type 1 and Type 2 rows come from
@@ -113,11 +128,11 @@ evampire implements it in either case (:ref:`req-poe-classification`).
 
 .. _poe-class-outcome:
 
-The power depends on both ends
-------------------------------
+Power at the powered device
+---------------------------
 
-:numref:`tab-poe-class-outcome` gives the power at the powered device for
-each kind of power sourcing equipment, by the class the powered device
+The power at the powered device depends on both ends.
+:numref:`tab-poe-class-outcome` gives it for each kind of power sourcing equipment, by the class the powered device
 requests. Each value is the power of the assigned class at the powered
 device (:numref:`tab-poe-classes`), and assumes the power sourcing
 equipment has the power to give.
@@ -177,11 +192,12 @@ of class 4 or higher without LLDP.
 
 .. _poe-demotion:
 
-Fewer class events demote the powered device
---------------------------------------------
+Power demotion
+--------------
 
 The assigned class is the lower of the requested class and the class that
-the number of class events allows (:numref:`tab-poe-events`). A power
+the number of class events allows (:numref:`tab-poe-events`,
+:numref:`fig-poe-class-events`). A power
 sourcing equipment that cannot supply the requested class, because of its
 type or its power budget, issues fewer class events (:clause:`145.2.8.1`,
 :clause:`Table 145-11 <145>`). The standard has no name for this; the
@@ -202,11 +218,11 @@ classes 1 to 7, and to 99.9 W for class 8 (:clause:`145.5.3.3.1`,
 Autoclass only lowers the allocation (:ref:`autoclass <poe-autoclass>`).
 
 Before classification is complete, and in the first 80 ms after turn-on,
-the powered device stays within the start-up limits of
-:ref:`poe-pd-inrush`.
+the powered device stays within the
+:ref:`start-up limits <poe-pd-inrush>`.
 
-Equipment in the field relies on one method or the other
---------------------------------------------------------
+Methods used in the field
+-------------------------
 
 Power sourcing equipment differs in which method it relies on. The
 following are reference examples of products, not evidence of what the
@@ -245,11 +261,11 @@ says classes are negotiated by signature or in 0.1 W steps by LLDP. That
 holds for Types 3 and 4. For Type 2 it is incomplete, because compliant
 power sourcing equipment may rely on one class event and LLDP.
 
-evampire uses both methods in both roles
-----------------------------------------
+Methods in evampire
+-------------------
 
-:ref:`req-poe-classification` sets what evampire does in each role. These
-pages describe how:
+evampire uses both methods in both roles, as :ref:`req-poe-classification`
+sets out for each role. These pages describe how:
 
 As a powered device
    The start-up sequencer shows the class signatures (:doc:`startup`), and

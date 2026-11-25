@@ -108,8 +108,33 @@ Output selectors A and B
 
    The forwarding path has no full-frame storage. A forwarded frame that
    starts arriving while a processor frame is being sent on the same port is
-   therefore dropped. The share of the forwarded link's time taken by
-   dropped frames is roughly
+   therefore dropped, as :numref:`fig-output-selector` shows. The share of
+   the forwarded link's time taken by dropped frames is roughly
+
+   .. wavedrom::
+      :name: fig-output-selector
+      :alt: Timing diagram of output selector B. Port A receives frame 1,
+            then after a gap frame 2 and later frame 3. Port B sends frame 1
+            a few cycles after it arrives. A processor frame waits until
+            frame 1 has been sent and then starts in the gap. Frame 2 starts
+            arriving while the processor frame is being sent, so it is
+            dropped. Frame 3 arrives after the processor frame and is
+            forwarded.
+      :caption: Output selector B placing a processor frame in a gap, and
+                dropping a forwarded frame that starts during it, schematic
+                and not to scale.
+
+      { "signal": [
+          { "name": "A receives", "wave": "x3..x.4..x.5..",
+            "data": ["frame 1", "frame 2", "frame 3"] },
+          { "name": "processor waits", "wave": "0.1..0........" },
+          { "name": "B sends", "wave": "x.3..6...x..5.",
+            "data": ["frame 1", "processor frame", "frame 3"] },
+          { "name": "frame 2", "wave": "x.....9..x....",
+            "data": ["dropped"] }
+        ],
+        "config": { "hscale": 1 }
+      }
 
    .. math::
 

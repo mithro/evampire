@@ -95,9 +95,9 @@ duty cycle moves in steps of
 
 and in a buck converter the output moves in steps of
 :math:`\Delta V_\text{out} = V_\text{in} \, \Delta D` (symbols in
-:numref:`tab-conv-sym-pwm`). The finest voltage step a USB Power Delivery
-source must make is the 20 mV step of the programmable supply (*vPpsStep*,
-:pd:`Table 4.7`; see :doc:`../usb-pd/index`). At the highest input of 57 V that
+:numref:`tab-conv-sym-pwm`). The finest voltage step a
+:doc:`USB Power Delivery <../usb-pd/index>` source must make is the 20 mV
+step of the programmable supply (*vPpsStep*, :pd:`Table 4.7`). At the highest input of 57 V that
 needs :math:`\Delta D = 0.020 / 57 = 3.51 \times 10^{-4}`, which is
 11.5 bits, and therefore
 
@@ -349,8 +349,8 @@ one feeds.
 Two differences limit the sharing:
 
 * A converter senses its inductor current, and a port's current is the
-  inductor current averaged and, for a boost converter, multiplied by
-  :math:`1 - D` (:doc:`boost`). The port current for monitoring can be
+  inductor current averaged and, for a :doc:`boost converter <boost>`,
+  multiplied by :math:`1 - D`. The port current for monitoring can be
   computed from the inductor current or sensed at the port.
 * A power sourcing equipment port must limit the current in its own switch
   (:ref:`conv-fault-times`), so it needs its own sense point after the
@@ -442,9 +442,9 @@ The USB Power Delivery specification gives no response time for the source's
 over-current protection; it requires that the protection does not trip
 within the negotiated contract (:pd:`Section 4.1.5.1`, see
 :doc:`../usb-pd/index`). The converter's own cycle-by-cycle limit protects the
-converter, and software carries out the shutdown sequence. A boost
-converter needs a series switch to stop a short on its output
-(:doc:`boost`).
+converter, and software carries out the shutdown sequence. A
+:doc:`boost converter <boost>` needs a series switch to stop a short on its
+output.
 
 For reference, the TPS23881 power sourcing equipment controller turns its
 switch off within 0.9 µs of its short-circuit threshold, 205 mV to 245 mV
@@ -631,7 +631,7 @@ For evampire the same structure needs, without software:
   supply and the input are high enough;
 * a default operating point for the input converter: a bus voltage set by
   hardware, for example by a resistor divider or a fixed reference;
-* a soft start (:ref:`conv-soft-start`) and the cycle-by-cycle current limit
+* a :ref:`soft start <conv-soft-start>` and the cycle-by-cycle current limit
   (:ref:`conv-protection`) active from the first pulse;
 * a hand-over from the start-up path to the converter's own output.
 
@@ -641,9 +641,9 @@ negotiates more power where needed.
 USB start-up
 ~~~~~~~~~~~~
 
-A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any USB Power
-Delivery negotiation, at the current its pull-up resistor advertises
-(:typec:`Table 4-27`, see :doc:`../usb-pd/index`).
+A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any
+:doc:`USB Power Delivery <../usb-pd/index>` negotiation, at the current its
+pull-up resistor advertises (:typec:`Table 4-27`).
 :numref:`tab-conv-usb-start-power` gives the power at the lowest voltage.
 
 .. list-table:: Power available from a USB source before negotiation, at 4.75 V

@@ -45,7 +45,7 @@ allows either a :wikipedia:`current source <Current_source>` working from
 
 On chip
    Switched :wikipedia:`current mirrors <Current_mirror>` copy a current set
-   by the voltage reference (:ref:`usbpd-reference`). With no sink attached,
+   by the :ref:`voltage reference <usbpd-reference>`. With no sink attached,
    the pin must rise above the 2.432 V disconnect threshold of the 3.0 A level
    (:typec:`Table 4-37`). From a 3.3 V supply, this leaves 0.87 V of headroom
    for the mirror's output transistor. The CC pin stays below 5.5 V, within
@@ -118,17 +118,14 @@ then sit at the same voltage, so :math:`V_\text{GS}` equals the drain-source
 voltage, which is positive while current flows: :math:`V_\text{GS}` is never
 below zero, even for a transistor whose threshold is.
 
-:math:`V_\text{CC}` must lie between the source's two thresholds at every
+:math:`V_\text{CC}` must stay in the range a source reads as Rd at every
 pull-up current of its level, or the source reads Ra or an open pin and does
-not turn VBUS on. With a current-source Rp the window is above 0.260 V and
-below 1.321 V at the default level, above 0.675 V and below 1.441 V at
-1.5 A, and above 0.879 V and below 2.432 V at 3.0 A
-(:numref:`tab-usbpd-src-thresholds`, :typec:`Table 4-37`). The
-dead-battery path keeps :math:`V_\text{CC}` a margin below the upper
-thresholds. At the default and 1.5 A levels
-it holds :math:`V_\text{CC}` at or below 1.32 V, the top of the voltage-clamp Rd
-(:typec:`Section 4.8.5`). At 3.0 A it holds it at or below 2.181 V, the top of the
-range for an Rd within ± 20 % (:typec:`Table 4-35`).
+not turn VBUS on. With a current-source Rp the range is 0.261 V to 1.32 V at
+the default level, 0.676 V to 1.32 V at 1.5 A, and 0.88 V to 2.181 V at
+3.0 A (:typec:`Table 4-37`). The upper ends are the highest voltage of the
+voltage-clamp Rd, 1.32 V, and of an Rd within ± 20 %, 2.181 V
+(:typec:`Table 4-28`, :typec:`Table 4-35`). The source's thresholds on
+either side are in :numref:`tab-usbpd-src-thresholds`.
 
 For example, take a standard 6 V NMOS at its highest documented threshold,
 0.85 V ([USBPD-GF180-ELEC]_, Section 2.0), and :math:`R_\text{s}` =
@@ -137,7 +134,19 @@ For example, take a standard 6 V NMOS at its highest documented threshold,
 with the overdrive neglected. At the 3.0 A level, 356.4 µA, it gives 1.6 V,
 inside the 2.181 V limit. At the lowest threshold, 0.61 V, and the lowest
 current of each level, 64 µA, 165.6 µA and 303.6 µA, it gives 0.74 V,
-0.94 V and 1.2 V, above the lower thresholds. :numref:`fig-usbpd-dead-battery` plots the
+0.94 V and 1.2 V, above the lower ends of the ranges.
+
+Two effects neglected above raise :math:`V_\text{GS}` further. The
+overdrive is :math:`\sqrt{2 I_\text{Rp} / \beta}`, where :math:`\beta`
+grows with the transistor's width: keeping it within the 80 mV left at
+1.5 A in the example, 1.32 V − 1.24 V, needs :math:`\beta` of about
+:math:`2 \times 194.4\ \mu\text{A} / (80\ \text{mV})^{2} = 60\ \text{mA/V}^{2}`.
+The body effect raises the threshold because the transistor's source sits
+at :math:`I_\text{Rp} \times R_\text{s}` above its P-well, up to 0.71 V
+in the example and 2.1 V for a native transistor with 5.9 kΩ. A
+transistor in an isolated P-well tied to its own source avoids the body
+effect. The transistor's width and the body effect therefore set the
+usable :math:`R_\text{s}`, which a simulation with the PDK models settles. :numref:`fig-usbpd-dead-battery` plots the
 equation over the range of pull-up currents.
 
 .. graphviz:: rd-paths.dot
@@ -159,32 +168,35 @@ equation over the range of pull-up currents.
    :name: fig-usbpd-dead-battery
    :alt: Graph of CC voltage from 0 to 2.6 V against pull-up current from
          0 to 380 µA. Green boxes mark, for each level's current range, the
-         window between the source's thresholds: 0.260 to 1.321 V at 64 to
-         96 µA, 0.675 to 1.441 V at 165.6 to 194.4 µA, and 0.879 to
-         2.432 V at 303.6 to 356.4 µA, with dashed margin targets at 1.32 V,
-         1.32 V and 2.181 V. Lines for a standard NMOS with R_s of 2.0 kΩ
+         range a source reads as Rd: 0.261 to 1.32 V at 64 to 96 µA, 0.676
+         to 1.32 V at 165.6 to 194.4 µA, and 0.88 to 2.181 V at 303.6 to
+         356.4 µA. Lines for a standard NMOS with R_s of 2.0 kΩ
          and threshold 0.61 V or 0.85 V pass through every window. A native
          NMOS with 2.0 kΩ falls below every window; with 5.0 kΩ it passes
          through all three.
 
    CC voltage of the dead-battery path against the source's pull-up current,
-   against the source's thresholds, with the overdrive neglected.
+   against the range a source reads as Rd, with the overdrive and the body
+   effect neglected.
 
 On chip, native transistor
    The PDK's 6 V :term:`native transistor` *nfet_06v0_nvt* has a
    :wikipedia:`threshold <Threshold_voltage>` of −0.32 V to 0.08 V
    ([USBPD-GF180-ELEC]_, Section 4.0). With :math:`V_\text{GS}` between
    0 V and 0.08 V, the resistor alone must lift the CC voltage above the
-   lower thresholds: :math:`R_\text{s}` above
-   :math:`0.675\ \text{V} / 165.6\ \mu\text{A} = 4.1\ \text{k}\Omega`.
+   lower ends of the ranges: :math:`R_\text{s}` above
+   :math:`0.676\ \text{V} / 165.6\ \mu\text{A} = 4.1\ \text{k}\Omega`.
    The upper limits need :math:`R_\text{s}` below
    :math:`(2.181\ \text{V} - 0.08\ \text{V}) / 356.4\ \mu\text{A}
    = 5.9\ \text{k}\Omega`. A native transistor therefore needs about
-   4.1 kΩ to 5.9 kΩ; the 2.0 kΩ of the example is too small. Its threshold
-   can be below zero, so turning it off needs its gate about 0.5 V below its
-   source, or a switch in series: with its gate at 0 V, its source rises to
-   the threshold magnitude and the path still conducts. Off in this way, it :wikipedia:`leaks <Leakage_(electronics)>`
-   up to 50 µA/µm at 6.6 V ([USBPD-GF180-ELEC]_, Section 4.0). Any leakage
+   4.1 kΩ to 5.9 kΩ, before the overdrive and body effect; the 2.0 kΩ of
+   the example is too small. Its threshold can be below zero, so turning it
+   off needs its gate held below its source, or a switch in series: with
+   its gate at 0 V, its source rises to the threshold magnitude and the path
+   still conducts. With its gate 0.5 V below its threshold, up to 0.82 V
+   below its source, it :wikipedia:`leaks <Leakage_(electronics)>` 1 µA/µm
+   typically and up to 50 µA/µm at 6.6 V across it and 25 °C
+   ([USBPD-GF180-ELEC]_, Section 4.0). Any leakage
    adds to the Rp current when the port presents Rp (:typec:`Table 4-27`,
    Note 2).
 On chip, standard transistor
@@ -375,8 +387,8 @@ VBUS sensing and discharge
 
 The port measures VBUS to detect attach and detach, to check that VBUS is
 near 0 V before it switches VBUS on, and to check the voltage after each
-change. It discharges VBUS after detach, during a power role swap and during
-a Hard Reset (:ref:`usbpd-discharge`, :ref:`usbpd-monitoring`). VBUS
+change. It :ref:`discharges VBUS <usbpd-discharge>` after detach, during a power
+role swap and during a Hard Reset (:ref:`usbpd-monitoring`). VBUS
 reaches 21.5 V with fixed :term:`SPR` supplies, 22.15 V with PPS, and 50.9 V with :term:`EPR`
 (:ref:`usbpd-spr`, :ref:`usbpd-epr`). Commercial controllers take one of two
 approaches: a VBUS pin that holds the full voltage, as on the TPS65987D, or
@@ -469,7 +481,7 @@ The converters are described on :doc:`../converters/index`, their gate drive
 on :ref:`conv-gate-drive`, their protection on :ref:`conv-protection`, and
 the custom devices for on-chip power switches on :ref:`conv-custom`. The
 current limit that software sets is on :ref:`usbpd-limiting`, and the power
-flow on the board on :ref:`power-flow`. For reference, the TPS65987D puts
+flow on the board on :ref:`the power bridging page <power-flow>`. For reference, the TPS65987D puts
 two 5 A switches on the controller die, and the CCG5C drives external
 P-channel MOSFETs on separate sink and source paths
 (:numref:`tab-usbpd-ref-values`).
@@ -575,8 +587,10 @@ Open questions
 
 * Which transistor carries the dead-battery Rd path. For the native NMOS,
   a simulation with the PDK models gives the off-state leakage at the CC
-  voltages. For a standard 6 V NMOS, it gives the CC voltage over the range
-  of pull-up currents.
+  voltages. For either, it gives the CC voltage over the range of pull-up
+  currents with the overdrive and the body effect, and so the transistor
+  width, the series resistor and whether the transistor needs an isolated
+  P-well.
 * How much VCONN power a board supplies, which follows from whether its
   ports carry SuperSpeed signals and offer more than 3 A
   (:typec:`Table 4-4`).

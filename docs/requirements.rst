@@ -13,8 +13,8 @@ configurations, the first version and the full design, are described in
 
 .. _req-transceivers:
 
-Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
--------------------------------------------------------------------------------
+Ethernet transceivers
+---------------------
 
 * Each external port uses an :term:`Ethernet transceiver`. The transceiver
   is an external chip or is integrated on evampire, depending on the board
@@ -32,7 +32,9 @@ Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
   :wikipedia:`automatic speed negotiation <Autonegotiation>`.
 * The :term:`forwarding logic` connects to an integrated transceiver through
   the same one-byte-per-clock interface that it uses with an RGMII
-  interface.
+  interface. A 1000BASE-T slave transmits on the clock it recovers from the
+  cable, so its transmit bytes cross clock domains as well as its receive
+  bytes (:ref:`phy-int-interface`).
 * Every port supports gigabit Ethernet (1000BASE-T, 1000 Mbit/s over four
   pairs, :clause:`40`), 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) and
   10 Mbit/s Ethernet (10BASE-T, :clause:`14`) in both board configurations.
@@ -40,8 +42,8 @@ Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
 
 .. _req-cable:
 
-Each port connects to its RJ45 socket with or without transformers
-------------------------------------------------------------------
+Connection to the cable
+-----------------------
 
 * Each Ethernet port connects to its :term:`RJ45` socket either through
   coupling transformers, the :term:`magnetics`, or without them, depending
@@ -54,8 +56,8 @@ Each port connects to its RJ45 socket with or without transformers
 
 .. _req-forwarding:
 
-Ports A and B forward every frame to each other, except LLDP frames
--------------------------------------------------------------------
+Frame forwarding
+----------------
 
 * Every :term:`frame` received on port A is transmitted on port B, and every
   frame received on port B is transmitted on port A, except the frames
@@ -111,12 +113,13 @@ the buffer's slack:
 
 For example, a slack of 2 bytes gives
 :math:`L_\text{max} \approx 2 / (200 \times 10^{-6}) = 10\,000` bytes,
-which is longer than a 9000-byte jumbo frame.
+which is longer than a 9000-byte jumbo frame. :numref:`fig-rate-matching`
+shows the buffer level across such a frame.
 
 .. _req-processor-delivery:
 
-The processor receives the frames that match its address filter
----------------------------------------------------------------
+Frame delivery to the processor
+-------------------------------
 
 * Each received frame's destination :term:`MAC address` is compared against
   a programmable address and mask pair. A frame matches when every bit set
@@ -129,19 +132,20 @@ The processor receives the frames that match its address filter
 
 .. _req-processor-transmit:
 
-The processor sends frames in the gaps between forwarded frames
----------------------------------------------------------------
+Frame transmission by the processor
+-----------------------------------
 
 * The processor writes a frame into a transmit buffer and requests that it
   be sent out of port A, port B or both.
 * The chip adds the frame's :term:`preamble`, :term:`start frame delimiter`
   and checksum.
-* Processor frames are sent only in the gaps between forwarded frames.
+* Processor frames are sent only in the gaps between forwarded frames
+  (:numref:`fig-output-selector`).
 
 .. _req-memory:
 
-Only the processor's frames are stored whole
---------------------------------------------
+Frame storage
+-------------
 
 * The chip does not store full frames on the forwarding path.
 * Frame storage for the processor holds one or two frames of up to
@@ -149,7 +153,8 @@ Only the processor's frames are stored whole
   one frame while the hardware fills or empties the other.
 * The 1522 bytes are 1500 bytes of payload, the two 6-byte addresses, the
   2-byte type field, the 4-byte checksum and an optional 4-byte
-  :term:`VLAN tag` (:std:`IEEE 802.1Q <802.1Q>`, :clause:`3`).
+  :term:`VLAN tag` (:std:`IEEE 802.1Q <802.1Q>`, :clause:`3`), as
+  :numref:`fig-frame-layout` shows.
 * Frames longer than the processor's buffer, for example
   :wikipedia:`jumbo frames <Jumbo_frame>` of up to about 9000 bytes, are
   still forwarded between ports A and B, but are not delivered to the
@@ -157,8 +162,8 @@ Only the processor's frames are stored whole
 
 .. _req-processor:
 
-A small RISC-V processor handles low-rate traffic and control
--------------------------------------------------------------
+RISC-V processor
+----------------
 
 * The processor is a :wikipedia:`RISC-V` core with on-chip program and data
   memory (:std:`RISC-V ISA <riscv-unpriv>`).
@@ -173,8 +178,8 @@ A small RISC-V processor handles low-rate traffic and control
 
 .. _req-power-bridging:
 
-Power moves between Ethernet and USB Type-C in either direction
----------------------------------------------------------------
+Power bridging
+--------------
 
 A board built around evampire takes its power from an Ethernet cable
 (:term:`Power over Ethernet`, see :doc:`power/poe/index`) or from a
@@ -184,7 +189,7 @@ port. The section on :ref:`power roles <power-roles>` explains the names of
 the two ends of a powered cable, and :numref:`tab-power-board-configs` gives the role of each port in
 each board configuration.
 
-The board works in these modes:
+The board works in these modes (:numref:`fig-power-modes`):
 
 Ethernet in, USB out
    evampire receives power from an Ethernet port as a
@@ -239,8 +244,8 @@ Ethernet in, Ethernet out
 
 .. _req-power-control:
 
-Software makes every power decision, within hardware limits
------------------------------------------------------------
+Power control
+-------------
 
 * Software on the RISC-V processor makes every power decision once it is
   running. It carries out the negotiation on every port, keeps the power
@@ -259,7 +264,8 @@ Software makes every power decision, within hardware limits
   times.
 * evampire has a small built-in start-up sequencer, working without the
   processor, that answers the detection and classification steps and
-  requests a power level. Once the processor is running, the software
+  requests a power level (:numref:`fig-poe-sequencer`,
+  :numref:`fig-poe-voltage-timeline`). Once the processor is running, the software
   carries out any further negotiation, for example asking for more power.
 * evampire has built-in power limiting. Each port has a current and power
   limit that the software sets.
@@ -269,8 +275,8 @@ Software makes every power decision, within hardware limits
 
 .. _req-poe-classification:
 
-Power over Ethernet uses both classification methods in both roles
-------------------------------------------------------------------
+Power over Ethernet classification
+----------------------------------
 
 Power sourcing equipment in the field relies on either
 :term:`Physical Layer classification` or
@@ -316,8 +322,8 @@ every other part.
 
 .. _req-converters:
 
-evampire includes the functions of three voltage converters
------------------------------------------------------------
+Voltage converters
+------------------
 
 * evampire includes the functions of the three
   :wikipedia:`switching voltage converters <Switched-mode_power_supply>` in
@@ -332,8 +338,8 @@ evampire includes the functions of three voltage converters
 
 .. _req-usb-serial:
 
-Each USB Type-C port carries a USB serial port
-----------------------------------------------
+USB serial port
+---------------
 
 * Each USB Type-C port can also carry a :std:`USB 2.0 <usb2>` full-speed
   (12 Mbit/s) data connection on its D+ and D− wires.
@@ -347,8 +353,8 @@ Each USB Type-C port carries a USB serial port
 
 .. _req-process:
 
-evampire is built on gf180mcu, with custom devices where a function needs them
--------------------------------------------------------------------------------
+Process and custom devices
+--------------------------
 
 * The chip targets the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
   process through `wafer.space <https://wafer.space/>`_.

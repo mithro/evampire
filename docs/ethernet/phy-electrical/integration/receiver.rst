@@ -1,7 +1,7 @@
 .. _phy-int-receiver:
 
-Receiver
-========
+Integrated receiver
+===================
 
 Before the digital filters, the integrated receiver shares the echo between
 analogue and digital stages, and its analogue-to-digital converter (ADC)

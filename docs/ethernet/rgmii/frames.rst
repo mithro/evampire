@@ -124,8 +124,8 @@ therefore the nibble 5 fourteen times, and the SFD is 5 then D.
    { "signal": [
        { "name": "RXC",      "wave": "p......", "period": 2, "phase": -0.5 },
        { "name": "RX_CTL",   "wave": "0...1........." },
-       { "name": "RXD[3:0]", "wave": "=...=====2====",
-         "data": ["D", "5", "5", "5", "5", "5", "more 5", "5", "D",
+       { "name": "RXD[3:0]", "wave": "=...====2.====",
+         "data": ["D", "5", "5", "5", "5", "more 5", "5", "D",
                   "1", "0"] },
        {},
        { "name": "field",    "wave": "2...3.....4.5.",
@@ -164,14 +164,14 @@ preamble.
          preamble, RX_CTL rises and RXD carries many nibbles 5, then 5 and D.
          With a shortened preamble, RX_CTL rises later and RXD carries 5, 5,
          then 5 and D. With no preamble, RXD carries only 5 and D.
-   :caption: The start of a frame with a full, a shortened and no preamble; the
-             receiver finds the frame from the D that follows a 5. The cell
-             marked "more" stands for the preamble nibbles 5 not drawn.
+   :caption: The start of a frame with a full, a shortened and no preamble,
+             where the receiver finds the frame from the D that follows a 5
+             and the cell marked "more 5" stands for the nibbles not drawn.
 
    { "signal": [
        ["full",
          { "name": "RX_CTL", "wave": "01........" },
-         { "name": "RXD[3:0]", "wave": "x=====2==x", "data": ["5", "5", "5", "5", "5", "more", "5", "D"] }
+         { "name": "RXD[3:0]", "wave": "x====2.==x", "data": ["5", "5", "5", "5", "more 5", "5", "D"] }
        ],
        {},
        ["shorter",

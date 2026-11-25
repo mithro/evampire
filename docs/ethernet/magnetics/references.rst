@@ -3,7 +3,7 @@ References
 
 The documents cited on the magnetics pages, grouped by kind. Each page
 gives the section, table or slide at the point where it cites a document.
-Standards are listed on :doc:`../../standards`.
+Standards are listed on the :doc:`standards page <../../standards>`.
 
 IEEE 802.3 working group documents
 ----------------------------------

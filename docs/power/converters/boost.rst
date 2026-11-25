@@ -129,8 +129,8 @@ Large step-up ratios
 
 A large step-up ratio needs a long on time: from :math:`1/(1-D)`, the
 duty cycle approaches 1 as the ratio grows.
-The USB Power Delivery source on the other end of the cable decides which
-input voltages are available (:doc:`../usb-pd/index`).
+The :doc:`USB Power Delivery <../usb-pd/index>` source on the other end of
+the cable decides which input voltages are available.
 :numref:`tab-conv-boost-duty` shows the duty cycle needed to reach 54 V from
 each fixed USB Power Delivery voltage.
 

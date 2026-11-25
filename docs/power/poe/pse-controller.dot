@@ -4,7 +4,8 @@
 // control.
 //
 // Fill colours: power circuits #fff2cc, evampire #dbe8f5, external parts
-// and connectors #ffffff.
+// and connectors #ffffff. Red outlines mark the blocks that see the full
+// port voltage; the others sit near the supply return.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -17,9 +18,12 @@ digraph pse_channel {
 
     vpwr [label="High-voltage converter\n44–57 V", fillcolor="#fff2cc"];
     port [label="Port: positive pairs\nto supply, negative\npairs to switch", fillcolor="#ffffff"];
-    det  [label="Detection and\nclass source", fillcolor="#fff2cc"];
+    prot [label="Port protection:\n0.1 µF 100 V, TVS ≥ 58 V,\nfuse ≥ 60 V DC", fillcolor="#ffffff"];
+    det  [label="Detection and\nclass source\nsees up to 57 V", fillcolor="#fff2cc",
+          color="#c00000", penwidth=2];
     vmeas [label="Voltage\nmeasurement", fillcolor="#fff2cc"];
-    fet  [label="Switch\n(power MOSFET)", fillcolor="#fff2cc"];
+    fet  [label="Switch\n(power MOSFET)\nsees up to 57 V", fillcolor="#fff2cc",
+          color="#c00000", penwidth=2];
     gate [label="Gate drive and\ncurrent-limit loop", fillcolor="#fff2cc"];
     rsns [label="Sense resistor", fillcolor="#ffffff"];
     imeas [label="Current\nmeasurement", fillcolor="#fff2cc"];
@@ -27,6 +31,7 @@ digraph pse_channel {
     sw   [label="Software on\nevampire", fillcolor="#dbe8f5"];
 
     { rank=same; port; det; vmeas; }
+    { rank=same; vpwr; prot; }
     { rank=same; fet; gate; }
     { rank=same; rsns; imeas; fast; }
 
@@ -34,6 +39,7 @@ digraph pse_channel {
     port -> fet   [penwidth=2.5, label="power"];
     fet  -> rsns  [penwidth=2.5, label="power"];
     det  -> port  [label="test"];
+    prot -> port  [arrowhead=none, label="across"];
     port -> vmeas [label="volts"];
     gate -> fet   [label="gate"];
     rsns -> imeas [label="mV"];

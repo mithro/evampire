@@ -5,7 +5,7 @@ Simulated IEC contact discharges
 
 A simulated :std:`IEC 61000-4-2` contact discharge into the bidirectional
 pad ``gf180mcu_fd_io__bi_t``, with DVSS grounded, drives far more current
-than the human body model discharges of :doc:`results-hbm`. The current in
+than the :doc:`human body model discharges <results-hbm>`. The current in
 each protection device is compared with the current at which the foundry
 measured that device failing (:ref:`esd-limits`).
 

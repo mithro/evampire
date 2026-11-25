@@ -232,7 +232,8 @@ Registers used by evampire
 
 Registers 0 to 15 are defined by IEEE 802.3, and registers 16 to 31 are
 specific to each manufacturer (:clause:`Table 22-6 <22>`).
-:numref:`tab-rgmii-registers` lists the standard registers evampire uses.
+evampire uses eight of them, registers 0 to 5, 9 and 10, which
+:numref:`tab-rgmii-registers` lists in seven rows.
 
 :wikipedia:`Autonegotiation <Autonegotiation>` (:clause:`28`) is the
 exchange, at link start-up, in which the two transceivers on a cable tell

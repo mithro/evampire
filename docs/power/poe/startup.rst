@@ -7,8 +7,8 @@ A board powered only from its powered-device port starts from nothing,
 and at each step of the sequence the cable delivers only a limited power
 to it.
 
-A built-in sequencer answers the first steps
---------------------------------------------
+Built-in start-up sequencer
+---------------------------
 
 Until the power sourcing equipment switches on the operating voltage, the
 cable carries only test voltages, for limited times (:doc:`sequence`).
@@ -17,6 +17,19 @@ sequencer, working without the processor, answers detection and
 classification and requests a power level (:ref:`req-power-control`). Once
 the processor runs, the software reads the assigned class and carries out
 any further negotiation over LLDP (:doc:`lldp`).
+:numref:`fig-poe-sequencer` shows which part answers each step.
+
+.. graphviz:: sequencer.dot
+   :name: fig-poe-sequencer
+   :caption: The steps answered by the built-in start-up sequencer and
+             those handled by software once the processor runs.
+   :alt: Diagram of five steps in order: detection, where the signature is
+         shown; class and mark events; turn-on and inrush; the processor
+         starts; and the software reads the class and runs the LLDP
+         exchange. The first three steps are marked as the built-in
+         start-up sequencer, working without the processor, and the last
+         two as software on the processor.
+   :align: center
 
 The sequencer's jobs are those of the blocks in
 :numref:`fig-poe-pd-controller`. It shows the detection signature, draws the
@@ -27,12 +40,13 @@ this at each step is set by the standard, and is given below as ranges.
 Whether it is enough depends on the design of the sequencer, which is an
 open question.
 
-The power available at each step
---------------------------------
+Power at each step
+------------------
 
 :numref:`tab-poe-startup-power` gives the power the cable delivers to the
 powered device at each step, from the lowest voltage and current of the
-step to the highest.
+step to the highest, and :numref:`fig-poe-startup-power` sets the ranges
+on a log scale.
 
 .. list-table:: Power available to the powered device at each step
    :name: tab-poe-startup-power
@@ -98,7 +112,7 @@ The currents for each row are:
 
 Detection, as an offset current
    A constant current adds an offset to the measured line but does not
-   change its slope. Power sourcing equipment must tolerate an offset
+   change its slope (:numref:`fig-poe-detect-iv` shows an offset line). Power sourcing equipment must tolerate an offset
    current of up to 12 µA (:clause:`Table 145-8 <145>`, item 4). Its
    behaviour with a larger offset is undefined (:clause:`145.2.6.4`). The
    range is 12 µA at 2.7 V and at 10.1 V.
@@ -115,10 +129,23 @@ Class event
    20.5 V at the highest (:numref:`tab-poe-class-sig`).
 
 Mark event
-   0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
+   0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
 
-The steps last a limited time
------------------------------
+.. figure:: startup-power.svg
+   :name: fig-poe-startup-power
+   :alt: Bar chart of power on a log scale from 0.01 to 1000 mW for each
+         step: detection as an offset current 0.032 to 0.12 mW; detection
+         through the signature 0.28 to 4.3 mW; mark event 1.7 to 40 mW;
+         class event with signature 0, 14.5 to 82 mW; signature 1, 131 to
+         246 mW; signature 2, 247 to 410 mW; signature 3, 377 to 615 mW;
+         signature 4, 522 to 902 mW. A note gives 0 mW during reset.
+   :align: center
+
+   The power available to the powered device at each step, spanning more
+   than four orders of magnitude.
+
+Energy in each step
+-------------------
 
 The energy available in a step is its power multiplied by its duration
 (:numref:`tab-poe-step-times`). For example, the first class event of
@@ -138,15 +165,29 @@ Energy cannot be carried across the steps in a large capacitor, because
 the input capacitance during detection is limited to 0.12 µF
 (:clause:`Table 145-21 <145>`). Whether a capacitor behind a diode or a
 switch can hold the sequencer's supply between steps, without appearing in
-the detection signature, is part of the sequencer design.
+the detection signature, is part of the sequencer design
+(:numref:`fig-poe-holdup`).
 
-After power-on the class power is available
--------------------------------------------
+.. graphviz:: holdup.dot
+   :name: fig-poe-holdup
+   :caption: An open idea: a hold-up capacitor for the sequencer behind a
+             diode or switch, outside the detection signature.
+   :alt: Diagram. The bridge outputs feed the 25 kΩ signature, with a port
+         capacitance of 0.05 to 0.12 µF, and, through a diode or switch, a
+         hold-up capacitor that supplies the sequencer. The diode or switch
+         and the capacitor are drawn dashed, and a note says it is open
+         whether the capacitor can stay hidden from detection.
+   :align: center
 
-Once the voltage passes the turn-on voltage, the powered device may draw up
-to 0.4 A (0.8 A for classes 7 and 8) until 80 ms after turn-on, mostly to
-charge its input capacitor (:doc:`powered-device`). At 30 V to 57 V,
-0.4 A is 12 W to 23 W. From 50 ms after turn-on it also stays within
+Power after turn-on
+-------------------
+
+Once the voltage passes the turn-on voltage, the power sourcing equipment
+supplies at least 0.4 A (0.8 A for classes 7 and 8) during its inrush
+period, which the powered device uses mostly to charge its input capacitor
+(:numref:`tab-poe-inrush`). From 50 ms until 80 ms after turn-on the
+powered device draws less than that current (:doc:`powered-device`). At
+30 V to 57 V, 0.4 A is 12 W to 23 W. From 50 ms after turn-on it also stays within
 13 W, or within the power of class 1 or 2 if it requested one of them
 (:ref:`poe-pd-inrush`). From 80 ms after turn-on it may draw the power of
 its assigned class, from 3.84 W for class 1 to 71.3 W for class 8

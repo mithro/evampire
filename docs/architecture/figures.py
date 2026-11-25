@@ -67,7 +67,7 @@ def rate_matching():
         body.append(line(x0, y, x0 + pw, y, stroke="#dddddd"))
         s = f"{occ:+d}".replace("-", "−") if occ else "0"
         body.append(text(x0 - 8, y + 4, s, anchor="end", size=12))
-    for b in range(0, 12001, 2000):
+    for b in range(0, 10001, 2000):
         x, _ = px(b, 0)
         body.append(text(x, y0 + ph + 18, f"{b:,}".replace(",", " "),
                          size=12))

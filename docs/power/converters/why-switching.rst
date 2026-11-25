@@ -67,8 +67,8 @@ supply current is neglected, so the result is the best case.
 
 :numref:`tab-conv-linear` works this out for the "Ethernet in, USB out"
 mode (:ref:`power-modes`). The input is the powered device input range,
-37 V to 57 V (:doc:`../poe/index`), and the outputs are the 5 V and 20 V fixed
-USB Power Delivery voltages at 3 A (:doc:`../usb-pd/index`). For example, at
+37 V to 57 V (:doc:`../poe/index`), and the outputs are the 5 V and 20 V fixed
+:doc:`USB Power Delivery <../usb-pd/index>` voltages at 3 A. For example, at
 57 V in and 20 V out, :math:`P_\text{loss} = (57 - 20) \times 3 = 111` W and
 :math:`\eta_\text{lin} = 20 / 57 = 35.1` %.
 

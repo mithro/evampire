@@ -8,7 +8,7 @@ data connection on the D+ and D− wires of its USB Type-C connectors.
 The :ref:`requirements <requirements>` ask for the USB data protocol to run
 mostly in software on the processor, with built-in hardware only where the
 timing of USB is beyond what the software can do. The same connectors also
-carry the USB Power Delivery negotiation (see :doc:`/power/usb-pd/index`), and
+carry the :doc:`USB Power Delivery </power/usb-pd/index>` negotiation, and
 the same processor runs it.
 
 :doc:`usb-device`

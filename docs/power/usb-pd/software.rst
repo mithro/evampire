@@ -86,8 +86,8 @@ limits of this work span five orders of magnitude
      - :pd:`10.1 <Table 10.1>`
 
 The first two times are derived from the masks in :ref:`usbpd-receive` and
-:ref:`usbpd-transmit`. Fast role swap is described in
-:ref:`usbpd-fast-role-swap`. Replies to protocol messages have 15 ms or
+:ref:`usbpd-transmit`. :ref:`Fast role swap <usbpd-fast-role-swap>` is described with
+the role changes. Replies to protocol messages have 15 ms or
 more, such as tReceiverResponse (:pd:`Table 7.10`).
 
 .. _usbpd-receive:
@@ -309,7 +309,7 @@ The transmit mask leaves 0.015 UI between the ideal edge time and the start
 of the inner mask (:pd:`Table 5.6`, X1Tx). Read strictly, each edge has to
 cross the mid-level within ± 0.015 UI, which is ± 50 ns at the nominal
 300 kbit/s. This figure is a target derived from the mask, to be confirmed
-by measuring a transmitter against it (:ref:`usbpd-transmitter`). Computing
+by measuring a :ref:`transmitter <usbpd-transmitter>` against it. Computing
 each edge time from a counter, rather than counting loop iterations, keeps
 the average bit rate within the 0.25 % pBitRate limit (:pd:`Table 5.10`).
 
@@ -782,7 +782,7 @@ Open questions
   direct memory access or an automatic GoodCRC, per port. This follows from
   the processor core and its clock (:ref:`req-processor`).
 * The edge-placement target of ± 50 ns, to be confirmed by measuring a
-  transmitter against the mask (:ref:`usbpd-transmitter`).
+  :ref:`transmitter <usbpd-transmitter>` against the mask.
 * The instruction counts and the interrupt overhead, by writing the receive,
   transmit and reply code and running it on the chosen core or a model of
   it.

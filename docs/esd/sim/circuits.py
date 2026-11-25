@@ -239,9 +239,9 @@ def drift_clamp(d, x):
     d += elm.Capacitor().down().at((x + 0.8, 4.2)).to((x + 0.8, 2.0)).label(
         "C", loc="bottom")
     d += elm.Ground().at((x + 0.8, 2.0))
-    d += elm.Line().at((x + 0.8, 4.2)).to((x + 1.4, 4.2))
-    box(d, x + 1.4, 3.2, x + 3.2, 5.2, "invert-\ning\ndriver")
-    d += elm.Line().at((x + 3.2, 4.2)).to((x + 3.4, 4.2))
+    d += elm.Line().at((x + 0.8, 4.2)).to((x + 1.1, 4.2))
+    box(d, x + 1.1, 3.2, x + 3.3, 5.2, "invert-\ning\ndriver")
+    d += elm.Line().at((x + 3.3, 4.2)).to((x + 3.4, 4.2))
     fet = d.add(elm.NFet().anchor("gate").at((x + 3.4, 4.2)).reverse()
                 .color(CLAMP))
     d += elm.Line().at(fet.drain).to((fet.drain[0], 7.0))

@@ -69,11 +69,15 @@ input gates below their 12 V minimum oxide breakdown (:ref:`esd-limits`).
 Wider diodes and more clamps
 ----------------------------
 
+Wider diodes and more supply pads lower the stress on the protection.
 :numref:`tab-esd-scaled` repeats the ±8 kV contact discharge with the pad's
 diodes widened, as if dedicated diodes were added beside the output
 drivers, and with more DVDD and DVSS pads, each with its rail clamp
 (:numref:`fig-esd-scaled-pad`). The output NMOS and its snapback stay as
-they are. :numref:`fig-esd-scaled` plots the results.
+they are. :numref:`fig-esd-scaled` plots the results: wider diodes lower
+the stress in both polarities, and more supply pads lower it in positive
+discharges, but only the negative discharge with four times the diode
+width comes below the measured failure current.
 
 .. figure:: figures/scaled-pad.svg
    :name: fig-esd-scaled-pad

@@ -7,8 +7,8 @@ The software chooses the class that a power sourcing equipment port
 offers from the power on the input port. Worked examples cover USB Power
 Delivery inputs and Power over Ethernet inputs.
 
-The input power can never be switched straight through
-------------------------------------------------------
+No direct pass-through
+----------------------
 
 Power arriving on an Ethernet port cannot be switched straight through to
 the other. At a powered device the voltage can be as low as 37 V
@@ -17,9 +17,23 @@ supply at least 44 V, 50 V or 52 V (:numref:`tab-poe-pse-voltage`). A USB
 Power Delivery input is at most 48 V. The power therefore passes onto the
 internal power bus and through the high-voltage converter
 (:ref:`power-flow`, :doc:`../converters/index`).
+:numref:`fig-poe-voltages` compares the ranges.
 
-The software picks the highest class that fits
-----------------------------------------------
+.. figure:: voltages.svg
+   :name: fig-poe-voltages
+   :alt: Bar chart of voltage from 0 to 57 V. The powered device input runs
+         from 37 to 57 V. Power sourcing equipment outputs run from 44 to
+         57 V for Type 1, 50 to 57 V for Types 2 and 3 and 52 to 57 V for
+         Type 4. A USB Power Delivery supply runs from 5 to 48 V. A dashed
+         line at 44 V shows that the powered device input can be below
+         every power sourcing equipment minimum.
+   :align: center
+
+   The voltage ranges at the two ends of a cable and of a USB Power
+   Delivery supply.
+
+Highest class that fits
+-----------------------
 
 The software first works out the power left for the outputs, as on
 :ref:`power-translation`:
@@ -125,12 +139,40 @@ For example, a 20 V, 3 A contract gives:
    P_\text{in} \times \eta &= 60\ \text{W} \times 0.94 = 56.4\ \text{W} \\
    P_\text{board,max} &= 56.4\ \text{W} - 45\ \text{W} = 11.4\ \text{W}
 
-Class 5 fits while the board uses no more than 11.4 W. Above that, class 4
+:numref:`fig-poe-power-split` shows this split. Class 5 fits while the
+board uses no more than 11.4 W. Above that, class 4
 fits up to :math:`56.4\ \text{W} - 30\ \text{W} = 26.4\ \text{W}` of
 board power. With a 5 V, 3 A contract,
 class 3 leaves only 0.1 W for the board, so in practice class 2 applies
-(up to 7.4 W). The USB contract itself is negotiated as described on
-:doc:`../usb-pd/index`.
+(up to 7.4 W). The USB contract itself is negotiated as described on
+:doc:`../usb-pd/index`. :numref:`fig-poe-class-board` gives the highest
+class against the board's power for several inputs.
+
+.. figure:: power-split.svg
+   :name: fig-poe-power-split
+   :alt: Bar from 0 to 60 W. Of a 60 W USB contract, the conversion loss
+         leaves 56.4 W; of that, class 5 takes 45 W and the board can use
+         up to 11.4 W.
+   :align: center
+
+   A 60 W USB Power Delivery contract split into the class 5 output, the
+   board's power and the conversion loss.
+
+.. figure:: class-board.svg
+   :name: fig-poe-class-board
+   :alt: Two step graphs of the highest class offered, 0 to 8, against the
+         board's own power, 0 to 40 W. The upper graph is for USB Power
+         Delivery contracts of 27, 45, 60 and 100 W with an efficiency of
+         0.94; with 60 W, class 5 is offered up to 11.4 W of board power
+         and class 4 up to 26.4 W. The lower graph is for Power over
+         Ethernet inputs of class 4, 6 and 8 with an efficiency of 0.85;
+         with class 8 in, class 6 is offered up to 0.6 W and class 5 up to
+         15.6 W. Every curve steps down as the board takes more power, to
+         none when no class fits.
+   :align: center
+
+   The highest class offered against the board's own power, for USB Power
+   Delivery and Power over Ethernet inputs.
 
 Ethernet in, Ethernet out
 -------------------------
@@ -169,6 +211,7 @@ and 94 % efficient, so :math:`\eta = 0.90 \times 0.94 = 0.85`.
      - 6
      - 0.6
 
+:numref:`fig-poe-class-board` shows the same steps for Ethernet inputs.
 Port B always offers a lower class than port A. Each class needs more
 power at the power sourcing equipment than it gives at the powered device
 (:numref:`tab-poe-classes`), and the converters take a share on top. For class 8 in, class 6 out leaves only

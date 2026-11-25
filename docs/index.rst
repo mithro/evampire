@@ -14,10 +14,11 @@ This page introduces what evampire does: how it passes Ethernet traffic
 between its ports, what its processor does with that traffic, and how it
 moves power between Ethernet and USB Type-C.
 
-The hub has two external ports and one internal port
-----------------------------------------------------
+Ports
+-----
 
-The external ports are called port A and port B.
+The hub has two external ports, called port A and port B, and one
+internal port, all drawn in :numref:`fig-overview`.
 
 Port A and port B
    Each external port connects to an Ethernet cable through an
@@ -29,8 +30,8 @@ Port A and port B
 The internal port
    The internal port connects to the processor inside the chip.
 
-Traffic passes between port A and port B as it arrives
-------------------------------------------------------
+Cut-through forwarding
+----------------------
 
 Ethernet carries data in :term:`frames <frame>`, messages that are
 normally up to 1522 bytes long and each start with the address of the device
@@ -43,29 +44,57 @@ evampire does not wait for a whole frame to arrive before it starts sending
 it on. Each byte is passed to the other side a few clock cycles after it
 arrives. This is called :term:`cut-through forwarding`. It needs only a few
 bytes of storage on each path, not a whole frame.
+:numref:`fig-cut-through` compares it with store-and-forward, in which a
+switch receives the whole frame before it starts sending it.
+
+.. wavedrom::
+   :name: fig-cut-through
+   :alt: Timing diagram. Port A receives a frame as a run of bytes, 1
+         to N. With cut-through forwarding, port B starts
+         sending byte 1 a few clock cycles after it arrives, while the rest
+         of the frame is still arriving, and finishes a few cycles after
+         the last byte arrives. With store-and-forward, port B starts
+         sending only after the last byte has arrived, a whole frame later.
+   :caption: One frame through cut-through forwarding, which starts a few
+             clock cycles after the first byte, and through
+             store-and-forward, which waits for the whole frame; schematic.
+
+   { "signal": [
+       { "name": "A receives", "wave": "x=====x.....",
+         "data": ["1", "2", "3", "…", "N"] },
+       { "name": "B, cut-through", "wave": "x.=====x....",
+         "data": ["1", "2", "3", "…", "N"] },
+       { "name": "B, stored first", "wave": "x......=====",
+         "data": ["1", "2", "3", "…", "N"] }
+     ],
+     "head": { "text": "bytes 1 to N of one frame" },
+     "config": { "hscale": 1 }
+   }
 
 .. _overview-processor-frames:
 
-The processor receives selected frames and sends its own
---------------------------------------------------------
+Processor traffic
+-----------------
 
 The processor sees a copy of the frames, from either port, whose destination
 address matches a filter that it sets. It can also send frames of its own, which evampire
-sends in the gaps between the frames it forwards. The processor's network
+sends in the gaps between the frames it forwards
+(:numref:`fig-output-selector`). The processor's network
 traffic is below 1 Mbit/s, so it does not need to keep up with gigabit
 traffic.
 
-The processor moves power between Ethernet and USB Type-C
----------------------------------------------------------
+Power management
+----------------
 
-The processor also manages power. A board built around evampire can be
+The processor also manages power, moving it between Ethernet and USB
+Type-C. A board built around evampire can be
 powered from an Ethernet cable and supply power over USB Type-C, or be
 powered from USB Type-C and supply power over an Ethernet cable. The
 processor negotiates the role and the power level on each port (see
-:doc:`power/index`).
+:doc:`power/index`, which draws the modes in :numref:`fig-power-modes`).
 
-The main blocks of evampire
----------------------------
+Main blocks
+-----------
 
 :numref:`fig-overview` shows the main blocks of evampire and how data and
 power flow between them.
@@ -123,8 +152,8 @@ The labels use two abbreviations. USB Power Delivery messages on the
 :term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the
 extended power range of USB Power Delivery.
 
-What this documentation covers
-------------------------------
+Scope of this documentation
+---------------------------
 
 This documentation describes what the chip does and explains the Ethernet
 and power-delivery standards that evampire implements. It is written for

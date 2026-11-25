@@ -1,7 +1,7 @@
 .. _phy-int-dsp:
 
-Signal processing
-=================
+Integrated signal processing
+============================
 
 The digital signal processing of one port must finish its work in each
 8 ns symbol period, the amount of work depends on cable reach, and one

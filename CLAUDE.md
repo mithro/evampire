@@ -89,6 +89,14 @@ uv run docs/power/converters/control_waves.py
 uv run docs/power/converters/fv_figures.py
 uv run docs/power/converters/graphs.py
 uv run docs/power/converters/sections.py
+uv run docs/power/poe/drawings_pairs.py
+uv run docs/power/poe/drawings_pd.py
+uv run docs/power/poe/drawings_hv.py
+uv run docs/power/poe/graphs_sequence.py
+uv run docs/power/poe/graphs_signature.py
+uv run docs/power/poe/graphs_limits.py
+uv run docs/power/poe/graphs_power.py
+uv run docs/power/poe/graphs_budget.py
 uv run docs/power/usb-pd/graphs_cc.py
 uv run docs/power/usb-pd/graphs_levels.py
 uv run docs/power/usb-pd/graphs_power.py
@@ -110,7 +118,8 @@ helpers that the scripts above import, so run the script, not the helper:
   and `drawings_cap.py`;
 - `svgplot.py` in `docs/ethernet/phy-electrical/`,
   `docs/power/converters/` and `docs/usb-serial/`, and `svgfig.py` in
-  `docs/power/usb-pd/`.
+  `docs/power/usb-pd/` and `docs/power/poe/`.
+
 `FONT_SCALE` in `docs/power/usb-pd/svgfig.py` sets the text size of every
 USB Power Delivery graph. Every script reproduces its committed files byte
 for byte, so a rerun that changes a file means its inputs changed.

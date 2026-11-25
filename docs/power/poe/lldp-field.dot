@@ -1,0 +1,22 @@
+// The two power fields of the Power via MDI entry in an LLDP frame, from
+// lldp.rst (IEEE 802.1AB and IEEE 802.3 79.3.2, 145.5.5, Table 145-12).
+// Each end fills one field with its own value and the other with a copy
+// of the value it last received. Field lengths are not to scale.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph lldp_field {
+    graph [fontname="Helvetica", rankdir=TB, nodesep=0.2, ranksep=0.35];
+    node  [shape=record, fontname="Helvetica", fontsize=10, style=filled,
+           fillcolor="#ffffff"];
+    edge  [arrowhead=none, style=dashed, color="#888888"];
+
+    frame [label="destination\n01-80-C2-00-00-0E|source|EtherType\n0x88CC|<pv>other entries … Power via MDI …|frame check\nsequence"];
+    field [fillcolor="#fff2cc",
+           label="<a>PD requested power value|<b>PSE allocated power value"];
+    note [shape=plaintext, style="", fontsize=10,
+          label="from the PD: its own request and a copy of the last allocation\nfrom the PSE: a copy of the last request and its own allocation\npowers in units of 0.1 W: 255 means 25.5 W"];
+    frame:pv -> field:a;
+    frame:pv -> field:b;
+    field -> note [style=invis];
+}

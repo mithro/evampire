@@ -7,8 +7,8 @@ Power over Ethernet has four types and nine classes. Each class gives a
 set power at each end of the cable, and the cable's resistance links the
 two.
 
-Four types set the rules each end follows
------------------------------------------
+The four types
+--------------
 
 A :term:`type <Type (Power over Ethernet)>` is a set of rules that power
 sourcing equipment or a powered device follows. :numref:`tab-poe-types`
@@ -46,8 +46,8 @@ The highest classes come from :clause:`Table 145-11 <145>` and
 device that does no classification counts as class 0, which Types 3 and 4
 treat as class 3 (:clause:`145.2.8`).
 
-Each class grants a fixed power
--------------------------------
+Class power
+-----------
 
 A :term:`class` is a number that stands for a maximum power. The powered
 device asks for a class during classification (:doc:`sequence`), and the
@@ -111,19 +111,32 @@ equipment supplies 7.00 W for class 2 and 15.4 W for class 3, because it
 allows for a longer cable (:clause:`Table 33-7 <33>`).
 
 A powered device may draw more than its class power, up to the peak power,
-for no longer than 50 ms at a time and for no more than 5 % of a 1 s window
-(:clause:`145.3.8.4`, with the 50 ms from :clause:`Table 145-16 <145>`).
+for no longer than 50 ms at a time and for no more than 5 % of a 1 s window
+(:clause:`145.3.8.4`, with the 50 ms from :clause:`Table 145-16 <145>`).
+:numref:`fig-poe-peak-power` shows this for class 4.
+
+.. figure:: peak-power.svg
+   :name: fig-poe-peak-power
+   :alt: Graph of powered device power, 20 to 30 W, against time across a
+         1 s window. The class 4 power, 25.5 W, and the peak, 28.3 W, are
+         marked; above 28.3 W is not allowed. The device draws below its
+         class power and then rises to 28 W for 50 ms, which is allowed at
+         most 50 ms at a time and 5 % of any 1 s window.
+   :align: center
+
+   A class 4 powered device drawing above its class power, up to the peak,
+   for a limited time; the trace is an example.
 
 .. _poe-cable-loss:
 
-The cable takes the difference between the two powers
------------------------------------------------------
+Power lost in the cable
+-----------------------
 
 The power at the power sourcing equipment and the power at the powered
 device differ by the power lost in the cable. The calculation below shows
 where that difference comes from. It treats the cable as one resistance in
 the current loop, out on one pair and back on another, and assumes the
-power sourcing equipment delivers its full power at its lowest voltage:
+power sourcing equipment delivers its full power at its lowest voltage (:numref:`fig-poe-loop`):
 
 .. math::
 
@@ -163,6 +176,18 @@ With both pair sets sharing the current it is half that, 6.25 Ω
 (:clause:`145.1.3`). The model holds when the two pair sets of a 4-pair
 link carry equal currents; the standard limits the current of each pair set
 separately to cover unequal currents (:clause:`145.2.10.6.1`).
+
+.. graphviz:: loop.dot
+   :name: fig-poe-loop
+   :caption: The cable as one loop resistance, split between the pair that
+             carries the current out and the pair that returns it, with the
+             Type 4 example below.
+   :alt: Diagram. Power sourcing equipment, 90 W at 52 V, drives a loop
+         current of 1.73 A through half the loop resistance on the out pair
+         set to the powered device, 71.3 W at 41.2 V, and back through the
+         other half on the return. A note gives R_loop as 6.25 Ω with both
+         pair sets and P_cable as I squared times R_loop, 18.7 W.
+   :align: center
 
 For Type 4 with both pair sets:
 
@@ -212,8 +237,8 @@ and 52 V. A shorter or thicker cable loses less.
 
 .. _poe-lowest-voltage:
 
-The cable sets the lowest voltage at the powered device
--------------------------------------------------------
+Lowest voltage at the powered device
+------------------------------------
 
 The same model gives the lowest voltage at which the powered device must
 still work. The powered device draws :math:`P_\text{PD}` at a voltage
@@ -255,6 +280,22 @@ For class 8, with 52 V and 6.25 Ω:
    D &= (52\ \text{V})^2 - 4 \times 6.25\ \Omega \times 71.3\ \text{W} \\
    &= 2704\ \text{V}^2 - 1782.5\ \text{V}^2 = 921.5\ \text{V}^2 \\
    V_\text{PD} &= \frac{52\ \text{V} + 30.36\ \text{V}}{2} = 41.2\ \text{V}
+
+:numref:`fig-poe-pd-voltage` draws both roots against the power. They meet
+where :math:`D = 0`, the most power the cable can deliver.
+
+.. figure:: pd-voltage.svg
+   :name: fig-poe-pd-voltage
+   :alt: Graph of voltage at the powered device, 0 to 60 V, against its
+         power, 0 to 120 W, for 52 V with 6.25 Ω, 50 V with 6.25 Ω and
+         50 V with 12.5 Ω. Each curve has a higher root, the operating
+         point, falling from the supply voltage, and a lower root rising
+         from 0; they meet where D is zero, at half the supply voltage. For
+         52 V and 6.25 Ω they meet at 108 W and 26 V, and the class 8
+         point, 71.3 W at 41.2 V, lies on the higher root.
+   :align: center
+
+   Voltage at the powered device against its power, from the cable model.
 
 :numref:`tab-poe-lowest-voltage` gives the lowest voltage that the standard
 requires each class of powered device to accept

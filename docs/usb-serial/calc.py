@@ -128,10 +128,23 @@ for z in (28, 44):
     tau = z * CL
     print(f"  ZDRV {z} ohm x 50 pF: tau = {tau*1e9:.2f} ns, 10-90 % = {tau*math.log(9)*1e9:.2f} ns")
 
-print("== Short to VBUS through a pad diode (section 7.1.1; ASSUMPTION 0.6 V diode) ==")
+print("== Short to VBUS (section 7.1.1; ASSUMPTIONS 3.3 V pad supply, 0.6 V diode) ==")
+VBUS, VDD, VD = 5.25, 3.3, 0.6
+print(f"  driver off, pad diode: VBUS - VDD - VD = {VBUS - VDD - VD:.2f} V across RS")
 for r in (28, 44):
-    i = (5.25 - 3.3 - 0.6) / r
-    print(f"  series {r} ohm: I = (5.25 - 3.3 - 0.6) / {r} = {i*1e3:.0f} mA")
+    print(f"    RS {r} ohm: I = {(VBUS - VDD - VD) / r * 1e3:.0f} mA")
+print(f"  driving high, PMOS on: VBUS - VDD = {VBUS - VDD:.2f} V across ZDRV")
+for z in (44, 28):
+    print(f"    ZDRV {z} ohm: I_H = {(VBUS - VDD) / z * 1e3:.0f} mA")
+print(f"  driving low, NMOS on: VBUS = {VBUS} V across ZDRV")
+for z in (44, 28):
+    print(f"    ZDRV {z} ohm: I_L = {VBUS / z * 1e3:.0f} mA, "
+          f"dissipated in ZDRV {VBUS**2 / z:.2f} W")
+k = (VBUS - VDD - VD) / VBUS
+print(f"  driving low is the largest case while RS > {VBUS - VDD - VD:.2f} / {VBUS} "
+      f"= {k:.2f} x ZDRV:")
+for z in (28, 44):
+    print(f"    ZDRV {z} ohm: RS > {k * z:.1f} ohm")
 
 print("== gf180mcu_fd_io__bi_t output transitions at the largest tabulated load ==")
 # Pass the path of gf180mcu_fd_io__bi_t__tt_025C_3v30.lib (from the

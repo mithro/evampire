@@ -115,9 +115,9 @@ Transceiver datasheets use other names for the same pins, listed in
      - RD[3:0]
 
 How the clock, control and data signals carry bytes at each speed is
-described on :doc:`data`. Each transceiver also has a slower management
-interface, MDC and MDIO, for reading its status and changing its settings
-(see :doc:`mdio`).
+described on :doc:`data`. Each transceiver also has a slower
+:doc:`management interface <mdio>`, MDC and MDIO, for reading its status
+and changing its settings.
 
 .. _rgmii-full-duplex:
 

@@ -11,8 +11,8 @@ Parts for each port
 
 Each of Ethernet ports A and B (:ref:`requirements`) needs:
 
-* one external transceiver with an RGMII interface
-  (:doc:`../rgmii/index`);
+* one external transceiver with an
+  :doc:`RGMII interface <../rgmii/index>`;
 * one set of four-channel magnetics for 1000BASE-T, as a module or in the
   socket;
 * the circuit-side centre-tap connection that the transceiver's datasheet

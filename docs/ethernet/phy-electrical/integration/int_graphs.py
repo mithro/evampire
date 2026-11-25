@@ -95,7 +95,7 @@ def jitter():
     fig.text(ax.X(0), ax.Y(1e-6), "σ = 4.9 ps", size=12, fill=BLUE)
     fig.text(267, 336, "Dashed: ±7.03σ; each tail beyond holds 10⁻¹².\n"
              "Limits: 1.4 ns unfiltered, about 20 × Jpp;\n"
-             "0.3 ns after a 5 kHz high-pass filter, about 4 × Jpp",
+             "0.3 ns filtered, shared with Jtxout, about 4 × Jpp",
              size=12, fill=GREY)
     fig.save(HERE / "jitter.svg")
 

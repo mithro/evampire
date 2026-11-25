@@ -45,7 +45,9 @@ Tests and disturbances
 ----------------------
 
 :numref:`tbl-magnetics-events` lists the tests and the disturbances that
-the port meets from time to time.
+the port meets from time to time. Unlike the continuous voltages above,
+each lasts a limited time, from a few nanoseconds to the 60 s of the
+isolation tests. Each is described below the table.
 
 .. list-table:: Tests and disturbances at an Ethernet port
    :name: tbl-magnetics-events

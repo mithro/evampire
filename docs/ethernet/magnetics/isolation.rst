@@ -223,7 +223,8 @@ capacitors take. The lateral paths must hold the test voltage
 too: between the cable-side and chip-side pads, from the cable-side metal
 to the seal ring at the die edge, and across the package and bond wires.
 
-:numref:`fig-magnetics-die-barrier` shows the arrangement in cross-section.
+:numref:`fig-magnetics-die-barrier` shows the arrangement in cross-section;
+it draws only the vertical path through the oxide.
 
 .. figure:: die-barrier.svg
    :name: fig-magnetics-die-barrier
@@ -238,7 +239,7 @@ to the seal ring at the die edge, and across the package and bond wires.
 
    An isolation capacitor between the lowest and highest metal layers,
    with everything connected to the cable on the top metal (schematic,
-   not to scale). Only the vertical path through the oxide is drawn.
+   not to scale, vertical path only).
 
 The oxide between the first and fifth metal layers of gf180mcu is four
 layers of 1.15 µm to 1.45 µm ([MAG-GF180]_, inter-layer specification),

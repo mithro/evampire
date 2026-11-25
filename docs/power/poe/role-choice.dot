@@ -1,0 +1,32 @@
+// Choosing the role of a port automatically: show a powered-device
+// signature, time out, then try the power sourcing role. From
+// dual-role.rst. Fixed grid (positions in inches).
+//
+// Fill colours: power circuits #fff2cc, powered states #e2f0d9.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph role_choice {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=11, width=1.9, height=0.6,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    pd   [pos="1.2,2.4!", label="Powered-device role:\nshow the signature"];
+    pse  [pos="5.4,2.4!", label="Sourcing role:\nrun detection"];
+    pdon [pos="1.2,0.6!", label="Receiving power", fillcolor="#e2f0d9"];
+    pson [pos="5.4,0.6!", label="Supplying power", fillcolor="#e2f0d9"];
+
+    pd  -> pse;
+    pse -> pd;
+    la [pos="3.3,2.95!", shape=plaintext, style="", width=2.2, height=0.4,
+        fontsize=10, label="to sourcing: no power within\nthe set time, then a random wait"];
+    lb [pos="3.3,1.9!", shape=plaintext, style="", width=2.2, height=0.4,
+        fontsize=10, label="back: no valid signature,\nthen a random wait"];
+    pd  -> pdon [label="power arrives"];
+    pse -> pson [label="valid signature"];
+    l1 [pos="3.3,0.9!", shape=plaintext, style="", width=3.4, height=0.5,
+        fontsize=10, label="Fixed method: the board sets one role\nand the other path stays off."];
+}

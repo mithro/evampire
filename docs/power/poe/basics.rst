@@ -1,14 +1,14 @@
 .. _poe-basics:
 
-The two ends, the pairs and the voltages
-========================================
+Ends, pairs and voltages
+========================
 
 One end of a powered Ethernet cable supplies the power and the other
 receives it. The power travels on one or both pair sets of the cable, within
 a voltage range that the standard sets for each end.
 
-One end supplies the power and the other receives it
-----------------------------------------------------
+The two ends
+------------
 
 The end that puts power onto the cable is the
 :term:`power sourcing equipment`, abbreviated PSE in the standard. It is
@@ -39,8 +39,8 @@ internal power bus (:ref:`power-flow`).
          RGMII. evampire reads status from port A and controls port B.
    :align: center
 
-The power rides on the pairs as a common-mode voltage
------------------------------------------------------
+Power as a common-mode voltage
+------------------------------
 
 An Ethernet cable has 8 wires twisted into 4
 :wikipedia:`twisted pairs <Twisted_pair>`. The power sourcing equipment
@@ -55,10 +55,33 @@ disturb it. On the first-version board the DC voltage is connected to the
 :term:`centre taps <centre tap>` of the cable-side windings of the :term:`magnetics`, which pass
 the data and keep the DC away from the :term:`Ethernet transceiver`. The
 full design has no coupling transformers. :doc:`../../ethernet/magnetics/index`
-describes both arrangements.
+describes both arrangements. :numref:`fig-poe-pairs` shows the
+first-version arrangement with power on one pair set.
 
-Each pair set has a name at each end
-------------------------------------
+.. figure:: pairs.svg
+   :name: fig-poe-pairs
+   :alt: Schematic of the four pairs of a cable between power sourcing
+         equipment on the left and a powered device on the right. Each pair
+         runs from a transformer at one end to a transformer at the other,
+         and each transformer's data winding connects to an Ethernet
+         transceiver, which sees data only. Pairs 1-2 (orange) and 3-6
+         (green) form Alternative A at the power sourcing end and Mode A
+         at the powered device. The centre tap of pair 1-2 connects to the
+         negative side of the 44 to 57 V supply and that of pair 3-6 to the
+         positive side, so the wires of pair 1-2 sit at 0 V plus and minus
+         half the data and those of pair 3-6 at DC plus and minus half the
+         data. At the powered device both centre taps go to the polarity
+         bridges. Pairs 4-5 (blue) and 7-8 (brown), Alternative B and
+         Mode B, are idle in this example.
+   :align: center
+
+   Power on Alternative A: the DC is fed in at the centre taps of the
+   cable-side windings, so both wires of a pair carry the same DC and the
+   data is their difference (pins 1, 2 negative, which every type allows;
+   T568B colours).
+
+Pair set names
+--------------
 
 The power sourcing equipment calls the two pair sets Alternative A and
 Alternative B. The powered device calls the same pair sets Mode A and
@@ -84,7 +107,9 @@ The wire colours follow the T568A and T568B wiring of
 :std:`TIA-568 <tia-568>`, in which pins 1 and 2 are one pair, pins 3 and 6
 another, pins 4 and 5 the third and pins 7 and 8 the fourth.
 
-The polarity of each pair set is chosen by the power sourcing equipment:
+Each name belongs to one end, so :numref:`fig-poe-pairs` labels the same
+pins Alternative A at one end and Mode A at the other. The polarity of
+each pair set is chosen by the power sourcing equipment:
 
 * On Alternative A, either pair of the set may be positive
   (:clause:`Table 33-2 <33>`, :clause:`Table 145-3 <145>`).
@@ -98,19 +123,35 @@ The powered device cannot know in advance which pair set carries power, or
 which pair is positive, so it must accept any polarity on either pair set
 (:doc:`powered-device`).
 
-Power uses one pair set or both
--------------------------------
+2-pair and 4-pair power
+-----------------------
 
 Power sourcing equipment of Types 1 and 2 powers one pair set. Types 3 and
 4 may power one pair set or both for classes 1 to 4, and must power both
 for classes 5 to 8 (:clause:`145.1.3`, :clause:`145.2.10.1`). Powering both
-pair sets is called 4-pair power.
+pair sets is called 4-pair power. :numref:`fig-poe-pair-sets` shows the
+two cases.
 
 Gigabit Ethernet (:term:`1000BASE-T`) carries data on all four pairs, so
 on a gigabit port both pair sets carry data and power together.
 
-The power sourcing equipment sets the voltage
----------------------------------------------
+.. figure:: pair-sets.svg
+   :name: fig-poe-pair-sets
+   :alt: Two panels, each with power sourcing equipment on the left, a
+         powered device on the right and four pairs between them. In the
+         2-pair panel, pins 1-2 carry negative and data and pins 3-6
+         positive and data, while pins 4-5 and 7-8 carry data only; this
+         serves Types 1 to 4 at classes 1 to 4. In the 4-pair panel, pins
+         4-5 also carry positive and data and pins 7-8 negative and data;
+         this is Types 3 and 4 and is needed for classes 5 to 8.
+   :align: center
+
+   2-pair power on one pair set, here pair set A, and 4-pair power on
+   both, with data on all four pairs of a gigabit link; the polarities
+   drawn are those a Type 4 source uses.
+
+Output voltage
+--------------
 
 :numref:`tab-poe-pse-voltage` gives the output voltage that power sourcing
 equipment of each type must hold while the power is on. The voltage at the

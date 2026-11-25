@@ -52,7 +52,7 @@ def channel_limits():
     top = ax.pts([(f, next_loss(f)) for f in FREQS])
     bot = ax.pts([(f, il(f)) for f in reversed(FREQS)])
     fig.poly(top + bot, stroke="none", fill=FILL_ORANGE, closed=True)
-    ax.frame([1, 2, 5, 10, 20, 31.25, 62.5, 100], range(0, 71, 10),
+    ax.frame([1, 2, 5, 10, 31.25, 62.5, 100], range(0, 71, 10),
              "Frequency (MHz, log scale)", "Loss (dB)",
              xfmt=lambda v: f"{v:g}")
     for f in (31.25, 62.5):
@@ -81,7 +81,7 @@ def channel_limits():
     fig.text(10, 420, "(b) Far-end crosstalk against the received signal",
              size=14, anchor="start", weight="bold")
     bx = Axes(fig, 62, 438, 462, 638, (1, 100), (0, 70), xlog=True)
-    bx.frame([1, 2, 5, 10, 20, 31.25, 62.5, 100], range(0, 71, 10),
+    bx.frame([1, 2, 5, 10, 31.25, 62.5, 100], range(0, 71, 10),
              "Frequency (MHz, log scale)", "ELFEXT loss (dB)",
              xfmt=lambda v: f"{v:g}")
     bx.plot([(f, elfext(f)) for f in FREQS], stroke=GREEN)

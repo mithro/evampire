@@ -1,0 +1,34 @@
+// The cable as one loop resistance between the power sourcing equipment
+// and the powered device, with the Type 4 worked example of
+// types-classes.rst (IEEE 802.3 Tables 33-1 and 145-1, 145.1.3).
+//
+// Fill colours: far-end equipment #fbe5d6, cable #dbe8f5. Bold edges
+// carry the loop current. Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph cable_loop {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=1.6, height=0.6, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, penwidth=2.2, arrowsize=0.7];
+
+    pse  [pos="0.9,1.3!", label="Power sourcing\nequipment\n90 W at 52 V", width=1.5,
+          height=1.9, fillcolor="#fbe5d6"];
+    out  [pos="3.3,2.0!", label="out pair set half\nR_loop / 2", fillcolor="#dbe8f5"];
+    ret  [pos="3.3,0.6!", label="return half\nR_loop / 2", fillcolor="#dbe8f5"];
+    pd   [pos="5.7,1.3!", label="Powered\ndevice\n71.3 W at 41.2 V", width=1.5,
+          height=1.9, fillcolor="#fbe5d6"];
+    po [pos="1.65,2.0!", shape=point, width=0.01];
+    pr [pos="1.65,0.6!", shape=point, width=0.01];
+    qo [pos="4.95,2.0!", shape=point, width=0.01];
+    qr [pos="4.95,0.6!", shape=point, width=0.01];
+
+    po -> out [label="I = 1.73 A", arrowhead=none];
+    out -> qo;
+    qr -> ret [arrowhead=none];
+    ret -> pr;
+    n [pos="3.3,1.3!", shape=plaintext, style="", width=2.2, height=0.4,
+       fontsize=10, label="R_loop = 6.25 Ω (both pair sets)\nP_cable = I² × R_loop = 18.7 W"];
+}

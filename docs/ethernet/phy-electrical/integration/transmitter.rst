@@ -1,7 +1,7 @@
 .. _phy-int-transmitter:
 
-Transmitter
-===========
+Integrated transmitter
+======================
 
 The integrated transmitter's DAC and line driver need a set linearity and
 swing, deliver power into the cable, set the termination impedance, and
@@ -225,7 +225,7 @@ Connection to the cable
 
 Besides the signal, the cable can carry voltage common to both wires of a
 pair, surges, electrostatic discharge and, on boards that use it,
-:term:`Power over Ethernet` (:doc:`/power/poe/index`). Without
+:doc:`Power over Ethernet </power/poe/index>`. Without
 transformers, the isolation and protection that the transformers gave come
 from one of three routes, each open (:ref:`requirements-open-questions`):
 

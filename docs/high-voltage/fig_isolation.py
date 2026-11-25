@@ -132,56 +132,66 @@ def poly_on_fox():
     return svg(w, h, body)
 
 
-def iso_panel(ox, title, kind):
-    """One 200 px wide cross-section."""
-    b = [text(ox + 100, 24, title, size=13, weight="bold")]
-    y = 60
-    if kind == "bulk":
-        b.append(rect(ox, y, 200, 190, SUB))
-        b.append(well(ox + 15, y, 70, 40, NWELL, r=8))
-        b.append(well(ox + 115, y, 70, 40, NWELL, r=8))
-        b.append(text(ox + 50, y + 25, "0 V", size=12))
-        b.append(text(ox + 150, y + 25, "50 V", size=12))
-        b.append(text(ox + 100, y + 120, "one shared", size=12))
-        b.append(text(ox + 100, y + 136, "P substrate, 0 V", size=12))
-        b.append(line(ox + 150, y + 44, ox + 150, y + 90, marker=True))
-        b.append(text(ox + 144, y + 72, "50 V to", anchor="end", size=12))
-        b.append(text(ox + 144, y + 88, "substrate", anchor="end", size=12))
-        b.append(text(ox + 100, y + 176, "junctions hold it", size=12,
-                      weight="bold"))
-        return b
-    # Islands of silicon with oxide-filled trenches between them.
+def labels(y, lines):
+    """A bold title and plain lines beside a cross-section."""
+    b = [text(268, y + 22, lines[0], anchor="start", size=16,
+              weight="bold")]
+    for k, s in enumerate(lines[1:]):
+        b.append(text(268, y + 48 + k * 20, s, anchor="start", size=15))
+    return b
+
+
+def islands(y, h, top_oxide):
+    """Three silicon islands at their own voltages, with oxide between
+    them from y to y + h; top_oxide is the depth of oxide at the surface
+    if the trenches below it are a separate, later fill."""
+    b = []
     for k, v in enumerate(("0 V", "25 V", "50 V")):
-        x = ox + 8 + k * 64
-        b.append(rect(x, y, 56, 36, NWELL))
-        b.append(text(x + 28, y + 23, v, size=12))
-    for x in (ox, ox + 64, ox + 128, ox + 192):
-        b.append(rect(x, y, 8, 36, OXIDE))
-    b.append(rect(ox, y + 36, 200, 16, OXIDE))
-    b.append(text(ox + 100, y + 48, "buried oxide" if kind == "soi"
-                  else "dielectric added after thinning", size=11))
-    if kind == "soi":
-        b.append(rect(ox, y + 52, 200, 138, SUB))
-        b.append(text(ox + 100, y + 110, "handle wafer", size=12))
-        b.append(text(ox + 100, y + 176, "the oxide holds it", size=12,
-                      weight="bold"))
-    else:
-        b.append(rect(ox, y + 52, 200, 80, CARRIER))
-        b.append(text(ox + 100, y + 86, "insulating carrier,", size=12))
-        b.append(text(ox + 100, y + 102, "where the substrate was", size=12))
-        b.append(text(ox + 100, y + 176, "the oxide holds it", size=12,
-                      weight="bold"))
-    b.append(text(ox + 100, y - 8, "islands, each at its own voltage",
-                  size=11))
+        x = 22 + k * 80
+        b.append(rect(x, y, 68, h, NWELL))
+        b.append(text(x + 34, y + h / 2 + 6, v, size=15))
+    for x in (10, 90, 170, 250):
+        b.append(rect(x - 2, y, 14, h, OXIDE))
+        if top_oxide:
+            b.append(rect(x - 2, y, 14, top_oxide, "#bdbdbd"))
     return b
 
 
 def oxide_isolation():
-    w, h = 660, 260
+    w, h = 480, 600
     body = [ARROW]
-    body += iso_panel(10, "Bulk silicon", "bulk")
-    body += iso_panel(230, "Silicon on insulator", "soi")
-    body += iso_panel(450, "Bulk die, substrate removed", "removed")
+    # Bulk silicon: junctions to one shared substrate.
+    y = 20
+    body.append(rect(10, y, 240, 150, SUB))
+    body.append(well(30, y, 80, 46, NWELL, r=10))
+    body.append(well(150, y, 80, 46, NWELL, r=10))
+    body.append(text(70, y + 28, "0 V", size=15))
+    body.append(text(190, y + 28, "50 V", size=15))
+    body.append(line(190, y + 50, 190, y + 100, marker=True))
+    body.append(text(130, y + 136, "P substrate, 0 V", size=15))
+    body += labels(y, ("Bulk silicon", "junctions to one", "shared substrate",
+                       "hold the voltage"))
+    # Silicon on insulator.
+    y = 210
+    body += islands(y, 46, 0)
+    body.append(rect(8, y + 46, 244, 20, OXIDE))
+    body.append(text(130, y + 61, "buried oxide", size=14))
+    body.append(rect(8, y + 66, 244, 84, SUB))
+    body.append(text(130, y + 114, "handle wafer", size=15))
+    body += labels(y, ("Silicon on insulator", "trenches and the",
+                       "buried oxide hold", "the voltage"))
+    # Thinned bulk die.
+    y = 400
+    body += islands(y, 62, 12)
+    body.append(rect(8, y + 62, 244, 18, OXIDE))
+    body.append(rect(8, y + 80, 244, 70, CARRIER))
+    body.append(text(130, y + 120, "insulating carrier", size=15))
+    body += labels(y, ("Thinned bulk die", "trenches etched from",
+                       "the back stop on the", "shallow trench",
+                       "isolation (dark grey)"))
+    body.append(text(10, y + 176, "the dielectric under the islands is "
+                     "added after thinning", anchor="start", size=14,
+                     fill="#555555"))
     return svg(w, h, body)
 
 

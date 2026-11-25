@@ -242,8 +242,8 @@ def ovp_ramp():
 
 
 def vconn_inrush():
-    """VCONN charging the cable at constant current, then the cable load
-    (cables.rst)."""
+    """VCONN charging the cable at constant current while the cable draws
+    up to iRaDetect, then the cable load (cables.rst; Type-C Table 4-6)."""
     pv = Plot(60, 20, 590, 150, (-0.5, 4), (0, 3.5))
     pi = Plot(60, 210, 590, 130, (-0.5, 4), (0, 40))
     body = [pv.frame(), pi.frame()]
@@ -253,18 +253,21 @@ def vconn_inrush():
                          SRC_INK, 2.2))
     body.append(line(pi.left, pi.y(33), pi.right, pi.y(33), INK, 1.2,
                      "6,3"))
-    body.append(polyline(pi.pts([(-0.5, 0), (0, 0), (0, 15), (2, 15),
-                                 (2, 25), (3, 25), (3, 6.7), (4, 6.7)]),
+    body.append(polyline(pi.pts([(0, 15), (2, 15)]), SRC_INK, 1.2, "3,3"))
+    body.append(polyline(pi.pts([(-0.5, 0), (0, 0), (0, 25), (2, 25),
+                                 (3, 25), (3, 6.7), (4, 6.7)]),
                          SRC_INK, 2.2))
     for p in (pv, pi):
         body.append(line(p.x(2), p.top, p.x(2), p.bottom, INK, 0.8, "4,3"))
     body.append(text(pv.x(2) + 6, pv.y(3.0) + 18, "3.0 V, the lowest "
                      "valid VCONN,", 11))
     body.append(text(pv.x(2) + 6, pv.y(3.0) + 34, "by tVCONNON = 2 ms", 11))
-    body.append(text(pi.x(0.1), pi.y(15) - 6, "15 mA charges 10 µF", 11))
+    body.append(text(pi.x(0.1), pi.y(25) - 6, "up to 25 mA in the ramp", 11))
+    body.append(text(pi.x(0.1), pi.y(15) + 16, "15 mA charges 10 µF; the "
+                     "rest is iRaDetect", 11))
     body.append(text(pi.x(-0.45), pi.y(33) - 5, "33 mA: the 100 mW the "
                      "source must be able to supply", 11))
-    body.append(text(pi.x(2.05), pi.y(25) - 6, "cable: at most 75 mW", 11))
+    body.append(text(pi.x(2.05), pi.y(25) - 6, "then at most 75 mW", 11))
     body.append(text(pi.right - 4, pi.y(6.7) - 6, "then 20 mW", 11, "end"))
     body += pi.xticks([0, 1, 2, 3, 4], "time after VCONN is switched on (ms)",
                       grid=False)

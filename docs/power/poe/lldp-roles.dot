@@ -1,0 +1,54 @@
+// evampire in both LLDP roles: a powered device on port A and power
+// sourcing equipment on port B. When the allocation on port A falls, the
+// software lowers the allocation on port B at once, answers on port A
+// within 10 s, and lets port B's exchange follow its own 10 s limit. Time
+// runs from top to bottom; not to scale. From lldp.rst (IEEE 802.3
+// 145.5.2).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph lldp_roles {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.5,
+           ranksep=0.3, newrank=true, splines=false];
+    node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    u [shape=box, style="rounded,filled", fillcolor="#fbe5d6",
+       label="Upstream power\nsourcing equipment", width=1.4];
+    e [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+       label="evampire: PD on A,\nPSE on B", width=1.4];
+    d [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+       label="Downstream\npowered device", width=1.4];
+    nh [shape=plaintext, label="Timing", fontsize=10,
+        fontname="Helvetica-Bold"];
+
+    u1; u2; u3; u4;
+    e1; e2; e3; e4;
+    d1; d2; d3; d4;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    n1 [label=""];
+    n2 [label="at once"];
+    n3 [label="within 10 s\nof step 1"];
+    n4 [label="within 10 s of\nstep 2; until then\nthe old allocation\nmay be drawn"];
+
+    { rank=same; u; e; d; nh; }
+    { rank=same; u1; e1; d1; n1; }
+    { rank=same; u2; e2; d2; n2; }
+    { rank=same; u3; e3; d3; n3; }
+    { rank=same; u4; e4; d4; n4; }
+    u -> e -> d -> nh [style=invis];
+
+    edge [arrowhead=none, style=dashed, color="#999999", weight=100];
+    u -> u1 -> u2 -> u3 -> u4;
+    e -> e1 -> e2 -> e3 -> e4;
+    d -> d1 -> d2 -> d3 -> d4;
+    nh -> n1 -> n2 -> n3 -> n4 [style=invis];
+
+    edge [arrowhead=normal, style=solid, color="#000000", weight=0];
+    u1 -> e1 [label="1. port A: lower\nallocation"];
+    e2 -> d2 [label="2. port B: lower\nallocation"];
+    e3 -> u3 [label="3. port A: answer,\nnew value"];
+    d4 -> e4 [label="4. port B: answer,\nnew value"];
+}
