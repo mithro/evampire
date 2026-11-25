@@ -1,0 +1,27 @@
+{
+ "source": {
+  "status": "PLACEHOLDER: invented values that only exercise the tables and graphs; not simulation output",
+  "simulator": "none",
+  "repository": "mithro/gf180-tcad, experiments/hv-junction",
+  "commit": "none",
+  "date": "2026-11-26"
+ },
+ "processes": {
+  "A": "PLACEHOLDER. P-well generated wherever no N-well, deep N-well or NAT is drawn; nominal doping",
+  "B": "PLACEHOLDER. P-well only where the layout draws it; nominal doping"
+ },
+ "structures": {
+  "NT20": {"A": {"edge": 22.0, "corner": 20.0, "ring_v": []},
+           "B": {"edge": 75.0, "corner": 52.0, "ring_v": []}},
+  "NC0": {"A": {"edge": 22.0, "corner": 19.0, "ring_v": []},
+          "B": {"edge": 75.0, "corner": 38.0, "ring_v": []}},
+  "NW0": {"B": {"edge": 22.0, "corner": 20.0, "ring_v": []}},
+  "NW1p5": {"B": {"edge": 55.0, "corner": 40.0, "ring_v": []}},
+  "NW6": {"B": {"edge": 74.0, "corner": 51.0, "ring_v": []}},
+  "NA0p6": {"A": {"edge": 70.0, "corner": 50.0, "ring_v": []},
+            "B": {"edge": 75.0, "corner": 52.0, "ring_v": []}},
+  "NR1S2": {"B": {"edge": 80.0, "corner": null,
+                  "ring_v": [[0, 0.0], [10, 0.2], [20, 4.0], [30, 13.0],
+                             [40, 23.0], [50, 33.0]]}}
+ }
+}
