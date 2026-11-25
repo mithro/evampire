@@ -19,6 +19,7 @@ the colon is added by the HTML translator, which writes only the caption.
 SPDX-License-Identifier: Apache-2.0
 """
 
+import copy
 import re
 
 from sphinx.util import logging
@@ -50,8 +51,22 @@ def stable_id(kind, label):
     return label
 
 
+def _restore_numbers(app, env):
+    """Put back the numbers that Sphinx assigned in the previous build.
+
+    Sphinx compares the numbers it assigns with the ones it saved last time,
+    and rewrites every page where they differ. Saving identifiers in their
+    place would make every page differ on every build.
+    """
+    numeric = getattr(env, "stable_ids_numbers", None)
+    if numeric is not None:
+        env.toc_fignumbers = numeric
+    return []
+
+
 def _replace_numbers(app, env):
     """Swap every number Sphinx assigned for the item's identifier."""
+    env.stable_ids_numbers = copy.deepcopy(env.toc_fignumbers)
     seen = {}
     for docname in sorted(env.toc_fignumbers):
         for kind, numbers in env.toc_fignumbers[docname].items():
@@ -84,11 +99,17 @@ class CaptionColonTranslator(HTML5Translator):
         added = self.body[start:]
         if len(added) == 3 and added[1].endswith(" "):
             self.body[start + 1] = added[1][:-1] + ": "
+        elif added:
+            logger.warning(
+                "the caption number has an unexpected form, so no colon was "
+                "added; update CaptionColonTranslator for this Sphinx "
+                "version", location=node)
 
 
 def setup(app):
     # Sphinx assigns the numbers in its own handler for this event, at the
     # default priority of 500. A higher number runs later.
+    app.connect("env-get-updated", _restore_numbers, priority=100)
     app.connect("env-get-updated", _replace_numbers, priority=900)
     for builder in ("html", "dirhtml", "singlehtml"):
         app.set_translator(builder, CaptionColonTranslator)
