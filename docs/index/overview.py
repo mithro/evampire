@@ -18,7 +18,7 @@ pages, which are the place to change them:
   architecture/index.rst and ethernet/rgmii/port-logic.rst.
 - Power stages on the chip in the full design, except possibly some
   high-voltage switches: power/index.rst (tab-power-board-configs).
-- Processor network traffic below 1 Mbit/s: overview.rst.
+- Processor network traffic below 1 Mbit/s: index.rst.
 - USB 2.0 full speed, 12 Mbit/s, on D+ and D-: requirements.rst.
 - USB-PD biphase mark coding on CC, 300 kbit/s: power/usb-pd/cc-signalling.rst.
 - PoE 37 V to 57 V at the powered device, 44 V to 57 V from the power
