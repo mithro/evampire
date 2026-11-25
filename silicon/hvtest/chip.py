@@ -45,15 +45,29 @@ def build(sites):
     layout.dbu = geom.DBU
     top = layout.create_cell("hvtest")
     pad = pad_cell(layout)
-    m1, m5 = layout.layer(*L.METAL1), layout.layer(*L.METAL5)
+    m1, m2, m5 = layout.layer(*L.METAL1), layout.layer(*L.METAL2), layout.layer(*L.METAL5)
+    up = layout.create_cell("m2_to_m5")  # via stack from Metal2 to Metal5
+    sq = geom.box(-2.0, -2.0, 2.0, 2.0)
+    for metal in L.METALS[1:]:
+        up.shapes(layout.layer(*metal)).insert(sq)
+    for via in L.VIAS[1:]:
+        up.shapes(layout.layer(*via)).insert(geom.contacts(sq, junction.VIA, junction.VIA_PITCH, 0.3))
     cols = int((DIE_W - 2 * EDGE) // SITE_W)
     rows = int((DIE_H - 2 * EDGE - 160.0) // SITE_H)  # the bottom strip holds the bus pads
-    if len(sites) > cols * rows:
-        raise ValueError(f"{len(sites)} sites do not fit {cols} x {rows}")
+    taken = set()
     manifest = {"die": [DIE_W, DIE_H], "sites": []}
     y_bus = EDGE + 130.0
-    for k, (name, params) in enumerate(sites):
-        col, row = k % cols, k // cols
+    slot = 0
+    for name, params in sites:
+        col, row = slot % cols, slot // cols
+        two = params.get("sense") or params.get("gate")
+        slot += 1
+        if two:  # the site above in the same column holds the second pad
+            if row % 2 == 1:
+                raise ValueError(f"{name}: two-pad structures must sit in an even row")
+            taken.add((col, row + 1))
+        while (slot % cols, slot // cols) in taken:
+            slot += 1
         x0 = EDGE + col * SITE_W  # west edge of the site
         cy = y_bus + 30.0 + SITE_H / 2 + row * SITE_H
         p = {**junction.DEFAULTS, **params}
@@ -68,7 +82,22 @@ def build(sites):
         place(top, pad, px, cy)
         top.shapes(m5).insert(geom.box(cx + bh, cy - junction.LEAD_W / 2, px - PAD / 2, cy + junction.LEAD_W / 2))
         top.shapes(m5).insert(geom.text(layout, name, 8.0, px - PAD / 2, cy + PAD / 2 + 4.0))
-        manifest["sites"].append({"name": name, "params": p, "pad": [px, cy], "centre": [cx, cy]})
+        site = {"name": name, "params": p, "pad": [px, cy], "centre": [cx, cy]}
+        if p["sense"] or p["gate"]:
+            # second pad in the site above: Metal2 north, then east, then up to Metal5
+            ay = cy + SITE_H
+            top.shapes(m2).insert(geom.box(cx - 1.2, cy + bh, cx + 1.2, ay + 1.2))
+            top.shapes(m2).insert(geom.box(cx - 1.2, ay - 1.2, px - PAD / 2 + 4.0, ay + 1.2))
+            place(top, up, px - PAD / 2 + 2.0, ay)
+            place(top, pad, px, ay)
+            role = "ring1" if p["sense"] else "gate"
+            top.shapes(m5).insert(geom.text(layout, f"{name}.{role[0].upper()}", 8.0,
+                                            px - PAD / 2, ay + PAD / 2 + 4.0))  # fmt: skip
+            site["aux_pad"] = [px, ay]
+            site["aux_role"] = role
+        manifest["sites"].append(site)
+    if (slot - 1) // cols >= rows:
+        raise ValueError(f"sites need {(slot - 1) // cols + 1} rows; {rows} fit")
     # column buses and the bottom bus on Metal1, with substrate pads
     y_top = y_bus + 30.0 + rows * SITE_H
     for col in range(cols):
