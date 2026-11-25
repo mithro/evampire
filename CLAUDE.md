@@ -46,7 +46,10 @@ uv run python docs/check_source.py docs   # fast: source-only check, no build
    - numbered figures and tables that no link points to;
    - diagrams without `:alt:`;
    - pages that the left sidebar does not link to. The home page is in
-     the sidebar through the `Overview <self>` entry of its own `toctree`.
+     the sidebar through the `Home <self>` entry of its own `toctree`.
+     Furo calls that page "Home" in its previous-page link, so the entry
+     uses the same name. Pages that only redirect, such as
+     `docs/_extra/overview.html`, are exempt.
 
 `check_html.py` checks links across the whole site, so it needs a full
 build; no check renders a single page on its own.

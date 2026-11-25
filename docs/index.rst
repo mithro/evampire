@@ -10,9 +10,42 @@ processor that also moves power between
 :wikipedia:`Power over Ethernet <Power_over_Ethernet>` and
 :wikipedia:`USB Type-C <USB-C>`.
 
-This page introduces what evampire does: how it passes Ethernet traffic
-between its ports, what its processor does with that traffic, and how it
-moves power between Ethernet and USB Type-C.
+.. figure:: index/overview.svg
+   :name: fig-overview
+   :alt: Block diagram. Data runs in a straight line along the top, between
+         Ethernet port A, Ethernet transceiver A, the cut-through hub,
+         Ethernet transceiver B and Ethernet port B. Each transceiver is
+         labelled 10, 100, 1000 Mbit/s, the hub same speed on both ports,
+         and each link between a transceiver and the hub RGMII, up to
+         125 MHz. The hub
+         passes frames, below 1 Mbit/s, to and from the RISC-V processor
+         below it. The processor connects to three blocks: power control
+         (measure, limit), the USB 2.0 serial port (12 Mbit/s) and USB-PD
+         (BMC, 300 kbit/s). The serial port connects straight down to the USB
+         Type-C port over the D+ and D− wires, and USB-PD over the CC wire;
+         both hop over the power row. Power control connects to the power
+         bus. Power runs in a straight line along the bottom, from
+         Ethernet port A (PoE in, 37–57 V) through the powered device and
+         buck converter to the power bus on the board. From the bus it runs
+         through the boost converter and power sourcing equipment to
+         Ethernet port B (PoE out, 44–57 V). Below the bus, power comes up from the USB Type-C port
+         through the VBUS sink switch, and goes down to it through the VBUS
+         source buck-boost converter. The USB Type-C port is labelled VBUS
+         5–20 V, up to 48 V with EPR. The first-version chip is drawn as a
+         die with a ring of bond pads around the hub, processor, power
+         control, serial port and USB-PD; coloured pads mark the RGMII links,
+         the USB wires and the power control signals that leave it. A dashed
+         outline that also includes both Ethernet transceivers and all the
+         power stages marks the chip in the full design, with a note that
+         some high-voltage switches may stay external parts. The outline has
+         a hole around the power bus, which stays on the board.
+   :align: center
+
+   The main blocks of evampire. Data flows along the top row and power along
+   the bottom row, each from Ethernet port A to port B. The first-version
+   chip is drawn as a die, where a coloured pad marks each signal that leaves
+   it, and the dashed outline is the chip in the full design. The power bus
+   stays on the board.
 
 Ports
 -----
@@ -99,43 +132,6 @@ Main blocks
 :numref:`fig-overview` shows the main blocks of evampire and how data and
 power flow between them.
 
-.. figure:: index/overview.svg
-   :name: fig-overview
-   :alt: Block diagram. Data runs in a straight line along the top, between
-         Ethernet port A, Ethernet transceiver A, the cut-through hub,
-         Ethernet transceiver B and Ethernet port B. Each transceiver is
-         labelled 10, 100, 1000 Mbit/s, the hub same speed on both ports,
-         and each link between a transceiver and the hub RGMII, up to
-         125 MHz. The hub
-         passes frames, below 1 Mbit/s, to and from the RISC-V processor
-         below it. The processor connects to three blocks: power control
-         (measure, limit), the USB 2.0 serial port (12 Mbit/s) and USB-PD
-         (BMC, 300 kbit/s). The serial port connects straight down to the USB
-         Type-C port over the D+ and D− wires, and USB-PD over the CC wire;
-         both hop over the power row. Power control connects to the power
-         bus. Power runs in a straight line along the bottom, from
-         Ethernet port A (PoE in, 37–57 V) through the powered device and
-         buck converter to the power bus on the board. From the bus it runs
-         through the boost converter and power sourcing equipment to
-         Ethernet port B (PoE out, 44–57 V). Below the bus, power comes up from the USB Type-C port
-         through the VBUS sink switch, and goes down to it through the VBUS
-         source buck-boost converter. The USB Type-C port is labelled VBUS
-         5–20 V, up to 48 V with EPR. The first-version chip is drawn as a
-         die with a ring of bond pads around the hub, processor, power
-         control, serial port and USB-PD; coloured pads mark the RGMII links,
-         the USB wires and the power control signals that leave it. A dashed
-         outline that also includes both Ethernet transceivers and all the
-         power stages marks the chip in the full design, with a note that
-         some high-voltage switches may stay external parts. The outline has
-         a hole around the power bus, which stays on the board.
-   :align: center
-
-   The main blocks of evampire. Data flows along the top row and power along
-   the bottom row, each from Ethernet port A to port B. The first-version
-   chip is drawn as a die, where a coloured pad marks each signal that leaves
-   it, and the dashed outline is the chip in the full design. The power bus
-   stays on the board.
-
 The two chip outlines are the two board configurations of
 :numref:`tab-power-board-configs`. The first version connects to separate
 Ethernet transceiver chips over RGMII and uses external power stages. The
@@ -152,14 +148,6 @@ The labels use two abbreviations. USB Power Delivery messages on the
 :term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the
 extended power range of USB Power Delivery.
 
-Scope of this documentation
----------------------------
-
-This documentation describes what the chip does and explains the Ethernet
-and power-delivery standards that evampire implements. It is written for
-readers who are familiar with digital and analogue integrated circuit design
-but not with the Ethernet or USB Power Delivery standards.
-
 The chip
 --------
 
@@ -173,7 +161,7 @@ The chip
    :caption: The chip
    :hidden:
 
-   Overview <self>
+   Home <self>
    requirements
    architecture/index
 

@@ -14,6 +14,7 @@ Some problems only show up in the rendered pages, not as Sphinx warnings:
 * A page that the left sidebar does not link to can only be reached by a
   link in the text. Sphinx warns about a page in no ``toctree``, but not
   about the home page, which needs a ``self`` entry in its own ``toctree``.
+  A page that only redirects to another page is exempt.
 
 Usage: python check_html.py <html-output-directory>
 
@@ -50,6 +51,7 @@ class PageParser(html.parser.HTMLParser):
     a label can land on the figure, on the table or on an element within it.
     ``missing_alt`` lists images and diagrams without alternative text.
     ``sidebar_links`` holds the link targets in the left sidebar's page tree.
+    ``redirects`` is true for a page that sends the browser to another page.
     """
 
     def __init__(self):
@@ -58,6 +60,7 @@ class PageParser(html.parser.HTMLParser):
         self.numbered = []
         self.missing_alt = []
         self.sidebar_links = []
+        self.redirects = False
         # How many <div> elements are open inside the sidebar's page tree,
         # counting the tree's own <div>.
         self._sidebar_depth = 0
@@ -76,6 +79,8 @@ class PageParser(html.parser.HTMLParser):
                 self.sidebar_links.append(attrs["href"])
         if tag == "div" and (self._sidebar_depth or "sidebar-tree" in classes):
             self._sidebar_depth += 1
+        if tag == "meta" and (attrs.get("http-equiv") or "").lower() == "refresh":
+            self.redirects = True
         if tag in ("figure", "table"):
             self._open.append([set(), None])
         if "id" in attrs:
@@ -120,9 +125,10 @@ def sidebar_problems(parsed):
 
     Furo puts the whole page tree in the sidebar of every page. Files in
     folders that Sphinx names with a leading underscore, such as ``_static``,
-    are not pages.
+    are not pages, and a page that only redirects has no sidebar.
     """
-    pages = [name for name in parsed if not name.startswith("_")]
+    pages = [name for name, parser in parsed.items()
+             if not name.startswith("_") and not parser.redirects]
     expected = [name for name in pages if name not in GENERATED_PAGES]
     problems = []
     # For each page, the pages whose sidebar does not link to it.
