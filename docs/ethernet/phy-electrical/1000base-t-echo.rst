@@ -140,8 +140,7 @@ where :math:`M` is the margin in dB, shaded in
 :math:`M = 30.5 - 18.7 = 11.8` dB; at 100 MHz, :math:`M = 27.1 - 24.0 =
 3.1` dB. There are three neighbouring pairs, and the transceiver's own
 transmission on the same pair, the echo, is larger still. The receiver
-works only because it removes these known signals, as the rest of this
-page describes.
+works only because it removes these known signals (:ref:`phy-echo`).
 
 .. _phy-echo:
 
