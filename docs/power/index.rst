@@ -32,7 +32,7 @@ Power roles
 -----------
 
 Each standard has its own names for the two ends of a cable, listed in
-:numref:`tab-power-roles`.
+:numref:`tab-power-roles` and drawn in :numref:`fig-power-roles`.
 
 .. list-table:: Names for the two ends of a powered cable
    :name: tab-power-roles
@@ -59,12 +59,24 @@ and receiving power need different circuits on the board, so a port that can
 take either role has both sets of circuits and selects one before a cable is
 connected (see :doc:`poe/index`).
 
+.. graphviz:: index/roles.dot
+   :name: fig-power-roles
+   :caption: The two ends of a powered cable in each standard, and a USB
+             Type-C role swap with the cable still connected.
+   :alt: Three rows. Power over Ethernet: power sourcing equipment sends
+         power over the Ethernet cable to a powered device, with roles
+         fixed while connected. USB Power Delivery before a role swap:
+         dual-role port 1 is the source and sends power over VBUS to
+         dual-role port 2, the sink. After a role swap, with the cable
+         still connected, port 2 is the source and port 1 the sink.
+   :align: center
+
 .. _power-modes:
 
 Operating modes
 ---------------
 
-The board works in three modes:
+The board works in three modes, drawn in :numref:`fig-power-modes`:
 
 Ethernet in, USB out
    An Ethernet port receives power as a powered device. The USB Type-C port
@@ -76,6 +88,19 @@ USB in, Ethernet out
 
 Ethernet in, Ethernet out
    One Ethernet port receives power and the other supplies it.
+
+.. graphviz:: index/modes.dot
+   :name: fig-power-modes
+   :caption: The three operating modes around the internal power bus, with
+             port A receiving and port B supplying as an example.
+   :alt: Three panels, each with Ethernet ports A and B above the power
+         bus and the USB Type-C port below it. Ethernet in, USB out: power
+         flows from Ethernet A, a powered device, through the bus to the
+         USB-C port, a source. USB in, Ethernet out: power flows from the
+         USB-C port, a sink, through the bus to Ethernet B, power sourcing
+         equipment. Ethernet in, Ethernet out: power flows from Ethernet A
+         through the bus to Ethernet B. Unused ports are greyed.
+   :align: center
 
 .. _power-budget:
 
@@ -160,9 +185,37 @@ devices do, and the alternative for those that don't.
 The software uses these changes to move power between ports. When a device
 on one port is unplugged or uses less than its share, the software raises
 the offer on another port. When a new device is plugged in, the software
-first lowers the offers on the other ports to make room. :doc:`usb-pd/index` and
+first lowers the offers on the other ports to make room
+(:numref:`fig-power-sharing`). :doc:`usb-pd/index` and
 :doc:`poe/sharing` describe how the budget is divided, and how a port's offer is
 reduced safely while a device is using it.
+
+.. wavedrom::
+   :name: fig-power-sharing
+   :alt: Timing diagram of the offers on three output ports with an 80 W
+         output budget. At first Ethernet port B offers 45 W, USB-C port 1
+         35 W and USB-C port 2 nothing. When a device attaches to USB-C
+         port 2, the software lowers the Ethernet offer; until the powered
+         device answers, up to 10 s later, 45 W stays in the budget. Then
+         Ethernet offers 25 W and USB-C port 2 20 W. When the device on
+         USB-C port 1 is unplugged, USB-C port 2 is raised to 55 W. The sum
+         stays at 80 W throughout.
+   :caption: Offers on three output ports sharing an 80 W budget: lowered
+             first, raised after; the values are an example.
+
+   { "signal": [
+       { "name": "Ethernet B (W)", "wave": "3...4...5......",
+         "data": ["45", "45: lowering, up to 10 s", "25"] },
+       { "name": "USB-C 1 (W)", "wave": "6..........2...",
+         "data": ["35", "0: unplugged"] },
+       { "name": "USB-C 2 (W)", "wave": "2...2...7..7...",
+         "data": ["0", "0: attached", "20", "55"] },
+       {},
+       { "name": "sum (W)", "wave": "9...9...9..9...",
+         "data": ["80", "80", "80", "80"] }
+     ],
+     "config": { "hscale": 1 }
+   }
 
 .. _power-board-configs:
 
@@ -170,7 +223,8 @@ Board configurations
 --------------------
 
 :numref:`tab-power-board-configs` describes the two board configurations,
-the first version and the full design.
+the first version and the full design. :numref:`fig-overview` draws both
+chip outlines.
 
 .. list-table:: The two board configurations
    :name: tab-power-board-configs

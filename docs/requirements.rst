@@ -109,7 +109,8 @@ the buffer's slack:
 
 For example, a slack of 2 bytes gives
 :math:`L_\text{max} \approx 2 / (200 \times 10^{-6}) = 10\,000` bytes,
-which is longer than a 9000-byte jumbo frame.
+which is longer than a 9000-byte jumbo frame. :numref:`fig-rate-matching`
+shows the buffer level across such a frame.
 
 .. _req-processor-delivery:
 
@@ -148,7 +149,8 @@ Frame storage
   one frame while the hardware fills or empties the other.
 * The 1522 bytes are 1500 bytes of payload, the two 6-byte addresses, the
   2-byte type field, the 4-byte checksum and an optional 4-byte
-  :term:`VLAN tag` (:std:`IEEE 802.1Q <802.1Q>`, :clause:`3`).
+  :term:`VLAN tag` (:std:`IEEE 802.1Q <802.1Q>`, :clause:`3`), as
+  :numref:`fig-frame-layout` shows.
 * Frames longer than the processor's buffer, for example
   :wikipedia:`jumbo frames <Jumbo_frame>` of up to about 9000 bytes, are
   still forwarded between ports A and B, but are not delivered to the
@@ -183,7 +185,7 @@ port. The section on :ref:`power roles <power-roles>` explains the names of
 the two ends of a powered cable, and :numref:`tab-power-board-configs` gives the role of each port in
 each board configuration.
 
-The board works in these modes:
+The board works in these modes (:numref:`fig-power-modes`):
 
 Ethernet in, USB out
    evampire receives power from an Ethernet port as a
@@ -258,7 +260,8 @@ Power control
   times.
 * evampire has a small built-in start-up sequencer, working without the
   processor, that answers the detection and classification steps and
-  requests a power level. Once the processor is running, the software
+  requests a power level (:numref:`fig-poe-sequencer`,
+  :numref:`fig-poe-voltage-timeline`). Once the processor is running, the software
   carries out any further negotiation, for example asking for more power.
 * evampire has built-in power limiting. Each port has a current and power
   limit that the software sets.

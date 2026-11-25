@@ -91,7 +91,7 @@ Type-C. A board built around evampire can be
 powered from an Ethernet cable and supply power over USB Type-C, or be
 powered from USB Type-C and supply power over an Ethernet cable. The
 processor negotiates the role and the power level on each port (see
-:doc:`power/index`).
+:doc:`power/index`, which draws the modes in :numref:`fig-power-modes`).
 
 Main blocks
 -----------
