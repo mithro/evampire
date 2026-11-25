@@ -53,7 +53,7 @@ source_suffix = {
     ".md": "markdown",
 }
 
-exclude_patterns = ["_build"]
+exclude_patterns = ["_build", "_extra"]
 
 # Give figures, tables and code blocks an identifier so they can be
 # referenced with :numref:. The stable_ids extension replaces the running
@@ -71,7 +71,7 @@ graphviz_output_format = "svg"
 # "make linkcheck" checks every external link. External sites fail briefly,
 # so each link is tried several times before it counts as broken.
 linkcheck_retries = 3
-linkcheck_timeout = 30
+linkcheck_timeout = 60
 # Sites that refuse automated requests (they answer 403 or time out for
 # any client that is not a browser). Links to them are checked by hand.
 linkcheck_ignore = [
@@ -117,6 +117,9 @@ myst_enable_extensions = [
 html_theme = "furo"
 html_title = "evampire"
 html_static_path = ["_static"]
+# Files copied to the top of the site as they are: pages that redirect an
+# address that used to be a page to the page that replaced it.
+html_extra_path = ["_extra"]
 html_css_files = ["custom.css"]
 # Adds an "Open diagram at full size" link under each diagram on narrow
 # screens, where diagrams are scaled down to the column width.
