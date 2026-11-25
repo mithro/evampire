@@ -3,8 +3,8 @@
 1000BASE-T: PAM-5 and trellis coding
 ====================================
 
-This page explains how 1000BASE-T (:clause:`40`) carries 1000 Mbit/s: all
-four pairs at once, five signal levels, a shaping filter, scrambling and an
+1000BASE-T (:clause:`40`) carries 1000 Mbit/s on all four pairs at once,
+with five signal levels, a shaping filter, scrambling and an
 error-correcting trellis code. :doc:`1000base-t-echo` explains how each pair
 carries both directions at the same time.
 
@@ -56,7 +56,7 @@ The fastest pattern a symbol stream can hold changes level every symbol and
 repeats every two symbols. At 125 MBd that is a 62.5 MHz signal, half the
 symbol rate, called the :wikipedia:`Nyquist frequency
 <Nyquist_frequency>`. A channel that passes frequencies up to it can carry
-the symbols, so these pages use 62.5 MHz as the reference frequency. The
+the symbols, so 62.5 MHz serves as the reference frequency. The
 transmitted spectrum is about 80 MHz wide (:clause:`40.7.1`), inside the
 100 MHz for which the cable is specified (:numref:`fig-phy-nyquist`).
 
@@ -133,7 +133,7 @@ A voltage ratio of 2 is
 
 so PAM-5 needs about 6 dB more signal-to-noise ratio than three-level
 signalling for the same error rate ([PHY-TUT98]_ slide 22). The trellis code
-described below wins this back.
+(:ref:`phy-trellis`) wins this back.
 
 .. _phy-shaping:
 
@@ -303,7 +303,7 @@ groups followed by a two-code-group End-of-Stream delimiter
          using only −2, 0 and +2, two SSD code groups, three data code groups
          using all five levels, two CSReset code groups, two ESD code groups,
          then idle again. The levels of the delimiters and resets are drawn
-         dashed, as not listed on these pages.
+         dashed, as their levels are not listed.
    :align: center
 
    The code groups around one frame: SSD is the Start-of-Stream

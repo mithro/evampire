@@ -3,10 +3,10 @@
 Signal processing
 =================
 
-This page states what the digital signal processing of one port must do
-each 8 ns symbol period, how that depends on cable reach, and the one loop
-that must close within a symbol period. It assumes no clock or supply for
-the logic: those are options on :doc:`cells`.
+The digital signal processing of one port must finish its work in each
+8 ns symbol period, the amount of work depends on cable reach, and one
+loop must close within a single symbol period. No clock or supply is
+assumed for the logic: those are options on :doc:`cells`.
 
 .. _phy-int-work:
 

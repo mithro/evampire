@@ -3,10 +3,10 @@
 1000BASE-T: receiver and clocking
 =================================
 
-This page explains the rest of a 1000BASE-T receiver: the equalisers, the
-master and slave clocking that keeps the cancellers matched, the
-correction of pair delays, the blocks of a whole transceiver, and how much
-arithmetic they do every symbol period.
+Behind its cancellers, a 1000BASE-T receiver has equalisers, master and
+slave clocking that keeps the cancellers matched, and correction of the
+delays between pairs. The blocks of a whole transceiver do a large amount
+of arithmetic every symbol period.
 
 .. _phy-equalisation:
 
@@ -155,7 +155,7 @@ Transceiver blocks
 ------------------
 
 A gigabit transceiver has a copy of the signal path for each of the four
-pairs. :numref:`fig-phy-blocks` puts the blocks of these pages together for one
+pairs. :numref:`fig-phy-blocks` puts the blocks together for one
 pair, and :numref:`tab-phy-blocks` lists them with the page that explains
 each one.
 

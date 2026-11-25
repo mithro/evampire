@@ -3,10 +3,10 @@
 1000BASE-T: channel, echo and crosstalk
 =======================================
 
-This page gives the size of the cable effects that 1000BASE-T must handle,
-and explains how a :term:`hybrid` and adaptive cancellers let one pair carry
-both directions at once. The effects themselves are introduced in
-:doc:`job`.
+1000BASE-T carries both directions at once on each pair, so it must handle
+the echo and crosstalk of the cable as well as its loss. A :term:`hybrid`
+and adaptive cancellers remove the echo and crosstalk. The effects
+themselves are introduced in :doc:`job`.
 
 .. _phy-channel-limits:
 

@@ -3,10 +3,10 @@
 Integrated transceiver
 ======================
 
-These pages specify a 1000BASE-T :term:`Ethernet transceiver` built into
-evampire on the gf180mcu process: what each speed requires, what each block
-must do, the options for building it, and area and power illustrations.
-They build on :doc:`../index`, which explains how a transceiver works.
+A 1000BASE-T :term:`Ethernet transceiver` built into evampire on the
+gf180mcu process has requirements set by each speed, and blocks that each
+have several options for building them. :doc:`../index` explains how a
+transceiver works.
 
 The transceiver is integrated in the board configurations of
 :numref:`tab-power-board-configs` that do not use an external one. Every
@@ -15,7 +15,7 @@ port runs 1000BASE-T, 100BASE-TX and 10BASE-T
 reach of the integrated transceiver is a parameter: results that depend on
 it are given as functions of reach.
 
-Three kinds of value appear on these pages:
+Values for the integrated transceiver are of three kinds:
 
 Required
    A limit set by IEEE 802.3-2022 (:doc:`/standards`), cited by subclause.
@@ -24,7 +24,7 @@ Reference example
    function has been built and at what cost there; it is not a prediction
    for evampire.
 Estimate
-   A number worked out on these pages from required values, reference
+   A number worked out from required values, reference
    examples and stated assumptions. It is labelled as an estimate and is to
    be confirmed by implementation.
 
@@ -43,7 +43,7 @@ Estimate
    slower-speeds
    risks
 
-The pages, in the order of the signal and then of the design work:
+In the order of the signal and then of the design work:
 
 * :doc:`requirements`: the interface to the forwarding logic, the blocks of
   one port and the requirements of each speed.

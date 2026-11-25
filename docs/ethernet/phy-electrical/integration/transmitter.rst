@@ -3,10 +3,9 @@
 Transmitter
 ===========
 
-This page works out what the integrated transmitter needs: the linearity
-and swing of the DAC and line driver, the power it delivers into the cable,
-the termination impedance, and how the pins reach the cable without
-transformers.
+The integrated transmitter's DAC and line driver need a set linearity and
+swing, deliver power into the cable, set the termination impedance, and
+reach the cable from the pins without transformers.
 
 .. _phy-int-linearity:
 

@@ -3,10 +3,10 @@
 Devices, cell libraries and supply options
 ==========================================
 
-This page lists what gf180mcu offers the transceiver: its transistors, the
-standard-cell libraries and how much logic each fits in one 8 ns symbol
-period, and the switching energy that sets the power of the signal
-processing. The choice of cells and supply is open.
+gf180mcu offers the transceiver its transistors, standard-cell libraries
+that each fit a different amount of logic in one 8 ns symbol period, and a
+switching energy that sets the power of the signal processing. The choice
+of cells and supply is open.
 
 .. _phy-int-devices:
 

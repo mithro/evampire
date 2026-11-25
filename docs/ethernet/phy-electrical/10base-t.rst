@@ -3,9 +3,9 @@
 10BASE-T: Manchester coding and link pulses
 ===========================================
 
-This page describes 10BASE-T (:clause:`14`), the simplest of the three
-twisted-pair speeds: its coding, its signal levels and the link pulses that
-show a cable is connected.
+10BASE-T (:clause:`14`) is the simplest of the three twisted-pair speeds:
+it sends Manchester-coded data at two signal levels, and link pulses show
+that a cable is connected.
 
 .. _phy-manchester:
 

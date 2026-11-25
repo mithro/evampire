@@ -3,9 +3,9 @@
 Area and power
 ==============
 
-This page adds up area and power for one integrated 1000BASE-T port from
-the reference examples and assumptions of the other pages. The result is
-an illustration from published designs in other processes, not a
+The area and power of one integrated 1000BASE-T port, added up from the
+reference examples and assumptions of the other integration pages, are an
+illustration from published designs in other processes. They are not a
 prediction for evampire: the area and power of a gf180mcu transceiver are
 not known. Synthesis of the signal processing for gf180mcu, and test chips
 of the ADC, the line driver and the PLL, would establish them. The totals

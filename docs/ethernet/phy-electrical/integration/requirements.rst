@@ -3,9 +3,9 @@
 Requirements
 ============
 
-This page lists the interface, the blocks and the requirements of one
-integrated 1000BASE-T port, and points to the limits of the slower
-speeds.
+One integrated 1000BASE-T port connects to the forwarding logic through a
+byte interface and is built from a set of blocks, each with requirements
+from IEEE 802.3. The slower speeds have limits of their own.
 
 .. _phy-int-interface:
 

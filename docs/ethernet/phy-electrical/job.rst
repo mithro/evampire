@@ -3,9 +3,9 @@
 Transceiver role and the cable
 ==============================
 
-This page describes the job of an :term:`Ethernet transceiver`, the three
-speeds it handles, and the four ways a twisted-pair cable changes the signal
-on its way.
+An :term:`Ethernet transceiver` connects the forwarding logic to the cable
+at one of three speeds, and the twisted-pair cable changes the signal on
+its way in four ways.
 
 .. _phy-position:
 
@@ -93,8 +93,9 @@ twisted pair.
      - 5
 
 10BASE-T and 100BASE-TX use one pair for each direction. 1000BASE-T uses
-all four pairs in both directions at once (:numref:`fig-phy-speeds`). These pages describe the speeds
-in that order, because each one adds techniques to the one before.
+all four pairs in both directions at once (:numref:`fig-phy-speeds`). Each
+speed adds
+techniques to the one before.
 
 .. figure:: speeds.svg
    :name: fig-phy-speeds
@@ -121,7 +122,7 @@ Three terms are used on every page:
 Differential voltage
    Each pair carries the difference between the voltages of its two wires
    (:wikipedia:`differential signalling <Differential_signalling>`). Every
-   amplitude on these pages is a differential voltage into the 100 Ω
+   transceiver amplitude given is a differential voltage into the 100 Ω
    impedance of the cable.
 
 .. _phy-cable:
