@@ -38,11 +38,11 @@ digraph pinout {
     node [shape=plaintext, style="", width=2.2, height=0.2, fontsize=9];
     l1 [pos="2.35,3.07!", label="TXC, TX_CTL, TXD[3:0]: 6 pins"];
     l2 [pos="2.35,2.77!", label="RXC, RX_CTL, RXD[3:0]: 6 pins"];
-    l3 [pos="1.95,2.5!", width=1.4, label="MDC: 1 pin, shared"];
-    l7 [pos="2.05,2.24!", width=2.3, label="MDIO: 1 pin, both ways, shared"];
+    l3 [pos="2.05,2.5!", width=1.4, label="MDC: 1 pin, shared"];
+    l7 [pos="2.25,2.24!", width=1.7, label="MDIO: 1 pin, both ways"];
     l4 [pos="2.35,1.22!", label="TXC, TX_CTL, TXD[3:0]: 6 pins"];
     l5 [pos="2.35,0.92!", label="RXC, RX_CTL, RXD[3:0]: 6 pins"];
-    l6 [pos="1.85,0.27!", width=1.4, label="125 MHz clock: 1 pin"];
+    l6 [pos="2.15,0.27!", width=1.5, label="125 MHz clock: 1 pin"];
 
     e1 -> a1 [color="#1f4e79"];
     a2 -> e2 [color="#c55a11"];
