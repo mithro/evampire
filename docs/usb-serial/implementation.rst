@@ -1,7 +1,9 @@
 USB serial port in evampire
 ===========================
 
-These pages cover how evampire builds the USB serial port.
+evampire runs its USB serial port mostly in software on the processor,
+with hardware helpers and an analogue front end where USB timing needs
+them.
 
 :doc:`software-cost`
    How much processor time each part of USB takes in software, and the

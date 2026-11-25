@@ -1,9 +1,9 @@
 USB Power Delivery roles
 ========================
 
-This page describes how the USB serial port fits with the power roles of a
-USB Type-C port, the data role swap, boards with two ports, and the other
-work the processor does. The USB Power Delivery negotiation itself is on
+evampire's USB serial port shares each USB Type-C port with that port's
+power and data roles, and shares the processor with USB Power Delivery and
+Ethernet, on boards with one or two ports. The USB Power Delivery negotiation itself is on
 :doc:`/power/usb-pd/index`. Type-C and PD references link to the USB Type-C and
 USB Power Delivery specifications on the :doc:`standards page
 </standards>`.

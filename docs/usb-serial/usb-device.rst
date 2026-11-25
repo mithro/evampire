@@ -1,8 +1,8 @@
 USB full-speed device
 =====================
 
-These pages explain what a USB full-speed serial device is and how it talks
-to a computer.
+A USB full-speed serial device talks to a computer over the D+ and D−
+wires, and the computer needs no custom driver for it.
 
 :doc:`what-it-is`
    What a computer sees, the communications device class and why no custom

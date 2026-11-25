@@ -1,9 +1,9 @@
 Timing requirements
 ===================
 
-This page collects the time limits of a full-speed device, from the USB 2.0
-specification [USBSER-USB2]_, and works out what each one requires of the
-circuit or the software that meets it. :doc:`software-cost` uses these
+The USB 2.0 specification [USBSER-USB2]_ sets the time limits of a
+full-speed device, and each limit places a requirement on the circuit or
+the software that meets it. :doc:`software-cost` uses these
 figures.
 
 Bit time and tolerance
