@@ -161,7 +161,7 @@ The chip
    :caption: The chip
    :hidden:
 
-   Overview <self>
+   Home <self>
    requirements
    architecture/index
 
