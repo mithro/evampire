@@ -420,7 +420,7 @@ No Try mechanism, then a power role swap
    (:ref:`usbpd-power-role-swap`).
 A fixed role on each port
    A source-only or sink-only port is the simplest, but it does not meet the
-   dual-role requirement of :ref:`req-power-bridging`.
+   dual-role requirement of :ref:`the power bridging requirements <req-power-bridging>`.
 
 The data role also enters the choice. The source starts as the host (DFP)
 and the sink as the device (UFP) (:typec:`Section 2.3.3`). The USB serial

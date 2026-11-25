@@ -72,7 +72,7 @@ whether evampire uses it.
 The TX and RX pairs carry USB 3.2 and USB4 data, and the :term:`SBU`
 contacts carry other signals, for example in alternate modes
 (:typec:`Section 4.2`, :typec:`Section 4.3`). The D+ and D− contacts carry
-the USB serial port of :ref:`the requirements <req-usb-serial>` (see :doc:`/usb-serial/index`).
+the :ref:`USB serial port requirement <req-usb-serial>` (see :doc:`/usb-serial/index`).
 
 CC wire and plug orientation
 ----------------------------
