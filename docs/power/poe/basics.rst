@@ -67,9 +67,9 @@ first-version arrangement with power on one pair set.
          transceiver, which sees data only. Pairs 1-2 (orange) and 3-6
          (green) form Alternative A at the power sourcing end and Mode A
          at the powered device. The centre tap of pair 1-2 connects to the
-         positive side of the 44 to 57 V supply and that of pair 3-6 to the
-         negative side, so the wires of pair 1-2 sit at DC plus and minus
-         half the data and those of pair 3-6 at 0 V plus and minus half the
+         negative side of the 44 to 57 V supply and that of pair 3-6 to the
+         positive side, so the wires of pair 1-2 sit at 0 V plus and minus
+         half the data and those of pair 3-6 at DC plus and minus half the
          data. At the powered device both centre taps go to the polarity
          bridges. Pairs 4-5 (blue) and 7-8 (brown), Alternative B and
          Mode B, are idle in this example.
@@ -77,7 +77,8 @@ first-version arrangement with power on one pair set.
 
    Power on Alternative A: the DC is fed in at the centre taps of the
    cable-side windings, so both wires of a pair carry the same DC and the
-   data is their difference (polarity is one example; T568B colours).
+   data is their difference (pins 1, 2 negative, which every type allows;
+   T568B colours).
 
 Pair set names
 --------------
@@ -138,15 +139,16 @@ on a gigabit port both pair sets carry data and power together.
    :name: fig-poe-pair-sets
    :alt: Two panels, each with power sourcing equipment on the left, a
          powered device on the right and four pairs between them. In the
-         2-pair panel, pins 1-2 carry positive and data and pins 3-6
-         negative and data, while pins 4-5 and 7-8 carry data only; this
+         2-pair panel, pins 1-2 carry negative and data and pins 3-6
+         positive and data, while pins 4-5 and 7-8 carry data only; this
          serves Types 1 to 4 at classes 1 to 4. In the 4-pair panel, pins
          4-5 also carry positive and data and pins 7-8 negative and data;
          this is Types 3 and 4 and is needed for classes 5 to 8.
    :align: center
 
    2-pair power on one pair set, here pair set A, and 4-pair power on
-   both, with data on all four pairs of a gigabit link.
+   both, with data on all four pairs of a gigabit link; the polarities
+   drawn are those a Type 4 source uses.
 
 Output voltage
 --------------

@@ -48,7 +48,7 @@ def pairs():
     body = []
     xl, xr = 150, 530            # transformer centres
     rj_l, rj_r = 215, 465        # RJ45 positions
-    rows = [("1", "2", "+"), ("3", "6", "-"), ("4", "5", None),
+    rows = [("1", "2", "-"), ("3", "6", "+"), ("4", "5", None),
             ("7", "8", None)]
     top = 92
     ys = []
@@ -149,11 +149,11 @@ def pair_sets():
         body += box(x0, 40, 70, 230, "Power\nsourcing\nequip-\nment", FAR,
                     11)
         body += box(x0 + 250, 40, 70, 230, "Powered\ndevice", FAR, 11)
-        sets = (("A", 1, 2, 3, 6), ("B", 4, 5, 7, 8))
+        sets = (("A", 1, 2, 3, 6, "−", "+"), ("B", 4, 5, 7, 8, "+", "−"))
         y = 80
-        for name, a, b, c, d in sets:
+        for name, a, b, c, d, pa, pc in sets:
             powered = name == "A" or four
-            for k, (p1, p2, pol) in enumerate(((a, b, "+"), (c, d, "−"))):
+            for k, (p1, p2, pol) in enumerate(((a, b, pa), (c, d, pc))):
                 yy = y + k * 46
                 col = INK if powered else GREY
                 wdt = 2.6 if powered else 1.2
