@@ -481,7 +481,7 @@ The converters are described on :doc:`../converters/index`, their gate drive
 on :ref:`conv-gate-drive`, their protection on :ref:`conv-protection`, and
 the custom devices for on-chip power switches on :ref:`conv-custom`. The
 current limit that software sets is on :ref:`usbpd-limiting`, and the power
-flow on the board on :ref:`power-flow`. For reference, the TPS65987D puts
+flow on the board on :ref:`the power bridging page <power-flow>`. For reference, the TPS65987D puts
 two 5 A switches on the controller die, and the CCG5C drives external
 P-channel MOSFETs on separate sink and source paths
 (:numref:`tab-usbpd-ref-values`).

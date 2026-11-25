@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="526" viewBox="0 0 680 526">
+<title>Power over Ethernet pairs</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="526" fill="#ffffff"/>
+<rect x="8.0" y="82.0" width="78.0" height="358.0" rx="6" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
+<text x="47.0" y="249.3" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">Ethernet</text>
+<text x="47.0" y="265.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">trans-</text>
+<text x="47.0" y="282.3" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">ceiver</text>
+<rect x="594.0" y="82.0" width="78.0" height="358.0" rx="6" fill="#ffffff" stroke="#000000" stroke-width="1.0"/>
+<text x="633.0" y="249.3" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">Ethernet</text>
+<text x="633.0" y="265.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">trans-</text>
+<text x="633.0" y="282.3" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">ceiver</text>
+<line x1="215.0" y1="26.0" x2="215.0" y2="442.0" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="4,3"/>
+<text x="211.0" y="52.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">RJ45</text>
+<line x1="465.0" y1="26.0" x2="465.0" y2="442.0" stroke="#7f7f7f" stroke-width="1.0" stroke-dasharray="4,3"/>
+<text x="469.0" y="52.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">RJ45</text>
+<text x="140.0" y="18.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#c55a11">Power sourcing equipment</text>
+<text x="540.0" y="18.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#c55a11">Powered device</text>
+<text x="340.0" y="18.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#7f7f7f">cable</text>
+<path d="M124.0,92.0 A4.2,4.2 0 0 1 124.0,100.5 A4.2,4.2 0 0 1 124.0,109.0 A4.2,4.2 0 0 1 124.0,117.5 A4.2,4.2 0 0 1 124.0,126.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M156.0,92.0 A4.2,4.2 0 0 0 156.0,100.5 A4.2,4.2 0 0 0 156.0,109.0 A4.2,4.2 0 0 0 156.0,117.5 A4.2,4.2 0 0 0 156.0,126.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="138.0" y1="92.0" x2="138.0" y2="126.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="142.0" y1="92.0" x2="142.0" y2="126.0" stroke="#000000" stroke-width="1.2"/>
+<path d="M556.0,92.0 A4.2,4.2 0 0 0 556.0,100.5 A4.2,4.2 0 0 0 556.0,109.0 A4.2,4.2 0 0 0 556.0,117.5 A4.2,4.2 0 0 0 556.0,126.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M524.0,92.0 A4.2,4.2 0 0 1 524.0,100.5 A4.2,4.2 0 0 1 524.0,109.0 A4.2,4.2 0 0 1 524.0,117.5 A4.2,4.2 0 0 1 524.0,126.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="538.0" y1="92.0" x2="538.0" y2="126.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="542.0" y1="92.0" x2="542.0" y2="126.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="92.0" x2="124.0" y2="92.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="92.0" x2="594.0" y2="92.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="126.0" x2="124.0" y2="126.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="126.0" x2="594.0" y2="126.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="156.0" y1="92.0" x2="524.0" y2="92.0" stroke="#000000" stroke-width="2.4"/>
+<text x="219.0" y="88.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">1</text>
+<text x="461.0" y="88.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">1</text>
+<line x1="156.0" y1="126.0" x2="524.0" y2="126.0" stroke="#000000" stroke-width="2.4"/>
+<text x="219.0" y="122.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">2</text>
+<text x="461.0" y="122.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">2</text>
+<text x="235.0" y="113.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">orange pair</text>
+<text x="340.0" y="87.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">0 V + data/2</text>
+<text x="340.0" y="140.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">0 V − data/2</text>
+<circle cx="156.0" cy="109.0" r="2.5" fill="#000000"/>
+<circle cx="524.0" cy="109.0" r="2.5" fill="#000000"/>
+<path d="M124.0,172.0 A4.2,4.2 0 0 1 124.0,180.5 A4.2,4.2 0 0 1 124.0,189.0 A4.2,4.2 0 0 1 124.0,197.5 A4.2,4.2 0 0 1 124.0,206.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M156.0,172.0 A4.2,4.2 0 0 0 156.0,180.5 A4.2,4.2 0 0 0 156.0,189.0 A4.2,4.2 0 0 0 156.0,197.5 A4.2,4.2 0 0 0 156.0,206.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="138.0" y1="172.0" x2="138.0" y2="206.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="142.0" y1="172.0" x2="142.0" y2="206.0" stroke="#000000" stroke-width="1.2"/>
+<path d="M556.0,172.0 A4.2,4.2 0 0 0 556.0,180.5 A4.2,4.2 0 0 0 556.0,189.0 A4.2,4.2 0 0 0 556.0,197.5 A4.2,4.2 0 0 0 556.0,206.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M524.0,172.0 A4.2,4.2 0 0 1 524.0,180.5 A4.2,4.2 0 0 1 524.0,189.0 A4.2,4.2 0 0 1 524.0,197.5 A4.2,4.2 0 0 1 524.0,206.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="538.0" y1="172.0" x2="538.0" y2="206.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="542.0" y1="172.0" x2="542.0" y2="206.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="172.0" x2="124.0" y2="172.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="172.0" x2="594.0" y2="172.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="206.0" x2="124.0" y2="206.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="206.0" x2="594.0" y2="206.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="156.0" y1="172.0" x2="524.0" y2="172.0" stroke="#000000" stroke-width="2.4"/>
+<text x="219.0" y="168.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">3</text>
+<text x="461.0" y="168.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">3</text>
+<line x1="156.0" y1="206.0" x2="524.0" y2="206.0" stroke="#000000" stroke-width="2.4"/>
+<text x="219.0" y="202.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">6</text>
+<text x="461.0" y="202.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">6</text>
+<text x="235.0" y="193.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">green pair</text>
+<text x="340.0" y="167.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">DC + data/2</text>
+<text x="340.0" y="220.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">DC − data/2</text>
+<circle cx="156.0" cy="189.0" r="2.5" fill="#000000"/>
+<circle cx="524.0" cy="189.0" r="2.5" fill="#000000"/>
+<path d="M124.0,316.0 A4.2,4.2 0 0 1 124.0,324.5 A4.2,4.2 0 0 1 124.0,333.0 A4.2,4.2 0 0 1 124.0,341.5 A4.2,4.2 0 0 1 124.0,350.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M156.0,316.0 A4.2,4.2 0 0 0 156.0,324.5 A4.2,4.2 0 0 0 156.0,333.0 A4.2,4.2 0 0 0 156.0,341.5 A4.2,4.2 0 0 0 156.0,350.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="138.0" y1="316.0" x2="138.0" y2="350.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="142.0" y1="316.0" x2="142.0" y2="350.0" stroke="#000000" stroke-width="1.2"/>
+<path d="M556.0,316.0 A4.2,4.2 0 0 0 556.0,324.5 A4.2,4.2 0 0 0 556.0,333.0 A4.2,4.2 0 0 0 556.0,341.5 A4.2,4.2 0 0 0 556.0,350.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M524.0,316.0 A4.2,4.2 0 0 1 524.0,324.5 A4.2,4.2 0 0 1 524.0,333.0 A4.2,4.2 0 0 1 524.0,341.5 A4.2,4.2 0 0 1 524.0,350.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="538.0" y1="316.0" x2="538.0" y2="350.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="542.0" y1="316.0" x2="542.0" y2="350.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="316.0" x2="124.0" y2="316.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="316.0" x2="594.0" y2="316.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="350.0" x2="124.0" y2="350.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="350.0" x2="594.0" y2="350.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="156.0" y1="316.0" x2="524.0" y2="316.0" stroke="#7f7f7f" stroke-width="1.2"/>
+<text x="219.0" y="312.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">4</text>
+<text x="461.0" y="312.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">4</text>
+<line x1="156.0" y1="350.0" x2="524.0" y2="350.0" stroke="#7f7f7f" stroke-width="1.2"/>
+<text x="219.0" y="346.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">5</text>
+<text x="461.0" y="346.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">5</text>
+<text x="235.0" y="337.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">blue pair</text>
+<circle cx="156.0" cy="333.0" r="2.5" fill="#000000"/>
+<circle cx="524.0" cy="333.0" r="2.5" fill="#000000"/>
+<path d="M124.0,396.0 A4.2,4.2 0 0 1 124.0,404.5 A4.2,4.2 0 0 1 124.0,413.0 A4.2,4.2 0 0 1 124.0,421.5 A4.2,4.2 0 0 1 124.0,430.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M156.0,396.0 A4.2,4.2 0 0 0 156.0,404.5 A4.2,4.2 0 0 0 156.0,413.0 A4.2,4.2 0 0 0 156.0,421.5 A4.2,4.2 0 0 0 156.0,430.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="138.0" y1="396.0" x2="138.0" y2="430.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="142.0" y1="396.0" x2="142.0" y2="430.0" stroke="#000000" stroke-width="1.2"/>
+<path d="M556.0,396.0 A4.2,4.2 0 0 0 556.0,404.5 A4.2,4.2 0 0 0 556.0,413.0 A4.2,4.2 0 0 0 556.0,421.5 A4.2,4.2 0 0 0 556.0,430.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M524.0,396.0 A4.2,4.2 0 0 1 524.0,404.5 A4.2,4.2 0 0 1 524.0,413.0 A4.2,4.2 0 0 1 524.0,421.5 A4.2,4.2 0 0 1 524.0,430.0 " fill="none" stroke="#000000" stroke-width="1.4"/>
+<line x1="538.0" y1="396.0" x2="538.0" y2="430.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="542.0" y1="396.0" x2="542.0" y2="430.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="396.0" x2="124.0" y2="396.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="396.0" x2="594.0" y2="396.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="86.0" y1="430.0" x2="124.0" y2="430.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="556.0" y1="430.0" x2="594.0" y2="430.0" stroke="#000000" stroke-width="1.2"/>
+<line x1="156.0" y1="396.0" x2="524.0" y2="396.0" stroke="#7f7f7f" stroke-width="1.2"/>
+<text x="219.0" y="392.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">7</text>
+<text x="461.0" y="392.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">7</text>
+<line x1="156.0" y1="430.0" x2="524.0" y2="430.0" stroke="#7f7f7f" stroke-width="1.2"/>
+<text x="219.0" y="426.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">8</text>
+<text x="461.0" y="426.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">8</text>
+<text x="235.0" y="417.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">brown pair</text>
+<circle cx="156.0" cy="413.0" r="2.5" fill="#000000"/>
+<circle cx="524.0" cy="413.0" r="2.5" fill="#000000"/>
+<text x="30.0" y="72.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#7f7f7f">data only</text>
+<text x="650.0" y="72.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#7f7f7f">data only</text>
+<text x="221.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="bold" fill="#000000">Alternative A</text>
+<text x="459.0" y="48.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="bold" fill="#000000">Mode A</text>
+<text x="340.0" y="61.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#7f7f7f">pins 1, 2, 3, 6</text>
+<text x="221.0" y="272.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="bold" fill="#000000">Alternative B</text>
+<text x="459.0" y="272.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="bold" fill="#000000">Mode B</text>
+<text x="340.0" y="285.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#7f7f7f">pins 4, 5, 7, 8: idle here</text>
+<rect x="100.0" y="470.0" width="112.0" height="44.0" rx="6" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="156.0" y="488.6" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">Supply</text>
+<text x="156.0" y="505.1" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">44–57 V</text>
+<rect x="468.0" y="470.0" width="112.0" height="44.0" rx="6" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="524.0" y="488.6" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">Polarity</text>
+<text x="524.0" y="505.1" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">bridges</text>
+<polyline points="156.0,109.0 192.0,109.0 192.0,470.0" fill="none" stroke="#000000" stroke-width="1.8"/>
+<polyline points="156.0,189.0 176.0,189.0 176.0,470.0" fill="none" stroke="#000000" stroke-width="1.8"/>
+<line x1="156.0" y1="333.0" x2="166.0" y2="333.0" stroke="#7f7f7f" stroke-width="1.0"/>
+<line x1="156.0" y1="413.0" x2="166.0" y2="413.0" stroke="#7f7f7f" stroke-width="1.0"/>
+<text x="172.0" y="464.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">+</text>
+<text x="196.0" y="464.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="start" font-weight="normal" fill="#000000">−</text>
+<polyline points="524.0,109.0 488.0,109.0 488.0,470.0" fill="none" stroke="#000000" stroke-width="1.8"/>
+<polyline points="524.0,189.0 504.0,189.0 504.0,470.0" fill="none" stroke="#000000" stroke-width="1.8"/>
+<line x1="524.0" y1="333.0" x2="514.0" y2="333.0" stroke="#7f7f7f" stroke-width="1.0"/>
+<line x1="524.0" y1="413.0" x2="514.0" y2="413.0" stroke="#7f7f7f" stroke-width="1.0"/>
+<text x="340.0" y="496.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#7f7f7f">DC on the centre taps</text>
+</svg>

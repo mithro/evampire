@@ -8,7 +8,7 @@ How evampire's software turns the power granted by
 offers, and, in the other direction, a USB contract into a Power over
 Ethernet :term:`class`.
 
-The :ref:`power-translation` requirement sets out this translation. The
+The :ref:`power translation <power-translation>` section sets out this translation. The
 page covers the "Ethernet in, USB out" mode first
 (:ref:`power-modes`). :doc:`../poe/index` explains how a class is detected
 and granted.

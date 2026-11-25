@@ -7,8 +7,8 @@ This page describes how the software shares the power budget when a power
 sourcing equipment port supplies power at the same time as other output
 ports, and how it moves power between them safely.
 
-The offers on all outputs add up to the budget
-----------------------------------------------
+Offers within the budget
+------------------------
 
 Several ports can supply power at once (:ref:`power-sharing`): on a full
 design board, two USB Type-C ports and an Ethernet port, or both Ethernet
@@ -39,11 +39,22 @@ class at the power sourcing equipment (:numref:`tab-poe-classes`), or the
 allocated value set over LLDP plus the cable loss (:doc:`lldp`).
 
 For example, with :math:`P_\text{out} = 80\ \text{W}`, a class 5 Ethernet
-output takes 45 W and leaves 35 W for the USB Type-C ports together. The USB
-offers that fit in 35 W are described on :doc:`../usb-pd/index`.
+output takes 45 W and leaves 35 W for the USB Type-C ports together
+(:numref:`fig-poe-budget-split`). The USB
+offers that fit in 35 W are described on :doc:`../usb-pd/index`.
 
-Power over Ethernet allocations change in steps
------------------------------------------------
+.. figure:: budget-split.svg
+   :name: fig-poe-budget-split
+   :alt: Bar of power offered from 0 to 80 W. A class 5 Ethernet output
+         takes 45 W and the USB Type-C ports together take the remaining
+         35 W of the 80 W output budget.
+   :align: center
+
+   An 80 W output budget shared between a class 5 Ethernet output and the
+   USB Type-C ports.
+
+Allocation changes
+------------------
 
 A USB Power Delivery source can change its offer while a device is
 connected, by sending a new list of offers. A power sourcing equipment port
@@ -64,17 +75,36 @@ but not only on how much power the powered device has drawn in the past
 (:clause:`145.2.11`). If the powered device uses autoclass, the measured
 draw plus its margin is a valid allocation (:clause:`145.2.8`).
 
-Power is moved by lowering first
---------------------------------
+Moving power between ports
+--------------------------
 
 When a device on one port is unplugged or uses less than its share, the
-software raises the offer on another port. When a new device is plugged in,
+software raises the offer on another port (:numref:`fig-power-sharing`
+shows the offers over time). When a new device is plugged in,
 it first lowers the offers on the other ports to make room. On a power
 sourcing equipment port, lowering over LLDP is complete only when the
 powered device has answered with the new value, which may take up to 10 s
 (:clause:`145.5.2`). Until then the software keeps the old allocation in
-the budget. Its built-in current and power limit on the port is lowered at
-the same time (:doc:`monitoring`).
+the budget. A compliant powered device may keep drawing its old allocation
+until it answers, so the port's built-in current and power limit
+(:doc:`monitoring`) stays at the old allocation until then and is lowered
+when the answer arrives. :numref:`fig-poe-sharing-move` shows the
+order.
+
+.. graphviz:: sharing-move.dot
+   :name: fig-poe-sharing-move
+   :caption: Moving power to a new device on a USB Type-C output by first
+             lowering the allocation of an Ethernet output.
+   :alt: Sequence diagram with three lifelines: the powered device on the
+         Ethernet output, the software on evampire, and a new device on a
+         USB Type-C output. The new device attaches and the budget needs
+         room. The software sends an LLDP frame lowering the allocation;
+         the old allocation is still counted and the hardware limit stays
+         at the old value. Up to 10 s later the powered device echoes the
+         new value; the lower allocation is counted and the hardware limit
+         is lowered. The software then raises the offer on the USB Type-C
+         output.
+   :align: center
 
 If the input power falls faster than the outputs can be lowered, for
 example when the USB charger is unplugged, the software removes power from

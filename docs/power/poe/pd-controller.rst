@@ -1,14 +1,14 @@
 .. _poe-pd-controller:
 
-Inside a powered-device controller
-==================================
+Powered-device controller
+=========================
 
 This page describes the circuit blocks that carry out the powered-device
 steps of :doc:`powered-device`, using commercial controller chips as
 reference examples.
 
-The blocks share one reference node
------------------------------------
+Controller blocks
+-----------------
 
 :numref:`fig-poe-pd-controller` shows the blocks. All of them work at the
 cable voltage, up to 57 V, and all voltages inside are measured from the
@@ -85,16 +85,18 @@ Thermal shutdown
 
 Input protection
    A :wikipedia:`transient-voltage suppressor
-   <Transient-voltage-suppression_diode>` across the bridge outputs limits
+   <Transient-voltage-suppression_diode>` across the bridge outputs
+   (:numref:`fig-poe-bridges` draws the bridges) limits
    surges from the cable. For reference, Texas Instruments recommends an
    SMAJ58A for the TPS2372 [POE-TPS2372]_ (Application and
    Implementation). :doc:`hv-limits`
    describes the surge.
 
-The class resistor sets the class current
------------------------------------------
+Class current
+-------------
 
-The regulator holds :math:`V_\text{CLS}` across the class resistor, so:
+The regulator holds :math:`V_\text{CLS}` across the class resistor
+(:numref:`fig-poe-class-regulator`), so:
 
 .. math::
 
@@ -120,6 +122,21 @@ The regulator holds :math:`V_\text{CLS}` across the class resistor, so:
      - Current drawn from the cable
      - mA
 
+.. graphviz:: class-regulator.dot
+   :name: fig-poe-class-regulator
+   :caption: The class current regulator: the amplifier holds V_CLS across
+             the class resistor, and the pass device drops the rest of the
+             input voltage.
+   :alt: Diagram. The class current flows from VDD, 14.5 to 20.5 V during
+         a class event, through a pass device that drops up to 18 V, out of
+         the CLS pin and through the 63.4 Ω class resistor to VSS. An
+         amplifier senses the CLS pin, compares it with a 2.5 V reference
+         on the TPS2378, and drives the gate of the pass device. A note
+         gives the current as V_CLS over R_CLS, 39 mA, and, at up to
+         44 mA, the regulator's dissipation as 0.79 W and the resistor's as
+         0.11 W.
+   :align: center
+
 For class signature 4, ignoring :math:`I_\text{bias}`, with the TPS2378
 (2.5 V, 63.4 Ω [POE-TPS2378]_) and the LT4275 (1.40 V, 34.8 Ω
 [POE-LT4275]_):
@@ -133,8 +150,12 @@ Both land in the 36 mA to 44 mA window of class signature 4
 (:numref:`tab-poe-class-sig`). The margin of about 4 mA on each side covers
 the resistor tolerance, the regulator's error and :math:`I_\text{bias}`.
 
-The comparators sit in the gaps between ranges
-----------------------------------------------
+Comparator thresholds
+---------------------
+
+Each comparator threshold sits in a gap between two neighbouring ranges of
+:numref:`tab-poe-steps`, so that noise within a range does not cross it.
+:numref:`fig-poe-thresholds` places the thresholds of one controller.
 
 .. list-table:: Typical comparator thresholds of the TPS2372
    :name: tab-poe-tps2372-cmp
@@ -160,10 +181,32 @@ The comparators sit in the gaps between ranges
 The thresholds are from [POE-TPS2372]_ (Electrical Characteristics). The
 lower class edge, 12.5 V, falls in the 10.1 V to 14.5 V gap of
 :clause:`Table 145-25 <145>`. The mark reset, 3.9 V, falls in the 2.81 V
-to 6.9 V gap.
+to 6.9 V gap.
 
-The isolation switch limits the inrush current
-----------------------------------------------
+.. figure:: thresholds.svg
+   :name: fig-poe-thresholds
+   :alt: Voltage axis from 0 to 60 V. Bars show the ranges at the powered
+         device: reset 0 to 2.81 V, detection 2.7 to 10.1 V, mark 6.9 to
+         10.1 V, class 14.5 to 20.5 V, turn on 30 to 42 V and operating
+         42.5 to 57 V. Shaded gaps run from 2.81 to 6.9 V and from 10.1 to
+         14.5 V. Below, the TPS2372 thresholds: mark reset at 3.9 V
+         falling; class lower edge at 12.5 V rising and 10.9 V falling;
+         class upper edge at 22 V rising and 21.2 V falling; turn on at
+         38.1 V rising and 32 V falling. A third shaded gap runs from 20.5
+         to 30 V. The operating range is drawn for class 4, from 42.5 V; its
+         lower edge is 39.9 to 44.3 V by class.
+   :align: center
+
+   The ranges at the powered device and the comparator thresholds of the
+   TPS2372, typical values, with the falling thresholds lower by the
+   hysteresis.
+
+Isolation switch
+----------------
+
+The isolation switch limits the inrush current while it charges the input
+capacitor, then allows a higher operating current.
+:numref:`tab-poe-iso-switch` gives two reference examples.
 
 .. list-table:: Isolation switches of two controllers
    :name: tab-poe-iso-switch
@@ -186,15 +229,16 @@ The isolation switch limits the inrush current
 The values are from [POE-TPS2378]_ and [POE-TPS2372]_ (Electrical
 Characteristics). If the load pulls the switch out of full conduction for
 longer than a filter time, 800 µs on the TPS2378, the controller falls back
-to the inrush limit. For reference, the LT4275 drives an external MOSFET
+to the inrush limit (:numref:`fig-poe-inrush-pd` shows the TPS2378 limits
+while charging). For reference, the LT4275 drives an external MOSFET
 instead and sets the inrush current with a capacitor on the gate
 [POE-LT4275]_ (Applications Information).
 
-Commercial controllers are reference examples
----------------------------------------------
+Commercial controllers
+----------------------
 
-:numref:`tab-poe-pd-chips` lists commercial powered-device controllers.
-They show which blocks are commonly combined in one chip.
+:numref:`tab-poe-pd-chips` lists commercial powered-device controllers as
+reference examples. They show which blocks are commonly combined in one chip.
 
 .. list-table:: Example powered-device controller chips
    :name: tab-poe-pd-chips
@@ -237,8 +281,8 @@ LT4275A also accepts Analog Devices' LTPoE++ classification up to 90 W
 [POE-LT4275]_. For reference, the Microchip PD70224 replaces the two diode
 bridges with MOSFETs [POE-PD70224]_.
 
-The input converter follows the isolation switch
-------------------------------------------------
+Input converter
+---------------
 
 After the isolation switch the board has a supply of 30 V to 57 V. The
 input converter brings it down to the board's power bus. Whether it is

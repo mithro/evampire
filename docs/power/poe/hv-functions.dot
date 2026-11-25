@@ -1,0 +1,49 @@
+// The cable-side functions of one port that hv-options.rst discusses, with
+// the high-voltage parts marked. From hv-options.rst.
+//
+// Fill colours: high-voltage functions #fff2cc with red outlines,
+// low-voltage parts on evampire #dbe8f5, connectors #ffffff. Bold edges
+// carry power. Fixed grid (positions in inches): powered-device functions
+// on the left, power sourcing functions on the right.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph hv_functions {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           color="#c00000", penwidth=1.6, fontname="Helvetica", fontsize=10,
+           width=1.55, height=0.5, fixedsize=true];
+    edge  [arrowsize=0.6];
+
+    rj   [pos="3.6,4.3!", label="RJ45", fillcolor="#ffffff", color="#000000",
+          penwidth=1, width=0.9, height=0.4];
+    surge [pos="3.6,3.5!", label="Surge and ESD\nprotection"];
+    t1   [pos="1.4,4.3!", shape=plaintext, style="", width=1.8, height=0.3,
+          fontsize=11, label="powered-device role"];
+    t2   [pos="5.8,4.3!", shape=plaintext, style="", width=2.0, height=0.3,
+          fontsize=11, label="power sourcing role"];
+
+    br   [pos="1.4,3.5!", label="Polarity correction"];
+    sig  [pos="1.4,2.7!", label="Signature and\nclassification"];
+    iso  [pos="1.4,1.9!", label="Isolation switch"];
+    vs1  [pos="1.4,1.1!", label="Voltage sensing"];
+
+    det  [pos="5.8,3.5!", label="Detection and\nclass source"];
+    psw  [pos="5.8,2.7!", label="Power sourcing switch"];
+    gd   [pos="5.8,1.9!", label="Gate drive", fillcolor="#dbe8f5",
+          color="#000000", penwidth=1];
+    cs   [pos="5.8,1.1!", label="Current sensing", fillcolor="#dbe8f5",
+          color="#000000", penwidth=1];
+
+    low  [pos="3.6,0.3!", label="On evampire in every option: sequencing,\nmeasurement logic, software",
+          fillcolor="#dbe8f5", color="#000000", penwidth=1, width=4.0,
+          height=0.5];
+    rj -> surge [penwidth=2.2, dir=none];
+    surge -> br [penwidth=2.2]; br -> sig [penwidth=2.2];
+    sig -> iso [penwidth=2.2]; iso -> vs1 [penwidth=2.2];
+    psw -> surge [penwidth=2.2]; det -> surge;
+    gd -> psw; cs -> psw [dir=none, penwidth=2.2];
+    n [pos="3.6,1.9!", shape=plaintext, style="", width=1.6, height=0.6,
+       fontsize=9, label="red outline:\nsees the cable\nvoltage"];
+}

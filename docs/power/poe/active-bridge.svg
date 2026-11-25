@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="378" viewBox="0 0 680 378">
+<title>Active bridge</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="378" fill="#ffffff"/>
+<text x="170.0" y="22.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">pins 1, 2 positive</text>
+<line x1="120.0" y1="60.0" x2="120.0" y2="86.7" stroke="#c55a11" stroke-width="2.4"/>
+<line x1="120.0" y1="104.7" x2="120.0" y2="131.4" stroke="#c55a11" stroke-width="2.4"/>
+<line x1="120.0" y1="131.4" x2="120.0" y2="171.7" stroke="#000000" stroke-width="1.4"/>
+<line x1="120.0" y1="189.7" x2="120.0" y2="230.0" stroke="#000000" stroke-width="1.4"/>
+<rect x="109.0" y="86.7" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#c55a11" stroke-width="1.2"/>
+<polygon points="115.0,99.7 125.0,99.7 120.0,91.7" fill="#c55a11" stroke="#c55a11" stroke-width="1.0"/>
+<line x1="115.0" y1="91.7" x2="125.0" y2="91.7" stroke="#c55a11" stroke-width="1.6"/>
+<rect x="109.0" y="171.7" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#000000" stroke-width="1.2"/>
+<polygon points="115.0,184.7 125.0,184.7 120.0,176.7" fill="#000000" stroke="#000000" stroke-width="1.0"/>
+<line x1="115.0" y1="176.7" x2="125.0" y2="176.7" stroke="#000000" stroke-width="1.6"/>
+<circle cx="120.0" cy="131.4" r="3" fill="#000000"/>
+<line x1="200.0" y1="60.0" x2="200.0" y2="100.3" stroke="#000000" stroke-width="1.4"/>
+<line x1="200.0" y1="118.3" x2="200.0" y2="158.6" stroke="#000000" stroke-width="1.4"/>
+<line x1="200.0" y1="158.6" x2="200.0" y2="185.3" stroke="#c55a11" stroke-width="2.4"/>
+<line x1="200.0" y1="203.3" x2="200.0" y2="230.0" stroke="#c55a11" stroke-width="2.4"/>
+<rect x="189.0" y="100.3" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#000000" stroke-width="1.2"/>
+<polygon points="195.0,113.3 205.0,113.3 200.0,105.3" fill="#000000" stroke="#000000" stroke-width="1.0"/>
+<line x1="195.0" y1="105.3" x2="205.0" y2="105.3" stroke="#000000" stroke-width="1.6"/>
+<rect x="189.0" y="185.3" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#c55a11" stroke-width="1.2"/>
+<polygon points="195.0,198.3 205.0,198.3 200.0,190.3" fill="#c55a11" stroke="#c55a11" stroke-width="1.0"/>
+<line x1="195.0" y1="190.3" x2="205.0" y2="190.3" stroke="#c55a11" stroke-width="1.6"/>
+<circle cx="200.0" cy="158.6" r="3" fill="#000000"/>
+<polyline points="120.0,60.0 300.0,60.0" fill="none" stroke="#c55a11" stroke-width="2.4"/>
+<polyline points="120.0,230.0 300.0,230.0" fill="none" stroke="#c55a11" stroke-width="2.4"/>
+<text x="304.0" y="64.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="bold" fill="#000000">VDD</text>
+<text x="304.0" y="234.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="bold" fill="#000000">VSS</text>
+<path d="M60.0,131.4 L120.0,131.4" fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M60.0,158.6 L115.0,158.6 A5,5 0 0 1 125.0,158.6 L200.0,158.6" fill="none" stroke="#000000" stroke-width="1.4"/>
+<text x="56.0" y="135.4" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">1, 2</text>
+<text x="56.0" y="162.6" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">3, 6</text>
+<rect x="70.0" y="262.0" width="230.0" height="34.0" rx="6" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
+<text x="185.0" y="283.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">substrate at VSS</text>
+<line x1="230.0" y1="230.0" x2="230.0" y2="262.0" stroke="#000000" stroke-width="1.4" stroke-dasharray="4,3"/>
+<text x="185.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#7f7f7f">VSS is joined to pins 3, 6</text>
+<text x="510.0" y="22.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="bold" fill="#000000">pins 3, 6 positive</text>
+<line x1="460.0" y1="60.0" x2="460.0" y2="86.7" stroke="#000000" stroke-width="1.4"/>
+<line x1="460.0" y1="104.7" x2="460.0" y2="131.4" stroke="#000000" stroke-width="1.4"/>
+<line x1="460.0" y1="131.4" x2="460.0" y2="171.7" stroke="#c55a11" stroke-width="2.4"/>
+<line x1="460.0" y1="189.7" x2="460.0" y2="230.0" stroke="#c55a11" stroke-width="2.4"/>
+<rect x="449.0" y="86.7" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#000000" stroke-width="1.2"/>
+<polygon points="455.0,99.7 465.0,99.7 460.0,91.7" fill="#000000" stroke="#000000" stroke-width="1.0"/>
+<line x1="455.0" y1="91.7" x2="465.0" y2="91.7" stroke="#000000" stroke-width="1.6"/>
+<rect x="449.0" y="171.7" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#c55a11" stroke-width="1.2"/>
+<polygon points="455.0,184.7 465.0,184.7 460.0,176.7" fill="#c55a11" stroke="#c55a11" stroke-width="1.0"/>
+<line x1="455.0" y1="176.7" x2="465.0" y2="176.7" stroke="#c55a11" stroke-width="1.6"/>
+<circle cx="460.0" cy="131.4" r="3" fill="#000000"/>
+<line x1="540.0" y1="60.0" x2="540.0" y2="100.3" stroke="#c55a11" stroke-width="2.4"/>
+<line x1="540.0" y1="118.3" x2="540.0" y2="158.6" stroke="#c55a11" stroke-width="2.4"/>
+<line x1="540.0" y1="158.6" x2="540.0" y2="185.3" stroke="#000000" stroke-width="1.4"/>
+<line x1="540.0" y1="203.3" x2="540.0" y2="230.0" stroke="#000000" stroke-width="1.4"/>
+<rect x="529.0" y="100.3" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#c55a11" stroke-width="1.2"/>
+<polygon points="535.0,113.3 545.0,113.3 540.0,105.3" fill="#c55a11" stroke="#c55a11" stroke-width="1.0"/>
+<line x1="535.0" y1="105.3" x2="545.0" y2="105.3" stroke="#c55a11" stroke-width="1.6"/>
+<rect x="529.0" y="185.3" width="22.0" height="18.0" rx="2" fill="#ffffff" stroke="#000000" stroke-width="1.2"/>
+<polygon points="535.0,198.3 545.0,198.3 540.0,190.3" fill="#000000" stroke="#000000" stroke-width="1.0"/>
+<line x1="535.0" y1="190.3" x2="545.0" y2="190.3" stroke="#000000" stroke-width="1.6"/>
+<circle cx="540.0" cy="158.6" r="3" fill="#000000"/>
+<polyline points="460.0,60.0 640.0,60.0" fill="none" stroke="#c55a11" stroke-width="2.4"/>
+<polyline points="460.0,230.0 640.0,230.0" fill="none" stroke="#c55a11" stroke-width="2.4"/>
+<text x="644.0" y="64.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="bold" fill="#000000">VDD</text>
+<text x="644.0" y="234.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="bold" fill="#000000">VSS</text>
+<path d="M400.0,131.4 L460.0,131.4" fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M400.0,158.6 L455.0,158.6 A5,5 0 0 1 465.0,158.6 L540.0,158.6" fill="none" stroke="#000000" stroke-width="1.4"/>
+<text x="396.0" y="135.4" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">1, 2</text>
+<text x="396.0" y="162.6" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">3, 6</text>
+<rect x="410.0" y="262.0" width="230.0" height="34.0" rx="6" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
+<text x="525.0" y="283.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="middle" font-weight="normal" fill="#000000">substrate at VSS</text>
+<line x1="570.0" y1="230.0" x2="570.0" y2="262.0" stroke="#000000" stroke-width="1.4" stroke-dasharray="4,3"/>
+<text x="525.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#7f7f7f">VSS is joined to pins 1, 2</text>
+<text x="10.0" y="350.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#7f7f7f">Boxes: transistors switched on as rectifiers, with the direction each conducts. Highlighted: the</text>
+<text x="10.0" y="366.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#7f7f7f">conducting path. The substrate stays at VSS, which is a different cable pair in each polarity.</text>
+</svg>
