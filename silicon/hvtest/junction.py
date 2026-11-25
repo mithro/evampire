@@ -8,7 +8,7 @@ to the east; the substrate ring's Metal1 tab leaves to the west.
 
 Parameters (micrometres), with defaults in DEFAULTS:
 
-  kind       "nw" (N-well) or "dnw" (deep N-well)
+  kind       "nw" (N-well), "dnw" (deep N-well) or "open" (lead only, no junction)
   half       half the side of the well
   corner     corner radius of the well outline (0 = sharp square); 45-degree cuts
              approximate the arc, and every outer outline is offset concentrically
@@ -71,6 +71,14 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         reg[layer] = reg.get(layer, kdb.Region()) + region
 
     half, inset, w, term = p["half"], p["inset"], p["ncomp_w"], p["term"]
+    if p["kind"] == "open":
+        # reference for the pad and lead capacitance: the lead with no junction under it
+        bh = block_half(p)
+        sx = half - inset - w / 2
+        cell.shapes(layout.layer(*L.METAL5)).insert(geom.box(sx, -LEAD_W / 2, bh, LEAD_W / 2))
+        for layer in (L.NDMY, L.PMNDMY):
+            cell.shapes(layout.layer(*layer)).insert(geom.box(-bh, -bh, bh, bh))
+        return cell
     add(L.NWELL if p["kind"] == "nw" else L.DNWELL, outline(p, 0.0))
 
     # N+ contact ring inside the well edge

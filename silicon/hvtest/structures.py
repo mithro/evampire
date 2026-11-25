@@ -1,18 +1,87 @@
-"""The list of test structures on the die: (name, junction parameters)."""
+"""The test structures on the die: (name, junction parameters), in placement order.
 
-SITES = [
-    ("NWR4", {"rings": [[2.0, 2.0], [2.5, 2.0], [3.0, 2.0], [3.5, 2.0]], "term": 30.0, "sense": True}),
-    ("GP", {"plates": {"poly": 3.0}, "gate": True}),
-    ("GM1", {"plates": {"m1": 6.0}, "gate": True}),
-    ("GM2", {"plates": {"m2": 6.0}, "gate": True}),
-    ("GPM", {"plates": {"poly": 3.0, "m1": 6.0}, "gate": True}),
-    ("NW0", {}),
-    ("NWS", {"corner": 0.0}),
-    ("NWP", {"plates": {"poly": 3.0}}),
-    ("NWM1", {"plates": {"m1": 6.0}}),
-    ("NWPM", {"plates": {"poly": 2.0, "m1": 5.0, "m2": 9.0}}),
-    ("NWPW", {"pwell_gap": 3.0}),
-    ("NWNAT", {"nat_gap": 0.5}),
-    ("DN0", {"kind": "dnw", "term": 20.0}),
-    ("DNM1", {"kind": "dnw", "plates": {"m1": 6.0}}),
+Naming: N = N-well, D = deep N-well, then the feature that varies and its size in
+micrometres (a "p" stands for the decimal point). Unless a name says otherwise the well is
+30 um across with 8 um corners and the P+ substrate ring is 20 um from the well edge.
+
+  T   distance to the P+ ring          C   corner radius of the well
+  W   drawn P-well starting at         A   NAT (no P-well) starting at
+  P / M1 / M2   field plate of poly / Metal1 / Metal2, length beyond the well edge
+  R   floating rings (number, then first gap)
+  G   gated diode: the plate has its own pad      S  ring 1 has its own pad
+"""
+
+BASE = {"half": 15.0, "corner": 8.0, "term": 20.0}
+
+
+def s(**kw):
+    return {**BASE, **kw}
+
+
+def rings(*gaps, width=2.0):
+    return [[g, width] for g in gaps]
+
+
+# Two-pad structures come first: each also takes the site above it.
+TWO_PAD = [
+    ("NR1S2", s(rings=rings(2.0), sense=True)),
+    ("NR1S3", s(rings=rings(3.0), sense=True)),
+    ("NR4S", s(rings=rings(1.6, 2.0, 2.5, 3.0), term=30.0, sense=True)),
+    ("NGP4", s(plates={"poly": 4.0}, gate=True)),
+    ("NGM1", s(plates={"m1": 6.0}, gate=True)),
+    ("NAGM1", s(plates={"m1": 6.0}, gate=True, nat_gap=0.6)),
+    ("DGM1", s(kind="dnw", plates={"m1": 6.0}, gate=True)),
+]
+
+ONE_PAD = [
+    # what surrounds a plain N-well: distance to the P+ ring, and the corner
+    ("NT5", s(term=5.0)), ("NT10", s(term=10.0)), ("NT20", s()), ("NT35", s(term=35.0)),
+    ("NC0", s(corner=0.0)), ("NC3", s(corner=3.0)), ("NC15", s(corner=15.0)),
+    # a drawn P-well at a set distance
+    ("NW0", s(pwell_gap=0.0)), ("NW0p5", s(pwell_gap=0.5)), ("NW1p5", s(pwell_gap=1.5)),
+    ("NW3", s(pwell_gap=3.0)), ("NW6", s(pwell_gap=6.0)), ("NW10", s(pwell_gap=10.0)),
+    # NAT keeps the generated P-well away
+    ("NA0p6", s(nat_gap=0.6)), ("NA1", s(nat_gap=1.0)), ("NA2", s(nat_gap=2.0)),
+    ("NA4", s(nat_gap=4.0)), ("NA0p6T10", s(nat_gap=0.6, term=10.0)),
+    ("NA0p6T35", s(nat_gap=0.6, term=35.0)), ("NA0p6C0", s(nat_gap=0.6, corner=0.0)),
+    ("NAM1_3", s(nat_gap=0.6, plates={"m1": 3.0})), ("NAM1_6", s(nat_gap=0.6, plates={"m1": 6.0})),
+    ("NAM1_10", s(nat_gap=0.6, plates={"m1": 10.0})), ("NAM2_6", s(nat_gap=0.6, plates={"m2": 6.0})),
+    ("NAM2_12", s(nat_gap=0.6, plates={"m2": 12.0})),
+    # field plates on a plain N-well
+    ("NP1", s(plates={"poly": 1.0})), ("NP2", s(plates={"poly": 2.0})), ("NP4", s(plates={"poly": 4.0})),
+    ("NM1_3", s(plates={"m1": 3.0})), ("NM1_6", s(plates={"m1": 6.0})), ("NM1_10", s(plates={"m1": 10.0})),
+    ("NM2_6", s(plates={"m2": 6.0})), ("NM2_12", s(plates={"m2": 12.0})),
+    ("NP1M1_3", s(plates={"poly": 1.0, "m1": 3.0})),
+    ("NPM12", s(plates={"poly": 2.0, "m1": 5.0, "m2": 9.0})),
+    # floating rings
+    ("NR1_1p4", s(rings=rings(1.4))), ("NR1_2", s(rings=rings(2.0))), ("NR1_3", s(rings=rings(3.0))),
+    ("NR1_4p5", s(rings=rings(4.5))),
+    ("NR3_1p5", s(rings=rings(1.5, 2.0, 2.5))), ("NR3_2", s(rings=rings(2.0, 2.5, 3.0))),
+    ("NR3W1", s(rings=rings(2.0, 2.5, 3.0, width=1.0))), ("NR3W3", s(rings=rings(2.0, 2.5, 3.0, width=3.0), term=30.0)),
+    ("NR5_1p4", s(rings=rings(1.4, 1.7, 2.0, 2.4, 2.8), term=35.0)),
+    ("NR5_2", s(rings=rings(2.0, 2.5, 3.0, 3.5, 4.0), term=40.0)),
+    ("NR3M1", s(rings=rings(2.0, 2.5, 3.0), plates={"m1": 3.0}, term=30.0)),
+    # deep N-well
+    ("DT2p6", s(kind="dnw", term=2.6)), ("DT5", s(kind="dnw", term=5.0)), ("DT10", s(kind="dnw", term=10.0)),
+    ("DT20", s(kind="dnw")), ("DT35", s(kind="dnw", term=35.0)),
+    ("DC0", s(kind="dnw", corner=0.0)), ("DC15", s(kind="dnw", corner=15.0)),
+    ("DW1p5", s(kind="dnw", pwell_gap=1.5)), ("DW3", s(kind="dnw", pwell_gap=3.0)),
+    ("DW6", s(kind="dnw", pwell_gap=6.0)),
+    ("DM1_3", s(kind="dnw", plates={"m1": 3.0})), ("DM1_6", s(kind="dnw", plates={"m1": 6.0})),
+    ("DM1_10", s(kind="dnw", plates={"m1": 10.0})), ("DM2_8", s(kind="dnw", plates={"m2": 8.0})),
+    ("DP2", s(kind="dnw", plates={"poly": 2.0})),
+    ("DPM12", s(kind="dnw", plates={"poly": 2.0, "m1": 5.0, "m2": 9.0})),
+    # references: a pad and lead with no junction, and a second copy of the plain well
+    ("OPEN", s(kind="open")), ("NT20b", s()),
+]
+
+SITES = TWO_PAD + ONE_PAD
+
+# Wells too large for a standard site; no fill block (it would exceed the NDMY size limit).
+BIG = {"corner": 20.0, "term": 6.0, "block": False}
+LARGE = [
+    ("CVN", {"half": 100.0, **BIG}),
+    ("CVN2", {"half": 50.0, **BIG}),
+    ("CVD", {"kind": "dnw", "half": 100.0, **BIG}),
+    ("CVD2", {"kind": "dnw", "half": 50.0, **BIG}),
 ]

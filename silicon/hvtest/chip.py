@@ -25,6 +25,7 @@ EDGE = 60.0  # keep-out from the die edge (seal ring 26 um, guideline 30 um to p
 PAD = 100.0  # Metal5 pad side
 PAD_OPEN = 90.0
 SITE_W, SITE_H = 300.0, 150.0  # site pitch
+LARGE_BAND, LARGE_PITCH = 300.0, 440.0  # band at the top for wells too big for a site
 BUS_W = 6.0
 
 
@@ -40,7 +41,7 @@ def place(top, cell, x, y):
     top.insert(kdb.CellInstArray(cell.cell_index(), kdb.Trans(geom.nm(x), geom.nm(y))))
 
 
-def build(sites):
+def build(sites, large=()):
     layout = kdb.Layout()
     layout.dbu = geom.DBU
     top = layout.create_cell("hvtest")
@@ -53,7 +54,8 @@ def build(sites):
     for via in L.VIAS[1:]:
         up.shapes(layout.layer(*via)).insert(geom.contacts(sq, junction.VIA, junction.VIA_PITCH, 0.3))
     cols = int((DIE_W - 2 * EDGE) // SITE_W)
-    rows = int((DIE_H - 2 * EDGE - 160.0) // SITE_H)  # the bottom strip holds the bus pads
+    # the bottom strip holds the bus pads, the top band the large structures
+    rows = int((DIE_H - 2 * EDGE - 160.0 - LARGE_BAND) // SITE_H)
     taken = set()
     manifest = {"die": [DIE_W, DIE_H], "sites": []}
     y_bus = EDGE + 130.0
@@ -96,10 +98,28 @@ def build(sites):
             site["aux_pad"] = [px, ay]
             site["aux_role"] = role
         manifest["sites"].append(site)
+    # large structures in the top band, each with its pad to the east
+    y_top = y_bus + 30.0 + rows * SITE_H
+    for k, (name, params) in enumerate(large):
+        p = {**junction.DEFAULTS, **params}
+        bh = junction.block_half(p)
+        cx = EDGE + BUS_W + 4.0 + 125.0 + k * LARGE_PITCH
+        cy = y_top + LARGE_BAND / 2
+        px = cx + 125.0 + 30.0 + PAD / 2
+        if px + PAD / 2 > DIE_W - EDGE or bh > 125.0:
+            raise ValueError(f"{name}: does not fit the large band")
+        place(top, junction.build(layout, f"s_{name}", params), cx, cy)
+        place(top, pad, px, cy)
+        top.shapes(m5).insert(geom.box(cx + bh, cy - junction.LEAD_W / 2, px - PAD / 2, cy + junction.LEAD_W / 2))
+        top.shapes(m5).insert(geom.text(layout, name, 8.0, px - PAD / 2, cy + PAD / 2 + 4.0))
+        # substrate tab west to a short Metal1 riser that drops to the top of column 0..n bus
+        xb = EDGE + (int((cx - bh - EDGE) // SITE_W)) * SITE_W
+        top.shapes(m1).insert(geom.box(xb, cy - 1.5, cx - bh, cy + 1.5))
+        top.shapes(m1).insert(geom.box(xb, y_top, xb + BUS_W, cy + 1.5))
+        manifest["sites"].append({"name": name, "params": p, "pad": [px, cy], "centre": [cx, cy]})
     if (slot - 1) // cols >= rows:
         raise ValueError(f"sites need {(slot - 1) // cols + 1} rows; {rows} fit")
     # column buses and the bottom bus on Metal1, with substrate pads
-    y_top = y_bus + 30.0 + rows * SITE_H
     for col in range(cols):
         x0 = EDGE + col * SITE_W
         top.shapes(m1).insert(geom.box(x0, y_bus, x0 + BUS_W, y_top))
@@ -121,10 +141,10 @@ def build(sites):
 
 
 if __name__ == "__main__":
-    layout, manifest = build(structures.SITES)
+    layout, manifest = build(structures.SITES, structures.LARGE)
     opts = kdb.SaveLayoutOptions()
     opts.write_context_info = False
     layout.write(sys.argv[1], opts)
     if len(sys.argv) > 2:
         json.dump(manifest, open(sys.argv[2], "w"), indent=1)
-    print(f"{len(structures.SITES)} sites written to {sys.argv[1]}")
+    print(f"{len(structures.SITES)} + {len(structures.LARGE)} sites written to {sys.argv[1]}")
