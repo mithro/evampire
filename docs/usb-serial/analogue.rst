@@ -9,9 +9,8 @@ cell meets a requirement, it describes the custom options.
 :numref:`fig-usbser-frontend` shows the blocks of the front end for one
 port.
 
-.. _fig-usbser-frontend:
-
 .. graphviz:: analogue/frontend.dot
+   :name: fig-usbser-frontend
    :caption: The analogue front end of one USB port, between the digital
              logic and the D+, D− and VBUS pins.
    :alt: Block diagram: the digital logic drives a pull-up switch and a

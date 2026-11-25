@@ -48,9 +48,8 @@ than 3.5 mm, to keep the unused branch, the *stub*, short
 connection to evampire, with the series resistors and the pull-up resistor
 described in :doc:`analogue`.
 
-.. _fig-usbser-dpdn:
-
 .. graphviz:: signalling/dpdn.dot
+   :name: fig-usbser-dpdn
    :caption: The two D+ contacts and the two D− contacts of the receptacle
              joined near the connector and taken to evampire.
    :alt: Diagram: receptacle contacts A6 and B6 join into one D+ line and

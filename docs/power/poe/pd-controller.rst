@@ -17,9 +17,8 @@ are rated to 100 V: the TPS2372 has a 100 V isolation switch and the LT4275
 a 100 V absolute maximum input [POE-TPS2372]_ [POE-LT4275]_ (Absolute
 Maximum Ratings).
 
-.. _fig-poe-pd-controller:
-
 .. graphviz:: pd-controller.dot
+   :name: fig-poe-pd-controller
    :caption: The blocks of a powered-device controller, with the isolation
              switch between the load return and VSS.
    :alt: Block diagram. The bridge outputs feed window comparators and the

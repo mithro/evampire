@@ -59,9 +59,8 @@ and the sink then changes its Rd to Rp and turns VBUS on.
 :numref:`tab-usbpd-prswap` its time limits. The sequence after Accept is the
 same whichever port asked (:pd:`Section 4.3.3`).
 
-.. _fig-usbpd-prswap:
-
 .. graphviz:: pr-swap.dot
+   :name: fig-usbpd-prswap
    :caption: Power role swap asked for by the initial sink
              (:pd:`Section 4.3.3`, :pd:`Figure 4.14 <x>`).
    :alt: Sequence diagram between the initial source and the initial sink.
@@ -398,9 +397,8 @@ sends when communication has failed (:pd:`PD Sections 4.4 <x>` and
 their power supplies to the default state. :numref:`fig-usbpd-hard-reset`
 shows the sequence.
 
-.. _fig-usbpd-hard-reset:
-
 .. graphviz:: hard-reset.dot
+   :name: fig-usbpd-hard-reset
    :caption: Hard Reset sequence (:pd:`Section 4.4.1`, :pd:`Figure 4.16 <x>`).
    :alt: Sequence diagram between the source and the sink. Either side
          sends Hard Reset, with no GoodCRC. The sink prepares within 15 ms.

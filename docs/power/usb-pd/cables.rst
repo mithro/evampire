@@ -221,9 +221,8 @@ carries a *Cable VDO*, a 32-bit :term:`VDO` describing the cable
 (:pd:`Table 6.45`). :numref:`fig-usbpd-discover-identity` shows the
 exchange.
 
-.. _fig-usbpd-discover-identity:
-
 .. graphviz:: discover-identity.dot
+   :name: fig-usbpd-discover-identity
    :caption: A source asks the cable plug for its identity after turning
              VCONN on.
    :alt: Sequence diagram between the source and the cable plug. The source
