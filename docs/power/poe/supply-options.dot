@@ -1,0 +1,26 @@
+// Two alternatives for the supply of a power sourcing port: a
+// switched-capacitor converter from an 18 V bus, or a 48 V USB supply used
+// directly. From pse-sequencing.rst.
+//
+// Fill colours: power circuits #fff2cc, the bus #dbe8f5, sources #fbe5d6.
+// Bold edges carry power. Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph supply_options {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10, width=1.6, height=0.55, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.6, penwidth=2.2];
+
+    b1 [pos="0.9,1.4!", label="Power bus held\nat 18 V", fillcolor="#dbe8f5"];
+    s1 [pos="3.0,1.4!", label="Switched-capacitor\nconverter, ratio 3", fillcolor="#fff2cc", width=1.8];
+    o1 [pos="5.2,1.4!", label="54 V port supply,\nclasses 1 and 2", fillcolor="#fff2cc", width=1.7];
+    b1 -> s1; s1 -> o1;
+
+    b2 [pos="0.9,0.4!", label="USB EPR source\nfixed 48 V", fillcolor="#fbe5d6"];
+    s2 [pos="3.0,0.4!", label="Switch only,\nno converter", fillcolor="#fff2cc", width=1.8];
+    o2 [pos="5.2,0.4!", label="45.1–48 V port supply:\nabove 44 V, below 50 V", fillcolor="#fff2cc", width=1.7];
+    b2 -> s2; s2 -> o2;
+}
