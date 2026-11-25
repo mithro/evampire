@@ -73,7 +73,21 @@ equipment must accept (:clause:`Table 145-8 <145>`):
 
 The offset cancels. At the edges the points stay in the 2.8 V to 10 V
 window: 26.5 kΩ with a 2 V offset gives 9.2 V at 270 µA, and 19 kΩ with no
-offset gives 3.0 V at 160 µA.
+offset gives 3.0 V at 160 µA. :numref:`fig-poe-detect-iv` draws these
+lines.
+
+.. figure:: detect-iv.svg
+   :name: fig-poe-detect-iv
+   :alt: Graph of port voltage, 0 to 11 V, against forced current, 0 to
+         400 µA, with the test window from 2.8 V to 10 V shaded. A 25 kΩ
+         line with a 2 V offset passes through 6.0 V at 160 µA and 8.75 V
+         at 270 µA; the steps of 110 µA and 2.75 V give 25 kΩ, the same as
+         the parallel 25 kΩ line with no offset. Dotted edge cases give
+         9.2 V at 270 µA for 26.5 kΩ with a 2 V offset and 3.0 V at 160 µA
+         for 19 kΩ with no offset.
+   :align: center
+
+   Two-point detection: the offset shifts the line but not its slope.
 
 The decision follows :numref:`tab-poe-detect`
 (:clause:`Table 145-8 <145>`, :clause:`Table 145-9 <145>`). The power
@@ -134,10 +148,24 @@ that allows this is:
      - none
 
 The lower band, 15 kΩ to 19 kΩ, gives 0.12. A resistance measurement within
-about ± 10 % therefore meets both. If detection fails on Alternative B, the
+about ± 10 % therefore meets both (:numref:`fig-poe-detect-bands`). If detection fails on Alternative B, the
 power sourcing equipment waits at least 2 s before trying again, unless it
 measured an open circuit above 0.5 MΩ (:clause:`Table 145-16 <145>`,
 item 23, and :clause:`145.2.6.5`).
+
+.. figure:: detect-bands.svg
+   :name: fig-poe-detect-bands
+   :alt: Number line of signature resistance from 0 to 40 kΩ. The power
+         sourcing equipment rejects 0 to 15 kΩ, may decide either way from
+         15 to 19 kΩ, accepts 19 to 26.5 kΩ, may decide either way from
+         26.5 to 33 kΩ and rejects above 33 kΩ. A threshold in each either
+         band allows an error of 12 % in the lower band and 11 % in the
+         upper. Below, the powered device's valid window is 23.7 to
+         26.3 kΩ, inside the accept band.
+   :align: center
+
+   Detection decision bands, with a threshold placed in each band where
+   either decision is allowed.
 
 Connection check
 ----------------
@@ -149,8 +177,21 @@ dual-signature powered device (:clause:`145.2.7`). A single-signature
 powered device shows an invalid signature on one pair set while 3.7 V to
 57 V is applied to the other; a dual-signature powered device shows a
 valid signature on each regardless (:clause:`145.3.5`). Detection must
-start within 0.4 s of the end of the connection check
-(:clause:`Table 145-10 <145>`).
+start within 0.4 s of the end of the connection check
+(:clause:`Table 145-10 <145>`). :numref:`fig-poe-connection-check`
+compares the two kinds of powered device.
+
+.. graphviz:: connection-check.dot
+   :name: fig-poe-connection-check
+   :caption: The connection check: one circuit behind both pair sets, or
+             one circuit behind each.
+   :alt: Two panels. On the left, power sourcing equipment applies 3.7 to
+         57 V to pair set A of a single-signature powered device and runs
+         detection on pair set B. Bridges A and B join one signature, so B
+         shows an invalid signature. On the right, a dual-signature powered
+         device has circuit 1, a bridge and signature, on pair set A and
+         circuit 2 on pair set B, and each shows a valid signature.
+   :align: center
 
 Classification
 --------------
@@ -190,8 +231,23 @@ In the gaps between the bands either neighbouring signature is allowed, and
 from 45 mA to 51 mA the signature may also be judged invalid. The bands are
 wider than the powered device's (:numref:`tab-poe-class-sig`) to allow for
 measurement error. The narrowest gaps, 5 mA to 8 mA and 13 mA to 16 mA, are
-3 mA wide, so a current measurement within about ± 1.5 mA places every
-threshold correctly.
+3 mA wide, so a current measurement within about ± 1.5 mA places every
+threshold correctly. :numref:`fig-poe-class-bands` shows both sets of bands.
+
+.. figure:: class-bands.svg
+   :name: fig-poe-class-bands
+   :alt: Two number lines of class event current from 0 to 56 mA. The upper
+         one shows the powered device's class signatures: 0 at 1 to 4 mA, 1
+         at 9 to 12 mA, 2 at 17 to 20 mA, 3 at 26 to 30 mA and 4 at 36 to
+         44 mA. The lower one shows the power sourcing equipment's
+         decisions: 0 from 0 to 5 mA, 1 from 8 to 13, 2 from 16 to 21, 3
+         from 25 to 31, 4 from 35 to 45, either neighbour in the gaps
+         between, 4 or invalid from 45 to 51 mA, and the end of
+         classification above 51 mA.
+   :align: center
+
+   Class signature currents of the powered device against the decision
+   bands of the power sourcing equipment.
 
 Between class events the port drops to the mark range, 7 V to 10 V, with
 the current limited to between 5 mA and 100 mA. The power sourcing
@@ -272,7 +328,20 @@ the current of each pair set separately (:clause:`Table 145-16 <145>`).
 Power sourcing equipment switches at least the more negative conductor of
 each pair set (:clause:`145.4.1.1.1`, :clause:`145.4.1.1.2`). A common
 arrangement ties the positive pairs of both pair sets to the supply and
-switches only the negative pairs.
+switches only the negative pairs, as :numref:`fig-poe-pse-channels`
+shows.
+
+.. graphviz:: pse-channels.dot
+   :name: fig-poe-pse-channels
+   :caption: A port that powers both pair sets, with one channel for each
+             negative pair.
+   :alt: Block diagram. The 44 to 57 V supply connects to the positive
+         pairs of pair sets A and B at the port. The negative pair of A
+         passes through switch A and sense A, and the negative pair of B
+         through switch B and sense B, to the supply return. A current
+         limit block set by software reads both sense resistors and drives
+         the gates of both switches.
+   :align: center
 
 A dual-signature powered device is detected and classified on each pair set
 separately (:clause:`145.2.8`). Power sourcing equipment that has assigned

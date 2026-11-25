@@ -139,6 +139,7 @@ Comparator thresholds
 
 Each comparator threshold sits in a gap between two neighbouring ranges of
 :numref:`tab-poe-steps`, so that noise within a range does not cross it.
+:numref:`fig-poe-thresholds` places the thresholds of one controller.
 
 .. list-table:: Typical comparator thresholds of the TPS2372
    :name: tab-poe-tps2372-cmp
@@ -164,7 +165,23 @@ Each comparator threshold sits in a gap between two neighbouring ranges of
 The thresholds are from [POE-TPS2372]_ (Electrical Characteristics). The
 lower class edge, 12.5 V, falls in the 10.1 V to 14.5 V gap of
 :clause:`Table 145-25 <145>`. The mark reset, 3.9 V, falls in the 2.81 V
-to 6.9 V gap.
+to 6.9 V gap.
+
+.. figure:: thresholds.svg
+   :name: fig-poe-thresholds
+   :alt: Voltage axis from 0 to 60 V. Bars show the ranges at the powered
+         device: reset 0 to 2.81 V, detection 2.7 to 10.1 V, mark 6.9 to
+         10.1 V, class 14.5 to 20.5 V, turn on 30 to 42 V and operating
+         42.5 to 57 V. Shaded gaps run from 2.81 to 6.9 V and from 10.1 to
+         14.5 V. Below, the TPS2372 thresholds: mark reset at 3.9 V
+         falling; class lower edge at 12.5 V rising and 10.9 V falling;
+         class upper edge at 22 V rising and 21.2 V falling; turn on at
+         38.1 V rising and 32 V falling.
+   :align: center
+
+   The ranges at the powered device and the comparator thresholds of the
+   TPS2372, typical values, with the falling thresholds lower by the
+   hysteresis.
 
 Isolation switch
 ----------------

@@ -35,11 +35,25 @@ On chip
    57 V plus surge in reverse, carries the port current with the metal
    widths of :numref:`tab-poe-metal`, and does not conduct backwards during
    detection (:doc:`powered-device`). The substrate must sit at the most
-   negative rectified node, which moves with the polarity.
+   negative rectified node, which moves with the polarity
+   (:numref:`fig-poe-active-bridge`).
 
 What decides
    The breakdown to the substrate, and the die area for a low enough
    on-resistance.
+
+.. figure:: active-bridge.svg
+   :name: fig-poe-active-bridge
+   :alt: Two schematics of the same bridge of four transistors, each drawn
+         as a box with the direction it conducts. With pins 1, 2 positive,
+         the upper transistor of the first leg and the lower transistor of
+         the second leg conduct, and VSS is joined to pins 3, 6. With pins
+         3, 6 positive, the other two conduct and VSS is joined to pins
+         1, 2. In both, the substrate is tied to VSS.
+   :align: center
+
+   An active bridge on chip in both polarities: the substrate follows VSS,
+   which is a different cable pair in each.
 
 Signature and classification
 ----------------------------

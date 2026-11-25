@@ -15,7 +15,23 @@ does not know which pair set will carry power or which pair will be
 positive (:doc:`basics`). It therefore puts a
 :wikipedia:`full-wave bridge rectifier <Diode_bridge>` on each pair set and
 joins the two outputs. The joined outputs are the positive and negative
-inputs of the rest of the circuit.
+inputs of the rest of the circuit, VDD and VSS
+(:numref:`fig-poe-bridges`).
+
+.. figure:: bridges.svg
+   :name: fig-poe-bridges
+   :alt: Schematic of two diode bridges. Bridge A takes the centre taps of
+         pins 1, 2 and pins 3, 6 (Mode A), and bridge B those of pins 4, 5
+         and pins 7, 8 (Mode B). Each bridge has two legs of two diodes.
+         The bridge outputs join into a VDD bus and a VSS bus, which feed
+         the signature, class and switch block. The current path with pins
+         1, 2 positive is highlighted: from pins 1, 2 through the upper
+         diode of the first leg to VDD, through the load to VSS, and back
+         through the lower diode of the second leg to pins 3, 6.
+   :align: center
+
+   Two polarity bridges joined into VDD and VSS, with the current path
+   when pins 1, 2 are positive.
 
 A bridge of ordinary diodes loses two diode drops. A bridge of
 :wikipedia:`Schottky diodes <Schottky_diode>` loses less but leaks more
@@ -45,7 +61,22 @@ shows a valid :term:`detection signature` when (:clause:`Table 145-21 <145>`):
 
 To make sure it is not detected, for example during a mark event or when it
 refuses power, the powered device shows less than 12 kΩ or more than 45 kΩ,
-or more than 10 µF (:clause:`Table 145-22 <145>`).
+or more than 10 µF (:clause:`Table 145-22 <145>`).
+:numref:`fig-poe-pd-signature` shows valid and invalid signatures as lines
+of voltage against current.
+
+.. figure:: pd-signature.svg
+   :name: fig-poe-pd-signature
+   :alt: Graph of voltage at the powered device input, 0 to 12 V, against
+         current, 0 to 500 µA. The detection range from 2.7 V to 10.1 V is
+         shaded. A 24.9 kΩ resistor is a straight line through the origin,
+         and the same resistor with a 1.9 V offset is a parallel line
+         starting at 1.9 V. Dotted lines of 12 kΩ and 45 kΩ mark the
+         invalid signatures below and above. A note gives the valid slope,
+         23.7 to 26.3 kΩ, and offset, at most 1.9 V.
+   :align: center
+
+   Valid and invalid detection signatures over the detection range.
 
 The signature is usually a resistor across the bridge output. The valid
 window is about 25 kΩ ± 5 %, which is the whole error budget for the
@@ -266,7 +297,28 @@ Characteristics).
 
 When the input falls below a threshold between 2.81 V and 6.9 V, the
 powered device forgets the events it has counted
-(:clause:`Table 145-25 <145>`, item 5).
+(:clause:`Table 145-25 <145>`, item 5). :numref:`fig-poe-pd-states` shows
+these states and the thresholds between them.
+
+.. graphviz:: pd-states.dot
+   :name: fig-poe-pd-states
+   :caption: The states of a powered device during detection and
+             classification, and the input voltages that move it between
+             them.
+   :alt: State diagram with four states. Idle shows the signature with a
+         count of 0. A rise above a threshold between 10.1 and 14.5 V moves
+         it to a class event, where it draws the class current. A fall into
+         the mark range, 6.9 to 10.1 V, moves it to mark, where it adds the
+         mark load and counts the event; a rise above 10.1 to 14.5 V starts
+         the next class event. From mark, a rise past the turn-on voltage,
+         30 to 42 V, turns the isolation switch on, and a fall below a
+         threshold between 2.81 and 6.9 V returns it to idle and loses the
+         count. From powered, a fall below the turn-off voltage of at
+         least 30 V returns it to idle. A note on the class event state
+         says that a first event longer than 75.5 to 87.5 ms identifies
+         Type 3 or 4 power sourcing equipment, and that autoclass drops to
+         signature 0 from that time.
+   :align: center
 
 A first class event longer than 75.5 ms to 87.5 ms tells the powered
 device that the power sourcing equipment is Type 3 or Type 4
@@ -314,7 +366,19 @@ examples.
      - 31
 
 The values are from [POE-TPS2372]_ and [POE-LT4275]_ (Electrical
-Characteristics).
+Characteristics). :numref:`fig-poe-hysteresis` draws both as loops.
+
+.. figure:: hysteresis.svg
+   :name: fig-poe-hysteresis
+   :alt: Graph of the load switch state, off or on, against input voltage
+         from 25 to 45 V, with the region where turn-on is allowed, 30 to
+         42 V, shaded. The TPS2372 turns on as the voltage rises past
+         38.1 V and off as it falls past 32 V. The LT4275 turns on at 35 V
+         and off at 31 V. Arrows show that the switch follows the lower
+         path while the voltage rises and the upper path while it falls.
+   :align: center
+
+   Turn-on hysteresis of two controllers, typical values.
 
 .. _poe-pd-inrush:
 
