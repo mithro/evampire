@@ -10,41 +10,24 @@ leaves. Supplying power is not limited in this way.
 Classes 4 and higher need LLDP
 ------------------------------
 
-A :term:`powered device` asks for its :term:`class` during Physical Layer
-classification, before the power is switched on
-(:doc:`../power/poe/sequence`). After the Ethernet link is up, the two
-ends can change the allocation by exchanging :term:`LLDP` frames
-(:doc:`../power/poe/lldp`). evampire's power tables treat port A as a
-:term:`single-signature powered device` (:numref:`tab-usbpd-class-power`).
-For such a device, IEEE 802.3 makes this exchange mandatory from class 4, as
-:numref:`tab-ebat-lldp-needed` shows (:clause:`Table 145-19 <145>`,
-:clause:`145.3.6`).
+evampire uses both classification methods on every Ethernet port:
+:term:`Physical Layer classification` before the power is switched on, and
+:term:`Data Link Layer classification` over :term:`LLDP` once the link is
+up (:ref:`req-poe-classification`). LLDP frames are Ethernet frames, so
+ebat has only the first.
 
-.. list-table:: When a single-signature powered device must support LLDP
-   :name: tab-ebat-lldp-needed
-   :header-rows: 1
-   :widths: 50 50
-
-   * - Class requested
-     - LLDP
-   * - 1 to 3
-     - Optional
-   * - 4 to 8
-     - Required
-
-:clause:`33`, which defines Types 1 and 2, says the same for Type 2
-powered devices. These request class 4 and implement both two-event
-classification and LLDP (:clause:`33.3.5`). LLDP frames are Ethernet
-frames, so a powered device with no data path cannot take part. ebat's
-port A, the same circuit as evampire's, therefore requests class 1, 2 or 3.
+A powered device that requests class 4 or higher must implement Data Link
+Layer classification, and one that requests class 1 to 3 need not
+(:numref:`tab-poe-class-methods`). ebat's port A, the same circuit as
+evampire's, therefore requests class 1, 2 or 3.
 
 Class 3 gives 13 W
 ------------------
 
 At class 3 a powered device may draw 13 W at its input
-(:numref:`tab-poe-classes`). Every type of power sourcing equipment assigns
-class 3 after one class event (:numref:`tab-poe-events`), so any power
-sourcing equipment gives this power.
+(:numref:`tab-poe-classes`). Every type of power sourcing equipment gives
+the full power of class 1 to 3 from Physical Layer classification alone
+(:numref:`tab-poe-class-outcome`).
 
 From 13 W, ebat leaves the same power for its outputs as evampire does at
 class 3. The evampire pages give it, with the same illustrative
@@ -95,18 +78,18 @@ the allocation (:ref:`ebat-pass-through-lldp`).
 
 As :term:`power sourcing equipment`, port B assigns a class by Physical
 Layer classification, up to class 8 with 4-pair power
-(:doc:`../power/poe/power-sourcing`). LLDP is optional for power sourcing
-equipment (:clause:`145.2.8`, :clause:`145.5`), so ebat meets the standard
-without it. A powered device on port B that requested class 4 or higher
-keeps the class it was assigned, because no LLDP exchange changes it
-(:clause:`145.3.6`).
+(:doc:`../power/poe/power-sourcing`), and a powered device without LLDP
+receives the full power of that class, as from evampire
+(:ref:`req-poe-classification`). Data Link Layer classification is
+optional for power sourcing equipment (:numref:`tab-poe-class-methods`),
+so ebat meets the standard without it. ebat cannot answer LLDP power
+requests, so a powered device on port B keeps the class it was assigned,
+including after demotion (:ref:`poe-demotion`).
 
 Without LLDP, the software can lower port B's allocation only by removing
 the power and classifying the powered device again with fewer class events,
-which interrupts the device (:doc:`../power/poe/sharing`). Autoclass, in
-which the power sourcing equipment measures the powered device's real draw
-shortly after power-on, is an extension of Physical Layer classification and
-needs no LLDP (:clause:`145.2.8.2`). It is defined only for
-single-signature powered devices. If the powered device supports it, ebat
-can use it to allocate less than the full class power
+which interrupts the device (:doc:`../power/poe/sharing`).
+:ref:`Autoclass <poe-autoclass>` is part of Physical Layer classification
+and needs no LLDP (:clause:`145.2.8.2`). If the powered device supports
+it, ebat can use it to allocate less than the full class power
 (:doc:`../power/poe/translation`).

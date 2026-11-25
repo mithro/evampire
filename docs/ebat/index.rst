@@ -41,7 +41,10 @@ has each one.
    * - :ref:`Transceiver configuration interface <arch-config-interface>`
      - Yes
      - No
-   * - :ref:`Power negotiation over LLDP <poe-lldp>`
+   * - :ref:`Physical Layer classification, in both roles <req-poe-classification>`
+     - Yes
+     - Yes, the same
+   * - :ref:`Data Link Layer classification over LLDP <req-poe-classification>`
      - Yes
      - No
    * - Highest class requested when receiving Power over Ethernet

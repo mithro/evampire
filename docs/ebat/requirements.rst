@@ -38,6 +38,7 @@ written, except for the negotiation over LLDP (:ref:`req-ebat-no-lldp`):
   budget, the translation between the standards and the sharing between
   output ports;
 * :ref:`req-power-control`;
+* :ref:`req-poe-classification`, in its Physical Layer part;
 * :ref:`req-converters`;
 * :ref:`req-usb-serial`;
 * :ref:`req-processor`, which on ebat runs no Ethernet traffic;
@@ -52,15 +53,20 @@ the ports it needs, as :doc:`boards` describes.
 ebat negotiates Power over Ethernet without LLDP
 ------------------------------------------------
 
+ebat does the Physical Layer part of :ref:`req-poe-classification` in
+both roles, as evampire does, and none of the Data Link Layer part, which
+needs :term:`LLDP` frames:
+
 * As a :term:`powered device`, port A requests at most class 3. IEEE 802.3
-  requires a powered device that requests class 4 or higher to take part
-  in power negotiation over :term:`LLDP`, which needs Ethernet frames
-  (:clause:`145.3.6`). :doc:`power-without-lldp` gives the power this
+  requires a powered device that requests class 4 or higher to implement
+  Data Link Layer classification (:clause:`145.3.6`,
+  :clause:`33.3.5`). :doc:`power-without-lldp` gives the power this
   leaves.
 * As :term:`power sourcing equipment`, port B assigns a class by Physical
   Layer classification alone, up to class 8
-  (:doc:`../power/poe/power-sourcing`). Support for LLDP is optional for
-  power sourcing equipment (:clause:`145.2.8`, :clause:`145.5`).
+  (:doc:`../power/poe/power-sourcing`). It does not answer LLDP power
+  requests, which is optional for power sourcing equipment
+  (:numref:`tab-poe-class-methods`).
 * On a board without data pass-through, the allocation on port B changes
   only by removing the power and classifying the powered device again
   (:doc:`../power/poe/sharing`). With data pass-through, LLDP frames pass

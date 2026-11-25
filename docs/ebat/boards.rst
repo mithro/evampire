@@ -169,6 +169,6 @@ Open questions
 * Whether ebat boards pass Ethernet data through, and if so how they deal
   with the LLDP frames that pass between the far ends. Offering only
   classes 1 to 3 on port B does not remove the problem, because LLDP is
-  optional for those classes, not forbidden (:numref:`tab-ebat-lldp-needed`).
+  optional for those classes, not forbidden (:numref:`tab-poe-class-methods`).
 * Which Ethernet speeds a pass-through board supports, which sets the
   midspan variant it meets (:clause:`145.2.3`).
