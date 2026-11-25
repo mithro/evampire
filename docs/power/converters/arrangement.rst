@@ -217,7 +217,7 @@ Arrangements
 Three separate converters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The arrangement in :ref:`power-flow`: an input converter (a buck or an
+The arrangement in :ref:`the power flow of the first-version board <power-flow>`: an input converter (a buck or an
 isolated flyback) from the Power over Ethernet input to the bus; a
 four-switch buck-boost from the bus to the USB port; a boost from the bus to
 the power sourcing equipment port. When the USB port is a sink, a switch
