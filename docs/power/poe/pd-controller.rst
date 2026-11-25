@@ -3,9 +3,9 @@
 Powered-device controller
 =========================
 
-This page describes the circuit blocks that meet the
-:doc:`powered-device requirements <powered-device>`, using commercial
-controller chips as reference examples.
+This page describes the circuit blocks that carry out the powered-device
+steps of :doc:`powered-device`, using commercial controller chips as
+reference examples.
 
 Controller blocks
 -----------------
