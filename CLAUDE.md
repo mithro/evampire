@@ -148,8 +148,8 @@ comes from the gf180mcu PDK and is not in this repository.
   Silicon, Reference). Sphinx shows captions only for the root page, so a
   topic with more than about seven pages groups them under small group
   pages instead (for example `power/poe/fundamentals.rst`). A group page
-  opens with one sentence, lists its pages with one line each, and holds
-  the `toctree` for them; the topic index lists the groups. A new page goes
+  opens with one sentence about the subject, lists its pages with one line
+  each, and holds the `toctree` for them; the topic index lists the groups. A new page goes
   into the group page that fits it.
 - Each topic has its own `references.rst`. Citation keys carry a per-topic
   prefix (`PHY-`, `MAG-`, `RGMII-`, `POE-`, `USBPD-`, `CONV-`, `ESD-`, `HV-`,
@@ -220,9 +220,14 @@ publish copies of them, or quote from them at length.
   a standard, datasheet or other site for a picture; redraw it from the
   numbers on the page and cite the source of the numbers.
 - **Each fact in one place:** link to it instead of restating it.
-- **Page shape:** each page opens with one sentence saying what it covers.
-  A page that leaves design decisions open ends with one "Open questions"
-  section, which lists them all. Explanatory pages with nothing open have
+- **Page shape:** the first paragraph starts on the subject and states
+  facts about it, so that what the page covers is clear from it. Pages
+  never describe themselves or address the writer: no "This page
+  describes…", "These pages cover…", "this section", "below we", notes to
+  the author or TODOs. Write "A powered device limits its inrush current so
+  that …", not "This page describes how a powered device limits its inrush
+  current." A page that leaves design decisions open ends with one "Open
+  questions" section, which lists them all. Explanatory pages with nothing open have
   none.
 - **Numbering:** every figure and table is numbered, referenced with
   `:numref:`, and has `:alt:` text.
