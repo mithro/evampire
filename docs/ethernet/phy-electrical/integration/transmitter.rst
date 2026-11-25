@@ -1,7 +1,7 @@
 .. _phy-int-transmitter:
 
-Transmitter
-===========
+Integrated transmitter
+======================
 
 This page works out what the integrated transmitter needs: the linearity
 and swing of the DAC and line driver, the power it delivers into the cable,

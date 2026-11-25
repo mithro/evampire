@@ -185,37 +185,37 @@ each one.
      - Explained in
    * - Scrambler, trellis encoder and transmit shaping filter
      - 1
-     - :doc:`1000base-t-coding`
+     - :doc:`1000BASE-T coding page <1000base-t-coding>`
    * - DAC and line driver
      - 4
-     - :doc:`line-drivers`
+     - :doc:`Line drivers page <line-drivers>`
    * - Hybrid
      - 4
-     - :ref:`phy-echo`
+     - :ref:`Echo page, hybrid <phy-echo>`
    * - Amplifier, filter and ADC
      - 4
-     - :doc:`integration/receiver`
+     - :doc:`Integrated receiver page <integration/receiver>`
    * - Echo canceller
      - 4
-     - :ref:`phy-echo-canceller`
+     - :ref:`Echo page, echo canceller <phy-echo-canceller>`
    * - Near-end crosstalk cancellers
      - 12
-     - :ref:`phy-crosstalk`
+     - :ref:`Echo page, crosstalk cancellers <phy-crosstalk>`
    * - Feed-forward and decision-feedback equalisers
      - 4
-     - :ref:`phy-equalisation`
+     - :ref:`This page, equalisers <phy-equalisation>`
    * - Trellis decoder and descrambler
      - 1
-     - :ref:`phy-trellis`
+     - :ref:`Coding page, trellis code <phy-trellis>`
    * - Clock synthesis and clock recovery
      - 1
-     - :ref:`phy-master-slave`
+     - :ref:`This page, master and slave <phy-master-slave>`
    * - Autonegotiation
      - 1
-     - :doc:`autonegotiation`
+     - :doc:`Autonegotiation page <autonegotiation>`
    * - Management registers
      - 1
-     - :ref:`phy-position`
+     - :ref:`Integrated control page, registers <phy-int-registers>`
 
 The ADC is preceded by a variable-gain amplifier that scales the signal to
 the ADC's input range, and by a filter that removes noise above the band

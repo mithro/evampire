@@ -1,7 +1,7 @@
 .. _phy-int-reqs-page:
 
-Requirements
-============
+Integrated transceiver requirements
+===================================
 
 This page lists the interface, the blocks and the requirements of one
 integrated 1000BASE-T port, and points to the limits of the slower

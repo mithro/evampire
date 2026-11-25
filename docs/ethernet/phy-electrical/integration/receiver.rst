@@ -1,7 +1,7 @@
 .. _phy-int-receiver:
 
-Receiver
-========
+Integrated receiver
+===================
 
 This page works out what the integrated receiver needs before the digital
 filters: how the echo is shared between analogue and digital stages, and
