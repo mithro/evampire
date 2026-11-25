@@ -384,8 +384,8 @@ mechanisms act only during attach.
    "config": {"hscale": 1}}
 
 After attach, two ports that support
-:term:`USB Power Delivery` can swap the power role with messages
-(:ref:`usbpd-power-role-swap`).
+:term:`USB Power Delivery` can swap the power role with messages, a
+:ref:`power role swap <usbpd-power-role-swap>`.
 
 .. _usbpd-initial-role:
 
@@ -414,10 +414,10 @@ Try.SRC or Try.SNK, chosen from the budget at each attach
    Gives the preferred role against another dual-role port that has no
    preference. It adds up to tDRPTry to the attach.
 No Try mechanism, then a power role swap
-   The outcome against another dual-role port is random, and a power role
-   swap with USB Power Delivery messages corrects it afterwards. It needs no
-   Try state, but VBUS is off for a short time during the swap
-   (:ref:`usbpd-power-role-swap`).
+   The outcome against another dual-role port is random, and a
+   :ref:`power role swap <usbpd-power-role-swap>` with USB Power Delivery
+   messages corrects it afterwards. It needs no Try state, but VBUS is off
+   for a short time during the swap.
 A fixed role on each port
    A source-only or sink-only port is the simplest, but it does not meet the
    dual-role requirement of :ref:`req-power-bridging`.

@@ -170,15 +170,16 @@ A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
    the source answers EPR_Mode (Enter Acknowledged) and, once its checks
    pass, EPR_Mode (Enter Succeeded) (:pd:`Section 6.4.9`,
    :pd:`Section 7.30.1`).
-#. The source checks that the cable is rated for EPR, with Discover
-   Identity (:pd:`Section 8.6.1.2.3`; :ref:`usbpd-discover-identity`).
+#. The source checks that the cable is rated for EPR, with
+   :ref:`Discover Identity <usbpd-discover-identity>`
+   (:pd:`Section 8.6.1.2.3`).
 #. In EPR mode, the two ends exchange a message at least every
    *tSinkEPRKeepAlive* (250 ms to 500 ms); the sink sends an EPR_KeepAlive
    message when there is no other traffic, and the source answers it with
    EPR_KeepAlive_Ack. A source that sees no message for
    *tSourceEPRKeepAlive* (750 ms to 1000 ms) restarts the port with a
-   :term:`Hard Reset` (:pd:`PD Sections 7.31.18.2 and 7.31.18.3 <7.31.18.2>`,
-   :pd:`Table 7.10`; :ref:`usbpd-hard-reset`).
+   :ref:`Hard Reset <usbpd-hard-reset>`
+   (:pd:`PD Sections 7.31.18.2 and 7.31.18.3 <7.31.18.2>`, :pd:`Table 7.10`).
 
 :numref:`fig-usbpd-epr-entry` shows the entry, and
 :numref:`fig-usbpd-epr-keepalive` the keep-alive timing.
@@ -214,8 +215,8 @@ A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
    ],
    "config": {"hscale": 1}}
 
-A power role swap is not allowed in EPR mode; the port leaves EPR mode
-first (:pd:`Section 7.10`; :ref:`usbpd-power-role-swap`).
+A :ref:`power role swap <usbpd-power-role-swap>` is not allowed in EPR
+mode; the port leaves EPR mode first (:pd:`Section 7.10`).
 
 With 48 V, the equation in :ref:`usbpd-spr` gives the EPR worst case:
 
@@ -354,7 +355,7 @@ Data objects (bits 14 to 12)
      - Data
      - 01111
 
-Vendor_Defined carries Discover Identity (:ref:`usbpd-discover-identity`).
+Vendor_Defined carries :ref:`Discover Identity <usbpd-discover-identity>`.
 How long each message takes on the wire is given in
 :ref:`usbpd-durations`.
 

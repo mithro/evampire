@@ -46,7 +46,7 @@ allows either a :wikipedia:`current source <Current_source>` working from
 
 On chip
    Switched :wikipedia:`current mirrors <Current_mirror>` copy a current set
-   by the voltage reference (:ref:`usbpd-reference`). With no sink attached,
+   by the :ref:`voltage reference <usbpd-reference>`. With no sink attached,
    the pin must rise above the 2.432 V disconnect threshold of the 3.0 A level
    (:typec:`Table 4-37`). From a 3.3 V supply, this leaves 0.87 V of headroom
    for the mirror's output transistor. The CC pin stays below 5.5 V, within
@@ -375,8 +375,8 @@ VBUS sensing and discharge
 
 The port measures VBUS to detect attach and detach, to check that VBUS is
 near 0 V before it switches VBUS on, and to check the voltage after each
-change. It discharges VBUS after detach, during a power role swap and during
-a Hard Reset (:ref:`usbpd-discharge`, :ref:`usbpd-monitoring`). VBUS
+change. It :ref:`discharges VBUS <usbpd-discharge>` after detach, during a power
+role swap and during a Hard Reset (:ref:`usbpd-monitoring`). VBUS
 reaches 21.5 V with fixed :term:`SPR` supplies, 22.15 V with PPS, and 50.9 V with :term:`EPR`
 (:ref:`usbpd-spr`, :ref:`usbpd-epr`). Commercial controllers take one of two
 approaches: a VBUS pin that holds the full voltage, as on the TPS65987D, or

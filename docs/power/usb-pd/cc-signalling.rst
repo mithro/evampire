@@ -439,8 +439,8 @@ disconnected within *tInterFrameGap* after the packet, leaving no more than
 A transmitter must also survive its output being shorted to ground for up
 to 120 µs (*tFRSwapTx*, :pd:`Table 10.1`; :pd:`Section 5.3.4.10`). This
 happens when the source pulls CC low to signal a
-:term:`fast role swap <Fast role swap>`, in which the sink takes over as
-source because the source is losing its own power (:ref:`usbpd-fast-role-swap`).
+:ref:`fast role swap <usbpd-fast-role-swap>`, in which the sink takes over
+as source because the source is losing its own power.
 
 .. _usbpd-dc-level:
 

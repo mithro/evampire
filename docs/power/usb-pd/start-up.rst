@@ -229,9 +229,9 @@ on.
 
 A sink that has seen no Source_Capabilities message may send
 :term:`Hard Reset` to make the source start again, or may carry on at the
-USB Type-C Current level (:pd:`Section 7.31.3.2`). A Hard Reset turns VBUS
-off for a time, so a board powered only from VBUS loses its power
-(:pd:`Section 4.4`; :ref:`usbpd-hard-reset`).
+USB Type-C Current level (:pd:`Section 7.31.3.2`). A :ref:`Hard Reset <usbpd-hard-reset>`
+turns VBUS off for a time, so a board powered only from VBUS loses its power
+(:pd:`Section 4.4`).
 
 Open questions
 --------------
