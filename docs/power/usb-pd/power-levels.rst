@@ -197,8 +197,9 @@ A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
 
 .. wavedrom::
    :caption: The EPR keep-alive, ending in a Hard Reset when the messages
-            stop, schematic and not to scale; tSinkEPRKeepAlive is 250 ms
-            to 500 ms and tSourceEPRKeepAlive 750 ms to 1000 ms.
+            stop, schematic and not to scale; the sink limit is
+            tSinkEPRKeepAlive and the source limit tSourceEPRKeepAlive, and
+            the break marks a compressed wait.
    :name: fig-usbpd-epr-keepalive
    :alt: Timing diagram. The sink sends EPR_KeepAlive and the source answers
          EPR_KeepAlive_Ack. The sink must send its next message within
@@ -207,11 +208,11 @@ A source rated above 100 W and up to 240 W can also offer 28 V, 36 V and
          and then sends Hard Reset, which returns the port to its defaults.
 
    {"signal": [
-     {"name": "sink", "wave": "=...z..........", "data": ["EPR_KeepAlive"]},
-     {"name": "source", "wave": "z...=...z...=..", "data": ["EPR_KeepAlive_Ack", "Hard Reset"]},
-     {"name": "sink timer", "wave": "x...=...x......", "data": ["tSinkEPRKeepAlive"]},
-     {"name": "source timer", "wave": "x.......=...x..", "data": ["tSourceEPRKeepAlive"]},
-     {"name": "mode", "wave": "=...........=..", "data": ["EPR mode", "defaults"]}
+     {"name": "sink", "wave": "=..z...........", "data": ["EPR_KeepAlive"]},
+     {"name": "source", "wave": "z..=...z.....=.", "data": ["EPR_KeepAlive_Ack", "Hard Reset"]},
+     {"name": "sink limit", "wave": "x..=..x........", "data": ["250–500 ms"]},
+     {"name": "source limit", "wave": "x......=..|..x.", "data": ["750–1000 ms"]},
+     {"name": "mode", "wave": "=............=.", "data": ["EPR mode", "defaults"]}
    ],
    "config": {"hscale": 1}}
 

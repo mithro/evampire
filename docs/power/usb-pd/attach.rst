@@ -244,19 +244,21 @@ is random (:typec:`Section 4.5.2.2.7.2`; :typec:`Section 2.3.3`).
 .. wavedrom::
    :caption: Two toggling dual-role ports meeting, schematic and not to
              scale: port A presents Rp while port B presents Rd, so A
-             becomes the source.
+             becomes the source once tCCDebounce, 100 ms to 200 ms, has
+             passed.
    :name: fig-usbpd-drp-meet
    :alt: Timing diagram. Port A toggles Rp, Rd, Rp; port B presents Rp and
          then Rd. While both present Rp, or both Rd, neither sees the other.
          When A presents Rp and B presents Rd, A sees SRC.Rd and B sees
-         SNK.Rp, and both stop toggling: A goes on as the source and B as
-         the sink. Each toggle period tDRP is 50 to 100 ms, with Rp for 30 to
+         SNK.Rp, and both stop toggling; after tCCDebounce A goes on as the
+         source and B as the sink. Each toggle period tDRP is 50 to 100 ms, with Rp for 30 to
          70 % of it.
 
    {"signal": [
      {"name": "port A CC", "wave": "=.=.=........", "data": ["Rp", "Rd", "Rp, held"]},
      {"name": "port B CC", "wave": "=.=..........", "data": ["Rp", "Rd, held"]},
      {"name": "seen", "wave": "x...=........", "data": ["A sees SRC.Rd, B sees SNK.Rp: A is the source"]},
+     {"name": "debounce", "wave": "x...=...x....", "data": ["tCCDebounce"]},
      {"name": "A period", "wave": "=...x........", "data": ["tDRP 50–100 ms"]}
    ],
    "config": {"hscale": 1}}

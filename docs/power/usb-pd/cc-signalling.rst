@@ -740,10 +740,10 @@ the order.
          tInterFrameGap, 25 µs, after the end of the previous packet.
 
    {"signal": [
-     {"name": "CC", "wave": "010101z....010"},
-     {"name": "line", "wave": "=.........==..", "data": ["busy", "idle", "sending"]},
-     {"name": "no edges", "wave": "x.....=...x...", "data": ["tTransitionWindow"]},
-     {"name": "gap", "wave": "x.....=....x..", "data": ["tInterFrameGap 25 µs"]}
+     {"name": "CC", "wave": "010101z...0101"},
+     {"name": "line", "wave": "=........==...", "data": ["busy", "idle", "sending"]},
+     {"name": "no edges", "wave": "x....=...x....", "data": ["tTransitionWindow"]},
+     {"name": "gap", "wave": "x....=....x...", "data": ["tInterFrameGap 25 µs"]}
    ],
    "config": {"hscale": 1}}
 
