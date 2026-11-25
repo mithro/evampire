@@ -18,7 +18,7 @@ Ports
 -----
 
 The hub has two external ports, called port A and port B, and one
-internal port.
+internal port, all drawn in :numref:`fig-overview`.
 
 Port A and port B
    Each external port connects to an Ethernet cable through an
