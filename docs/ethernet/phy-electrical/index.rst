@@ -1,10 +1,8 @@
 Ethernet transceivers
 =====================
 
-These pages explain how an :term:`Ethernet transceiver` turns bytes into
-the analogue signals on a twisted-pair Ethernet cable and back, and what
-evampire needs in order to build the transceiver on the chip. They are
-written for integrated circuit designers who have not worked on Ethernet.
+An :term:`Ethernet transceiver` turns bytes into the analogue signals on a
+twisted-pair Ethernet cable and back.
 
 Each board configuration either uses an external transceiver or integrates
 it on evampire (:numref:`tab-power-board-configs`). Every port runs
@@ -18,7 +16,8 @@ it on evampire (:numref:`tab-power-board-configs`). Every port runs
    Building the transceiver on evampire, from the requirements of each speed
    to area and power illustrations and the order of work.
 :doc:`references`
-   The standard, test suites, datasheets and papers cited on these pages.
+   The standard, test suites, datasheets and papers cited for the
+   transceivers.
 
 .. toctree::
    :hidden:

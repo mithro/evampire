@@ -1,8 +1,10 @@
 RGMII and its signals
 =====================
 
-What RGMII is, the six signals it uses in each direction, and how it relates
-to the older MII and GMII interfaces.
+RGMII is the set of digital signals between an Ethernet transceiver and a
+media access controller, six in each direction. Using both clock edges, its
+four data wires carry the eight bits of a byte that the older GMII
+interface sends on eight wires.
 
 .. _rgmii-what:
 
@@ -31,7 +33,7 @@ transceiver drives. RGMII is an industry specification, not an IEEE
 standard (:std:`RGMII 1.3 <rgmii-1-3>`, :std:`RGMII 2.0 <rgmii-2-0>`).
 Gigabit Ethernet transceivers that support it include the Texas
 Instruments DP83867 [RGMII-DP83867]_ and the Microchip KSZ9031RNX
-[RGMII-KSZ9031]_, which these pages use as examples.
+[RGMII-KSZ9031]_, the two examples used throughout for RGMII.
 
 evampire uses RGMII in the board configuration with external transceivers
 (see :numref:`tab-power-board-configs`). :numref:`fig-rgmii-connection` shows

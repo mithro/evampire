@@ -1,10 +1,10 @@
 RGMII port logic
 ================
 
-The logic behind each RGMII port: the double-data-rate output and input
-stages, where the 2 ns clock delay comes from, the interface to the
-forwarding logic and the clock domains. The pins and pad cells are on
-:doc:`io-cells`.
+Behind each RGMII port, evampire has double-data-rate output and input
+stages built from standard cells, a source for the 2 ns clock delay, an
+interface to the forwarding logic, and the clock domains between them. The
+pins and pad cells are on :doc:`io-cells`.
 
 .. _rgmii-tx-stage:
 

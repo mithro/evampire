@@ -3,9 +3,9 @@
 Powered device requirements
 ===========================
 
-This page lists what the end that receives power, port A on a
-first-version board, must do at each step of the sequence on
-:doc:`sequence`.
+The end that receives power, port A on a first-version board, has a task
+at each step of the sequence on :doc:`sequence`, from accepting either
+polarity to drawing the maintain power signature.
 
 Polarity bridges
 ----------------

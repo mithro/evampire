@@ -3,19 +3,19 @@
 ESD tests
 =========
 
-This page describes the electrostatic discharge (ESD) tests that chips and
-products are rated against. It then shows why a test at thousands of volts
-leaves only a few volts on a pin whose protection conducts.
+Chips and products are rated against electrostatic discharge (ESD) tests
+at thousands of volts, yet a pin whose protection conducts sees only a few
+volts.
 
 Chip and product tests
 ----------------------
 
 An ESD rating names a test and a voltage. The voltage is the voltage to
 which the tester charges a capacitor, which then discharges through a
-resistor into the pin. :numref:`tab-esd-tests` lists the tests that this
-section uses.
+resistor into the pin. :numref:`tab-esd-tests` lists the chip and product
+tests.
 
-.. list-table:: ESD tests used in this section
+.. list-table:: Chip and product ESD tests
    :name: tab-esd-tests
    :header-rows: 1
    :widths: 26 18 16 40

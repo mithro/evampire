@@ -3,10 +3,9 @@
 Risks and order of work
 =======================
 
-This page lists the main risks of the integrated 1000BASE-T transceiver,
-how each can be checked before the whole transceiver exists, the
-alternatives to each usual approach, and an order of work in which each
-block can be checked on its own.
+Each main risk of the integrated 1000BASE-T transceiver can be checked
+before the whole transceiver exists, and each usual approach has
+alternatives. In the order of work, each block can be checked on its own.
 
 .. _phy-int-risk-table:
 

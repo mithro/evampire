@@ -1,9 +1,9 @@
 Management interface (MDIO)
 ===========================
 
-How evampire reads the status of each Ethernet transceiver and changes its
-settings over the two-wire management interface, and which registers it
-uses. The interface and its standard registers are defined in
+evampire reads the status of each Ethernet transceiver and changes its
+settings over the two-wire management interface, using a few of its
+registers. The interface and its standard registers are defined in
 :clause:`22`.
 
 .. _rgmii-mdio-wires:

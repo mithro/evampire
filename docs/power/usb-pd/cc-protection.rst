@@ -3,10 +3,10 @@
 CC protection against VBUS shorts
 =================================
 
-What a short from :term:`VBUS` to a :term:`CC` pin does, why the
-:term:`ESD` protection of a pin does not cover it, and the ways to protect
-evampire's CC pins: blocking the short, or pulling the pin to ground with a
-crowbar.
+A short from :term:`VBUS` to a :term:`CC` pin puts far more than the pin's
+normal voltage on it, and the :term:`ESD` protection of a pin does not
+cover it. evampire's CC pins can be protected by blocking the short, or by
+pulling the pin to ground with a crowbar.
 
 Over-voltage protection on the CC pins
 --------------------------------------

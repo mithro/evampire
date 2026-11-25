@@ -3,8 +3,8 @@
 Line drivers and the transformer centre tap
 ===========================================
 
-This page explains the two common kinds of transceiver line driver and how
-each sets the connection of the transformer centre tap on a board with
+Transceiver line drivers come in two common kinds, and each sets the
+connection of the transformer centre tap on a board with
 :term:`magnetics`. :doc:`../magnetics/index` covers the transformers
 themselves and the transformer-free connection.
 

@@ -1,11 +1,11 @@
 Converter arrangement
 =====================
 
-This page sets out the voltages and currents that evampire's three converter
-functions must handle in each operating mode (:ref:`power-modes`), where
-the Power over Ethernet and USB Power Delivery ranges overlap, and the ways
-of arranging converters to cover them. The arrangement is an open decision;
-this page compares the options and lists what would decide between them.
+evampire's three converter functions must handle different voltages and
+currents in each operating mode (:ref:`power-modes`), and the Power over
+Ethernet and USB Power Delivery ranges overlap. Several arrangements of
+converters cover these ranges, and the choice between them is an open
+decision.
 
 The three conversions
 ---------------------
@@ -515,7 +515,7 @@ For a Type 4 input of 71.3 W, one conversion leaves
 :math:`P_\text{out} = 64.2` W to 69.2 W minus :math:`P_\text{board}`, and
 two conversions 57.8 W to 67.1 W minus :math:`P_\text{board}`. The board's
 own consumption :math:`P_\text{board}` is open (:ref:`requirements`), so it
-stays a parameter here.
+stays a parameter.
 
 .. _conv-alternatives:
 

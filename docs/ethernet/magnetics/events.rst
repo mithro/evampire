@@ -1,11 +1,10 @@
 Voltages and events at the cable
 ================================
 
-This page lists the voltages, currents and energies that reach an Ethernet
-port from its cable, from the data signal to lightning surges. A port
-without a transformer must survive all of them and keep the signal intact.
-It is a reference page; the jobs of the transformer are described on
-:doc:`functions`.
+An Ethernet port receives voltages, currents and energies from its cable,
+from the data signal to lightning surges. A port without a transformer must
+survive all of them and keep the signal intact. The jobs of the transformer
+are described on :doc:`functions`.
 
 Continuous voltages
 -------------------

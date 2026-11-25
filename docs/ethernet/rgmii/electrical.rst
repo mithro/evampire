@@ -1,9 +1,10 @@
 Electrical levels and board layout
 ==================================
 
-The logic levels of the RGMII signals, as the specifications define them
-and as transceivers implement them, and the board layout rules for the
-traces. evampire's own pins are described on :doc:`io-cells`.
+The logic levels of the RGMII signals differ between the two versions of
+the specification and between transceivers, and the traces that carry them
+follow board layout rules. evampire's own pins are described on
+:doc:`io-cells`.
 
 .. _rgmii-spec-levels:
 

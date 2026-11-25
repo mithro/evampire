@@ -3,9 +3,9 @@
 Junction breakdown
 ==================
 
-This page explains how a reverse-biased P-N junction holds a voltage, why
-the doping on its lightly doped side sets how much, and why the curved
-edges of a well break down long before its flat bottom.
+A reverse-biased P-N junction holds a voltage up to a limit set by the
+doping on its lightly doped side. The curved edges of a well break down
+long before its flat bottom.
 
 The depletion region
 --------------------

@@ -1,10 +1,9 @@
 Transactions and enumeration
 ============================
 
-This page describes how the packets of :doc:`signalling` combine into
-transactions and transfers, how the host recognises and configures a newly
-attached device, and which descriptors and endpoints a USB serial port
-needs. Section and table numbers refer to the :std:`USB 2.0 specification <usb2>`
+The packets of :doc:`signalling` combine into transactions and transfers.
+With them the host recognises and configures a newly attached device, and
+reads the descriptors and endpoints that a USB serial port declares. Section and table numbers refer to the :std:`USB 2.0 specification <usb2>`
 [USBSER-USB2]_, the CDC specification [USBSER-CDC]_ and its PSTN subclass
 specification [USBSER-PSTN]_.
 

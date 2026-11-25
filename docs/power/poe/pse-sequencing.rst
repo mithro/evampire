@@ -3,9 +3,10 @@
 Software-sequenced power sourcing
 =================================
 
-This page describes the circuit blocks of a power sourcing equipment port
-whose detection and classification are sequenced by evampire's software,
-the timing that the software must meet, and the 44 V to 57 V supply.
+A power sourcing equipment port can have its detection and classification
+sequenced by evampire's software. The software must then meet the
+standard's timing, and the port's circuit blocks need a 44 V to 57 V
+supply.
 
 Software and hardware roles
 ---------------------------

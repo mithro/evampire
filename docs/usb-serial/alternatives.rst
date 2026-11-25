@@ -1,10 +1,10 @@
 Serial port alternatives
 ========================
 
-This page lists other ways to give evampire's processor a serial channel to
-a computer, including some that other projects avoid. For each it gives the
-reason others avoid it and whether that reason applies to evampire. All of
-them remain open (see `Open questions`_).
+Besides a USB full-speed device, several other channels could carry
+serial data between evampire's processor and a computer, including some
+that other projects avoid. The reasons others avoid them do not all apply
+to evampire, and every one remains open (see `Open questions`_).
 
 USB low speed
 -------------

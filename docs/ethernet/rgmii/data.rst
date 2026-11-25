@@ -1,9 +1,11 @@
 Data at each link speed
 =======================
 
-How the RGMII clock, control and data signals carry bytes at 1000, 100 and
-10 Mbit/s, and what the receive data signals carry between frames. The
-signals are listed on :doc:`signals`.
+The RGMII clock, control and data signals carry one byte per clock cycle at
+1000 Mbit/s, using both clock edges, and one nibble per cycle at 100 and
+10 Mbit/s. Between frames, the receive data signals can carry the link status.
+This in-band status is optional.
+The signals are listed on :doc:`signals`.
 
 .. _rgmii-speeds:
 

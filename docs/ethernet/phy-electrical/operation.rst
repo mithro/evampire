@@ -1,7 +1,9 @@
 Transceiver operation
 =====================
 
-These pages explain how an Ethernet transceiver works, simplest speed first.
+An Ethernet transceiver runs at 10, 100 and 1000 Mbit/s, each speed with
+its own coding and signalling, and each adding techniques to the slower
+one before it.
 
 :doc:`job`
    Where the transceiver sits, the three speeds, and the four ways the cable

@@ -3,10 +3,10 @@
 ESD simulation set-up
 =====================
 
-This page describes the circuit simulation behind :doc:`results-hbm` and
-:doc:`results-iec`: what is
-simulated, which foundry models it uses, what it adds to them and why, and
-what it cannot show.
+The discharges of :doc:`results-hbm` and :doc:`results-iec` come from a
+circuit simulation of the foundry's own pad netlists and device models. The
+simulation adds ESD behaviour that the models lack, works around faults in
+them, and has limits on what it can show.
 
 Simulated circuit
 -----------------
@@ -353,7 +353,7 @@ and I/O cell repositories. Run it in a
        uv run docs/esd/sim/esd_sim.py
 
 It writes the figures to ``docs/esd/figures/`` and the tables to
-``docs/esd/sim/results/``. The results on these pages were made with
+``docs/esd/sim/results/``. The published results were made with
 ngspice 44.2 and the two repositories at the commits above.
 :download:`sim/schematic.py <sim/schematic.py>` draws the pad's
 schematic, :numref:`fig-esd-io-cell`.

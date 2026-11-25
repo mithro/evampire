@@ -1,12 +1,11 @@
 On-chip converter parts
 =======================
 
-This page describes the steps by which more of each converter moves onto
-evampire, and what each step needs from the
-`gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_ process. The first
-version keeps the gate drivers and power transistors external
-(:ref:`requirements`, :doc:`first-version`). The full design moves the
-gate drivers on chip, and then the power transistors
+More of each converter moves onto evampire in steps, and each step places
+its own demands on the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
+process. The first version keeps the gate drivers and power transistors
+external (:ref:`requirements`, :doc:`first-version`). The full design moves
+the gate drivers on chip, and then the power transistors
 (:numref:`tab-power-board-configs`). :numref:`fig-conv-integration-steps`
 shows the three steps.
 
@@ -29,7 +28,7 @@ gf180mcu design will achieve.
 Process documentation
 ---------------------
 
-Three kinds of fact bear on each step, and they are kept apart here.
+Three kinds of fact bear on each step, and they are kept apart.
 
 Ratings of the standard devices
    The foundry's continuous operating limits for long life

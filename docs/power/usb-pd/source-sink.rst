@@ -3,9 +3,9 @@
 Source and sink duties
 ======================
 
-The steps a :term:`source` and a :term:`sink` each follow to set up and keep
-a power :term:`contract`, and how evampire's software builds its offer from
-the :ref:`power budget <power-budget>`.
+A :term:`source` and a :term:`sink` each follow their own steps to set up
+and keep a power :term:`contract`, and evampire's software builds its offer
+from the :ref:`power budget <power-budget>`.
 
 The message exchange itself, and its time limits, are on
 :doc:`negotiation`.
@@ -177,8 +177,8 @@ supply at present, in 1 W steps (:pd:`Table 6.29`). With one output port,
 The equation neglects the loss in the USB cable, because the offered
 voltage is measured at the source's connector (*vSrcNew*,
 :pd:`Table 4.7`). It treats :math:`\eta` as a constant, although a
-converter's efficiency changes with its load; the converter pages give the
-ranges (:ref:`conv-efficiency`).
+converter's efficiency changes with its load; the ranges are in
+:ref:`conv-efficiency`.
 
 For example, a class 4 Power over Ethernet grant of 25.5 W, with
 :math:`\eta` = 0.900 and :math:`P_\text{board}` = 3.10 W, both assumed for
@@ -234,7 +234,7 @@ After detach, a source must bring VBUS below vSafe5V (maximum) within
 tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
 (:pd:`Section 4.1.5.5`, :pd:`Table 4.9`; :numref:`fig-usbpd-vbus-discharge`).
 The USB Type-C specification gives the same 650 ms limit for detach as
-tVBUSOFF (:typec:`Table 4-32`), the name the attach pages use.
+tVBUSOFF (:typec:`Table 4-32`), the name used in :doc:`attach`.
 It also discharges VBUS before
 attaching (the AttachWait.SRC state, :typec:`Section 4.5.2.2.8.1`) and
 during a power role swap. A switched load from VBUS to ground, controlled by

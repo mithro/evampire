@@ -1,13 +1,14 @@
 Capacitor-coupled gigabit over long cables
 ==========================================
 
-This page works through what can limit gigabit Ethernet, 1000BASE-T,
-running through coupling capacitors over a long cable, and gives the
-measurements that would show whether it does. Capacitor coupling is shown
-for short links and backplanes, and in one vendor test for cables up to
-100 m ([MAG-ADIWIKI]_). Cable reach of the integrated transceiver is a
-parameter (:ref:`requirements-open-questions`), so the effects that
-depend on it are given as a function of reach.
+Four effects can limit gigabit Ethernet, 1000BASE-T, running through
+coupling capacitors over a long cable: its low-frequency content, the echo
+tail, common-mode noise and parasitic capacitance. Measurements would show
+whether any of them does. Capacitor coupling is shown for short links and
+backplanes, and in one vendor test for cables up to 100 m
+([MAG-ADIWIKI]_). Cable reach of the integrated transceiver is a parameter
+(:ref:`requirements-open-questions`), so the effects that depend on it are
+given as a function of reach.
 
 Low-frequency content
 ---------------------

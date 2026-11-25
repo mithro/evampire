@@ -3,9 +3,9 @@
 Control logic and registers
 ===========================
 
-This page lists what a gigabit-only integrated transceiver needs for
-:doc:`../autonegotiation` and for software control: the link pulse driver
-and receiver, the state machines and timers, and the management registers.
+For :doc:`../autonegotiation` and for software control, a gigabit-only
+integrated transceiver needs a link pulse driver and receiver, state
+machines and timers, and management registers.
 
 .. _phy-int-autoneg:
 

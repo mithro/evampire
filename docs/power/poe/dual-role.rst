@@ -3,9 +3,9 @@
 Ports that take either role
 ===========================
 
-This page describes an Ethernet port that can be either a powered device
-or power sourcing equipment, how its role can be chosen, and the safety
-rules that any choice must keep.
+An Ethernet port can be built to act as either a powered device or power
+sourcing equipment. Its role can be chosen in more than one way, and every
+choice must keep the same safety rules.
 
 No role swap
 ------------

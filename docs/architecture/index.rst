@@ -1,9 +1,10 @@
 Architecture
 ============
 
-This page gives a high-level view of the blocks inside evampire and how
-frames move between them. The :doc:`../ethernet/index` and
-:doc:`../power/index` pages describe each external interface in detail.
+Inside evampire, frames move between the two Ethernet ports along two
+forwarding paths, and between the ports and the RISC-V processor along the
+processor's path. The :doc:`../ethernet/index` and :doc:`../power/index`
+pages describe each external interface in detail.
 
 Forwarding and processor paths
 ------------------------------

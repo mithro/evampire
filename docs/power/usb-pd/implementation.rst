@@ -1,7 +1,9 @@
 USB Power Delivery in evampire
 ==============================
 
-These pages cover what evampire needs to build USB Power Delivery.
+USB Power Delivery on evampire needs software on the processor, analogue
+circuits for each port, protection for the CC pins, and circuits that the
+gf180mcu voltage limits allow on the chip.
 
 :doc:`software`
    What the processor must do to send and receive messages, and the hardware

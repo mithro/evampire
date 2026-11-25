@@ -3,11 +3,10 @@
 Integrated receiver
 ===================
 
-This page works out what the integrated receiver needs before the digital
-filters: how the echo is shared between analogue and digital stages, and
-how many effective bits the analogue-to-digital converter (ADC) needs as a
-function of cable reach. :doc:`../1000base-t-echo` explains the hybrid and
-the echo canceller.
+Before the digital filters, the integrated receiver shares the echo between
+analogue and digital stages, and its analogue-to-digital converter (ADC)
+needs a number of effective bits that depends on cable reach.
+:doc:`../1000base-t-echo` explains the hybrid and the echo canceller.
 
 .. _phy-int-echo:
 
@@ -316,7 +315,8 @@ equaliser ahead of the ADC, instead of digital filters after it
          analogue DFE, then a coarse ADC or comparators.
    :align: center
 
-The gigabit reference designs on these pages do this work in digital logic
+The gigabit reference designs cited for the transceiver do this work in
+digital logic
 ([PHY-TUT98]_ slide 51; [PHY-HE01]_), in processes of 0.25 µm and smaller.
 The gf180mcu standard cells are built from 5 V transistors of 0.5 µm and
 0.6 µm gate length (:ref:`phy-int-cells`), so digital logic there is larger

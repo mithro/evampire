@@ -3,10 +3,10 @@
 Packet structure
 ================
 
-How a :term:`USB Power Delivery` message is framed as a packet, coded into
-5-bit symbols and checked, and how long a packet takes to send. The
-:doc:`electrical signal <cc-signalling>` that carries the bits on the
-:term:`CC` wire has its own page.
+A :term:`USB Power Delivery` message is framed as a packet, coded into
+5-bit symbols and checked, and its length sets how long the packet takes to
+send. The :doc:`electrical signal <cc-signalling>` that carries the bits on
+the :term:`CC` wire is covered separately.
 
 Packet parts
 ------------

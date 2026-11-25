@@ -3,14 +3,14 @@
 Attach and detach
 =================
 
-How a :term:`dual-role port` finds the device at the other end of a USB
-Type-C cable, settles on the source or sink role, and starts again after an
+A :term:`dual-role port` finds the device at the other end of a USB Type-C
+cable, settles on the source or sink role, and starts again after an
 error.
 
 The :std:`USB Type-C specification <usb-type-c>` describes attach as a
 :wikipedia:`finite-state machine <Finite-state_machine>` for each kind of
-port (:typec:`Section 4.5.2.2`). This page follows the one for a dual-role
-port. The states depend on what each CC pin sees: SRC.Rd, SRC.Ra or SRC.Open
+port (:typec:`Section 4.5.2.2`). evampire's ports follow the one for a
+dual-role port. The states depend on what each CC pin sees: SRC.Rd, SRC.Ra or SRC.Open
 while the port presents :term:`Rp`, and SNK.Rp or SNK.Open while it presents
 :term:`Rd` (:ref:`usbpd-cc-states`).
 

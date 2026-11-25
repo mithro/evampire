@@ -3,9 +3,9 @@
 Role changes
 ============
 
-How two connected USB Type-C ports exchange the power role, the data role
-and the VCONN supply without unplugging, and how a Hard Reset returns both
-to their starting state.
+Two connected USB Type-C ports can exchange the power role, the data role
+and the VCONN supply without unplugging, and a Hard Reset returns both to
+their starting state.
 
 Kinds of swap
 -------------

@@ -3,9 +3,9 @@
 On-chip and external options
 ============================
 
-This page sets out, for each function that handles the cable voltage, the
-external option and the on-chip option, and what would decide between
-them.
+Each function that handles the cable voltage has an external option and
+an on-chip option, and each function has its own factors that decide
+between them.
 
 Choice per function
 -------------------

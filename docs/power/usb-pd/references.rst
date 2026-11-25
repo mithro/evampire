@@ -1,8 +1,9 @@
 References
 ==========
 
-The documents cited on the USB Power Delivery pages, grouped by kind. The
-pages give the section, table or figure at each citation.
+Specifications, datasheets and papers on USB Power Delivery and USB
+Type-C, grouped by kind. Each citation gives the section, table or
+figure.
 
 USB specifications
 ------------------

@@ -3,11 +3,10 @@
 IEC level 4 protection
 ======================
 
-This page works out what a pin wired to a connector needs to survive
-:std:`IEC 61000-4-2` level 4, ±8 kV contact or ±15 kV air discharge, and
-compares the ways to provide it: on the chip, on the board, or both. The
-choice for each of evampire's connector pins is an open design decision
-(:ref:`esd-open`).
+A pin wired to a connector survives :std:`IEC 61000-4-2` level 4, ±8 kV
+contact or ±15 kV air discharge, only with protection on the chip, on the
+board, or both. The choice for each of evampire's connector pins is an open
+design decision (:ref:`esd-open`).
 
 Level 4 current
 ---------------

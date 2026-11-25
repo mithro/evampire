@@ -3,9 +3,9 @@
 Surface voltage grading
 =======================
 
-This page describes ways to make the voltage between a high-voltage region
-and the surrounding substrate fall gradually across the surface, instead of
-all at one edge, so that no point reaches the critical field.
+The voltage between a high-voltage region and the surrounding substrate
+can be made to fall gradually across the surface, instead of all at one
+edge, so that no point reaches the critical field.
 
 Even voltage fall
 -----------------

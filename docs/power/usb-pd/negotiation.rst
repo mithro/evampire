@@ -3,9 +3,9 @@
 Contract negotiation
 ====================
 
-The message exchange that sets up a power :term:`contract` between a
-:term:`source` and a :term:`sink`, the acknowledgement of each message, and
-the time limits on both ends.
+A power :term:`contract` between a :term:`source` and a :term:`sink` is set
+up by a message exchange, in which each message is acknowledged and both
+ends must meet time limits.
 
 Message sequence
 ----------------
@@ -73,8 +73,7 @@ carries the MessageID of the message it acknowledges
    ],
    "config": {"hscale": 1}}
 
-The 195 µs deadline is the tightest time limit in USB Power Delivery. The
-other pages link here for it. What it means for software on the processor is
+The 195 µs deadline is the tightest time limit in USB Power Delivery. What it means for software on the processor is
 on :ref:`usbpd-goodcrc-deadline`.
 
 Retries and resets

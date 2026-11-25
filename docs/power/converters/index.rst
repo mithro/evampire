@@ -1,12 +1,6 @@
 Voltage converters
 ==================
 
-These pages explain how the switching voltage converters in evampire's power
-path work, starting from the simplest converter, and what evampire needs in
-order to control them and, step by step, to take over more of each converter.
-They are written for chip designers, digital and analogue, who have not
-designed power converters before.
-
 A board built around evampire has three converter functions
 (:ref:`power-flow`, :ref:`requirements`):
 
@@ -24,8 +18,8 @@ A board built around evampire has three converter functions
    How evampire's converters are arranged, how evampire controls external
    power stages, and bringing converter parts onto the chip.
 :doc:`references`
-   The datasheets, application notes, papers and process documents cited on
-   these pages.
+   The datasheets, application notes, papers and process documents cited for
+   the voltage converters.
 
 .. toctree::
    :hidden:

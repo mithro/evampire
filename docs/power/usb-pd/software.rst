@@ -3,9 +3,9 @@
 Processor requirements
 ======================
 
-The processor time, sampling rate, edge accuracy and reply deadlines that
-sending and receiving :term:`USB Power Delivery` messages in software needs,
-and the hardware helper that removes each need.
+Sending and receiving :term:`USB Power Delivery` messages in software takes
+processor time, needs a sampling rate and edge accuracy, and must meet
+reply deadlines. A hardware helper can remove each of these needs.
 
 USB Power Delivery runs mostly in software on the RISC-V processor, with
 digital helpers only where software cannot meet the timing

@@ -3,9 +3,9 @@
 Isolation from the cable
 ========================
 
-This page gives the isolation that the standard requires between the cable
-and the rest of the equipment, and sets out the three routes by which a
-board built around evampire can provide it.
+The standard requires isolation between the cable and the rest of the
+equipment, and a board built around evampire can provide it by three
+routes.
 
 Required isolation
 ------------------

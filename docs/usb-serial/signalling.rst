@@ -1,11 +1,10 @@
 Full-speed signalling and packets
 =================================
 
-This page describes the electrical signal and the packet format of a USB 2.0
-full-speed connection, from the wires up to the checksum, in the detail
-needed to receive and send it in software or in small hardware blocks. All
-section and table numbers refer to the :std:`USB 2.0 specification <usb2>`
-[USBSER-USB2]_.
+A USB 2.0 full-speed connection carries its packets as line states on two
+wires, D+ and D−. Software or small hardware blocks can receive and send
+them, from the wire levels up to the checksum. Section and table numbers
+are those of the :std:`USB 2.0 specification <usb2>` [USBSER-USB2]_.
 
 Host and device
 ---------------
@@ -163,8 +162,8 @@ The receiver classifies the two wires into a few *line states*
      - High
      - Never sent on purpose ([USBSER-USB2]_ section 7.1.1).
 
-On a low-speed connection J and K are swapped; this documentation describes
-full speed only.
+On a low-speed connection J and K are swapped; :numref:`tab-usbser-states`
+gives the full-speed states.
 
 .. wavedrom::
    :caption: The D+ and D− levels of the idle, J, K and SE0 line states on a

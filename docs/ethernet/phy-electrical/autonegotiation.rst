@@ -3,10 +3,9 @@
 Autonegotiation
 ===============
 
-This page explains how two transceivers use :term:`autonegotiation`
-(:clause:`28`) to agree, before any data flows, on the speed, on whether
-both directions may send at once, and, for 1000BASE-T, on which end is the
-clock master.
+Before any data flows, two transceivers use :term:`autonegotiation`
+(:clause:`28`) to agree on the speed, on whether both directions may send
+at once, and, for 1000BASE-T, on which end is the clock master.
 
 *Full duplex* means both ends may transmit at once, the normal case today;
 *half duplex* means only one at a time, a mode kept for old shared-cable
@@ -194,8 +193,8 @@ Mode and master resolution
 --------------------------
 
 Each end compares its own abilities with its partner's and picks the
-highest mode both support (:clause:`28.2.3.3`). For the three speeds on
-these pages the order, highest first, is 1000BASE-T full duplex,
+highest mode both support (:clause:`28.2.3.3`). For the three twisted-pair
+speeds the order, highest first, is 1000BASE-T full duplex,
 1000BASE-T half duplex, 100BASE-TX full duplex, 100BASE-TX half duplex,
 10BASE-T full duplex and 10BASE-T half duplex (:clause:`Annex 28B.3 <28>`). Both
 ends reach the same answer because they apply the same rules to the same

@@ -3,9 +3,8 @@
 Process voltage limits
 ======================
 
-This page separates three kinds of voltage limit in the gf180mcu process,
-and describes the four kinds of electrical stress that a circuit connected
-to the cable must survive.
+The gf180mcu process has three kinds of voltage limit, and a circuit
+connected to the cable must survive four kinds of electrical stress.
 
 Cable voltage and device ratings
 --------------------------------
@@ -16,10 +15,10 @@ to 57 V, plus surges. The standard transistors of
 `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_ are rated for 3.3 V,
 5 V or 6 V. A rating is not the only limit: evampire uses custom devices
 wherever a function needs them (:ref:`req-process`), so a function with no
-ready-made high-voltage device is a design task, not an impossibility. Three
-kinds of limit are separated below. :numref:`fig-poe-ratings` sets the
-ratings and breakdown voltages of the next two sections against the cable
-voltage.
+ready-made high-voltage device is a design task, not an impossibility.
+The three kinds of limit are the ratings, the breakdown voltages and the
+reach of custom structures. :numref:`fig-poe-ratings` sets the ratings and
+breakdown voltages against the cable voltage.
 
 .. figure:: ratings.svg
    :name: fig-poe-ratings

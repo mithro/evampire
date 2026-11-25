@@ -1,8 +1,8 @@
 Converter fundamentals
 ======================
 
-These pages explain how switching voltage converters work, starting from the
-simplest.
+Switching voltage converters use transistors as switches and store energy
+for a moment in an inductor.
 
 :doc:`why-switching`
    Why the power path uses switching converters instead of linear

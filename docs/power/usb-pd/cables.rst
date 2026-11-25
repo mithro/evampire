@@ -3,8 +3,8 @@
 Cables and VCONN
 ================
 
-How a USB Type-C port powers the chip inside a marked cable, and how it asks
-that chip for the cable's rating before offering more than 3 A.
+A USB Type-C port powers the chip inside a marked cable, and asks that chip
+for the cable's rating before offering more than 3 A.
 
 Cable current rating
 --------------------

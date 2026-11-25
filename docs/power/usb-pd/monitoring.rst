@@ -3,9 +3,9 @@
 Port power monitoring and limits
 ================================
 
-What evampire must measure and limit on each USB Type-C port and on the
-board's power bus, derived from the USB Power Delivery rules. The circuits
-that do it are an open choice.
+The USB Power Delivery rules set what evampire must measure and limit on
+each USB Type-C port and on the board's power bus. The circuits that do it
+are an open choice.
 
 Measurement and limit requirement
 ---------------------------------
@@ -39,9 +39,9 @@ and how the limits act.
          the processor, which writes the limits. The bus voltage and current
          are measured and read by the processor.
 
-The converter pages already sense the same quantities for control and
-protection; :ref:`conv-protection` and :ref:`conv-fault-times` cover the
-converter side. This page covers what USB Power Delivery adds.
+The converters sense the same quantities for control and protection
+(:ref:`conv-protection`, :ref:`conv-fault-times`). USB Power Delivery
+adds its own measurement ranges, steps and limits.
 
 Measurement ranges and steps
 ----------------------------

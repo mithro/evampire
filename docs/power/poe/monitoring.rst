@@ -3,9 +3,9 @@
 Power monitoring and limits
 ===========================
 
-This page lists what evampire's built-in power monitoring and limiting must
-measure and enforce on a Power over Ethernet port, and how fast each limit
-must act.
+evampire's built-in power monitoring and limiting measures each Power over
+Ethernet port and enforces its limits, and each limit must act within a
+time set by the fault it guards against.
 
 Limits and enforcement
 ----------------------

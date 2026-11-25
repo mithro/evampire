@@ -1,9 +1,9 @@
 Isolation without a transformer
 ===============================
 
-This page describes three routes to the electrical isolation that a
-transformer gives an Ethernet port, and what the gf180mcu process can
-hold. How the isolation is made in the full design is an open question
+A transformer gives an Ethernet port electrical isolation, and a port
+without one can reach it by three routes, within what the gf180mcu process
+can hold. How the isolation is made in the full design is an open question
 (:ref:`requirements-open-questions`), so all three routes are options. The
 isolation tests themselves are described on :doc:`functions`.
 
@@ -37,7 +37,7 @@ A barrier on the evampire die
 
 The routes can also be combined, for example a second die whose barrier is
 built into one of the two dies. Each route also has to isolate the Power
-over Ethernet power path, described at the end of this page.
+over Ethernet power path.
 
 Capacitors in the isolation tests
 ---------------------------------
@@ -94,7 +94,7 @@ For :math:`C_\text{w} = 20\ \text{nF}`:
    = 75\ \text{mA}
 
 :numref:`tbl-magnetics-ac-current` gives the current for the capacitor
-values used on these pages.
+values considered.
 
 .. list-table:: Current through the coupling capacitors in the 1500 V rms,
                 50 Hz test
@@ -133,7 +133,7 @@ capacitors are readily available for this ([MAG-SNLA088]_, section 5), and
 the transformerless Power over Ethernet patents use them
 ([MAG-US8132027]_).
 
-The largest suitable parts used on these pages are 10 nF ceramic capacitors
+The largest suitable parts considered are 10 nF ceramic capacitors
 in an 1812 package, 4.5 mm × 3.2 mm, rated 2000 V and tested at 2400 V
 ([MAG-KEMET1812]_). One part per path withstands the 2250 V test. A wire
 that needs 20 nF takes two in parallel:
@@ -205,7 +205,7 @@ times more data.
 
 The cable-side die also needs power on its own side of the barrier. A port
 that takes Power over Ethernet can draw it from the cable; otherwise it
-needs an isolated supply, as described for the power path below.
+needs an isolated supply, as for the Power over Ethernet power path.
 
 The cable-side die can be a custom gf180mcu die, which keeps evampire's
 own design in both dies. It can also be a commercial Ethernet transceiver

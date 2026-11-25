@@ -3,10 +3,10 @@
 Clock recovery
 ==============
 
-This page states what the integrated transceiver's clocks must do: the
-accuracy of the reference, the phase control of the ADC sampling clock in
-master and slave, and the jitter limits. :ref:`The receiver page <phy-master-slave>`
-explains master and slave clocking.
+The integrated transceiver's clocks need an accurate reference, phase
+control of the ADC sampling clock in master and slave, and jitter within
+set limits. :ref:`Master and slave clocking <phy-master-slave>` is
+explained with the 1000BASE-T receiver.
 
 .. _phy-int-reference:
 

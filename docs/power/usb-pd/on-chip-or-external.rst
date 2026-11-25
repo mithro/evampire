@@ -3,17 +3,17 @@
 gf180mcu voltage limits
 =======================
 
-The voltage limits of the :term:`gf180mcu` process that decide which USB
-Type-C circuits can be built on evampire, and the on-chip and external option
-for each circuit.
+The voltage limits of the :term:`gf180mcu` process decide which USB Type-C
+circuits can be built on evampire. Each circuit has an on-chip and an
+external option.
 
 The process has three kinds of voltage limit. A rating is the voltage a
 standard device is designed to work at continuously. A breakdown is the
 voltage at which a junction or an insulator starts to conduct, measured on
 test structures. A custom structure, built from the process layers, can work
 above the ratings of the standard devices, up to the breakdowns of the layers
-it relies on. The converter pages use the same limits for the power
-converters (:doc:`../converters/index`).
+it relies on. The same limits apply to the power converters
+(:doc:`../converters/index`).
 
 Standard device ratings
 -----------------------

@@ -1,9 +1,9 @@
 USB serial port basics
 ======================
 
-This page describes what a computer sees when evampire's processor is
-attached as a USB serial port, and what the port is for. How the bits get
-there is on the following pages.
+When evampire's processor is attached as a USB serial port, a computer
+sees a named port that any terminal program can open. :doc:`signalling`
+and :doc:`transactions` explain how the bits get there.
 
 The computer's view
 -------------------

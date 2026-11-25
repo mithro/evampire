@@ -3,9 +3,9 @@
 100BASE-TX: 4B5B, scrambling and MLT-3
 ======================================
 
-This page describes 100BASE-TX (:clause:`24` and :clause:`25`): how it
-codes the data, the three-level signal on the wire and what its receiver
-does.
+100BASE-TX (:clause:`24` and :clause:`25`) codes its data with 4B5B and
+scrambling, and sends it on the wire as a three-level MLT-3 signal, which
+its receiver must recover.
 
 100BASE-TX uses the same pairs as :doc:`10base-t`, pins 1 and 2 and pins 3
 and 6 of the :term:`RJ45` socket, one pair for each direction

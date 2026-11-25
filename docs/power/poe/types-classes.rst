@@ -3,9 +3,9 @@
 Types, classes and the cable
 ============================
 
-This page lists the four types and nine classes of Power over Ethernet, the
-power each class gives at each end of the cable, and how the cable's
-resistance links the two.
+Power over Ethernet has four types and nine classes. Each class gives a
+set power at each end of the cable, and the cable's resistance links the
+two.
 
 The four types
 --------------

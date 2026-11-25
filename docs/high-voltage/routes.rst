@@ -3,8 +3,9 @@
 Route comparison
 ================
 
-This page sets the routes for holding a circuit above the substrate side by
-side, and lists the measurements that would decide between them.
+The routes for holding a circuit above the substrate differ in the
+structure that holds the voltage. They can be combined, and measurements
+on test structures would decide between them.
 
 Summary of routes
 -----------------
@@ -15,7 +16,7 @@ Each route moves the voltage to the substrate onto a different structure
 :doc:`grading`, the insulator routes on :doc:`dielectric`, and metal-gate sensing on
 :doc:`metal-gate`. They combine: a high-voltage well can have a
 field plate and floating rings, and polysilicon devices on the field oxide
-can bias the rings. Each structure is drawn on its own page: the wells in
+can bias the rings. The figures show each structure: the wells in
 :numref:`fig-hv-curved-edge` and :numref:`fig-hv-edge-remedies`, the
 grading structures in :numref:`fig-hv-grading`, devices on the oxide in
 :numref:`fig-hv-poly-on-fox`, the metal gate in :numref:`fig-hv-metal-gate`

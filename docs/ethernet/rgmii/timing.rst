@@ -1,8 +1,9 @@
 Timing and the clock delay
 ==========================
 
-Why the RGMII clock must be delayed by about 2 ns, where that delay can be
-added, and the timing limits of the interface. The signals are described on
+The RGMII clock must be delayed by about 2 ns relative to its data, by the
+board, the transmitting chip or the receiving chip, and the interface sets
+limits on the clock and data timing. The signals are described on
 :doc:`signals` and :doc:`data`.
 
 .. _rgmii-why-delay:

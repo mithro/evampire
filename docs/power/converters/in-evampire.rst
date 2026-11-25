@@ -1,8 +1,8 @@
 Converters in evampire
 ======================
 
-These pages cover evampire's three converters and how evampire controls and
-integrates them.
+evampire controls three converters, whose gate drivers and power
+transistors start as external parts and move onto the chip step by step.
 
 :doc:`arrangement`
    The voltage and current ranges of evampire's three converters in every

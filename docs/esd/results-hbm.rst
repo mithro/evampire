@@ -3,13 +3,14 @@
 Simulated human body model discharges
 =====================================
 
-This page gives the simulated human body model discharges into the
-bidirectional pad ``gf180mcu_fd_io__bi_t``, with DVSS grounded, built as
-described on :doc:`simulation`. It compares the current in each protection
-device with the current at which the foundry measured that device failing
-(:ref:`esd-limits`). :doc:`results-iec` gives the IEC discharges.
+A simulated human body model discharge into the bidirectional pad
+``gf180mcu_fd_io__bi_t``, with DVSS grounded, drives a current through each
+protection device. Each current is compared with the current at which the
+foundry measured that device failing (:ref:`esd-limits`). The simulation is
+set up as :doc:`simulation` describes, and :doc:`results-iec` gives the IEC
+discharges.
 
-In the current graphs on this page, a current is positive when it flows
+In the current graphs, a current is positive when it flows
 out of the pad into the chip.
 
 The 2 kV discharge

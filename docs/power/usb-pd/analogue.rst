@@ -3,9 +3,10 @@
 Analogue circuits for one port
 ==============================
 
-The analogue circuits that connect one evampire USB Type-C port to its
-:term:`CC` pins and to :term:`VBUS`: the requirement for each, the on-chip
-and external options, and reference examples from commercial controllers.
+Each evampire USB Type-C port connects to its :term:`CC` pins and to
+:term:`VBUS` through a set of analogue circuits. Each circuit has a
+requirement and both on-chip and external options, and commercial
+controllers give reference examples.
 
 :numref:`fig-usbpd-port-blocks` shows the blocks, from the connector pins to
 the processor. Each port has its own set; the number of ports in each board
@@ -15,8 +16,7 @@ The processor's part, and the optional timer, are described on
 blocks has its own page, :ref:`usbpd-cc-protection`, and the voltage limits
 of the process that decide each on-chip option are on
 :ref:`usbpd-process-limits`. The values commercial controllers reach for each
-block are collected at the end of the page, in
-:ref:`usbpd-analogue-examples`.
+block are collected in :ref:`usbpd-analogue-examples`.
 
 .. graphviz:: port-blocks.dot
    :name: fig-usbpd-port-blocks

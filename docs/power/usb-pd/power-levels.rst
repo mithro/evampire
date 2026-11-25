@@ -3,8 +3,8 @@
 Power levels and messages
 =========================
 
-The voltages and currents that :term:`USB Power Delivery` offers, and the
-format of the messages that carry the offers and requests.
+:term:`USB Power Delivery` offers a range of voltages and currents, and
+messages with a fixed format carry the offers and requests.
 
 Once :term:`VBUS` is at 5 V, the :term:`source` sends a list of what it can
 supply and the :term:`sink` asks for one item from the list
@@ -131,7 +131,7 @@ AVS supply ends at 20 V and has the same tolerances as a fixed supply
 Every circuit that connects to VBUS, and to the CC pins if they can be
 shorted to VBUS (:ref:`usbpd-cc-protection`), must withstand 21.5 V with SPR
 fixed supplies, 22.15 V if PPS is used, and 50.9 V in EPR
-(:ref:`usbpd-epr`). The other pages link here for these values. The
+(:ref:`usbpd-epr`). The
 description of the cable's maximum-voltage field quotes 21.55 V for the
 fixed-supply sum (:pd:`Table 6.45`); the parameter values in
 :pd:`Table 4.7` give 21.5 V.
@@ -283,7 +283,7 @@ MessageID (bits 11 to 9)
 Data objects (bits 14 to 12)
    The number of 32-bit data objects; zero for a control message.
 
-.. list-table:: Message type codes used on these pages (:pd:`Table 6.4`,
+.. list-table:: Selected message type codes (:pd:`Table 6.4`,
    :pd:`Table 6.5`)
    :name: tab-usbpd-message-types
    :header-rows: 1

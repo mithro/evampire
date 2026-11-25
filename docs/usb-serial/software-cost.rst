@@ -1,10 +1,10 @@
 Software cost and hardware assistance
 =====================================
 
-This page works out what the processor has to do to run a full-speed USB
-device in software: how many instructions per bit, how many samples per
-second and how short a reply deadline. It then adds hardware helpers one at
-a time and states what each one removes from those needs. The
+A full-speed USB device run in software sets the processor a number of
+instructions per bit, a number of samples per second and a short reply
+deadline. Each hardware helper, added one at a time, removes part of those
+needs. The
 :ref:`requirement <requirements>` is that the USB protocol runs mostly in
 software, with built-in hardware where the timing needs it.
 
