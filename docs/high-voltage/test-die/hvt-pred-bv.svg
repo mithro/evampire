@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="324" viewBox="0 0 640 324" font-family="sans-serif" font-size="13">
+<rect width="640" height="324" fill="white"/>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Predicted breakdown voltage by structure</text>
+<text x="20" y="44" text-anchor="start" font-size="11" font-weight="normal" fill="#c0392b">Status of the values: PLACEHOLDER: invented values that only exercise the tables and graphs;</text>
+<rect x="120" y="70" width="480" height="154" rx="0" fill="none" stroke="#222222"/>
+<line x1="120.0" y1="70" x2="120.0" y2="224" stroke="#dddddd" stroke-width="1"/>
+<text x="120.0" y="241" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="216.0" y1="70" x2="216.0" y2="224" stroke="#dddddd" stroke-width="1"/>
+<text x="216.0" y="241" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="312.0" y1="70" x2="312.0" y2="224" stroke="#dddddd" stroke-width="1"/>
+<text x="312.0" y="241" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="408.0" y1="70" x2="408.0" y2="224" stroke="#dddddd" stroke-width="1"/>
+<text x="408.0" y="241" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">60</text>
+<line x1="504.0" y1="70" x2="504.0" y2="224" stroke="#dddddd" stroke-width="1"/>
+<text x="504.0" y="241" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">80</text>
+<line x1="600.0" y1="70" x2="600.0" y2="224" stroke="#dddddd" stroke-width="1"/>
+<text x="600.0" y="241" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">100</text>
+<text x="360.0" y="262" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">predicted breakdown voltage (V)</text>
+<text x="70" y="147.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 70 147.0)"></text>
+<line x1="187.2" y1="70" x2="187.2" y2="224" stroke="#666666" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="190.2" y="65" text-anchor="start" font-size="11" font-weight="normal" fill="#666666">published 14 V</text>
+<line x1="393.6" y1="70" x2="393.6" y2="224" stroke="#666666" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="396.6" y="65" text-anchor="start" font-size="11" font-weight="normal" fill="#666666">57 V</text>
+<text x="112" y="85.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NR1S2</text>
+<circle cx="504.0" cy="83.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<text x="112" y="107.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NT20</text>
+<rect x="120" y="92.0" width="480" height="22" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
+<circle cx="225.6" cy="100.5" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.7"/>
+<rect x="212.5" y="97.0" width="7" height="7" rx="0" fill="white" stroke="#c0392b"/>
+<circle cx="480.0" cy="105.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<rect x="366.1" y="102.0" width="7" height="7" rx="0" fill="white" stroke="#2e86de"/>
+<text x="112" y="129.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NC0</text>
+<circle cx="225.6" cy="122.5" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.7"/>
+<rect x="207.7" y="119.0" width="7" height="7" rx="0" fill="white" stroke="#c0392b"/>
+<circle cx="480.0" cy="127.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<rect x="298.9" y="124.0" width="7" height="7" rx="0" fill="white" stroke="#2e86de"/>
+<text x="112" y="151.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NW0</text>
+<rect x="120" y="136.0" width="480" height="22" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
+<circle cx="225.6" cy="149.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<rect x="212.5" y="146.0" width="7" height="7" rx="0" fill="white" stroke="#2e86de"/>
+<text x="112" y="173.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NW1p5</text>
+<circle cx="384.0" cy="171.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<rect x="308.5" y="168.0" width="7" height="7" rx="0" fill="white" stroke="#2e86de"/>
+<text x="112" y="195.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NW6</text>
+<rect x="120" y="180.0" width="480" height="22" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
+<circle cx="475.2" cy="193.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<rect x="361.3" y="190.0" width="7" height="7" rx="0" fill="white" stroke="#2e86de"/>
+<text x="112" y="217.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NA0p6</text>
+<circle cx="456.0" cy="210.5" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.7"/>
+<rect x="356.5" y="207.0" width="7" height="7" rx="0" fill="white" stroke="#c0392b"/>
+<circle cx="480.0" cy="215.5" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<rect x="366.1" y="212.0" width="7" height="7" rx="0" fill="white" stroke="#2e86de"/>
+<circle cx="26" cy="280" r="4" fill="#c0392b" stroke="#222222" stroke-width="0.7"/>
+<text x="36" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">process A</text>
+<circle cx="134" cy="280" r="4" fill="#2e86de" stroke="#222222" stroke-width="0.7"/>
+<text x="144" y="284" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">process B</text>
+<text x="20" y="306" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Filled circle: straight edge. Open square: corner.</text>
+</svg>
