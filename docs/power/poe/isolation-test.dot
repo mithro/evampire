@@ -1,0 +1,43 @@
+// Where the isolation test voltage is applied: between all the cable
+// conductors and every accessible conductor. Values from isolation.rst
+// (IEEE 802.3 145.4.1 and 33.4.1).
+//
+// Fill colours: cable side #fbe5d6, accessible side #dbe8f5, test
+// equipment #ffffff, failure #f4cccc. The dashed line is the barrier.
+// Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph isolation_test {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=2.0, height=0.6, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10];
+
+    cable [pos="1.2,2.6!", label="All 8 cable conductors\n(RJ45 pins 1 to 8)",
+           fillcolor="#fbe5d6", width=2.1];
+    pd    [pos="1.2,1.6!", label="Cable-side circuits:\nbridges, signature,\nswitches", fillcolor="#fbe5d6",
+           width=2.1, height=0.7];
+    acc   [pos="5.6,2.6!", label="Frame ground, USB-C\nconnector, board ground",
+           fillcolor="#dbe8f5", width=2.2];
+    evp   [pos="5.6,1.6!", label="Accessible circuits\n(evampire in this\nexample)", fillcolor="#dbe8f5",
+           width=2.2, height=0.7];
+    bar   [pos="3.4,2.0!", label="isolation\nbarrier", width=0.9, height=2.2,
+           style="dashed", color="#c00000", fontcolor="#c00000"];
+    test  [pos="3.4,0.3!", label="Test source: 1500 V rms for 60 s, or 2250 V DC for 60 s,\nor ten 1500 V 10/700 µs impulses; then at least 2 MΩ at 500 V DC",
+           fillcolor="#ffffff", width=5.6, height=0.6];
+    clamp [pos="3.4,3.6!", label="A clamp across the barrier\nwould conduct and fail the test",
+           fillcolor="#f4cccc", width=2.8, height=0.5];
+
+    cable -- pd;
+    acc   -- evp;
+    l1 [pos="1.2,0.9!", shape=point, width=0.05];
+    l2 [pos="5.6,0.9!", shape=point, width=0.05];
+    pd  -- l1 [penwidth=2];
+    evp -- l2 [penwidth=2];
+    l1 -- test [penwidth=2, label="  test voltage"];
+    l2 -- test [penwidth=2];
+    clamp -- cable [style=dotted];
+    clamp -- acc   [style=dotted];
+}
