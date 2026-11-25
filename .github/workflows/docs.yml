@@ -24,7 +24,7 @@ jobs:
           uv run --python 3.12 --with-requirements docs/requirements.txt
           sphinx-build -W --keep-going -b html docs docs/_build/html
 
-      - name: Check rendered pages for error boxes, unreferenced numbers and alt text
+      - name: Check rendered pages for error boxes, unreferenced numbers, alt text and sidebar links
         run: uv run --python 3.12 python docs/check_html.py docs/_build/html
 
       - uses: actions/upload-artifact@v4
