@@ -93,8 +93,9 @@ structures on a gf180mcu run would measure directly:
   oxide and over active silicon, at several channel lengths, measured for
   threshold, current and drift over temperature and time.
 
-Device simulation of the same structures, with the gf180mcu doping as an
-input, would narrow the dimensions to put on the test run.
+The :ref:`test die <hv-test-die>` holds the first four kinds: wells,
+rings, plates and large wells, with simulated predictions for each. The
+polysilicon strips and the field and metal-gate transistors are not on it.
 
 Open questions
 --------------

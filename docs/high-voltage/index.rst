@@ -24,6 +24,9 @@ different physics, from simplest to most involved. The voltage limits of the gf1
 :doc:`routes`
    The routes side by side, and the measurements that would decide between
    them.
+:doc:`test-die`
+   The test die that measures the breakdown of wells with different edge
+   terminations, its measurement method and the simulated predictions.
 :doc:`references`
    The sources cited for high-voltage isolation.
 
@@ -36,4 +39,5 @@ different physics, from simplest to most involved. The voltage limits of the gf1
    dielectric
    metal-gate
    routes
+   test-die
    references
