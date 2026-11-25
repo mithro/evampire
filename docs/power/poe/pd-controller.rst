@@ -86,7 +86,8 @@ Thermal shutdown
 
 Input protection
    A :wikipedia:`transient-voltage suppressor
-   <Transient-voltage-suppression_diode>` across the bridge outputs limits
+   <Transient-voltage-suppression_diode>` across the bridge outputs
+   (:numref:`fig-poe-bridges` draws the bridges) limits
    surges from the cable. For reference, Texas Instruments recommends an
    SMAJ58A for the TPS2372 [POE-TPS2372]_ (Application and
    Implementation). :doc:`hv-limits`

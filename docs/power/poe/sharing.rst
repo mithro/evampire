@@ -79,7 +79,8 @@ Moving power between ports
 --------------------------
 
 When a device on one port is unplugged or uses less than its share, the
-software raises the offer on another port. When a new device is plugged in,
+software raises the offer on another port (:numref:`fig-power-sharing`
+shows the offers over time). When a new device is plugged in,
 it first lowers the offers on the other ports to make room. On a power
 sourcing equipment port, lowering over LLDP is complete only when the
 powered device has answered with the new value, which may take up to 10 s

@@ -112,7 +112,7 @@ The currents for each row are:
 
 Detection, as an offset current
    A constant current adds an offset to the measured line but does not
-   change its slope. Power sourcing equipment must tolerate an offset
+   change its slope (:numref:`fig-poe-detect-iv` shows an offset line). Power sourcing equipment must tolerate an offset
    current of up to 12 µA (:clause:`Table 145-8 <145>`, item 4). Its
    behaviour with a larger offset is undefined (:clause:`145.2.6.4`). The
    range is 12 µA at 2.7 V and at 10.1 V.
