@@ -1,12 +1,10 @@
 Electrostatic discharge protection
 ==================================
 
-These pages explain how the I/O cells of the gf180mcu process protect a
-chip against electrostatic discharge (ESD): tests rated in thousands of
-volts, in a process whose transistors are rated for 5 V. They simulate the
-foundry's own cells with the foundry's device models, and show what limits
-the protection. They are written for integrated circuit designers who have
-not designed ESD protection.
+The I/O cells of the gf180mcu process protect a chip against
+electrostatic discharge (ESD) tests rated in thousands of volts, although
+the process's transistors are rated for 5 V. Simulating the foundry's own
+cells with the foundry's device models shows what limits that protection.
 
 Every pad of the gf180mcu I/O library has ESD protection
 (:doc:`io-cells`). The pins of evampire that are wired to connectors also
@@ -24,8 +22,6 @@ than the test a chip is rated by (:doc:`events`).
    results-iec
    higher-levels
    references
-
-What each page covers:
 
 * :doc:`events`: the ESD tests, their levels, and why a kilovolt test
   leaves only volts on the pin.

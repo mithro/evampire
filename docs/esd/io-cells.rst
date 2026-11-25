@@ -3,9 +3,9 @@
 gf180mcu I/O cell protection
 ============================
 
-This page describes the ESD protection built into the standard gf180mcu
-I/O cells, with the device sizes taken from the cells' netlists, and the
-limits of each protection device measured by the foundry.
+The standard gf180mcu I/O cells have ESD protection built in. The cells'
+netlists give the size of each protection device, and the foundry has
+measured the limits of each device.
 
 Library rating
 --------------
@@ -17,8 +17,8 @@ The foundry I/O library, gf180mcu_fd_io, targets 2000 V
 :term:`latch-up` immunity ([ESD-GF180-IO]_, latch-up page). No
 :std:`IEC 61000-4-2` level is given for the library.
 
-The library ships a netlist of every cell ([ESD-GF180-IO-SRC]_). This page
-uses three of them:
+The library ships a netlist of every cell ([ESD-GF180-IO-SRC]_). Three of
+them contain the protection structures that follow:
 
 * ``gf180mcu_fd_io__bi_t``, the bidirectional digital pad. The input-only
   pads ``in_c`` and ``in_s`` contain the same protection.
@@ -343,7 +343,7 @@ circuits it protects (:numref:`tab-esd-breakdown`).
      - 8.5
      - 10.5
 
-This section uses the minimum oxide breakdown as the limit for the input
+The minimum oxide breakdown is taken as the limit for the input
 transistors' gates. The design manual also warns that TLP results can
 differ from human body model results, because the waveforms differ
 ([ESD-GF180-DRM-14-4]_).
