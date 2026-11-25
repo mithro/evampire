@@ -1,9 +1,6 @@
 Glossary
 ========
 
-The terms used in this documentation, in alphabetical order. Each entry
-gives a short description and a link to the full explanation.
-
 .. glossary::
    :sorted:
 
