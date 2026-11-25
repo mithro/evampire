@@ -108,20 +108,19 @@ def inrush_pd():
     body.append(text(p.x(t_ch) + 6, p.y(57) + 14, f"charged at "
                      f"{t_ch:.0f} ms", 10))
     q = Plot(70, 190, 560, 140, (0, 100), (0, 1.1))
-    body.append(rect(q.x(0), q.top, q.x(80) - q.x(0), q.y(0.4) - q.top,
+    body.append(rect(q.x(50), q.top, q.x(80) - q.x(50), q.y(0.4) - q.top,
                      BAD, "none"))
     body.append(q.frame())
     body += q.yticks([0, 0.14, 0.4, 1.0], "current (A)", fmt="{:g}")
     body.append(polyline(q.pts([(0, 0.14), (t_ch, 0.14), (t_ch, 0.0),
                                 (100, 0.0)]), SRC_INK, 2.2))
-    body.append(polyline(q.pts([(0, 0.14), (t_ch, 0.14), (t_ch, 1.0),
-                                (100, 1.0)]), INK, 1.4, "6,3"))
     body.append(text(q.x(3), q.y(0.14) - 6, "charging at the 140 mA limit",
                      10))
-    body.append(text(q.x(t_ch) + 6, q.y(1.0) + 14, "switch limit then 1 A "
-                     "(TPS2378)", 10))
-    body.append(text(q.x(40), q.y(0.4) - 6, "PD draws less than 0.4 A "
-                     "(0.8 A, classes 7, 8) until 80 ms", 10, "middle",
+    body.append(text(q.x(49), q.y(0.7), "50–80 ms: PD draws less", 10,
+                     "end", fill=BAD_INK))
+    body.append(text(q.x(49), q.y(0.7) + 14, "than 0.4 A (0.8 A,", 10, "end",
+                     fill=BAD_INK))
+    body.append(text(q.x(49), q.y(0.7) + 28, "classes 7 and 8)", 10, "end",
                      fill=BAD_INK))
     for t, s in ((50, "PSE inrush ends: 50 ms at the earliest"),
                  (80, "80 ms: class power")):

@@ -32,7 +32,17 @@ digraph pd_states {
     l_up   [pos="4.35,2.15!", shape=plaintext, style="", width=1.1,
             height=0.45, fontsize=10, label="rises above\n10.1–14.5 V"];
     mark -> on   [label="rises past turn-on,\n30–42 V"];
-    mark -> idle [label="falls below a threshold\nin 2.81–6.9 V: count lost", style=dashed];
-    on   -> idle [label="falls below turn-off\n(at least 30 V)", style=dashed];
+    mark -> idle [style=dashed];
+    l_reset [pos="2.75,2.05!", shape=plaintext, style="", width=1.6,
+             height=0.45, fontsize=10, label="falls below a threshold\nin 2.81–6.9 V: count lost"];
+    on   -> idle [style=dashed];
+    idle -> on;
+    cls  -> on;
+    l_off [pos="0.45,2.15!", shape=plaintext, style="", width=1.2, height=0.6,
+           fontsize=10, label="down: rises\npast turn-on;\nup: falls below\nturn-off (≥ 30 V)"];
+    l_cls [pos="3.4,1.5!", shape=plaintext, style="", width=1.4, height=0.45,
+           fontsize=10, label="rises past turn-on\nfrom a class event"];
+    nt [pos="3.3,-0.1!", shape=plaintext, style="", width=6.0, height=0.45,
+        fontsize=10, label="Turn-on from idle or a class event: Type 1 or 2 equipment that skips\nclassification or powers up straight after its last class event."];
     note -> cls  [style=dotted, arrowhead=none];
 }

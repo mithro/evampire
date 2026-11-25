@@ -182,10 +182,12 @@ the detection signature, is part of the sequencer design
 Power after turn-on
 -------------------
 
-Once the voltage passes the turn-on voltage, the powered device may draw up
-to 0.4 A (0.8 A for classes 7 and 8) until 80 ms after turn-on, mostly to
-charge its input capacitor (:doc:`powered-device`). At 30 V to 57 V,
-0.4 A is 12 W to 23 W. From 50 ms after turn-on it also stays within
+Once the voltage passes the turn-on voltage, the power sourcing equipment
+supplies at least 0.4 A (0.8 A for classes 7 and 8) during its inrush
+period, which the powered device uses mostly to charge its input capacitor
+(:numref:`tab-poe-inrush`). From 50 ms until 80 ms after turn-on the
+powered device draws less than that current (:doc:`powered-device`). At
+30 V to 57 V, 0.4 A is 12 W to 23 W. From 50 ms after turn-on it also stays within
 13 W, or within the power of class 1 or 2 if it requested one of them
 (:ref:`poe-pd-inrush`). From 80 ms after turn-on it may draw the power of
 its assigned class, from 3.84 W for class 1 to 71.3 W for class 8

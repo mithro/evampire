@@ -314,8 +314,11 @@ these states and the thresholds between them.
          the next class event. From mark, a rise past the turn-on voltage,
          30 to 42 V, turns the isolation switch on, and a fall below a
          threshold between 2.81 and 6.9 V returns it to idle and loses the
-         count. From powered, a fall below the turn-off voltage of at
-         least 30 V returns it to idle. A note on the class event state
+         count. A rise past the turn-on voltage also turns the switch on
+         directly from idle or from a class event, for Type 1 or Type 2
+         equipment that skips classification or powers up straight after
+         its last class event. From powered, a fall below the turn-off
+         voltage of at least 30 V returns it to idle. A note on the class event state
          says that a first event longer than 75.5 to 87.5 ms identifies
          Type 3 or 4 power sourcing equipment, and that autoclass drops to
          signature 0 from that time.
@@ -386,10 +389,11 @@ Characteristics). :numref:`fig-poe-hysteresis` draws both as loops.
 Inrush current and start-up power
 ---------------------------------
 
-After turn-on the powered device charges its input capacitor. It draws less
-than 0.4 A for classes 1 to 6, or 0.8 A for classes 7 and 8, until 80 ms
-after turn-on (:clause:`Table 145-29 <145>`, items 4 and 7, and
-:clause:`145.3.8.3`).
+After turn-on the powered device charges its input capacitor, while the
+power sourcing equipment limits the current for at least 50 ms. From 50 ms
+until 80 ms after turn-on, the powered device draws less than 0.4 A for
+classes 1 to 6, or 0.8 A for classes 7 and 8 (:clause:`Table 145-29 <145>`,
+items 4 and 7, and :clause:`145.3.8.3`).
 
 From 50 ms after turn-on until 80 ms, the powered device's power limit is
 that of class 3, 13 W, or of its requested class if that is lower
@@ -447,10 +451,10 @@ example against the time limits.
    :name: fig-poe-inrush-pd
    :alt: Two graphs against time after turn-on, 0 to 100 ms. The capacitor
          voltage rises linearly from 0 to 57 V, charged at 41 ms. The
-         current is 140 mA, the charging limit, until 41 ms; the switch
-         limit then rises to 1 A. A shaded region shows that the powered
-         device draws less than 0.4 A, or 0.8 A for classes 7 and 8, until
-         80 ms. Dashed lines mark 50 ms, the earliest end of the power
+         current is 140 mA, the charging limit, until 41 ms, and then
+         falls as the load is still off. A shaded region from 50 to 80 ms
+         shows that the powered device must draw less than 0.4 A, or 0.8 A
+         for classes 7 and 8, in that window. Dashed lines mark 50 ms, the earliest end of the power
          sourcing equipment's inrush period, and 80 ms, from which class
          power is allowed.
    :align: center
