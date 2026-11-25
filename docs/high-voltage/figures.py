@@ -100,8 +100,8 @@ def resurf(ox, oy):
     b = [rect(ox + 75, oy + 70, 170, 14, NWELL)]
     b.append(text(ox + 160, oy + 50, "thin N layer, depleted from below",
                   size=12))
-    b.append(path(f"M{ox + 5},{oy + 145} L{ox + 75},{oy + 118} "
-                  f"L{ox + 235},{oy + 96} L{ox + 250},{oy + 70}"))
+    b.append(path(f"M{ox + 5},{oy + 145} Q{ox + 70},{oy + 145} {ox + 84},"
+                  f"{oy + 130} L{ox + 235},{oy + 96} L{ox + 250},{oy + 70}"))
     return b
 
 
@@ -112,8 +112,8 @@ def chain(ox, oy):
         b.append(rect(ox + 70 + i * 48, oy + 46, 40, 12, POLY))
     for i, s in enumerate(labels):
         b.append(text(ox + 114 + i * 48, oy + 40, s, size=11))
-    b.append(path(f"M{ox + 5},{oy + 150} L{ox + 75},{oy + 130} "
-                  f"L{ox + 255},{oy + 92} L{ox + 262},{oy + 70}"))
+    b.append(path(f"M{ox + 5},{oy + 150} Q{ox + 72},{oy + 150} {ox + 86},"
+                  f"{oy + 134} L{ox + 255},{oy + 92} L{ox + 262},{oy + 70}"))
     return b
 
 

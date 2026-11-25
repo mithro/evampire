@@ -19,7 +19,7 @@ can bias the rings. Each structure is drawn on its own page: the wells in
 :numref:`fig-hv-curved-edge` and :numref:`fig-hv-edge-remedies`, the
 grading structures in :numref:`fig-hv-grading`, devices on the oxide in
 :numref:`fig-hv-poly-on-fox`, the metal gate in :numref:`fig-hv-metal-gate`
-and substrate removal in :numref:`fig-hv-oxide-isolation`.
+and a thinned die in :numref:`fig-hv-oxide-isolation`.
 
 .. list-table:: Routes for holding a circuit above the substrate
    :name: tab-hv-routes
@@ -62,8 +62,8 @@ and substrate removal in :numref:`fig-hv-oxide-isolation`.
      - Insulator under a metal plate
      - Measured, drifting threshold
      - Charge in the dielectrics
-   * - Removing the substrate
-     - Insulating carrier and oxide
+   * - Thinning and cutting the die
+     - Dielectric in backside trenches and on the carrier
      - Extra steps after the foundry
      - Process cost and yield
    * - Second die
@@ -125,5 +125,5 @@ Open questions
 * Can the silicon under a metal gate be left without source and drain
   doping and without polysilicon, for a channel over active silicon instead
   of field oxide? (:doc:`metal-gate`)
-* Can wafers from a gf180mcu run be processed afterwards to remove the
-  substrate, and at what cost? (:doc:`dielectric`)
+* Can wafers from a gf180mcu run be thinned and cut into islands from the
+  back afterwards, and at what cost? (:doc:`dielectric`)

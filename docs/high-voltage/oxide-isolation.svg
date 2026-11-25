@@ -1,51 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="660" height="260" viewBox="0 0 660 260" font-family="sans-serif" font-size="13">
-<rect width="660" height="260" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="600" viewBox="0 0 480 600" font-family="sans-serif" font-size="13">
+<rect width="480" height="600" fill="white"/>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
-<text x="110" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Bulk silicon</text>
-<rect x="10" y="60" width="200" height="190" rx="0" fill="#dbe8f5" stroke="#222222"/>
-<path d="M25,60 L25,92 Q25,100 33,100 L87,100 Q95,100 95,92 L95,60" fill="#fbd9b5" stroke="#222222"/>
-<path d="M125,60 L125,92 Q125,100 133,100 L187,100 Q195,100 195,92 L195,60" fill="#fbd9b5" stroke="#222222"/>
-<text x="60" y="85" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0 V</text>
-<text x="160" y="85" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">50 V</text>
-<text x="110" y="180" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">one shared</text>
-<text x="110" y="196" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">P substrate, 0 V</text>
-<line x1="160" y1="104" x2="160" y2="150" stroke="#222222" stroke-width="1.5" marker-end="url(#arrow)"/>
-<text x="154" y="132" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">50 V to</text>
-<text x="154" y="148" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">substrate</text>
-<text x="110" y="236" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">junctions hold it</text>
-<text x="330" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Silicon on insulator</text>
-<rect x="238" y="60" width="56" height="36" rx="0" fill="#fbd9b5" stroke="#222222"/>
-<text x="266" y="83" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0 V</text>
-<rect x="302" y="60" width="56" height="36" rx="0" fill="#fbd9b5" stroke="#222222"/>
-<text x="330" y="83" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">25 V</text>
-<rect x="366" y="60" width="56" height="36" rx="0" fill="#fbd9b5" stroke="#222222"/>
-<text x="394" y="83" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">50 V</text>
-<rect x="230" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="294" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="358" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="422" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="230" y="96" width="200" height="16" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<text x="330" y="108" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">buried oxide</text>
-<rect x="230" y="112" width="200" height="138" rx="0" fill="#dbe8f5" stroke="#222222"/>
-<text x="330" y="170" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">handle wafer</text>
-<text x="330" y="236" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">the oxide holds it</text>
-<text x="330" y="52" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">islands, each at its own voltage</text>
-<text x="550" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Bulk die, substrate removed</text>
-<rect x="458" y="60" width="56" height="36" rx="0" fill="#fbd9b5" stroke="#222222"/>
-<text x="486" y="83" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0 V</text>
-<rect x="522" y="60" width="56" height="36" rx="0" fill="#fbd9b5" stroke="#222222"/>
-<text x="550" y="83" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">25 V</text>
-<rect x="586" y="60" width="56" height="36" rx="0" fill="#fbd9b5" stroke="#222222"/>
-<text x="614" y="83" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">50 V</text>
-<rect x="450" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="514" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="578" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="642" y="60" width="8" height="36" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<rect x="450" y="96" width="200" height="16" rx="0" fill="#e8e8e8" stroke="#222222"/>
-<text x="550" y="108" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">dielectric added after thinning</text>
-<rect x="450" y="112" width="200" height="80" rx="0" fill="#d9d2c3" stroke="#222222"/>
-<text x="550" y="146" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">insulating carrier,</text>
-<text x="550" y="162" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">where the substrate was</text>
-<text x="550" y="236" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">the oxide holds it</text>
-<text x="550" y="52" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">islands, each at its own voltage</text>
+<rect x="10" y="20" width="240" height="150" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<path d="M30,20 L30,56 Q30,66 40,66 L100,66 Q110,66 110,56 L110,20" fill="#fbd9b5" stroke="#222222"/>
+<path d="M150,20 L150,56 Q150,66 160,66 L220,66 Q230,66 230,56 L230,20" fill="#fbd9b5" stroke="#222222"/>
+<text x="70" y="48" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">0 V</text>
+<text x="190" y="48" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">50 V</text>
+<line x1="190" y1="70" x2="190" y2="120" stroke="#222222" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="130" y="156" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">P substrate, 0 V</text>
+<text x="268" y="42" text-anchor="start" font-size="16" font-weight="bold" fill="#222222">Bulk silicon</text>
+<text x="268" y="68" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">junctions to one</text>
+<text x="268" y="88" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">shared substrate</text>
+<text x="268" y="108" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">hold the voltage</text>
+<rect x="22" y="210" width="68" height="46" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="56" y="239.0" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">0 V</text>
+<rect x="102" y="210" width="68" height="46" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="136" y="239.0" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">25 V</text>
+<rect x="182" y="210" width="68" height="46" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="216" y="239.0" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">50 V</text>
+<rect x="8" y="210" width="14" height="46" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="88" y="210" width="14" height="46" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="168" y="210" width="14" height="46" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="248" y="210" width="14" height="46" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="8" y="256" width="244" height="20" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<text x="130" y="271" text-anchor="middle" font-size="14" font-weight="normal" fill="#222222">buried oxide</text>
+<rect x="8" y="276" width="244" height="84" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<text x="130" y="324" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">handle wafer</text>
+<text x="268" y="232" text-anchor="start" font-size="16" font-weight="bold" fill="#222222">Silicon on insulator</text>
+<text x="268" y="258" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">trenches and the</text>
+<text x="268" y="278" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">buried oxide hold</text>
+<text x="268" y="298" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">the voltage</text>
+<rect x="22" y="400" width="68" height="62" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="56" y="437.0" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">0 V</text>
+<rect x="102" y="400" width="68" height="62" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="136" y="437.0" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">25 V</text>
+<rect x="182" y="400" width="68" height="62" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="216" y="437.0" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">50 V</text>
+<rect x="8" y="400" width="14" height="62" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="8" y="400" width="14" height="12" rx="0" fill="#bdbdbd" stroke="#222222"/>
+<rect x="88" y="400" width="14" height="62" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="88" y="400" width="14" height="12" rx="0" fill="#bdbdbd" stroke="#222222"/>
+<rect x="168" y="400" width="14" height="62" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="168" y="400" width="14" height="12" rx="0" fill="#bdbdbd" stroke="#222222"/>
+<rect x="248" y="400" width="14" height="62" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="248" y="400" width="14" height="12" rx="0" fill="#bdbdbd" stroke="#222222"/>
+<rect x="8" y="462" width="244" height="18" rx="0" fill="#e8e8e8" stroke="#222222"/>
+<rect x="8" y="480" width="244" height="70" rx="0" fill="#d9d2c3" stroke="#222222"/>
+<text x="130" y="520" text-anchor="middle" font-size="15" font-weight="normal" fill="#222222">insulating carrier</text>
+<text x="268" y="422" text-anchor="start" font-size="16" font-weight="bold" fill="#222222">Thinned bulk die</text>
+<text x="268" y="448" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">trenches etched from</text>
+<text x="268" y="468" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">the back stop on the</text>
+<text x="268" y="488" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">shallow trench</text>
+<text x="268" y="508" text-anchor="start" font-size="15" font-weight="normal" fill="#222222">isolation (dark grey)</text>
+<text x="10" y="576" text-anchor="start" font-size="14" font-weight="normal" fill="#555555">the dielectric under the islands is added after thinning</text>
 </svg>

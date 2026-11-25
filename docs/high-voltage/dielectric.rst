@@ -135,12 +135,22 @@ transistors then share a high voltage with no junction to a common
 substrate, which is how the stacked silicon-on-insulator results on
 :ref:`poe-limits` work.
 
-gf180mcu is built on bulk silicon, so its wafers have no buried oxide. A
-bulk die can still be turned into islands after it is made, by removing the
-substrate from behind the circuits down to the oxide and supporting the die
-on an insulating carrier. That is wafer processing outside the foundry's
-flow, and its cost and yield are open questions.
-:numref:`fig-hv-oxide-isolation` compares the three structures.
+gf180mcu is built on bulk silicon, so its wafers have no buried oxide for
+a thinning step to stop on. The shallow trench isolation between devices
+is far shallower than the wells, so thinning the substrate from behind
+does not by itself leave separate islands. A bulk die could still be
+turned into islands after it is made, with steps added for the purpose.
+
+The die is thinned from the back to a few micrometres below the wells and
+supported on an insulating carrier. Trenches etched from the back, aligned
+to the circuits on the front, then cut the remaining silicon into islands.
+An etch that removes silicon much faster than oxide stops on the shallow
+trench isolation, and the trenches and the back are filled with
+dielectric. A deep trench or an etch-stop layer added from the front would
+serve the same purpose, but neither is in the gf180mcu flow. All of this is
+wafer processing outside the foundry's flow, and its cost and yield are
+open questions. :numref:`fig-hv-oxide-isolation` compares the three
+structures.
 
 .. figure:: oxide-isolation.svg
    :name: fig-hv-oxide-isolation
@@ -148,14 +158,13 @@ flow, and its cost and yield are open questions.
          0 V and 50 V in one shared P substrate at 0 V, so junctions hold the
          voltage. Silicon on insulator: three silicon islands at 0 V, 25 V
          and 50 V, separated by oxide-filled trenches, on a buried oxide over
-         a handle wafer; the oxide holds the voltage. Bulk die with its
-         substrate removed: the same islands, separated by trench oxide,
-         on a dielectric added after thinning, on an insulating carrier
-         where the substrate was; the oxide holds the voltage.
+         a handle wafer; the oxide holds the voltage. Thinned bulk die: the
+         same islands, separated by trenches etched from the back that
+         stop on the shallow trench isolation at the surface, on a
+         dielectric added after thinning, on an insulating carrier.
 
    Junction isolation in bulk silicon against oxide isolation, in silicon on
-   insulator and in a bulk die with its substrate removed, with example
-   voltages.
+   insulator and in a thinned bulk die, with example voltages.
 
 Two dies in one package
 -----------------------
