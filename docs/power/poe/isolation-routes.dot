@@ -1,0 +1,53 @@
+// The three routes that can provide the isolation barrier for the power
+// and the signals of one port. From isolation.rst.
+//
+// Fill colours: cable side #fbe5d6, evampire #dbe8f5, isolating parts
+// #fff2cc, connectors #ffffff. The dashed red line is the barrier; each
+// isolating part straddles it. Bold edges carry power and signals.
+// Fixed grid (positions in inches): one row per route.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+graph isolation_routes {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=1.3, height=0.6, fixedsize=true];
+    edge  [penwidth=2.5];
+
+    top [pos="3.6,4.35!", shape=point, width=0.01];
+    bot [pos="3.6,0.0!", shape=point, width=0.01];
+    top -- bot [style=dashed, color="#c00000", penwidth=1.5];
+    bl  [pos="3.95,4.35!", shape=plaintext, style="", width=0.6, height=0.2,
+         fontsize=10, fontcolor="#c00000", label="barrier"];
+
+    h1 [pos="0.75,3.95!", shape=plaintext, style="", width=1.6, height=0.2,
+        fontsize=11, label="1. External parts"];
+    r1 [pos="0.6,3.4!", label="RJ45", width=0.7, fillcolor="#ffffff"];
+    f1 [pos="2.0,3.4!", label="Cable-side\nfunctions:\nexternal parts", fillcolor="#fbe5d6", height=0.7];
+    i1 [pos="3.6,3.4!", label="HV capacitors,\nisolated converter,\ndigital isolators", fillcolor="#fff2cc",
+        width=1.5, height=0.7];
+    e1 [pos="5.4,3.4!", label="evampire", fillcolor="#dbe8f5"];
+    r1 -- f1; f1 -- i1; i1 -- e1;
+
+    h2 [pos="0.95,2.45!", shape=plaintext, style="", width=2.0, height=0.2,
+        fontsize=11, label="2. Second cable-side die"];
+    r2 [pos="0.6,1.9!", label="RJ45", width=0.7, fillcolor="#ffffff"];
+    f2 [pos="2.0,1.9!", label="Second die:\npowered-device or\nsourcing blocks", fillcolor="#fbe5d6", height=0.7];
+    i2 [pos="3.6,1.9!", label="Isolated links\nand converter", fillcolor="#fff2cc",
+        width=1.5];
+    e2 [pos="5.4,1.9!", label="evampire", fillcolor="#dbe8f5"];
+    r2 -- f2; f2 -- i2; i2 -- e2;
+
+    h3 [pos="1.05,0.95!", shape=plaintext, style="", width=2.2, height=0.2,
+        fontsize=11, label="3. Barrier on the evampire die"];
+    die [pos="3.75,0.4!", label="", width=4.4, height=0.75,
+         style="rounded,dashed", color="#1f4e79", fillcolor="none"];
+    dl [pos="6.4,0.4!", shape=plaintext, style="", width=0.8, height=0.4,
+        fontsize=10, fontcolor="#1f4e79", label="one die,\nshared\nsubstrate"];
+    r3 [pos="0.6,0.4!", label="RJ45", width=0.7, fillcolor="#ffffff"];
+    f3 [pos="2.2,0.4!", label="Cable-side\ncircuits", fillcolor="#fbe5d6", width=1.1, height=0.5];
+    i3 [pos="3.6,0.4!", label="Series MIM\nstack > 106", fillcolor="#fff2cc", width=1.1, height=0.5];
+    e3 [pos="5.0,0.4!", label="Core", fillcolor="#dbe8f5", width=1.0, height=0.5];
+    r3 -- f3; f3 -- i3; i3 -- e3;
+}
