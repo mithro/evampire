@@ -103,8 +103,8 @@ def class_events():
     for k in range(5):
         body.append(text(p.x(5 * k + 1.5), p.bottom + 16, f"{k + 1}", 11,
                          "middle"))
-    body.append(text(p.x(12), p.bottom + 32, "class event (marks between, "
-                     "at 0.25–4 mA)", 12, "middle"))
+    body.append(text(p.x(12), p.bottom + 32, "class event (marks between at "
+                     "0.25–4 mA; time not to scale)", 12, "middle"))
     # Where the power sourcing equipment may stop.
     stops = [(1, "3"), (2, "4"), (3, "4"), (4, "6"), (5, "8")]
     yb = p.bottom + 54

@@ -32,8 +32,8 @@ voltage.
          n-well to substrate 10 to 14 V; 10 V LDMOS rated 10 V with drain
          to source 13.2 to 14.5 V; vertical PNP 10 to 15 V; MIM 1 fF/µm²
          rated 20 V with breakdown 20 to 40 V; MIM 1.5 and 2 fF/µm² 10 to
-         24 V. Dashed lines mark the 57 V cable voltage and a 95 V clamp
-         limit, far above every bar.
+         24 V. Dashed lines mark the 57 V cable voltage and the 95 V
+         suppressor limit, far above every bar.
    :align: center
 
    Ratings and breakdown voltages of standard gf180mcu devices against the
@@ -133,8 +133,8 @@ of these limits sits.
          under a metal line at high voltage and 8 inter-metal dielectric.
    :align: center
 
-   Where each breakdown sits, with minimum values; open markers are not
-   documented. Schematic, not to scale; the LDMOS is not drawn.
+   Where each breakdown sits, with minimum values and open markers for the
+   undocumented ones, in a schematic not to scale without the LDMOS.
 
 Metal carries the current, within electromigration limits of 2.09 mA per µm
 of width for Metal 1 to the second-top layer and 16.52 mA per µm for the
@@ -219,12 +219,13 @@ stress or a structure must block it.
          a 150 ns time constant and 0.2 mJ, is marked clamp. A 1500 V surge
          through 40 Ω with a 462 µs time constant, 1.5 J in a clamp held at
          90 V, is marked clamp. The isolation test, 1500 V rms or 2250 V DC
-         for 60 s, is marked block. Continuous operation at 57 V while
+         for 60 s or ten 1500 V impulses, is marked block. Continuous operation at 57 V while
          powered is marked block.
    :align: center
 
-   The four stresses on the cable side by duration and voltage; continuous
-   operation is drawn at an arbitrary long duration.
+   The four stresses on the cable side by duration and voltage: the same
+   10/700 µs impulse is clamped as a surge but blocked in the isolation
+   test, and continuous operation is drawn at an arbitrary long duration.
 
 ESD during handling
 ~~~~~~~~~~~~~~~~~~~

@@ -35,5 +35,5 @@ digraph class_regulator {
     cls  -> amp  [style=dashed, label="sense"];
     amp  -> pass [label="gate"];
     n [pos="3.9,1.25!", shape=plaintext, style="", width=2.6, height=0.55,
-       fontsize=10, label="I = V_CLS / R_CLS = 39 mA\nregulator: up to 0.79 W\nresistor: 0.11 W"];
+       fontsize=10, label="I = V_CLS / R_CLS = 39 mA;\nat up to 44 mA: regulator\n0.79 W, resistor 0.11 W"];
 }

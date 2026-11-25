@@ -193,7 +193,7 @@ def class_bands():
 def thresholds():
     p = Plot(40, 40, 600, 150, (0, 60), (0, 3))
     body = []
-    for a, b in ((2.81, 6.9), (10.1, 14.5)):
+    for a, b in ((2.81, 6.9), (10.1, 14.5), (20.5, 30)):
         body.append(rect(p.x(a), p.y(3), p.x(b) - p.x(a), p.y(0) - p.y(3),
                          "#f2f2f2", GREY, 0.8, "3,2"))
         body.append(text(p.x((a + b) / 2), p.y(3) - 6, "gap", 10, "middle",
@@ -202,8 +202,8 @@ def thresholds():
                      11, "end", "bold"))
     rows = [(2.5, "detection", 2.7, 10.1, EVP), (2.5, "class", 14.5, 20.5,
                                                 OK),
-            (2.5, "turn on", 30, 42, POWER), (2.5, "operating", 42.5, 57,
-                                              FILL),
+            (2.5, "turn on", 30, 42, POWER), (2.5, "operating*", 42.5, 57,
+                                               FILL),
             (1.6, "mark", 6.9, 10.1, EVP), (1.6, "reset", 0, 2.81, BAD)]
     for r, name, a, b, fill in rows:
         yc = p.y(r)
@@ -225,7 +225,10 @@ def thresholds():
     body.append(text(p.left, p.bottom + 58, "↑ rising threshold (solid); "
                      "↓ falling threshold (dashed), lower by the hysteresis.",
                      11, fill=GREY))
-    return svg(680, int(p.bottom + 70), body, "Comparator thresholds")
+    body.append(text(p.left, p.bottom + 74, "*Operating range drawn for "
+                     "class 4; its lower edge is 39.9 V to 44.3 V by class.",
+                     11, fill=GREY))
+    return svg(680, int(p.bottom + 86), body, "Comparator thresholds")
 
 
 def hysteresis():

@@ -133,8 +133,9 @@ The regulator holds :math:`V_\text{CLS}` across the class resistor
          the CLS pin and through the 63.4 Ω class resistor to VSS. An
          amplifier senses the CLS pin, compares it with a 2.5 V reference
          on the TPS2378, and drives the gate of the pass device. A note
-         gives the current as V_CLS over R_CLS, 39 mA, the regulator's
-         dissipation as up to 0.79 W and the resistor's as 0.11 W.
+         gives the current as V_CLS over R_CLS, 39 mA, and, at up to
+         44 mA, the regulator's dissipation as 0.79 W and the resistor's as
+         0.11 W.
    :align: center
 
 For class signature 4, ignoring :math:`I_\text{bias}`, with the TPS2378
@@ -192,7 +193,9 @@ to 6.9 V gap.
          14.5 V. Below, the TPS2372 thresholds: mark reset at 3.9 V
          falling; class lower edge at 12.5 V rising and 10.9 V falling;
          class upper edge at 22 V rising and 21.2 V falling; turn on at
-         38.1 V rising and 32 V falling.
+         38.1 V rising and 32 V falling. A third shaded gap runs from 20.5
+         to 30 V. The operating range is drawn for class 4, from 42.5 V; its
+         lower edge is 39.9 to 44.3 V by class.
    :align: center
 
    The ranges at the powered device and the comparator thresholds of the

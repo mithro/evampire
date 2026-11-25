@@ -141,8 +141,12 @@ def ripple():
     for a, b, v in steps:
         body.append(rect(p.x(a), p.y(0.6), p.x(b) - p.x(a), p.y(v)
                          - p.y(0.6), BAD, "none"))
-        body.append(text(p.x(math.sqrt(a * b)), p.y(v) - 6, f"{v:g} Vpp",
-                         10, "middle"))
+        if v > 0.15:
+            body.append(text(p.x(math.sqrt(a * b)), p.y(v) - 6,
+                             f"{v:g} Vpp", 10, "middle"))
+        else:
+            body.append(text(p.x(b) - 4, p.y(v) + (30 if v == 0.1 else 16),
+                             f"{v:g} Vpp", 10, "end"))
     body.append(p.frame())
     pts = []
     for a, b, v in steps:
@@ -191,7 +195,7 @@ def ratings():
         body.append(line(p.left, p.y(n - k - rh), p.right,
                          p.y(n - k - rh), GREY, 0.4))
         k += rh
-    for v, s, col in ((57, "57 V cable", BAD_INK), (95, "95 V clamp",
+    for v, s, col in ((57, "57 V cable", BAD_INK), (95, "95 V suppressor limit",
                                                     SRC_INK)):
         body.append(line(p.x(v), p.top - 4, p.x(v), p.bottom, col, 1.6,
                          "6,3"))
@@ -217,8 +221,8 @@ def stresses():
               OK_INK, "clamp"),
              (462e-6, 1500, "surge: 1500 V, 40 Ω,", "τ 462 µs, 1.5 J in clamp",
               OK_INK, "clamp"),
-             (60, 2250, "isolation test: 1500 Vrms", "or 2250 V DC, 60 s",
-              BAD_INK, "block"),
+             (60, 2250, "isolation: 1500 Vrms or 2250 V DC",
+              "for 60 s, or ten 1500 V impulses", BAD_INK, "block"),
              (3e3, 57, "continuous: 57 V", "while powered", BAD_INK,
               "block")]
     for x, v, s1, s2, col, act in items:
@@ -227,6 +231,8 @@ def stresses():
         dx = -10 if x > 1 else 10
         if x == 462e-6:
             v = 600
+        if x == 60:
+            v = 6500
         body.append(text(p.x(x) + dx, p.y(v) - 4, s1, 10, anchor))
         body.append(text(p.x(x) + dx, p.y(v) + 10, s2, 10, anchor))
         body.append(text(p.x(x) + dx, p.y(v) + 24, act, 10, anchor, "bold",

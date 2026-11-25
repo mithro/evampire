@@ -167,7 +167,8 @@ class against the board's power for several inputs.
          and class 4 up to 26.4 W. The lower graph is for Power over
          Ethernet inputs of class 4, 6 and 8 with an efficiency of 0.85;
          with class 8 in, class 6 is offered up to 0.6 W and class 5 up to
-         15.6 W. Every curve steps down as the board takes more power.
+         15.6 W. Every curve steps down as the board takes more power, to
+         none when no class fits.
    :align: center
 
    The highest class offered against the board's own power, for USB Power
