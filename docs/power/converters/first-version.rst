@@ -518,7 +518,9 @@ class.
      - 71.3
      - 4
 
-Source: :clause:`145` as tabulated on :doc:`../poe/index`.
+Source: :clause:`145` as tabulated on :doc:`../poe/index`. The class
+assigned also depends on the power sourcing equipment
+(:ref:`poe-class-outcome`).
 
 The power left for the board while it starts is
 

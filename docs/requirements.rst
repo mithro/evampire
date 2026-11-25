@@ -243,8 +243,9 @@ Software makes every power decision, within hardware limits
 * Software on the RISC-V processor makes every power decision once it is
   running. It carries out the negotiation on every port, keeps the power
   budget, and switches power on and off on each port. The negotiation is
-  Power over Ethernet detection and classification in both roles, and USB
-  Power Delivery.
+  Power over Ethernet detection and classification in both roles, both
+  Physical Layer and Data Link Layer classification
+  (:ref:`req-poe-classification`), and USB Power Delivery.
 * The only exception is the start-up sequencer described below, which works
   before the processor is running.
 * evampire has built-in power monitoring. It measures the voltage and
@@ -263,6 +264,53 @@ Software makes every power decision, within hardware limits
 * Built-in hardware enforces these limits. It switches a port off when a
   fault happens faster than software can react, for example a short
   circuit, and then reports the fault to the software.
+
+.. _req-poe-classification:
+
+Power over Ethernet uses both classification methods in both roles
+------------------------------------------------------------------
+
+Power sourcing equipment in the field relies on either
+:term:`Physical Layer classification` or
+:term:`Data Link Layer classification` over :term:`LLDP`, so evampire
+implements both on every Ethernet port, in either role.
+:doc:`power/poe/classification` explains the methods and the power each
+combination gives.
+
+As a :term:`powered device`, evampire:
+
+* shows the class signatures of its requested class in every class event:
+  two class events from Type 2 power sourcing equipment, and up to five
+  from Type 3 or Type 4 (:clause:`33.3.5`, :clause:`145.3.6`);
+* takes part in Data Link Layer classification over LLDP once the link is
+  up (:clause:`145.5`), which Type 2 powered devices and powered devices
+  requesting class 4 or higher must do;
+* keeps the board within the power it has been given until LLDP raises
+  the allocation, including after one class event from Type 2 power
+  sourcing equipment and after demotion (:ref:`poe-class-outcome`);
+* keeps within the start-up limits before classification is complete and
+  in the first 80 ms after turn-on (:ref:`poe-pd-inrush`);
+* asks over LLDP for up to its requested class when it has been given
+  less.
+
+As :term:`power sourcing equipment`, evampire:
+
+* runs multiple-event Physical Layer classification, issuing as many class
+  events as the requested class needs and the power budget allows: up to
+  two as Type 2, and up to four or five as Type 3 or Type 4
+  (:clause:`33.2.6.2`, :clause:`145.2.8`). A powered device without LLDP
+  then receives the full power of its assigned class;
+* never relies on one class event and LLDP to grant class 4, although
+  :clause:`33.2.6.2` allows it for Type 2;
+* answers LLDP power requests, allocating power in steps of 0.1 W within
+  the power budget (:clause:`145.5`), which the standard leaves optional
+  for power sourcing equipment;
+* raises the allocation of a demoted powered device over LLDP, up to its
+  requested class, when the budget allows.
+
+The start-up sequencer does the Physical Layer part as a powered device
+before the processor runs (:ref:`req-power-control`). The software does
+every other part.
 
 .. _req-converters:
 

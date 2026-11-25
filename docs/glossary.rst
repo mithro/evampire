@@ -72,9 +72,10 @@ gives a short description and a link to the full explanation.
       :doc:`ethernet/magnetics/standard-port`).
 
    Class
-      In Power over Ethernet, the power level that a powered device asks for
-      during classification. Each class has a maximum power at the powered
-      device (:clause:`145`, see :doc:`power/poe/index`).
+      In Power over Ethernet, a power level. The powered device requests a
+      class during classification and the power sourcing equipment assigns
+      one, which may be lower. Each class has a maximum power at the
+      powered device (:clause:`145`, see :doc:`power/poe/types-classes`).
 
    Class event
       A step of Power over Ethernet classification in which the power
@@ -115,6 +116,11 @@ gives a short description and a link to the full explanation.
       needs only a few bytes of storage on each path (see
       :wikipedia:`Cut-through switching <Cut-through_switching>` and
       :ref:`the forwarding requirements <req-forwarding>`).
+
+   Data Link Layer classification
+      Changing the power allocation of a powered device after the link is
+      up, in steps of 0.1 W, by exchanging LLDP frames (:clause:`145.5`,
+      see :doc:`power/poe/lldp` and :doc:`power/poe/classification`).
 
    Detection signature
       The resistance of about 25 kΩ that a powered device shows at 2.7 V to
@@ -216,8 +222,8 @@ gives a short description and a link to the full explanation.
    Link Layer Discovery Protocol
       The protocol that two directly connected Ethernet devices use to tell
       each other about themselves (:std:`IEEE 802.1AB <802.1AB>`). Power
-      over Ethernet devices use it to negotiate power after classification
-      (:clause:`79`, see
+      over Ethernet devices use it for Data Link Layer classification, which
+      changes the power after the link is up (:clause:`79`, see
       :wikipedia:`Link Layer Discovery Protocol
       <Link_Layer_Discovery_Protocol>`).
 
@@ -267,6 +273,11 @@ gives a short description and a link to the full explanation.
       (:clause:`4`). In evampire the forwarding logic and the processor
       share this role.
 
+   Mutual identification
+      The part of Power over Ethernet classification in which power
+      sourcing equipment and a powered device each learn the type of the
+      other (:clause:`145.2.8`, see :doc:`power/poe/classification`).
+
    Pair set
       Two pairs of an Ethernet cable, one positive and one negative, that
       carry Power over Ethernet current out and back (see
@@ -286,10 +297,24 @@ gives a short description and a link to the full explanation.
       rising edge of a 2.5 MHz or 25 MHz clock (:clause:`22`, see
       :doc:`ethernet/rgmii/signals`).
 
+   Physical Layer classification
+      Power over Ethernet classification by class events before the
+      operating voltage is switched on. The number of class events and the
+      class signatures decide the assigned class (:clause:`145.2.8`, see
+      :doc:`power/poe/sequence` and :doc:`power/poe/classification`).
+
    Power budget
       The power that the processor may offer on the output ports: the power
       granted on the input port, minus the board's own consumption and the
       conversion losses (see :ref:`the power budget <power-budget>`).
+
+   Power demotion
+      Assigning a powered device a lower class than it requested, by
+      issuing fewer class events, when power sourcing equipment cannot
+      supply the requested class. The name comes from the Ethernet
+      Alliance; the standard describes it without naming it
+      (:clause:`145.2.8.1`, :clause:`Table 145-11 <145>`, see
+      :ref:`poe-demotion`).
 
    Power over Ethernet
    PoE

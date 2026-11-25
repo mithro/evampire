@@ -24,8 +24,8 @@ processor makes every power decision once it is running
    What power sourcing equipment must do, supplying power sequenced in
    software, and monitoring and limiting power.
 :doc:`allocation`
-   Negotiating over LLDP, choosing the class to offer, sharing the budget,
-   and ports that take either role.
+   Negotiating over LLDP, the two classification methods, choosing the
+   class to offer, sharing the budget, and ports that take either role.
 :doc:`high-voltage`
    The voltages the process can hold, isolation from the cable, and the
    on-chip and external options for each function.

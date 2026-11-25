@@ -12,8 +12,10 @@ Software runs the sequence; hardware does the fast parts
 
 Software on evampire's processor runs the steps of :doc:`power-sourcing`:
 it sets each test voltage or current, reads the measurements, decides, and
-switches the power on (:ref:`req-power-control`). No external power
-sourcing equipment controller is needed. The hardware provides the
+switches the power on (:ref:`req-power-control`). Once the link is up it
+also answers LLDP power requests (:doc:`lldp`,
+:ref:`req-poe-classification`). No external power sourcing equipment
+controller is needed. The hardware provides the
 measurements, the current limit and a fast switch-off that does not wait
 for software (:doc:`monitoring`). :numref:`fig-poe-pse-channel` shows one
 channel.
