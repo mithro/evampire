@@ -35,14 +35,16 @@
 <text x="14.0" y="275.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 275.0)">current (mA)</text>
 <polyline points="60.0,170.0 125.6,170.0 387.8,41.4 650.0,41.4" fill="none" stroke="#c55a11" stroke-width="2.2"/>
 <line x1="60.0" y1="232.8" x2="650.0" y2="232.8" stroke="#000000" stroke-width="1.2" stroke-dasharray="6,3"/>
-<polyline points="60.0,340.0 125.6,340.0 125.6,291.2 387.8,291.2 387.8,258.8 518.9,258.8 518.9,318.2 650.0,318.2" fill="none" stroke="#c55a11" stroke-width="2.2"/>
+<polyline points="125.6,291.2 387.8,291.2" fill="none" stroke="#c55a11" stroke-width="1.2" stroke-dasharray="3,3"/>
+<polyline points="60.0,340.0 125.6,340.0 125.6,258.8 387.8,258.8 518.9,258.8 518.9,318.2 650.0,318.2" fill="none" stroke="#c55a11" stroke-width="2.2"/>
 <line x1="387.8" y1="20.0" x2="387.8" y2="170.0" stroke="#000000" stroke-width="0.8" stroke-dasharray="4,3"/>
 <line x1="387.8" y1="210.0" x2="387.8" y2="340.0" stroke="#000000" stroke-width="0.8" stroke-dasharray="4,3"/>
 <text x="393.8" y="59.4" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">3.0 V, the lowest valid VCONN,</text>
 <text x="393.8" y="75.4" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">by tVCONNON = 2 ms</text>
-<text x="138.7" y="285.2" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">15 mA charges 10 µF</text>
+<text x="138.7" y="252.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">up to 25 mA in the ramp</text>
+<text x="138.7" y="307.2" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">15 mA charges 10 µF; the rest is iRaDetect</text>
 <text x="66.6" y="227.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">33 mA: the 100 mW the source must be able to supply</text>
-<text x="394.3" y="252.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">cable: at most 75 mW</text>
+<text x="394.3" y="252.8" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">then at most 75 mW</text>
 <text x="646.0" y="312.2" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="normal" fill="#000000">then 20 mW</text>
 <line x1="125.6" y1="340.0" x2="125.6" y2="345.0" stroke="#000000" stroke-width="1.0"/>
 <text x="125.6" y="358.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
