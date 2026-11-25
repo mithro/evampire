@@ -1,0 +1,26 @@
+// A switch that blocks 57 V ahead of the low-voltage signature, mark-load
+// and class circuits of an on-chip powered device. From hv-options.rst.
+//
+// Fill colours: high-voltage part #fff2cc with a red outline, low-voltage
+// circuits #dbe8f5. Bold edges carry power. Fixed grid (inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph sig_blocking {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=10, width=1.7, height=0.55, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.6];
+
+    vin  [pos="0.9,1.3!", label="Bridge output\n0 to 57 V", fillcolor="#ffffff"];
+    blk  [pos="3.0,1.3!", label="Switch or structure\nblocking 57 V", fillcolor="#fff2cc",
+          color="#c00000", penwidth=1.6];
+    lv   [pos="5.4,1.3!", label="Signature, mark load,\nclass current ≤ 44 mA\n(work below about 22 V)",
+          fillcolor="#dbe8f5", width=2.0, height=0.7];
+    cmp  [pos="3.0,0.25!", label="Divider and comparator", fillcolor="#dbe8f5"];
+    vin -> blk [penwidth=2.2];
+    blk -> lv  [penwidth=2.2];
+    vin -> cmp [style=dashed, label="sense"];
+    cmp -> blk [style=dashed, label="open above\nthe class range"];
+}
