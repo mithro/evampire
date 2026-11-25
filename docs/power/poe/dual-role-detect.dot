@@ -24,7 +24,7 @@ graph dual_role_detect {
     c1 [pos="1.7,2.0!", shape=point, width=0.08];
     s1 [pos="0.8,1.1!", label="Own signature\n24.9 kΩ"];
     d1 [pos="2.6,1.1!", label="Own idle sourcing\nload 80–190 kΩ"];
-    o1 [pos="1.7,0.2!", label="seen: 19.0–22.0 kΩ,\nbelow 23.7 kΩ: fails", width=2.2,
+    o1 [pos="1.7,0.2!", label="seen: 19.0–22.0 kΩ, below the\nPD's 23.7 kΩ: may fail", width=2.2,
         fillcolor="#f4cccc"];
     r1 -- c1 [style=dashed, label="  measures"];
     c1 -- s1; c1 -- d1;
