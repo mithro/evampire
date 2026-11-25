@@ -37,9 +37,9 @@ difference. :numref:`fig-magnetics-cm-dm` shows the two parts.
 Gigabit Ethernet, :term:`1000BASE-T`, sends data on all four pairs in both
 directions at the same time (:clause:`40`). 10 Mbit/s Ethernet (10BASE-T,
 :clause:`14`) and 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) use two
-pairs, one in each direction. Whether an integrated transceiver also
-supports these two speeds is open (:ref:`requirements-open-questions`), so
-their values are given only where they differ.
+pairs, one in each direction. Every port supports all three speeds, with an
+integrated or an external transceiver (:ref:`req-transceivers`). The values
+for the two slower speeds are given where they differ from gigabit.
 :numref:`fig-magnetics-pair-usage` compares the two.
 
 .. graphviz:: pair-usage.dot
