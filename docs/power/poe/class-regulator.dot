@@ -1,0 +1,39 @@
+// The class current regulator of a powered device: an amplifier and pass
+// device hold V_CLS across the class resistor, so the resistor sets the
+// current. Values from powered-device.rst and pd-controller.rst (TPS2378
+// and LT4275 as reference examples).
+//
+// Fill colours: power circuits #fff2cc, external parts #ffffff. Bold
+// edges carry the class current. Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph class_regulator {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=11, width=1.7, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    vdd  [pos="1.2,3.4!", label="VDD: 14.5–20.5 V\nduring a class event", width=1.9,
+          fillcolor="#ffffff"];
+    pass [pos="1.2,2.3!", label="Pass device\ndrops up to 18 V", width=1.6];
+    amp  [pos="3.6,2.3!", label="Amplifier", width=1.2];
+    ref  [pos="3.6,3.4!", label="V_CLS reference\n2.5 V (TPS2378)", width=1.6];
+    cls  [pos="1.2,1.2!", label="CLS pin", width=0.9, height=0.4];
+    rcls [pos="1.2,0.35!", label="R_CLS 63.4 Ω", width=1.3, height=0.45,
+          fillcolor="#ffffff"];
+    vss  [pos="3.6,0.35!", label="VSS", width=0.8, height=0.4,
+          fillcolor="#ffffff"];
+
+    vdd  -> pass [penwidth=2.4, label=" I_class"];
+    pass -> cls  [penwidth=2.4];
+    cls  -> rcls [penwidth=2.4];
+    rcls -> vss  [penwidth=2.4];
+    ref  -> amp  [label=" set"];
+    cls  -> amp  [style=dashed, label="sense"];
+    amp  -> pass [label="gate"];
+    n [pos="3.9,1.25!", shape=plaintext, style="", width=2.6, height=0.55,
+       fontsize=10, label="I = V_CLS / R_CLS = 39 mA\nregulator: up to 0.79 W\nresistor: 0.11 W"];
+}
