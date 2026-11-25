@@ -1,8 +1,9 @@
 High voltage and isolation
 ==========================
 
-These pages cover the voltages a cable-side circuit must hold and the choice
-of what to build on the chip.
+A cable-side circuit must hold up to 57 V plus surges, and each function
+that handles the cable voltage can be built on the chip or from external
+parts.
 
 :doc:`hv-limits`
    The voltages the gf180mcu process can hold, and the four kinds of

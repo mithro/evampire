@@ -3,9 +3,9 @@
 What power sourcing equipment must do
 =====================================
 
-This page lists what the end that supplies power, port B on a
-first-version board, must do at each step of the sequence on
-:doc:`sequence`, and how accurately it must measure.
+The end that supplies power, port B on a first-version board, has a task
+at each step of the sequence on :doc:`sequence`, and the standard's limits
+set how accurately it must measure.
 
 Power only a valid detection signature
 --------------------------------------

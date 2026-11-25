@@ -3,9 +3,9 @@
 Sharing the budget between ports
 ================================
 
-This page describes how the software shares the power budget when a power
-sourcing equipment port supplies power at the same time as other output
-ports, and how it moves power between them safely.
+When a power sourcing equipment port supplies power at the same time as
+other output ports, the software shares the power budget between them and
+moves power between them safely.
 
 The offers on all outputs add up to the budget
 ----------------------------------------------

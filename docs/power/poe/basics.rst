@@ -3,8 +3,9 @@
 The two ends, the pairs and the voltages
 ========================================
 
-This page names the two ends of a powered Ethernet cable, shows which pairs
-of the cable carry the power, and gives the voltage range at each end.
+One end of a powered Ethernet cable supplies the power and the other
+receives it. The power travels on one or both pair sets of the cable, within
+a voltage range that the standard sets for each end.
 
 One end supplies the power and the other receives it
 ----------------------------------------------------

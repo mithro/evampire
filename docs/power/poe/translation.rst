@@ -3,9 +3,9 @@
 Choosing the class to offer
 ===========================
 
-This page shows how the software chooses the class that a power sourcing
-equipment port offers, from the power on the input port, with worked
-examples for USB Power Delivery inputs and Power over Ethernet inputs.
+The software chooses the class that a power sourcing equipment port
+offers from the power on the input port. Worked examples cover USB Power
+Delivery inputs and Power over Ethernet inputs.
 
 The input power can never be switched straight through
 ------------------------------------------------------

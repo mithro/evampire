@@ -1,8 +1,8 @@
 Power over Ethernet fundamentals
 ================================
 
-These pages explain how an Ethernet cable carries power and the steps before
-the power is switched on.
+An Ethernet cable carries power on its pairs only after the two ends have
+completed a sequence of steps that starts when the cable is plugged in.
 
 :doc:`basics`
    The two ends of the cable, which pairs carry the power, and the voltages.

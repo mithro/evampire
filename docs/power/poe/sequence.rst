@@ -3,9 +3,9 @@
 The power-up sequence
 =====================
 
-This page describes the steps that power sourcing equipment runs, from the
-moment a cable is plugged in until full power flows, and what keeps the
-power on afterwards.
+Power sourcing equipment runs a sequence of steps from the moment a cable
+is plugged in until full power flows, and a signature from the powered
+device keeps the power on afterwards.
 
 Each step uses its own voltage range
 ------------------------------------

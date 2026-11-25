@@ -3,10 +3,10 @@
 Physical Layer and Data Link Layer classification
 =================================================
 
-This page describes the two ways in which a powered device obtains its
-power, which of them each type must implement, the power that each
-combination of the two ends gives, and how evampire uses both in each of
-its roles.
+A powered device obtains its power through two classification methods.
+Each type must implement a set of them, each combination of the two ends
+gives a different power, and evampire uses both methods in each of its
+roles.
 
 There are two classification methods
 ------------------------------------

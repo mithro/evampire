@@ -6,10 +6,9 @@ A board built around evampire moves power between its Ethernet ports and its
 (:wikipedia:`Power over Ethernet <Power_over_Ethernet>`) and supply power to
 a USB device, or be powered from a USB Type-C charger
 (:wikipedia:`USB Power Delivery <USB_Power_Delivery>`) and supply power to
-an Ethernet device. This page describes the roles, the operating modes, the
-power budget and the board configurations.
+an Ethernet device.
 
-The pages in this section explain each part of the power path:
+The power path has three parts:
 
 :doc:`poe/index`
    The circuits that take part in Power over Ethernet detection and

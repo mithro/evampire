@@ -1,10 +1,6 @@
 Power over Ethernet
 ===================
 
-These pages explain how an Ethernet cable carries power, the signals the two
-ends exchange before the power is switched on, and what evampire needs at
-each end of the cable.
-
 :term:`Power over Ethernet` puts a DC voltage of up to 57 V on the pairs of
 an Ethernet cable, alongside the data. The end that supplies the power
 checks that a compatible device is connected, and learns how much power it
@@ -30,7 +26,7 @@ processor makes every power decision once it is running
    The voltages the process can hold, isolation from the cable, and the
    on-chip and external options for each function.
 :doc:`references`
-   The datasheets, papers and other sources cited on these pages.
+   The datasheets, papers and other sources cited for Power over Ethernet.
 
 .. toctree::
    :hidden:

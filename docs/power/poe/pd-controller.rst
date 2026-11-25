@@ -3,9 +3,9 @@
 Inside a powered-device controller
 ==================================
 
-This page describes the circuit blocks that carry out the powered-device
-steps of :doc:`powered-device`, using commercial controller chips as
-reference examples.
+A powered-device controller is a set of circuit blocks that carry out the
+steps of :doc:`powered-device`. Commercial controller chips give reference
+examples of each block.
 
 The blocks share one reference node
 -----------------------------------

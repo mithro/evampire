@@ -3,9 +3,9 @@
 Negotiating power over LLDP
 ===========================
 
-This page describes how the two ends of a cable change the power
-allocation after the Ethernet link is up, and how evampire takes part as a
-powered device and as power sourcing equipment.
+After the Ethernet link is up, the two ends of a cable can change the
+power allocation by exchanging LLDP frames. evampire takes part in this
+exchange both as a powered device and as power sourcing equipment.
 
 Classification sets the first allocation
 ----------------------------------------

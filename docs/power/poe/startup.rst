@@ -3,9 +3,9 @@
 Start-up without the processor
 ==============================
 
-This page gives the power that reaches a board at each step of the
-sequence when the board is powered only from its powered-device port and
-starts from nothing.
+A board powered only from its powered-device port starts from nothing,
+and at each step of the sequence the cable delivers only a limited power
+to it.
 
 A built-in sequencer answers the first steps
 --------------------------------------------

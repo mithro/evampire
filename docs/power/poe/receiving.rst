@@ -1,7 +1,7 @@
 Receiving power
 ===============
 
-These pages cover the end of the cable that receives power, the powered device.
+The powered device is the end of the cable that receives power.
 
 :doc:`powered-device`
    What the end that receives power must do at each step.
