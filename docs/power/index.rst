@@ -28,8 +28,8 @@ part in this exchange on every port, in whichever role that port has.
 
 .. _power-roles:
 
-Each standard names the two ends of a powered cable
----------------------------------------------------
+Power roles
+-----------
 
 Each standard has its own names for the two ends of a cable, listed in
 :numref:`tab-power-roles`.
@@ -61,8 +61,10 @@ connected (see :doc:`poe/index`).
 
 .. _power-modes:
 
-The board works in three modes
-------------------------------
+Operating modes
+---------------
+
+The board works in three modes:
 
 Ethernet in, USB out
    An Ethernet port receives power as a powered device. The USB Type-C port
@@ -85,8 +87,8 @@ role swap, the processor lowers the power offered on the outputs first.
 
 .. _power-translation:
 
-The software translates power between the standards
----------------------------------------------------
+Power translation
+-----------------
 
 The two standards describe power differently. Power over Ethernet grants
 power in fixed steps called :term:`classes <class>`, each with a maximum
@@ -131,8 +133,8 @@ new input.
 
 .. _power-sharing:
 
-The software shares the budget between output ports
----------------------------------------------------
+Budget sharing
+--------------
 
 On a board with more than one port that can supply power (see
 :numref:`tab-power-board-configs`), several ports can supply power at the
@@ -164,8 +166,8 @@ reduced safely while a device is using it.
 
 .. _power-board-configs:
 
-The board comes in two configurations
--------------------------------------
+Board configurations
+--------------------
 
 :numref:`tab-power-board-configs` describes the two board configurations,
 the first version and the full design.
@@ -206,8 +208,8 @@ makes the isolation without coupling transformers, are listed in
 
 .. _power-flow:
 
-All power passes through an internal power bus
-----------------------------------------------
+Internal power bus
+------------------
 
 :numref:`fig-power-flow` shows how power flows on the first-version board.
 All power passes through an internal power bus on the board.

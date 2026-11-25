@@ -11,8 +11,8 @@ configurations, the first version and the full design, are described in
 
 .. _req-transceivers:
 
-Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
--------------------------------------------------------------------------------
+Ethernet transceivers
+---------------------
 
 * Each external port uses an :term:`Ethernet transceiver`. The transceiver
   is an external chip or is integrated on evampire, depending on the board
@@ -38,8 +38,8 @@ Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
 
 .. _req-cable:
 
-Each port connects to its RJ45 socket with or without transformers
-------------------------------------------------------------------
+Connection to the cable
+-----------------------
 
 * Each Ethernet port connects to its :term:`RJ45` socket either through
   coupling transformers, the :term:`magnetics`, or without them, depending
@@ -52,8 +52,8 @@ Each port connects to its RJ45 socket with or without transformers
 
 .. _req-forwarding:
 
-Ports A and B forward every frame to each other, except LLDP frames
--------------------------------------------------------------------
+Frame forwarding
+----------------
 
 * Every :term:`frame` received on port A is transmitted on port B, and every
   frame received on port B is transmitted on port A, except the frames
@@ -113,8 +113,8 @@ which is longer than a 9000-byte jumbo frame.
 
 .. _req-processor-delivery:
 
-The processor receives the frames that match its address filter
----------------------------------------------------------------
+Frame delivery to the processor
+-------------------------------
 
 * Each received frame's destination :term:`MAC address` is compared against
   a programmable address and mask pair. A frame matches when every bit set
@@ -127,8 +127,8 @@ The processor receives the frames that match its address filter
 
 .. _req-processor-transmit:
 
-The processor sends frames in the gaps between forwarded frames
----------------------------------------------------------------
+Frame transmission by the processor
+-----------------------------------
 
 * The processor writes a frame into a transmit buffer and requests that it
   be sent out of port A, port B or both.
@@ -138,8 +138,8 @@ The processor sends frames in the gaps between forwarded frames
 
 .. _req-memory:
 
-Only the processor's frames are stored whole
---------------------------------------------
+Frame storage
+-------------
 
 * The chip does not store full frames on the forwarding path.
 * Frame storage for the processor holds one or two frames of up to
@@ -155,8 +155,8 @@ Only the processor's frames are stored whole
 
 .. _req-processor:
 
-A small RISC-V processor handles low-rate traffic and control
--------------------------------------------------------------
+RISC-V processor
+----------------
 
 * The processor is a :wikipedia:`RISC-V` core with on-chip program and data
   memory (:std:`RISC-V ISA <riscv-unpriv>`).
@@ -171,8 +171,8 @@ A small RISC-V processor handles low-rate traffic and control
 
 .. _req-power-bridging:
 
-Power moves between Ethernet and USB Type-C in either direction
----------------------------------------------------------------
+Power bridging
+--------------
 
 A board built around evampire takes its power from an Ethernet cable
 (:term:`Power over Ethernet`, see :doc:`power/poe/index`) or from a
@@ -237,8 +237,8 @@ Ethernet in, Ethernet out
 
 .. _req-power-control:
 
-Software makes every power decision, within hardware limits
------------------------------------------------------------
+Power control
+-------------
 
 * Software on the RISC-V processor makes every power decision once it is
   running. It carries out the negotiation on every port, keeps the power
@@ -267,8 +267,8 @@ Software makes every power decision, within hardware limits
 
 .. _req-poe-classification:
 
-Power over Ethernet uses both classification methods in both roles
-------------------------------------------------------------------
+Power over Ethernet classification
+----------------------------------
 
 Power sourcing equipment in the field relies on either
 :term:`Physical Layer classification` or
@@ -314,8 +314,8 @@ every other part.
 
 .. _req-converters:
 
-evampire includes the functions of three voltage converters
------------------------------------------------------------
+Voltage converters
+------------------
 
 * evampire includes the functions of the three
   :wikipedia:`switching voltage converters <Switched-mode_power_supply>` in
@@ -330,8 +330,8 @@ evampire includes the functions of three voltage converters
 
 .. _req-usb-serial:
 
-Each USB Type-C port carries a USB serial port
-----------------------------------------------
+USB serial port
+---------------
 
 * Each USB Type-C port can also carry a :std:`USB 2.0 <usb2>` full-speed
   (12 Mbit/s) data connection on its D+ and D− wires.
@@ -345,8 +345,8 @@ Each USB Type-C port carries a USB serial port
 
 .. _req-process:
 
-evampire is built on gf180mcu, with custom devices where a function needs them
--------------------------------------------------------------------------------
+Process and custom devices
+--------------------------
 
 * The chip targets the `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_
   process through `wafer.space <https://wafer.space/>`_.

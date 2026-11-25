@@ -14,10 +14,11 @@ This page introduces what evampire does: how it passes Ethernet traffic
 between its ports, what its processor does with that traffic, and how it
 moves power between Ethernet and USB Type-C.
 
-The hub has two external ports and one internal port
-----------------------------------------------------
+Ports
+-----
 
-The external ports are called port A and port B.
+The hub has two external ports, called port A and port B, and one
+internal port.
 
 Port A and port B
    Each external port connects to an Ethernet cable through an
@@ -29,8 +30,8 @@ Port A and port B
 The internal port
    The internal port connects to the processor inside the chip.
 
-Traffic passes between port A and port B as it arrives
-------------------------------------------------------
+Cut-through forwarding
+----------------------
 
 Ethernet carries data in :term:`frames <frame>`, messages that are
 normally up to 1522 bytes long and each start with the address of the device
@@ -46,8 +47,8 @@ bytes of storage on each path, not a whole frame.
 
 .. _overview-processor-frames:
 
-The processor receives selected frames and sends its own
---------------------------------------------------------
+Processor traffic
+-----------------
 
 The processor sees a copy of the frames, from either port, whose destination
 address matches a filter that it sets. It can also send frames of its own, which evampire
@@ -55,17 +56,18 @@ sends in the gaps between the frames it forwards. The processor's network
 traffic is below 1 Mbit/s, so it does not need to keep up with gigabit
 traffic.
 
-The processor moves power between Ethernet and USB Type-C
----------------------------------------------------------
+Power management
+----------------
 
-The processor also manages power. A board built around evampire can be
+The processor also manages power, moving it between Ethernet and USB
+Type-C. A board built around evampire can be
 powered from an Ethernet cable and supply power over USB Type-C, or be
 powered from USB Type-C and supply power over an Ethernet cable. The
 processor negotiates the role and the power level on each port (see
 :doc:`power/index`).
 
-The main blocks of evampire
----------------------------
+Main blocks
+-----------
 
 :numref:`fig-overview` shows the main blocks of evampire and how data and
 power flow between them.
@@ -123,8 +125,8 @@ The labels use two abbreviations. USB Power Delivery messages on the
 :term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the
 extended power range of USB Power Delivery.
 
-What this documentation covers
-------------------------------
+Scope of this documentation
+---------------------------
 
 This documentation describes what the chip does and explains the Ethernet
 and power-delivery standards that evampire implements. It is written for
