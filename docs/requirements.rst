@@ -30,7 +30,9 @@ Every port runs 10, 100 or 1000 Mbit/s Ethernet through an Ethernet transceiver
   :wikipedia:`automatic speed negotiation <Autonegotiation>`.
 * The :term:`forwarding logic` connects to an integrated transceiver through
   the same one-byte-per-clock interface that it uses with an RGMII
-  interface.
+  interface. A 1000BASE-T slave transmits on the clock it recovers from the
+  cable, so its transmit bytes cross clock domains as well as its receive
+  bytes (:ref:`phy-int-interface`).
 * Every port supports gigabit Ethernet (1000BASE-T, 1000 Mbit/s over four
   pairs, :clause:`40`), 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) and
   10 Mbit/s Ethernet (10BASE-T, :clause:`14`) in both board configurations.

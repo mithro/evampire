@@ -79,7 +79,8 @@ Jitter
 ------
 
 The master's clock jitter must stay below 1.4 ns peak-to-peak unfiltered
-and 0.3 ns after a 5 kHz high-pass filter (:clause:`40.6.1.2.5`,
+and 0.3 ns after a 5 kHz high-pass filter together with the output
+jitter Jtxout (:clause:`40.6.1.2.5`,
 :numref:`tab-phy-int-reqs`). PLLs are commonly specified by their rms jitter
 :math:`\sigma`. To compare, take the jitter as Gaussian, and the
 peak-to-peak value as the range whose ends are each exceeded with
@@ -116,7 +117,8 @@ With :math:`\sigma = 4.9` ps:
    J_\text{pp} = 2 \times 7.03 \times 4.9\ \text{ps} = 69\ \text{ps}
 
 which is about one twentieth of the 1.4 ns unfiltered limit and about a
-quarter of the 0.3 ns limit after the 5 kHz high-pass filter (estimate,
+quarter of the 0.3 ns filtered limit, which it shares with Jtxout
+(estimate,
 for the reference example above; a gf180mcu PLL needs its own design and
 measurement). :numref:`fig-phy-int-jitter` draws the distribution.
 
@@ -128,8 +130,8 @@ measurement). :numref:`fig-phy-int-jitter` draws the distribution.
          7.03 sigma either side, beyond each of which a tail holds a
          probability of 1e-12, and an arrow between them is labelled
          Jpp = 2 × 7.03 × 4.9 ps = 69 ps. A note says the 1.4 ns
-         unfiltered limit is about 20 times Jpp, and the 0.3 ns limit after
-         a 5 kHz high-pass filter about 4 times Jpp.
+         unfiltered limit is about 20 times Jpp, and the 0.3 ns filtered
+         limit, shared with the output jitter Jtxout, about 4 times Jpp.
    :align: center
 
    Gaussian jitter of 4.9 ps rms and its peak-to-peak value at a tail
