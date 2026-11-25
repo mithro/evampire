@@ -134,7 +134,8 @@ Frame transmission by the processor
   be sent out of port A, port B or both.
 * The chip adds the frame's :term:`preamble`, :term:`start frame delimiter`
   and checksum.
-* Processor frames are sent only in the gaps between forwarded frames.
+* Processor frames are sent only in the gaps between forwarded frames
+  (:numref:`fig-output-selector`).
 
 .. _req-memory:
 
