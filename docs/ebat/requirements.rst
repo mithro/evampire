@@ -3,14 +3,14 @@
 ebat requirements
 =================
 
-This page lists the evampire requirements that ebat drops, the power
-requirements it keeps unchanged, and the one that changes because LLDP
-goes with the data path.
+ebat drops evampire's requirements on the Ethernet data path, keeps its
+power requirements, and meets the classification requirement without LLDP,
+because LLDP needs Ethernet frames.
 
 .. _req-ebat-no-data:
 
-ebat has no Ethernet data path
-------------------------------
+No Ethernet data path
+---------------------
 
 * ebat is its own die, built from evampire's design without the Ethernet
   data circuits.
@@ -18,21 +18,25 @@ ebat has no Ethernet data path
   :term:`RGMII` interface. It does not receive, forward or send Ethernet
   :term:`frames <frame>`.
 * These evampire requirements do not apply: :ref:`req-transceivers`,
-  :ref:`req-cable`, :ref:`req-forwarding`, :ref:`req-processor-delivery`,
+  :ref:`req-forwarding`, :ref:`req-processor-delivery`,
   :ref:`req-processor-transmit` and :ref:`req-memory`.
-* ebat has no :term:`MDIO` interface and needs no 125 MHz reference clock
-  (:doc:`architecture`).
+* Of :ref:`req-cable`, only the electrical isolation and the path for
+  Power over Ethernet current apply. The parts that serve the data do not
+  (:ref:`ebat-boards-no-magnetics`, :ref:`ebat-boards-isolation`).
+* Of :ref:`req-processor`, the item on the transceiver configuration
+  interface does not apply, because ebat has no :term:`MDIO` interface
+  (:ref:`ebat-left-out`).
 * A board can pass Ethernet data between two RJ45 sockets, on wiring
-  that does not pass through ebat. :doc:`boards` describes such boards and
-  the precautions they need.
+  that does not pass through ebat. :ref:`ebat-pass-through` describes such
+  boards and the precautions they need.
 
 .. _req-ebat-same-power:
 
-Every power requirement of evampire applies unchanged
------------------------------------------------------
+Unchanged power requirements
+----------------------------
 
 ebat's power side is evampire's. These requirements apply to ebat as
-written, except for the negotiation over LLDP (:ref:`req-ebat-no-lldp`):
+written, except where :ref:`req-ebat-no-lldp` states otherwise:
 
 * :ref:`req-power-bridging`: the ports, the operating modes, the power
   budget, the translation between the standards and the sharing between
@@ -41,36 +45,42 @@ written, except for the negotiation over LLDP (:ref:`req-ebat-no-lldp`):
 * :ref:`req-poe-classification`, in its Physical Layer part;
 * :ref:`req-converters`;
 * :ref:`req-usb-serial`;
-* :ref:`req-processor`, which on ebat runs no Ethernet traffic;
+* :ref:`req-processor`, except its item on the transceiver configuration
+  interface;
 * :ref:`req-process`.
 
-evampire's board configurations (:numref:`tab-power-board-configs`) apply
-to ebat in every row except the transceiver and cable rows. A board fits
-the ports it needs, as :doc:`boards` describes.
+Each Ethernet port takes the power role that evampire's board
+configurations give it (:numref:`tab-power-board-configs`). In the first
+version, port A receives power and port B supplies it. In the full design,
+either port takes either role, and each statement about port A or port B
+on ebat applies to whichever port has that role.
+
+The rows of :numref:`tab-power-board-configs` on the transceivers and the
+connection to the cable do not apply. A board fits only the ports it needs,
+so it can have fewer Ethernet or USB Type-C ports than the table lists
+(:ref:`ebat-boards-ports`).
 
 .. _req-ebat-no-lldp:
 
-ebat negotiates Power over Ethernet without LLDP
-------------------------------------------------
+Classification without LLDP
+---------------------------
 
 ebat does the Physical Layer part of :ref:`req-poe-classification` in
 both roles, as evampire does, and none of the Data Link Layer part, which
-needs :term:`LLDP` frames:
+needs :term:`LLDP` frames. :doc:`power-without-lldp` gives the reasons and
+the power that results:
 
-* As a :term:`powered device`, port A requests at most class 3. IEEE 802.3
-  requires a powered device that requests class 4 or higher to implement
-  Data Link Layer classification (:clause:`145.3.6`,
-  :clause:`33.3.5`). :doc:`power-without-lldp` gives the power this
-  leaves.
+* As a :term:`powered device`, port A requests class 1, 2 or 3, and never
+  class 4 or higher (:ref:`ebat-lldp-class-4`).
 * As :term:`power sourcing equipment`, port B assigns a class by Physical
-  Layer classification alone, up to class 8
-  (:doc:`../power/poe/power-sourcing`). It does not answer LLDP power
-  requests, which is optional for power sourcing equipment
-  (:numref:`tab-poe-class-methods`).
-* On a board without data pass-through, the allocation on port B changes
-  only by removing the power and classifying the powered device again
-  (:doc:`../power/poe/sharing`). With data pass-through, LLDP frames pass
-  between the far ends (:ref:`ebat-pass-through-lldp`).
+  Layer classification alone, up to class 8, and does not answer LLDP power
+  requests.
+* Port B changes the allocation of the powered device it supplies only by
+  removing the power and classifying the device again. The sharing between
+  output ports in :ref:`req-power-bridging` moves power to or from port B
+  only in this way (:ref:`ebat-port-b-allocation`).
+* With data pass-through on the board, LLDP frames pass between the far
+  ends (:ref:`ebat-pass-through-lldp`).
 
 .. _ebat-requirements-open-questions:
 
@@ -79,4 +89,7 @@ Open questions
 
 * The questions that evampire leaves open on its power side apply to ebat
   in the same way (:ref:`requirements-open-questions`).
+* Which class the start-up sequencer requests, which evampire leaves open
+  (:doc:`../power/poe/startup`), on ebat chooses between classes 1, 2 and
+  3.
 * The questions on boards built around ebat are listed on :doc:`boards`.

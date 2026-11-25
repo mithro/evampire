@@ -1,0 +1,37 @@
+// Changing the allocation of the powered device on ebat's port B without
+// LLDP: remove the power, detect again, classify again, power on again.
+// Five steps in a row, with a bracket under the steps during which the
+// powered device has no power.
+//
+// Fill colours: powered steps #e2f0d9, unpowered steps #fbe5d6.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph reclassify {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=1.25, height=0.9, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.8];
+
+    on_old [pos="0.0,1.0!", label="Powered at\nassigned\nclass",
+            fillcolor="#e2f0d9"];
+    off    [pos="1.6,1.0!", label="Software\nremoves\nthe power",
+            fillcolor="#fbe5d6"];
+    detect [pos="3.2,1.0!", label="Detection\nagain",
+            fillcolor="#fbe5d6"];
+    cls    [pos="4.8,1.0!", label="Classification,\nother number\nof class events",
+            fillcolor="#fbe5d6"];
+    on_new [pos="6.4,1.0!", label="Powered at\nnew class",
+            fillcolor="#e2f0d9"];
+
+    on_old -> off;
+    off    -> detect;
+    detect -> cls;
+    cls    -> on_new;
+
+    // Bracket under the unpowered steps.
+    gap [pos="3.2,0.15!", shape=box, style="dashed", width=4.4, height=0.3,
+         fixedsize=true, label="powered device has no power", fontsize=10,
+         color="#888888"];
+}
