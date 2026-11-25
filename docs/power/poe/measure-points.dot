@@ -1,0 +1,37 @@
+// The measurement and limit points on each power port and on the bus of
+// a full-design board. From monitoring.rst.
+//
+// Fill colours: ports #ffffff, measurement and limit blocks #fff2cc,
+// evampire and the bus #dbe8f5. Bold edges carry power, dashed edges
+// readings and limits. Fixed grid (positions in inches).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph measure_points {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=10, width=1.25, height=0.55,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.6];
+
+    bus [pos="3.6,2.0!", label="Internal power bus", width=4.8, height=0.4,
+         fillcolor="#dbe8f5", style="filled,bold"];
+    mb  [pos="6.6,2.0!", label="V, I, limit", width=0.9, height=0.4];
+    pa  [pos="1.2,3.7!", label="Ethernet A", fillcolor="#ffffff", width=1.0, height=0.4];
+    pb  [pos="3.6,3.7!", label="Ethernet B", fillcolor="#ffffff", width=1.0, height=0.4];
+    u1  [pos="6.0,3.7!", label="USB-C ports", fillcolor="#ffffff", width=1.0, height=0.4];
+    ma  [pos="1.2,2.85!", label="V, I, limit,\nfast trip"];
+    mb2 [pos="3.6,2.85!", label="V, I, limit,\nfast trip"];
+    mu  [pos="6.0,2.85!", label="V, I, limit,\nfast trip"];
+    sw  [pos="3.6,0.7!", label="Software on evampire: sets each limit,\nreads each measurement, receives each fault report",
+         width=4.8, height=0.55, fillcolor="#dbe8f5"];
+
+    pa -> ma [dir=both, penwidth=2.2]; ma -> bus [dir=both, penwidth=2.2];
+    pb -> mb2 [dir=both, penwidth=2.2]; mb2 -> bus [dir=both, penwidth=2.2];
+    u1 -> mu [dir=both, penwidth=2.2]; mu -> bus [dir=both, penwidth=2.2];
+    mb -> sw [style=dashed, dir=both];
+    bus -> sw [style=invis];
+    n [pos="3.6,1.35!", shape=plaintext, style="", width=4.6, height=0.3,
+       fontsize=9, label="dashed: readings and limits; every block has this link, drawn once"];
+}
