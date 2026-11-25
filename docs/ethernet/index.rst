@@ -1,9 +1,10 @@
 Ethernet
 ========
 
-These pages follow the path of the data from the chip's pins to the Ethernet
-cable. Which parts are on evampire and which are separate depends on the
-board configuration (see :numref:`tab-power-board-configs`).
+Between evampire's pins and the Ethernet cable, the data passes through an
+Ethernet transceiver and coupling transformers. Which parts are on evampire
+and which are separate depends on the board configuration (see
+:numref:`tab-power-board-configs`).
 
 An :term:`Ethernet transceiver`
 (:wikipedia:`Ethernet physical layer <Ethernet_physical_layer>`) turns
@@ -12,9 +13,9 @@ transceiver talks to evampire over a digital interface,
 :wikipedia:`RGMII <Media-independent_interface>`. Coupling
 :wikipedia:`transformers <Transformer>`, often called the
 :term:`magnetics`, connect the transceiver to the
-:wikipedia:`RJ45 <8P8C>` socket. The pages on the transceiver and on the
-magnetics explain how these parts work and what evampire needs to do the
-same jobs itself.
+:wikipedia:`RJ45 <8P8C>` socket. :doc:`phy-electrical/index` and
+:doc:`magnetics/index` explain how these parts work and what evampire needs
+to do the same jobs itself.
 
 :numref:`fig-ethernet-path` shows the path and the pages that cover each
 part.
