@@ -1,10 +1,9 @@
 Cable and RJ45 socket
 =====================
 
-This page describes the four twisted pairs of an Ethernet cable, the
-:term:`RJ45` pins they use, and the two pin assignments that let two ports
-find each other. It is the starting point for the other pages on the
-:term:`magnetics`.
+An Ethernet cable has four twisted pairs, which reach the :term:`RJ45`
+socket on fixed pins, and two pin assignments let two ports find each
+other. The :term:`magnetics` of a port connect to these pins.
 
 Twisted pairs
 -------------
@@ -40,7 +39,7 @@ directions at the same time (:clause:`40`). 10 Mbit/s Ethernet (10BASE-T,
 :clause:`14`) and 100 Mbit/s Ethernet (100BASE-TX, :clause:`25`) use two
 pairs, one in each direction. Whether an integrated transceiver also
 supports these two speeds is open (:ref:`requirements-open-questions`), so
-these pages give their values only where they differ.
+their values are given only where they differ.
 :numref:`fig-magnetics-pair-usage` compares the two.
 
 .. graphviz:: pair-usage.dot

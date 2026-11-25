@@ -1,10 +1,10 @@
 Port with standard magnetics
 ============================
 
-This page shows the parts of a standard Ethernet port, the kind used on a
-first-version board (:ref:`board configurations <tab-power-board-configs>`):
-a transformer and a common-mode choke on each pair, the centre taps and the
-common-mode termination. :doc:`functions` explains what each part does.
+A standard Ethernet port, the kind used on a first-version board
+(:ref:`board configurations <tab-power-board-configs>`), has a transformer
+and a common-mode choke on each pair, centre taps and a common-mode
+termination. :doc:`functions` explains what each part does.
 
 One pair
 --------

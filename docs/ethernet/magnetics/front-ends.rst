@@ -1,13 +1,12 @@
 Transformer-free front ends
 ===========================
 
-This page describes two candidate front ends for a full-design port, which
-connects to the cable without coupling transformers
-(:ref:`board configurations <tab-power-board-configs>`). It gives the
-specifications they set for the circuits on evampire, and the IEEE 802.3
-requirements a port built this way meets. Both front ends use a
-voltage-mode line driver on evampire, and differ in how much of the work
-external passive parts do.
+Two candidate front ends connect a full-design port to the cable without
+coupling transformers (:ref:`board configurations
+<tab-power-board-configs>`). Both use a voltage-mode line driver on
+evampire, and differ in how much of the work external passive parts do.
+Each sets specifications for the circuits on evampire, and a port built
+this way meets a set of IEEE 802.3 requirements.
 
 Both front ends use one of the isolation routes of :doc:`isolation`. The
 figure shows the external-capacitor route; the other routes change only
@@ -117,9 +116,10 @@ die on the cable side, are further options described on
 Circuit specifications
 ----------------------
 
-:numref:`tbl-magnetics-specs` collects the specifications that these pages
-set for the circuits on evampire. Values marked "estimate" are derived on
-these pages. The requirements of the integrated transceiver as a whole are
+:numref:`tbl-magnetics-specs` collects the specifications that the front
+ends set for the circuits on evampire. Values marked "estimate" are
+derived from the analysis of the transformer-free port. The requirements of
+the integrated transceiver as a whole are
 on :doc:`../phy-electrical/index`.
 
 .. list-table:: Specifications for the front-end circuits on evampire
@@ -169,8 +169,9 @@ IEEE 802.3 requirements
 
 :numref:`tbl-magnetics-ieee` lists the IEEE 802.3 requirements that a
 transformer helps meet, and where the passive front end stands on
-each. The "Status" column uses three values: "met" where the analysis on
-these pages shows a way, "conditional" where it depends on parts or
+each. The "Status" column uses three values: "met" where the analysis of the
+transformer-free port shows a way, "conditional" where it depends on parts
+or
 choices, and "open" where only a measurement answers it.
 
 .. list-table:: IEEE 802.3 requirements for a port with the passive front

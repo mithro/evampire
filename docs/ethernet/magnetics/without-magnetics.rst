@@ -1,8 +1,8 @@
 Ports without magnetics
 =======================
 
-These pages explain how an Ethernet port can do the jobs of the magnetics
-without coupling transformers.
+An Ethernet port can do the jobs of the magnetics without coupling
+transformers, with coupling capacitors in their place.
 
 :doc:`events`
    The voltages, currents and energies that reach an Ethernet port, which

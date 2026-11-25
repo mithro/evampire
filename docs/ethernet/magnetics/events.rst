@@ -1,11 +1,10 @@
 Voltages and events at the cable
 ================================
 
-This page lists the voltages, currents and energies that reach an Ethernet
-port from its cable, from the data signal to lightning surges. A port
-without a transformer must survive all of them and keep the signal intact.
-It is a reference page; the jobs of the transformer are described on
-:doc:`functions`.
+An Ethernet port receives voltages, currents and energies from its cable,
+from the data signal to lightning surges. A port without a transformer must
+survive all of them and keep the signal intact. The jobs of the transformer
+are described on :doc:`functions`.
 
 Continuous voltages
 -------------------
@@ -46,7 +45,7 @@ Tests and disturbances
 ----------------------
 
 :numref:`tbl-magnetics-events` lists the tests and the disturbances that
-the port meets from time to time. Each is described below the table.
+the port meets from time to time.
 
 .. list-table:: Tests and disturbances at an Ethernet port
    :name: tbl-magnetics-events

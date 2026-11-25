@@ -1,11 +1,11 @@
 Matching and droop
 ==================
 
-This page works out two requirements that the :term:`magnetics` of a
-gigabit port help to meet: how closely the port must match the 100 Ω cable
-(its :term:`return loss`), and how much of a slow signal it must pass (its
-:term:`droop`). The same numbers set the size of the capacitors that
-replace the transformer on :doc:`coupling-capacitors`.
+The :term:`magnetics` of a gigabit port help to meet two requirements: how
+closely the port must match the 100 Ω cable (its :term:`return loss`), and
+how much of a slow signal it must pass (its :term:`droop`). The same
+numbers set the size of the capacitors that replace the transformer on
+:doc:`coupling-capacitors`.
 
 .. _magnetics-return-loss:
 

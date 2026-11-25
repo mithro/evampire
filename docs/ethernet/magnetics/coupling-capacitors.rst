@@ -1,9 +1,10 @@
 Coupling capacitors
 ===================
 
-This page describes the ports that already connect to twisted-pair cable
-without a transformer, and works out the size of the capacitors that carry
-the data in their place. :doc:`without-transformer` covers the other jobs
+Some Ethernet ports already connect to twisted-pair cable without a
+transformer, with a capacitor in each wire carrying the data in its place.
+The size of those capacitors follows from the return-loss, droop and
+100BASE-TX phase limits. :doc:`without-transformer` covers the other jobs
 of the transformer, and :doc:`isolation` covers isolation.
 
 Transformer-free ports in use
@@ -231,7 +232,7 @@ can instead meet an equivalent time constant above 2.4 µs
 (:clause:`25.4.5.1`, :doc:`matching-and-droop`). In the model this needs
 :math:`C_\text{w} \ge 2 \times 2.4\ \mu\text{s} / 200\ \Omega = 24\ \text{nF}`.
 Whether a port without a transformer can use this route in place of the
-inductance requirement is an open question below.
+inductance requirement is an open question.
 
 Working range
 -------------
@@ -344,7 +345,7 @@ The densest gf180mcu metal-insulator-metal (MIM) capacitor gives
    &= 8.0 \times 10^6\ \mu\text{m}^2 = 8.0\ \text{mm}^2
 
 :numref:`tbl-magnetics-cap-area` gives the area for one port, eight wires,
-at the four capacitor values used on these pages. These are estimates;
+at the four candidate capacitor values. These are estimates;
 the die area that evampire can give them is not fixed.
 
 .. list-table:: Die area of the coupling capacitors for one port, with

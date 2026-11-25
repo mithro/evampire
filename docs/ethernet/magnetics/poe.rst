@@ -1,11 +1,10 @@
 Power over Ethernet through the centre taps
 ===========================================
 
-This page describes how :term:`Power over Ethernet` current passes through
-the cable-side :term:`centre taps <centre tap>` of standard
-:term:`magnetics`, and how the transformer keeps the data circuits out of
-the way of detection and classification. The power circuits themselves are
-described on :doc:`../../power/poe/index`.
+Standard :term:`magnetics` pass :term:`Power over Ethernet` current through
+their cable-side :term:`centre taps <centre tap>`, and the transformer keeps
+the data circuits out of the way of detection and classification. The power
+circuits themselves are described on :doc:`../../power/poe/index`.
 
 .. _magnetics-poe-current:
 

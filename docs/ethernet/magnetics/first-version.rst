@@ -1,11 +1,10 @@
 Magnetics for the first version
 ===============================
 
-This page is for the designer of a first-version board, which uses an
-external :term:`Ethernet transceiver` and standard :term:`magnetics` on
-each port (:ref:`board configurations <tab-power-board-configs>`). It
-covers the parts each port needs, the kinds of magnetics, board layout,
-what to look for in a datasheet, and example parts.
+A first-version board uses an external :term:`Ethernet transceiver` and
+standard :term:`magnetics` on each port (:ref:`board configurations
+<tab-power-board-configs>`). The magnetics can be a separate module, part
+of the RJ45 socket, or transformers embedded in the board itself.
 
 Parts for each port
 -------------------

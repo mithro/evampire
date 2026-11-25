@@ -1,9 +1,9 @@
 Functions of the magnetics
 ==========================
 
-This page lists the jobs that the :term:`magnetics` of a standard port do,
-which part does each job, and which requirement of IEEE 802.3 or of other
-standards the job meets. The parts are shown on :doc:`standard-port`.
+The :term:`magnetics` of a standard port do several jobs, each done by one
+part and each meeting a requirement of IEEE 802.3 or of another standard.
+The parts are shown on :doc:`standard-port`.
 
 IEEE 802.3 does not require a transformer. It sets electrical requirements
 at the :term:`MDI`, and a 1:1 transformer on each pair is the most common
@@ -56,7 +56,7 @@ way of meeting them ([MAG-ENT98]_, section 2.1).
      - automatic MDI/MDI-X, :clause:`40.4.4`
 
 Matching and low frequencies are covered on :doc:`matching-and-droop`, and
-Power over Ethernet on :doc:`poe`. The other jobs are described below.
+Power over Ethernet on :doc:`poe`.
 
 .. _magnetics-isolation:
 
@@ -183,7 +183,7 @@ with.
          the alternating test or 2250 V in the direct test.
    :align: center
 
-These pages take a part as suitable when its maker states a withstand
+A part is taken as suitable when its maker states a withstand
 (test) voltage at least as high as that test voltage: 2121 V peak for the
 alternating test, or 2250 V for the direct test. Its rated working voltage
 can be lower. Magnetics datasheets state the isolation of the whole part,

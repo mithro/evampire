@@ -1,11 +1,10 @@
 Jobs without a transformer
 ==========================
 
-This page gives the options for each job of the :term:`magnetics`
-(:doc:`functions`) when the port has coupling capacitors instead of a
-transformer. Each job has options built from external parts and options
-built on evampire. The choice between them is open. Isolation has its own
-page, :doc:`isolation`, and the capacitor size is worked out on
+With coupling capacitors instead of a transformer, each job of the
+:term:`magnetics` (:doc:`functions`) has options built from external parts
+and options built on evampire. The choice between them is open. Isolation
+is covered on :doc:`isolation`, and the capacitor size is worked out on
 :doc:`coupling-capacitors`.
 
 Options on evampire can use custom devices and cells beyond the standard
@@ -140,8 +139,8 @@ devices at its input when the pins connect to them directly. A resistive
 or capacitive divider in front of the receiver extends the range by its
 division ratio, at the cost of a smaller signal and more noise. Stacked,
 drain-extended or custom input devices extend it further. The range needed
-is set by the fast common-mode steps that pass the capacitors, which is an
-open question below.
+is set by the fast common-mode steps that pass the capacitors, which is
+an open question.
 
 The rejection that magnetics give, 30 dB to 43 dB (:doc:`functions`),
 and the estimate of about 40 dB on :doc:`gigabit-risk` set the target for
