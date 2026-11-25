@@ -122,3 +122,11 @@ a.diagram-full-size {
     margin-top: 0.25rem;
   }
 }
+
+/* The home page opens with the block diagram. Keep it short enough to fit
+ * on the first screen below the title and the opening paragraph, but no
+ * smaller than 20rem on a short window. */
+#fig-overview img {
+  max-height: max(20rem, calc(100vh - 12rem));
+  width: auto;
+}
