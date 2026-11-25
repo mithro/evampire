@@ -3,9 +3,9 @@
 Insulator isolation
 ===================
 
-This page describes isolating a circuit from the substrate with an
-insulator instead of a junction, from devices built on the field oxide of
-a standard process to separate silicon islands.
+An insulator can isolate a circuit from the substrate instead of a
+junction. The structures range from devices built on the field oxide of a
+standard process to separate silicon islands.
 
 Oxide breakdown field
 ---------------------

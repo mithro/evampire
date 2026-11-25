@@ -3,9 +3,8 @@
 Metal-gate transistors
 ======================
 
-This page describes a transistor whose gate is one of the metal layers,
-which lets a high-voltage node control low-voltage silicon with only
-insulator between them.
+A transistor whose gate is one of the metal layers lets a high-voltage
+node control low-voltage silicon with only insulator between them.
 
 Metal as the gate
 -----------------

@@ -1,11 +1,10 @@
 High voltage above the substrate
 ================================
 
-These pages explain how a circuit on a bulk silicon chip can sit tens of
-volts above the chip's substrate, which is the question behind every
-evampire circuit that connects to an Ethernet cable or a USB Type-C port
-at its full voltage. They cover the physics of each route, from simplest
-to most involved. The voltage limits of the gf180mcu process are listed on
+Every evampire circuit that connects to an Ethernet cable or a USB Type-C
+port at its full voltage must sit tens of volts above the substrate of a
+bulk silicon chip. Several routes let a circuit do so, each resting on
+different physics, from simplest to most involved. The voltage limits of the gf180mcu process are listed on
 :ref:`poe-limits`.
 
 :doc:`substrate`

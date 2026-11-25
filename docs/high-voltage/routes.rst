@@ -3,8 +3,8 @@
 Route comparison
 ================
 
-This page sets the routes for holding a circuit above the substrate side by
-side, and lists the measurements that would decide between them.
+The routes for holding a circuit above the substrate can be combined, and
+measurements on test structures would decide between them.
 
 Summary of routes
 -----------------

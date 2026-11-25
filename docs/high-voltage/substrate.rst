@@ -3,9 +3,9 @@
 Series stacks on one substrate
 ==============================
 
-This page explains why a stack of low-voltage devices in series does not,
-on its own, let a chip hold a high voltage: each node of the stack also
-forms a junction with the shared substrate.
+A stack of low-voltage devices in series does not, on its own, let a chip
+hold a high voltage, because each node of the stack also forms a junction
+with the shared substrate.
 
 Voltage sharing in a series stack
 ---------------------------------
