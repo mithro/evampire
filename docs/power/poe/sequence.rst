@@ -1,14 +1,14 @@
 .. _poe-sequence:
 
-The power-up sequence
-=====================
+Power-up sequence
+=================
 
 This page describes the steps that power sourcing equipment runs, from the
 moment a cable is plugged in until full power flows, and what keeps the
 power on afterwards.
 
-Each step uses its own voltage range
-------------------------------------
+Voltage range of each step
+--------------------------
 
 Before it applies full voltage, the power sourcing equipment finds out
 whether a powered device is connected and how much power it wants. Each
@@ -91,8 +91,8 @@ The ranges come from :clause:`Table 145-7 <145>`,
 :clause:`Table 145-25 <145>`. The operation row is for Type 2 and Type 3
 (:numref:`tab-poe-pse-voltage`, :numref:`tab-poe-lowest-voltage`).
 
-Each step has time limits
--------------------------
+Duration of each step
+---------------------
 
 :numref:`tab-poe-step-times` gives the duration of each step for Types 3
 and 4 (:clause:`Table 145-14 <145>`, :clause:`Table 145-16 <145>`).
@@ -133,8 +133,8 @@ long, and Type 1 makes its single class event 6 ms to 75 ms long
 lets a powered device tell which type it is connected to
 (:clause:`145.3.7`).
 
-More class events give more power
----------------------------------
+Number of class events
+----------------------
 
 Type 1 power sourcing equipment issues one class event. Type 2 issues up to
 two, Type 3 up to four and Type 4 up to five (:clause:`145.2.8.1`). A
@@ -173,8 +173,8 @@ gets the lower of the class it asked for and the class in
 :numref:`tab-poe-events`. Getting a lower class is called
 :term:`power demotion` (:ref:`poe-demotion`).
 
-Both ends act at each step
---------------------------
+Actions at each end
+-------------------
 
 :numref:`fig-poe-states` shows what each end does during the sequence of
 :numref:`fig-poe-voltage-timeline`. The top rows are the power sourcing
@@ -222,8 +222,8 @@ During a mark event the signature resistor stays connected, and the mark
 load in parallel with it brings the resistance below 12 kΩ, which is not a
 valid detection signature (:clause:`145.3.6.1.1`).
 
-The maintain power signature keeps the power on
------------------------------------------------
+Maintain power signature
+------------------------
 
 Once powered, the powered device must keep drawing at least a minimum
 current, steadily or in pulses (:clause:`Table 145-32 <145>`):

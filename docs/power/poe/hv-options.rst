@@ -1,14 +1,14 @@
 .. _poe-options:
 
-On chip or external, function by function
-=========================================
+On-chip and external options
+============================
 
 This page sets out, for each function that handles the cable voltage, the
 external option and the on-chip option, and what would decide between
 them.
 
-The full design builds each function on chip where it can
----------------------------------------------------------
+Choice per function
+-------------------
 
 The full design builds most of these functions on chip, on evampire or on
 a second cable-side die (:numref:`tab-power-board-configs`). The choice is made per function. An
@@ -260,8 +260,8 @@ The gate drivers and power transistors of the converters are discussed on
 :doc:`../converters/index`, with the steps to move them onto evampire
 (:ref:`conv-custom`).
 
-A stack needs a minimum number of devices
------------------------------------------
+Devices in a stack
+------------------
 
 A stack of transistors that shares a voltage equally needs enough devices
 for each to stay within its rating. As a first estimate, ignoring the

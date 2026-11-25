@@ -1,13 +1,13 @@
 .. _poe-basics:
 
-The two ends, the pairs and the voltages
-========================================
+Ends, pairs and voltages
+========================
 
 This page names the two ends of a powered Ethernet cable, shows which pairs
 of the cable carry the power, and gives the voltage range at each end.
 
-One end supplies the power and the other receives it
-----------------------------------------------------
+The two ends
+------------
 
 The end that puts power onto the cable is the
 :term:`power sourcing equipment`, abbreviated PSE in the standard. It is
@@ -39,8 +39,8 @@ internal power bus (:ref:`power-flow`).
          RGMII. evampire reads status from port A and controls port B.
    :align: center
 
-The power rides on the pairs as a common-mode voltage
------------------------------------------------------
+Power as a common-mode voltage
+------------------------------
 
 An Ethernet cable has 8 wires twisted into 4
 :wikipedia:`twisted pairs <Twisted_pair>`. The power sourcing equipment
@@ -57,8 +57,8 @@ the data and keep the DC away from the :term:`Ethernet transceiver`. The
 full design has no coupling transformers. :doc:`../../ethernet/magnetics/index`
 describes both arrangements.
 
-Each pair set has a name at each end
-------------------------------------
+Pair set names
+--------------
 
 The power sourcing equipment calls the two pair sets Alternative A and
 Alternative B. The powered device calls the same pair sets Mode A and
@@ -98,8 +98,8 @@ The powered device cannot know in advance which pair set carries power, or
 which pair is positive, so it must accept any polarity on either pair set
 (:doc:`powered-device`).
 
-Power uses one pair set or both
--------------------------------
+2-pair and 4-pair power
+-----------------------
 
 Power sourcing equipment of Types 1 and 2 powers one pair set. Types 3 and
 4 may power one pair set or both for classes 1 to 4, and must power both
@@ -109,8 +109,8 @@ pair sets is called 4-pair power.
 Gigabit Ethernet (:term:`1000BASE-T`) carries data on all four pairs, so
 on a gigabit port both pair sets carry data and power together.
 
-The power sourcing equipment sets the voltage
----------------------------------------------
+Output voltage
+--------------
 
 :numref:`tab-poe-pse-voltage` gives the output voltage that power sourcing
 equipment of each type must hold while the power is on. The voltage at the

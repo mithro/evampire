@@ -1,14 +1,14 @@
 .. _poe-pd-controller:
 
-Inside a powered-device controller
-==================================
+Powered-device controller
+=========================
 
-This page describes the circuit blocks that carry out the powered-device
-steps of :doc:`powered-device`, using commercial controller chips as
-reference examples.
+This page describes the circuit blocks that meet the
+:doc:`powered-device requirements <powered-device>`, using commercial
+controller chips as reference examples.
 
-The blocks share one reference node
------------------------------------
+Controller blocks
+-----------------
 
 :numref:`fig-poe-pd-controller` shows the blocks. All of them work at the
 cable voltage, up to 57 V, and all voltages inside are measured from the
@@ -92,8 +92,8 @@ Input protection
    Implementation). :doc:`hv-limits`
    describes the surge.
 
-The class resistor sets the class current
------------------------------------------
+Class current
+-------------
 
 The regulator holds :math:`V_\text{CLS}` across the class resistor, so:
 
@@ -134,8 +134,11 @@ Both land in the 36 mA to 44 mA window of class signature 4
 (:numref:`tab-poe-class-sig`). The margin of about 4 mA on each side covers
 the resistor tolerance, the regulator's error and :math:`I_\text{bias}`.
 
-The comparators sit in the gaps between ranges
-----------------------------------------------
+Comparator thresholds
+---------------------
+
+Each comparator threshold sits in a gap between two neighbouring ranges of
+:numref:`tab-poe-steps`, so that noise within a range does not cross it.
 
 .. list-table:: Typical comparator thresholds of the TPS2372
    :name: tab-poe-tps2372-cmp
@@ -163,8 +166,12 @@ lower class edge, 12.5 V, falls in the 10.1 V to 14.5 V gap of
 :clause:`Table 145-25 <145>`. The mark reset, 3.9 V, falls in the 2.81 V
 to 6.9 V gap.
 
-The isolation switch limits the inrush current
-----------------------------------------------
+Isolation switch
+----------------
+
+The isolation switch limits the inrush current while it charges the input
+capacitor, then allows a higher operating current.
+:numref:`tab-poe-iso-switch` gives two reference examples.
 
 .. list-table:: Isolation switches of two controllers
    :name: tab-poe-iso-switch
@@ -191,11 +198,11 @@ to the inrush limit. For reference, the LT4275 drives an external MOSFET
 instead and sets the inrush current with a capacitor on the gate
 [POE-LT4275]_ (Applications Information).
 
-Commercial controllers are reference examples
----------------------------------------------
+Commercial controllers
+----------------------
 
-:numref:`tab-poe-pd-chips` lists commercial powered-device controllers.
-They show which blocks are commonly combined in one chip.
+:numref:`tab-poe-pd-chips` lists commercial powered-device controllers as
+reference examples. They show which blocks are commonly combined in one chip.
 
 .. list-table:: Example powered-device controller chips
    :name: tab-poe-pd-chips
@@ -238,8 +245,8 @@ LT4275A also accepts Analog Devices' LTPoE++ classification up to 90 W
 [POE-LT4275]_. For reference, the Microchip PD70224 replaces the two diode
 bridges with MOSFETs [POE-PD70224]_.
 
-The input converter follows the isolation switch
-------------------------------------------------
+Input converter
+---------------
 
 After the isolation switch the board has a supply of 30 V to 57 V. The
 input converter brings it down to the board's power bus. Whether it is

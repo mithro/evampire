@@ -1,16 +1,17 @@
 .. _poe-limits:
 
-What the process can hold
-=========================
+Process voltage limits
+======================
 
 This page separates three kinds of voltage limit in the gf180mcu process,
 and describes the four kinds of electrical stress that a circuit connected
 to the cable must survive.
 
-The cable voltage is far above the standard devices' ratings
-------------------------------------------------------------
+Cable voltage and device ratings
+--------------------------------
 
-Every circuit on :doc:`powered-device` and :doc:`power-sourcing` handles up
+Every circuit of a :doc:`powered device <powered-device>` and of
+:doc:`power sourcing equipment <power-sourcing>` handles up
 to 57 V, plus surges. The standard transistors of
 `gf180mcu <https://gf180mcu-pdk.readthedocs.io/>`_ are rated for 3.3 V,
 5 V or 6 V. A rating is not the only limit: evampire uses custom devices
@@ -18,8 +19,8 @@ wherever a function needs them (:ref:`req-process`), so a function with no
 ready-made high-voltage device is a design task, not an impossibility. Three
 kinds of limit are separated below.
 
-Ratings are the guaranteed operating limits
--------------------------------------------
+Ratings
+-------
 
 The ratings are the continuous limits the foundry guarantees for long life
 (:numref:`tab-poe-gf180-ratings`).
@@ -46,8 +47,8 @@ The 10 V LDMOS transistors are drain-extended, and their well shares the
 substrate potential [POE-GF180-LDMOS]_. The 1.5 fF/µm² and 2 fF/µm² MIM
 options are for 6 V use [POE-GF180-MIM]_.
 
-Breakdown voltages are the physical limits
-------------------------------------------
+Breakdown voltages
+------------------
 
 The physical limits are the voltages at which a layer or junction breaks
 down. They are higher than the ratings, and a design must stay below them
@@ -106,8 +107,8 @@ For ESD, the PDK gives transmission-line pulse data for a 5 V or 6 V
 grounded-gate NMOS: it starts to conduct at about 10.7 V, holds about
 6.2 V, and fails at about 7 mA per µm of width [POE-GF180-ESD]_.
 
-Custom structures reach further
--------------------------------
+Custom structures
+-----------------
 
 Published work shows low-voltage CMOS switching or generating several times
 its device rating (:numref:`tab-poe-hv-cmos`). These are reference examples
@@ -161,10 +162,11 @@ documented limit rules it out.
 
 .. _poe-stresses:
 
-Four kinds of stress reach the cable side
------------------------------------------
+Stresses on the cable side
+--------------------------
 
-The four stresses differ by orders of magnitude in duration and energy.
+Four kinds of stress reach a circuit on the cable side. They differ by
+orders of magnitude in duration and energy.
 That decides whether a clamp can absorb a stress or a structure must block
 it.
 

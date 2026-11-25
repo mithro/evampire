@@ -7,8 +7,8 @@ This page gives the power that reaches a board at each step of the
 sequence when the board is powered only from its powered-device port and
 starts from nothing.
 
-A built-in sequencer answers the first steps
---------------------------------------------
+Built-in start-up sequencer
+---------------------------
 
 Until the power sourcing equipment switches on the operating voltage, the
 cable carries only test voltages, for limited times (:doc:`sequence`).
@@ -27,8 +27,8 @@ this at each step is set by the standard, and is given below as ranges.
 Whether it is enough depends on the design of the sequencer, which is an
 open question.
 
-The power available at each step
---------------------------------
+Power at each step
+------------------
 
 :numref:`tab-poe-startup-power` gives the power the cable delivers to the
 powered device at each step, from the lowest voltage and current of the
@@ -117,8 +117,8 @@ Class event
 Mark event
    0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
 
-The steps last a limited time
------------------------------
+Energy in each step
+-------------------
 
 The energy available in a step is its power multiplied by its duration
 (:numref:`tab-poe-step-times`). For example, the first class event of
@@ -140,8 +140,8 @@ the input capacitance during detection is limited to 0.12 µF
 switch can hold the sequencer's supply between steps, without appearing in
 the detection signature, is part of the sequencer design.
 
-After power-on the class power is available
--------------------------------------------
+Power after turn-on
+-------------------
 
 Once the voltage passes the turn-on voltage, the powered device may draw up
 to 0.4 A (0.8 A for classes 7 and 8) until 80 ms after turn-on, mostly to

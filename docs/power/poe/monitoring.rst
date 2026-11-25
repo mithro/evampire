@@ -1,14 +1,14 @@
 .. _poe-monitoring:
 
-Monitoring and limiting power
-=============================
+Power monitoring and limits
+===========================
 
 This page lists what evampire's built-in power monitoring and limiting must
 measure and enforce on a Power over Ethernet port, and how fast each limit
 must act.
 
-Software sets the limits and hardware enforces them
----------------------------------------------------
+Limits and enforcement
+----------------------
 
 evampire measures the voltage and current of every power port and of the
 board's power bus, so the software can read the power through each of them
@@ -18,8 +18,8 @@ a port off by itself when a fault is too fast for the software, and then
 reports the fault. The same measurements serve the converters
 (:doc:`../converters/index`).
 
-The standard sets the accuracy needed
--------------------------------------
+Measurement accuracy
+--------------------
 
 :numref:`tab-poe-accuracy` collects the measurement accuracy derived on
 :doc:`power-sourcing` from the bands in which the standard allows either
@@ -52,11 +52,12 @@ On a powered-device port the software checks that the board stays within
 its assigned class. The standard measures the powered device's average
 power over a sliding 1 s window (:clause:`145.3.8.2`).
 
-The limits act on four time scales
-----------------------------------
+Limits on a powered port
+------------------------
 
 :numref:`tab-poe-limits` lists the limits that apply while a power sourcing
-equipment port is powered, from the fastest to the slowest
+equipment port is powered, on time scales from 10 µs to 4 s, from the
+fastest to the slowest
 (:clause:`145.2.10.8` to :clause:`145.2.10.13`).
 
 .. list-table:: Limits on a powered port, fastest first
@@ -137,8 +138,8 @@ Between 10 µs and 8.2 ms the template follows a fixed energy limit:
 At 10 µs this gives 50 A, at 1 ms 5 A, and at 8.2 ms 1.75 A, where the
 template joins the flat 1.75 A section.
 
-The switch's safe operating area sets the fastest response
-----------------------------------------------------------
+Switch safe operating area
+--------------------------
 
 The fast fault comparator must keep the current inside the template and the
 switch inside its :wikipedia:`safe operating area <Safe_operating_area>`.
@@ -180,8 +181,8 @@ current rating. For reference, the TPS23881 turns its switch off within
 [POE-TPS23881]_ (Electrical Characteristics). Faults in the converters have
 their own response times (:ref:`conv-fault-times`).
 
-The supply must stay steady and quiet
--------------------------------------
+Supply voltage, ripple and noise
+--------------------------------
 
 The port voltage must stay above 45.3 V (Type 3) or 48.4 V (Type 4) through
 transients of 30 µs to 250 µs, and inside the output range for longer

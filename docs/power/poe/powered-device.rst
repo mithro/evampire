@@ -1,17 +1,18 @@
 .. _poe-pd-side:
 
-What a powered device must do
-=============================
+Powered device requirements
+===========================
 
 This page lists what the end that receives power, port A on a
 first-version board, must do at each step of the sequence on
 :doc:`sequence`.
 
-Accept either polarity on either pair set
------------------------------------------
+Polarity bridges
+----------------
 
-The powered device does not know which pair set will carry power or which
-pair will be positive (:doc:`basics`). It therefore puts a
+The powered device accepts either polarity on either pair set, because it
+does not know which pair set will carry power or which pair will be
+positive (:doc:`basics`). It therefore puts a
 :wikipedia:`full-wave bridge rectifier <Diode_bridge>` on each pair set and
 joins the two outputs. The joined outputs are the positive and negative
 inputs of the rest of the circuit.
@@ -30,8 +31,8 @@ bridge must not conduct backwards during detection, because a
 single-signature powered device must show an invalid signature on one
 pair set while 3.7 V to 57 V is applied to the other (:clause:`145.3.5`).
 
-Show a 25 kΩ detection signature
---------------------------------
+Detection signature
+-------------------
 
 Over the whole range of 2.7 V to 10.1 V at its input, a powered device
 shows a valid :term:`detection signature` when (:clause:`Table 145-21 <145>`):
@@ -136,8 +137,8 @@ larger than 0.12 µF, so it must stay disconnected during detection. The
 
 .. _poe-class-signature:
 
-Draw a class signature current during each class event
-------------------------------------------------------
+Class signature
+---------------
 
 During each class event the powered device draws one of five class
 signature currents (:clause:`Table 145-24 <145>`), listed in
@@ -251,8 +252,8 @@ holds 2.5 V across the class resistor (as the TPS2378 does
 The rest, 0.11 W, is in the class resistor. The regulator dissipates about
 0.8 W for the length of each class event, up to 105 ms for the first.
 
-Recognise mark events and resets
---------------------------------
+Mark events and resets
+----------------------
 
 Between class events the voltage falls into the mark range, 6.9 V to
 10.1 V at the powered device. The powered device then draws 0.25 mA to
@@ -285,8 +286,8 @@ powered device drew more than class 1 power during the measurement, it then
 draws no more than the measured power, unless it negotiates more over
 LLDP, up to its requested class (:clause:`145.3.8.2`).
 
-Turn on with hysteresis
------------------------
+Turn-on hysteresis
+------------------
 
 The powered device draws no load current until its input passes a turn-on
 voltage between 30 V and 42 V, and turns off again when the input falls
@@ -317,8 +318,8 @@ Characteristics).
 
 .. _poe-pd-inrush:
 
-Limit the inrush current and the start-up power
------------------------------------------------
+Inrush current and start-up power
+---------------------------------
 
 After turn-on the powered device charges its input capacitor. It draws less
 than 0.4 A for classes 1 to 6, or 0.8 A for classes 7 and 8, until 80 ms
@@ -376,8 +377,8 @@ then charged before the power sourcing equipment ends its inrush period,
 50 ms at the earliest. Only then does the controller let the input converter
 start (:doc:`pd-controller`).
 
-Keep drawing the maintain power signature
------------------------------------------
+Maintain power signature
+------------------------
 
 :doc:`sequence` gives the minimum current and pulse timing. A board that
 always draws a steady power meets it if the current stays above the
@@ -441,8 +442,8 @@ real design makes the pulses longer than 7 ms.
 
 .. _poe-pd-dll:
 
-Take part in Data Link Layer classification
--------------------------------------------
+Data Link Layer classification
+------------------------------
 
 Once the link is up, a Type 2 powered device, and a Type 3 or Type 4
 powered device that requests class 4 or higher, must also take part in
@@ -455,8 +456,8 @@ user an active indication if it is underpowered (:clause:`145.3.6`). It
 stays within the assigned class until the exchange raises the allocation
 (:ref:`poe-demotion`).
 
-An alternative: accept passive power as a fallback input
---------------------------------------------------------
+Passive power as a fallback input
+---------------------------------
 
 Some equipment puts a fixed 24 V or 48 V on the cable with no detection or
 classification, called

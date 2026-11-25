@@ -7,8 +7,8 @@ This page describes an Ethernet port that can be either a powered device
 or power sourcing equipment, how its role can be chosen, and the safety
 rules that any choice must keep.
 
-Power over Ethernet has no role swap
-------------------------------------
+No role swap
+------------
 
 In the full design either Ethernet port can take either role
 (:ref:`board configurations <tab-power-board-configs>`). Power over
@@ -38,8 +38,11 @@ for 4-pair power (:doc:`pse-sequencing`). The full design has no coupling
 transformers, so this power path is the one its transformer-free front end
 provides (:doc:`../../ethernet/magnetics/index`).
 
-The two sets must not both be connected
----------------------------------------
+Disconnect switches
+-------------------
+
+The powered-device blocks and the power sourcing equipment channels must
+not both be connected to the cable at once, for two reasons.
 
 The powered-device signature would appear in parallel with the remote
 powered device, so the port's own power sourcing equipment would measure
@@ -87,8 +90,8 @@ switch; the first reason remains.
 Each path therefore has a disconnect switch rated for the cable voltage and
 surges, turned on only for the selected role.
 
-The role can be fixed or chosen automatically
----------------------------------------------
+Role choice
+-----------
 
 Two ways of choosing the role are possible:
 
@@ -107,8 +110,8 @@ Chosen automatically
 Which method is used is an open question. Either must keep the safety
 rules below.
 
-Safety rules that any role choice keeps
----------------------------------------
+Safety rules
+------------
 
 Never apply power without a valid detection
    This rule applies to every pair set separately (:clause:`145.2.6`). In

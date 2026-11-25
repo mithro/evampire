@@ -7,8 +7,8 @@ This page shows how the software chooses the class that a power sourcing
 equipment port offers, from the power on the input port, with worked
 examples for USB Power Delivery inputs and Power over Ethernet inputs.
 
-The input power can never be switched straight through
-------------------------------------------------------
+No direct pass-through
+----------------------
 
 Power arriving on an Ethernet port cannot be switched straight through to
 the other. At a powered device the voltage can be as low as 37 V
@@ -18,8 +18,8 @@ Power Delivery input is at most 48 V. The power therefore passes onto the
 internal power bus and through the high-voltage converter
 (:ref:`power-flow`, :doc:`../converters/index`).
 
-The software picks the highest class that fits
-----------------------------------------------
+Highest class that fits
+-----------------------
 
 The software first works out the power left for the outputs, as on
 :ref:`power-translation`:

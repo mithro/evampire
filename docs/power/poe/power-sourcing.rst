@@ -1,14 +1,14 @@
 .. _poe-pse-side:
 
-What power sourcing equipment must do
+Power sourcing equipment requirements
 =====================================
 
 This page lists what the end that supplies power, port B on a
 first-version board, must do at each step of the sequence on
 :doc:`sequence`, and how accurately it must measure.
 
-Power only a valid detection signature
---------------------------------------
+Detection before power
+----------------------
 
 Power sourcing equipment must not apply the operating voltage to a pair set
 that has not shown a valid detection signature (:clause:`145.2.6`). This
@@ -16,8 +16,8 @@ rule protects equipment that was not designed for Power over Ethernet. Such
 equipment connects its centre taps only through capacitors, so it looks
 like an open circuit at DC, fails detection and receives no power.
 
-Detect with two measurements
-----------------------------
+Two-point detection
+-------------------
 
 The power sourcing equipment applies at least two test voltages, or forces
 two test currents, and measures the response. During detection it may
@@ -139,8 +139,8 @@ power sourcing equipment waits at least 2 s before trying again, unless it
 measured an open circuit above 0.5 MΩ (:clause:`Table 145-16 <145>`,
 item 23, and :clause:`145.2.6.5`).
 
-Check how the pair sets connect before using both
--------------------------------------------------
+Connection check
+----------------
 
 Power sourcing equipment that will power both pair sets first runs a
 *connection check*. It finds out whether the two pair sets lead to one
@@ -152,8 +152,8 @@ valid signature on each regardless (:clause:`145.3.5`). Detection must
 start within 0.4 s of the end of the connection check
 (:clause:`Table 145-10 <145>`).
 
-Classify with a limited current
--------------------------------
+Classification
+--------------
 
 After a valid detection the power sourcing equipment raises the port to
 15.5 V to 20.5 V and limits the current to between 51 mA and 100 mA
@@ -209,8 +209,8 @@ Power sourcing equipment that has less than class 3 power available does
 not power a powered device that requests more than it has
 (:clause:`145.2.11`).
 
-Power up within 400 ms with a limited current
----------------------------------------------
+Power-up and inrush
+-------------------
 
 The power sourcing equipment reaches full power within 400 ms of the end of
 detection, otherwise it starts again with detection
@@ -247,8 +247,8 @@ must supply at least 5 mA from 0 V to 10 V and 60 mA from 10 V to 30 V
 (:clause:`145.2.10.7`). The lower current at low voltage reduces the
 power in the switch while most of the supply voltage is across it.
 
-Supervise the port while it is powered
---------------------------------------
+Supervision while powered
+-------------------------
 
 While the port is powered, the power sourcing equipment holds its output
 voltage (:numref:`tab-poe-pse-voltage`), keeps its ripple and noise within
@@ -263,8 +263,8 @@ removing power because of a fault, it waits at least 750 ms before trying
 again (item 25). When it turns a port off, the port falls below 2.8 V
 within 500 ms (items 16 and 17).
 
-Two pair sets need two channels
--------------------------------
+Two channels for 4-pair power
+-----------------------------
 
 A port that powers both pair sets has two *channels*, each with its own
 switch, current measurement and current limit, because the standard limits

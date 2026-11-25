@@ -1,16 +1,17 @@
 .. _poe-pse-sequencing:
 
-Supplying power, sequenced in software
-======================================
+Software-sequenced power sourcing
+=================================
 
 This page describes the circuit blocks of a power sourcing equipment port
 whose detection and classification are sequenced by evampire's software,
 the timing that the software must meet, and the 44 V to 57 V supply.
 
-Software runs the sequence; hardware does the fast parts
---------------------------------------------------------
+Software and hardware roles
+---------------------------
 
-Software on evampire's processor runs the steps of :doc:`power-sourcing`:
+Software on evampire's processor runs the steps of the
+:doc:`power sourcing equipment requirements <power-sourcing>`:
 it sets each test voltage or current, reads the measurements, decides, and
 switches the power on (:ref:`req-power-control`). Once the link is up it
 also answers LLDP power requests (:doc:`lldp`,
@@ -72,8 +73,8 @@ Switch and sense resistor
    1 % sense resistor for the TPS23881 [POE-TPS23881]_ (Application and
    Implementation).
 
-The software has millisecond deadlines
---------------------------------------
+Software timing
+---------------
 
 The steps have time windows of a few milliseconds and longer
 (:numref:`tab-poe-step-times`). :numref:`tab-poe-sw-timing` lists the
@@ -167,8 +168,8 @@ ports, one for each pair set. The LTC4279 runs a port without a host processor
 [POE-LTC4279]_; the LTC4291-1 and LTC4292 pair carries its host link
 across a transformer [POE-LTC4291]_.
 
-The supply sits inside the output range
----------------------------------------
+Port supply
+-----------
 
 The port needs a supply inside the output range of its type
 (:numref:`tab-poe-pse-voltage`). A value near 54 V, as in the TPS23881
@@ -185,8 +186,8 @@ fuse rated for at least 60 V DC [POE-TPS23881]_ (Application and
 Implementation). The port capacitance during detection is limited to
 520 nF (:clause:`Table 145-7 <145>`).
 
-Two alternatives for the supply
--------------------------------
+Supply alternatives
+-------------------
 
 A switched-capacitor supply for low classes
    Classes 1 and 2 need at most 6.7 W at the power sourcing equipment

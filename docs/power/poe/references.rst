@@ -1,5 +1,5 @@
-References for the Power over Ethernet pages
-============================================
+References
+==========
 
 The sources cited on the Power over Ethernet pages, grouped by kind. Each
 citation in the text gives the section or table used. The standards

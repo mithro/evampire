@@ -7,8 +7,8 @@ This page describes how the software shares the power budget when a power
 sourcing equipment port supplies power at the same time as other output
 ports, and how it moves power between them safely.
 
-The offers on all outputs add up to the budget
-----------------------------------------------
+Offers within the budget
+------------------------
 
 Several ports can supply power at once (:ref:`power-sharing`): on a full
 design board, two USB Type-C ports and an Ethernet port, or both Ethernet
@@ -42,8 +42,8 @@ For example, with :math:`P_\text{out} = 80\ \text{W}`, a class 5 Ethernet
 output takes 45 W and leaves 35 W for the USB Type-C ports together. The USB
 offers that fit in 35 W are described on :doc:`../usb-pd/index`.
 
-Power over Ethernet allocations change in steps
------------------------------------------------
+Allocation changes
+------------------
 
 A USB Power Delivery source can change its offer while a device is
 connected, by sending a new list of offers. A power sourcing equipment port
@@ -64,8 +64,8 @@ but not only on how much power the powered device has drawn in the past
 (:clause:`145.2.11`). If the powered device uses autoclass, the measured
 draw plus its margin is a valid allocation (:clause:`145.2.8`).
 
-Power is moved by lowering first
---------------------------------
+Moving power between ports
+--------------------------
 
 When a device on one port is unplugged or uses less than its share, the
 software raises the offer on another port. When a new device is plugged in,

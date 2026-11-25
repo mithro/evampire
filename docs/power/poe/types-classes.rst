@@ -7,8 +7,8 @@ This page lists the four types and nine classes of Power over Ethernet, the
 power each class gives at each end of the cable, and how the cable's
 resistance links the two.
 
-Four types set the rules each end follows
------------------------------------------
+The four types
+--------------
 
 A :term:`type <Type (Power over Ethernet)>` is a set of rules that power
 sourcing equipment or a powered device follows. :numref:`tab-poe-types`
@@ -46,8 +46,8 @@ The highest classes come from :clause:`Table 145-11 <145>` and
 device that does no classification counts as class 0, which Types 3 and 4
 treat as class 3 (:clause:`145.2.8`).
 
-Each class grants a fixed power
--------------------------------
+Class power
+-----------
 
 A :term:`class` is a number that stands for a maximum power. The powered
 device asks for a class during classification (:doc:`sequence`), and the
@@ -116,8 +116,8 @@ for no longer than 50 ms at a time and for no more than 5 % of a 1 s window
 
 .. _poe-cable-loss:
 
-The cable takes the difference between the two powers
------------------------------------------------------
+Power lost in the cable
+-----------------------
 
 The power at the power sourcing equipment and the power at the powered
 device differ by the power lost in the cable. The calculation below shows
@@ -212,8 +212,8 @@ and 52 V. A shorter or thicker cable loses less.
 
 .. _poe-lowest-voltage:
 
-The cable sets the lowest voltage at the powered device
--------------------------------------------------------
+Lowest voltage at the powered device
+------------------------------------
 
 The same model gives the lowest voltage at which the powered device must
 still work. The powered device draws :math:`P_\text{PD}` at a voltage

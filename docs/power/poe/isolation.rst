@@ -7,8 +7,8 @@ This page gives the isolation that the standard requires between the cable
 and the rest of the equipment, and sets out the three routes by which a
 board built around evampire can provide it.
 
-The standard requires isolation from accessible conductors
-----------------------------------------------------------
+Required isolation
+------------------
 
 Powered devices and power sourcing equipment must be isolated between all
 the cable conductors and every accessible external conductor, including
@@ -28,8 +28,8 @@ There must be no breakdown, and the insulation resistance afterwards must
 be at least 2 MΩ at 500 V DC. Unlike a surge, this stress must be blocked;
 a clamp across the barrier would fail the test (:doc:`hv-limits`).
 
-The environment decides whether ports may share a ground
---------------------------------------------------------
+Environments A and B
+--------------------
 
 The standard distinguishes two environments (:clause:`145.4.1.1`):
 
@@ -48,8 +48,10 @@ cable-side ground and supply. In Environment B they may not, and each
 Ethernet port needs its own isolated domain. Which environment the board
 targets is an open question.
 
-The barrier can sit in two places
----------------------------------
+Barrier position
+----------------
+
+The barrier can sit in one of two places:
 
 Barrier between evampire and the cable
    evampire's ground is shared with the USB Type-C connectors and any other
@@ -68,8 +70,10 @@ The first-version board's data already crosses the coupling transformers.
 The full design has none, so the data path needs isolation too
 (:doc:`../../ethernet/magnetics/index`).
 
-Three routes provide the barrier
---------------------------------
+Routes to the barrier
+---------------------
+
+Three routes can provide the barrier:
 
 External high-voltage parts
    High-voltage capacitors in the data path, an isolated converter for
