@@ -3,10 +3,10 @@
 Current advertisement with Rp
 =============================
 
-How the source's pull-up and the sink's pull-down on the
+The source's pull-up and the sink's pull-down on the
 :term:`configuration channel` tell each end what is attached and how much
-current the sink may draw at 5 V, and the voltage thresholds each end
-measures.
+current the sink may draw at 5 V. Each end measures the voltage on the
+wire against thresholds.
 
 The specification calls this mechanism :term:`USB Type-C Current`
 (:typec:`Section 4.6.2.1`). It needs no messages and no processor: a

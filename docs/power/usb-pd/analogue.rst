@@ -3,9 +3,10 @@
 Analogue circuits for one port
 ==============================
 
-The analogue circuits that connect one evampire USB Type-C port to its
-:term:`CC` pins and to :term:`VBUS`: the requirement for each, the on-chip
-and external options, and reference examples from commercial controllers.
+Each evampire USB Type-C port connects to its :term:`CC` pins and to
+:term:`VBUS` through a set of analogue circuits. Each circuit has a
+requirement and both on-chip and external options, and commercial
+controllers give reference examples.
 
 :numref:`fig-usbpd-port-blocks` shows the blocks, from the connector pins to
 the processor. Each port has its own set; the number of ports in each board
@@ -15,8 +16,7 @@ The processor's part, and the optional timer, are described on
 blocks has its own page, :ref:`usbpd-cc-protection`, and the voltage limits
 of the process that decide each on-chip option are on
 :ref:`usbpd-process-limits`. The values commercial controllers reach for each
-block are collected at the end of the page, in
-:ref:`usbpd-analogue-examples`.
+block are collected in :ref:`usbpd-analogue-examples`.
 
 .. graphviz:: port-blocks.dot
    :name: fig-usbpd-port-blocks
@@ -123,10 +123,11 @@ pull-up current of its level, or the source reads Ra or an open pin and does
 not turn VBUS on. With a current-source Rp the window is above 0.260 V and
 below 1.321 V at the default level, above 0.675 V and below 1.441 V at
 1.5 A, and above 0.879 V and below 2.432 V at 3.0 A
-(:numref:`tab-usbpd-src-thresholds`, :typec:`Table 4-37`). This page
-keeps a margin below the upper thresholds. At the default and 1.5 A levels
-it uses at most 1.32 V, the top of the voltage-clamp Rd
-(:typec:`Section 4.8.5`). At 3.0 A it uses at most 2.181 V, the top of the
+(:numref:`tab-usbpd-src-thresholds`, :typec:`Table 4-37`). The
+dead-battery path keeps :math:`V_\text{CC}` a margin below the upper
+thresholds. At the default and 1.5 A levels
+it holds :math:`V_\text{CC}` at or below 1.32 V, the top of the voltage-clamp Rd
+(:typec:`Section 4.8.5`). At 3.0 A it holds it at or below 2.181 V, the top of the
 range for an Rd within ± 20 % (:typec:`Table 4-35`).
 
 For example, take a standard 6 V NMOS at its highest documented threshold,

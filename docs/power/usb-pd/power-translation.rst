@@ -3,13 +3,13 @@
 USB offers from Power over Ethernet
 ===================================
 
-How evampire's software turns the power granted by
+evampire's software turns the power granted by
 :term:`Power over Ethernet` into valid :term:`USB Power Delivery` source
 offers, and, in the other direction, a USB contract into a Power over
 Ethernet :term:`class`.
 
-The :ref:`power-translation` requirement sets out this translation. The
-page covers the "Ethernet in, USB out" mode first
+The :ref:`power-translation` requirement sets out this translation, for
+the "Ethernet in, USB out" mode first and then the reverse
 (:ref:`power-modes`). :doc:`../poe/index` explains how a class is detected
 and granted.
 

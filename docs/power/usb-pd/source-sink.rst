@@ -3,9 +3,9 @@
 Source and sink duties
 ======================
 
-The steps a :term:`source` and a :term:`sink` each follow to set up and keep
-a power :term:`contract`, and how evampire's software builds its offer from
-the :ref:`power budget <power-budget>`.
+A :term:`source` and a :term:`sink` each follow their own steps to set up
+and keep a power :term:`contract`, and evampire's software builds its offer
+from the :ref:`power budget <power-budget>`.
 
 The message exchange itself, and its time limits, are on
 :doc:`negotiation`.

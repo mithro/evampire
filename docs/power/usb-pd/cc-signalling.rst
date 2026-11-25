@@ -3,10 +3,10 @@
 Electrical signal on the CC wire
 ================================
 
-The electrical signal that carries :term:`USB Power Delivery` messages on the
-:term:`CC` wire: how each bit is coded, the bit rate, the transmitter, the
-DC level and the receiver. How the bits are grouped into packets is
-described on :doc:`packets`.
+:term:`USB Power Delivery` messages travel on the :term:`CC` wire as an
+electrical signal with its own bit coding, bit rate, transmitter, DC level
+and receiver. How the bits are grouped into packets is described on
+:doc:`packets`.
 
 Messages are sent on the CC wire that also carries the DC voltage set by the
 :term:`Rp` and :term:`Rd` resistors (:ref:`usbpd-cc-voltages`).

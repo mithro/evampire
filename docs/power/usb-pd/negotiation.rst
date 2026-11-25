@@ -3,9 +3,9 @@
 Contract negotiation
 ====================
 
-The message exchange that sets up a power :term:`contract` between a
-:term:`source` and a :term:`sink`, the acknowledgement of each message, and
-the time limits on both ends.
+A power :term:`contract` between a :term:`source` and a :term:`sink` is set
+up by a message exchange, in which each message is acknowledged and both
+ends must meet time limits.
 
 Message sequence
 ----------------

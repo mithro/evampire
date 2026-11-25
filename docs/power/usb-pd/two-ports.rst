@@ -3,9 +3,9 @@
 Two ports and budget sharing
 ============================
 
-How a board with two USB Type-C ports uses them together, and how the
-software moves power between them while devices stay connected. The number
-of USB Type-C ports in each configuration is given in
+A board with two USB Type-C ports can use them together, and the software
+moves power between them while devices stay connected. The number of USB
+Type-C ports in each configuration is given in
 :ref:`board configurations <tab-power-board-configs>`.
 
 Port role combinations
@@ -37,8 +37,8 @@ board can work in more ways than with one:
 Whenever two or more ports supply power at once, their offers together must
 stay within the :ref:`power budget <power-budget>`. The rule and how the
 software applies it on every kind of port are on
-:ref:`sharing the budget <power-sharing>`. This page covers what USB Power
-Delivery allows when the software changes a USB port's share.
+:ref:`sharing the budget <power-sharing>`. USB Power Delivery sets what is
+allowed when the software changes a USB port's share.
 
 .. _usbpd-sharing:
 

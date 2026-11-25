@@ -3,10 +3,9 @@
 Power at start-up
 =================
 
-The power a USB Type-C source makes available to evampire as a
-:term:`sink` before any :term:`USB Power Delivery` negotiation, at each
-:term:`USB Type-C Current` level, and what a board without power can count
-on.
+Before any :term:`USB Power Delivery` negotiation, a USB Type-C source
+makes power available to evampire as a :term:`sink` at one of the
+:term:`USB Type-C Current` levels.
 
 A board that takes all its power from USB Type-C starts from nothing
 (:ref:`req-power-control`). Until its processor is running, only the

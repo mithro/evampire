@@ -3,8 +3,9 @@
 Source, sink and the configuration channel
 ==========================================
 
-What a USB Type-C power connection is made of: the two ends, the contacts
-and wires they use, and the two ways in which they agree on power.
+A USB Type-C power connection joins two ends through the contacts and
+wires of the cable. The two ends agree on power either with resistors on
+the configuration channel or with USB Power Delivery messages.
 
 A powered :wikipedia:`USB-C` cable joins a :term:`source`, the end that
 supplies power, to a :term:`sink`, the end that receives it. A

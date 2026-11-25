@@ -1,8 +1,8 @@
 Power use in evampire
 =====================
 
-These pages cover how evampire's software uses USB Power Delivery to move
-power.
+evampire's software uses USB Power Delivery to move power between Power
+over Ethernet and its USB Type-C ports.
 
 :doc:`power-translation`
    The USB source offers that fit the power granted by Power over Ethernet.
