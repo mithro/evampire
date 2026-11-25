@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="348" viewBox="0 0 680 348">
+<title>Powered device signature</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="348" fill="#ffffff"/>
+<rect x="70.0" y="64.3" width="440.0" height="172.7" rx="0" fill="#e2f0d9" stroke="none" stroke-width="1.0"/>
+<rect x="70.0" y="20.0" width="440.0" height="280.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
+<line x1="70.0" y1="300.0" x2="510.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="300.0" x2="70.0" y2="300.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="304.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">0</text>
+<line x1="70.0" y1="237.0" x2="510.0" y2="237.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="237.0" x2="70.0" y2="237.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="241.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">2.7</text>
+<line x1="70.0" y1="160.0" x2="510.0" y2="160.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="160.0" x2="70.0" y2="160.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="164.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">6</text>
+<line x1="70.0" y1="64.3" x2="510.0" y2="64.3" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="64.3" x2="70.0" y2="64.3" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="68.3" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">10.1</text>
+<line x1="70.0" y1="20.0" x2="510.0" y2="20.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="20.0" x2="70.0" y2="20.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="24.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">12</text>
+<text x="14.0" y="160.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 160.0)">voltage at the PD input (V)</text>
+<line x1="70.0" y1="20.0" x2="70.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="70.0" y1="300.0" x2="70.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
+<text x="70.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
+<line x1="158.0" y1="20.0" x2="158.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="158.0" y1="300.0" x2="158.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
+<text x="158.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">100</text>
+<line x1="246.0" y1="20.0" x2="246.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="246.0" y1="300.0" x2="246.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
+<text x="246.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">200</text>
+<line x1="334.0" y1="20.0" x2="334.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="334.0" y1="300.0" x2="334.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
+<text x="334.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">300</text>
+<line x1="422.0" y1="20.0" x2="422.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="422.0" y1="300.0" x2="422.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
+<text x="422.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">400</text>
+<line x1="510.0" y1="20.0" x2="510.0" y2="300.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="510.0" y1="300.0" x2="510.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
+<text x="510.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">500</text>
+<text x="290.0" y="336.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">current (µA)</text>
+<text x="76.0" y="78.3" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#548235">detection range 2.7–10.1 V</text>
+<polyline points="70.0,300.0 494.1,20.0" fill="none" stroke="#c55a11" stroke-width="2.0"/>
+<polyline points="70.0,255.7 426.9,20.0" fill="none" stroke="#c55a11" stroke-width="2.0" stroke-dasharray="6,3"/>
+<polyline points="70.0,300.0 510.0,160.0" fill="none" stroke="#c00000" stroke-width="2.0" stroke-dasharray="2,3"/>
+<polyline points="70.0,300.0 304.7,20.0" fill="none" stroke="#c00000" stroke-width="2.0" stroke-dasharray="2,3"/>
+<line x1="520.0" y1="36.0" x2="538.0" y2="36.0" stroke="#c55a11" stroke-width="1.8"/>
+<text x="542.0" y="40.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#000000">24.9 kΩ</text>
+<line x1="520.0" y1="53.0" x2="538.0" y2="53.0" stroke="#c55a11" stroke-width="1.8" stroke-dasharray="6,3"/>
+<text x="542.0" y="57.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#000000">24.9 kΩ with</text>
+<text x="542.0" y="74.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#000000">1.9 V offset</text>
+<line x1="520.0" y1="87.0" x2="538.0" y2="87.0" stroke="#c00000" stroke-width="1.8" stroke-dasharray="2,3"/>
+<text x="542.0" y="91.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#000000">12 kΩ and</text>
+<text x="542.0" y="108.0" font-family="Helvetica, Arial, sans-serif" font-size="11.2" text-anchor="start" font-weight="normal" fill="#000000">45 kΩ: invalid</text>
+<text x="520.0" y="150.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#548235">valid: slope</text>
+<text x="520.0" y="165.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#548235">23.7–26.3 kΩ,</text>
+<text x="520.0" y="180.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#548235">offset ≤ 1.9 V</text>
+</svg>
