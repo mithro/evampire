@@ -148,7 +148,7 @@ def impulses():
                 "time (µs)", "voltage (kV)")
     for t1, t2, pk, col, lab, lx, ly in ((1.2, 50, 2.4, BLUE,
                                        "1.2/50 µs, 2400 V: port without "
-                                       "Power over Ethernet", 20, 2.3),
+                                       "Power over Ethernet", 120, 2.42),
                                       (10, 700, 1.5, ORANGE,
                                        "10/700 µs, 1500 V: port with Power "
                                        "over Ethernet", 250, 1.38)):
@@ -158,7 +158,7 @@ def impulses():
         b.append(text(a.x(lx), a.y(ly), lab, size=12, fill=col))
     b.append(line(a.x(0), a.y(2.121), a.x(1000), a.y(2.121), RED, 1.4,
                   dash="6,4"))
-    b.append(text(a.x(990), a.y(2.121) - 6,
+    b.append(text(a.x(990), a.y(2.121) + 16,
                   "peak of the 1500 V rms test: 2121 V", "end", 12,
                   fill=RED))
     return svg(w, h, b)

@@ -127,19 +127,25 @@ def choke_panel(x0, title, same_way, result):
 
 
 def choke():
-    w, h = 640, 315
-    b = []
-    b += choke_panel(10, "Differential (data) current", False,
+    """The two panels stacked, so that the text stays readable when the
+    figure is scaled to a narrow screen."""
+    w, h = 310, 640
+    b = ['<g transform="translate(0,0)">']
+    b += choke_panel(0, "Differential (data) current", False,
                      ["out on one wire, back on the other:",
                       "the fluxes cancel, low inductance"])
+    b.append('</g><g transform="translate(-330,290)">')
     b += choke_panel(330, "Common-mode current", True,
                      ["the same way on both wires:",
                       "the fluxes add, high impedance"])
-    b.append(line(320, 10, 320, 275, GREY, 0.8))
-    b.append(text(320, 302, "● marks the start of each winding: current "
-                  "flowing into both dots makes flux in the same direction",
+    b.append("</g>")
+    b.append(line(10, 285, w - 10, 285, GREY, 0.8))
+    b.append(text(w / 2, 600, "● marks the start of each winding:",
                   size=12))
-    return svg(w, h, b)
+    b.append(text(w / 2, 618, "current into both dots makes flux",
+                  size=12))
+    b.append(text(w / 2, 636, "in the same direction", size=12))
+    return svg(w, h + 6, b)
 
 
 # ---------------------------------------------------------------------------
