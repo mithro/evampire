@@ -317,7 +317,10 @@ Driving high gives :math:`1.95\ \text{V} / 44\ \Omega = 44\ \text{mA}` to
 :math:`5.25\ \text{V} / 28\ \Omega = 188\ \text{mA}`, and at 28 Ω the
 driver and *RS* together dissipate
 :math:`5.25^2 / 28 = 0.98\ \text{W}`. The output stage and *RS* therefore
-have to carry up to 188 mA, the largest of the three cases.
+have to carry up to 188 mA. This is the largest of the three cases as
+long as *RS* is more than 1.35 V / 5.25 V = 0.26 of *ZDRV*, which is
+7.2 Ω when *ZDRV* is 28 Ω. A smaller *RS*, or one on chip behind the
+pad diode, makes the current with the driver off the largest.
 
 .. graphviz:: analogue/short.dot
    :name: fig-usbser-short
@@ -336,9 +339,12 @@ with the driver off, or the pad has to block it. An output stage blocks it
 if the PMOS pull-up's n-well and its gate both follow the higher of the pad
 and supply voltages (:numref:`fig-usbser-custom-stage`). The gate needs its
 own tracking path, a pass gate that lifts it to the pad voltage, because
-the 3.3 V pre-driver cannot drive it above 3.3 V. This blocks the short
-only while the driver is off; while it transmits, the currents above
-apply.
+the 3.3 V pre-driver cannot drive it above 3.3 V. The pad's ESD diode
+to the supply has to move as well: a standard pad has a diode from the pad
+to the 3.3 V supply, which would still carry the driver-off current. In
+the custom stage that diode is removed, or its cathode is tied to the
+tracked n-well instead of to 3.3 V. This blocks the short only while the
+driver is off; while it transmits, the currents above apply.
 
 Electrostatic discharge reaches the connector pins from people and cables.
 The gf180mcu I/O library targets 2000 V human body model, 200 V machine
@@ -474,9 +480,9 @@ Where the standard cells fall short, the process allows custom circuits:
 * *A custom full-speed I/O cell.* An output stage of 6 V devices, sized for
   the 28 Ω to 44 Ω range with an on-chip polysilicon resistor or an
   external series resistor. A pre-driver shapes matched rise and fall
-  edges, and the PMOS n-well and gate track the higher of the pad and
-  supply voltages, so that a 5.25 V short is blocked while the driver is
-  off.
+  edges, and the PMOS n-well, its gate and the cathode of the pad's ESD
+  diode track the higher of the pad and supply voltages, so that a
+  5.25 V short is blocked while the driver is off.
 * *A custom differential receiver* on analogue pads, with single-ended
   comparators and the SE0 filter beside it.
 * *Custom transistors* drawn from the existing layers, as on
@@ -492,15 +498,19 @@ Where the standard cells fall short, the process allows custom circuits:
 
 .. graphviz:: analogue/custom-stage.dot
    :name: fig-usbser-custom-stage
-   :caption: A custom output stage whose PMOS n-well and gate follow the
-             higher of the pad and supply voltages while the driver is off.
+   :caption: A custom output stage whose PMOS n-well, PMOS gate and ESD
+             diode cathode follow the higher of the pad and supply voltages
+             while the driver is off.
    :alt: Schematic: a PMOS pull-up from the 3.3 V supply and an NMOS
          pull-down to ground, both 6 V devices, drive the pad. A short can
-         bring VBUS at 5.25 V onto the pad. A well and gate tracking block,
-         connected to the supply and the pad, puts the PMOS n-well at the
-         higher of the two, and a pass gate lifts the off PMOS's gate to the
-         pad voltage, which the 3.3 V pre-driver cannot. With the n-well and gate fixed at 3.3 V,
-         the drain-to-well diode and the channel would conduct from the pad
+         bring VBUS at 5.25 V onto the pad. A well tracking block,
+         connected to the supply and the pad, drives a tracked n-well at the
+         higher of the two; the PMOS n-well and the cathode of the pad's ESD
+         diode connect to it. A pass gate between the pad and the PMOS gate
+         lifts the off PMOS's gate to the pad voltage, which the 3.3 V
+         pre-driver, also connected to the gate, cannot. With the n-well,
+         the ESD diode's cathode or the gate at 3.3 V, the drain-to-well
+         diode, the ESD diode or the channel would conduct from the pad
          into the supply.
    :align: center
 
