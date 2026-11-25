@@ -31,7 +31,7 @@ real cable samples before it is built in silicon.
        chosen reach, choice of cells and supply
      - Synthesis and power estimation for gf180mcu; FPGA run on captured
        cable samples
-   * - The 8 ns decision loop (:ref:`phy-int-decision-loop`)
+   * - The 8 ns :ref:`decision loop <phy-int-decision-loop>`
      - Look-ahead, pipelined decoder, faster cells for the loop only
      - Static timing of the loop at the slow corner after synthesis and
        layout
@@ -43,7 +43,7 @@ real cable samples before it is built in silicon.
      - Replica hybrid on the coupled pins, analogue echo canceller
      - Echo measured on a test chip with a real cable and the chosen
        isolation route
-   * - Clock recovery and training time (:doc:`clock-recovery`)
+   * - :doc:`Clock recovery <clock-recovery>` and training time
      - PLL and phase interpolator; digital timing recovery
      - Jitter of a test-chip PLL; timing recovery on an FPGA
    * - Line driver linearity and swing (:doc:`transmitter`)

@@ -222,8 +222,8 @@ transformer.
    :align: center
 
 Real transformers pass some common-mode signal through the capacitance
-between their windings at high frequencies, which is why a choke is added
-(:ref:`magnetics-choke`). Datasheets give the rejection as "common-mode
+between their windings at high frequencies, which is why a
+:ref:`choke <magnetics-choke>` is added. Datasheets give the rejection as "common-mode
 rejection": for example 33 dB to 43 dB from 30 MHz to 100 MHz for the Pulse
 H5007NL ([MAG-PULSE]_, electrical table), and 30 dB to 35 dB for the Bel
 0826-1G1T-23-F ([MAG-BEL]_, electrical table).

@@ -203,8 +203,9 @@ models. The OSU 12-track library gives the same timing as the 9-track one
 Cell and supply options
 -----------------------
 
-The choice of cells and supply is open. What the decision loop needs depends on its structure
-(:ref:`phy-int-decision-loop`): its logic depth in carry stages, to be
+The choice of cells and supply is open. What the
+:ref:`decision loop <phy-int-decision-loop>` needs depends on its
+structure: its logic depth in carry stages, to be
 found by synthesis. Each option below can meet it under different
 conditions:
 
