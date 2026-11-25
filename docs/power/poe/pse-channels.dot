@@ -1,0 +1,53 @@
+// A power sourcing equipment port that powers both pair sets: the positive
+// pairs share the supply, and each negative pair has its own channel with
+// a switch, a sense resistor and a current limit. From power-sourcing.rst
+// (IEEE 802.3 Table 145-16, 145.4.1.1.1 and 145.4.1.1.2).
+//
+// Fill colours: power circuits #fff2cc, evampire #dbe8f5, connectors and
+// external parts #ffffff. Bold edges carry power, dashed edges control
+// and measurements.
+// Fixed grid (positions in inches): supply on the left, port on the right,
+// channel A above channel B.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pse_channels {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#fff2cc",
+           fontname="Helvetica", fontsize=11, width=1.5, height=0.5,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.7];
+
+    sup  [pos="0.9,3.5!", label="Supply\n44–57 V", width=1.2, height=0.55];
+    ret  [pos="1.5,0.4!", label="Supply return", width=1.3, height=0.4];
+    port [pos="6.4,2.25!", label="Port\n(RJ45)", width=1.0, height=2.9,
+          fillcolor="#ffffff"];
+
+    swa  [pos="4.0,2.5!", label="Switch A"];
+    rsa  [pos="2.4,2.5!", label="Sense A", width=1.0];
+    swb  [pos="4.0,0.9!", label="Switch B"];
+    rsb  [pos="2.4,0.9!", label="Sense B", width=1.0];
+    lim  [pos="4.0,1.7!", label="Current limits,\nset by software",
+          width=1.5, height=0.42, fillcolor="#dbe8f5"];
+
+    pp   [pos="5.9,3.5!", shape=point, width=0.01];
+    pa   [pos="5.9,2.5!", shape=point, width=0.01];
+    pb   [pos="5.9,0.9!", shape=point, width=0.01];
+    j    [pos="1.5,2.5!", shape=point, width=0.06];
+    k    [pos="1.5,0.9!", shape=point, width=0.06];
+
+    sup  -> pp   [penwidth=2.5, label="to the positive pairs of A and B"];
+    pa   -> swa  [penwidth=2.5, label="negative pair A", arrowhead=none];
+    swa  -> rsa  [penwidth=2.5];
+    rsa  -> j    [penwidth=2.5, arrowhead=none];
+    pb   -> swb  [penwidth=2.5, label="negative pair B", arrowhead=none];
+    swb  -> rsb  [penwidth=2.5];
+    rsb  -> k    [penwidth=2.5, arrowhead=none];
+    j    -> k    [penwidth=2.5, arrowhead=none];
+    k    -> ret  [penwidth=2.5];
+    lim  -> swa  [style=dashed, label="gate A"];
+    lim  -> swb  [style=dashed, label="gate B"];
+    rsa  -> lim  [style=dashed];
+    rsb  -> lim  [style=dashed];
+}
