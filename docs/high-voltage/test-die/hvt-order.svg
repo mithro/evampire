@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="474" viewBox="0 0 640 474" font-family="sans-serif" font-size="13">
+<rect width="640" height="474" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Order of work on each die</text>
+<rect x="60" y="44" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">1</text>
+<text x="72" y="65" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Contact check</text>
+<text x="568" y="65" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">substrate pad to substrate pad; OPEN to 150 V</text>
+<rect x="60" y="90" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="111" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">2</text>
+<text x="72" y="111" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P1 on groups 1 to 4</text>
+<text x="568" y="111" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">plain wells, drawn P-well, NAT, deep N-well</text>
+<line x1="320" y1="76" x2="320" y2="89" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="136" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="157" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">3</text>
+<text x="72" y="157" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Decision table</text>
+<text x="568" y="157" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">select the process assumption</text>
+<line x1="320" y1="122" x2="320" y2="135" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="182" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="203" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">4</text>
+<text x="72" y="203" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P2 on the large wells</text>
+<text x="568" y="203" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">doping profile; bias kept below their breakdown</text>
+<line x1="320" y1="168" x2="320" y2="181" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="228" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="249" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">5</text>
+<text x="72" y="249" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P1 on groups 5 and 6</text>
+<text x="568" y="249" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">field plates and floating rings</text>
+<line x1="320" y1="214" x2="320" y2="227" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="274" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="295" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">6</text>
+<text x="72" y="295" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P3 and P5</text>
+<text x="568" y="295" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">ring potential and punch-through</text>
+<line x1="320" y1="260" x2="320" y2="273" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="320" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">7</text>
+<text x="72" y="341" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P4</text>
+<text x="568" y="341" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">gated diodes</text>
+<line x1="320" y1="306" x2="320" y2="319" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="366" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="387" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">8</text>
+<text x="72" y="387" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P1 at 85 °C</text>
+<text x="568" y="387" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">a subset, to separate the mechanisms</text>
+<line x1="320" y1="352" x2="320" y2="365" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="60" y="412" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
+<text x="40" y="433" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">9</text>
+<text x="72" y="433" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Comparison</text>
+<text x="568" y="433" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">each structure against its prediction</text>
+<line x1="320" y1="398" x2="320" y2="411" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
+</svg>
