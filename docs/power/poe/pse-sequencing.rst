@@ -217,8 +217,9 @@ Supply alternatives
          switched-capacitor converter with a ratio of 3, which gives a 54 V
          port supply for classes 1 and 2. In the second, a USB extended
          power range source at a fixed 48 V feeds the port through a switch
-         with no converter, giving 45.1 to 48 V, above the 44 V minimum of
-         Type 1 but below the 50 V of Types 2 to 4.
+         with no converter, giving 45.1 to 50.9 V: above the 44 V minimum
+         of Type 1, but as low as 45.1 V, so it cannot be relied on to
+         reach the 50 V of Types 2 to 4.
    :align: center
 
 A switched-capacitor supply for low classes
@@ -253,8 +254,10 @@ A 48 V USB supply used directly
         - Lowest 48 V supply voltage at the source
         - V
 
-   45.1 V is above the 44 V minimum of Type 1 power sourcing equipment but
-   below the 50 V of Types 2 to 4. During a peak current the source may
+   The highest value is :math:`48\ \text{V} \times 1.05 + 0.5\ \text{V} =
+   50.9\ \text{V}`. The supply can be as low as 45.1 V, above the 44 V
+   minimum of Type 1 power sourcing equipment but below the 50 V of Types 2
+   to 4, so it cannot be relied on to reach 50 V. During a peak current the source may
    fall to 90 %, 43.2 V (:pd:`Table 4.7`), and the USB cable and the switch
    drop more. So a 48 V input could feed a Type 1 port without a converter
    only if those drops and peaks are excluded; this is an open question
@@ -265,8 +268,9 @@ A 48 V USB supply used directly
    :alt: Chart of voltage from 40 to 60 V. The output range is 44 to 57 V
          for Type 1 and 50 to 57 V for Types 2 to 4, with dashed lines at
          44, 50 and 52 V. A mark at 54 V shows a supply near 54 V. A 48 V
-         USB supply runs from its lowest value, 45.1 V, to 48 V nominal,
-         and falls to 43.2 V at a peak, below the 44 V Type 1 minimum.
+         USB supply runs from 45.1 V to 50.9 V around 48 V nominal, so it
+         cannot be relied on to reach 50 V, and falls to 43.2 V at a peak,
+         below the 44 V Type 1 minimum.
    :align: center
 
    A supply near 54 V inside the output range, and a 48 V USB supply used

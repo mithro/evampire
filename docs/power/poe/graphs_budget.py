@@ -143,7 +143,8 @@ def class_board():
         p = Plot(70, y0 + 20, 440, 200, (0, 40), (0, 8.6))
         body.append(text(p.left, y0 + 10, title, 12, weight="bold"))
         body.append(p.frame())
-        body += p.yticks([0, 2, 4, 6, 8], "highest class", fmt="{:g}")
+        body += p.yticks([2, 4, 6, 8], "highest class", fmt="{:g}")
+        body.append(text(p.left - 8, p.y(0) + 4, "none", 12, "end"))
         body += p.xticks([0, 10, 20, 30, 40], "board power (W)",
                          grid=False)
         for k, (pin, lab) in enumerate(inputs):
@@ -174,7 +175,7 @@ def supply_voltages():
     rows = [("Type 1 output range", 44, 57, OK),
             ("Types 2 to 4 output range", 50, 57, OK),
             ("supply near 54 V", 54, 54, SRC_INK),
-            ("48 V USB supply", 45.1, 48, EVP)]
+            ("48 V USB supply", 45.1, 50.9, EVP)]
     n = len(rows)
     p = Plot(190, 20, 450, 28 * n, (40, 60), (0, n))
     body = [p.frame()]
@@ -186,7 +187,8 @@ def supply_voltages():
         else:
             body.append(rect(p.x(lo), yc - 7, p.x(hi) - p.x(lo), 14, fill))
     yu = p.y(0.5)
-    body.append(text(p.x(48) + 4, yu + 4, "48 nominal", 9))
+    body.append(line(p.x(48), yu - 7, p.x(48), yu + 7, INK, 1.2))
+    body.append(text(p.x(50.9) + 4, yu + 4, "50.9", 9))
     body.append(line(p.x(43.2), yu - 10, p.x(43.2), yu + 10, BAD_INK, 2.0))
     body.append(text(p.x(43.2) - 4, yu + 4, "43.2 at a peak", 9, "end",
                      fill=BAD_INK))
@@ -195,10 +197,13 @@ def supply_voltages():
         body.append(line(p.x(v), p.top, p.x(v), p.bottom, GREY, 0.8, "3,3"))
     body += p.xticks([40, 44, 45.1, 50, 52, 54, 57, 60], "voltage (V)",
                      grid=False)
-    body.append(text(10, p.bottom + 58, "The 48 V supply is ± 5 % plus "
-                     "0.5 V in transitions; the switch and cable drop more.",
+    body.append(text(10, p.bottom + 58, "48 V ± 5 % plus 0.5 V in "
+                     "transitions (tick at 48 V): as low as 45.1 V, so it",
                      11, fill=GREY))
-    return svg(680, int(p.bottom + 70), body, "Supply voltages")
+    body.append(text(10, p.bottom + 74, "cannot be relied on to reach "
+                     "50 V. The switch and cable drop more.", 11,
+                     fill=GREY))
+    return svg(680, int(p.bottom + 86), body, "Supply voltages")
 
 
 if __name__ == "__main__":
