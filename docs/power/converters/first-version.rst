@@ -641,9 +641,9 @@ negotiates more power where needed.
 USB start-up
 ~~~~~~~~~~~~
 
-A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any USB Power
-Delivery negotiation, at the current its pull-up resistor advertises
-(:typec:`Table 4-27`, see :doc:`../usb-pd/index`).
+A USB charger supplies vSafe5V, 4.75 V to 5.5 V, before any
+:doc:`USB Power Delivery <../usb-pd/index>` negotiation, at the current its
+pull-up resistor advertises (:typec:`Table 4-27`).
 :numref:`tab-conv-usb-start-power` gives the power at the lowest voltage.
 
 .. list-table:: Power available from a USB source before negotiation, at 4.75 V
