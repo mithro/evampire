@@ -1,13 +1,13 @@
 External power stage control
 ============================
 
-This page sets out what evampire provides to control converters whose gate
-drivers and power transistors are external parts, as in the first version
-(:ref:`power-board-configs`, :ref:`requirements`). It covers the split
-between software and built-in hardware, the timing resolution and loop
-rates the control needs, how the converter sensing also serves power
-monitoring and limiting, the fault response times, and how the board starts
-before any software runs.
+In the first version, evampire controls converters whose gate drivers and
+power transistors are external parts (:ref:`power-board-configs`,
+:ref:`requirements`). The control is split between software and built-in
+hardware, and needs a timing resolution and loop rates set by the
+converters. The converter sensing also serves power monitoring and
+limiting, faults need set response times, and the board must start before
+any software runs.
 
 Functions on evampire
 ---------------------

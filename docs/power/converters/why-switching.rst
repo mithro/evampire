@@ -1,10 +1,10 @@
 Linear and switching converters
 ===============================
 
-This page compares the two ways of changing a DC voltage, the linear
-regulator and the switching converter, at the voltages and powers of
-evampire's power path. The converters themselves are described on
-:doc:`buck`, :doc:`boost` and :doc:`buck-boost`.
+A DC voltage can be changed by a linear regulator or by a switching
+converter. At the voltages and powers of evampire's power path, the two
+lose very different amounts of power. The converters themselves are
+described on :doc:`buck`, :doc:`boost` and :doc:`buck-boost`.
 
 Linear regulator losses
 -----------------------

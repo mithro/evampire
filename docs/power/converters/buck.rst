@@ -1,11 +1,12 @@
 Buck converter
 ==============
 
-This page explains the step-down converter, called a
-:wikipedia:`buck converter <Buck_converter>`: its parts, how the ratio of
-output to input voltage follows from the switch timing, the current ripple
-in its inductor, and its two modes of conduction. The input converter of an
-evampire board is a step-down converter (:ref:`power-flow`), and the
+The step-down converter, called a
+:wikipedia:`buck converter <Buck_converter>`, makes an output voltage lower
+than its input. Its ratio of output to input voltage follows from the
+timing of its switches. The current in its inductor ripples, and conducts
+continuously or discontinuously depending on the load. The input converter
+of an evampire board is a step-down converter (:ref:`power-flow`), and the
 four-switch buck-boost converter on :doc:`buck-boost` contains one.
 
 Parts and operation

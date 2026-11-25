@@ -1,12 +1,11 @@
 Converter control
 =================
 
-This page explains how a converter's switches are timed so that its output
-stays at the set voltage or current, and the circuits around the power
-stage that keep it safe: soft start, current limits, dead time and
-high-side gate drive. It ends with the trade-offs of the switching frequency
-and where the losses come from. What evampire itself provides for this is on
-:doc:`first-version`.
+A converter's switches are timed so that its output stays at the set
+voltage or current. Circuits around the power stage keep it safe: soft
+start, current limits, dead time and high-side gate drive. The switching
+frequency trades size against loss. What evampire itself provides for this
+is on :doc:`first-version`.
 
 Pulse-width modulation
 ----------------------

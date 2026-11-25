@@ -1,10 +1,11 @@
 Boost converter
 ===============
 
-This page explains the step-up converter, called a
-:wikipedia:`boost converter <Boost_converter>`, in the same way as
-:doc:`the buck converter <buck>`: its parts, its duty cycle, its inductor ripple and what limits
-it. On an evampire board the high-voltage converter, which produces the
+The step-up converter, called a
+:wikipedia:`boost converter <Boost_converter>`, makes an output voltage
+higher than its input from the same parts as :doc:`the buck converter
+<buck>`: two switches, an inductor and a capacitor. On an evampire board the
+high-voltage converter, which produces the
 44 V to 57 V for a power sourcing equipment port, is a step-up converter
 (:ref:`power-flow`).
 

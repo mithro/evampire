@@ -1,11 +1,11 @@
 Converter arrangement
 =====================
 
-This page sets out the voltages and currents that evampire's three converter
-functions must handle in each operating mode (:ref:`power-modes`), where
-the Power over Ethernet and USB Power Delivery ranges overlap, and the ways
-of arranging converters to cover them. The arrangement is an open decision;
-this page compares the options and lists what would decide between them.
+evampire's three converter functions must handle different voltages and
+currents in each operating mode (:ref:`power-modes`), and the Power over
+Ethernet and USB Power Delivery ranges overlap. Several arrangements of
+converters cover these ranges, and the choice between them is an open
+decision.
 
 The three conversions
 ---------------------

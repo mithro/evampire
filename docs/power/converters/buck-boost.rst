@@ -1,12 +1,12 @@
 Buck-boost and isolated converters
 ==================================
 
-This page explains converters whose output can be above or below their
-input. Several of evampire's conversions need one, because their input and
-output ranges cross (:doc:`arrangement`). It covers the inverting
-buck-boost converter, the four-switch buck-boost converter used in most USB
-Power Delivery sources, and the isolated flyback converter used in many
-Power over Ethernet powered devices.
+Some converters can make an output above or below their input. Several of
+evampire's conversions need one, because their input and output ranges
+cross (:doc:`arrangement`). They include the inverting buck-boost converter,
+the four-switch buck-boost converter used in most USB Power Delivery
+sources, and the isolated flyback converter used in many Power over
+Ethernet powered devices.
 
 Inverting buck-boost converter
 ------------------------------
