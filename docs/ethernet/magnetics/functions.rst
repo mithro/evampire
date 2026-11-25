@@ -143,7 +143,8 @@ peak of the alternating test.
    exponentials with the stated front and half-value times.
 
 The port passes when there is no insulation breakdown during the test, and
-the resistance afterwards is at least 2 MΩ, measured at 500 V. Annex J.1
+the resistance afterwards is at least 2 MΩ, measured at 500 V.
+:std:`Annex J.1 <802.3>`
 counts as breakdown a current that rises rapidly and without control. A
 steady current through a capacitor is therefore not breakdown, which
 matters for ports coupled through capacitors (:doc:`isolation`).
@@ -331,10 +332,10 @@ fields add, and it sees a high impedance.
 .. figure:: choke.svg
    :name: fig-magnetics-choke
    :alt: Two drawings of a ring core with wire plus wound on its top limb
-         and wire minus wound on its bottom limb. Left, differential
+         and wire minus wound on its bottom limb. Top, differential
          current flows right on wire plus and left on wire minus; the flux
          arrows of the two windings go round the core in opposite
-         directions and cancel. Right, common-mode current flows right on
+         directions and cancel. Bottom, common-mode current flows right on
          both wires; the flux arrows go round the core the same way and
          add.
 
