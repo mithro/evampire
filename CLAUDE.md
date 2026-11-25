@@ -68,6 +68,7 @@ uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
 uv run python docs/high-voltage/figures.py docs/high-voltage  # every high-voltage figure
+uv run python docs/high-voltage/test-die/figures.py  # test-die figures and tables
 uv run python docs/architecture/figures.py docs/architecture
 uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
 uv run docs/esd/sim/tlp_plot.py
@@ -115,6 +116,8 @@ Each script's docstring names the files it writes. These modules are
 helpers that the scripts above import, so run the script, not the helper:
 
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
+- `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py` and
+  every `fig_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
 - `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
@@ -127,18 +130,27 @@ helpers that the scripts above import, so run the script, not the helper:
 USB Power Delivery graph. Every script reproduces its committed files byte
 for byte, so a rerun that changes a file means its inputs changed.
 
+The test-die script reads three inputs. `silicon/hvtest/structures.json`
+is written by `silicon/hvtest/export.py`. `docs/high-voltage/test-die/manifest.json`
+is the floor plan: copy it from the second argument of
+`uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json`
+whenever the layout changes. `docs/high-voltage/test-die/predictions.json`
+holds the simulated breakdown voltages from mithro/gf180-tcad; its schema
+is in the docstring of `fig_pred.py`.
+
 The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
 the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
 model and I/O cell repositories at pinned commits, and takes about twenty
 minutes; `docs/esd/simulation.rst` gives the command. With `--reuse` it
 rebuilds the tables and figures from the waveforms of its last run.
 
-Four scripts print the numbers their pages quote, so re-run one after
+Five scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
 
 - `docs/power/usb-pd/calc.py`
 - `docs/power/converters/calc.py`
 - `docs/high-voltage/calc.py`
+- `docs/high-voltage/test-die/calc.py`
 - `docs/usb-serial/calc.py`
 
 `docs/usb-serial/calc.py` prints its last table only when given the path to
