@@ -24,48 +24,48 @@ HERE = pathlib.Path(__file__).parent
 
 def pwm_resolution():
     """Edge placement of a counter, a delay line and dithering."""
-    s = Svg(600, 400)
-    tr = (0, 56)
+    fs = 15
+    s = Svg(480, 470)
+    tr = (0, 48)
+    x0, x1 = 125, 470
     ideal = 37.4
     rows = []
-    ck = Axes(s, (150, 30, 580, 55), tr, (0, 1))
+    ck = Axes(s, (x0, 28, x1, 52), tr, (0, 1))
     pts = []
-    for k in range(7):
+    for k in range(6):
         pts += [(8 * k, 0), (8 * k, 1), (8 * k + 4, 1), (8 * k + 4, 0)]
-    pts.append((56, 0))
+    pts.append((48, 0))
     s.poly(ck.P(pts), stroke=GREY, width=1.4)
-    s.text(142, 42, "125 MHz clock", size=12, anchor="end")
-    for ax_y, name, edge, col in ((85, "ideal edge", ideal, GREEN),
-                                  (135, "counter only", 40, RED),
-                                  (185, "counter and\n8-tap delay line", 37,
-                                   BLUE)):
-        ax = Axes(s, (150, ax_y, 580, ax_y + 25), tr, (0, 1))
+    s.text(x0 - 8, 40, "125 MHz", size=fs, anchor="end")
+    for ax_y, name, edge, col in ((80, "ideal", ideal, GREEN),
+                                  (135, "counter", 40, RED),
+                                  (190, "counter and\ndelay line", 37, BLUE)):
+        ax = Axes(s, (x0, ax_y, x1, ax_y + 26), tr, (0, 1))
         square(s, ax, [(0, edge)], 0, 1, stroke=col)
-        s.text(142, ax_y + 12, name, size=12, anchor="end")
+        s.text(x0 - 8, ax_y + 13, name, size=fs, anchor="end")
         rows.append((ax, edge, col))
-    for ax, edge, col in rows[1:]:
+    for ax, edge, col in rows:
         err = f"{edge - ideal:+.1f}".replace("-", "−")
-        s.text(ax.X(edge) + 6, ax.y0 + 11, f"{edge:g} ns ({err} ns)",
-               size=11, fill=col, anchor="start")
-    s.text(rows[0][0].X(ideal) + 6, rows[0][0].y0 + 11, "37.4 ns", size=11,
-           fill=GREEN, anchor="start")
+        lab = "37.4 ns" if edge == ideal else f"{edge:g} ns ({err})"
+        s.text(ax.X(edge) - 4, ax.y0 - 10, lab, size=fs - 1, fill=col,
+               anchor="end")
     # Delay-line taps inside the clock period 32..40 ns.
     for k in range(9):
         x = rows[2][0].X(32 + k)
-        s.line(x, 222, x, 230, stroke=BLUE, width=1)
-    s.text(rows[2][0].X(36), 242, "taps 1 ns apart", size=10, fill=BLUE)
+        s.line(x, 228, x, 238, stroke=BLUE, width=1.2)
+    s.text(rows[2][0].X(36), 252, "taps 1 ns apart", size=fs - 1, fill=BLUE)
     # Dithering: two periods of 40 ns and one of 32 ns average 37.33 ns.
-    s.text(142, 296, "dithering:\nperiods 1, 2, 3", size=12, anchor="end")
-    for y0, edge in ((262, 40), (290, 40), (318, 32)):
-        ax = Axes(s, (150, y0, 580, y0 + 20), tr, (0, 1))
+    s.text(x0 - 8, 318, "dithering,\nperiods\n1, 2, 3", size=fs, anchor="end")
+    for y0, edge in ((280, 40), (310, 40), (340, 32)):
+        ax = Axes(s, (x0, y0, x1, y0 + 22), tr, (0, 1))
         square(s, ax, [(0, edge)], 0, 1, stroke=ORANGE)
-    s.text(365, 360, "two periods ending at 40 ns, one at 32 ns: 37.33 ns on "
-           "average (−0.07 ns)", size=11, fill=ORANGE)
-    for k in range(8):
+    s.text(240, 392, "40 ns, 40 ns, 32 ns: 37.33 ns on\naverage (−0.07 ns)",
+           size=fs - 1, fill=ORANGE)
+    for k in range(7):
         x = ck.X(8 * k)
-        s.line(x, 60, x, 345, stroke="#dddddd", width=1, dash="2 3")
-    s.text(365, 386, "time (ns), one 8 ns clock period per grid line",
-           size=11, fill=GREY)
+        s.line(x, 58, x, 365, stroke="#dddddd", width=1, dash="2 3")
+    s.text(240, 446, "time (ns), one 8 ns clock period\nper grid line",
+           size=fs - 1, fill=GREY)
     s.save(HERE / "pwm-resolution.svg")
 
 
