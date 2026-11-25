@@ -163,7 +163,8 @@ its maximum or the sink's need within 3 s of such a request
 (:typec:`Section 4.8.6.2`).
 
 When a device is unplugged, the source sees the detach on CC and removes
-VBUS, reaching vSafe0V within *tSafe0V* (650 ms) (:pd:`Section 4.1.5.5`).
+VBUS, reaching vSafe0V within *tVBUSOFF* (650 ms) (:typec:`Table 4-32`), as
+on :ref:`usbpd-attach-sequence`.
 Its share is free once VBUS is off. The software can then raise the offer
 on the other port as above. :numref:`fig-usbpd-raise-offer` shows a raised
 offer and :numref:`fig-usbpd-unplug` an unplugged device.
@@ -184,13 +185,13 @@ offer and :numref:`fig-usbpd-unplug` an unplugged device.
              schematic and not to scale.
    :name: fig-usbpd-unplug
    :alt: Timing diagram. Port B's CC goes open when its device is
-         unplugged. Port B's VBUS falls to vSafe0V within tSafe0V, 650 ms.
+         unplugged. Port B's VBUS falls to vSafe0V within tVBUSOFF, 650 ms.
          Port A's share can then be raised.
 
    {"signal": [
      {"name": "port B CC", "wave": "=.=.........", "data": ["Rd", "open: device unplugged"]},
      {"name": "port B VBUS", "wave": "1.=..0......", "data": ["falling"]},
-     {"name": "tSafe0V", "wave": "x.=...x.....", "data": ["≤ 650 ms"]},
+     {"name": "tVBUSOFF", "wave": "x.=...x.....", "data": ["≤ 650 ms"]},
      {"name": "port A share", "wave": "=.....=.....", "data": ["old share", "can be raised"]}
    ],
    "config": {"hscale": 1}}

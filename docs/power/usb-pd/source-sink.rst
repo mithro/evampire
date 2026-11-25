@@ -231,8 +231,10 @@ VBUS discharge
 ^^^^^^^^^^^^^^
 
 After detach, a source must bring VBUS below vSafe5V (maximum) within
-tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
+tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
 (:pd:`Section 4.1.5.5`, :pd:`Table 4.9`; :numref:`fig-usbpd-vbus-discharge`).
+The USB Type-C specification gives the same 650 ms limit for detach as
+tVBUSOFF (:typec:`Table 4-32`), the name the attach pages use.
 It also discharges VBUS before
 attaching (the AttachWait.SRC state, :typec:`Section 4.5.2.2.8.1`) and
 during a power role swap. A switched load from VBUS to ground, controlled by
