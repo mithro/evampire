@@ -1,9 +1,11 @@
 Standards
 =========
 
-This page lists the standards that the rest of the documentation refers to,
-with a link to each. A reference such as "Clause 40.8.3.1" links to the
-entry for the whole clause (here, Clause 40) on this page.
+The evampire design draws on standards for Ethernet, bridging and
+discovery, USB, cabling, safety and electromagnetic compatibility,
+integrated circuits, RGMII and RISC-V, each listed with a link to its
+publisher. A reference such as "Clause 40.8.3.1" links to the entry for its
+whole clause, Clause 40.
 
 .. _std-802-3:
 
@@ -21,11 +23,10 @@ standards in the programme
 <https://ieeexplore.ieee.org/browse/standards/get-program/page/series?id=68>`_),
 after accepting its terms of use.
 
-:numref:`tab-ieee8023-clauses` lists the clauses that the pages cite, each
-with its title in IEEE Std 802.3-2022 and a description, in the terms used
-in this documentation, of what it covers.
+:numref:`tab-ieee8023-clauses` lists the cited clauses, each with its
+title in IEEE Std 802.3-2022 and a description of what it covers.
 
-.. list-table:: IEEE 802.3 clauses cited in this documentation
+.. list-table:: Cited IEEE 802.3 clauses
    :name: tab-ieee8023-clauses
    :header-rows: 1
    :widths: 20 80
