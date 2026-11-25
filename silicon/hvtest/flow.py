@@ -38,8 +38,10 @@ def main(argv):
     steps = [
         ("sealring", f"python3 {TECH}/scripts/sealring.py --input /data/raw.gds "
                      f"--output /data/ring.gds --die-width {DIE_W} --die-height {DIE_H}"),
+        # Metal4 fill is allowed under Metal5: the pads cover 15 % of the die, and without
+        # dummy Metal4 beneath them the Metal4 density is 28 % against the 30 % minimum
         ("fill", f"klayout -b -zz -r {TECH}/scripts/fill_all.rb -rd input=/data/ring.gds "
-                 "-rd output=/data/filled.gds"),
+                 "-rd output=/data/filled.gds -rd Metal4_ignore_active=true"),
     ]  # fmt: skip
     if "--skip-precheck" not in argv:
         steps.append(("precheck",
