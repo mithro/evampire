@@ -44,7 +44,7 @@ configuration channel.
 Software-only baseline
 ----------------------
 
-The minimum hardware is the analogue front end of :doc:`analogue` connected
+The minimum hardware is the :doc:`analogue front end <analogue>` connected
 to plain processor-visible bits: D+ and D− receiver outputs as inputs; and
 driver enable, D+ level, D− level and pull-up enable as outputs. Everything
 else is software (:numref:`fig-usbser-baseline`).

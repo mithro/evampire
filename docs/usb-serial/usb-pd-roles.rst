@@ -3,8 +3,9 @@ USB Power Delivery roles
 
 This page describes how the USB serial port fits with the power roles of a
 USB Type-C port, the data role swap, boards with two ports, and the other
-work the processor does. The USB Power Delivery negotiation itself is on
-:doc:`/power/usb-pd/index`. Type-C and PD references link to the USB Type-C and
+work the processor does. The
+:doc:`USB Power Delivery negotiation </power/usb-pd/index>` itself has its
+own pages. Type-C and PD references link to the USB Type-C and
 USB Power Delivery specifications on the :doc:`standards page
 </standards>`.
 
