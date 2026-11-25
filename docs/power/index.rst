@@ -204,14 +204,14 @@ reduced safely while a device is using it.
              first, raised after; the values are an example.
 
    { "signal": [
-       { "name": "Ethernet B (W)", "wave": "3...4...5......",
-         "data": ["45", "45: lowering, up to 10 s", "25"] },
-       { "name": "USB-C 1 (W)", "wave": "6..........2...",
-         "data": ["35", "0: unplugged"] },
-       { "name": "USB-C 2 (W)", "wave": "2...2...7..7...",
-         "data": ["0", "0: attached", "20", "55"] },
+       { "name": "Ethernet B (W)", "wave": "3..4..5.....",
+         "data": ["45", "45 (≤ 10 s)", "25"] },
+       { "name": "USB-C 1 (W)", "wave": "6........2..",
+         "data": ["35", "0: gone"] },
+       { "name": "USB-C 2 (W)", "wave": "2..2..7..7..",
+         "data": ["0", "attached", "20", "55"] },
        {},
-       { "name": "sum (W)", "wave": "9...9...9..9...",
+       { "name": "sum (W)", "wave": "9..9..9..9..",
          "data": ["80", "80", "80", "80"] }
      ],
      "config": { "hscale": 1 }

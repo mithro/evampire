@@ -21,6 +21,6 @@ digraph sig_blocking {
     cmp  [pos="3.0,0.25!", label="Divider and comparator", fillcolor="#dbe8f5"];
     vin -> blk [penwidth=2.2];
     blk -> lv  [penwidth=2.2];
-    vin -> cmp [style=dashed, label="sense"];
+    vin -> cmp [style=dashed];
     cmp -> blk [style=dashed, label="open above\nthe class range"];
 }

@@ -120,12 +120,12 @@ Output selectors A and B
                 and not to scale.
 
       { "signal": [
-          { "name": "port A receive", "wave": "x3...x..4...x.5...x",
+          { "name": "A receives", "wave": "x3..x.4..x.5..",
             "data": ["frame 1", "frame 2", "frame 3"] },
-          { "name": "processor frame waiting", "wave": "0..1...0..........." },
-          { "name": "port B transmit", "wave": "xx3...x6...x...5...",
+          { "name": "processor waits", "wave": "0.1..0........" },
+          { "name": "B sends", "wave": "x.3..6...x..5.",
             "data": ["frame 1", "processor frame", "frame 3"] },
-          { "name": "frame 2", "wave": "x.......9...x......",
+          { "name": "frame 2", "wave": "x.....9..x....",
             "data": ["dropped"] }
         ],
         "config": { "hscale": 1 }

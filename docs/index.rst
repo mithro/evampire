@@ -60,11 +60,11 @@ switch receives the whole frame before it starts sending it.
              store-and-forward, which waits for the whole frame; schematic.
 
    { "signal": [
-       { "name": "port A receive", "wave": "x=====x......",
+       { "name": "A receives", "wave": "x=====x.....",
          "data": ["1", "2", "3", "…", "N"] },
-       { "name": "port B, cut-through", "wave": "x.=====x.....",
+       { "name": "B, cut-through", "wave": "x.=====x....",
          "data": ["1", "2", "3", "…", "N"] },
-       { "name": "port B, store-and-forward", "wave": "x......=====x",
+       { "name": "B, stored first", "wave": "x......=====",
          "data": ["1", "2", "3", "…", "N"] }
      ],
      "head": { "text": "bytes 1 to N of one frame" },

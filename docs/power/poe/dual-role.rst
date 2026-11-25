@@ -81,9 +81,12 @@ own signature:
      - Resistance the upstream power sourcing equipment measures
      - kΩ
 
-With 190 kΩ the result is 22.0 kΩ. Both are below the 23.7 kΩ minimum of
-:clause:`Table 145-21 <145>`, so the port would fail detection as a powered
-device. The calculation assumes the idle load is across the same two
+With 190 kΩ the result is 22.0 kΩ. Both are below the 23.7 kΩ minimum that
+a powered device must show (:clause:`Table 145-21 <145>`), so the port
+would not meet the powered-device requirements. Detection is not
+guaranteed to fail: the power sourcing equipment accepts 19 kΩ to 26.5 kΩ
+and may reject 15 kΩ to 19 kΩ (:clause:`Table 145-8 <145>`), so 19.0 kΩ
+sits on the edge of the accept band (:numref:`tab-poe-detect`). The calculation assumes the idle load is across the same two
 conductors as the signature. evampire's own power sourcing circuit could be
 designed without such an idle load, which would remove this reason for a
 switch; the first reason remains.
@@ -95,8 +98,9 @@ switch; the first reason remains.
    :alt: Two panels. On the left, the port acts as a powered device: the
          remote power sourcing equipment measures the port's own 24.9 kΩ
          signature in parallel with its own idle sourcing load of 80 to
-         190 kΩ, and sees 19.0 to 22.0 kΩ, below 23.7 kΩ, so detection
-         fails. On the right, the port acts as power sourcing equipment:
+         190 kΩ, and sees 19.0 to 22.0 kΩ, below the 23.7 kΩ that a
+         powered device must show, so the signature is out of
+         specification and detection may fail. On the right, the port acts as power sourcing equipment:
          its own channels measure the remote powered device's signature in
          parallel with the port's own 24.9 kΩ signature, which gives the
          wrong resistance.
@@ -160,7 +164,7 @@ safety rules below.
        ],
        {},
        ["random",
-         { "name": "port 1", "wave": "3..4.5......",
+         { "name": "port 1", "wave": "3..4..5.....",
            "data": ["PD", "PSE: detects", "supplying power"] },
          { "name": "port 2", "wave": "3.....5.....",
            "data": ["PD", "receiving power"] }

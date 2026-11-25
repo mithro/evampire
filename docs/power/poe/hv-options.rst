@@ -13,7 +13,7 @@ Choice per function
 The full design builds most of these functions on chip, on evampire or on
 a second cable-side die (:numref:`tab-power-board-configs`). The choice is made per function. An
 on-chip option is a custom design
-using the structures in :ref:`req-process`: custom transistor layouts,
+using the structures in :ref:`the process requirements <req-process>`: custom transistor layouts,
 drain-extended or stacked transistors, parasitic bipolar transistors and
 custom I/O cells. An on-chip option for a cable-side function also needs
 evampire to sit on the cable side of the isolation barrier, or a second
@@ -97,7 +97,8 @@ What decides
    :alt: Diagram. The bridge output, 0 to 57 V, passes through a switch or
          structure that blocks 57 V to the signature, mark load and class
          current circuits, which draw up to 44 mA and work below about
-         22 V. A divider and comparator sense the bridge output and open
+         22 V. A divider and comparator sense the bridge output (dashed)
+         and open
          the switch above the class range.
    :align: center
 
@@ -199,14 +200,14 @@ What decides
 
 .. graphviz:: divider.dot
    :name: fig-poe-divider
-   :caption: An external divider after the isolation switch, with a clamp
-             on its output.
+   :caption: An external divider after the isolation switch, so that it is
+             not across the signature, with a clamp on its output.
    :alt: Diagram. The bridges and signature feed the isolation switch,
          whose output is the port voltage of up to 57 V. A 1 MΩ resistor
          R1 and a 56 kΩ resistor R2 divide it to VSS, drawing 54 µA. The
-         tap feeds evampire's input, 3.0 V at 57 V, and a clamp to VSS. A
-         note says the divider is not across the signature, so detection
-         sees only 25 kΩ.
+         tap feeds evampire's input, 3.0 V at 57 V, and a clamp to VSS.
+         Because the divider follows the switch, detection sees only the
+         signature.
    :align: center
 
 Power sourcing switch and current sensing
