@@ -6,7 +6,6 @@
 <line x1="122.2" y1="32.0" x2="122.2" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="201.8" y1="32.0" x2="201.8" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="262.0" y1="32.0" x2="262.0" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
-<line x1="322.2" y1="32.0" x2="322.2" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="361.0" y1="32.0" x2="361.0" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="421.2" y1="32.0" x2="421.2" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="462.0" y1="32.0" x2="462.0" y2="352.0" stroke="#e4e4e4" stroke-width="1"/>
@@ -27,8 +26,6 @@
 <text x="201.8" y="367.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
 <line x1="262.0" y1="352.0" x2="262.0" y2="357.0" stroke="#222222" stroke-width="1.2"/>
 <text x="262.0" y="367.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">10</text>
-<line x1="322.2" y1="352.0" x2="322.2" y2="357.0" stroke="#222222" stroke-width="1.2"/>
-<text x="322.2" y="367.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
 <line x1="361.0" y1="352.0" x2="361.0" y2="357.0" stroke="#222222" stroke-width="1.2"/>
 <text x="361.0" y="367.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">31.25</text>
 <line x1="421.2" y1="352.0" x2="421.2" y2="357.0" stroke="#222222" stroke-width="1.2"/>
@@ -75,7 +72,6 @@
 <line x1="122.2" y1="438.0" x2="122.2" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="201.8" y1="438.0" x2="201.8" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="262.0" y1="438.0" x2="262.0" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
-<line x1="322.2" y1="438.0" x2="322.2" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="361.0" y1="438.0" x2="361.0" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="421.2" y1="438.0" x2="421.2" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
 <line x1="462.0" y1="438.0" x2="462.0" y2="638.0" stroke="#e4e4e4" stroke-width="1"/>
@@ -96,8 +92,6 @@
 <text x="201.8" y="653.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">5</text>
 <line x1="262.0" y1="638.0" x2="262.0" y2="643.0" stroke="#222222" stroke-width="1.2"/>
 <text x="262.0" y="653.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">10</text>
-<line x1="322.2" y1="638.0" x2="322.2" y2="643.0" stroke="#222222" stroke-width="1.2"/>
-<text x="322.2" y="653.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">20</text>
 <line x1="361.0" y1="638.0" x2="361.0" y2="643.0" stroke="#222222" stroke-width="1.2"/>
 <text x="361.0" y="653.0" font-size="13" text-anchor="middle" font-weight="normal" fill="#222222" dominant-baseline="middle">31.25</text>
 <line x1="421.2" y1="638.0" x2="421.2" y2="643.0" stroke="#222222" stroke-width="1.2"/>

@@ -47,5 +47,5 @@
 <text x="267.0" y="123.7" font-size="12" text-anchor="middle" font-weight="normal" fill="#1f4e79" dominant-baseline="middle">σ = 4.9 ps</text>
 <text x="267.0" y="322.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">Dashed: ±7.03σ; each tail beyond holds 10⁻¹².</text>
 <text x="267.0" y="336.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">Limits: 1.4 ns unfiltered, about 20 × Jpp;</text>
-<text x="267.0" y="350.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">0.3 ns after a 5 kHz high-pass filter, about 4 × Jpp</text>
+<text x="267.0" y="350.0" font-size="12" text-anchor="middle" font-weight="normal" fill="#777777" dominant-baseline="middle">0.3 ns filtered, shared with Jtxout, about 4 × Jpp</text>
 </svg>
