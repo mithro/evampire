@@ -44,6 +44,32 @@ evampire does not wait for a whole frame to arrive before it starts sending
 it on. Each byte is passed to the other side a few clock cycles after it
 arrives. This is called :term:`cut-through forwarding`. It needs only a few
 bytes of storage on each path, not a whole frame.
+:numref:`fig-cut-through` compares it with store-and-forward, in which a
+switch receives the whole frame before it starts sending it.
+
+.. wavedrom::
+   :name: fig-cut-through
+   :alt: Timing diagram. Port A receives a frame as a run of bytes, 1
+         to N. With cut-through forwarding, port B starts
+         sending byte 1 a few clock cycles after it arrives, while the rest
+         of the frame is still arriving, and finishes a few cycles after
+         the last byte arrives. With store-and-forward, port B starts
+         sending only after the last byte has arrived, a whole frame later.
+   :caption: One frame through cut-through forwarding, which starts a few
+             clock cycles after the first byte, and through
+             store-and-forward, which waits for the whole frame; schematic.
+
+   { "signal": [
+       { "name": "port A receive", "wave": "x=====x......",
+         "data": ["1", "2", "3", "…", "N"] },
+       { "name": "port B, cut-through", "wave": "x.=====x.....",
+         "data": ["1", "2", "3", "…", "N"] },
+       { "name": "port B, store-and-forward", "wave": "x......=====x",
+         "data": ["1", "2", "3", "…", "N"] }
+     ],
+     "head": { "text": "bytes 1 to N of one frame" },
+     "config": { "hscale": 1 }
+   }
 
 .. _overview-processor-frames:
 
@@ -52,7 +78,8 @@ Processor traffic
 
 The processor sees a copy of the frames, from either port, whose destination
 address matches a filter that it sets. It can also send frames of its own, which evampire
-sends in the gaps between the frames it forwards. The processor's network
+sends in the gaps between the frames it forwards
+(:numref:`fig-output-selector`). The processor's network
 traffic is below 1 Mbit/s, so it does not need to keep up with gigabit
 traffic.
 
