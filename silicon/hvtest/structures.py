@@ -5,7 +5,8 @@ micrometres (a "p" stands for the decimal point). Unless a name says otherwise t
 30 um across with 8 um corners and the P+ substrate ring is 20 um from the well edge.
 
   T   distance to the P+ ring          C   corner radius of the well
-  W   drawn P-well starting at         A   NAT (no P-well) starting at
+  W   drawn P-well starting at         A   NAT (no P-well) starting at ("o1": overlapping
+                                           the well edge by 1 um)
   P / M1 / M2   field plate of poly / Metal1 / Metal2, length beyond the well edge
   R   floating rings (number, then first gap)
   G   gated diode: the plate has its own pad      S  ring 1 has its own pad
@@ -42,7 +43,7 @@ ONE_PAD = [
     ("NW3", s(pwell_gap=3.0)), ("NW6", s(pwell_gap=6.0)), ("NW10", s(pwell_gap=10.0)),
     # NAT keeps the generated P-well away
     ("NA0p6", s(nat_gap=0.6)), ("NA1", s(nat_gap=1.0)), ("NA2", s(nat_gap=2.0)),
-    ("NA4", s(nat_gap=4.0)), ("NA0p6T10", s(nat_gap=0.6, term=10.0)),
+    ("NA4", s(nat_gap=4.0)),
     ("NA0p6T35", s(nat_gap=0.6, term=35.0)), ("NA0p6C0", s(nat_gap=0.6, corner=0.0)),
     ("NAM1_3", s(nat_gap=0.6, plates={"m1": 3.0})), ("NAM1_6", s(nat_gap=0.6, plates={"m1": 6.0})),
     ("NAM1_10", s(nat_gap=0.6, plates={"m1": 10.0})), ("NAM2_6", s(nat_gap=0.6, plates={"m2": 6.0})),
@@ -55,7 +56,6 @@ ONE_PAD = [
     ("NPM12", s(plates={"poly": 2.0, "m1": 5.0, "m2": 9.0})),
     # floating rings
     ("NR1_1p4", s(rings=rings(1.4))), ("NR1_2", s(rings=rings(2.0))), ("NR1_3", s(rings=rings(3.0))),
-    ("NR1_4p5", s(rings=rings(4.5))),
     ("NR3_1p5", s(rings=rings(1.5, 2.0, 2.5))), ("NR3_2", s(rings=rings(2.0, 2.5, 3.0))),
     ("NR3W1", s(rings=rings(2.0, 2.5, 3.0, width=1.0))), ("NR3W3", s(rings=rings(2.0, 2.5, 3.0, width=3.0), term=30.0)),
     ("NR5_1p4", s(rings=rings(1.4, 1.7, 2.0, 2.4, 2.8), term=35.0)),
@@ -69,10 +69,13 @@ ONE_PAD = [
     ("DW6", s(kind="dnw", pwell_gap=6.0)),
     ("DM1_3", s(kind="dnw", plates={"m1": 3.0})), ("DM1_6", s(kind="dnw", plates={"m1": 6.0})),
     ("DM1_10", s(kind="dnw", plates={"m1": 10.0})), ("DM2_8", s(kind="dnw", plates={"m2": 8.0})),
-    ("DP2", s(kind="dnw", plates={"poly": 2.0})),
     ("DPM12", s(kind="dnw", plates={"poly": 2.0, "m1": 5.0, "m2": 9.0})),
-    # references: a pad and lead with no junction, and a second copy of the plain well
-    ("OPEN", s(kind="open")), ("NT20b", s()),
+    # deep N-well with NAT overlapping its edge: no P-well can lie beside the junction
+    ("DAo1", s(kind="dnw", nat_gap=-1.0)), ("DAo1T35", s(kind="dnw", nat_gap=-1.0, term=35.0)),
+    ("DAo1C0", s(kind="dnw", nat_gap=-1.0, corner=0.0)),
+    ("DAo1M1_6", s(kind="dnw", nat_gap=-1.0, plates={"m1": 6.0})),
+    # reference: a pad and lead with no junction
+    ("OPEN", s(kind="open")),
 ]
 
 SITES = TWO_PAD + ONE_PAD
@@ -81,7 +84,10 @@ SITES = TWO_PAD + ONE_PAD
 BIG = {"corner": 20.0, "term": 6.0, "block": False}
 LARGE = [
     ("CVN", {"half": 100.0, **BIG}),
-    ("CVN2", {"half": 50.0, **BIG}),
     ("CVD", {"kind": "dnw", "half": 100.0, **BIG}),
+    ("CVN2", {"half": 50.0, **BIG}),
     ("CVD2", {"kind": "dnw", "half": 50.0, **BIG}),
+    # with NAT around it and the P+ ring 20 um out, so that the capacitance sweep can go
+    # past the 14 V of a well with a P-well beside it
+    ("CVNA", {"half": 50.0, "corner": 20.0, "term": 20.0, "nat_gap": 0.6, "block": "ring"}),
 ]

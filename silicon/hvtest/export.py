@@ -1,6 +1,6 @@
 """Write the structure list as JSON, for the TCAD predictions in mithro/gf180-tcad.
 
-    uv run python silicon/hvtest/export.py silicon/hvtest/structures.json
+    uv run --with klayout python silicon/hvtest/export.py silicon/hvtest/structures.json
 """
 
 import json

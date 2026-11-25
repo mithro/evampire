@@ -19,10 +19,13 @@ Parameters (micrometres), with defaults in DEFAULTS:
   plates     {"poly": L, "m1": L, "m2": L}: length of each plate beyond the well edge
   pwell_gap  None, or the distance from the well edge at which a drawn P-well starts
   nat_gap    None, or the distance from the well edge at which the NAT layer starts
+             (at least 0.5 from an N-well, rule NAT.3; negative for a deep N-well, whose
+             edge the NAT layer may overlap)
   sense      True adds a contact and a Metal2 lead (to the north) on the first ring
   gate       True ties the plates to their own Metal2 lead (to the north) instead of to
              the well, making a gated diode; the plates then start 1 um inside the well edge
-  block      False leaves out the fill blocks (for wells too large for one NDMY shape)
+  block      False leaves out the fill blocks (for wells too large for one NDMY shape);
+             "ring" blocks fill only over the termination zone
 
 A structure has at most one north lead: sense or gate, not both.
 """
@@ -81,6 +84,10 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         return cell
     add(L.NWELL if p["kind"] == "nw" else L.DNWELL, outline(p, 0.0))
 
+    if p["kind"] == "dnw":
+        # an N-well under the contact ring: the deep N-well alone is lightly doped at the
+        # surface, and its contact resistance is not published
+        add(L.NWELL, annulus(p, -inset - w - 0.3, -inset + 0.3))
     # N+ contact ring inside the well edge
     ncomp = annulus(p, -inset - w, -inset)
     add(L.COMP, ncomp)
@@ -171,6 +178,8 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
     # keep dummy fill out of the whole structure
     if p["block"]:
         blk = geom.box(-bh, -bh, bh, bh)
+        if p["block"] == "ring":
+            blk -= outline(p, -1.0)
         add(L.NDMY, blk)
         add(L.PMNDMY, blk)
 
