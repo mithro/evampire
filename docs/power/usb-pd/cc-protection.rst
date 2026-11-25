@@ -361,32 +361,41 @@ The crowbar has these costs:
   specification leaves its threshold and response time to the applicable
   safety standards (:pd:`Section 4.1.5.1`). A source that limits its current
   without switching off keeps the crowbar dissipating.
-* It does not clear the fault (:numref:`fig-usbpd-crowbar-timing`). A source that has switched off tries to
-  resume (:pd:`Section 4.1.5.1`), and the crowbar fires again for as long as
-  CC stays shorted to VBUS.
+* It does not clear the fault. A source whose protection has acted should
+  resume USB default operation, at vSafe5V, and negotiate again
+  (:pd:`Section 4.1.5.1`). That 5 V is below the trigger, and with CC
+  shorted to VBUS no message can pass, so the port stays at 5 V and the
+  crowbar does not fire again (:numref:`fig-usbpd-crowbar-timing`). CC then
+  sits at VBUS, within the 5.5 V the CC circuits already withstand.
+* A source that instead restores its previous voltage fires the crowbar
+  again on each retry, as VBUS rises through the trigger. The capacitance
+  is then charged only to about 6 V, so each firing releases
+  :math:`0.5 \times C_\text{BUS} \times (6\ \text{V})^{2}`, 0.18 mJ
+  to 2.2 mJ for 10 µF to 120 µF.
 * The short's current flows through the CC contact, whose rating is at
   least 0.5 A (:typec:`Section 3.7.8.4`), and through its board trace.
 * Its trigger sits above 5.5 V, so that it never fires on VCONN, and below
   the voltage the CC circuits withstand.
 
 .. wavedrom::
-   :caption: A crowbar firing on a VBUS short and again on each retry of the
-             source, schematic and not to scale.
+   :caption: A crowbar firing once on a VBUS short during a 20 V contract;
+             the source then returns at vSafe5V, below the trigger,
+             schematic and not to scale.
    :name: fig-usbpd-crowbar-timing
-   :alt: Timing diagram. A short appears and stays. The CC pin rises past
-         the trigger and the crowbar turns on, holding the pin near 0 V;
-         the VBUS capacitance discharges 2.3 to 28 mJ into it. The source's
-         over-current protection switches VBUS off, the pin falls to 0 V and
-         the crowbar releases. The source retries, the pin rises again and
-         the crowbar fires again with another discharge; the cycle repeats
-         for as long as the short lasts.
+   :alt: Timing diagram. A short appears during a 20 V contract and stays.
+         The CC pin rises past the trigger and the crowbar turns on, holding
+         the pin near 0 V; the VBUS capacitance discharges 2.3 to 28 mJ into
+         it. The source's over-current protection switches VBUS off, the pin
+         falls to 0 V and the crowbar releases. The source resumes at
+         vSafe5V; CC sits at about 5 V, below the trigger, and the crowbar
+         stays off.
 
    {"signal": [
      {"name": "short", "wave": "0..1.........."},
-     {"name": "CC pin", "wave": "=..==..=..==..", "data": ["≤ 5.5 V", "rises", "near 0 V", "0 V", "rises", "near 0 V"]},
-     {"name": "crowbar", "wave": "0...1..0...1.."},
-     {"name": "source VBUS", "wave": "=......=..=...", "data": ["on", "off", "retry"]},
-     {"name": "C_BUS energy", "wave": "x...=..x...=..", "data": ["2.3–28 mJ", "again"]}
+     {"name": "source VBUS", "wave": "=.....=..=....", "data": ["20 V contract", "off", "vSafe5V"]},
+     {"name": "CC pin", "wave": "=..==.=..=....", "data": ["≤ 5.5 V", "rises", "near 0 V", "0 V", "5 V: below trigger"]},
+     {"name": "crowbar", "wave": "0...1.0......."},
+     {"name": "C_BUS energy", "wave": "x...=..x......", "data": ["2.3–28 mJ"]}
    ],
    "config": {"hscale": 1}}
 
