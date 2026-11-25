@@ -7,8 +7,8 @@ What evampire must measure and limit on each USB Type-C port and on the
 board's power bus, derived from the USB Power Delivery rules. The circuits
 that do it are an open choice.
 
-Requirement
------------
+Measurement and limit requirement
+---------------------------------
 
 evampire measures the voltage and current of every power port and of the
 board's power bus, and enforces current and power limits that software sets
@@ -328,15 +328,15 @@ After the hardware has switched a port off, it records which limit acted and
 interrupts the processor. The software then carries out what USB Power
 Delivery asks of a source whose protection has acted (:pd:`Section 4.1.5.1`):
 
-#. It attempts to send Hard Reset (see :ref:`usbpd-hard-reset`), and then,
+#. It attempts to send :ref:`Hard Reset <usbpd-hard-reset>`, and then,
    if a contract was in place, an Alert message reporting the event.
 #. It brings VBUS down within the times in
    :numref:`tab-usbpd-fault-times`.
 #. It may then resume default 5 V operation and must negotiate again. How
    and when is the source's choice.
 
-If the Hard Reset does not clear the fault, the port goes to ErrorRecovery
-(:pd:`Section 7.1.3`; see :ref:`usbpd-error-recovery`).
+If the Hard Reset does not clear the fault, the port goes to
+:ref:`ErrorRecovery <usbpd-error-recovery>` (:pd:`Section 7.1.3`).
 :numref:`fig-usbpd-fault-flow` shows the whole response.
 
 .. graphviz:: fault-flow.dot
@@ -391,9 +391,10 @@ The current can be sensed with a series resistor, a
 :wikipedia:`shunt <Shunt_(electrical)>`, or across the power switch itself. For reference, the TPS65987D senses the forward voltage drop of its
 internal switches to latch them off at about 10 A, and disables a path in
 hardware when VBUS crosses over- and under-voltage thresholds that firmware
-sets ([USBPD-TPS65987D]_, Sections 6.7 and 8.3.3.1). The VBUS
-divider and discharge are described on :ref:`usbpd-vbus-sensing`, and the
-power path on :ref:`usbpd-power-path`.
+sets ([USBPD-TPS65987D]_, Sections 6.7 and 8.3.3.1). The
+:ref:`VBUS divider and discharge <usbpd-vbus-sensing>` and the
+:ref:`power path <usbpd-power-path>` are described with the analogue
+circuits.
 
 Open questions
 --------------

@@ -80,8 +80,8 @@ source:
    :term:`VCONN` if the cable needs it (:ref:`usbpd-vconn`);
 #. starts no message until VBUS has reached vSafe5V
    (:typec:`Section 4.5.2.2.9.1`);
-#. checks the cable with :term:`Discover Identity` if it will offer more
-   than 3 A or EPR voltages (:ref:`usbpd-discover-identity`);
+#. checks the cable with :ref:`Discover Identity <usbpd-discover-identity>`
+   if it will offer more than 3 A or EPR voltages;
 #. sends Source_Capabilities, and repeats it until it is acknowledged
    (:pd:`Section 7.31.3`);
 #. checks the Request and answers Accept, Reject or Wait
@@ -101,8 +101,8 @@ more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, :pd:`Table 4.7`). This
 :wikipedia:`slew rate <Slew_rate>` limit keeps the current that charges the
 sink's input capacitors within a 3 A connector rating, for up to 100 µF of
 sink capacitance (:pd:`Table 4.7`). :numref:`fig-usbpd-vbus-transition`
-shows these limits on a change from 5 V to 9 V, with the sink's side
-from :ref:`the sink's sequence <usbpd-sink-sequence>`; the order of messages is in
+shows these limits on a change from 5 V to 9 V, with the
+:ref:`sink's side <usbpd-sink-sequence>`; the order of messages is in
 :numref:`fig-usbpd-negotiation`.
 
 .. figure:: vbus-transition.svg
@@ -204,8 +204,8 @@ before the reduced capabilities (:pd:`Section 6.4.5.5`, :pd:`Table 4.7`).
 :numref:`fig-usbpd-lower-offer` shows the sequence.
 
 The input can fall faster than that, for example when the Power over
-Ethernet input is removed. The source then relies on its over-current
-protection (:ref:`usbpd-current-limit`) or a
+Ethernet input is removed. The source then relies on its
+:ref:`over-current protection <usbpd-current-limit>` or a
 :ref:`Hard Reset <usbpd-hard-reset>`. Keep a margin in the
 :ref:`power budget <power-budget>` for this case.
 
@@ -223,7 +223,7 @@ bring VBUS down to vSafe5V within *tSafe5V*, 275 ms, and to vSafe0V within
 
 On evampire the software sets the current limit of each port and the
 hardware enforces it (:ref:`req-power-control`, :ref:`usbpd-limiting`). The
-limit sits in the source power path (:ref:`usbpd-power-path`).
+limit sits in the source :ref:`power path <usbpd-power-path>`.
 
 .. _usbpd-discharge:
 
@@ -231,8 +231,10 @@ VBUS discharge
 ^^^^^^^^^^^^^^
 
 After detach, a source must bring VBUS below vSafe5V (maximum) within
-tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
+tSafe5V, 275 ms, and to vSafe0V, at most 0.8 V, within tSafe0V, 650 ms
 (:pd:`Section 4.1.5.5`, :pd:`Table 4.9`; :numref:`fig-usbpd-vbus-discharge`).
+The USB Type-C specification gives the same 650 ms limit for detach as
+tVBUSOFF (:typec:`Table 4-32`), the name the attach pages use.
 It also discharges VBUS before
 attaching (the AttachWait.SRC state, :typec:`Section 4.5.2.2.8.1`) and
 during a power role swap. A switched load from VBUS to ground, controlled by
@@ -273,8 +275,8 @@ Source_Capabilities up to 50 times, then less often
 (:pd:`Section 7.32.4`). A sink that sees no Source_Capabilities within
 *tTypeCSinkWaitCap* may send Hard Reset to restart the source
 (:pd:`Section 7.32.4`). Do not send this Hard Reset from a board powered
-only from VBUS: the source answers a Hard Reset by switching VBUS off
-(:ref:`usbpd-hard-reset`).
+only from VBUS: the source answers a :ref:`Hard Reset <usbpd-hard-reset>`
+by switching VBUS off.
 
 Open questions
 --------------

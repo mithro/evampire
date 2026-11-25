@@ -165,8 +165,8 @@ If the expected PS_RDY does not arrive within tPSSourceOff or tPSSourceOn,
 the waiting port goes to the Type-C ErrorRecovery state
 (:numref:`fig-usbpd-prswap`, right-hand notes)
 (:pd:`PD Sections 7.31.5.2 <x>` and :pd:`7.31.5.3 <x>`). It removes its
-terminations, both ports see a detach, and attach starts again (see
-:ref:`usbpd-error-recovery`). A board that was running from VBUS at that
+terminations, both ports see a detach, and attach starts again, as
+described for :ref:`ErrorRecovery <usbpd-error-recovery>`. A board that was running from VBUS at that
 moment loses its power.
 
 Power budget after a swap

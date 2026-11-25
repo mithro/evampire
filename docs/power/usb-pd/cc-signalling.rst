@@ -439,8 +439,8 @@ disconnected within *tInterFrameGap* after the packet, leaving no more than
 A transmitter must also survive its output being shorted to ground for up
 to 120 µs (*tFRSwapTx*, :pd:`Table 10.1`; :pd:`Section 5.3.4.10`). This
 happens when the source pulls CC low to signal a
-:term:`fast role swap <Fast role swap>`, in which the sink takes over as
-source because the source is losing its own power (:ref:`usbpd-fast-role-swap`).
+:ref:`fast role swap <usbpd-fast-role-swap>`, in which the sink takes over
+as source because the source is losing its own power.
 
 .. _usbpd-dc-level:
 
@@ -740,10 +740,10 @@ the order.
          tInterFrameGap, 25 µs, after the end of the previous packet.
 
    {"signal": [
-     {"name": "CC", "wave": "010101z....010"},
-     {"name": "line", "wave": "=.........==..", "data": ["busy", "idle", "sending"]},
-     {"name": "no edges", "wave": "x.....=...x...", "data": ["tTransitionWindow"]},
-     {"name": "gap", "wave": "x.....=....x..", "data": ["tInterFrameGap 25 µs"]}
+     {"name": "CC", "wave": "010101z...0101"},
+     {"name": "line", "wave": "=........==...", "data": ["busy", "idle", "sending"]},
+     {"name": "no edges", "wave": "x....=...x....", "data": ["tTransitionWindow"]},
+     {"name": "gap", "wave": "x....=....x...", "data": ["tInterFrameGap 25 µs"]}
    ],
    "config": {"hscale": 1}}
 

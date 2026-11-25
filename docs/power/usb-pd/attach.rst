@@ -244,19 +244,21 @@ is random (:typec:`Section 4.5.2.2.7.2`; :typec:`Section 2.3.3`).
 .. wavedrom::
    :caption: Two toggling dual-role ports meeting, schematic and not to
              scale: port A presents Rp while port B presents Rd, so A
-             becomes the source.
+             becomes the source once tCCDebounce, 100 ms to 200 ms, has
+             passed.
    :name: fig-usbpd-drp-meet
    :alt: Timing diagram. Port A toggles Rp, Rd, Rp; port B presents Rp and
          then Rd. While both present Rp, or both Rd, neither sees the other.
          When A presents Rp and B presents Rd, A sees SRC.Rd and B sees
-         SNK.Rp, and both stop toggling: A goes on as the source and B as
-         the sink. Each toggle period tDRP is 50 to 100 ms, with Rp for 30 to
+         SNK.Rp, and both stop toggling; after tCCDebounce A goes on as the
+         source and B as the sink. Each toggle period tDRP is 50 to 100 ms, with Rp for 30 to
          70 % of it.
 
    {"signal": [
      {"name": "port A CC", "wave": "=.=.=........", "data": ["Rp", "Rd", "Rp, held"]},
      {"name": "port B CC", "wave": "=.=..........", "data": ["Rp", "Rd, held"]},
      {"name": "seen", "wave": "x...=........", "data": ["A sees SRC.Rd, B sees SNK.Rp: A is the source"]},
+     {"name": "debounce", "wave": "x...=...x....", "data": ["tCCDebounce"]},
      {"name": "A period", "wave": "=...x........", "data": ["tDRP 50–100 ms"]}
    ],
    "config": {"hscale": 1}}
@@ -384,8 +386,8 @@ mechanisms act only during attach.
    "config": {"hscale": 1}}
 
 After attach, two ports that support
-:term:`USB Power Delivery` can swap the power role with messages
-(:ref:`usbpd-power-role-swap`).
+:term:`USB Power Delivery` can swap the power role with messages, a
+:ref:`power role swap <usbpd-power-role-swap>`.
 
 .. _usbpd-initial-role:
 
@@ -414,10 +416,10 @@ Try.SRC or Try.SNK, chosen from the budget at each attach
    Gives the preferred role against another dual-role port that has no
    preference. It adds up to tDRPTry to the attach.
 No Try mechanism, then a power role swap
-   The outcome against another dual-role port is random, and a power role
-   swap with USB Power Delivery messages corrects it afterwards. It needs no
-   Try state, but VBUS is off for a short time during the swap
-   (:ref:`usbpd-power-role-swap`).
+   The outcome against another dual-role port is random, and a
+   :ref:`power role swap <usbpd-power-role-swap>` with USB Power Delivery
+   messages corrects it afterwards. It needs no Try state, but VBUS is off
+   for a short time during the swap.
 A fixed role on each port
    A source-only or sink-only port is the simplest, but it does not meet the
    dual-role requirement of :ref:`req-power-bridging`.
