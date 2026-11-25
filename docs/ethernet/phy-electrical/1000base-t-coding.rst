@@ -303,7 +303,7 @@ groups followed by a two-code-group End-of-Stream delimiter
          using only −2, 0 and +2, two SSD code groups, three data code groups
          using all five levels, two CSReset code groups, two ESD code groups,
          then idle again. The levels of the delimiters and resets are drawn
-         dashed, as their levels are not listed.
+         dashed, as their exact levels are not given here.
    :align: center
 
    The code groups around one frame: SSD is the Start-of-Stream

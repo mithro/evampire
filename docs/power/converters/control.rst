@@ -2,9 +2,10 @@ Converter control
 =================
 
 A converter's switches are timed so that its output stays at the set
-voltage or current. Circuits around the power stage keep it safe: soft
+voltage or current, by pulse-width modulation in voltage mode or current
+mode, with a compensated feedback loop. Circuits around the power stage keep it safe: soft
 start, current limits, dead time and high-side gate drive. The switching
-frequency trades size against loss. What evampire itself provides for this
+frequency trades size against loss and efficiency. What evampire itself provides for this
 is on :doc:`first-version`.
 
 Pulse-width modulation

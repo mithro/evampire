@@ -111,7 +111,7 @@ Routes to a higher voltage
 
 Every circuit that sits above the substrate needs something between it and
 the substrate that holds the full voltage continuously. The physics allows
-three routes, each on its own page:
+three routes:
 
 * A junction to the substrate designed to hold the voltage, by its doping
   and the shape of its edges (:doc:`junctions`).

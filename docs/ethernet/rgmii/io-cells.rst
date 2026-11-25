@@ -1,7 +1,8 @@
 RGMII pins and I/O cells
 ========================
 
-evampire's two RGMII ports and the shared management pins take 27 pins,
+evampire's two RGMII ports, the shared management pins and the reference
+clock take 27 pins,
 which run from the I/O supply. The timing of the standard gf180mcu pad
 cells bears on the choice between standard and custom I/O cells. The logic
 in front of the pads is on :doc:`port-logic`.

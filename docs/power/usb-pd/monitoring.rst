@@ -39,10 +39,9 @@ and how the limits act.
          the processor, which writes the limits. The bus voltage and current
          are measured and read by the processor.
 
-The converter pages already sense the same quantities for control and
-protection; :ref:`conv-protection` and :ref:`conv-fault-times` cover the
-converter side. USB Power Delivery adds the measurements and limits
-below.
+The converters sense the same quantities for control and protection
+(:ref:`conv-protection`, :ref:`conv-fault-times`). USB Power Delivery
+adds its own measurement ranges, steps and limits.
 
 Measurement ranges and steps
 ----------------------------

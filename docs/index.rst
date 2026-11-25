@@ -216,9 +216,9 @@ Reference
 ---------
 
 :doc:`standards`
-   The standards that the pages cite, with links to each.
+   IEEE, USB and other standards, with links to each.
 :doc:`glossary`
-   The terms used in this documentation, in alphabetical order.
+   Terms and abbreviations, in alphabetical order.
 
 .. toctree::
    :maxdepth: 2

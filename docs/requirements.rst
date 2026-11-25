@@ -371,8 +371,8 @@ Process and custom devices
 Open questions
 --------------
 
-* The cable reach of the integrated gigabit transceiver. The pages treat it
-  as a parameter and give their results as a function of reach.
+* The cable reach of the integrated gigabit transceiver. Results that depend
+  on it are given as a function of reach.
 * How the isolation is made without coupling transformers. Three routes
   are explored:
 

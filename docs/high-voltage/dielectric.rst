@@ -172,7 +172,7 @@ Two dies in one package
 Two separate dies in one package, each with its own substrate, isolate
 completely: the simplest insulator is the gap between them. Signals cross between them through
 capacitors or coils, as above. The second die can be a gf180mcu die of its
-own, designed for the high-voltage side. The Ethernet pages describe this
-as the route with a second die on the cable side
+own, designed for the high-voltage side. This is the Ethernet isolation
+route with a second die on the cable side
 (:doc:`../ethernet/magnetics/isolation`, second row of
 :numref:`fig-magnetics-isolation-routes`).

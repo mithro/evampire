@@ -28,7 +28,7 @@ gf180mcu design will achieve.
 Process documentation
 ---------------------
 
-Three kinds of fact bear on each step, and they are kept apart here.
+Three kinds of fact bear on each step, and they are kept apart.
 
 Ratings of the standard devices
    The foundry's continuous operating limits for long life

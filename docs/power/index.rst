@@ -6,7 +6,9 @@ A board built around evampire moves power between its Ethernet ports and its
 (:wikipedia:`Power over Ethernet <Power_over_Ethernet>`) and supply power to
 a USB device, or be powered from a USB Type-C charger
 (:wikipedia:`USB Power Delivery <USB_Power_Delivery>`) and supply power to
-an Ethernet device.
+an Ethernet device. Each port takes a power role, the board runs in one
+of several operating modes, power is translated and shared within a
+budget, and the board configurations set which functions are on chip.
 
 The power path has three parts:
 
@@ -339,8 +341,8 @@ Custom structures, such as transistors stacked in isolated wells,
 drain-extended transistors and high-voltage capacitors, extend the voltages
 that circuits on the chip can handle (see :ref:`the process requirements <req-process>`). The
 full design builds most of these functions on chip
-(:numref:`tab-power-board-configs`). The pages on :doc:`poe/index`, :doc:`usb-pd/index` and :doc:`converters/index`
-analyse the choice for each standard.
+(:numref:`tab-power-board-configs`). The choice for each standard is analysed in :doc:`poe/index`,
+:doc:`usb-pd/index` and :doc:`converters/index`.
 
 .. [#gf180-supply] `gf180mcu design manual, section 14.1, "Power supply
    voltage limits"

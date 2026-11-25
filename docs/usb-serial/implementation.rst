@@ -2,8 +2,8 @@ USB serial port in evampire
 ===========================
 
 evampire runs its USB serial port mostly in software on the processor,
-with hardware helpers and an analogue front end where USB timing needs
-them.
+with hardware helpers where USB timing needs them and an analogue front
+end for the D+ and D− levels.
 
 :doc:`software-cost`
    How much processor time each part of USB takes in software, and the

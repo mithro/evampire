@@ -73,8 +73,7 @@ carries the MessageID of the message it acknowledges
    ],
    "config": {"hscale": 1}}
 
-The 195 µs deadline is the tightest time limit in USB Power Delivery. The
-other pages link here for it. What it means for software on the processor is
+The 195 µs deadline is the tightest time limit in USB Power Delivery. What it means for software on the processor is
 on :ref:`usbpd-goodcrc-deadline`.
 
 Retries and resets

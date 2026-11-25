@@ -515,7 +515,7 @@ For a Type 4 input of 71.3 W, one conversion leaves
 :math:`P_\text{out} = 64.2` W to 69.2 W minus :math:`P_\text{board}`, and
 two conversions 57.8 W to 67.1 W minus :math:`P_\text{board}`. The board's
 own consumption :math:`P_\text{board}` is open (:ref:`requirements`), so it
-stays a parameter here.
+stays a parameter.
 
 .. _conv-alternatives:
 
