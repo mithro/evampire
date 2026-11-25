@@ -25,8 +25,23 @@ The isolation must withstand one of three tests (Annex J of
 * ten 1500 V impulses of 10/700 µs shape, 60 s apart.
 
 There must be no breakdown, and the insulation resistance afterwards must
-be at least 2 MΩ at 500 V DC. Unlike a surge, this stress must be blocked;
+be at least 2 MΩ at 500 V DC. Unlike a surge, this stress must be blocked;
 a clamp across the barrier would fail the test (:doc:`hv-limits`).
+:numref:`fig-poe-isolation-test` shows where the test voltage is applied.
+
+.. graphviz:: isolation-test.dot
+   :name: fig-poe-isolation-test
+   :caption: The isolation test voltage, applied between all the cable
+             conductors and every accessible conductor.
+   :alt: Diagram. On the left, all 8 cable conductors and the cable-side
+         circuits; on the right, frame ground, the USB-C connector, board
+         ground and the accessible circuits. A dashed isolation barrier
+         separates them. A test source below connects to both sides and
+         applies 1500 V rms for 60 s, 2250 V DC for 60 s or ten 1500 V
+         10/700 µs impulses, then checks for at least 2 MΩ at 500 V DC. A
+         note says that a clamp across the barrier would conduct and fail
+         the test.
+   :align: center
 
 Environments A and B
 --------------------
@@ -45,8 +60,20 @@ Environment B
 
 In Environment A, ports A and B of one board may therefore share one
 cable-side ground and supply. In Environment B they may not, and each
-Ethernet port needs its own isolated domain. Which environment the board
-targets is an open question.
+Ethernet port needs its own isolated domain
+(:numref:`fig-poe-isolation-envs`). Which environment the board targets is
+an open question.
+
+.. graphviz:: isolation-envs.dot
+   :name: fig-poe-isolation-envs
+   :caption: Isolated domains for two Ethernet ports in Environments A
+             and B.
+   :alt: Two panels. In Environment A, ports A and B sit in one shared
+         cable-side domain, drawn as a dashed outline, isolated from the
+         protective ground and accessible conductors but not from each
+         other. In Environment B, port A and port B each have their own
+         dashed domain, isolated from the ground and from each other.
+   :align: center
 
 Barrier position
 ----------------
@@ -65,6 +92,23 @@ Barrier at the other connectors
    functions can then share evampire's die. In Environment B this works for
    only one Ethernet port, because the two ports must be isolated from each
    other.
+
+:numref:`fig-poe-barrier-position` compares the two places.
+
+.. graphviz:: barrier-position.dot
+   :name: fig-poe-barrier-position
+   :caption: The barrier between evampire and the cable, or at the other
+             connectors.
+   :alt: Two panels. On the left, the cable-side circuits connect through
+         an isolated converter and signal links, which straddle a dashed
+         barrier, to evampire, which shares its ground with the USB-C and
+         other connectors. On the right, the cable-side circuits connect
+         directly to evampire on the cable side, and an isolation part on
+         the barrier separates evampire from the USB-C and other
+         connectors. A note says that in Environment B this serves one
+         Ethernet port only, because the two ports must be isolated from
+         each other.
+   :align: center
 
 The first-version board's data already crosses the coupling transformers.
 The full design has none, so the data path needs isolation too
@@ -101,6 +145,25 @@ A barrier on the evampire die
    more than :math:`1500\ \text{V} \times \sqrt{2} / 20\ \text{V} = 106`
    such capacitors for the peak of the 1500 V rms test, before any margin. Whether thicker inter-metal
    dielectrics reach the test voltage needs test structures.
+
+:numref:`fig-poe-isolation-routes` sets the three routes side by side for
+the power and signals of one port; :numref:`fig-magnetics-isolation-routes`
+shows them for the data path alone.
+
+.. graphviz:: isolation-routes.dot
+   :name: fig-poe-isolation-routes
+   :caption: Three routes to the barrier for the power and signals of one
+             port.
+   :alt: Three rows, each crossed by one dashed barrier line. Row 1: the
+         RJ45 socket, cable-side functions as external parts, then
+         high-voltage capacitors, an isolated converter and digital
+         isolators on the barrier, then evampire. Row 2: the RJ45 socket, a
+         second die with the powered-device or sourcing blocks, then
+         isolated links and a converter on the barrier, then evampire. Row
+         3: the RJ45 socket, then one die with a shared substrate holding
+         the cable-side circuits, a series stack of more than 106 MIM
+         capacitors on the barrier, and the core.
+   :align: center
 
 Which route is used is an open question for each function
 (:doc:`hv-options`, :ref:`requirements-open-questions`).
