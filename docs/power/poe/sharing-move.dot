@@ -1,0 +1,51 @@
+// Moving power to a newly attached device by lowering another output
+// first. Time runs from top to bottom; not to scale. From sharing.rst
+// (IEEE 802.3 145.5.2).
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph sharing_move {
+    graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.5,
+           ranksep=0.3, newrank=true, splines=false];
+    node  [shape=point, width=0.05, color="#555555", fontname="Helvetica",
+           fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, arrowsize=0.7];
+
+    p [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+       label="Powered device\non the Ethernet\noutput", width=1.3];
+    s [shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+       label="Software on\nevampire", width=1.3];
+    u [shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+       label="New device on a\nUSB Type-C\noutput", width=1.3];
+    nh [shape=plaintext, label="Budget", fontsize=10,
+        fontname="Helvetica-Bold"];
+
+    p1; p2; p3; p4;
+    s1; s2; s3; s4;
+    u1; u2; u3; u4;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
+    n1 [label="needs room"];
+    n2 [label="old allocation still\ncounted; hardware\nlimit lowered now"];
+    n3 [label="up to 10 s later:\nlower allocation\ncounted"];
+    n4 [label="freed power\noffered"];
+
+    { rank=same; p; s; u; nh; }
+    p -> s -> u -> nh [style=invis];
+    { rank=same; p1; s1; u1; n1; }
+    { rank=same; p2; s2; u2; n2; }
+    { rank=same; p3; s3; u3; n3; }
+    { rank=same; p4; s4; u4; n4; }
+
+    edge [arrowhead=none, style=dashed, color="#999999", weight=100];
+    p -> p1 -> p2 -> p3 -> p4;
+    s -> s1 -> s2 -> s3 -> s4;
+    u -> u1 -> u2 -> u3 -> u4;
+    nh -> n1 -> n2 -> n3 -> n4 [style=invis];
+
+    edge [arrowhead=normal, style=solid, color="#000000", weight=0];
+    u1 -> s1 [label="attaches"];
+    s2 -> p2 [label="LLDP: lower\nallocation"];
+    p3 -> s3 [label="LLDP: echo of\nthe new value"];
+    s4 -> u4 [label="raise the offer"];
+}
