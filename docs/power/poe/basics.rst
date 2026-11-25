@@ -23,9 +23,8 @@ power from upstream power sourcing equipment and port B supplies power to
 a downstream powered device. All the power passes through the board's
 internal power bus (:ref:`power-flow`).
 
-.. _fig-poe-system:
-
 .. graphviz:: system.dot
+   :name: fig-poe-system
    :caption: The Power over Ethernet blocks on a first-version board, with
              power arriving on port A and leaving on port B.
    :alt: Block diagram. On the left, power sourcing equipment feeds a cable

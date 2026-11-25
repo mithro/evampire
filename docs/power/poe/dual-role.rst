@@ -17,9 +17,8 @@ roles, unlike USB Type-C (:ref:`power-roles`). A port therefore keeps one
 role for as long as the cable stays connected. :numref:`fig-poe-dual-role`
 shows such a port.
 
-.. _fig-poe-dual-role:
-
 .. graphviz:: dual-role.dot
+   :name: fig-poe-dual-role
    :caption: An Ethernet port that can take either role, with one disconnect
              switch on each power path.
    :alt: Block diagram. The RJ45 socket and cable-side power path connect

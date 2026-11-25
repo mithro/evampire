@@ -107,6 +107,8 @@ comes from the gf180mcu PDK and is not in this repository.
 - `docs/requirements.rst` is the single list of requirements (`req-*`
   labels). `docs/standards.rst` has one entry per standard that the roles
   link to.
+- `docs/_ext/` holds the Sphinx extensions written for this site.
+  `conf.py` adds the folder to the import path.
 - Diagrams are Graphviz `.dot` files next to the page, rendered as SVG.
   Prefer `layout=neato` with pinned `pos` and `splines=false`. Free layouts
   come out too wide to read. The front-page block diagram is the one
@@ -159,8 +161,17 @@ publish copies of them, or quote from them at length.
   A page that leaves design decisions open ends with one "Open questions"
   section, which lists them all. Explanatory pages with nothing open have
   none.
-- **Numbering:** every figure and table is numbered, referenced with
-  `:numref:`, and has `:alt:` text.
+- **Numbering:** every figure and table has a caption, a label, a
+  `:numref:` reference and `:alt:` text. The label is its identifier:
+  `docs/_ext/stable_ids.py` replaces Sphinx's running number with the label,
+  less its `fig-` or `tab-` prefix, so `tab-poe-pairs` is captioned
+  "Table poe-pairs:" and linked as "Table poe-pairs", and adding a table
+  renumbers nothing. Start a label with
+  `fig-` or `tab-` and the topic's prefix, and keep it short, since readers
+  see it. Renaming a label changes the identifier readers see. Label
+  diagrams with the `:name:` option; a `.. _label:` line before a captioned
+  `graphviz` or `wavedrom` directive does not reach the figure, and the
+  build reports it.
 - **Equations:** each equation has a Symbol/Meaning/Unit table and a worked
   example. Split long equations over aligned lines so they fit a 400 px
   screen.
