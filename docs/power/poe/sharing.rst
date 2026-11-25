@@ -85,8 +85,10 @@ it first lowers the offers on the other ports to make room. On a power
 sourcing equipment port, lowering over LLDP is complete only when the
 powered device has answered with the new value, which may take up to 10 s
 (:clause:`145.5.2`). Until then the software keeps the old allocation in
-the budget. Its built-in current and power limit on the port is lowered at
-the same time (:doc:`monitoring`). :numref:`fig-poe-sharing-move` shows the
+the budget. A compliant powered device may keep drawing its old allocation
+until it answers, so the port's built-in current and power limit
+(:doc:`monitoring`) stays at the old allocation until then and is lowered
+when the answer arrives. :numref:`fig-poe-sharing-move` shows the
 order.
 
 .. graphviz:: sharing-move.dot
@@ -97,10 +99,11 @@ order.
          Ethernet output, the software on evampire, and a new device on a
          USB Type-C output. The new device attaches and the budget needs
          room. The software sends an LLDP frame lowering the allocation;
-         the old allocation is still counted, and the hardware limit is
-         lowered at once. Up to 10 s later the powered device echoes the
-         new value and the lower allocation is counted. The software then
-         raises the offer on the USB Type-C output.
+         the old allocation is still counted and the hardware limit stays
+         at the old value. Up to 10 s later the powered device echoes the
+         new value; the lower allocation is counted and the hardware limit
+         is lowered. The software then raises the offer on the USB Type-C
+         output.
    :align: center
 
 If the input power falls faster than the outputs can be lowered, for

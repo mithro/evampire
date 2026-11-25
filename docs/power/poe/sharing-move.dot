@@ -26,8 +26,8 @@ digraph sharing_move {
 
     node [shape=plaintext, width=0, height=0, fontsize=9, fontcolor="#333333"];
     n1 [label="needs room"];
-    n2 [label="old allocation still\ncounted; hardware\nlimit lowered now"];
-    n3 [label="up to 10 s later:\nlower allocation\ncounted"];
+    n2 [label="old allocation still\ncounted; hardware\nlimit kept at it"];
+    n3 [label="up to 10 s later:\nlower allocation\ncounted, hardware\nlimit lowered"];
     n4 [label="freed power\noffered"];
 
     { rank=same; p; s; u; nh; }

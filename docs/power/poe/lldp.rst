@@ -29,12 +29,16 @@ device at the other end of the cable, to the destination address
 (:clause:`79.3.2`). The MDI, the medium dependent interface, is the
 connection to the cable, here the RJ45 socket.
 
-The field's main entries are:
+The field's two main entries are the *PD requested power value* and the
+*PSE allocated power value* (:clause:`79.3.2`). Every frame carries both:
 
-* the power the powered device requests;
-* the power the power sourcing equipment allocates;
-* copies of the other end's last values, so each end can see that the
-  other has received its value.
+* in a frame from the powered device, the requested value is its own and
+  the allocated value is a copy of the last one it received;
+* in a frame from the power sourcing equipment, the allocated value is its
+  own and the requested value is a copy of the last one it received.
+
+The copies let each end see that the other has received its value
+(:clause:`145.5.5`).
 
 Values are in units of 0.1 W, so 255 means 25.5 W
 (:clause:`Table 145-12 <145>`). :numref:`fig-poe-lldp-field` shows where
@@ -42,14 +46,15 @@ the field sits in a frame.
 
 .. graphviz:: lldp-field.dot
    :name: fig-poe-lldp-field
-   :caption: The Power via MDI field inside an LLDP frame, with the field
-             lengths not to scale.
+   :caption: The two power fields of the Power via MDI entry inside an
+             LLDP frame, with the field lengths not to scale.
    :alt: Diagram of an LLDP frame: destination address 01-80-C2-00-00-0E,
          source address, EtherType 0x88CC, other entries including Power
          via MDI, and the frame check sequence. The Power via MDI entry is
-         expanded into the PD requested power, the PSE allocated power, the
-         echo of the PD's request and the echo of the PSE's allocation. A
-         note says the powers are in units of 0.1 W, so 255 means 25.5 W.
+         expanded into two fields, the PD requested power value and the PSE
+         allocated power value. Notes say that each end fills one with its
+         own value and the other with a copy of the value it last received,
+         and that the powers are in units of 0.1 W, so 255 means 25.5 W.
    :align: center
 
 Devices that support LLDP
@@ -180,7 +185,12 @@ match (:doc:`monitoring`).
 
 When the power on port A falls, the software lowers the allocation on port
 B first (:ref:`power budget <power-budget>`), as
-:numref:`fig-poe-lldp-roles` shows.
+:numref:`fig-poe-lldp-roles` shows. It answers on port A within 10 s,
+without waiting for the answer on port B, which has its own 10 s limit
+(:clause:`145.5.2`). Until that answer arrives, the downstream powered
+device may still draw its old allocation, so the software keeps it in the
+budget, and removes power from port B if the new allocation on port A
+cannot cover it (:doc:`sharing`).
 
 .. graphviz:: lldp-roles.dot
    :name: fig-poe-lldp-roles
@@ -189,8 +199,9 @@ B first (:ref:`power budget <power-budget>`), as
    :alt: Sequence diagram with three lifelines: upstream power sourcing
          equipment, evampire as a powered device on port A and power
          sourcing equipment on port B, and a downstream powered device. The
-         upstream equipment lowers the allocation on port A. evampire first
-         lowers the allocation on port B. The downstream powered device
-         echoes the new value, in sync. evampire then echoes the new value
-         on port A, with its draw within the new allocation.
+         upstream equipment lowers the allocation on port A. evampire at
+         once lowers the allocation on port B, then answers on port A
+         within 10 s. The downstream powered device answers on port B
+         within its own 10 s; until then it may draw its old
+         allocation.
    :align: center
