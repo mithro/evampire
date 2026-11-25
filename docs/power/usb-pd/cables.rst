@@ -104,10 +104,14 @@ marked cable must meet.
      - none
      - 20
      - mW
-   * - The same, in the first *tRaWeaken*
+   * - The same, in the first *tRaWeaken* (21 ms to 1.2 s)
      - none
      - 75
      - mW
+   * - Current drawn while VCONN is below 3.0 V, *iRaDetect*
+     - none
+     - 10
+     - mA
    * - E-marker ready after VCONN, *teMarkerReady*
      - none
      - 50
@@ -154,20 +158,24 @@ least:
      - Turn-on time, tVCONNON, 2 ms (:typec:`Table 4-32`)
      - s
 
-The equation assumes the cable draws no other current while it charges.
-With the limits above:
+The equation counts only the current that charges the capacitance. With
+the limits above:
 
 .. math::
 
    I_\text{inrush} = \frac{10\ \mu\text{F} \times 3.0\ \text{V}}{2\ \text{ms}}
                    = 15\ \text{mA}
 
-Once charged, a passive marked cable draws at most 20 mW, or 75 mW in the
-first tRaWeaken (:numref:`tab-usbpd-vconn`). The source must nevertheless be
-able to supply 100 mW, which is
+While VCONN is below 3.0 V the cable may also draw up to *iRaDetect*,
+10 mA, so the switch supplies up to 15 mA plus 10 mA, 25 mA, during the
+ramp. Once VCONN is valid, a passive marked cable draws at most 75 mW in
+the first tRaWeaken, 25 mA at 3.0 V, and 20 mW after it
+(:numref:`tab-usbpd-vconn`). The source must also be able to supply
+100 mW, which is
 :math:`0.1\ \text{W} / 3.0\ \text{V} = 33\ \text{mA}` at the lowest valid
 VCONN voltage. A VCONN switch for evampire therefore needs a current limit of
-at least 33 mA (:numref:`fig-usbpd-vconn-inrush`). Sources with SuperSpeed data must supply 1 W to
+at least 33 mA, which also covers the 25 mA of the ramp
+(:numref:`fig-usbpd-vconn-inrush`). Sources with SuperSpeed data must supply 1 W to
 1.5 W (:typec:`Table 4-4`), and the controllers in
 :numref:`tab-usbpd-vconn-parts`, built for those, have much higher limits.
 They are reference examples, not requirements for evampire.
@@ -176,14 +184,16 @@ They are reference examples, not requirements for evampire.
    :name: fig-usbpd-vconn-inrush
    :alt: Two graphs against time after VCONN is switched on, 0 to 4 ms.
          VCONN rises linearly from 0 to 3.0 V, the lowest valid VCONN, by
-         tVCONNON at 2 ms. The switch current is 15 mA while it charges
-         10 µF. The cable then draws at most 75 mW, 25 mA, for a time, and
-         then at most 20 mW, 6.7 mA. A dashed line at 33 mA marks the
+         tVCONNON at 2 ms. While it rises, the switch supplies up to 25 mA:
+         15 mA to charge 10 µF, drawn dashed, plus up to 10 mA, iRaDetect,
+         drawn by the cable. The cable then draws at most 75 mW, 25 mA, in
+         the first tRaWeaken, and at most 20 mW, 6.7 mA, after it. A dashed line at 33 mA marks the
          100 mW the source must be able to supply.
 
    The VCONN switch charging a marked cable at a constant current, then
-   carrying its load, against the 100 mW a source must be able to supply;
-   the length of the 75 mW period is schematic.
+   carrying its load, against the 100 mW a source must be able to supply;
+   the length of the 75 mW period, tRaWeaken, is 21 ms to 1.2 s and is
+   drawn shorter.
 
 .. list-table:: VCONN current limits of commercial USB PD controllers
    :name: tab-usbpd-vconn-parts
