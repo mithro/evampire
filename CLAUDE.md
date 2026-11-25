@@ -100,10 +100,17 @@ uv run docs/usb-serial/sequences.py        # writes the sequence .dot files
 uv run docs/usb-serial/timing_figs.py
 ```
 
-Each script's docstring names the files it writes. Modules without a
-`# /// script` header (`svgdraw.py`, `svgkit.py`, `svgplot.py`, `svgfig.py`,
-`plotkit.py` and the `fig_*.py`, `*_figs.py` and `plots_*.py` modules) are
-helpers imported by the scripts above; run the script, not the helper.
+Each script's docstring names the files it writes. These modules are
+helpers that the scripts above import, so run the script, not the helper:
+
+- `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
+- `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
+  `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
+- `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
+  and `drawings_cap.py`;
+- `svgplot.py` in `docs/ethernet/phy-electrical/`,
+  `docs/power/converters/` and `docs/usb-serial/`, and `svgfig.py` in
+  `docs/power/usb-pd/`.
 `FONT_SCALE` in `docs/power/usb-pd/svgfig.py` sets the text size of every
 USB Power Delivery graph. Every script reproduces its committed files byte
 for byte, so a rerun that changes a file means its inputs changed.

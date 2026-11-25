@@ -142,5 +142,5 @@ Products and application notes
    Infineon application note AN2019-12, version 2.0, 2019-09-25.
 
 .. [HV-ISO7741] Texas Instruments, `ISO774x quad-channel digital isolators
-   <https://www.ti.com/product/ISO7741>`__, product page and data sheet
+   <https://www.ti.com/product/ISO7741>`__, product page and datasheet
    SLLSEP4.

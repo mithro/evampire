@@ -24,7 +24,7 @@ A board built around evampire has three converter functions
    How evampire's converters are arranged, how evampire controls external
    power stages, and bringing converter parts onto the chip.
 :doc:`references`
-   The data sheets, application notes, papers and process documents cited on
+   The datasheets, application notes, papers and process documents cited on
    these pages.
 
 .. toctree::

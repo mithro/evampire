@@ -5,7 +5,7 @@ This page is for the designer of a first-version board, which uses an
 external :term:`Ethernet transceiver` and standard :term:`magnetics` on
 each port (:ref:`board configurations <tab-power-board-configs>`). It
 covers the parts each port needs, the kinds of magnetics, board layout,
-what to look for in a data sheet, and example parts.
+what to look for in a datasheet, and example parts.
 
 Parts for each port
 -------------------
@@ -16,7 +16,7 @@ Each of Ethernet ports A and B (:ref:`requirements`) needs:
   (:doc:`../rgmii/index`);
 * one set of four-channel magnetics for 1000BASE-T, as a module or in the
   socket;
-* the circuit-side centre-tap connection that the transceiver's data sheet
+* the circuit-side centre-tap connection that the transceiver's datasheet
   asks for (:doc:`functions`);
 * the cable-side common-mode termination, unless it is in the socket;
 * a shielded RJ45 socket on a chassis ground area;
@@ -125,11 +125,11 @@ inch, 25.4 µm) of the cited guidance in brackets.
 * Place protection diodes on the transceiver side of the magnetics
   ([MAG-SNLA387]_, section 2).
 
-Data sheet checklist
+Datasheet checklist
 --------------------
 
 :numref:`tbl-magnetics-checklist` lists what transceiver makers ask of the
-magnetics. Data sheets write the turns ratio as "1CT:1CT": one turn to one
+magnetics. Datasheets write the turns ratio as "1CT:1CT": one turn to one
 turn, with a centre tap (CT) on both windings.
 
 .. list-table:: Requirements for 10/100/1000 Mbit/s magnetics
@@ -160,7 +160,7 @@ turn, with a centre tap (CT) on both windings.
        (:doc:`poe`)
 
 :numref:`tbl-magnetics-parts` gives two examples, with values from the
-makers' data sheets. The return loss column gives the value from 1 MHz to
+makers' datasheets. The return loss column gives the value from 1 MHz to
 30 MHz.
 
 .. list-table:: Example gigabit magnetics

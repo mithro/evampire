@@ -24,7 +24,7 @@ item 18, and :clause:`145.3.8.8`). A bridge of
 :wikipedia:`MOSFETs <MOSFET>` switched on as rectifiers loses less again.
 
 The bridge also adds series resistance and an offset voltage during
-detection. For reference, the LT4275 controller data sheet allows up to
+detection. For reference, the LT4275 controller datasheet allows up to
 1.1 kΩ for the bridge [POE-LT4275]_ (Applications Information). A MOSFET
 bridge must not conduct backwards during detection, because a
 single-signature powered device must show an invalid signature on one

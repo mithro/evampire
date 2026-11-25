@@ -106,7 +106,7 @@ either pair set, implements Data Link Layer classification
 devices it is optional.
 
 Some summaries are stricter than the standard. For reference, the TPS2373
-data sheet states that every Type 3 and Type 4 powered device does Data
+datasheet states that every Type 3 and Type 4 powered device does Data
 Link Layer classification [POE-TPS2373]_ (PoE Overview), whereas
 :clause:`145.3.6` makes it optional for single-signature classes 1 to 3.
 evampire implements it in either case (:ref:`req-poe-classification`).

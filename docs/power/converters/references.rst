@@ -5,7 +5,7 @@ The sources cited on the voltage converter pages, grouped by kind. Each
 citation in the text gives the section, table or equation used. The
 standards themselves are listed on :doc:`../../standards`.
 
-Data sheets and reference designs
+Datasheets and reference designs
 ---------------------------------
 
 .. [CONV-C2000] Texas Instruments, `TMS320F28004x Real-Time
@@ -19,38 +19,38 @@ Data sheets and reference designs
 
 .. [CONV-UCD3138] Texas Instruments, `UCD3138 Highly Integrated Digital
    Controller for Isolated Power <https://www.ti.com/lit/gpn/ucd3138>`__,
-   data sheet SLUSAP2J, revised 2021-11.
+   datasheet SLUSAP2J, revised 2021-11.
 
 .. [CONV-LM5109B] Texas Instruments, `LM5109B High Voltage 1-A Peak
    Half-Bridge Gate Driver <https://www.ti.com/lit/ds/symlink/lm5109b.pdf>`__,
-   data sheet SNVS477C, revised 2016-01.
+   datasheet SNVS477C, revised 2016-01.
 
 .. [CONV-LM5122] Texas Instruments, `LM5122 Wide-Input Synchronous Boost
    Controller With Multiple Phase Capability
-   <https://www.ti.com/lit/ds/symlink/lm5122.pdf>`__, data sheet SNVS954H,
+   <https://www.ti.com/lit/ds/symlink/lm5122.pdf>`__, datasheet SNVS954H,
    revised 2017-06.
 
 .. [CONV-LM5155] Texas Instruments, `LM5155x 2.2-MHz Wide Input
    Nonsynchronous Boost, SEPIC, Flyback Controller
-   <https://www.ti.com/lit/ds/symlink/lm5155.pdf>`__, data sheet SNVSB75E,
+   <https://www.ti.com/lit/ds/symlink/lm5155.pdf>`__, datasheet SNVSB75E,
    revised 2023-08.
 
 .. [CONV-LM5176] Texas Instruments, `LM5176 55-V Wide VIN Synchronous
    4-switch Buck-boost Controller <https://www.ti.com/lit/ds/symlink/lm5176.pdf>`__,
-   data sheet SNVSAI1D, revised 2021-08.
+   datasheet SNVSAI1D, revised 2021-08.
 
 .. [CONV-LM5177] Texas Instruments, `LM5177 60V Wide VIN Bidirectional
    4-Switch Buck-Boost Controller <https://www.ti.com/lit/ds/symlink/lm5177.pdf>`__,
-   data sheet SNVSBU4F, revised 2025-01.
+   datasheet SNVSBU4F, revised 2025-01.
 
 .. [CONV-LT8390] Analog Devices, `LT8390 60V Synchronous 4-Switch Buck-Boost
    Controller with Spread Spectrum
    <https://www.analog.com/en/products/lt8390.html>`__, product page and
-   data sheet (revision C used).
+   datasheet (revision C used).
 
 .. [CONV-LTC3780] Analog Devices, `LTC3780 High Efficiency, Synchronous,
    4-Switch Buck-Boost Controller <https://www.analog.com/en/products/ltc3780.html>`__,
-   product page and data sheet (revision G used).
+   product page and datasheet (revision G used).
 
 .. [CONV-PMP7979] Texas Instruments, `PMP7979: 12Vin to 67Vin, 54Vout at
    4.8A, 260W Dual-Phase Boost Reference Design
@@ -58,21 +58,21 @@ Data sheets and reference designs
 
 .. [CONV-TPS23753A] Texas Instruments, `TPS23753A IEEE 802.3 PoE Interface
    and Converter Controller with Enhanced ESD Immunity
-   <https://www.ti.com/lit/ds/symlink/tps23753a.pdf>`__, data sheet
+   <https://www.ti.com/lit/ds/symlink/tps23753a.pdf>`__, datasheet
    SLVS933D, revised 2020-12.
 
 .. [CONV-TPS23881] Texas Instruments, `TPS23881 Type-4 4-Pair 8-Channel PoE
    2 PSE Controller with SRAM and 200-mΩ RSENSE
-   <https://www.ti.com/lit/ds/symlink/tps23881.pdf>`__, data sheet SLVSF02E,
+   <https://www.ti.com/lit/ds/symlink/tps23881.pdf>`__, datasheet SLVSF02E,
    revised 2023-05.
 
 .. [CONV-TPS55289] Texas Instruments, `TPS55289 30-V, 8-A Buck-Boost
    Converter with I2C Interface <https://www.ti.com/lit/ds/symlink/tps55289.pdf>`__,
-   data sheet SLVSGA9A, revised 2022-08.
+   datasheet SLVSGA9A, revised 2022-08.
 
 .. [CONV-UCC27211] Texas Instruments, `UCC27211 120V, 3.7A/4.5A Half-Bridge
    Driver with 8V UVLO <https://www.ti.com/lit/ds/symlink/ucc27211.pdf>`__,
-   data sheet SLUSAT7H, revised 2025-09.
+   datasheet SLUSAT7H, revised 2025-09.
 
 Application notes, books and summaries
 --------------------------------------

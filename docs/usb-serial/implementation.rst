@@ -1,5 +1,5 @@
-Implementation on evampire
-==========================
+USB serial port in evampire
+===========================
 
 These pages cover how evampire builds the USB serial port.
 
