@@ -100,8 +100,8 @@ processor negotiates the role and the power level on each port (see
 The main blocks of evampire
 ---------------------------
 
-:numref:`fig-overview`, at the top of this page, shows the main blocks of
-evampire and how data and power flow between them.
+:numref:`fig-overview` shows the main blocks of evampire and how data and
+power flow between them.
 
 The two chip outlines are the two board configurations of
 :numref:`tab-power-board-configs`. The first version connects to separate
@@ -119,13 +119,8 @@ The labels use two abbreviations. USB Power Delivery messages on the
 :term:`biphase mark coding <Biphase mark coding>` (BMC). :term:`EPR` is the
 extended power range of USB Power Delivery.
 
-What this documentation covers
-------------------------------
-
-This documentation describes what the chip does and explains the Ethernet
-and power-delivery standards that evampire implements. It is written for
-readers who are familiar with digital and analogue integrated circuit design
-but not with the Ethernet or USB Power Delivery standards.
+Topics
+------
 
 :doc:`requirements`
    Every requirement the design meets, and the questions still open.
