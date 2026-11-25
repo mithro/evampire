@@ -36,8 +36,21 @@ The field's main entries are:
 * copies of the other end's last values, so each end can see that the
   other has received its value.
 
-Values are in units of 0.1 W, so 255 means 25.5 W
-(:clause:`Table 145-12 <145>`).
+Values are in units of 0.1 W, so 255 means 25.5 W
+(:clause:`Table 145-12 <145>`). :numref:`fig-poe-lldp-field` shows where
+the field sits in a frame.
+
+.. graphviz:: lldp-field.dot
+   :name: fig-poe-lldp-field
+   :caption: The Power via MDI field inside an LLDP frame, with the field
+             lengths not to scale.
+   :alt: Diagram of an LLDP frame: destination address 01-80-C2-00-00-0E,
+         source address, EtherType 0x88CC, other entries including Power
+         via MDI, and the frame check sequence. The Power via MDI entry is
+         expanded into the PD requested power, the PSE allocated power, the
+         echo of the PD's request and the echo of the PSE's allocation. A
+         note says the powers are in units of 0.1 W, so 255 means 25.5 W.
+   :align: center
 
 Devices that support LLDP
 -------------------------

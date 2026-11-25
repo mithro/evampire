@@ -16,7 +16,20 @@ at any time (:ref:`req-power-control`). The software sets a current and
 power limit for each port. Built-in hardware enforces the limits, switches
 a port off by itself when a fault is too fast for the software, and then
 reports the fault. The same measurements serve the converters
-(:doc:`../converters/index`).
+(:doc:`../converters/index`). :numref:`fig-poe-measure-points` shows where
+the measurements and limits sit.
+
+.. graphviz:: measure-points.dot
+   :name: fig-poe-measure-points
+   :caption: The measurement and limit points on each power port and on
+             the internal power bus.
+   :alt: Diagram. Ethernet port A, Ethernet port B and the USB Type-C ports
+         each connect to the internal power bus through a block that
+         measures voltage and current, enforces a limit and trips fast on
+         a fault. The bus has its own voltage, current and limit block. The
+         software on evampire sets each limit, reads each measurement and
+         receives each fault report; the link is drawn once.
+   :align: center
 
 Measurement accuracy
 --------------------

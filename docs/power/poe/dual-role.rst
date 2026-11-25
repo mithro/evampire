@@ -172,6 +172,22 @@ safety rules below.
 Safety rules
 ------------
 
+:numref:`fig-poe-pairings` summarises the four pairings.
+
+.. graphviz:: pairings.dot
+   :name: fig-poe-pairings
+   :caption: What happens when the port meets each kind of equipment at
+             the other end.
+   :alt: Four panels. This port as power sourcing equipment meeting
+         another power sourcing equipment: each sees the other's source,
+         an invalid signature, and applies no power, and each withstands
+         5 mA fed back. Two powered devices: neither supplies a voltage, so
+         nothing happens. Power sourcing equipment meeting equipment
+         without Power over Ethernet: detection fails and no power is
+         applied. A powered device meeting such equipment: no voltage
+         arrives and the board runs from another source.
+   :align: center
+
 Never apply power without a valid detection
    This rule applies to every pair set separately (:clause:`145.2.6`). In
    the powered-device role, the port's own power sourcing equipment

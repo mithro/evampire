@@ -25,7 +25,8 @@ channel.
 
 .. graphviz:: pse-controller.dot
    :caption: One power sourcing equipment channel, with the switch in the
-             negative pair and the sequence run by evampire's software.
+             negative pair and the sequence run by evampire's software; red
+             outlines mark the blocks that see the full port voltage.
    :alt: Block diagram. The high-voltage converter feeds the positive pairs
          of the port. The negative pairs pass through a power MOSFET switch
          and a sense resistor. A detection and class source applies test
@@ -34,7 +35,11 @@ channel.
          millivolts across the sense resistor. The comparator can turn the
          gate drive off directly. The software on evampire reads both
          measurements, steps the detection and class source, and sets the
-         current limit of the gate drive and current-limit loop.
+         current limit of the gate drive and current-limit loop. Port
+         protection, a 0.1 µF 100 V capacitor, a suppressor of at least
+         58 V and a fuse of at least 60 V DC, sits across the port. The
+         switch and the detection and class source are outlined in red
+         because they see up to 57 V.
    :align: center
 
 With the switch in the negative pair, the sense resistor, the
@@ -196,12 +201,25 @@ supply in the output ranges.
 
 For reference, the TPS23881 examples put a 0.1 µF, 100 V capacitor and a
 transient-voltage suppressor of at least 58 V standoff on each port, and a
-fuse rated for at least 60 V DC [POE-TPS23881]_ (Application and
-Implementation). The port capacitance during detection is limited to
+fuse rated for at least 60 V DC [POE-TPS23881]_ (Application and
+Implementation), drawn in :numref:`fig-poe-pse-channel`. The port capacitance during detection is limited to
 520 nF (:clause:`Table 145-7 <145>`).
 
 Supply alternatives
 -------------------
+
+:numref:`fig-poe-supply-options` shows the two alternatives.
+
+.. graphviz:: supply-options.dot
+   :name: fig-poe-supply-options
+   :caption: Two alternatives for the supply of a power sourcing port.
+   :alt: Two rows. In the first, a power bus held at 18 V feeds a
+         switched-capacitor converter with a ratio of 3, which gives a 54 V
+         port supply for classes 1 and 2. In the second, a USB extended
+         power range source at a fixed 48 V feeds the port through a switch
+         with no converter, giving 45.1 to 48 V, above the 44 V minimum of
+         Type 1 but below the 50 V of Types 2 to 4.
+   :align: center
 
 A switched-capacitor supply for low classes
    Classes 1 and 2 need at most 6.7 W at the power sourcing equipment

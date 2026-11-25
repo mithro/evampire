@@ -20,6 +20,22 @@ evampire to sit on the cable side of the isolation barrier, or a second
 cable-side die (:doc:`isolation`). The limits that decide each option are on
 :doc:`hv-limits`. The low-voltage parts, the sequencing, the measurement
 logic and the software, are on evampire in every option.
+:numref:`fig-poe-hv-functions` shows the functions of one port.
+
+.. graphviz:: hv-functions.dot
+   :name: fig-poe-hv-functions
+   :caption: The cable-side functions of one port, with red outlines on
+             those that see the cable voltage.
+   :alt: Diagram. The RJ45 socket connects to surge and ESD protection. On
+         the powered-device side, power passes through polarity correction,
+         signature and classification, the isolation switch and voltage
+         sensing. On the power sourcing side, the detection and class
+         source and the power sourcing switch connect to the protection;
+         the gate drive and current sensing connect to the switch. The
+         functions that see the cable voltage have red outlines; gate drive
+         and current sensing do not. Below, the sequencing, measurement
+         logic and software are on evampire in every option.
+   :align: center
 
 Polarity correction
 -------------------
@@ -62,7 +78,8 @@ External
    A powered-device controller (:numref:`tab-poe-pd-chips`).
 
 On chip
-   The signature, mark load and class current work only below about 22 V,
+   The signature, mark load and class current work only below about 22 V
+   (:numref:`fig-poe-sig-blocking`),
    and the class current is at most 44 mA. They stay connected while the
    input rises to 57 V, so a switch or structure that blocks 57 V sits ahead
    of them. The class regulator dissipates about 0.8 W in each event
@@ -72,6 +89,17 @@ On chip
 What decides
    The blocking structure ahead of the low-voltage circuits, and the heat of
    the class current.
+
+.. graphviz:: sig-blocking.dot
+   :name: fig-poe-sig-blocking
+   :caption: A structure that blocks 57 V ahead of the low-voltage
+             signature and class circuits of an on-chip powered device.
+   :alt: Diagram. The bridge output, 0 to 57 V, passes through a switch or
+         structure that blocks 57 V to the signature, mark load and class
+         current circuits, which draw up to 44 mA and work below about
+         22 V. A divider and comparator sense the bridge output and open
+         the switch above the class range.
+   :align: center
 
 Isolation switch of the powered device
 --------------------------------------
@@ -99,7 +127,19 @@ the 6 V devices drive it directly. Otherwise a stacked or bootstrapped
 driver, or an external driver, is needed. For reference, the TPS23881
 drives its gates at 10 V to 12.5 V and the LT4275 at 10 V to 18 V
 [POE-TPS23881]_ [POE-LT4275]_ (Electrical Characteristics).
-:ref:`conv-gate-drive` describes gate drive in the converters.
+:ref:`conv-gate-drive` describes gate drive in the converters, and
+:numref:`fig-poe-gate-drive` compares the three options.
+
+.. graphviz:: gate-drive.dot
+   :name: fig-poe-gate-drive
+   :caption: Three ways to drive an external switch from evampire.
+   :alt: Three rows. Row 1: evampire's 6 V devices drive a MOSFET specified
+         at a gate drive of 6 V or less directly. Row 2: evampire drives a
+         stacked or bootstrapped driver, which drives a MOSFET that needs a
+         higher gate voltage. Row 3: evampire drives an external driver,
+         which drives such a MOSFET. A note gives reference gate voltages:
+         TPS23881 10 to 12.5 V and LT4275 10 to 18 V.
+   :align: center
 
 Voltage sensing
 ---------------
@@ -142,19 +182,32 @@ External divider
    The divider costs about 3 mW. The model ignores the input's leakage and
    the resistor tolerance. A surge goes above 57 V, so the divider output
    needs a clamp. On the powered-device side the divider sits after the
-   isolation switch, so that it is not in parallel with the signature.
+   isolation switch, so that it is not in parallel with the signature
+   (:numref:`fig-poe-divider`).
 
 On-chip divider
    A high-resistance polysilicon divider. With the 2000 Ω per square
    option, 1 MΩ is 500 squares and dissipates
    :math:`(57\ \text{V})^2 / 1\ \text{M}\Omega = 3.2\ \text{mW}`. Its
-   voltage coefficient, −150 ppm/V typical, adds error
-   [POE-GF180-EP-6]_. The top of the divider sits at 57 V over the field
-   oxide. A capacitive divider of stacked MIM capacitors, at least three of
+   voltage coefficient, −150 ppm/V typical, adds error
+   [POE-GF180-EP-6]_. The top of the divider sits at 57 V over the field
+   oxide, as the polysilicon of :numref:`fig-hv-poly-on-fox` does. A capacitive divider of stacked MIM capacitors, at least three of
    the 20 V type for 57 V, suits sampled measurement.
 
 What decides
    The field-oxide breakdown under the divider.
+
+.. graphviz:: divider.dot
+   :name: fig-poe-divider
+   :caption: An external divider after the isolation switch, with a clamp
+             on its output.
+   :alt: Diagram. The bridges and signature feed the isolation switch,
+         whose output is the port voltage of up to 57 V. A 1 MΩ resistor
+         R1 and a 56 kΩ resistor R2 divide it to VSS, drawing 54 µA. The
+         tap feeds evampire's input, 3.0 V at 57 V, and a clamp to VSS. A
+         note says the divider is not across the signature, so detection
+         sees only 25 kΩ.
+   :align: center
 
 Power sourcing switch and current sensing
 -----------------------------------------
@@ -166,7 +219,7 @@ External
 On chip
    With the switch in the negative pair, the sense resistor, the current
    measurement, the fast fault comparator and the control logic sit near
-   the supply return, and the sense voltages are millivolts. They can be on
+   the supply return (:numref:`fig-poe-pse-channel`), and the sense voltages are millivolts. They can be on
    evampire at low voltage. The switch's drain reaches the full port
    voltage, so an on-chip switch needs a structure that blocks 57 V. The
    switch must stay inside its safe operating area through a short, up to
@@ -205,11 +258,23 @@ On chip
    on-chip clamp, for example a
    :wikipedia:`silicon-controlled rectifier <Silicon_controlled_rectifier>`
    or parasitic-bipolar clamp of several mm², is open, as is a split with an
-   external pre-clamp and an on-chip fine clamp.
+   external pre-clamp and an on-chip fine clamp
+   (:numref:`fig-poe-surge-split`).
 
 What decides
    A thermal estimate and a transmission-line pulse or surge test
    structure.
+
+.. graphviz:: surge-split.dot
+   :name: fig-poe-surge-split
+   :caption: Surge protection by an external suppressor alone, or split
+             between an external pre-clamp and an on-chip fine clamp; the
+             split is open.
+   :alt: Two rows. In the first, a 1.5 J cable surge goes into an external
+         suppressor, which takes the energy, before the port circuits. In
+         the second, an external pre-clamp takes most of the energy and an
+         on-chip fine clamp the rest, before the port circuits.
+   :align: center
 
 A rough estimate of the area treats the surge energy as heating a layer of
 silicon as thick as the heat spreads during the pulse:
@@ -278,7 +343,8 @@ Devices in a stack
 ------------------
 
 A stack of transistors that shares a voltage equally needs enough devices
-for each to stay within its rating. As a first estimate, ignoring the
+for each to stay within its rating (:numref:`fig-hv-stack-section` shows
+such a stack in cross-section). As a first estimate, ignoring the
 imbalance any real stack has:
 
 .. math::
