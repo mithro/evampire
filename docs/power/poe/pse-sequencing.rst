@@ -115,10 +115,11 @@ windows that the software must place its actions in.
      - 400
 
 The windows come from :clause:`Table 145-14 <145>` and
-:clause:`Table 145-16 <145>`. The narrowest is 6 ms wide. An action placed
-in the middle of it with a timing error of up to ± 1 ms leaves 2 ms of
-margin on each side, so a timer resolution and a response latency of 1 ms
-or better meet every window. This is an estimate of the need; the
+:clause:`Table 145-16 <145>`, and :numref:`fig-poe-step-times` places them
+in the sequence. The narrowest is 6 ms wide. An action placed in the middle
+of it with a timing error of up to ± 1 ms leaves 2 ms of margin on each
+side (:numref:`fig-poe-action-window`), so a timer resolution and a response
+latency of 1 ms or better meet every window. This is an estimate of the need; the
 processor that meets it is open (:ref:`requirements-open-questions`).
 
 Each measurement is read after the port settles: at least 6 ms into a class
@@ -126,6 +127,18 @@ event (:clause:`Table 145-14 <145>`, item 7), and after the detection
 voltage settles to within 1 % (:clause:`145.2.6.2`). The software takes a
 few readings per step, so its measurement rate is tens to hundreds of
 readings per second per port.
+
+.. figure:: action-window.svg
+   :name: fig-poe-action-window
+   :alt: Time line from 0 to 14 ms after a mark event starts. The window
+         from 6 to 12 ms is shaded. An action is aimed at 9 ms with an error
+         of plus or minus 1 ms, leaving a 2 ms margin from 6 to 8 ms and
+         from 10 to 12 ms. Before 6 ms is too early and after 12 ms too
+         late.
+   :align: center
+
+   Ending a mark event: an action aimed at the centre of the 6 ms window
+   with an error of ± 1 ms.
 
 For reference, commercial controllers do the same in firmware. The TPS23881
 runs its sequences on an internal processor whose firmware the host loads

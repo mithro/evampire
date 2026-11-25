@@ -179,7 +179,7 @@ The example resistors are those of the TPS2372 [POE-TPS2372]_
 (Application and Implementation). :numref:`tab-poe-request` shows which signatures a powered
 device shows for each class it requests (:clause:`Table 145-26 <145>`).
 The first signature is used in class events 1 and 2, the second from class
-event 3 on.
+event 3 on, as :numref:`fig-poe-class-events` shows for classes 4 and 8.
 
 .. list-table:: Class signatures for each requested class
    :name: tab-poe-request
@@ -380,7 +380,8 @@ start (:doc:`pd-controller`).
 Maintain power signature
 ------------------------
 
-:doc:`sequence` gives the minimum current and pulse timing. A board that
+:doc:`sequence` gives the minimum current and pulse timing
+(:numref:`fig-poe-mps`). A board that
 always draws a steady power meets it if the current stays above the
 minimum at the highest input voltage, where the current is smallest:
 

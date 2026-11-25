@@ -256,7 +256,7 @@ limits, polices the current, and watches for the maintain power signature.
 :doc:`monitoring` gives these limits and the response time each one needs.
 
 It removes the power when the current has stayed below its threshold for
-320 ms to 400 ms (:clause:`Table 145-16 <145>`, item 21). The threshold
+320 ms to 400 ms (:numref:`fig-poe-mps`) (:clause:`Table 145-16 <145>`, item 21). The threshold
 lies between 4 mA and 9 mA for classes 1 to 4 on one pair set
 (item 19), so a current measurement within about ± 2.5 mA meets it. After
 removing power because of a fault, it waits at least 750 ms before trying

@@ -181,7 +181,8 @@ Power demotion
 --------------
 
 The assigned class is the lower of the requested class and the class that
-the number of class events allows (:numref:`tab-poe-events`). A power
+the number of class events allows (:numref:`tab-poe-events`,
+:numref:`fig-poe-class-events`). A power
 sourcing equipment that cannot supply the requested class, because of its
 type or its power budget, issues fewer class events (:clause:`145.2.8.1`,
 :clause:`Table 145-11 <145>`). The standard has no name for this; the

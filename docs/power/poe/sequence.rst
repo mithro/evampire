@@ -131,7 +131,22 @@ Type 2 power sourcing equipment makes its first class event 6 ms to 30 ms
 long, and Type 1 makes its single class event 6 ms to 75 ms long
 (:clause:`Table 33-10 <33>`). The long first class event of Types 3 and 4
 lets a powered device tell which type it is connected to
-(:clause:`145.3.7`).
+(:clause:`145.3.7`). :numref:`fig-poe-step-times` lays the steps end to end
+for four class events.
+
+.. figure:: step-times.svg
+   :name: fig-poe-step-times
+   :alt: Bar chart of time after the end of detection, from 0 to 420 ms.
+         Bars laid end to end: class event 1 of 88 to 105 ms, a mark event
+         of 6 to 12 ms, class event 2 of 6 to 20 ms, a mark, class event 3,
+         a mark, class event 4 and an inrush period of 50 to 75 ms. Each bar
+         is solid up to its shortest duration and dashed up to its longest.
+         The longest total, without the last mark event, is 276 ms. A
+         dashed line at 400 ms marks the latest time for full power.
+   :align: center
+
+   The steps after detection for four class events, Types 3 and 4, against
+   the 400 ms limit from detection to full power.
 
 Number of class events
 ----------------------
@@ -141,8 +156,8 @@ two, Type 3 up to four and Type 4 up to five (:clause:`145.2.8.1`). A
 powered device that asks for class 5 to 8 shows class signature 4 in the
 first two events, so that older power sourcing equipment sees a class 4
 device. It shows a different signature from the third event on
-(:clause:`Table 145-26 <145>`). :doc:`powered-device` and
-:doc:`power-sourcing` give the details.
+(:clause:`Table 145-26 <145>`), as :numref:`fig-poe-class-events` shows.
+:doc:`powered-device` and :doc:`power-sourcing` give the details.
 
 Type 2 power sourcing equipment may also issue only one class event and
 complete the classification over LLDP (:doc:`classification`).
@@ -172,6 +187,22 @@ with 5 events one that asked for class 7 gets class 7. A powered device
 gets the lower of the class it asked for and the class in
 :numref:`tab-poe-events`. Getting a lower class is called
 :term:`power demotion` (:ref:`poe-demotion`).
+
+.. figure:: class-events.svg
+   :name: fig-poe-class-events
+   :alt: Graph of current from 0 to 50 mA against five class events, with
+         shaded bands for class signatures 0 to 4 (1 to 4, 9 to 12, 17 to
+         20, 26 to 30 and 36 to 44 mA). A class 4 powered device draws
+         about 40 mA, signature 4, in all five events. A class 8 powered
+         device draws signature 4 in events 1 and 2 and about 28 mA,
+         signature 3, in events 3 to 5. Between events both draw a mark
+         current. Below, the highest class assigned when the power sourcing
+         equipment stops after 1, 2, 3, 4 or 5 events is 3, 4, 4, 6 and 8.
+   :align: center
+
+   Class signature currents of a class 4 and a class 8 powered device, and
+   the highest class assigned for each number of class events (current
+   levels within each band are schematic).
 
 Actions at each end
 -------------------
@@ -238,7 +269,20 @@ Type 3 and Type 4 power sourcing equipment removes the power when the
 current has been below the threshold for 320 ms to 400 ms
 (:clause:`Table 145-16 <145>`, item 21). It turns the port off within
 500 ms, to below 2.8 V (items 16 and 17). A new cable then starts the
-sequence again with detection.
+sequence again with detection. :numref:`fig-poe-mps` shows both.
+
+.. figure:: mps.svg
+   :name: fig-poe-mps
+   :alt: Two graphs against time from 0 to 1800 ms. The upper graph shows
+         the powered device current as pulses above the 10 mA threshold,
+         each at least 75 ms long with gaps of at most 250 ms, and then the
+         current stops. The lower graph shows the port voltage at 54 V until
+         the power sourcing equipment removes the power 320 to 400 ms after
+         the current stops; it then falls below 2.8 V within 500 ms.
+   :align: center
+
+   The maintain power signature as pulses of current, and the removal of
+   power after the current stops.
 
 Open questions
 --------------
