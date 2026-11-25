@@ -1,10 +1,10 @@
 RGMII pins and I/O cells
 ========================
 
-The pins evampire uses for its two RGMII ports, the I/O supply they run
-from, the timing of the standard gf180mcu pad cells, and the choice between
-standard and custom I/O cells. The logic in front of the pads is on
-:doc:`port-logic`.
+evampire's two RGMII ports and the shared management pins take 27 pins,
+which run from the I/O supply. The timing of the standard gf180mcu pad
+cells bears on the choice between standard and custom I/O cells. The logic
+in front of the pads is on :doc:`port-logic`.
 
 .. _rgmii-pins:
 

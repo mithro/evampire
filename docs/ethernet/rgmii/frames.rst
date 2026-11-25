@@ -1,9 +1,10 @@
 Frames on the interface
 =======================
 
-How an Ethernet frame appears on the RGMII data signals: its fields, the
-preamble and start frame delimiter, and the gap between frames. How each
-byte is split into nibbles is described on :doc:`data`.
+An Ethernet frame crosses the RGMII data signals as a sequence of fields,
+starting with the preamble and the start frame delimiter, and a gap
+separates one frame from the next. How each byte is split into nibbles is
+described on :doc:`data`.
 
 .. _rgmii-frame-fields:
 

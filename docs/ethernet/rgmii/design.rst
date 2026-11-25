@@ -1,7 +1,9 @@
 RGMII design in evampire
 ========================
 
-These pages describe how evampire implements its two RGMII ports.
+evampire implements its two RGMII ports with gf180mcu pad cells,
+double-data-rate port logic, and a processor policy that keeps both ports
+at the same speed.
 
 :doc:`io-cells`
    The pins, the I/O supply, the timing of the gf180mcu pad cells, and the

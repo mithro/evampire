@@ -1,8 +1,8 @@
 Interface specification
 =======================
 
-These pages explain RGMII itself, as the specifications and the transceiver
-datasheets define it.
+RGMII is defined by two versions of an industry specification and by the
+datasheets of the transceivers that implement it.
 
 :doc:`signals`
    What RGMII is, its six signals in each direction, and how it relates to

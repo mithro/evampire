@@ -1,8 +1,8 @@
 Port speed policy
 =================
 
-How the processor sets up the two Ethernet transceivers so that ports A and
-B run at the same speed in full duplex, which cut-through forwarding needs.
+The processor sets up the two Ethernet transceivers so that ports A and B
+run at the same speed in full duplex, which cut-through forwarding needs.
 The registers it uses are on :doc:`mdio`.
 
 .. _rgmii-same-speed:
