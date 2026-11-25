@@ -25,7 +25,7 @@ different physics, from simplest to most involved. The voltage limits of the gf1
    The routes side by side, and the measurements that would decide between
    them.
 :doc:`references`
-   The sources cited on these pages.
+   The sources cited for high-voltage isolation.
 
 .. toctree::
    :hidden:
