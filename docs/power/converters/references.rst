@@ -3,7 +3,8 @@ References
 
 The sources cited on the voltage converter pages, grouped by kind. Each
 citation in the text gives the section, table or equation used. The
-standards themselves are listed on :doc:`../../standards`.
+standards themselves are listed on the
+:doc:`standards page <../../standards>`.
 
 Datasheets and reference designs
 ---------------------------------
