@@ -95,7 +95,8 @@ Input protection
 Class current
 -------------
 
-The regulator holds :math:`V_\text{CLS}` across the class resistor, so:
+The regulator holds :math:`V_\text{CLS}` across the class resistor
+(:numref:`fig-poe-class-regulator`), so:
 
 .. math::
 
@@ -120,6 +121,20 @@ The regulator holds :math:`V_\text{CLS}` across the class resistor, so:
    * - :math:`I_\text{class}`
      - Current drawn from the cable
      - mA
+
+.. graphviz:: class-regulator.dot
+   :name: fig-poe-class-regulator
+   :caption: The class current regulator: the amplifier holds V_CLS across
+             the class resistor, and the pass device drops the rest of the
+             input voltage.
+   :alt: Diagram. The class current flows from VDD, 14.5 to 20.5 V during
+         a class event, through a pass device that drops up to 18 V, out of
+         the CLS pin and through the 63.4 Ω class resistor to VSS. An
+         amplifier senses the CLS pin, compares it with a 2.5 V reference
+         on the TPS2378, and drives the gate of the pass device. A note
+         gives the current as V_CLS over R_CLS, 39 mA, the regulator's
+         dissipation as up to 0.79 W and the resistor's as 0.11 W.
+   :align: center
 
 For class signature 4, ignoring :math:`I_\text{bias}`, with the TPS2378
 (2.5 V, 63.4 Ω [POE-TPS2378]_) and the LT4275 (1.40 V, 34.8 Ω
@@ -211,7 +226,8 @@ capacitor, then allows a higher operating current.
 The values are from [POE-TPS2378]_ and [POE-TPS2372]_ (Electrical
 Characteristics). If the load pulls the switch out of full conduction for
 longer than a filter time, 800 µs on the TPS2378, the controller falls back
-to the inrush limit. For reference, the LT4275 drives an external MOSFET
+to the inrush limit (:numref:`fig-poe-inrush-pd` shows the TPS2378 limits
+while charging). For reference, the LT4275 drives an external MOSFET
 instead and sets the inrush current with a capacitor on the gate
 [POE-LT4275]_ (Applications Information).
 

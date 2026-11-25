@@ -22,7 +22,22 @@ The standard gives the two ends of a cable two ways to agree the power:
    allocation in steps of 0.1 W (:doc:`lldp`).
 
 Both also give :term:`mutual identification`: each end learns the type of
-the other (:clause:`33.2.6`, :clause:`145.2.8`).
+the other (:clause:`33.2.6`, :clause:`145.2.8`). :numref:`fig-poe-class-methods`
+shows where each acts.
+
+.. figure:: class-methods.svg
+   :name: fig-poe-class-methods
+   :alt: Graph of the allocation at the powered device against time, in
+         three phases: class events, power on, and link up with LLDP
+         frames. The allocation is zero during the class events, then
+         25.5 W, class 4, from Physical Layer classification when the power
+         comes on, and later rises to 51 W through Data Link Layer
+         classification, set in steps of 0.1 W.
+   :align: center
+
+   Physical Layer classification sets the first allocation and Data Link
+   Layer classification changes it once the link is up; the example is a
+   class 6 powered device first given class 4.
 
 Methods by type
 ---------------

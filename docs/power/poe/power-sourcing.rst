@@ -14,7 +14,20 @@ Power sourcing equipment must not apply the operating voltage to a pair set
 that has not shown a valid detection signature (:clause:`145.2.6`). This
 rule protects equipment that was not designed for Power over Ethernet. Such
 equipment connects its centre taps only through capacitors, so it looks
-like an open circuit at DC, fails detection and receives no power.
+like an open circuit at DC, fails detection and receives no power
+(:numref:`fig-poe-non-poe`).
+
+.. graphviz:: non-poe.dot
+   :name: fig-poe-non-poe
+   :caption: What detection finds at equipment without Power over Ethernet
+             and at a powered device.
+   :alt: Two rows. In the first, detection at 2.8 to 10 V measures
+         equipment without Power over Ethernet, whose centre taps connect
+         only through capacitors; it is open at DC, fails detection and
+         receives no power. In the second, detection measures a powered
+         device with a 25 kΩ signature, which is valid, so power may be
+         applied.
+   :align: center
 
 Two-point detection
 -------------------
@@ -302,6 +315,19 @@ current applies only above 30 V. Below that the power sourcing equipment
 must supply at least 5 mA from 0 V to 10 V and 60 mA from 10 V to 30 V
 (:clause:`145.2.10.7`). The lower current at low voltage reduces the
 power in the switch while most of the supply voltage is across it.
+:numref:`fig-poe-inrush-pse` draws the limits against the port voltage.
+
+.. figure:: inrush-pse.svg
+   :name: fig-poe-inrush-pse
+   :alt: Graph of inrush current on a log scale, 1 mA to 2 A, against port
+         voltage, 0 to 57 V. The lowest current the power sourcing
+         equipment must supply steps from 5 mA below 10 V to 60 mA from 10
+         to 30 V and 0.4 A above 30 V, or 0.8 A for classes 7 and 8.
+         Dotted lines mark the highest currents, 0.45 A for classes 1 to 4
+         and 0.9 A for classes 5 to 8.
+   :align: center
+
+   The inrush current of power sourcing equipment against port voltage.
 
 Supervision while powered
 -------------------------

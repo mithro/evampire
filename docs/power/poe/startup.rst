@@ -17,6 +17,19 @@ sequencer, working without the processor, answers detection and
 classification and requests a power level (:ref:`req-power-control`). Once
 the processor runs, the software reads the assigned class and carries out
 any further negotiation over LLDP (:doc:`lldp`).
+:numref:`fig-poe-sequencer` shows which part answers each step.
+
+.. graphviz:: sequencer.dot
+   :name: fig-poe-sequencer
+   :caption: The steps answered by the built-in start-up sequencer and
+             those handled by software once the processor runs.
+   :alt: Diagram of five steps in order: detection, where the signature is
+         shown; class and mark events; turn-on and inrush; the processor
+         starts; and the software reads the class and runs the LLDP
+         exchange. The first three steps are marked as the built-in
+         start-up sequencer, working without the processor, and the last
+         two as software on the processor.
+   :align: center
 
 The sequencer's jobs are those of the blocks in
 :numref:`fig-poe-pd-controller`. It shows the detection signature, draws the
@@ -32,7 +45,8 @@ Power at each step
 
 :numref:`tab-poe-startup-power` gives the power the cable delivers to the
 powered device at each step, from the lowest voltage and current of the
-step to the highest.
+step to the highest, and :numref:`fig-poe-startup-power` sets the ranges
+on a log scale.
 
 .. list-table:: Power available to the powered device at each step
    :name: tab-poe-startup-power
@@ -115,7 +129,20 @@ Class event
    20.5 V at the highest (:numref:`tab-poe-class-sig`).
 
 Mark event
-   0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
+   0.25 mA to 4 mA at 6.9 V to 10.1 V (:clause:`Table 145-25 <145>`).
+
+.. figure:: startup-power.svg
+   :name: fig-poe-startup-power
+   :alt: Bar chart of power on a log scale from 0.01 to 1000 mW for each
+         step: detection as an offset current 0.032 to 0.12 mW; detection
+         through the signature 0.28 to 4.3 mW; mark event 1.7 to 40 mW;
+         class event with signature 0, 14.5 to 82 mW; signature 1, 131 to
+         246 mW; signature 2, 247 to 410 mW; signature 3, 377 to 615 mW;
+         signature 4, 522 to 902 mW. A note gives 0 mW during reset.
+   :align: center
+
+   The power available to the powered device at each step, spanning more
+   than four orders of magnitude.
 
 Energy in each step
 -------------------
@@ -138,7 +165,19 @@ Energy cannot be carried across the steps in a large capacitor, because
 the input capacitance during detection is limited to 0.12 µF
 (:clause:`Table 145-21 <145>`). Whether a capacitor behind a diode or a
 switch can hold the sequencer's supply between steps, without appearing in
-the detection signature, is part of the sequencer design.
+the detection signature, is part of the sequencer design
+(:numref:`fig-poe-holdup`).
+
+.. graphviz:: holdup.dot
+   :name: fig-poe-holdup
+   :caption: An open idea: a hold-up capacitor for the sequencer behind a
+             diode or switch, outside the detection signature.
+   :alt: Diagram. The bridge outputs feed the 25 kΩ signature, with a port
+         capacitance of 0.05 to 0.12 µF, and, through a diode or switch, a
+         hold-up capacitor that supplies the sequencer. The diode or switch
+         and the capacitor are drawn dashed, and a note says it is open
+         whether the capacitor can stay hidden from detection.
+   :align: center
 
 Power after turn-on
 -------------------

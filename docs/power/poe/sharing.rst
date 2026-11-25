@@ -39,8 +39,19 @@ class at the power sourcing equipment (:numref:`tab-poe-classes`), or the
 allocated value set over LLDP plus the cable loss (:doc:`lldp`).
 
 For example, with :math:`P_\text{out} = 80\ \text{W}`, a class 5 Ethernet
-output takes 45 W and leaves 35 W for the USB Type-C ports together. The USB
-offers that fit in 35 W are described on :doc:`../usb-pd/index`.
+output takes 45 W and leaves 35 W for the USB Type-C ports together
+(:numref:`fig-poe-budget-split`). The USB
+offers that fit in 35 W are described on :doc:`../usb-pd/index`.
+
+.. figure:: budget-split.svg
+   :name: fig-poe-budget-split
+   :alt: Bar of power offered from 0 to 80 W. A class 5 Ethernet output
+         takes 45 W and the USB Type-C ports together take the remaining
+         35 W of the 80 W output budget.
+   :align: center
+
+   An 80 W output budget shared between a class 5 Ethernet output and the
+   USB Type-C ports.
 
 Allocation changes
 ------------------

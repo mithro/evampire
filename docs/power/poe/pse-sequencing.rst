@@ -191,7 +191,8 @@ drop in the switch and sense resistor, and below 57 V for tolerance
 [POE-TPS23881]_ (Application and Implementation). On an evampire board the
 high-voltage converter makes it from the power bus
 (:doc:`../converters/index`). Its ripple and noise must stay within the
-limits on :doc:`monitoring`.
+limits on :doc:`monitoring`. :numref:`fig-poe-supply-voltages` places the
+supply in the output ranges.
 
 For reference, the TPS23881 examples put a 0.1 µF, 100 V capacitor and a
 transient-voltage suppressor of at least 58 V standoff on each port, and a
@@ -238,7 +239,20 @@ A 48 V USB supply used directly
    below the 50 V of Types 2 to 4. During a peak current the source may
    fall to 90 %, 43.2 V (:pd:`Table 4.7`), and the USB cable and the switch
    drop more. So a 48 V input could feed a Type 1 port without a converter
-   only if those drops and peaks are excluded; this is an open question.
+   only if those drops and peaks are excluded; this is an open question
+   (:numref:`fig-poe-supply-voltages`).
+
+.. figure:: supply-voltages.svg
+   :name: fig-poe-supply-voltages
+   :alt: Chart of voltage from 40 to 60 V. The output range is 44 to 57 V
+         for Type 1 and 50 to 57 V for Types 2 to 4, with dashed lines at
+         44, 50 and 52 V. A mark at 54 V shows a supply near 54 V. A 48 V
+         USB supply runs from its lowest value, 45.1 V, to 48 V nominal,
+         and falls to 43.2 V at a peak, below the 44 V Type 1 minimum.
+   :align: center
+
+   A supply near 54 V inside the output range, and a 48 V USB supply used
+   directly against the Type 1 and Types 2 to 4 minimums.
 
 Open questions
 --------------

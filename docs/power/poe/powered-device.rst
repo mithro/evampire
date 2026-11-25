@@ -280,7 +280,8 @@ holds 2.5 V across the class resistor (as the TPS2378 does
      - Part dissipated in the regulator
      - W
 
-The rest, 0.11 W, is in the class resistor. The regulator dissipates about
+:numref:`fig-poe-class-regulator` shows the regulator. The rest,
+0.11 W, is in the class resistor. The regulator dissipates about
 0.8 W for the length of each class event, up to 105 ms for the first.
 
 Mark events and resets
@@ -438,8 +439,24 @@ The model assumes the capacitor starts empty, the load stays off until the
 capacitor is charged, and the current stays at the limit. It ignores the
 time the input takes to rise to the turn-on voltage. A 100 µF capacitor is
 then charged before the power sourcing equipment ends its inrush period,
-50 ms at the earliest. Only then does the controller let the input converter
-start (:doc:`pd-controller`).
+50 ms at the earliest. Only then does the controller let the input converter
+start (:doc:`pd-controller`). :numref:`fig-poe-inrush-pd` shows the
+example against the time limits.
+
+.. figure:: inrush-pd.svg
+   :name: fig-poe-inrush-pd
+   :alt: Two graphs against time after turn-on, 0 to 100 ms. The capacitor
+         voltage rises linearly from 0 to 57 V, charged at 41 ms. The
+         current is 140 mA, the charging limit, until 41 ms; the switch
+         limit then rises to 1 A. A shaded region shows that the powered
+         device draws less than 0.4 A, or 0.8 A for classes 7 and 8, until
+         80 ms. Dashed lines mark 50 ms, the earliest end of the power
+         sourcing equipment's inrush period, and 80 ms, from which class
+         power is allowed.
+   :align: center
+
+   Charging a 100 µF input capacitor at 140 mA after turn-on, against the
+   limits on the powered device.
 
 Maintain power signature
 ------------------------
@@ -536,6 +553,19 @@ voltage is at least 30 V. Accepting 24 V needs a second input path with a
 lower turn-on voltage. A passive source gives no class, so the software
 cannot know the power available and would start from the lowest assumption.
 Whether evampire accepts passive input is an open question.
+:numref:`fig-poe-passive-input` shows the two paths.
+
+.. graphviz:: passive-input.dot
+   :name: fig-poe-passive-input
+   :caption: A standard powered-device path beside a passive input path,
+             an alternative for a fallback input.
+   :alt: Diagram. A standard source with detection and classification and
+         a passive source at a fixed 24 V or 48 V both feed the bridges.
+         The bridges feed the powered-device path, which turns on at 30 to
+         42 V and knows its class, and a passive path with a lower turn-on
+         voltage and no class. Both paths feed the input converter and the
+         power bus.
+   :align: center
 
 Open questions
 --------------
