@@ -1,0 +1,6 @@
+Item,Value
+status,PLACEHOLDER: invented values that only exercise the tables and graphs; not simulation output
+simulator,none
+repository,"mithro/gf180-tcad, experiments/hv-junction"
+commit,none
+date,2026-11-26

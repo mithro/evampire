@@ -1,0 +1,11 @@
+Structure,Assumption,Lowest (V),Highest (V),Processes
+NR1S2,B,80,80,B
+NT20,A,20,20,A
+NT20,B,52,52,B
+NC0,A,19,19,A
+NC0,B,38,38,B
+NW0,B,20,20,B
+NW1p5,B,40,40,B
+NW6,B,51,51,B
+NA0p6,A,50,50,A
+NA0p6,B,52,52,B
