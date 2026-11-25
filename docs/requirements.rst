@@ -3,8 +3,10 @@
 Requirements
 ============
 
-This page lists every requirement that the evampire design meets, grouped
-by function, and ends with the questions that are still open. The two board
+The evampire design meets requirements for its Ethernet ports, the
+forwarding of frames between them, its RISC-V processor, the movement of
+power between Ethernet and USB Type-C, its USB serial port and its gf180mcu
+process. The two board
 configurations, the first version and the full design, are described in
 :numref:`tab-power-board-configs`. Each term is described in the
 :doc:`glossary`.
