@@ -11,7 +11,7 @@ How a :term:`USB Power Delivery` message is framed as a packet, coded into
 Packet parts
 ------------
 
-Every message travels on the CC wire as one packet. :numref:`tab-usbpd-packet`
+Every message travels on the CC wire as one packet, which has six parts. :numref:`tab-usbpd-packet`
 lists the parts in the order they are sent (:pd:`Section 5.3.1.1`,
 :pd:`Figure 5.1`). Each bit of the packet is then sent with
 :ref:`biphase mark coding <usbpd-bmc>`.

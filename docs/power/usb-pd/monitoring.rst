@@ -7,8 +7,8 @@ What evampire must measure and limit on each USB Type-C port and on the
 board's power bus, derived from the USB Power Delivery rules. The circuits
 that do it are an open choice.
 
-Requirement
------------
+Measurement and limit requirement
+--------------------------------
 
 evampire measures the voltage and current of every power port and of the
 board's power bus, and enforces current and power limits that software sets
