@@ -1,6 +1,7 @@
-// The parts of an LLDP frame that carry the power negotiation, from
-// lldp.rst (IEEE 802.1AB and IEEE 802.3 79.3.2, Table 145-12).
-// Field lengths are not to scale.
+// The two power fields of the Power via MDI entry in an LLDP frame, from
+// lldp.rst (IEEE 802.1AB and IEEE 802.3 79.3.2, 145.5.5, Table 145-12).
+// Each end fills one field with its own value and the other with a copy
+// of the value it last received. Field lengths are not to scale.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -12,9 +13,9 @@ digraph lldp_field {
 
     frame [label="destination\n01-80-C2-00-00-0E|source|EtherType\n0x88CC|<pv>other entries … Power via MDI …|frame check\nsequence"];
     field [fillcolor="#fff2cc",
-           label="<a>PD requested\npower|PSE allocated\npower|echo of the\nPD's request|<b>echo of the\nPSE's allocation"];
+           label="<a>PD requested power value|<b>PSE allocated power value"];
     note [shape=plaintext, style="", fontsize=10,
-          label="powers in units of 0.1 W: 255 means 25.5 W"];
+          label="from the PD: its own request and a copy of the last allocation\nfrom the PSE: a copy of the last request and its own allocation\npowers in units of 0.1 W: 255 means 25.5 W"];
     frame:pv -> field:a;
     frame:pv -> field:b;
     field -> note [style=invis];
