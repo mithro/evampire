@@ -52,7 +52,7 @@ Each class grants a fixed power
 A :term:`class` is a number that stands for a maximum power. The powered
 device asks for a class during classification (:doc:`sequence`), and the
 power sourcing equipment *assigns* a class, which may be lower than the one
-asked for. :numref:`tab-poe-classes` gives the power of each class at both
+asked for (:ref:`poe-demotion`). :numref:`tab-poe-classes` gives the power of each class at both
 ends of the cable.
 
 .. list-table:: The power of each class

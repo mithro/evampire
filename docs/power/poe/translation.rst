@@ -135,8 +135,10 @@ class 3 leaves only 0.1 W for the board, so in practice class 2 applies
 Ethernet in, Ethernet out
 -------------------------
 
-When power arrives on port A, the input power is the class power at the
-powered device (:numref:`tab-poe-classes`). The conversion now has two
+When power arrives on port A, the input power is the power of the assigned
+class at the powered device (:numref:`tab-poe-classes`), or the allocation
+set over LLDP. Before LLDP it can be lower than the requested class
+(:numref:`tab-poe-class-outcome`). The conversion now has two
 stages, the input converter and the high-voltage converter, assumed 90 %
 and 94 % efficient, so :math:`\eta = 0.90 \times 0.94 = 0.85`.
 :numref:`tab-poe-pass-through` gives the results.

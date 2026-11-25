@@ -146,13 +146,16 @@ After power-on the class power is available
 Once the voltage passes the turn-on voltage, the powered device may draw up
 to 0.4 A (0.8 A for classes 7 and 8) until 80 ms after turn-on, mostly to
 charge its input capacitor (:doc:`powered-device`). At 30 V to 57 V,
-0.4 A is 12 W to 23 W. From then on it may draw the power of its assigned
-class, from 3.84 W for class 1 to 71.3 W for class 8
+0.4 A is 12 W to 23 W. From 50 ms after turn-on it also stays within
+13 W, or within the power of class 1 or 2 if it requested one of them
+(:ref:`poe-pd-inrush`). From 80 ms after turn-on it may draw the power of
+its assigned class, from 3.84 W for class 1 to 71.3 W for class 8
 (:numref:`tab-poe-classes`).
 
 The assigned class depends on the power sourcing equipment as well as on
-the class requested (:numref:`tab-poe-events`). A board that requests
-class 6 from Type 2 power sourcing equipment gets class 4, 25.5 W. The
+the class requested (:numref:`tab-poe-class-outcome`). A board that
+requests class 6 gets class 4, 25.5 W, from Type 2 power sourcing equipment
+that issues two class events, and less from one that issues only one. The
 software reads the assigned class from the sequencer when it starts, and
 keeps the board within it (:doc:`monitoring`). The power left for the board
 after its converters is worked out on :doc:`../converters/index`.
