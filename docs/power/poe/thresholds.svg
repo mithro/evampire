@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="260" viewBox="0 0 680 260">
+<title>Comparator thresholds</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="260" fill="#ffffff"/>
+<rect x="68.1" y="40.0" width="40.9" height="150.0" rx="0" fill="#f2f2f2" stroke="#7f7f7f" stroke-width="0.8" stroke-dasharray="3,2"/>
+<text x="88.6" y="34.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#7f7f7f">gap</text>
+<rect x="141.0" y="40.0" width="44.0" height="150.0" rx="0" fill="#f2f2f2" stroke="#7f7f7f" stroke-width="0.8" stroke-dasharray="3,2"/>
+<text x="163.0" y="34.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#7f7f7f">gap</text>
+<text x="640.0" y="18.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="bold" fill="#000000">ranges at the powered device</text>
+<rect x="67.0" y="54.0" width="74.0" height="22.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
+<text x="104.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">detection</text>
+<rect x="185.0" y="54.0" width="60.0" height="22.0" rx="0" fill="#e2f0d9" stroke="#000000" stroke-width="1.0"/>
+<text x="215.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">class</text>
+<rect x="340.0" y="54.0" width="120.0" height="22.0" rx="0" fill="#fff2cc" stroke="#000000" stroke-width="1.0"/>
+<text x="400.0" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">turn on</text>
+<rect x="465.0" y="54.0" width="145.0" height="22.0" rx="0" fill="#d9d9d9" stroke="#000000" stroke-width="1.0"/>
+<text x="537.5" y="69.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">operating</text>
+<rect x="109.0" y="99.0" width="32.0" height="22.0" rx="0" fill="#dbe8f5" stroke="#000000" stroke-width="1.0"/>
+<text x="125.0" y="114.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">mark</text>
+<rect x="40.0" y="99.0" width="28.1" height="22.0" rx="0" fill="#f4cccc" stroke="#000000" stroke-width="1.0"/>
+<text x="54.0" y="114.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">reset</text>
+<text x="640.0" y="134.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="end" font-weight="bold" fill="#000000">TPS2372 thresholds (typical)</text>
+<line x1="165.0" y1="146.0" x2="165.0" y2="162.0" stroke="#000000" stroke-width="2.0"/>
+<line x1="149.0" y1="158.0" x2="149.0" y2="174.0" stroke="#000000" stroke-width="2.0" stroke-dasharray="3,2"/>
+<text x="165.0" y="142.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">12.5↑</text>
+<text x="149.0" y="186.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">10.9↓</text>
+<line x1="260.0" y1="146.0" x2="260.0" y2="162.0" stroke="#000000" stroke-width="2.0"/>
+<line x1="252.2" y1="158.0" x2="252.2" y2="174.0" stroke="#000000" stroke-width="2.0" stroke-dasharray="3,2"/>
+<text x="260.0" y="142.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">22↑</text>
+<text x="252.2" y="186.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">21.2↓</text>
+<line x1="421.0" y1="146.0" x2="421.0" y2="162.0" stroke="#000000" stroke-width="2.0"/>
+<line x1="360.0" y1="158.0" x2="360.0" y2="174.0" stroke="#000000" stroke-width="2.0" stroke-dasharray="3,2"/>
+<text x="421.0" y="142.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">38.1↑</text>
+<text x="360.0" y="186.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">32.0↓</text>
+<line x1="79.0" y1="158.0" x2="79.0" y2="174.0" stroke="#000000" stroke-width="2.0" stroke-dasharray="3,2"/>
+<text x="79.0" y="186.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle" font-weight="normal" fill="#000000">3.9↓</text>
+<line x1="40.0" y1="190.0" x2="40.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="40.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
+<line x1="140.0" y1="190.0" x2="140.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="140.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">10</text>
+<line x1="240.0" y1="190.0" x2="240.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="240.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">20</text>
+<line x1="340.0" y1="190.0" x2="340.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="340.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">30</text>
+<line x1="440.0" y1="190.0" x2="440.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="440.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">40</text>
+<line x1="540.0" y1="190.0" x2="540.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="540.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">50</text>
+<line x1="640.0" y1="190.0" x2="640.0" y2="195.0" stroke="#000000" stroke-width="1.0"/>
+<text x="640.0" y="208.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">60</text>
+<text x="340.0" y="226.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">voltage at the powered device input (V)</text>
+<text x="40.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#7f7f7f">↑ rising threshold (solid); ↓ falling threshold (dashed), lower by the hysteresis.</text>
+</svg>
