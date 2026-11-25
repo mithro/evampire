@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="492" viewBox="0 0 640 492" font-family="sans-serif" font-size="13">
+<rect width="640" height="492" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Floating N-well rings between the well and the P+ ring</text>
+<text x="30" y="56" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NR1_2: one ring, 2 µm wide, 2 µm from the well</text>
+<rect x="30" y="110" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<path d="M30.0,110 L30.0,152 L147.9,152 Q156.9,152 156.9,143 L156.9,110 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="36" y="144" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
+<path d="M193.1,110 L193.1,146 Q193.1,152 198.1,152 L224.4,152 Q229.4,152 229.4,146 L229.4,110 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="211.2" y="166" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">1</text>
+<rect x="30.0" y="110" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="120.6" y="110" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="555.6" y="110" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="84.4" y="110" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
+<rect x="519.4" y="110" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="102.5" y="132" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
+<text x="537.5" y="132" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
+<text x="604" y="198" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
+<rect x="100.5" y="82" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="84.4" y="74" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="535.5" y="82" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="519.4" y="74" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<text x="537.5" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
+<line x1="156.9" y1="110" x2="156.9" y2="222" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="193.1" y1="110" x2="193.1" y2="222" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="157.9" y1="222" x2="192.1" y2="222" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<text x="175.0" y="236" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">gap 2</text>
+<text x="30" y="271" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NR3_2: three rings, gaps 2, 2.5 and 3 µm</text>
+<rect x="30" y="325" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<path d="M30.0,325 L30.0,367 L147.9,367 Q156.9,367 156.9,358 L156.9,325 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="36" y="359" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
+<path d="M193.1,325 L193.1,361 Q193.1,367 198.1,367 L224.4,367 Q229.4,367 229.4,361 L229.4,325 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="211.2" y="381" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">1</text>
+<path d="M274.7,325 L274.7,361 Q274.7,367 279.7,367 L305.9,367 Q310.9,367 310.9,361 L310.9,325 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="292.8" y="381" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">2</text>
+<path d="M365.3,325 L365.3,361 Q365.3,367 370.3,367 L396.6,367 Q401.6,367 401.6,361 L401.6,325 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="383.4" y="381" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">3</text>
+<rect x="30.0" y="325" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="120.6" y="325" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="555.6" y="325" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="84.4" y="325" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
+<rect x="519.4" y="325" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="102.5" y="347" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
+<text x="537.5" y="347" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
+<text x="604" y="413" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
+<rect x="100.5" y="297" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="84.4" y="289" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="535.5" y="297" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="519.4" y="289" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<text x="537.5" y="283" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
+<line x1="156.9" y1="325" x2="156.9" y2="437" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="193.1" y1="325" x2="193.1" y2="437" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="157.9" y1="437" x2="192.1" y2="437" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<text x="175.0" y="451" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">gap 1</text>
+<line x1="229.4" y1="325" x2="229.4" y2="437" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="274.7" y1="325" x2="274.7" y2="437" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="230.4" y1="437" x2="273.7" y2="437" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<text x="252.0" y="451" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">gap 2</text>
+<rect x="30" y="472" width="16" height="12" rx="0" fill="#fbd9b5" stroke="#222222"/>
+<text x="52" y="483" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
+<rect x="112" y="472" width="16" height="12" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="134" y="483" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">P+ ring</text>
+</svg>
