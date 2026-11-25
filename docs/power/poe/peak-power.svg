@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="278" viewBox="0 0 680 278">
+<title>Peak power</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000000"/></marker></defs>
+<rect width="680" height="278" fill="#ffffff"/>
+<rect x="70.0" y="30.0" width="560.0" height="34.0" rx="0" fill="#f4cccc" stroke="none" stroke-width="1.0"/>
+<rect x="70.0" y="64.0" width="560.0" height="56.0" rx="0" fill="#fff2cc" stroke="none" stroke-width="1.0"/>
+<rect x="70.0" y="30.0" width="560.0" height="200.0" rx="0" fill="none" stroke="#000000" stroke-width="1.0"/>
+<line x1="70.0" y1="230.0" x2="630.0" y2="230.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="230.0" x2="70.0" y2="230.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="234.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">20</text>
+<line x1="70.0" y1="120.0" x2="630.0" y2="120.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="120.0" x2="70.0" y2="120.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="124.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">25.5</text>
+<line x1="70.0" y1="64.0" x2="630.0" y2="64.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="64.0" x2="70.0" y2="64.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="68.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">28.3</text>
+<line x1="70.0" y1="30.0" x2="630.0" y2="30.0" stroke="#7f7f7f" stroke-width="0.5" stroke-dasharray="2,3"/>
+<line x1="65.0" y1="30.0" x2="70.0" y2="30.0" stroke="#000000" stroke-width="1.0"/>
+<text x="62.0" y="34.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">30</text>
+<text x="14.0" y="130.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 130.0)">PD power (W)</text>
+<line x1="70.0" y1="230.0" x2="70.0" y2="235.0" stroke="#000000" stroke-width="1.0"/>
+<text x="70.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
+<line x1="182.0" y1="230.0" x2="182.0" y2="235.0" stroke="#000000" stroke-width="1.0"/>
+<text x="182.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">200</text>
+<line x1="294.0" y1="230.0" x2="294.0" y2="235.0" stroke="#000000" stroke-width="1.0"/>
+<text x="294.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">400</text>
+<line x1="406.0" y1="230.0" x2="406.0" y2="235.0" stroke="#000000" stroke-width="1.0"/>
+<text x="406.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">600</text>
+<line x1="518.0" y1="230.0" x2="518.0" y2="235.0" stroke="#000000" stroke-width="1.0"/>
+<text x="518.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">800</text>
+<line x1="630.0" y1="230.0" x2="630.0" y2="235.0" stroke="#000000" stroke-width="1.0"/>
+<text x="630.0" y="248.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">1000</text>
+<text x="350.0" y="266.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000">time in a 1 s window (ms)</text>
+<polyline points="70.0,170.0 238.0,170.0 238.0,70.0 266.0,70.0 266.0,170.0 630.0,170.0" fill="none" stroke="#c55a11" stroke-width="2.2"/>
+<line x1="238.0" y1="46.0" x2="266.0" y2="46.0" stroke="#000000" stroke-width="1.0" marker-end="url(#arr)" marker-start="url(#arr)"/>
+<text x="271.6" y="50.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">≤ 50 ms at a time, and ≤ 5 % of any 1 s window</text>
+<text x="624.4" y="115.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">class 4 power 25.5 W</text>
+<text x="624.4" y="59.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#000000">peak 28.3 W</text>
+<text x="624.4" y="40.0" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="end" font-weight="normal" fill="#c00000">not allowed</text>
+</svg>
