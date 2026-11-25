@@ -272,11 +272,18 @@ device that the power sourcing equipment is Type 3 or Type 4
 (:clause:`145.3.7`). It may then use the shorter maintain power signature
 pulses (:doc:`sequence`).
 
+.. _poe-autoclass:
+
 With the optional *autoclass*, a powered device drops to class signature 0
 between 75.5 ms and 87.5 ms into the first class event. It then draws its
 highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
-:clause:`Table 145-28 <145>`).
+:clause:`Table 145-28 <145>`). Autoclass only lets the power sourcing
+equipment allocate less than the assigned class: the measured power plus a
+margin, up to the power of the assigned class (:clause:`145.2.8`). If the
+powered device drew more than class 1 power during the measurement, it then
+draws no more than the measured power, unless it negotiates more over
+LLDP, up to its requested class (:clause:`145.3.8.2`).
 
 Turn on with hysteresis
 -----------------------
@@ -308,14 +315,31 @@ examples.
 The values are from [POE-TPS2372]_ and [POE-LT4275]_ (Electrical
 Characteristics).
 
-Limit the inrush current
-------------------------
+.. _poe-pd-inrush:
+
+Limit the inrush current and the start-up power
+-----------------------------------------------
 
 After turn-on the powered device charges its input capacitor. It draws less
 than 0.4 A for classes 1 to 6, or 0.8 A for classes 7 and 8, until 80 ms
 after turn-on (:clause:`Table 145-29 <145>`, items 4 and 7, and
-:clause:`145.3.8.3`). A powered device of class 1, 2 or 3 must also be
-within its class power 50 ms after turn-on.
+:clause:`145.3.8.3`).
+
+From 50 ms after turn-on until 80 ms, the powered device's power limit is
+that of class 3, 13 W, or of its requested class if that is lower
+(:clause:`Figure 145-25 <145>`, state POWER_DELAY). The delay gives the
+power sourcing equipment time to change from its inrush current limit to
+its operating limit before the powered device draws full power
+(:clause:`145.3.8.3`). A powered device assigned class 1, 2 or 3 is within
+its class power from 50 ms. Only from 80 ms may a powered device of
+class 4 to 8 draw the power of its assigned class.
+
+Under the :clause:`33` rules, a Type 2 powered device likewise draws less
+than the inrush current limit from 50 ms until 80 ms after turn-on. When
+it has learned that the power sourcing equipment is Type 2, it draws no
+more than the class 3 peak power, 14.4 W, in that window; otherwise it
+keeps to the Type 1 limits from 50 ms (:clause:`33.3.7.3`,
+:clause:`Table 33-18 <33>`, :ref:`poe-classification`).
 
 Charging the capacitor at a constant current takes:
 
@@ -415,14 +439,21 @@ The model assumes rectangular pulses as seen at the power sourcing
 equipment. The input capacitor delays the pulse seen at the cable, so a
 real design makes the pulses longer than 7 ms.
 
-Ask for more power over LLDP from class 4
------------------------------------------
+.. _poe-pd-dll:
 
-A single-signature powered device that requests class 4 or higher must
-also support power negotiation over :term:`LLDP` once the link is up
-(:clause:`145.3.6`). :doc:`lldp` describes it. A powered device assigned a
-lower class than it requested must give the user an active indication if
-it is underpowered (:clause:`145.3.6`).
+Take part in Data Link Layer classification
+-------------------------------------------
+
+Once the link is up, a Type 2 powered device, and a Type 3 or Type 4
+powered device that requests class 4 or higher, must also take part in
+:term:`Data Link Layer classification` over :term:`LLDP`
+(:numref:`tab-poe-class-methods`). :doc:`lldp` describes the exchange, and
+evampire does it in both roles (:ref:`req-poe-classification`).
+
+A powered device assigned a lower class than it requested must give the
+user an active indication if it is underpowered (:clause:`145.3.6`). It
+stays within the assigned class until the exchange raises the allocation
+(:ref:`poe-demotion`).
 
 An alternative: accept passive power as a fallback input
 --------------------------------------------------------

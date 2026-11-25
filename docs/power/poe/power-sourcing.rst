@@ -202,6 +202,9 @@ class needs. It may issue extra events to learn the requested class, then
 reset the powered device by holding the port below 2.8 V for at least
 15 ms and start again (:clause:`145.2.8.1`).
 
+evampire's port issues these class events in every type, and also
+answers LLDP requests (:ref:`req-poe-classification`).
+
 Power sourcing equipment that has less than class 3 power available does
 not power a powered device that requests more than it has
 (:clause:`145.2.11`).

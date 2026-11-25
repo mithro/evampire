@@ -97,6 +97,9 @@ linkcheck_ignore = [
     r"https://www\.littelfuse\.com/.*",
     # SourceForge answers 403 to the GitHub Actions runners.
     r"https://ngspice\.sourceforge\.io/.*",
+    # Cisco and DigiKey answer 403 to automated clients.
+    r"https://www\.cisco\.com/.*",
+    r"https://www\.digikey\.co\.uk/.*",
 ]
 # GitHub draws its line anchors (#L16-L52) with JavaScript, so the checker
 # never finds them in the page. The page itself is still checked.

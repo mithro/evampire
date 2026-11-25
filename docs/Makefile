@@ -4,7 +4,8 @@
 #   make check      check that references to standards are links, build with
 #                   warnings treated as errors, then check the rendered
 #                   pages for error boxes, unreferenced figure and table
-#                   numbers and missing alt text (same as CI)
+#                   numbers, missing alt text and pages missing from the
+#                   sidebar (same as CI)
 #   make linkcheck  check that every external link opens a page
 #   make clean      remove the build output
 

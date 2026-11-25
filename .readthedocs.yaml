@@ -12,8 +12,8 @@ build:
   jobs:
     # Fail the build if a page mentions a standard without linking
     # to it, or if a rendered page contains an error box, an unreferenced
-    # figure or table number, or a diagram without alt text, that Sphinx does
-    # not report as a warning.
+    # figure or table number, a diagram without alt text, or a page missing
+    # from the sidebar, that Sphinx does not report as a warning.
     pre_build:
       - python docs/check_source.py docs
     post_build:
