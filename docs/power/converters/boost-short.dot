@@ -2,70 +2,66 @@
 // path through the inductor and S2, which no switch of the power stage can
 // break; (b) a series switch in the output that blocks it.
 //
-// Fixed grid (positions in inches): panel (a) has its top row at y=4.6 and
-// ground at y=2.9; panel (b) has its top row at y=1.9 and ground at y=0.2.
-// The fault current path is drawn thick and red.
+// Fixed grid (positions in inches), drawn narrow so that the text stays
+// readable on a phone: panel (a) has its top row at y=4.7 and ground at
+// y=3.1; panel (b) has its top row at y=1.8 and ground at y=0.2. The fault
+// current path is drawn thick and red.
 //
 // SPDX-License-Identifier: Apache-2.0
 
 digraph boost_short {
     graph [layout=neato, splines=false, overlap=true, fontname="Helvetica",
-           size="7.4,6"];
+           size="7.4,7"];
     node  [shape=box, style="rounded,filled", fillcolor="#f2f2f2",
-           fontname="Helvetica", fontsize=11, width=1.0, height=0.5,
+           fontname="Helvetica", fontsize=13, width=0.7, height=0.5,
            fixedsize=true];
     edge  [penwidth=1.5, arrowhead=none];
 
-    // Panel titles.
-    t_a [pos="3.6,5.1!", shape=plaintext, style="", width=6.0, height=0.25,
-         fontsize=12, label="(a) Output shorted: current flows whatever the switches do"];
-    t_b [pos="3.6,2.36!", shape=plaintext, style="", width=6.0, height=0.25,
-         fontsize=12, label="(b) A series switch in the output blocks the path"];
-
-    // Panel (a).
-    a_vin  [pos="0.5,3.75!", shape=circle, width=0.75, label="Input\nVin",
-            fillcolor="#ffffff"];
-    a_l    [pos="1.7,4.6!", width=0.9, label="L\ninductor", fillcolor="#dbe8f5"];
-    a_s1   [pos="2.9,3.75!", width=1.0, label="S1 off", fillcolor="#ffffff",
-            style="rounded,filled,dashed", fontcolor="#777777"];
-    a_s2   [pos="4.1,4.6!", width=1.4, label="S2 off, its body\ndiode conducts",
-            fillcolor="#fbe5d6"];
-    a_c    [pos="5.4,3.75!", width=0.9, label="C output\ncapacitor",
-            fillcolor="#dbe8f5"];
-    a_sh   [pos="6.65,3.75!", width=1.0, label="Short\ncircuit",
-            fillcolor="#f4cccc"];
-    a_note [pos="3.6,2.68!", shape=plaintext, style="", width=4.0, height=0.2,
-            fontsize=10, fontcolor="#c0392b",
+    // Panel titles and notes.
+    t_a [pos="3.0,5.35!", shape=plaintext, style="", width=5.6, height=0.5,
+         fontsize=14, label="(a) Output shorted: current flows\nwhatever the switches do"];
+    t_b [pos="3.0,2.45!", shape=plaintext, style="", width=5.6, height=0.5,
+         fontsize=14, label="(b) A series switch in the output\nblocks the path"];
+    a_note [pos="3.0,2.85!", shape=plaintext, style="", width=5.6, height=0.2,
+            fontsize=13, fontcolor="#c0392b",
             label="limited only by the source and the path resistance"];
 
-    // Panel (b).
-    b_vin  [pos="0.5,1.05!", shape=circle, width=0.75, label="Input\nVin",
+    // Panel (a).
+    a_vin  [pos="0.35,3.9!", shape=circle, width=0.6, label="Vin",
             fillcolor="#ffffff"];
-    b_l    [pos="1.7,1.9!", width=0.9, label="L\ninductor", fillcolor="#dbe8f5"];
-    b_s1   [pos="2.9,1.05!", width=1.0, label="S1 off", fillcolor="#ffffff",
+    a_l    [pos="1.2,4.7!", width=0.6, label="L", fillcolor="#dbe8f5"];
+    a_s1   [pos="2.05,3.9!", width=0.75, label="S1 off", fillcolor="#ffffff",
             style="rounded,filled,dashed", fontcolor="#777777"];
-    b_s2   [pos="3.85,1.9!", width=0.9, label="S2",
-            fillcolor="#fbe5d6"];
-    b_c    [pos="4.9,1.05!", width=0.9, label="C output\ncapacitor",
-            fillcolor="#dbe8f5"];
-    b_ser  [pos="5.8,1.9!", width=1.45, height=0.66,
-            label="Series switch, off;\nbody diode points\nback to C",
+    a_s2   [pos="3.05,4.7!", width=1.35, height=0.7,
+            label="S2 off, its\nbody diode\nconducts", fillcolor="#fbe5d6"];
+    a_c    [pos="4.1,3.9!", width=0.55, label="C", fillcolor="#dbe8f5"];
+    a_sh   [pos="5.65,3.9!", width=0.85, label="short", fillcolor="#f4cccc"];
+
+    // Panel (b).
+    b_vin  [pos="0.35,1.0!", shape=circle, width=0.6, label="Vin",
+            fillcolor="#ffffff"];
+    b_l    [pos="1.2,1.8!", width=0.6, label="L", fillcolor="#dbe8f5"];
+    b_s1   [pos="2.05,1.0!", width=0.75, label="S1 off", fillcolor="#ffffff",
+            style="rounded,filled,dashed", fontcolor="#777777"];
+    b_s2   [pos="3.05,1.8!", width=0.6, label="S2", fillcolor="#fbe5d6"];
+    b_c    [pos="3.75,1.0!", width=0.55, label="C", fillcolor="#dbe8f5"];
+    b_ser  [pos="4.75,1.8!", width=1.6, height=0.78,
+            label="series switch,\noff; body diode\npoints back to C",
             fillcolor="#e2f0d9", style="rounded,filled,bold"];
-    b_sh   [pos="6.75,1.05!", width=0.8, label="Short\ncircuit",
-            fillcolor="#f4cccc"];
+    b_sh   [pos="5.85,1.0!", width=0.75, label="short", fillcolor="#f4cccc"];
 
     // Junctions and corners.
-    node  [shape=point, width=0.06, height=0.06, label="", style=filled,
+    node  [shape=point, width=0.07, height=0.07, label="", style=filled,
            fillcolor=black];
-    a_in  [pos="0.5,4.6!"];   a_sw [pos="2.9,4.6!", width=0.09, height=0.09];
-    a_out [pos="5.4,4.6!", width=0.09, height=0.09];  a_ot [pos="6.65,4.6!"];
-    a_g0  [pos="0.5,2.9!"];   a_g1 [pos="2.9,2.9!", width=0.09, height=0.09];
-    a_g2  [pos="5.4,2.9!", width=0.09, height=0.09];  a_g3 [pos="6.65,2.9!"];
+    a_in  [pos="0.35,4.7!"];   a_sw [pos="2.05,4.7!", width=0.1, height=0.1];
+    a_out [pos="4.1,4.7!", width=0.1, height=0.1];  a_ot [pos="5.65,4.7!"];
+    a_g0  [pos="0.35,3.1!"];   a_g1 [pos="2.05,3.1!", width=0.1, height=0.1];
+    a_g2  [pos="4.1,3.1!", width=0.1, height=0.1];  a_g3 [pos="5.65,3.1!"];
 
-    b_in  [pos="0.5,1.9!"];   b_sw [pos="2.9,1.9!", width=0.09, height=0.09];
-    b_out [pos="4.9,1.9!", width=0.09, height=0.09];  b_ot [pos="6.75,1.9!"];
-    b_g0  [pos="0.5,0.2!"];   b_g1 [pos="2.9,0.2!", width=0.09, height=0.09];
-    b_g2  [pos="4.9,0.2!", width=0.09, height=0.09];  b_g3 [pos="6.75,0.2!"];
+    b_in  [pos="0.35,1.8!"];   b_sw [pos="2.05,1.8!", width=0.1, height=0.1];
+    b_out [pos="3.75,1.8!", width=0.1, height=0.1];  b_ot [pos="5.85,1.8!"];
+    b_g0  [pos="0.35,0.2!"];   b_g1 [pos="2.05,0.2!", width=0.1, height=0.1];
+    b_g2  [pos="3.75,0.2!", width=0.1, height=0.1];  b_g3 [pos="5.85,0.2!"];
 
     // Panel (a): ordinary wiring, then the fault path on top.
     a_sw -> a_s1;  a_s1 -> a_g1;  a_out -> a_c;  a_c -> a_g2;
