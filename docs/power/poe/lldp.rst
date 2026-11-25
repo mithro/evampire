@@ -103,8 +103,26 @@ The rules of :clause:`145.5.2` and :clause:`145.5.5` are:
 * Values above 71.3 W are used only after both ends are in sync
   (:clause:`145.5.4`).
 
-Deadlines of seconds let the software meet them without
-special hardware.
+:numref:`fig-poe-lldp-exchange` shows an exchange in which the powered
+device asks for more power. Deadlines of seconds let the software meet them
+without special hardware.
+
+.. graphviz:: lldp-exchange.dot
+   :name: fig-poe-lldp-exchange
+   :caption: A powered device raising its allocation over LLDP, with the
+             rule that applies at each step; the powers are an example.
+   :alt: Sequence diagram between power sourcing equipment and a powered
+         device. The power sourcing equipment sends its first frame,
+         allocated 25.5 W, within 10 s of enabling the exchange. The
+         powered device sends requested 51 W with an echo of 25.5 W; while
+         out of sync it keeps its request and draw. Within 10 s the power
+         sourcing equipment answers allocated 51 W with an echo of 51 W,
+         which it may do only while in sync. The powered device answers
+         requested 51 W, echo 51 W: the copies match, both ends are in
+         sync, and the powered device may draw 51 W; values above 71.3 W
+         are used only after sync. Finally the power sourcing equipment
+         may lower the allocation at any time.
+   :align: center
 
 LLDP frames on evampire
 -----------------------
@@ -148,4 +166,18 @@ the same value. It also sets the current and power limits of the port to
 match (:doc:`monitoring`).
 
 When the power on port A falls, the software lowers the allocation on port
-B first (:ref:`power budget <power-budget>`).
+B first (:ref:`power budget <power-budget>`), as
+:numref:`fig-poe-lldp-roles` shows.
+
+.. graphviz:: lldp-roles.dot
+   :name: fig-poe-lldp-roles
+   :caption: evampire as a powered device on port A and power sourcing
+             equipment on port B, lowering port B first.
+   :alt: Sequence diagram with three lifelines: upstream power sourcing
+         equipment, evampire as a powered device on port A and power
+         sourcing equipment on port B, and a downstream powered device. The
+         upstream equipment lowers the allocation on port A. evampire first
+         lowers the allocation on port B. The downstream powered device
+         echoes the new value, in sync. evampire then echoes the new value
+         on port A, with its draw within the new allocation.
+   :align: center

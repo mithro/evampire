@@ -46,7 +46,8 @@ not both be connected to the cable at once, for two reasons.
 
 The powered-device signature would appear in parallel with the remote
 powered device, so the port's own power sourcing equipment would measure
-the wrong resistance during detection.
+the wrong resistance during detection. :numref:`fig-poe-dual-role-detect`
+shows both reasons.
 
 The power sourcing equipment circuit can also load the port while it is
 off. For reference, with a TPS23881-style power sourcing equipment, 80 kΩ to
@@ -87,6 +88,20 @@ conductors as the signature. evampire's own power sourcing circuit could be
 designed without such an idle load, which would remove this reason for a
 switch; the first reason remains.
 
+.. graphviz:: dual-role-detect.dot
+   :name: fig-poe-dual-role-detect
+   :caption: What detection measures when both sets of blocks stay
+             connected to the cable.
+   :alt: Two panels. On the left, the port acts as a powered device: the
+         remote power sourcing equipment measures the port's own 24.9 kΩ
+         signature in parallel with its own idle sourcing load of 80 to
+         190 kΩ, and sees 19.0 to 22.0 kΩ, below 23.7 kΩ, so detection
+         fails. On the right, the port acts as power sourcing equipment:
+         its own channels measure the remote powered device's signature in
+         parallel with the port's own 24.9 kΩ signature, which gives the
+         wrong resistance.
+   :align: center
+
 Each path therefore has a disconnect switch rated for the cable voltage and
 surges, turned on only for the selected role.
 
@@ -107,8 +122,52 @@ Chosen automatically
    nothing. A random waiting time before each switch, as USB Type-C
    dual-role ports use when toggling, would separate them.
 
-Which method is used is an open question. Either must keep the safety
-rules below.
+:numref:`fig-poe-role-choice` shows both methods, and
+:numref:`fig-poe-role-collision` the failure that the random wait
+prevents. Which method is used is an open question. Either must keep the
+safety rules below.
+
+.. graphviz:: role-choice.dot
+   :name: fig-poe-role-choice
+   :caption: Choosing the role automatically, with the fixed method as the
+             alternative.
+   :alt: State diagram. The port starts in the powered-device role, showing
+         its signature. If power arrives, it receives power. If no power
+         arrives within the set time, it waits a random time and moves to
+         the sourcing role, where it runs detection. A valid signature
+         leads to supplying power; no valid signature leads, after a random
+         wait, back to the powered-device role. A note says that with the
+         fixed method the board sets one role and the other path stays off.
+   :align: center
+
+.. wavedrom::
+   :name: fig-poe-role-collision
+   :alt: Timing diagram of two automatic ports connected together. Without
+         random waits, both show a powered-device signature, both time out
+         together, both run detection as power sourcing equipment, see an
+         invalid signature and power nothing, and repeat. With random
+         waits, port 1 switches to the sourcing role while port 2 still
+         shows its signature, so port 1 detects port 2 and powers it.
+   :caption: Two automatic ports connected together, without and with a
+             random wait before each switch, schematic.
+
+   { "signal": [
+       ["fixed",
+         { "name": "port 1", "wave": "3..4..3..4..",
+           "data": ["PD", "PSE: invalid", "PD", "PSE: invalid"] },
+         { "name": "port 2", "wave": "3..4..3..4..",
+           "data": ["PD", "PSE: invalid", "PD", "PSE: invalid"] }
+       ],
+       {},
+       ["random",
+         { "name": "port 1", "wave": "3..4.5......",
+           "data": ["PD", "PSE: detects", "supplying power"] },
+         { "name": "port 2", "wave": "3.....5.....",
+           "data": ["PD", "receiving power"] }
+       ]
+     ],
+     "config": { "hscale": 1 }
+   }
 
 Safety rules
 ------------
