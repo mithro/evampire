@@ -20,8 +20,7 @@ Link pulse driver
    Each pulse fits the 10BASE-T link test pulse template, with its peak
    between 585 mV and 3.1 V and a width of about 100 ns
    (:clause:`Figure 14-13 <14>`, :numref:`fig-phy-link-pulses`). The
-   gigabit driver of
-   :doc:`transmitter` reaches 1 V on the line, inside that range, so the
+   gigabit driver (:doc:`transmitter`) reaches 1 V on the line, inside that range, so the
    link pulses need no higher-swing driver (estimate, to be confirmed by
    checking the whole template shape).
 Link pulse receiver

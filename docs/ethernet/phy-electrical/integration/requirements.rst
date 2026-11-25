@@ -1,7 +1,7 @@
 .. _phy-int-reqs-page:
 
-Requirements
-============
+Integrated transceiver requirements
+===================================
 
 This page lists the interface, the blocks and the requirements of one
 integrated 1000BASE-T port, and points to the limits of the slower
@@ -131,11 +131,12 @@ that the analogue blocks must meet.
    * - Master clock jitter, peak-to-peak (ns)
      - less than 1.4
      - :clause:`40.6.1.2.5`
-   * - Master jitter after a 5 kHz high-pass filter, peak-to-peak (ns)
+   * - Master clock jitter after a 5 kHz high-pass filter, plus the
+       output jitter Jtxout, peak-to-peak (ns)
      - less than 0.3
      - :clause:`40.6.1.2.5`
-   * - Slave jitter after a 32 kHz high-pass filter, above the master's
-       (ns)
+   * - Slave clock jitter after a 32 kHz high-pass filter, plus Jtxout,
+       above the master's filtered value (ns)
      - at most 0.4
      - :clause:`40.6.1.2.5`
    * - Symbol rate error (parts per million)
@@ -149,7 +150,10 @@ The return-loss limit falls from 16 dB at 40 MHz to
 :math:`10 - 20\log_{10}(100/80) = 8.1` dB at 100 MHz
 (:numref:`fig-phy-int-return-loss`). The slave's unfiltered jitter,
 measured against the master's clock, is also less than 1.4 ns
-(:clause:`40.6.1.2.5`).
+(:clause:`40.6.1.2.5`). Jtxout is the peak-to-peak jitter of the output's
+zero crossings relative to the transmit clock, measured in test modes 2
+and 3, so the filtered limits share their budget between the clock and
+the driver (:clause:`40.6.1.2.5`).
 
 .. figure:: return-loss.svg
    :name: fig-phy-int-return-loss
