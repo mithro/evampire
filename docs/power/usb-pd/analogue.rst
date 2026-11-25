@@ -125,10 +125,10 @@ not turn VBUS on. With a current-source Rp the window is above 0.260 V and
 below 1.321 V at the default level, above 0.675 V and below 1.441 V at
 1.5 A, and above 0.879 V and below 2.432 V at 3.0 A
 (:numref:`tab-usbpd-src-thresholds`, :typec:`Table 4-37`). This page
-keeps a margin below the upper thresholds: at most 1.32 V, the top of the
-voltage-clamp Rd (:typec:`Section 4.8.5`), at the default and 1.5 A levels,
-and at most 2.181 V, the top of the range for an Rd within ± 20 %
-(:typec:`Table 4-35`), at 3.0 A.
+keeps a margin below the upper thresholds. At the default and 1.5 A levels
+it uses at most 1.32 V, the top of the voltage-clamp Rd
+(:typec:`Section 4.8.5`). At 3.0 A it uses at most 2.181 V, the top of the
+range for an Rd within ± 20 % (:typec:`Table 4-35`).
 
 For example, take a standard 6 V NMOS at its highest documented threshold,
 0.85 V ([USBPD-GF180-ELEC]_, Section 2.0), and :math:`R_\text{s}` =
@@ -323,7 +323,7 @@ Voltage reference
 -----------------
 
 The driver level must stay within ± 6.7 % of 1.125 V (1.05 V to 1.2 V,
-:ref:`usbpd-transmitter`), the 1.5 A and 3.0 A pull-up currents within ± 8 %
+:ref:`the transmitter <usbpd-transmitter>`), the 1.5 A and 3.0 A pull-up currents within ± 8 %
 (:typec:`Table 4-27`), and the thresholds inside their windows. All three
 come from a voltage reference that is stable over supply and temperature.
 

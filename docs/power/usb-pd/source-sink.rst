@@ -102,7 +102,7 @@ more than 30 mV/µs (*vSrcSlewPos*, *vSrcSlewNeg*, :pd:`Table 4.7`). This
 sink's input capacitors within a 3 A connector rating, for up to 100 µF of
 sink capacitance (:pd:`Table 4.7`). :numref:`fig-usbpd-vbus-transition`
 shows these limits on a change from 5 V to 9 V, with the sink's side
-from :ref:`usbpd-sink-sequence`; the order of messages is in
+from :ref:`the sink's sequence <usbpd-sink-sequence>`; the order of messages is in
 :numref:`fig-usbpd-negotiation`.
 
 .. figure:: vbus-transition.svg
@@ -205,8 +205,8 @@ before the reduced capabilities (:pd:`Section 6.4.5.5`, :pd:`Table 4.7`).
 
 The input can fall faster than that, for example when the Power over
 Ethernet input is removed. The source then relies on its over-current
-protection (:ref:`usbpd-current-limit`) or a :term:`Hard Reset`
-(:ref:`usbpd-hard-reset`). Keep a margin in the
+protection (:ref:`usbpd-current-limit`) or a
+:ref:`Hard Reset <usbpd-hard-reset>`. Keep a margin in the
 :ref:`power budget <power-budget>` for this case.
 
 .. _usbpd-current-limit:

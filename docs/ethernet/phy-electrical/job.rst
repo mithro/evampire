@@ -36,7 +36,7 @@ a set of transformers, the :term:`magnetics`, or a transformer-free
 connection (:doc:`../magnetics/index`). An external transceiver exchanges
 bytes with evampire over :term:`RGMII` (:doc:`../rgmii/index`); an
 integrated one uses an on-chip byte interface
-(:doc:`integration/requirements`).
+(:doc:`integrated transceiver requirements <integration/requirements>`).
 
 When a cable is plugged in, the transceivers at its two ends exchange a
 short description of what each can do and choose the fastest speed both

@@ -354,7 +354,7 @@ Data objects (bits 14 to 12)
      - Data
      - 01111
 
-Vendor_Defined carries Discover Identity (:ref:`usbpd-discover-identity`).
+Vendor_Defined carries :ref:`Discover Identity <usbpd-discover-identity>`.
 How long each message takes on the wire is given in
 :ref:`usbpd-durations`.
 

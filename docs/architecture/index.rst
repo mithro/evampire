@@ -62,8 +62,12 @@ RGMII interfaces A and B
 Rate-matching buffers
    Received data arrives on the clock that the transceiver recovers from the
    cable, which is set by the crystal at the far end of the cable.
-   Transmitted data leaves on evampire's own 125 MHz clock. These two clocks
-   have the same nominal frequency but are not identical. Gigabit Ethernet
+   Over RGMII, transmitted data leaves on evampire's own 125 MHz clock. An
+   integrated transceiver in the slave role transmits on its recovered
+   clock instead, so it needs a transmit buffer as well
+   (:doc:`../ethernet/phy-electrical/integration/requirements`). The receive
+   and transmit clocks have the same nominal frequency but are not
+   identical. Gigabit Ethernet
    allows each end to be up to 100
    :wikipedia:`parts per million <Parts-per_notation>` away from 125 MHz
    (:clause:`40`, see :doc:`../ethernet/phy-electrical/index`), so the two

@@ -121,10 +121,10 @@ be dropped instead.
 
    { "signal": [
        { "name": "RXC", "wave": "p.....", "period": 2, "phase": -0.5 },
-       { "name": "RX_CTL", "wave": "1...01......" },
+       { "name": "RX_CTL", "wave": "1....01....." },
        {},
        { "name": "TXC", "wave": "p.....", "period": 2, "phase": -0.5 },
-       { "name": "TX_CTL", "wave": "1.......01.." }
+       { "name": "TX_CTL", "wave": "1........01." }
      ],
      "config": { "hscale": 1 }
    }

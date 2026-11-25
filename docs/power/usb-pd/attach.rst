@@ -226,7 +226,7 @@ A sink such as a phone finds the port while it presents Rp
      {"name": "evampire CC", "wave": "=..............", "data": ["Rp"]},
      {"name": "evampire", "wave": "=...=.....=....", "data": ["Unattached.SRC", "AttachWait.SRC", "Attached.SRC"]},
      {"name": "discharge", "wave": "x...=..x.......", "data": ["tVsafe0V"]},
-     {"name": "debounce", "wave": "x...=....=..x..", "data": ["tCCDebounce", "tVBUSON"]},
+     {"name": "debounce", "wave": "x...=.....=.x..", "data": ["tCCDebounce", "tVBUSON"]},
      {"name": "VBUS", "wave": "=......0....1..", "data": ["left over"]},
      {"name": "phone CC", "wave": "=..............", "data": ["Rd"]},
      {"name": "phone", "wave": "=...=.......=..", "data": ["Unattached.SNK", "AttachWait.SNK", "Attached.SNK"]}

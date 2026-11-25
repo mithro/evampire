@@ -50,8 +50,8 @@ reaching 5 V (:typec:`Section 4.5.2.2.9.1`; :typec:`Table 4-32 <x>`).
          within tVCONNON, 2 ms, of VBUS reaching 5 V.
 
 The port that supplies VCONN is the *VCONN Source*. After attach it is the
-source; the two ports can exchange the job with a VCONN_Swap (see
-:ref:`usbpd-vconn-swap`).
+source; the two ports can exchange the job with a
+:ref:`VCONN_Swap <usbpd-vconn-swap>`.
 
 evampire's USB Type-C ports carry USB 2.0 data on D+ and D− (see
 :ref:`req-usb-serial`) and no SuperSpeed pairs. :numref:`tab-usbpd-vconn-when`

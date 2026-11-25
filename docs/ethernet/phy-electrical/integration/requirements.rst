@@ -22,7 +22,7 @@ logic is the same whether the transceiver is external or on the chip.
 On receive, the bytes are timed by the clock recovered from the cable, and
 the :ref:`rate-matching buffer <arch-rate-matching>` moves them onto
 evampire's own clock, as with RGMII. On transmit, a slave sends on the
-clock it recovers from the master (:ref:`phy-master-slave`), not on
+clock it recovers from the master (:clause:`40.1.3`, :ref:`phy-master-slave`), not on
 evampire's clock, so the transmit bytes also cross clock domains, through
 a transmit buffer
 (:numref:`fig-phy-int-byte-interface`). A master needs the same buffer
