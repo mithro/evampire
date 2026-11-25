@@ -203,13 +203,13 @@ each one.
      - :ref:`Echo page, crosstalk cancellers <phy-crosstalk>`
    * - Feed-forward and decision-feedback equalisers
      - 4
-     - :ref:`This page, equalisers <phy-equalisation>`
+     - :ref:`Equalisers <phy-equalisation>`
    * - Trellis decoder and descrambler
      - 1
      - :ref:`Coding page, trellis code <phy-trellis>`
    * - Clock synthesis and clock recovery
      - 1
-     - :ref:`This page, master and slave <phy-master-slave>`
+     - :ref:`Master and slave <phy-master-slave>`
    * - Autonegotiation
      - 1
      - :doc:`Autonegotiation page <autonegotiation>`

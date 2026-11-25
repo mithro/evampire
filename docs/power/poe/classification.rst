@@ -265,7 +265,7 @@ Methods in evampire
 -------------------
 
 evampire uses both methods in both roles, as :ref:`req-poe-classification`
-sets out for each role. These pages describe how:
+sets out for each role. Each part is designed on its own page:
 
 As a powered device
    The start-up sequencer shows the class signatures (:doc:`startup`), and
