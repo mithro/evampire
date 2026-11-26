@@ -18,7 +18,7 @@ INVERTERS = (15.8, 195.4, 59.6, 214.6)
 
 def clamp():
     """The whole DVDD pad: the rail clamp and its timer."""
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=62, right=75, bottom=184)
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=80, right=75, bottom=184)
     lay = gdskit.load(CELL)
     f.silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
@@ -30,12 +30,16 @@ def clamp():
     f.box(INVERTERS, colour=CLAMP, dash="5,4", width=2.0)
     f.note(CLAMP, "the inverters", kind="box")
     top = f.oy - 34
-    f.label("Clamp transistor: 4 blocks of 20\nfingers, each finger 50 µm wide",
-            (37.5, 116), (f.px(0, 131)[0], top), colour=CLAMP, weight="bold")
-    f.label("Timer capacitors:\n8 of 10 µm × 25 µm", (19, 231),
-            (f.px(0, 226)[0], top), colour=CLAMP, weight="bold")
-    f.label("Timer resistors:\n12 of 30 kΩ", (37.5, 287.8),
-            (f.px(0, 288)[0], top), colour=CLAMP, weight="bold")
+    # Each label gives the total that the schematic of schematic.py names.
+    f.label("Clamp NMOS: 4 blocks of 20\nfingers, each finger 50 µm\n"
+            "wide, 4000 µm in all",
+            (37.5, 116), (f.px(0, 131)[0], top - 17), colour=CLAMP,
+            weight="bold")
+    f.label("MOS capacitor of the\ntimer: 8 of 10 µm ×\n25 µm in parallel",
+            (19, 231), (f.px(0, 226)[0], top - 17), colour=CLAMP,
+            weight="bold")
+    f.label("Timer resistor:\n12 of 30 kΩ in\nseries, 360 kΩ", (37.5, 287.8),
+            (f.px(0, 288)[0], top - 17), colour=CLAMP, weight="bold")
     f.label("4 supply\ncapacitors", (10, 337.8), (f.ox + f.dw, top),
             anchor="end")
     bot = f.oy + f.dh + 30
@@ -105,7 +109,7 @@ def _stack(cell, name):
 
 def ring():
     """A positive pulse from PAD to DVSS, across two cells of the ring."""
-    f = Fig("bi_t", (0, 0, 2 * PITCH, 222), 3.7, left=20, top=70, right=190,
+    f = Fig("bi_t", (0, 0, 2 * PITCH, 222), 3.7, left=20, top=70, right=215,
             bottom=136)
     f.wells = False
     lay = gdskit.load("dvss")
@@ -165,7 +169,7 @@ def ring():
             "stripes to metal 2 of the DVSS pad", (bus, y_rail),
             (f.px(0, 158)[0], bot), colour=HOT, leader=INK, weight="bold")
     x, y = f.px(PITCH + 5, y_rail)
-    f.label("3  DVDD rail into\nthe next cell", (PITCH + 5, y_rail),
+    f.label("3  Along the DVDD rail\ninto the DVSS supply\npad cell", (PITCH + 5, y_rail),
             (f.ox + f.dw + 14, y), anchor="start", colour=HOT, leader=INK, weight="bold",
             lead="left")
     return f

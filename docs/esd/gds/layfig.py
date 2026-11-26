@@ -240,11 +240,14 @@ class Fig:
         """Outline a region of the layout (x0, y0, x1, y1)."""
         (xa, ya), (xb, yb) = self.px(window[0], window[1]), self.px(
             window[2], window[3])
+        at = (f'x="{min(xa, xb):.1f}" y="{min(ya, yb):.1f}" '
+              f'width="{abs(xb - xa):.1f}" height="{abs(yb - ya):.1f}"')
+        # A white line under the dashes, so they show over any layer.
+        self.over.append(f'<rect {at} fill="none" stroke="#ffffff" '
+                         f'stroke-width="{width + 2.6}" opacity="0.9"/>')
         self.over.append(
-            f'<rect x="{min(xa, xb):.1f}" y="{min(ya, yb):.1f}" '
-            f'width="{abs(xb - xa):.1f}" height="{abs(yb - ya):.1f}" '
-            f'fill="none" stroke="{colour}" stroke-width="{width}" '
-            f'stroke-dasharray="{dash}"/>')
+            f'<rect {at} fill="none" stroke="{colour}" '
+            f'stroke-width="{width}" stroke-dasharray="{dash}"/>')
 
     def attach(self, other, gap=24):
         """Put another figure of the same scale to the right as a panel."""
