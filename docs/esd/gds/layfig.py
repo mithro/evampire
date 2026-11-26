@@ -26,6 +26,7 @@ SECONDARY = "#1f4e9c"  # secondary protection
 CLAMP = "#e08a00"      # rail clamp
 DVDD = "#a02c7d"
 DVSS = "#16806f"
+SNAP = "#8e44ad"       # snapback, as in the cross-section
 
 # name: (fill, stroke, legend text)
 STYLES = {
@@ -37,9 +38,17 @@ STYLES = {
     "contact": ("#333333", "none", "contact"),
     "metal": (METAL, "#6b7684", "metal"),
     "pad": ("none", INK, "pad opening"),
-    "padnet": (HOT, "#7d1f14", "PAD net"),
-    "dvdd": (DVDD, "#6a1c53", "DVDD"),
-    "dvss": (DVSS, "#0d5045", "DVSS"),
+    "padnet": (HOT, "#7d1f14", "PAD net, metal 2"),
+    "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
+    "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
+    "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
+    "dvddrail": (DVDD, "#6a1c53", "DVDD rail, metal 5"),
+    "dvssrail": (DVSS, "#0d5045", "DVSS rail, metal 5"),
+    "innet": (SECONDARY, "#12305f", "protected input net"),
+    "other": ("#c4c9cf", "#8a9199", "other diffusion"),
+    "resistor": ("none", SECONDARY, "resistor body"),
+    "gate": ("#8e5bb5", "#4f2a70", "gate over diffusion"),
+    "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
 }
 FONT = 14
 
@@ -65,7 +74,7 @@ class Fig:
         self.dw, self.dh = (y1 - y0) * scale, (x1 - x0) * scale
         self.w = left + self.dw + right
         self.h = top + self.dh + bottom
-        self.body, self.over, self.keys = [], [], []
+        self.body, self.over, self.keys, self.panels = [], [], [], []
         self.body.append(
             f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" width="{self.dw:.1f}" '
             f'height="{self.dh:.1f}" fill="{SUB}"/>')
@@ -135,21 +144,27 @@ class Fig:
         self.over.extend(out)
 
     def label(self, s, target, at, anchor="middle", colour=INK, elbow=None,
-              weight="normal"):
+              weight="normal", lead="auto"):
         """Text at pixel position `at` with a leader to a layout point.
 
-        The leader starts under or over the text, on the side that faces
-        the target, and ends in a dot on the target.
+        The leader leaves the text below or above it (lead="auto", for
+        labels in the top and bottom margins) or at its left or right end
+        (for labels in the side margins), and ends in a dot on the target.
         """
         tx, ty = self.px(*target)
         ax, ay = at
-        n = len(s.split("\n"))
-        below = ty > ay
-        sy = ay + (n - 1) * FONT * 1.2 + 5 if below else ay - FONT - 1
-        pts = [(ax, sy)]
-        if elbow is not None:
-            pts.append(elbow)
-        pts.append((tx, ty))
+        lines = s.split("\n")
+        n = len(lines)
+        mid = ay - FONT * 0.35 + (n - 1) * FONT * 0.6
+        if lead == "left":
+            start = (ax - 6, mid)
+        elif lead == "right":
+            start = (ax + 6, mid)
+        elif ty > ay:
+            start = (ax, ay + (n - 1) * FONT * 1.2 + 5)
+        else:
+            start = (ax, ay - FONT - 1)
+        pts = [start] + ([elbow] if elbow is not None else []) + [(tx, ty)]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
         self.over.append(f'<polyline points="{d}" fill="none" stroke="#fff" '
                          'stroke-width="3.2" opacity="0.85"/>')
@@ -157,8 +172,7 @@ class Fig:
                          f'stroke="{colour}" stroke-width="1.3"/>')
         self.over.append(f'<circle cx="{tx:.1f}" cy="{ty:.1f}" r="3.2" '
                          f'fill="{colour}" stroke="#fff" stroke-width="1"/>')
-        tx_text = ax if anchor == "middle" else ax
-        self.text(tx_text, ay, s, anchor=anchor, fill=colour, weight=weight)
+        self.text(ax, ay, s, anchor=anchor, fill=colour, weight=weight)
 
     def dim(self, a, b, s, offset=0.0, colour=INK, side="above"):
         """A dimension line between two layout points, with its text."""
@@ -188,7 +202,8 @@ class Fig:
         """An arrow along layout points: the direction of a current."""
         pts = points if pixels else [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
-        mid = {HOT: "hot", CLAMP: "clamp", SECONDARY: "second"}[colour]
+        mid = {HOT: "hot", CLAMP: "clamp", SECONDARY: "second",
+               SNAP: "snap"}[colour]
         extra = f' stroke-dasharray="{dash}"' if dash else ""
         self.over.append(f'<polyline points="{d}" fill="none" stroke="#fff" '
                          f'stroke-width="{width + 3}" opacity="0.9" '
@@ -208,6 +223,19 @@ class Fig:
             f'fill="none" stroke="{colour}" stroke-width="{width}" '
             f'stroke-dasharray="{dash}"/>')
 
+    def attach(self, other, gap=24):
+        """Put another figure of the same scale to the right as a panel."""
+        assert other.s == self.s, "panels share one scale bar"
+        self.panels.append((other, self.w - 20 + gap))
+        self.w += gap + other.w - 20
+        self.h = max(self.h, other.h)
+        self.keys += [k for k in other.keys if k not in self.keys]
+
+    def title(self, s):
+        """A panel title above the top-left corner of the layout."""
+        self.text(self.ox, self.oy - 10, s, anchor="start", weight="bold",
+                  halo=False)
+
     # -- furniture --------------------------------------------------------
     def _scalebar(self, y):
         target = self.dw / self.s / 5
@@ -225,7 +253,7 @@ class Fig:
         out = []
         items = [(STYLES[k][0], STYLES[k][1], STYLES[k][2],
                   "4,2" if k in ("pad", "sab") else None)
-                 for k in self.keys] + extra
+                 for k in STYLES if k in self.keys] + extra
         x_start = x
         for fill, stroke, name, dash in items:
             width = 26 + 6 + len(name) * FONT * 0.56 + 18
@@ -239,6 +267,12 @@ class Fig:
             x += width
         return out, y
 
+    def _content(self):
+        return [*self.body,
+                f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" '
+                f'width="{self.dw:.1f}" height="{self.dh:.1f}" fill="none" '
+                f'stroke="{GREY}" stroke-width="1"/>', *self.over]
+
     def save(self, path, extra_keys=()):
         """Write the SVG, with the scale bar and legend under the layout."""
         base = self.h - 44
@@ -251,7 +285,7 @@ class Fig:
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
             'stroke-width="1.2"/></pattern>']
         for name, colour in (("hot", HOT), ("clamp", CLAMP),
-                             ("second", SECONDARY)):
+                             ("second", SECONDARY), ("snap", SNAP)):
             defs.append(
                 f'<marker id="arrow-{name}" viewBox="0 0 10 10" refX="7" '
                 'refY="5" markerWidth="4.5" markerHeight="4.5" '
@@ -262,9 +296,9 @@ class Fig:
                'font-family="sans-serif">',
                "<defs>" + "".join(defs) + "</defs>",
                f'<rect width="{self.w:.0f}" height="{h:.0f}" fill="#ffffff"/>',
-               *self.body,
-               f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" '
-               f'width="{self.dw:.1f}" height="{self.dh:.1f}" fill="none" '
-               f'stroke="{GREY}" stroke-width="1"/>',
-               *self.over, *bar, *legend, "</svg>"]
+               *self._content()]
+        for other, dx in self.panels:
+            svg += [f'<g transform="translate({dx:.1f},0)">',
+                    *other._content(), "</g>"]
+        svg += [*bar, *legend, "</svg>"]
         path.write_text("\n".join(svg) + "\n")

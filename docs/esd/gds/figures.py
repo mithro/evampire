@@ -20,10 +20,12 @@ SPDX-License-Identifier: Apache-2.0
 import pathlib
 import sys
 
+import figs_clamp
+import figs_driver
 import figs_pad
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
-FIGURES = {**figs_pad.FIGURES}
+FIGURES = {**figs_pad.FIGURES, **figs_driver.FIGURES, **figs_clamp.FIGURES}
 
 
 def main(names):

@@ -119,6 +119,9 @@ def bounds(cell):
 STARTS = {
     "bi_t": {"PAD": ("metal5", 37.5, 32.0), "DVDD": ("metal5", 3.925, 189.35),
              "DVSS": ("metal5", 3.58, 94.16), "IN": ("poly", 32.85, 273.9)},
+    "dvdd": {"DVDD": ("metal5", 38.9, 34.27), "DVSS": ("metal5", 3.58, 94.16)},
+    "dvss": {"DVSS": ("metal5", 37.98, 32.73),
+             "DVDD": ("metal5", 3.925, 189.35)},
 }
 
 
