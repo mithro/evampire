@@ -77,7 +77,7 @@
 <rect x="370.8" y="167.2" width="1" height="5" rx="0" fill="#7b241c" stroke="none" fill-opacity="0.3"/>
 <circle cx="380.0" cy="169.7" r="3.6" fill="#7b241c" stroke="#222222" stroke-width="0.6"/>
 <rect x="367.6" y="166.5" width="6.4" height="6.4" rx="0" fill="white" stroke="#7b241c"/>
-<rect x="365.8" y="179.8" width="5.0" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<rect x="365.8" y="179.8" width="1" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="374.2" cy="182.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <rect x="362.6" y="179.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
 <rect x="365.8" y="184.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
