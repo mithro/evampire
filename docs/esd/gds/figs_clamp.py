@@ -18,7 +18,7 @@ INVERTERS = (15.8, 195.4, 59.6, 214.6)
 
 def clamp():
     """The whole DVDD pad: the rail clamp and its timer."""
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=62, right=75, bottom=184)
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=80, right=75, bottom=184)
     lay = gdskit.load(CELL)
     f.silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
@@ -30,12 +30,16 @@ def clamp():
     f.box(INVERTERS, colour=CLAMP, dash="5,4", width=2.0)
     f.note(CLAMP, "the inverters", kind="box")
     top = f.oy - 34
-    f.label("Clamp transistor: 4 blocks of 20\nfingers, each finger 50 µm wide",
-            (37.5, 116), (f.px(0, 131)[0], top), colour=CLAMP, weight="bold")
-    f.label("Timer capacitors:\n8 of 10 µm × 25 µm", (19, 231),
-            (f.px(0, 226)[0], top), colour=CLAMP, weight="bold")
-    f.label("Timer resistors:\n12 of 30 kΩ", (37.5, 287.8),
-            (f.px(0, 288)[0], top), colour=CLAMP, weight="bold")
+    # Each label gives the total that the schematic of schematic.py names.
+    f.label("Clamp NMOS transistor: 4\nblocks of 20 fingers, each\n"
+            "50 µm wide, 4000 µm in all",
+            (37.5, 116), (f.px(0, 131)[0], top - 17), colour=CLAMP,
+            weight="bold")
+    f.label("MOS capacitor of the\ntimer: 8 of 10 µm ×\n25 µm in parallel",
+            (19, 231), (f.px(0, 226)[0], top - 17), colour=CLAMP,
+            weight="bold")
+    f.label("Timer resistor:\n12 of 30 kΩ in\nseries, 360 kΩ", (37.5, 287.8),
+            (f.px(0, 288)[0], top - 17), colour=CLAMP, weight="bold")
     f.label("4 supply\ncapacitors", (10, 337.8), (f.ox + f.dw, top),
             anchor="end")
     bot = f.oy + f.dh + 30
@@ -69,7 +73,7 @@ def clamp_fingers():
     f.label("P+ guard ring, on DVSS", (9.3, 76.5), (f.px(0, 76.5)[0], top),
             colour=DVSS, weight="bold")
     f.label("Polysilicon bar joining the gates of a block (16 of its 20 fingers shown)",
-            (11.8, 86), (f.px(0, 86)[0], top))
+            (11.8, 80.5), (f.px(0, 86)[0], top))
     # The 0.52 µm strips repeat every 1.22 µm: drain, gate, source, gate.
     first, pitch = 74.88, 1.22
     bot = f.oy + f.dh + 30
@@ -85,16 +89,14 @@ def clamp_fingers():
     # (0.11 µm contact half-width plus half of the 0.15 µm gap)
     f.label("Contacts 0.15 µm from each gate:\nno silicide block",
             (20.9, gap), (f.px(0, gap)[0], bot), weight="bold")
-    # Dimension ticks on the fingers, named in the bare strip above them.
-    band = f.px(10.55, 0)[1] + 5
-    g0 = first + 8.5 * pitch - 0.35
-    f.dim((13.2, g0), (13.2, g0 + 0.7), "")
-    f.label("gate length: 0.7 µm", (13.2, g0 + 0.35),
-            (f.px(0, g0)[0] - 70, band), weight="bold")
-    d0 = first + 12 * pitch - 0.26
-    f.dim((13.2, d0), (13.2, d0 + 0.52), "")
-    f.label("drain strip: 0.52 µm", (13.2, d0 + 0.26),
-            (f.px(0, d0)[0] + 10, band), weight="bold")
+    # Dimensions in the bare strip above the fingers, with extension
+    # lines down to the two edges each one measures.
+    for k, size, text in ((9.5, 0.7, "gate length: 0.7 µm"),
+                          (14, 0.52, "drain strip: 0.52 µm")):
+        lo = first + k * pitch - size / 2
+        for gy in (lo, lo + size):
+            f.line((10.75, gy), (13.6, gy))
+        f.dim((10.95, lo), (10.95, lo + size), text)
     return f
 
 
@@ -107,7 +109,7 @@ def _stack(cell, name):
 
 def ring():
     """A positive pulse from PAD to DVSS, across two cells of the ring."""
-    f = Fig("bi_t", (0, 0, 2 * PITCH, 222), 3.7, left=20, top=70, right=190,
+    f = Fig("bi_t", (0, 0, 2 * PITCH, 222), 3.7, left=20, top=70, right=215,
             bottom=136)
     f.wells = False
     lay = gdskit.load("dvss")
@@ -148,24 +150,28 @@ def ring():
     # The current: along the pad's metal, down the DVDD rail, through the
     # clamp transistor, and back along a metal 2 bus of the DVSS pad.
     y_rail, bus = 181.5, PITCH + 44.3
-    f.flow([(42.5, 64), (42.5, y_rail), (bus, y_rail), (bus, 56)],
-           width=5.0)
+    route = [(42.5, 64), (42.5, y_rail), (bus, y_rail), (bus, 56)]
+    f.flow(route, width=5.0)
+    # A head part-way along the first two runs; the last has the end's.
+    for (ax, ay), (bx, by) in list(zip(route, route[1:]))[:2]:
+        f.flow([(ax, ay), (ax + 0.62 * (bx - ax), ay + 0.62 * (by - ay))],
+               width=5.0)
     top = f.oy - 38
     f.label("1  Positive pulse: from the bond pad\nalong metal 2 to the "
-            "PMOS drains", (42.5, 100), (f.px(0, 84)[0], top), colour=HOT,
+            "PMOS drains", (42.5, 100), (f.px(0, 84)[0], top), colour=HOT, leader=INK,
             weight="bold")
-    f.label("2  PMOS drain diode: P+ drain to N-well,\nthen up to the DVDD "
-            "stripes over it", (42.5, y_rail), (f.px(0, 190)[0], top),
-            colour=HOT, weight="bold")
+    f.label("2  PMOS drain diode: P+ drain to N-well,\nthen to the DVDD "
+            "stripes, metal 3 to 5", (42.5, y_rail), (f.px(0, 190)[0], top),
+            colour=HOT, leader=INK, weight="bold")
     bot = f.oy + f.dh + 30
     f.label("5  Metal 2 buses over the clamp,\nback to the DVSS bond pad",
-            (bus, 100), (f.px(0, 56)[0], bot), colour=HOT, weight="bold")
+            (bus, 80), (f.px(0, 56)[0], bot), colour=HOT, leader=INK, weight="bold")
     f.label("4  Clamp transistor, 4 blocks in parallel: from the\nDVDD "
             "stripes to metal 2 of the DVSS pad", (bus, y_rail),
-            (f.px(0, 158)[0], bot), colour=HOT, weight="bold")
+            (f.px(0, 158)[0], bot), colour=HOT, leader=INK, weight="bold")
     x, y = f.px(PITCH + 5, y_rail)
-    f.label("3  DVDD rail into\nthe next cell", (PITCH + 5, y_rail),
-            (f.ox + f.dw + 14, y), anchor="start", colour=HOT, weight="bold",
+    f.label("3  Along the DVDD rail\ninto the DVSS supply\npad cell", (PITCH + 5, y_rail),
+            (f.ox + f.dw + 14, y), anchor="start", colour=HOT, leader=INK, weight="bold",
             lead="left")
     return f
 

@@ -28,6 +28,8 @@ figures share four conventions:
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
 
+.. _esd-layout-floorplan:
+
 Bidirectional pad floorplan
 ---------------------------
 
@@ -65,6 +67,8 @@ largest part of the cell, and they are also its primary ESD protection
    :width: 100%
 
    The parts of gf180mcu_fd_io__bi_t, drawn from its layout.
+
+.. _esd-layout-pad:
 
 Pad connection
 --------------
@@ -118,6 +122,9 @@ against :term:`latch-up`. Outside both rings, a bar of P+ diffusion on
 the core ground VSS runs along the pad side of the drivers. It lies just
 inside the P+ ring round the whole cell, on the same net.
 
+The line A–A′ in :numref:`fig-esd-gds-nmos-driver` is the cut that the
+cross-section :numref:`fig-esd-driver-section` draws for the NMOS.
+
 No P-well shape is drawn under these transistors, nor under any ordinary
 NMOS transistor of the cell: the layout draws that layer only under the
 MOS capacitors. The P-well mask is both drawn and generated
@@ -138,11 +145,15 @@ layout figures colour every area with no N-well as P-type silicon.
          silicide blocked for 3.78 µm on each side of a row of drain contacts
          on the PAD net. Then the gate of the second finger, a source shared
          by two fingers, and the gate of the third finger. Each gate has
-         contacts at its end, which connect to the pre-drivers.
+         contacts at its end, which connect to the pre-drivers. A dash-dot
+         line A–A′ runs from the drain contacts across the first gate and
+         source to the P+ guard ring.
    :width: 100%
 
    One corner of the NMOS output drivers of gf180mcu_fd_io__bi_t. Three of
    the eight gates are shown, and 24 µm of their 38 µm width.
+
+.. _esd-layout-silicide:
 
 Silicide block
 --------------
@@ -179,6 +190,8 @@ resistors.
 
    The silicide-blocked drains of both output drivers, beside a pre-driver
    transistor that has no silicide block.
+
+.. _esd-layout-paths:
 
 Discharge paths in the drivers
 ------------------------------
@@ -221,6 +234,8 @@ drain diode adds to the foundry's test diode (:ref:`esd-simulation`).
    The discharge currents drawn on the output drivers of
    gf180mcu_fd_io__bi_t.
 
+.. _esd-layout-secondary:
+
 Secondary protection layout
 ---------------------------
 
@@ -253,6 +268,8 @@ which is the diode's other terminal.
 
    The secondary protection of gf180mcu_fd_io__bi_t: four resistors and
    two pairs of diodes.
+
+.. _esd-layout-clamp:
 
 Rail clamp layout
 -----------------
@@ -306,6 +323,8 @@ the silicide block is for (:ref:`esd-io-cells`).
    One corner of the clamp transistor of gf180mcu_fd_io__dvdd. Sixteen of
    its 80 fingers are shown, and 9 µm of their 50 µm width.
 
+.. _esd-layout-ring:
+
 Path across the ring
 --------------------
 
@@ -345,9 +364,9 @@ the voltage at the pad (:doc:`results-hbm`).
    :alt: The pad ends of a bidirectional pad cell, above, and a DVSS supply
          pad cell, below, side by side as on the pad ring. Stripes of metal 3
          to 5 cross both cells, some DVDD in magenta and some DVSS in green,
-         each continuing from one cell into the other. One red arrow marks
-         the current. Step 1, from the PAD bond pad along metal 2 to the PMOS
-         drains. Step 2, through the PMOS drain diode onto the DVDD stripes
+         each continuing from one cell into the other. A red path with
+         arrowheads marks the current. Step 1, from the PAD bond pad along
+         metal 2 to the PMOS drains. Step 2, through the PMOS drain diode onto the DVDD stripes
          above. Step 3, along the DVDD rail into the supply pad. Step 4,
          through the clamp transistor, four orange blocks in parallel, from
          the DVDD stripes to metal 2 of the DVSS pad. Step 5, along the
@@ -407,7 +426,8 @@ The other modules in the same folder do the work:
   contacts and vias. The layer numbers are those of the design manual
   ([ESD-GF180-DRM-4-1]_).
 * :download:`gds/layfig.py <gds/layfig.py>` draws a window of a cell with
-  its labels, scale bar and legend.
+  its labels, and :download:`gds/laykey.py <gds/laykey.py>` adds the scale
+  bar and legend.
 * :download:`gds/figs_pad.py <gds/figs_pad.py>`,
   :download:`gds/figs_driver.py <gds/figs_driver.py>` and
   :download:`gds/figs_clamp.py <gds/figs_clamp.py>` hold the figures.

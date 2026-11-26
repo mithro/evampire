@@ -5,7 +5,8 @@
 """Draw annotated views of the gf180mcu_fd_io pad cell layouts.
 
 Reads the 5-metal GDS files of the foundry I/O library and writes the
-docs/esd/figures/gds-*.svg figures of docs/esd/layout.rst. GF180_IO names
+docs/esd/figures/gds-*.svg figures of docs/esd/layout.rst and
+docs/esd/io-cells.rst. GF180_IO names
 a checkout of the library at the commit docs/esd/simulation.rst pins:
 
     GF180_IO=$PWD/globalfoundries-pdk-libs-gf180mcu_fd_io \\

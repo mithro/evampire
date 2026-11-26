@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1089" height="745" viewBox="0 0 1089 745" font-family="sans-serif">
-<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
-<rect width="1089" height="745" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1089" height="769" viewBox="0 0 1089 769" font-family="sans-serif">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker><marker id="arrow-snap" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker></defs>
+<rect width="1089" height="769" fill="#ffffff"/>
 <rect x="20.0" y="64.0" width="719.4" height="523.6" fill="#dbe8f5"/>
 <path d="M63.9,64.0L739.4,64.0L739.4,178.8L126.4,178.8L126.4,587.6L63.9,587.6L63.9,178.8L63.9,174.3Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M131.5,183.5L739.4,183.5L739.4,220.9L163.4,220.9L163.4,232.6L163.4,587.6L131.5,587.6L131.5,232.6L131.5,220.9L131.5,219.8L131.5,187.9ZM27.0,64.0L50.6,64.0L50.6,587.6L27.0,587.6Z" fill="#7fa7d6" stroke="#3d6294" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -81,6 +81,10 @@
 <polyline points="399.3,602.6 199.3,595.6 199.3,553.1" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="199.3" cy="553.1" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="399.3" y="617.6" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Gate contacts, a pair at each end of every gate, to a pre-driver</text>
+<line x1="673.4" y1="398.0" x2="673.4" y2="204.8" stroke="#fff" stroke-width="4.4" opacity="0.85"/>
+<line x1="673.4" y1="398.0" x2="673.4" y2="204.8" stroke="#222222" stroke-width="2.0" stroke-dasharray="9,3,2,3"/>
+<text x="673.4" y="414.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">A</text>
+<text x="673.4" y="198.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">A′</text>
 <rect x="20.0" y="647.5999999999999" width="110.0" height="6" fill="#222222"/>
 <text x="138.0" y="655.5999999999999" font-size="14" fill="#222222">5 µm</text>
 <rect x="195.6" y="644.5999999999999" width="26" height="14" fill="#dbe8f5"/>
@@ -107,12 +111,14 @@
 <rect x="445.6" y="692.5999999999999" width="26" height="14" fill="#dbe8f5"/>
 <rect x="445.6" y="692.6" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
 <text x="479.6" y="704.5999999999999" font-size="14" fill="#222222">gate over diffusion</text>
-<text x="648.6" y="704.5999999999999" font-size="14" font-weight="bold" fill="#16806f">Abc</text>
-<text x="682.6" y="704.5999999999999" font-size="14" fill="#222222">on DVSS</text>
-<text x="195.6" y="728.5999999999999" font-size="14" font-weight="bold" fill="#a02c7d">Abc</text>
-<text x="229.6" y="728.5999999999999" font-size="14" fill="#222222">on DVDD</text>
-<text x="445.6" y="728.5999999999999" font-size="14" font-weight="bold" fill="#c0392b">Abc</text>
-<text x="479.6" y="728.5999999999999" font-size="14" fill="#222222">on the PAD net</text>
-<line x1="648.6" y1="723.5999999999999" x2="674.6" y2="723.5999999999999" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<text x="682.6" y="728.5999999999999" font-size="14" fill="#222222">layout continues</text>
+<line x1="648.6" y1="699.5999999999999" x2="675.6" y2="699.5999999999999" stroke="#222222" stroke-width="2" stroke-dasharray="9,3,2,3"/>
+<text x="682.6" y="704.5999999999999" font-size="14" fill="#222222">A–A′: the cut of the cross-section</text>
+<text x="195.6" y="728.5999999999999" font-size="14" font-weight="bold" fill="#16806f">Abc</text>
+<text x="229.6" y="728.5999999999999" font-size="14" fill="#222222">on DVSS</text>
+<text x="445.6" y="728.5999999999999" font-size="14" font-weight="bold" fill="#a02c7d">Abc</text>
+<text x="479.6" y="728.5999999999999" font-size="14" fill="#222222">on DVDD</text>
+<text x="648.6" y="728.5999999999999" font-size="14" font-weight="bold" fill="#c0392b">Abc</text>
+<text x="682.6" y="728.5999999999999" font-size="14" fill="#222222">on the PAD net</text>
+<line x1="195.6" y1="747.5999999999999" x2="221.6" y2="747.5999999999999" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="229.6" y="752.5999999999999" font-size="14" fill="#222222">layout continues</text>
 </svg>

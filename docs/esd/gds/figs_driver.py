@@ -54,6 +54,13 @@ def nmos_driver():
     f.label("Gate contacts, a pair at each end of every gate, to a pre-driver",
             (26.83, 75.05), (f.px(0, 75.05)[0] + 200, bot),
             elbow=(f.px(0, 75.05)[0], f.oy + f.dh + 8))
+    # The cut that the cross-section of sections.py draws for the NMOS:
+    # from a drain's contacts across the gate and source to the P+ ring.
+    f.line((19.78, 96.6), (11.0, 96.6), width=2.0, dash="9,3,2,3")
+    for gx, name, dy in ((19.78, "A", 16), (11.0, "A′", -6)):
+        x, y = f.px(gx, 96.6)
+        f.text(x, y + dy, name, weight="bold")
+    f.note(INK, "A–A′: the cut of the cross-section", kind="cut")
     f.note(DVSS, "on DVSS")
     f.note(DVDD, "on DVDD")
     f.note(HOT, "on the PAD net")
@@ -61,16 +68,21 @@ def nmos_driver():
 
 
 def _panel(window, title):
-    f = Fig(CELL, window, 30, left=20, top=48, right=20, bottom=112)
+    f = Fig(CELL, window, 30, left=20, top=78, right=20, bottom=112)
     devices(f)
-    f.title(title)
+    f.title(title, up=44)
     return f
 
 
-def _inside(f, text, gx, gy, row, dx=44):
+def _inside(f, text, gx, gy, row):
     """Text inside a panel, starting at a layout point, tied to a row."""
     x, y = f.px(gx, gy)
-    f.label(text, (row, gy + 1.25), (x + dx, y), anchor="start")
+    f.label(text, (row, gy + 1.25), (x + 44, y), anchor="start")
+
+
+def _above(f, text, gx, gy):
+    """Text in the margin above a panel, with a leader down to a row."""
+    f.label(text, (gx, gy), (f.px(0, gy)[0], f.oy - 14))
 
 
 def silicide_block():
@@ -80,13 +92,13 @@ def silicide_block():
     a.dim((20.11, 82.9), (23.89, 82.9), "blocked drain: 3.78 µm")
     a.dim((14.52, 76.2), (15.67, 76.2), "gate length: 1.15 µm", side="below")
     _inside(a, "Drain contacts", 20.95, 75.0, 19.78)
-    _inside(a, "Source contacts, unblocked", 13.62, 75.2, 14.0, dx=8)
+    _above(a, "Source contacts, outside the block", 14.0, 79.4)
     b = _panel((10.2, 144.9, 23.8, 154.1), "(b) PMOS output driver, blocked")
     b.dim((12.295, 153.2), (15.075, 153.2), "blocked drain: 2.78 µm")
     b.dim((15.735, 153.2), (18.515, 153.2), "blocked drain: 2.78 µm")
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
-    _inside(b, "Drain contacts", 16.58, 145.3, 15.405)
-    _inside(b, "Source contacts, unblocked", 10.72, 145.5, 11.1, dx=8)
+    _inside(b, "Drain contacts", 14.75, 145.3, 15.405)
+    _above(b, "Source contacts, outside the block", 11.1, 149.7)
     c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, not blocked")
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
     bot = c.oy + c.dh + 30

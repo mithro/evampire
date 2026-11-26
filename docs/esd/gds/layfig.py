@@ -144,13 +144,15 @@ class Fig:
         self.over.extend(out)
 
     def label(self, s, target, at, anchor="middle", colour=INK, elbow=None,
-              weight="normal", lead="auto", also=()):
+              weight="normal", lead="auto", also=(), leader=None):
         """Text at pixel position `at` with a leader to a layout point.
 
         The leader leaves the text below or above it (lead="auto", for
         labels in the top and bottom margins) or at its left or right end
         (for labels in the side margins), and ends in a dot on the target.
+        `leader` gives the leader a colour other than the text's.
         """
+        text_colour, colour = colour, leader or colour
         tx, ty = self.px(*target)
         ax, ay = at
         lines = s.split("\n")
@@ -180,7 +182,17 @@ class Fig:
             self.over.append(
                 f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="3.2" fill="{colour}" '
                 'stroke="#fff" stroke-width="1"/>')
-        self.text(ax, ay, s, anchor=anchor, fill=colour, weight=weight)
+        self.text(ax, ay, s, anchor=anchor, fill=text_colour, weight=weight)
+
+    def line(self, a, b, colour=INK, width=1.0, dash=None):
+        """A thin line between two layout points, such as an extension line."""
+        (x1, y1), (x2, y2) = self.px(*a), self.px(*b)
+        seg = f'x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}"'
+        extra = f' stroke-dasharray="{dash}"' if dash else ""
+        self.over.append(f'<line {seg} stroke="#fff" '
+                         f'stroke-width="{width + 2.4}" opacity="0.85"/>')
+        self.over.append(f'<line {seg} stroke="{colour}" '
+                         f'stroke-width="{width}"{extra}/>')
 
     def dim(self, a, b, s, offset=0.0, colour=INK, side="above"):
         """A dimension line between two layout points, with its text."""
@@ -228,11 +240,14 @@ class Fig:
         """Outline a region of the layout (x0, y0, x1, y1)."""
         (xa, ya), (xb, yb) = self.px(window[0], window[1]), self.px(
             window[2], window[3])
+        at = (f'x="{min(xa, xb):.1f}" y="{min(ya, yb):.1f}" '
+              f'width="{abs(xb - xa):.1f}" height="{abs(yb - ya):.1f}"')
+        # A white line under the dashes, so they show over any layer.
+        self.over.append(f'<rect {at} fill="none" stroke="#ffffff" '
+                         f'stroke-width="{width + 2.6}" opacity="0.9"/>')
         self.over.append(
-            f'<rect x="{min(xa, xb):.1f}" y="{min(ya, yb):.1f}" '
-            f'width="{abs(xb - xa):.1f}" height="{abs(yb - ya):.1f}" '
-            f'fill="none" stroke="{colour}" stroke-width="{width}" '
-            f'stroke-dasharray="{dash}"/>')
+            f'<rect {at} fill="none" stroke="{colour}" '
+            f'stroke-width="{width}" stroke-dasharray="{dash}"/>')
 
     def attach(self, other, gap=24):
         """Put another figure of the same scale to the right as a panel."""
@@ -243,93 +258,15 @@ class Fig:
         self.keys += [k for k in other.keys if k not in self.keys]
         self.alpha = {**other.alpha, **self.alpha}
 
-    def title(self, s):
+    def title(self, s, up=10):
         """A panel title above the top-left corner of the layout."""
-        self.text(self.ox, self.oy - 10, s, anchor="start", weight="bold",
+        self.text(self.ox, self.oy - up, s, anchor="start", weight="bold",
                   halo=False)
 
     # -- furniture --------------------------------------------------------
-    def _scalebar(self, y):
-        target = self.dw / self.s / 5
-        length = max(v for v in (0.5, 1, 2, 5, 10, 20, 50, 100)
-                     if v <= max(target, 0.5))
-        x0, x1 = self.ox, self.ox + length * self.s
-        out = [f'<rect x="{x0:.1f}" y="{y}" width="{x1 - x0:.1f}" height="6" '
-               f'fill="{INK}"/>']
-        label = f"{length:g} µm" + (", all panels" if self.panels else "")
-        out.append(f'<text x="{x1 + 8:.1f}" y="{y + 8}" font-size="{FONT}" '
-                   f'fill="{INK}">{label}</text>')
-        return out, x1 + 8 + len(label) * FONT * 0.6
-
     def note(self, colour, text, kind="label"):
         """Explain a label colour or an outline in the legend."""
         self.notes.append((kind, colour, text))
-
-    def _legend(self, x, y):
-        """Swatches in columns of one width, drawn as they are in the layout."""
-        items = []
-        if self.wells:
-            items.append(("swatch", (SUB, GREY, None, 1.0),
-                          "P-type silicon, no N-well"))
-        for k in STYLES:
-            if k in self.keys:
-                fill, stroke, name = STYLES[k]
-                dash = "4,2" if k == "pad" else None
-                kind = "contact" if k == "contact" else "swatch"
-                items.append((kind, (fill, stroke, dash, self.alpha[k]), name))
-        items += [(kind, colour, text) for kind, colour, text in self.notes]
-        widths = [(0 if kind == "plain" else 32) + len(name) * FONT * 0.56 + 22
-                  for kind, _, name in items]
-        # As many columns as fit, each as wide as its widest entry.
-        for per_row in range(len(items), 0, -1):
-            cols = [max(widths[i::per_row]) for i in range(per_row)]
-            if sum(cols) <= self.w - 10 - x:
-                break
-        lefts = [x + sum(cols[:i]) for i in range(per_row)]
-        out = []
-        for i, (kind, style, name) in enumerate(items):
-            cx, cy = lefts[i % per_row], y + (i // per_row) * 24
-            if kind == "plain":   # a remark, with no swatch
-                out.append(f'<text x="{cx:.1f}" y="{cy}" font-size="{FONT}" '
-                           f'fill="{INK}">{name}</text>')
-                continue
-            if kind in ("box", "outline"):
-                d = ' stroke-dasharray="5,4"' if kind == "box" else ""
-                out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
-                           f'height="14" fill="none" stroke="{style}" '
-                           f'stroke-width="2"{d}/>')
-            elif kind == "crop":
-                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 26:.1f}" '
-                           f'y2="{cy - 5}" stroke="{INK}" stroke-width="1.3" '
-                           'stroke-dasharray="7,5"/>')
-            elif kind == "dashes":
-                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 27:.1f}" '
-                           f'y2="{cy - 5}" stroke="{style}" stroke-width="4" '
-                           'stroke-dasharray="7,4"/>')
-            elif kind == "arrow":
-                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 18:.1f}" '
-                           f'y2="{cy - 5}" stroke="{style}" stroke-width="4"/>')
-                out.append(f'<path d="M{cx + 16:.1f},{cy - 11} L{cx + 27:.1f},'
-                           f'{cy - 5} L{cx + 16:.1f},{cy + 1} z" fill="{style}"/>')
-            elif kind == "label":
-                out.append(f'<text x="{cx:.1f}" y="{cy}" font-size="{FONT}" '
-                           f'font-weight="bold" fill="{style}">Abc</text>')
-            else:
-                fill, stroke, dash, alpha = style
-                d = f' stroke-dasharray="{dash}"' if dash else ""
-                w, h, dx = (8, 8, 9) if kind == "contact" else (26, 14, 0)
-                if fill != "none":   # show a tint over what lies under it
-                    under = (NWELL if name == STYLES["dvdd"][2]
-                             and "nwell" in self.keys else SUB)
-                    out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
-                               f'height="14" fill="{under}"/>')
-                out.append(
-                    f'<rect x="{cx + dx:.1f}" y="{cy - 12 + (14 - h) / 2:.1f}" '
-                    f'width="{w}" height="{h}" fill="{fill}" stroke="{stroke}" '
-                    f'opacity="{alpha}"{d}/>')
-            out.append(f'<text x="{cx + 34:.1f}" y="{cy}" font-size="{FONT}" '
-                       f'fill="{INK}">{name}</text>')
-        return out, y + ((len(items) - 1) // per_row) * 24
 
     def _content(self):
         """The layout and its labels, in a frame dashed where it is cropped."""
@@ -352,8 +289,9 @@ class Fig:
 
     def save(self, path):
         """Write the SVG, with the scale bar and legend under the layout."""
+        import laykey   # here, because laykey imports this module's palette
         base = self.h - 44
-        bar, x = self._scalebar(base)
+        bar, x = laykey.scalebar(self, base)
         for other, _ in self.panels:
             self.notes += [n for n in other.notes if n not in self.notes]
         drawn = self._content() + [line for other, _ in self.panels
@@ -362,7 +300,7 @@ class Fig:
         if (crop not in self.notes
                 and any('stroke-dasharray="7,5"' in line for line in drawn)):
             self.notes.append(crop)
-        legend, y_end = self._legend(x + 24, base + 9)
+        legend, y_end = laykey.legend(self, x + 24, base + 9)
         h = max(self.h, y_end + 16)
         defs = [
             '<pattern id="hatch" width="6" height="6" '
@@ -371,10 +309,11 @@ class Fig:
             'stroke-width="1.2"/></pattern>']
         for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
-                f'<marker id="arrow-{name}" viewBox="0 0 10 10" refX="7" '
-                'refY="5" markerWidth="4.5" markerHeight="4.5" '
+                f'<marker id="arrow-{name}" viewBox="-1 -1 12 12" refX="7" '
+                'refY="5" markerWidth="5.4" markerHeight="5.4" '
                 'orient="auto"><path d="M0,0 L10,5 L0,10 z" '
-                f'fill="{colour}"/></marker>')
+                f'fill="{colour}" stroke="#ffffff" stroke-width="0.7" '
+                'stroke-linejoin="round"/></marker>')
         svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.w:.0f}" '
                f'height="{h:.0f}" viewBox="0 0 {self.w:.0f} {h:.0f}" '
                'font-family="sans-serif">',
