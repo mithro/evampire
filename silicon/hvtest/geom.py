@@ -68,3 +68,14 @@ def text(layout: kdb.Layout, s: str, height: float, x: float, y: float) -> kdb.R
     reg = gen.text(s, DBU, mag)
     reg.move(nm(x), nm(y))
     return reg
+
+
+def cut_row(cx: float, cy: float, n: int, size: float, pitch: float) -> kdb.Region:
+    """A row of n square cuts centred on (cx, cy). Unlike contacts(), which keeps a fixed
+    grid and may place none in a narrow shape, this always places n."""
+    out = kdb.Region()
+    h = size / 2
+    for k in range(n):
+        x = cx + (k - (n - 1) / 2) * pitch
+        out.insert(kdb.Box(nm(x - h), nm(cy - h), nm(x + h), nm(cy + h)))
+    return out

@@ -1,10 +1,11 @@
 """Seal ring, fill and wafer.space precheck for the high-voltage test die.
 
-    uv run python silicon/hvtest/flow.py RAW.gds WORKDIR [--skip-precheck]
+    uv run python silicon/hvtest/flow.py RAW.gds MANIFEST.json WORKDIR [--skip-precheck]
 
-RAW.gds is the layout build.py writes. All three steps run inside the wafer.space precheck
+RAW.gds is the layout chip.py writes. All three steps run inside the wafer.space precheck
 container, which holds KLayout and the gf180mcuD PDK: the PDK's seal-ring script, its fill
-script, then precheck.py for slot 0p5x0p5. WORKDIR receives ring.gds, filled.gds, the
+script, then precheck.py for slot 0p5x0p5. Before them check_nets.py verifies the
+connections against MANIFEST.json (both files are written by chip.py). WORKDIR receives ring.gds, filled.gds, the
 final hvtest.oas and the precheck run directory; every step logs to WORKDIR/<step>.log.
 """
 
@@ -32,8 +33,16 @@ def container(work, name, script):
 
 
 def main(argv):
-    raw, work = pathlib.Path(argv[0]).resolve(), pathlib.Path(argv[1]).resolve()
+    raw, manifest, work = (pathlib.Path(a).resolve() for a in argv[:3])
     work.mkdir(parents=True, exist_ok=True)
+    # connections first: DRC and the precheck cannot see an open circuit
+    here = pathlib.Path(__file__).resolve().parent
+    with open(work / "nets.log", "wb") as log:
+        rc = subprocess.run(["uv", "run", "--with", "klayout", "python", str(here / "check_nets.py"),
+                             str(raw), str(manifest)], stdout=log, stderr=subprocess.STDOUT).returncode
+    print(f"nets: exit {rc} ({work / 'nets.log'})", flush=True)
+    if rc:
+        return rc
     shutil.copy(raw, work / "raw.gds")
     steps = [
         ("sealring", f"python3 {TECH}/scripts/sealring.py --input /data/raw.gds "

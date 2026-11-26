@@ -27,6 +27,7 @@ PAD_OPEN = 90.0
 SITE_W, SITE_H = 300.0, 150.0  # site pitch
 LARGE_BAND = 300.0  # band at the top for wells too big for a site
 BUS_W = 6.0
+LABEL_H = 20.0  # height of the Metal5 labels
 
 
 def pad_cell(layout):
@@ -35,6 +36,14 @@ def pad_cell(layout):
     h = PAD_OPEN / 2
     c.shapes(layout.layer(*L.PAD)).insert(geom.box(-h, -h, h, h))
     return c
+
+
+def label(top, layout, s, x, y):
+    """A Metal5 text label with its lower-left corner at (x, y), kept clear of dummy metal."""
+    reg = geom.text(layout, s, LABEL_H, x, y)
+    top.shapes(layout.layer(*L.METAL5)).insert(reg)
+    box = reg.bbox().enlarged(geom.nm(2.0), geom.nm(2.0))
+    top.shapes(layout.layer(*L.PMNDMY)).insert(box)
 
 
 def place(top, cell, x, y):
@@ -83,7 +92,7 @@ def build(sites, large=()):
         px = x0 + SITE_W - 20.0 - PAD / 2
         place(top, pad, px, cy)
         top.shapes(m5).insert(geom.box(cx + bh, cy - junction.LEAD_W / 2, px - PAD / 2, cy + junction.LEAD_W / 2))
-        top.shapes(m5).insert(geom.text(layout, name, 8.0, px - PAD / 2, cy + PAD / 2 + 4.0))
+        label(top, layout, name, px - PAD / 2, cy + PAD / 2 + 5.0)
         site = {"name": name, "params": p, "pad": [px, cy], "centre": [cx, cy]}
         if p["sense"] or p["gate"]:
             # second pad in the site above: Metal2 north, then east, then up to Metal5
@@ -93,8 +102,7 @@ def build(sites, large=()):
             place(top, up, px - PAD / 2 + 2.0, ay)
             place(top, pad, px, ay)
             role = "ring1" if p["sense"] else "gate"
-            top.shapes(m5).insert(geom.text(layout, f"{name}.{role[0].upper()}", 8.0,
-                                            px - PAD / 2, ay + PAD / 2 + 4.0))  # fmt: skip
+            label(top, layout, f"{name}.{role[0].upper()}", px - PAD / 2, ay + PAD / 2 + 5.0)
             site["aux_pad"] = [px, ay]
             site["aux_role"] = role
         manifest["sites"].append(site)
@@ -113,7 +121,7 @@ def build(sites, large=()):
         place(top, junction.build(layout, f"s_{name}", params), cx, cy)
         place(top, pad, px, cy)
         top.shapes(m5).insert(geom.box(cx + bh, cy - junction.LEAD_W / 2, px - PAD / 2, cy + junction.LEAD_W / 2))
-        top.shapes(m5).insert(geom.text(layout, name, 8.0, px - PAD / 2, cy + PAD / 2 + 4.0))
+        label(top, layout, name, px - PAD / 2, cy + PAD / 2 + 5.0)
         # substrate: a strap straight down from the bottom of the P+ ring to the top bus
         ring_bottom = cy - (p["half"] + p["term"])
         top.shapes(m1).insert(geom.box(cx - BUS_W / 2, y_top, cx + BUS_W / 2, ring_bottom))
@@ -139,7 +147,12 @@ def build(sites, large=()):
         px = EDGE + col * SITE_W + 100.0
         place(top, stack, px, y_bus - BUS_W - 8.0 - PAD / 2)
         manifest["sub_pads"].append([px, y_bus - BUS_W - 8.0 - PAD / 2])
-    top.shapes(m5).insert(geom.text(layout, "SUB", 8.0, EDGE + cols * SITE_W + 5.0, EDGE + 20.0))
+        label(top, layout, "SUB", px + PAD / 2 + 8.0, y_bus - BUS_W - 8.0 - PAD / 2 - LABEL_H / 2)
+    if large:  # one more substrate pad at the right end of the top bus
+        px, py = EDGE + cols * SITE_W - PAD / 2, y_top + BUS_W + 8.0 + PAD / 2
+        top.insert(kdb.CellInstArray(stack.cell_index(), kdb.Trans(2, False, geom.nm(px), geom.nm(py))))
+        manifest["sub_pads"].append([px, py])
+        label(top, layout, "SUB", px - PAD / 2, py + PAD / 2 + 5.0)
     return layout, manifest
 
 

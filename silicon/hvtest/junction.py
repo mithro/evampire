@@ -24,6 +24,8 @@ Parameters (micrometres), with defaults in DEFAULTS:
   sense      True adds a contact and a Metal2 lead (to the north) on the first ring
   gate       True ties the plates to their own Metal2 lead (to the north) instead of to
              the well, making a gated diode; the plates then start 1 um inside the well edge
+  lead_w     width of the Metal5 lead where it crosses the termination (6 by default; a
+             wide lead is the control for the lead's own effect on the junction)
   block      False leaves out the fill blocks (for wells too large for one NDMY shape);
              "ring" blocks fill only over the termination zone
 
@@ -40,15 +42,16 @@ import layers as L
 DEFAULTS = {
     "kind": "nw", "half": 15.0, "corner": 3.0, "inset": 2.0, "ncomp_w": 2.0, "term": 20.0,
     "rings": [], "plates": {}, "pwell_gap": None, "nat_gap": None, "sense": False,
-    "gate": False, "block": True,
+    "gate": False, "block": True, "lead_w": 6.0,
 }  # fmt: skip
 
 CUT, CUT_PITCH = 0.22, 0.50  # contact size and pitch (0.28 space, as arrays need)
 VIA, VIA_PITCH = 0.26, 0.62  # via size and pitch (0.36 space)
 IMPLANT = 0.23  # N+/P+ implant beyond COMP
 BLOCK_MARGIN = 3.0  # fill-block margin beyond the P+ ring
-LEAD_W = 6.0  # Metal5 lead width
+LEAD_W = 6.0  # Metal5 lead width outside the cell
 STACK = 2.6  # side of the via-stack squares
+NORTH_CLEAR = 4.0  # half-width of the gap in the P+ ring's Metal1 under a north lead
 
 
 def outline(p, d):
@@ -78,7 +81,7 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         # reference for the pad and lead capacitance: the lead with no junction under it
         bh = block_half(p)
         sx = half - inset - w / 2
-        cell.shapes(layout.layer(*L.METAL5)).insert(geom.box(sx, -LEAD_W / 2, bh, LEAD_W / 2))
+        cell.shapes(layout.layer(*L.METAL5)).insert(geom.box(sx, -p["lead_w"] / 2, bh, p["lead_w"] / 2))
         for layer in (L.NDMY, L.PMNDMY):
             cell.shapes(layout.layer(*layer)).insert(geom.box(-bh, -bh, bh, bh))
         return cell
@@ -105,7 +108,7 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         if "poly" in plates:
             add(L.POLY2, annulus(p, g0, plates["poly"]))
             patch = geom.box(-1.2, half + g0 + 0.1, 1.2, half + g0 + 1.3)
-            add(L.CONTACT, geom.contacts(patch, CUT, CUT_PITCH, 0.12))
+            add(L.CONTACT, geom.cut_row(0.0, half + g0 + 0.7, 3, CUT, CUT_PITCH))
             north = patch
         if "m1" in plates:
             add(L.METAL1, annulus(p, g0, plates["m1"]))
@@ -118,9 +121,11 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
     else:
         if "poly" in plates:
             add(L.POLY2, annulus(p, -inset + 0.4, plates["poly"]))
-            tie = annulus(p, -inset + 0.5, -inset + 1.2)  # contacts to the poly, under Metal1
+            # contacts to the poly, under Metal1; 1 um wide so that the 0.5 um contact grid
+            # lands in it on every side
+            tie = annulus(p, -inset + 0.45, -inset + 1.45)
             add(L.CONTACT, geom.contacts(tie, CUT, CUT_PITCH, 0.12))
-            m1_out = -inset + 1.3
+            m1_out = -inset + 1.55
         if "m1" in plates:
             m1_out = plates["m1"]
         add(L.METAL1, annulus(p, -inset - w, m1_out))
@@ -141,8 +146,13 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
     pcomp = annulus(p, term, term + w)
     add(L.COMP, pcomp)
     add(L.PPLUS, annulus(p, term - IMPLANT, term + w + IMPLANT))
-    add(L.CONTACT, geom.contacts(pcomp, CUT, CUT_PITCH, 0.15))
-    add(L.METAL1, pcomp)
+    pmetal = pcomp
+    if p["sense"] or p["gate"]:
+        # no grounded Metal1 under the north lead: the lead may sit at the well voltage, and
+        # only 0.6 um of oxide separates Metal1 from Metal2
+        pmetal = pcomp - geom.box(-NORTH_CLEAR, half, NORTH_CLEAR, half + term + w + 1.0)
+    add(L.CONTACT, geom.contacts(pmetal, CUT, CUT_PITCH, 0.15))
+    add(L.METAL1, pmetal)
     add(L.METAL1, geom.box(-bh, -1.5, -(half + term), 1.5))
 
     if p["pwell_gap"] is not None:
@@ -157,7 +167,7 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         add(metal, sq)
     for via in L.VIAS:
         add(via, geom.contacts(sq, VIA, VIA_PITCH, 0.3))
-    add(L.METAL5, geom.box(sx, -LEAD_W / 2, bh, LEAD_W / 2))
+    add(L.METAL5, geom.box(sx, -p["lead_w"] / 2, bh, p["lead_w"] / 2))
 
     # optional sense contact on the first ring
     if p["sense"] and first_ring:
@@ -166,7 +176,7 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         tap = geom.box(-0.9, y - 0.3, 0.9, y + 0.3)
         add(L.COMP, tap)
         add(L.NPLUS, tap.sized(geom.nm(IMPLANT)))
-        add(L.CONTACT, geom.contacts(tap, CUT, CUT_PITCH, 0.1))
+        add(L.CONTACT, geom.cut_row(0.0, y, 3, CUT, CUT_PITCH))
         north = geom.box(-1.2, y - 0.6, 1.2, y + 0.6)
     # the north lead on Metal2, from its Metal1 patch to the cell edge
     if north is not None:
