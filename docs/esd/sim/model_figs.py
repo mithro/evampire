@@ -97,7 +97,8 @@ def sab_model():
             d += elm.Line().at(f.gate).to((f.gate[0], 4.0))
             gates.append(f.gate[0])
         d += elm.Line().at((gates[0] - 0.8, 4.0)).to((gates[-1], 4.0))
-        note(d, gates[-1] + 0.2, 4.0, "gates", halign="left")
+        # Under the free end of the gate wire, clear of the source wires.
+        note(d, gates[0] - 0.8, 3.5, "gates", halign="left")
         note(d, x0 + 4.0, 5.6, "…", halign="center")
         note(d, x0 + 2.8, 2.2, "40 transistors of 100 µm\nin parallel",
              halign="center")
