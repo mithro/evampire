@@ -35,9 +35,9 @@ TWO_PAD = [
     ("NR4S", s(rings=rings(1.6, 2.0, 2.5, 3.0), term=35.0, sense=True)),
     # one contacted ring further out: the spacing at which a neighbouring well at another
     # voltage is reached (punch-through), for wells up to the full working voltage
-    ("NR1S5", s(rings=rings(5.0, width=3.0), term=25.0, sense=True)),
-    ("NR1S8", s(rings=rings(8.0, width=3.0), term=28.0, sense=True)),
-    ("NR1S12", s(rings=rings(12.0, width=3.0), term=32.0, sense=True)),
+    ("NR1S5", s(rings=rings(5.0), term=25.0, sense=True)),
+    ("NR1S8", s(rings=rings(8.0), term=28.0, sense=True)),
+    ("NR1S12", s(rings=rings(12.0), term=32.0, sense=True)),
     ("NGP4", s(plates={"poly": 4.0}, gate=True)),
     ("NGM1", s(plates={"m1": 6.0}, gate=True)),
     ("NAGM1", s(plates={"m1": 6.0}, gate=True, nat_gap=0.6)),
