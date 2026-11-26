@@ -260,8 +260,9 @@ voltage is too low, for a well that faces only the light substrate.
    * - Capacitance, N-well to substrate
      - 1.4914 × 10\ :sup:`-4` F/m² at zero bias, grading 0.305
      - [HV-GF180-MODELS]_
-     - Within 4 % from 0 V to 10 V with the deep P layer under the
-       N-well; 17 % apart at 10 V without it
+     - With the deep P layer under the N-well: 0.96 to 1.03 of the model
+       from 0 V to 10 V. Without it: 1.00 at 0 V, 0.90 at 5 V and 0.83 at
+       10 V
    * - Sheet resistance of the N-well
      - 800 Ω, 1000 Ω and 1200 Ω per square
      - [HV-GF180-EP-5-1]_
@@ -309,20 +310,44 @@ strip. The variant An is A without P-well in the strip. Under assumption B
 a P-well exists only where the layout draws one, and bare substrate
 surrounds a plain well.
 
-The second is where the deep P layer lies. The published data place it
-under the deep N-well and cannot say whether it continues elsewhere. Under
-L it lies under deep N-well only. Under D it lies under the whole wafer,
-N-wells included.
+The second is where the deep P layer lies. Under L it lies under deep
+N-well only. Under D it lies under the whole wafer, N-wells included.
 
-The N-well's own capacitance gives weak evidence for D. With the layer
-under the N-well, the fitted profile follows the published N-well
-capacitance within 4 % from 0 V to 10 V. Without it, the published
-capacitance at 10 V is 17 % above the simulated one: the model's
-capacitance falls more slowly than a well over light substrate allows.
-The evidence is weak because one fitted profile is not the only one
-possible. Under D a plain N-well cannot hold more than its flat bottom
-does (:numref:`tab-hvt-pred-key`), and the capacitance sweep of
-:ref:`CVNA <hvt-s-cvna>` is the measurement that decides.
+Within this model D is the better supported. The profiles were fitted
+with the layer present, and the N-well's simulated capacitance then stays
+within 4 % of the published model from 0 V to 10 V. Without the layer
+under the N-well it falls too fast, to 0.83 of the model at 10 V
+(:numref:`tab-hvt-anchors`). Any substrate whose doping rises with depth
+would have the same effect, so the evidence is for heavier doping under
+the N-well and not for one particular layer. The capacitance wells measure
+it (:ref:`hv-test-method`).
+
+Under D a plain N-well cannot hold more than its flat bottom does
+(:numref:`tab-hvt-pred-key`). How firm that ceiling is depends on the
+depth of the layer (:numref:`tab-hvt-cap-sens`). The N-well capacitance
+fixes the depth to about a quarter of a micrometre, but only if the
+published model is itself right to a few per cent. The ceiling is
+therefore about 55 V to 75 V, before the 10 % to 25 % by which the
+simulation runs high.
+
+.. list-table:: Simulated ceiling of a plain N-well under D against the
+               depth of the deep P layer
+   :name: tab-hvt-cap-sens
+   :header-rows: 1
+   :widths: 60 40
+
+   * - Change to the assumed profile
+     - Breakdown of the flat bottom (V)
+   * - Shape of the layer changed, deep N-well fixed
+     - 58 to 64
+   * - Layer and deep N-well both 1.0 µm shallower
+     - 41
+   * - Both 0.25 µm shallower
+     - 58
+   * - Both 0.25 µm deeper
+     - 69
+   * - Both 1.0 µm deeper
+     - 84
 
 A process name joins the two: BL is assumption B with the layer under
 deep N-well only. A further letter marks a member of the family, such as
@@ -427,9 +452,12 @@ of its edge and corner values. The band runs from the lowest to the
 highest of those. The G processes are in no band. A process is left out
 when one of its runs failed, or ended below the breakdown voltage of the
 other shape, because its lower value is then unknown. The agreement range
-is the band widened by 15 % at each end, the tolerance that
-:ref:`hv-test-method` applies to a measurement. The last column lists what
-the simulation left open.
+is the band widened by 30 % downwards and 15 % upwards, lopsided because
+the simulation runs high. The table also names each structure's reference
+and gives the predicted ratio of the two breakdown voltages, which is the
+main comparison of :ref:`hv-test-method`. A ratio is formed from the
+nominal process of the family. The last column lists what the simulation
+left open.
 
 .. csv-table:: Band and agreement range of each prediction
    :name: tab-hvt-pred-band
@@ -476,7 +504,11 @@ below both:
   breaks down against the deep layer.
 * Every deep N-well structure breaks down a little above 30 V under every
   assumption, at the bottom of the well. No termination changes it, so a
-  deep N-well is not a way to hold 57 V in this model.
+  deep N-well is not a way to hold 57 V in this model. The result is
+  partly built in: the simulated deep N-well is a buried layer with
+  almost no donors at the surface. If the real well is N-type up to the
+  surface, its published breakdown could be set at the edge, and the
+  structures with a close ring, a P-well or NAT would show it.
 
 Only under BL do the terminations differ, in ways the die can test:
 
@@ -495,12 +527,20 @@ Only under BL do the terminations differ, in ways the die can test:
 * Oxide charge of 10\ :sup:`11` cm\ :sup:`-2` moves the results by a few
   volts at most.
 
-Some cases have no result. The sections of sharp corners, at a radius of
-1 µm, stopped converging far below the edge value with the ionisation
-integral still below 1; the tables give them as lower bounds. The
-structures with three or more rings are not finished. Several runs failed
-outright (:numref:`tab-hvt-pred-source`). None of these is a prediction of
-early breakdown.
+Sharp corners are the exception to these results. Their sections, at a
+radius of 1 µm, stopped converging before breakdown, and the tables give
+them as lower bounds. They do not show that a sharp corner is safe. For
+NC0 under BL the ionisation integral had reached 0.694 at 36 V and was
+rising by 0.035 per volt. Extended in a straight line, that reaches 1 near
+46 V, below 57 V. This is an extrapolation of a sweep that did not
+converge, not a result. The same pattern holds under BD and BLq, and for
+NA0p6C0.
+
+Other cases have no result. The structures with three or more rings are
+not finished, and several runs failed outright
+(:numref:`tab-hvt-pred-source`). The values of NW0 under B and of NT1 were
+limited by the mesh, by about 12 % and within 20 %, and are being
+repeated on a finer one.
 
 Second simulator
 ----------------
@@ -584,7 +624,8 @@ silicon. These limits bound what it can say:
 * The profiles are assumed. They reproduce the published capacitances and
   the deep N-well's breakdown, and nothing measures them directly.
 * The sections are two-dimensional, and a corner is a smooth arc. The die
-  has vertices, which no section represents.
+  has vertices, which no section represents. The design rules allow only
+  45° edges on a well, so a product would have the same vertices.
 * A floating ring is simulated with the ionisation path ending at the
   ring.
 * The Metal5 lead and the leads to second pads are left out. They cross the
@@ -603,8 +644,10 @@ Open questions
 --------------
 
 * Does the deep P layer exist, and does it lie under N-wells too? The fit
-  to the deep N-well's published values needs it, and no public document
-  names it.
+  to the published capacitances needs heavier doping at depth under both
+  wells, and no public document names such a layer.
+* Is the deep N-well N-type up to the surface? The model assumes a buried
+  layer.
 * What do the structures with three or more rings hold? Their runs are
   not finished.
 * What does a vertex of 90° or 135° hold against the smooth arc of a

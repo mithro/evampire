@@ -85,11 +85,12 @@ positions, which this die does not have.
 Independent reviews
 -------------------
 
-Two reviews by readers who had not worked on the die were made before
-submission, one of the layout and one of the physics
-(:numref:`tab-hvt-reviews`). Each changed the die.
+Three reviews by readers who had not worked on the die were made before
+submission: one of the layout, one of the physics, and a final one of the
+layout and the method together. Each changed the die
+(:numref:`tab-hvt-reviews`).
 
-.. list-table:: Findings of the two reviews and what changed
+.. list-table:: Findings of the reviews and what changed
    :name: tab-hvt-reviews
    :header-rows: 1
    :widths: 12 44 44
@@ -113,7 +114,7 @@ submission, one of the layout and one of the physics
      - No structure showed the spread across the die or the effect of the
        Metal5 lead; labels were hard to read
      - Second copies NT20b, DT20b and NA0p6b; NT20L with a wide lead;
-       labels 20 µm high; a seventh substrate pad
+       larger labels; a seventh substrate pad
    * - Layout
      - The corner "radius" is one 45° cut, not an arc
      - Stated on :ref:`hv-test-structures`; corner predictions treated as
@@ -134,6 +135,60 @@ submission, one of the layout and one of the physics
      - Two other explanations of the published 14 V were untested: a P+
        region near the well, and the 6 V area
      - NT1 and NT20V added
+   * - Final
+     - Punch-through to a contacted ring was measured only at gaps of
+       3 µm or less, far below the spacing a 57 V well needs
+     - NR1S5, NR1S8 and NR1S12 added, with a contacted ring at 5 µm, 8 µm
+       and 12 µm
+   * - Final
+     - The N-well under NAT had one size, so its edge capacitance could
+       not be separated from that of its bottom
+     - CVNA2 added, 200 µm across; CVN2 without a fill block, like CVN
+   * - Final
+     - Six deep N-well structures were predicted to give the same result
+       as their neighbours
+     - DT5, DT35, DC15, DW3, DW6, DM1_3 and CVD2 removed
+   * - Final
+     - A symmetric tolerance of 15 % did not fit predictions known to run
+       high; the capacitance connection and the ring retrace test would
+       not have worked as written
+     - Ratio to a reference structure made the main comparison; the
+       method corrected (:ref:`hv-test-method`)
+   * - Final
+     - No smoother corner existed as a reference
+     - None possible: the rules allow only 45° edges on a well. The
+       avalanche light is photographed on three structures instead
+
+The final review also put numbers on its confidence, for the die and
+method as they stood before the last four rows of the table
+(:numref:`tab-hvt-confidence`). They are one reviewer's estimates, not
+measurements, and the changes that followed were aimed at the lowest of
+them.
+
+.. list-table:: Confidence stated by the final review, before its own
+               corrections were made
+   :name: tab-hvt-confidence
+   :header-rows: 1
+   :widths: 60 40
+
+   * - Statement
+     - Probability
+   * - The layout passes the wafer.space precheck
+     - 85 %
+   * - The breakdown measurements work as intended
+     - 85 %
+   * - The method gives patterns and ratios comparable with the simulation
+     - 60 %
+   * - The method gives absolute values within 15 % of the simulation
+     - 35 %
+   * - The set of structures is sufficient
+     - 45 %
+
+The review named four missing items behind the last figure: a smoother
+corner, wider gaps to a contacted well, a 200 µm well under NAT, and
+finished predictions for the multi-ring structures. The second and third
+are now on the die, the first cannot be drawn, and the fourth is still
+running.
 
 The reviews left four things open. No simulation represents a vertex in
 three dimensions. The effect of the Metal5 lead is bounded by NT20L for a

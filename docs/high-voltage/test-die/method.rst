@@ -21,7 +21,10 @@ a current that hides leakage. The die sits in a shielded enclosure at
 
 All seven substrate pads are one net, and at least two are probed. The
 resistance between two of them is measured before anything else. The pads
-are joined by a metal bus, so two probes in good contact read a few ohms.
+are joined by a Metal1 bus 6 µm wide and up to 2 mm long. At the
+published 90 mΩ per square [HV-GF180-EP-5-1]_ that is about 30 Ω from the
+first pad to the last, so two probes in good contact read a few tens of
+ohms.
 The back of the die also connects to the substrate, so the chuck is held
 at 0 V.
 
@@ -41,7 +44,8 @@ at 0 V.
      - Input current below 100 fA, voltage range to 150 V, guarded input
      - P3
    * - :term:`LCR meter`
-     - 100 kHz and 1 MHz, DC bias to 10 V or more, resolution of 10 fF
+     - 100 kHz and 1 MHz, DC bias to 40 V from the meter or from an
+       external bias source, resolution of 10 fF
      - P2
    * - Probe station
      - Dark and shielded, three or more probes, guarded cables, chuck
@@ -123,7 +127,10 @@ Where a structure breaks down can be seen as well as measured. A junction
 in avalanche emits light, and a microscope with a sensitive camera shows
 it with the well held at the current limit of 10 µA. Light along the
 whole edge, at the vertices or under the Metal5 lead names the weakest
-place. The step is optional and uses the P1 connections.
+place. The step uses the P1 connections. It is required on NT20, NC0 and
+NC15, because nothing else separates a breakdown set at a vertex from a
+simulation whose ionisation coefficients are off. It is optional
+elsewhere.
 
 The second temperature separates the mechanisms. The avalanche breakdown
 voltage rises with temperature, because hotter carriers lose more energy
@@ -144,27 +151,34 @@ Capacitance against voltage (P2)
 
 The capacitance of a reverse-biased junction gives the doping on its
 lightly doped side, here the substrate under the well. The procedure
-applies to the large wells CVN, CVN2, CVD, CVD2 and CVNA, and to OPEN
+applies to the large wells CVN, CVN2, CVD, CVNA and CVNA2, and to OPEN
 (:numref:`fig-hvt-conn-p2`).
 
 .. figure:: hvt-conn-p2.svg
    :name: fig-hvt-conn-p2
    :alt: Connection diagram on a cross-section of a large well. The low
          terminal of the LCR meter connects to the well pad. The high
-         terminal connects to the substrate pads and carries a DC bias of
-         0 V to minus 10 V, which reverse-biases the junction. The
-         measuring signal is 30 mV at 100 kHz and at 1 MHz. The same
-         measurement is repeated on OPEN and subtracted.
+         terminal connects to the substrate pads and the chuck and
+         carries a DC bias down to minus 40 V, which reverse-biases the
+         junction. The measuring signal is 30 mV at 100 kHz and at 1 MHz.
+         The chuck is never grounded. The same measurement is repeated on
+         OPEN and subtracted.
 
    Connections for capacitance against voltage.
 
-The meter's low terminal goes to the well pad, because that node has the
-least stray capacitance to the chuck. The bias makes the substrate
-negative of the well, from 0 V to 10 V of reverse bias in steps of 0.25 V.
-The bias stays below 80 % of the breakdown voltage that P1 gives for the
-same well on another die. The capacitance is read at 100 kHz and at 1 MHz.
-The two readings agree, and the dissipation factor is below 0.1, when the
-series resistance of the well and substrate is negligible.
+The meter's low terminal, which senses the current, goes to the well
+pad, because that node has the least stray capacitance. The high terminal
+drives the substrate pads and carries the DC bias. The back of the die is
+the same node as the substrate pads, so the chuck is joined to the high
+terminal or left floating. A grounded chuck would short the bias, which is
+the one condition that differs from the other procedures.
+
+The bias makes the substrate negative of the well, from 0 V upwards in
+steps of 0.25 V. It stays below 80 % of the breakdown voltage that P1
+gives for the same well on another die, which may be as much as 40 V for a
+well under NAT. The capacitance is read at 100 kHz and at 1 MHz. The two
+readings agree, and the dissipation factor is below 0.1, when the series
+resistance of the well and substrate is negligible.
 
 The same sweep on OPEN gives the capacitance of a pad, its lead and the
 probe, which is subtracted at each bias. A Metal5 pad of 100 µm by 100 µm
@@ -296,12 +310,15 @@ has NAT round it for that reason: if NAT clears the P-well from its edge,
 its bias can go several times higher. Its area and perimeter equal those
 of CVN2, so the two together also show what the NAT layer changes.
 
-A sweep that goes beyond about 15 V also answers a second question. If a
-heavily doped P layer lies a few micrometres under the N-well, the
-depletion region stops spreading when it reaches that layer. The
-capacitance then stops falling, and the doping profile shows a steep rise
-at that depth. A profile that stays flat means no such layer lies within
-the depth reached.
+The sweep also shows whether a heavily doped P layer lies a few
+micrometres under the N-well. Such a layer stops the depletion region from
+spreading, so the capacitance falls more slowly with voltage than over
+light substrate alone. In the simulation the two cases already differ by
+7 % at 5 V and by 24 % at 10 V. CVN and CVN2 therefore answer the question
+below 10 V, even if P-well surrounds them and they break down early.
+CVNA and CVNA2 extend the sweep to higher voltages if NAT clears their
+edges, where the capacitance stops falling altogether once the depletion
+region meets the layer.
 
 .. _hvt-p3:
 
@@ -312,7 +329,7 @@ A floating ring stays near 0 V until the depletion region of the well
 reaches it, and then follows the well at a fixed step below it
 (:ref:`hv-grading`). The well voltage at which the ring starts to follow is
 the :term:`punch-through` voltage of the gap. The procedure applies to
-NR1S2, NR1S3 and NR4S, whose ring 1 has a pad
+NR1S2, NR1S3 and NR4S, whose ring 1 has a pad at a gap of 3 µm or less
 (:numref:`fig-hvt-conn-p3`).
 
 .. figure:: hvt-conn-p3.svg
@@ -328,8 +345,9 @@ NR1S2, NR1S3 and NR4S, whose ring 1 has a pad
 
 The well is swept as in P1, to the breakdown voltage that P1 gave for the
 same structure on another die. The ring pad goes to an electrometer, or to
-a source-measure channel that forces 0 A and reads voltage. The ring
-voltage is recorded at each step, on a sweep up and a sweep back down.
+a source-measure channel that forces 0 A and reads voltage. Before the
+sweep the ring is grounded through its pad, so that it starts at 0 V. The
+ring voltage is then recorded at each step of a sweep upwards.
 
 The meter must draw almost nothing. The ring's own junction leaks about
 0.4 fA, from the published saturation current of the N-well junction and
@@ -355,8 +373,10 @@ below 100 fA.
 The ring and its cable are a capacitance that this small current must
 charge. A cable of 10 pF charged through 0.5 V by 1 pA takes 5 s, so each
 step needs seconds, and a guarded cable cuts the capacitance that counts.
-A sweep down that retraces the sweep up shows that the steps were long
-enough.
+Only the sweep upwards is used. On the way down nothing pulls the ring
+back but its leakage and the meter: 0.4 fA into about 1 pF moves the ring
+by a volt in about 40 minutes. A ring that lags on the way down is
+therefore expected and is not a fault.
 
 The punch-through voltage is the well voltage at which the ring reaches
 1 V. The step is the well voltage minus the ring voltage at the highest
@@ -424,7 +444,7 @@ falls to a level between the two (:numref:`fig-hvt-gated-iv`).
      - 100 nA. Any plate current means the oxide conducts, and ends the
        sweep
    * - Voltage between well and plate
-     - At most 80 V in either direction, in both parts; 64 V on the
+     - At most 80 V in either direction, in both parts; 60 V on the
        polysilicon plate
    * - Well pad, second part
      - P1, repeated with the plate at −10 V, 0 V, +10 V and +20 V. Each
@@ -516,16 +536,22 @@ positive plate relieves it. The breakdown voltage against plate voltage is
 compared with the simulation of the same structure with its plate at 0 V
 (:numref:`tab-hvt-pred-g`).
 
-The voltage between the well and the plate stays within 80 V. The
+The voltage between the well and a Metal1 plate stays within 80 V. The
 plate's Metal1 lies 1 µm from the well's own Metal1, and 80 V across that
-gap is a field of 0.8 MV/cm, well below what deposited oxide withstands.
-On the polysilicon plate the limit is 64 V, because the 0.32 µm of trench
-oxide between that plate and the well then sees 2 MV/cm. Both limits are
-choices: no strength is published for either oxide. A sweep with the
-plate at 0 V therefore ends at 80 V on the well, which is above the
-breakdown voltage predicted for that case (:numref:`tab-hvt-pred-g`). The
-sweep with the plate joined to the well has no such limit, because plate
-and well are shorted at the probes and stay at one voltage.
+gap is a field of 0.8 MV/cm. Where the plate overlaps the well, 70 V is
+0.6 MV/cm across the oxide between them. On the polysilicon plate the
+limit is 60 V, which is 1.8 MV/cm across the 0.33 µm of trench oxide
+between that plate and the well. Both limits are choices: no strength is
+published for either oxide. A sweep with a Metal1 plate at 0 V therefore
+ends at 80 V on the well, above the breakdown voltage predicted for that
+case (:numref:`tab-hvt-pred-g`). The sweep with the plate joined to the
+well has no such limit, because plate and well are shorted at the probes
+and stay at one voltage.
+
+If P-well lies under the plate, the first part gives the flat-band
+voltage only. The threshold over silicon as heavily doped as P-well is
+above 100 V under Metal1, outside the plate's range, so no fall of the
+current is seen.
 
 .. _hvt-p5:
 
@@ -535,7 +561,7 @@ Punch-through to a contacted ring (P5)
 With ring 1 held at 0 V, the ring is a second N-well at the substrate's
 potential, a known gap from the well. The well voltage at which current
 flows between them is the punch-through voltage of two N-wells at that
-gap. The procedure applies to NR1S2, NR1S3 and NR4S
+gap. The procedure applies to the six structures with a pad on ring 1
 (:numref:`fig-hvt-conn-p5`).
 
 .. figure:: hvt-conn-p5.svg
@@ -559,10 +585,16 @@ voltage also gives the current available to the meter in P3 at each
 voltage.
 
 The result is the spacing rule for wells at different voltages. Rule NW.2b
-allows 1.4 µm, for circuits at 6 V or less (:numref:`tab-hvt-rules`). Gaps
-of 2 µm and 3 µm show what a wider gap holds. The onset in P3 and the
-punch-through voltage here describe the same event, and agree within a
-volt when both are measured correctly.
+allows 1.4 µm, for circuits at 6 V or less (:numref:`tab-hvt-rules`). The
+rings at 1.6 µm, 2 µm and 3 µm are reached at low voltages. NR1S5, NR1S8
+and NR1S12, with a ring at 5 µm, 8 µm and 12 µm, show what spacing a well
+at the working voltage needs from a neighbour at another voltage.
+
+The onset in P3 and the punch-through voltage here are not the same
+number. P3 responds to femtoamperes and this procedure to 1 nA, six
+decades more, so the two differ by more than a volt. P3 gives the voltage
+at which the ring starts to move, and P5 the voltage at which a
+neighbouring well would draw a current that matters.
 
 Order of work
 -------------
@@ -603,7 +635,8 @@ between 8 V and 25 V, around the published 10 V minimum and 14 V typical
 [HV-GF180-EP-5]_. "Much higher" is above 40 V. Two values are "the same"
 when they differ by less than 15 % or 3 V, whichever is larger. These
 limits are choices. The second copies NT20b, NA0p6b and DT20b show whether
-the spread across a die fits inside them.
+the spread across a die fits inside them. The same limits apply to the
+ratios of the next section.
 
 The pattern across groups 1 to 3 answers the first question
 (:numref:`tab-hvt-decision`).
@@ -652,11 +685,10 @@ result. Within group 3, a breakdown voltage that is near 14 V at 4 µm and
 much higher at 0.6 µm means the foundry generates P-well in a wide strip
 beside the well but not in a narrow one.
 
-The second question has an answer only if some N-well edge is clear of
-P-well, under An or B (:numref:`tab-hvt-deep`). Under A every N-well
-breaks down at its surface first, and only the capacitance sweep of the
-large wells reaches the depth of the layer, as far as their own breakdown
-allows.
+The second question is answered by breakdown voltages only if some N-well
+edge is clear of P-well, under An or B (:numref:`tab-hvt-deep`). Under A
+every N-well breaks down at its surface first. The capacitance of the
+large wells answers it in every case.
 
 .. list-table:: Measurements that show a deep P layer under the N-wells
    :name: tab-hvt-deep
@@ -674,7 +706,11 @@ allows.
        prediction (:numref:`tab-hvt-pred-band`)
      - Possible
      - Not possible
-   * - Capacitance of CVNA and CVN beyond about 15 V
+   * - Capacitance of CVN and CVN2 from 0 V to 10 V
+     - Falls as over light substrate
+     - Falls more slowly: 7 % higher at 5 V and 24 % higher at 10 V in
+       the simulation
+   * - Capacitance of CVNA and CVNA2 beyond about 15 V
      - Keeps falling
      - Stops falling at the depth of the layer
 
@@ -683,19 +719,30 @@ structure is predicted to break down near 30 V, at the bottom of the
 well, under every assumption. Values that are the same across the group
 confirm it. A deep N-well with NAT over its edge or with a plate that
 holds much more than the plain one contradicts it, and the deep N-well
-predictions are then wrong.
+predictions are then wrong. The simulated deep N-well barely reaches the
+surface, so a member with a close ring or a P-well that holds less than
+the plain one would show a real well that does.
 
 Comparison with predictions
 ---------------------------
 
 Once the two answers select a family of processes, such as BL, each
-remaining structure is compared with its prediction under that family.
-:numref:`tab-hvt-pred-band` gives each structure a band, the range of its
-predictions over the family, and an agreement range, the band widened by
-15 % at each end. A structure agrees when its measured breakdown voltage
-lies within the agreement range. The 15 % stands for the uncertainty of
-the ionisation coefficients, and is a choice
-(:ref:`hv-test-predictions`).
+remaining structure is compared with its prediction under that family in
+two ways (:numref:`tab-hvt-pred-band`).
+
+The first and main comparison is a ratio. The measured breakdown voltage
+of a structure is divided by that of its reference structure on the same
+die: NT20 for an N-well whose edge is clear of P-well, NW0 for an N-well
+limited by P-well, and DT20 for a deep N-well. The same ratio is formed
+from the predictions. The structure agrees when the two ratios are within
+15 % of each other. A ratio cancels most of the error of the ionisation
+coefficients, which raises or lowers every prediction together.
+
+The second comparison is absolute. Each structure has a band, the range
+of its predictions over the family, and an agreement range, the band
+widened by 30 % downwards and 15 % upwards. The range is lopsided because
+the predictions are known to run 10 % to 25 % high
+(:ref:`hv-test-predictions`). Both widths are choices.
 
 The measured value used is the median over the dies, from the first
 sweep, at 1 µA. A structure outside its range is reported with the
@@ -706,9 +753,52 @@ points to that termination. A structure whose simulation did not finish
 has no range, and its measurement stands alone.
 
 The corner sections of the simulation assume a smooth arc, and the die
-has vertices. A measured value below the corner prediction but within
-reach of it is therefore expected, and the C series shows how large that
-difference is.
+has vertices. A measured value below the corner prediction is therefore
+expected, and the C series with the photographs of the avalanche light
+shows how large that difference is.
+
+Distinguishable outcomes
+------------------------
+
+The die separates some answers firmly, others only through particular
+structures, and some not at all (:numref:`tab-hvt-tell`).
+
+.. list-table:: What the die can and cannot tell apart
+   :name: tab-hvt-tell
+   :header-rows: 1
+   :widths: 30 20 50
+
+   * - Question
+     - Told apart
+     - By what
+   * - P-well everywhere (A), everywhere but beside NAT (An), or only
+       where drawn (B)
+     - Yes, firmly
+     - Groups 1 to 3, by differences of tens of volts
+       (:numref:`tab-hvt-decision`)
+   * - Deep P layer under N-wells or not (D or L), when some N-well edge
+       is clear of P-well
+     - Yes, indirectly
+     - Plates and rings against the plain well, and the capacitance
+       wells. Plain wells alone cannot: their predictions under L, under
+       L with heavier substrate and under D lie within a few volts
+       (:numref:`tab-hvt-pred-b`)
+   * - Deep P layer under N-wells or not, when P-well lies against every
+       N-well
+     - By capacitance only
+     - CVN and CVN2 below 10 V. No breakdown voltage differs
+   * - Under A: P-well in the strip beside NAT, or NAT that blocks
+       nothing
+     - No
+     - Both give group 3 the value of group 1
+   * - A breakdown set at a vertex, or coefficients that are off
+     - Only with photographs
+     - The light of the avalanche on NT20, NC0 and NC15
+
+If P-well lies against every N-well and NAT does not clear it, the die
+says nothing about terminations: every N-well structure breaks down at the
+same low voltage. That is a valid result. It would show that no junction
+of an N-well to the substrate reaches 57 V in this process as it stands.
 
 Sample size and records
 -----------------------
@@ -801,7 +891,7 @@ check for each (:numref:`tab-hvt-inconclusive`).
        exceeds 0.1
      - Lower frequency. The smaller well, which has less resistance
    * - Poor substrate contact
-     - Resistance between two substrate pads above a few ohms
+     - Resistance between two substrate pads above a few tens of ohms
      - Probes reseated
 
 Open questions
