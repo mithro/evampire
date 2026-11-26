@@ -213,9 +213,9 @@ source, to the P+ ring at A′.
          gate.
    :width: 100%
 
-   The silicide-blocked drains of both output drivers in the layout, beside
-   a pre-driver transistor that has none. :ref:`esd-layout-silicide` gives
-   the sizes.
+   The blocked drains of :numref:`fig-esd-driver-section` in the layout,
+   NMOS in (a) and PMOS in (b), beside a pre-driver transistor that has no
+   silicide block. :ref:`esd-layout-silicide` gives the sizes.
 
 Secondary protection
 ~~~~~~~~~~~~~~~~~~~~
