@@ -76,6 +76,8 @@ uv run docs/esd/sim/paths.py
 uv run python docs/esd/sim/sections.py
 uv run docs/esd/sim/plots.py
 uv run docs/esd/sim/model_figs.py
+GF180_IO=<fd_io checkout> uv run docs/esd/gds/figures.py  # the gds-*.svg layout figures
+GF180_IO=<fd_io checkout> uv run docs/esd/gds/check.py    # writes docs/esd/gds/layout-check.csv
 uv run docs/ethernet/rgmii/figures.py
 uv run docs/ethernet/magnetics/plots.py
 uv run docs/ethernet/magnetics/drawings.py
@@ -115,6 +117,7 @@ Each script's docstring names the files it writes. These modules are
 helpers that the scripts above import, so run the script, not the helper:
 
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
+- `docs/esd/gds/`: `gdskit.py`, `layfig.py` and every `figs_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
 - `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
@@ -132,6 +135,13 @@ the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
 model and I/O cell repositories at pinned commits, and takes about twenty
 minutes; `docs/esd/simulation.rst` gives the command. With `--reuse` it
 rebuilds the tables and figures from the waveforms of its last run.
+
+The layout figures (`docs/esd/gds/figures.py`) and the netlist-against-layout
+table (`docs/esd/gds/check.py`) read the foundry's GDS files. `GF180_IO`
+names a checkout of the gf180mcu I/O cell repository at the commit
+`docs/esd/simulation.rst` pins. Every layout figure uses the palette, scale
+bar and legend of `layfig.py`, and is drawn with the bond pad at the left.
+`check.py` fails if a device's size in the layout differs from its netlist.
 
 Four scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
