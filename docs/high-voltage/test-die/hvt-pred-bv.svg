@@ -80,7 +80,7 @@
 <text x="102" y="236.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NW0</text>
 <rect x="183.8" y="219.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="221.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="184.2" y="235.8" width="1" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<rect x="183.8" y="235.8" width="1" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="184.2" cy="238.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <rect x="181.8" y="235.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
 <rect x="184.2" y="240.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
@@ -90,11 +90,11 @@
 <text x="102" y="264.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NW1p5</text>
 <rect x="183.8" y="247.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="249.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="323.8" y="263.8" width="5.0" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
-<circle cx="331.7" cy="266.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<rect x="323.8" y="263.8" width="2.5" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<circle cx="328.3" cy="266.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <rect x="320.6" y="263.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
 <rect x="322.5" y="268.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
-<circle cx="330.8" cy="270.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="327.9" cy="270.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <rect x="319.3" y="267.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <text x="102" y="292.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NW3</text>
 <rect x="183.8" y="275.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
