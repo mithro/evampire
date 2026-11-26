@@ -63,7 +63,7 @@
 <polyline points="698.0,152.0 698.4,248.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="698.0,152.0 698.4,248.0" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="698.4" cy="248.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="698.0" y="147.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drain width: 0.52 µm</text>
+<text x="698.0" y="147.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drain strip: 0.52 µm</text>
 <rect x="20.0" y="660.0" width="80.0" height="6" fill="#222222"/>
 <text x="108.0" y="668.0" font-size="14" fill="#222222">2 µm</text>
 <rect x="165.6" y="657.0" width="26" height="14" fill="#dbe8f5"/>
