@@ -22,6 +22,12 @@
 <text x="74" y="48.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">60</text>
 <text x="300.0" y="352" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">gap from the well edge to ring 1 (µm)</text>
 <text x="30" y="179.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 30 179.0)">well voltage at 1 nA of ring current (V)</text>
-<text x="300.0" y="179.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">not yet simulated</text>
+<path d="M143.7,221.8 L151.7,225.8 L143.7,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M177.5,221.8 L185.5,225.8 L177.5,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M245.2,221.8 L253.2,225.8 L245.2,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M346.8,221.8 L354.8,225.8 L346.8,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M482.2,221.8 L490.2,225.8 L482.2,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<circle cx="536.0" cy="54.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="58" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AL</text>
 <text x="20" y="388" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Open triangle: the ring current did not reach 1 nA by the end of the sweep.</text>
 </svg>
