@@ -2,9 +2,9 @@ Structure,Group,AL: edge / corner (V),ALhi: edge / corner (V),AD: edge / corner 
 NR1S2,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
 NR1S3,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
 NR4S,Floating rings,failed / –,–,–,–,–
-NR1S5,Floating rings,failed / –,–,–,–,–
-NR1S8,Floating rings,failed / –,–,–,–,–
-NR1S12,Floating rings,failed / –,–,–,–,–
+NR1S5,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
+NR1S8,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
+NR1S12,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
 NGP4,Gated diodes,17.4 / –,–,17.4 / –,17.4 / –,17.4 / –
 NGM1,Gated diodes,17.6 / –,–,17.6 / –,17.6 / –,17.6 / –
 NAGM1,Gated diodes,17.5 / –,–,17.5 / –,90.2 / 84.8,62.9 / 59.6
@@ -45,7 +45,7 @@ NR3_2,Floating rings,17.7 / –,17.9 / –,17.7 / –,17.7 / –,17.7 / –
 NR3W1,Floating rings,failed / –,–,failed / –,failed / –,failed / –
 NR3W3,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
 NR5_1p4,Floating rings,failed / –,–,–,–,–
-NR5_2,Floating rings,failed / –,–,–,–,–
+NR5_2,Floating rings,17.7 / –,–,17.7 / –,17.7 / –,17.7 / –
 NR3M1,Floating rings,failed / –,–,failed / –,failed / –,failed / –
 DT2p6,Deep N-well,32.4 / 30.0,–,32.3 / 31.3,32.4 / 30.0,32.3 / 31.3
 DT20,Deep N-well,32.4 / 30.0,32.4 / 30.3,32.4 / 31.3,32.4 / 30.0,32.4 / 31.3

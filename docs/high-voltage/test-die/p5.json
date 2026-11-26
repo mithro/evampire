@@ -3,7 +3,7 @@
   "criterion": "ring current of 1 nA, as in procedure P5",
   "records": [
    {
-    "cases": 17,
+    "cases": 18,
     "commit": "5e624bfb7803c417aaae214a87892bc3191ee9a4",
     "record": "p5.json"
    }
@@ -122,6 +122,12 @@
     "perimeter_um": 126.2,
     "punch_through_v": 1.4,
     "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 63.0,
+    "perimeter_um": 126.2,
+    "punch_through_v": 1.4,
+    "reached_v": 66.6
    }
   }
  }

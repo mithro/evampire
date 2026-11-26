@@ -426,12 +426,12 @@ Limits
    * - BL
      - 109.7
      - 106.3
-     - 106.3 to 106.3
-     - 74.4 to 122.2
+     - 106.3 to 107.4
+     - 74.4 to 123.5
      - 1.59 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 110.5
-     - failed
+     - 107.4
      - –
      - –
      - –
@@ -547,12 +547,12 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 77.9
      - 67.1
@@ -673,12 +673,12 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
@@ -790,12 +790,12 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
@@ -1857,12 +1857,12 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 105.7
      - > 38.4
