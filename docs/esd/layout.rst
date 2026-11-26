@@ -103,7 +103,9 @@ gate, drain, gate, source:
 
 Three rings surround the fingers. The innermost is P+ diffusion in the
 substrate, tied to DVSS: it is the body contact of the transistors and
-the anode of the NMOS drain diode. The next is N+ diffusion in an N-well,
+the anode of the NMOS drain diode. The transistors have no P-well: the
+P-well layer appears in this cell only under MOS capacitors, so the P
+substrate itself is their body. The next is N+ diffusion in an N-well,
 tied to DVDD. It collects electrons that a forward-biased drain injects
 into the substrate, before they reach other circuits, which is the
 protection against :term:`latch-up`. The outermost is P+ diffusion tied
