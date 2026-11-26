@@ -66,11 +66,15 @@
 <circle cx="452.4" cy="177.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="126.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, BD</text>
-<polyline points="107.6,265.0 127.1,274.2 127.1,274.2 159.6,274.2" stroke="#c0392b" stroke-width="1.6" fill="none"/>
+<polyline points="107.6,265.0 127.1,274.2 127.1,274.2 127.1,274.2 159.6,274.2 224.7,274.2 322.3,274.2 452.4,274.2" stroke="#c0392b" stroke-width="1.6" fill="none"/>
 <circle cx="107.6" cy="265.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="159.6" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="224.7" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="322.3" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="144.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="148" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, AL</text>
 <text x="20" y="372" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Each point: the lower of the straight-edge and corner values. Open triangle: a lower bound.</text>
