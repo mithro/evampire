@@ -126,14 +126,16 @@ Primary protection
 The pad has no separate primary diodes. The output transistors are the
 primary protection. Their drains connect to the pad, and each drain is a
 diffusion in a well, so it forms a diode with that well
-(:numref:`fig-esd-driver-section`). :numref:`fig-esd-io-gds-pad-net` shows
-the pad's metal and every drain it connects to, in the layout:
+(:numref:`fig-esd-driver-section`):
 
 * The PMOS drains (P+ in an N-well tied to DVDD) form a diode from the pad
   to DVDD. Four transistors of 80 µm and four of 40 µm give 480 µm of
   width ([ESD-BI-T-CDL]_, lines 42 to 72).
 * The NMOS drains (N+ in a P-well tied to DVSS) form a diode from DVSS to
   the pad. Eight transistors of 38 µm give 304 µm of width (same lines).
+
+:numref:`fig-esd-io-gds-pad-net` shows the pad's metal and every drain it
+connects to, in the layout.
 
 These transistors are drawn as ESD devices. Their drains are silicide
 blocked for 3.78 µm (NMOS) and 2.78 µm (PMOS), and the NMOS gates are
@@ -150,9 +152,8 @@ each one turns on and :term:`snaps back <Snapback>` to about 6 V
 (:ref:`esd-limits`).
 
 The cross-section :numref:`fig-esd-driver-section` cuts across the gates.
-:numref:`fig-esd-io-gds-driver`
-shows the same NMOS transistors from above, in the layout, with the rings
-that surround them. The line A–A′ in the layout is the cut that the
+:numref:`fig-esd-io-gds-driver` shows the same NMOS transistors from
+above, in the layout, with the rings that surround them. The line A–A′ in the layout is the cut that the
 cross-section draws for the NMOS: from the drain contacts at A, across
 the blocked drain, the gate and the source, to the P+ ring at A′.
 

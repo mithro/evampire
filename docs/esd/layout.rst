@@ -364,8 +364,8 @@ the voltage at the pad (:doc:`results-hbm`).
    :alt: The pad ends of a bidirectional pad cell, above, and a DVSS supply
          pad cell, below, side by side as on the pad ring. Stripes of metal 3
          to 5 cross both cells, some DVDD in magenta and some DVSS in green,
-         each continuing from one cell into the other. One red arrow marks
-         the current. Step 1, from the PAD bond pad along metal 2 to the PMOS
+         each continuing from one cell into the other. A red path with
+         arrowheads marks the current. Step 1, from the PAD bond pad along metal 2 to the PMOS
          drains. Step 2, through the PMOS drain diode onto the DVDD stripes
          above. Step 3, along the DVDD rail into the supply pad. Step 4,
          through the clamp transistor, four orange blocks in parallel, from
@@ -426,7 +426,8 @@ The other modules in the same folder do the work:
   contacts and vias. The layer numbers are those of the design manual
   ([ESD-GF180-DRM-4-1]_).
 * :download:`gds/layfig.py <gds/layfig.py>` draws a window of a cell with
-  its labels, scale bar and legend.
+  its labels, and :download:`gds/laykey.py <gds/laykey.py>` adds the scale
+  bar and legend.
 * :download:`gds/figs_pad.py <gds/figs_pad.py>`,
   :download:`gds/figs_driver.py <gds/figs_driver.py>` and
   :download:`gds/figs_clamp.py <gds/figs_clamp.py>` hold the figures.
