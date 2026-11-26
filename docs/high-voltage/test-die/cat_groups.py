@@ -99,8 +99,9 @@ GROUPS = {
         what="Floating rings are N-well rings round the well that connect "
              "to nothing. These structures find the gap at which a ring "
              "starts to take voltage, and what more rings add. Six of "
-             "them bring ring 1 out to a pad, at gaps of 1.6 µm, 2 µm, "
-             "3 µm, 5 µm, 8 µm and 12 µm.",
+             "them bring ring 1 out to a pad. Five have one ring of the "
+             "same width at gaps of 2 µm, 3 µm, 5 µm, 8 µm and 12 µm, and "
+             "the sixth has four rings with ring 1 at 1.6 µm.",
         works="The well's depletion region spreads outwards until it "
               "reaches ring 1. From then on the ring's potential rises "
               "with the well's, a fixed step below it. The well's own edge "

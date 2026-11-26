@@ -1,0 +1,35 @@
+{
+ "source": {
+  "origin": "the reviewer's own scripts for the final independent review",
+  "status": "not yet in a gf180-tcad record; replace this file when the values are",
+  "model": "the fitted doping family of mithro/gf180-tcad, experiments/hv-junction (fit.py)"
+ },
+ "capacitance": {
+  "note": "N-well capacitance per area, simulated over published model",
+  "with_layer": "0.96 to 1.03 over the whole range",
+  "volts": [0, 1, 2, 3, 5, 7, 10],
+  "without_layer": [1.00, 1.01, 0.98, 0.95, 0.90, 0.87, 0.83],
+  "difference_percent": {"5": 7, "10": 24}
+ },
+ "ceiling": {
+  "note": "breakdown of the flat bottom of a plain N-well under D",
+  "rows": [
+   ["Shape of the layer changed, deep N-well fixed", "58 to 64"],
+   ["Layer and deep N-well both 1.0 µm shallower", "41"],
+   ["Both 0.25 µm shallower", "58"],
+   ["Both 0.25 µm deeper", "69"],
+   ["Both 1.0 µm deeper", "84"],
+   ["Range if the published capacitance is right to a few per cent", "55 to 75"]
+  ]
+ },
+ "corner": {
+  "structure": "NC0",
+  "process": "BL",
+  "radius_um": 1.0,
+  "last_volts": 36,
+  "integral": 0.694,
+  "slope_per_volt": 0.035,
+  "extrapolated_volts": 46,
+  "same_pattern": "BD, BLq, and NA0p6C0"
+ }
+}

@@ -186,13 +186,12 @@ E["NR4S"] = dict(
 
 E["NR1S5"] = dict(
     p="Gives the spacing between two wells at different voltages: a "
-      "contacted ring 3 µm wide, 5 µm from the well.",
+      "contacted ring 5 µm from the well.",
     w="With its pad at 0 V the ring is a neighbouring well at the "
       "substrate's potential. The well's depletion region crosses the "
       "5 µm of substrate at a voltage that rises roughly with the "
       "square of the gap, and current then flows from well to ring.",
-    c=[("NR1S3", "a gap of 5 µm in place of 3 µm, and a ring 3 µm wide "
-                 "in place of 2 µm"),
+    c=[("NR1S3", "a gap of 5 µm in place of 3 µm"),
        ("NR1S8", "a gap of 5 µm in place of 8 µm"),
        ("NT5", "an N-well ring at 5 µm in place of a P+ ring")],
     m="{P5} is the main procedure here: the ring pad is held at 0 V and "

@@ -166,8 +166,8 @@ def procedures(name):
         return ["P1", "P2"]
     if p["half"] >= 50:
         return ["P1", "P2"]
-    if p["sense"]:
-        return ["P1", "P3", "P5"]
+    if p["sense"]:   # a ring beyond 3 um is reached too late for P3
+        return ["P1", "P3", "P5"] if p["rings"][0][0] <= 3 else ["P1", "P5"]
     return ["P1", "P4"] if p["gate"] else ["P1"]
 
 

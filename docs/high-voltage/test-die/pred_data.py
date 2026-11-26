@@ -7,6 +7,8 @@ hvt-tab-pred-key.csv    a few structures that carry the main findings.
 hvt-tab-processes.csv, hvt-tab-pred-source.csv   what was simulated.
 hvt-tab-crosscheck.csv, hvt-tab-crosscheck-ring.csv and
 hvt-tab-crosscheck-source.csv   the second simulator.
+hvt-tab-mc-cap.csv, -corner.csv, -ceiling.csv, -source.csv   the values
+                      of model_checks.json, which is edited by hand.
 
 predictions.json is written by import_predictions.py: {"structures":
 {NAME: {PROCESS: {"edge": volts or null, "corner": volts or null,
@@ -38,6 +40,7 @@ import tdkit
 STRUCTS, MAN = tdkit.load()
 PRED = json.loads((tdkit.HERE / "predictions.json").read_text())
 CROSS = json.loads((tdkit.HERE / "crosscheck.json").read_text())
+CHECKS = json.loads((tdkit.HERE / "model_checks.json").read_text())
 WIDEN = (0.30, 0.15)   # agreement range: the band widened down and up
 RATIO = 0.15           # agreement of a ratio to the reference structure
 SHAPES = ("edge", "corner")
@@ -117,9 +120,14 @@ def served(name, fam):
 
 def reference(name, fam):
     """The structure whose breakdown a ratio is taken against."""
-    if STRUCTS[name]["kind"] == "dnw":
+    p = STRUCTS[name]
+    if p["kind"] == "dnw":
         return "DT20"
-    return "NW0" if parse(fam)[1] == "A" else "NT20"
+    if parse(fam)[1] == "A":
+        return "NW0"
+    if parse(fam)[1] == "An" and p["nat_gap"] is not None and p["plates"]:
+        return "NA0p6"   # NT20 is limited by P-well under An; NA0p6 is not
+    return "NT20"
 
 
 def nominal(name, fam):
@@ -316,6 +324,36 @@ def cross_tables():
             "hvt-tab-crosscheck-source.csv": tb.write(src)}
 
 
+def check_tables():
+    """The tables of model_checks.json: values from the final review that
+    no simulation record holds yet."""
+    cap, cor = CHECKS["capacitance"], CHECKS["corner"]
+    rows = [["Reverse voltage (V)", "Layer under deep N-well only",
+             "Layer under the N-well too",
+             "Capacitance with the layer over without"]]
+    for v, r in zip(cap["volts"], cap["without_layer"]):
+        d = cap["difference_percent"].get(str(v))
+        rows.append([str(v), f"{r:.2f}", cap["with_layer"] if v == 0
+                     else "as above", f"+{d} %" if d else "–"])
+    corner = [["Item", "Value"],
+              ["Section", f"{cor['structure']} under {cor['process']}, "
+               f"corner radius {cor['radius_um']:g} µm"],
+              ["Last converged voltage", f"{cor['last_volts']} V"],
+              ["Ionisation integral there", f"{cor['integral']}"],
+              ["Rise of the integral", f"{cor['slope_per_volt']} per volt"],
+              ["Integral reaches 1, by straight-line extrapolation",
+               f"about {cor['extrapolated_volts']} V"],
+              ["Same pattern", cor["same_pattern"]]]
+    ceiling = [["Change to the assumed profile",
+                "Breakdown of the flat bottom (V)"]] + CHECKS["ceiling"]["rows"]
+    src = [["Item", "Value"]] + [[k.capitalize(), v]
+                                 for k, v in CHECKS["source"].items()]
+    return {"hvt-tab-mc-cap.csv": tb.write(rows),
+            "hvt-tab-mc-corner.csv": tb.write(corner),
+            "hvt-tab-mc-ceiling.csv": tb.write(ceiling),
+            "hvt-tab-mc-source.csv": tb.write(src)}
+
+
 def tables():
     proc = [["Process", "Family", "Description"]] + [
         [k, family(k), v] for k, v in PRED["processes"].items()]
@@ -329,4 +367,5 @@ def tables():
            "hvt-tab-processes.csv": tb.write(proc),
            "hvt-tab-pred-source.csv": source_table()}
     out.update(cross_tables())
+    out.update(check_tables())
     return out

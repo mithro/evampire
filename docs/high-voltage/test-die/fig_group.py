@@ -133,7 +133,7 @@ def rings():
     cols = (COLOUR["BL"], "#16a085", "#8e44ad")
     curves = [(f"{lab}, BL", "BL", pts, col) for (lab, pts), col in zip(
         (("one ring", one), ("three rings", three), ("five rings", five),
-         ("one ring 3 µm wide", wide)), cols + ("#d35400",))]
+         ("one ring, wide gap", wide)), cols + ("#d35400",))]
     curves += [(f"all, {proc}", proc, sorted(one + three + five + wide))
                for proc in ("BD", "AL") if proc in pd.PRED["processes"]]
     return trend("Floating rings: breakdown against the first gap",
@@ -212,7 +212,7 @@ ALT = {
               "for polysilicon, Metal1 and Metal2 plates" + _END,
     "rings": _BV + "the gap from the well to ring 1, from 1.4 µm to 12 µm, "
              "with separate curves for one, three and five rings and for "
-             "the wide contacted ring" + _END,
+             "one ring at the wide gaps" + _END,
     "gated": _BV + "the four gated diodes, with the plate joined to the "
              "well and with the plate at 0 V" + _END,
     "dnw": _BV + "the distance from the edge of the deep N-well to the P+ "
