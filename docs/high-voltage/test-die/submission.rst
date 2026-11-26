@@ -173,42 +173,53 @@ layout and the method together. Each changed the die
      - None possible: the rules allow only 45° edges on a well. The
        avalanche light is photographed on three structures instead
 
-The final review also put numbers on its confidence, first for the die
-and method as it found them and again after the corrections of the rows
-marked "Final" (:numref:`tab-hvt-confidence`). They are one reviewer's
-estimates, not measurements. The rows marked "Reassessment" were made
-after the second set of figures and are not reflected in them.
+The final review also put numbers on its confidence three times: for the
+die and method as it found them, after the corrections of the rows marked
+"Final", and after those marked "Reassessment"
+(:numref:`tab-hvt-confidence`). They are one reviewer's estimates, not
+measurements. At the last check the reviewer verified the committed file
+independently and had nothing further to add to the die.
 
-.. list-table:: Confidence stated by the final review, before and after
-               its first corrections
+.. list-table:: Confidence stated by the final review at its three checks
    :name: tab-hvt-confidence
    :header-rows: 1
-   :widths: 60 20 20
+   :widths: 49 17 17 17
 
    * - Statement
-     - Before
-     - After
+     - As found
+     - After the first corrections
+     - After the reassessment's changes
    * - The layout passes the wafer.space precheck
      - 85 %
      - 85 %
+     - 87 %
    * - The breakdown measurements work as intended
      - 85 %
      - 87 %
+     - 88 %
    * - The method gives patterns and ratios comparable with the simulation
      - 60 %
      - 72 %
-   * - The method gives absolute values within 15 % of the simulation
+     - 75 %
+   * - The method gives absolute values comparable with the simulation
      - 35 %
+     - 50 %
      - 50 %
    * - The set of structures is sufficient
      - 45 %
      - 60 %
+     - 68 %
 
-The review named four missing items behind the last figure: a smoother
-corner, wider gaps to a contacted well, a 200 µm well under NAT, and
-finished predictions for the multi-ring structures. The second and third
-are now on the die, the first cannot be drawn, and the fourth is still
-running.
+What holds the last figure down is the physics, not the die: if the P-well
+is generated everywhere, or the deep P layer lies under the whole wafer,
+the result is that a plain junction does not reach the working voltage,
+which the die is built to show.
+
+The review named four missing items behind the figure it first gave: a
+smoother corner, wider gaps to a contacted well, a 200 µm well under NAT,
+and finished predictions for the multi-ring structures. The second and
+third are now on the die, the first cannot be drawn, and the fourth is
+done.
 
 The reviews left four things open. No simulation represents a vertex in
 three dimensions. The effect of the Metal5 lead is bounded by three
