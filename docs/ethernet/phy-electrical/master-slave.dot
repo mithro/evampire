@@ -18,7 +18,7 @@ digraph masterslave {
     g_s [pos="6.1,1.25!", width=2.4, height=2.4, label="Slave", labelloc=t,
          style="rounded", color="#548235", fillcolor="none", fontsize=12];
 
-    mx   [pos="0.75,0.55!", width=0.9, label="Crystal", fillcolor="#e2efda"];
+    mx   [pos="0.6,0.55!", width=0.8, label="Crystal", fillcolor="#e2efda"];
     mtx  [pos="1.75,1.65!", width=1.1, label="Transmit", fillcolor="#fbe5d6"];
     mrx  [pos="1.75,0.55!", width=1.1, label="Receive", fillcolor="#fbe5d6"];
     srec [pos="5.6,1.65!", width=1.4, label="Receive and\nclock recovery",
