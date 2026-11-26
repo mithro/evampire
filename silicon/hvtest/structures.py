@@ -102,8 +102,8 @@ BIG = {"corner": 20.0, "term": 6.0, "block": False}
 LARGE = [
     ("CVN", {"half": 100.0, **BIG}),
     ("CVD", {"kind": "dnw", "half": 100.0, **BIG}),
-    # the 100 um wells fit one fill block (122 um square, under the 15000 um2 limit)
-    ("CVN2", {"half": 50.0, **BIG, "block": True}),
+    # no fill block either, so that the two sizes differ in size alone
+    ("CVN2", {"half": 50.0, **BIG}),
 
     # with NAT around it and the P+ ring 20 um out, so that the capacitance sweep can go
     # past the 14 V of a well with a P-well beside it
