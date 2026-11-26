@@ -117,7 +117,8 @@ helpers that the scripts above import, so run the script, not the helper:
 
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
 - `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
-  `pred_data.py` and every `fig_*.py`;
+  `pred_data.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
+  every `fig_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
 - `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
@@ -142,6 +143,15 @@ from the records in `results/hv-junction/` of mithro/gf180-tcad; its schema
 is in the docstring of `pred_data.py`. `crosscheck.json` in the same folder
 holds the second-simulator results and is edited by hand. Rerun
 `figures.py` after changing either.
+
+`figures.py` also writes the structure catalogue:
+`docs/high-voltage/test-die/catalogue.rst` and everything in
+`docs/high-voltage/test-die/catalogue/` are generated, so never edit them
+by hand. The written part of each entry is in `catalogue.py` and the
+`cat_*.py` modules beside it, one entry per structure. The script stops
+if a structure in `manifest.json` has no entry or an entry names a
+structure that is not on the die, so a new structure needs its entry
+before the figures can be regenerated.
 
 The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
 the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
