@@ -44,15 +44,18 @@ def line(x1, y1, x2, y2, stroke=INK, width=1.5, dash=None, arrow=False):
             f'stroke-width="{width}"{d}{m}/>')
 
 
-def diode(x, y, up, label, anchor):
-    """A diode symbol at (x, y), conducting upward if up, with a label."""
+def diode(x, y, up):
+    """A diode symbol across a junction at (x, y), conducting upward if up.
+
+    The symbol is centred on the junction, with a lead into the region on
+    each side, so the anode and cathode sit in the regions that form them.
+    """
     t = (f"{x - 8},{y + 7} {x + 8},{y + 7} {x},{y - 7}" if up
          else f"{x - 8},{y - 7} {x + 8},{y - 7} {x},{y + 7}")
     bar = y - 7 if up else y + 7
-    return [f'<polygon points="{t}" fill="{HOT}" stroke="{HOT}"/>',
-            line(x - 8, bar, x + 8, bar, stroke=HOT, width=2.5),
-            text(x + (12 if anchor == "start" else -12), y + 5, label,
-                 anchor=anchor, size=12, fill=HOT)]
+    return [line(x, y - 15, x, y + 15, stroke=HOT, width=2),
+            f'<polygon points="{t}" fill="{HOT}" stroke="{HOT}"/>',
+            line(x - 8, bar, x + 8, bar, stroke=HOT, width=2.5)]
 
 
 def bracket(x1, x2, y, label, anchor="middle"):
@@ -113,13 +116,14 @@ def driver_section():
     b.append(rect(538, 106, 65, 6, METAL))
     b.append(text(570, 98, "DVSS", size=13, weight="bold"))
     b.append(text(145, top - 16, "gate", size=11))
-    # Diodes the drains form with their wells.
-    b += diode(225, top + 66, False, "", "start")
+    # Diodes the drains form with their wells, each drawn across the
+    # bottom of its drain, under the metal that connects the drain to PAD.
+    b += diode(270, top + 22, False)
     b.append(text(170, top + 128, "P+ drain to N-well: diode from PAD",
                   size=12, fill=HOT, anchor="middle"))
     b.append(text(170, top + 144, "to DVDD, 480 µm in all", size=12,
                   fill=HOT))
-    b += diode(415, top + 66, True, "", "start")
+    b += diode(370, top + 22, True)
     b.append(text(450, top + 128, "P-well to N+ drain: diode from DVSS",
                   size=12, fill=HOT))
     b.append(text(450, top + 144, "to PAD, 304 µm in all", size=12,
