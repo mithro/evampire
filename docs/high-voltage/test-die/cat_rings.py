@@ -109,7 +109,8 @@ E["NR5_1p4"] = dict(
     r="Above the three-ring structures: the fourth and fifth rings "
       "still take voltage.",
     l="Its length makes it the structure most exposed to charge on the "
-      "oxide between rings.")
+      "oxide between rings. Its P+ ring is 36 µm from the well, 15 µm "
+      "beyond the last ring.")
 E["NR5_2"] = dict(
     p="Five rings from a gap of 2 µm: the longest termination on the "
       "die, 25 µm of rings and gaps.",
@@ -149,7 +150,9 @@ E["NR1S2"] = dict(
     c=[("NR1_2", "a contact and lead on the ring in place of none"),
        ("NR1S3", "a gap of 2 µm in place of 3 µm")],
     m="The ring pad needs a meter whose input current is below 100 fA, "
-      "and seconds of settling at each step.",
+      "and seconds of settling at each step. The ring is grounded "
+      "through its pad before each sweep, and only the sweep upwards is "
+      "read.",
     r="The well voltage at which the ring starts to follow, and the "
       "step it then keeps, are compared with the predicted curve.",
     l="The pad, its lead and the meter's cable load the ring with "
@@ -161,6 +164,7 @@ E["NR1S3"] = dict(
       "the ring at 0 V, it gives the punch-through voltage of two wells "
       "3 µm apart.",
     c=[("NR1S2", "a gap of 3 µm in place of 2 µm"),
+       ("NR1S5", "a gap of 3 µm in place of 5 µm"),
        ("NR1_3", "a contact and lead on the ring in place of none")],
     m="As for {NR1S2}.",
     r="A later onset and a larger step than {NR1S2}, in the ratio the "
@@ -180,6 +184,52 @@ E["NR4S"] = dict(
     l="Only ring 1 has a pad, so how the voltage divides among the "
       "outer rings is not seen.")
 
+E["NR1S5"] = dict(
+    p="Gives the spacing between two wells at different voltages: a "
+      "contacted ring 3 µm wide, 5 µm from the well.",
+    w="With its pad at 0 V the ring is a neighbouring well at the "
+      "substrate's potential. The well's depletion region crosses the "
+      "5 µm of substrate at a voltage that rises roughly with the "
+      "square of the gap, and current then flows from well to ring.",
+    c=[("NR1S3", "a gap of 5 µm in place of 3 µm, and a ring 3 µm wide "
+                 "in place of 2 µm"),
+       ("NR1S8", "a gap of 5 µm in place of 8 µm"),
+       ("NT5", "an N-well ring at 5 µm in place of a P+ ring")],
+    m="{P5} is the main procedure here: the ring pad is held at 0 V and "
+      "its current recorded.",
+    r="The well voltage at which ring current starts is what two wells "
+      "5 µm apart can differ by.",
+    l="Under assumption A the P-well between well and ring fails first, "
+      "and the structure shows only that.")
+E["NR1S8"] = dict(
+    p="The same measurement at a gap of 8 µm, wider than the depletion "
+      "region of a plain well at its breakdown voltage.",
+    w="If the well breaks down before its depletion region has crossed "
+      "8 µm, no current reaches the ring, and the substrate current "
+      "rises instead. The gap is then wide enough for any voltage the "
+      "well itself can hold.",
+    c=[("NR1S5", "a gap of 8 µm in place of 5 µm"),
+       ("NR1S12", "a gap of 8 µm in place of 12 µm"),
+       ("NT10", "an N-well ring at 8 µm in place of a P+ ring at 10 µm")],
+    m="As for {NR1S5}. Which pad the current leaves by, ring or "
+      "substrate, is the result.",
+    r="Substrate current first: 8 µm isolates two wells up to the "
+      "breakdown voltage. Ring current first: it does not.",
+    l="As for {NR1S5}.")
+E["NR1S12"] = dict(
+    p="The widest gap, 12 µm: the spacing expected to be safe at any "
+      "voltage a well on this die holds.",
+    w="Twelve micrometres is more than twice the flat depletion width "
+      "at the plain well's predicted breakdown. The ring should stay "
+      "unreached, and the well should break down as {NT20} does.",
+    c=[("NR1S8", "a gap of 12 µm in place of 8 µm"),
+       ("NT20", "an N-well ring at 12 µm in place of nothing")],
+    m="As for {NR1S5}.",
+    r="A breakdown voltage equal to {NT20}, with no ring current: a "
+      "neighbouring well 12 µm away changes nothing.",
+    l="If ring current still flows here, the die has no wider gap to "
+      "show where it stops.")
+
 # ---- gated diodes ----------------------------------------------------------
 E["NGP4"] = dict(
     p="A polysilicon plate on its own pad: the most sensitive probe of "
@@ -193,8 +243,8 @@ E["NGP4"] = dict(
        ("NGM1", "polysilicon over 0.32 µm in place of Metal1 over "
                 "1.18 µm")],
     m="The oxide under this plate sees the whole voltage between plate "
-      "and well, so that voltage stays within 64 V here, which is "
-      "2 MV/cm across 0.32 µm.",
+      "and well, so that voltage stays within 60 V here, which is "
+      "1.8 MV/cm across 0.33 µm.",
     r="A threshold of a few volts: bare substrate beside the well. "
       "Several times higher: P-well.",
     l="The thin oxide limits the voltage between plate and well more "
@@ -216,8 +266,9 @@ E["NGM1"] = dict(
     r="A threshold near the published Metal1 field threshold: bare "
       "substrate. No threshold within the range: a surface as heavily "
       "doped as P-well.",
-    l="Over P-well the threshold is above the plate's range, so the "
-      "doping can be bounded from below but not measured.")
+    l="Over P-well the threshold is above 100 V, outside the plate's "
+      "range. The first part then gives the flat-band voltage only, and "
+      "the doping is bounded from below but not measured.")
 E["NAGM1"] = dict(
     p="A Metal1 plate on its own pad over NAT: reads directly whether "
       "P-well lies under the NAT layer.",

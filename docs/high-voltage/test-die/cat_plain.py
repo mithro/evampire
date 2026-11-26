@@ -66,7 +66,8 @@ E["NT20"] = dict(
        ("NT20V", "the 3.3 V area in place of the 6 V area"),
        ("NT35", "the ring is at 20 µm in place of 35 µm")],
     m="It is the first structure swept on each die, and is swept again at "
-      "85 °C.",
+      "85 °C. It is one of the three on which the light of the avalanche "
+      "is always photographed at the current limit.",
     r="Near 14 V: P-well lies against the well. Much higher: it does not, "
       "and the other groups then show what each termination gains.",
     l="A single plain well cannot tell an edge that fails from a bottom "
@@ -94,8 +95,9 @@ E["NC0"] = dict(
       "to a radius of about the well's lateral spread.",
     c=[("NT20", "four 90° vertices in place of eight of 135°"),
        ("NC15", "no cut in place of the longest cut")],
-    m="Swept again at 85 °C. Under a microscope that shows the light of "
-      "the avalanche, the four vertices should light first.",
+    m="Swept again at 85 °C. The light of the avalanche is always "
+      "photographed at the current limit; the four vertices should light "
+      "first.",
     r="Below {NT20}: the vertices set the breakdown, and a cut is worth "
       "having. Equal: something other than the corner limits both.",
     l="The simulation of this corner did not reach breakdown, so its "
@@ -110,7 +112,8 @@ E["NC15"] = dict(
       "of the nominal radius, a larger radius would hold more.",
     c=[("NT20", "a cut of 8.8 µm in place of 4.7 µm"),
        ("NC0", "the longest cut in place of none")],
-    m="",
+    m="The light of the avalanche is always photographed at the current "
+      "limit, to see whether it sits at the eight vertices.",
     r="Equal to {NT20}: the vertex angle decides and the nominal radius "
       "means little. Higher: the cut length matters as a radius would.",
     l="The well cannot be rounder than this at 30 µm across, so a trend "

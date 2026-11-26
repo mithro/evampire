@@ -26,10 +26,11 @@ GROUPS = {
              "ring comes within reach. If a deep P layer lies under the "
              "well, the values with a distant ring all stop at the "
              "breakdown of the well's flat bottom.",
-        limits="Every corner on the die is a 45° cut, so the corner "
-               "sections of the simulation, which assume an arc, are upper "
-               "bounds. The Metal5 lead crosses the termination zone of "
-               "every member, and only {NT20L} varies it."),
+        limits="Every corner on the die is a 45° cut, because the design "
+               "rules allow no other angle on a well. The corner sections "
+               "of the simulation assume an arc and are upper bounds. The "
+               "Metal5 lead crosses the termination zone of every member, "
+               "and only {NT20L} varies it."),
     "pwell": dict(
         file="p-well", title="Drawn P-well",
         what="A drawn P-well stands in for the P-well that the foundry may "
@@ -97,7 +98,9 @@ GROUPS = {
         file="floating-rings", title="Floating rings",
         what="Floating rings are N-well rings round the well that connect "
              "to nothing. These structures find the gap at which a ring "
-             "starts to take voltage, and what more rings add.",
+             "starts to take voltage, and what more rings add. Six of "
+             "them bring ring 1 out to a pad, at gaps of 1.6 µm, 2 µm, "
+             "3 µm, 5 µm, 8 µm and 12 µm.",
         works="The well's depletion region spreads outwards until it "
               "reaches ring 1. From then on the ring's potential rises "
               "with the well's, a fixed step below it. The well's own edge "
@@ -109,7 +112,10 @@ GROUPS = {
              "B a ring raises the breakdown voltage by an amount set by "
              "the gap, and more rings raise it further. With a deep P "
              "layer under the well, all stop at the plain well's value.",
-        limits="Rule NW.2b forbids a gap below 1.4 µm. The simulation ends "
+        limits="Rule NW.2b forbids a gap below 1.4 µm. A contacted ring "
+               "held at 0 V is a neighbouring well, and the wide gaps give "
+               "the spacing two wells need; a floating ring at those gaps "
+               "would never be reached. The simulation ends "
                "its ionisation path at a ring, and several multi-ring "
                "cases have no finished simulation, so their predictions "
                "are the weakest on the die."),
@@ -132,8 +138,10 @@ GROUPS = {
              "beside the well, without breaking the junction down.",
         limits="The plate's Metal1 is 1 µm from the well's own Metal1, so "
                "the voltage between plate and well stays within 80 V, "
-               "which is 0.8 MV/cm across that gap. The current step of "
-               "the first part may be only tens of femtoamperes."),
+               "which is 0.8 MV/cm across that gap, and within 60 V on "
+               "the polysilicon plate. The current step of the first part "
+               "may be only tens of femtoamperes. Over P-well the first "
+               "part gives the flat-band voltage only."),
     "dnw": dict(
         file="deep-n-well", title="Deep N-wells",
         what="The deep N-well structures are a reference group. They "
@@ -151,15 +159,19 @@ GROUPS = {
              "distance, corner, P-well, NAT or plate. A member that holds "
              "much more than the plain {DT20} shows that the edge limits "
              "after all, and the deep-layer picture is wrong for it.",
-        limits="A group in which nothing changes cannot rank its "
-               "terminations. If the bottom does limit, the deep N-well is "
-               "not a way to hold 57 V, and this group only confirms "
-               "that."),
+        limits="The simulated deep N-well is a buried layer with almost no "
+               "donors at the surface, so its indifference to the edge is "
+               "partly built into the model. If the real well is N-type "
+               "up to the surface, the published value could be set at "
+               "the edge, and the members with a close ring, a P-well or "
+               "NAT would then differ. If the bottom does limit, the deep "
+               "N-well is not a way to hold 57 V."),
     "large": dict(
         file="capacitance-wells", title="Capacitance wells and open reference",
         what="Five wells are large enough for their capacitance to be "
-             "measured, and one structure has a pad and a lead with no "
-             "well. Together they give the doping under the wells and the "
+             "measured: an N-well and an N-well under NAT, each at two "
+             "sizes, and one deep N-well. One more structure has a pad "
+             "and a lead with no well. Together they give the doping under the wells and the "
              "part of every reading that the pad contributes.",
         works="The capacitance of a reverse-biased junction is that of a "
               "slab of silicon as thick as the depletion region. As the "
@@ -173,7 +185,7 @@ GROUPS = {
              "layer. For an N-well that would be the deep P layer of "
              "assumption D.",
         limits="The sweep cannot go beyond the breakdown voltage of the "
-               "well's own edge. The 200 µm wells receive dummy fill "
+               "well's own edge. Every large well receives dummy fill "
                "inside the well. Series resistance in the well and the "
                "substrate distorts the reading at high frequency."),
 }

@@ -186,8 +186,10 @@ def measurement(name):
               f"{site['aux_pad'][1]:.0f} µm")
     s += ". "
     if p["gate"]:
-        s += ("For {P1} the two pads are shorted at the probes. In {P4} "
-              "the voltage between well and plate stays within 80 V. ")
+        limit = 60 if "poly" in p["plates"] else 80
+        s += (f"For {{P1}} the two pads are shorted at the probes. In "
+              f"{{P4}} the voltage between well and plate stays within "
+              f"{limit} V. ")
     if p["half"] >= 50 and p["kind"] != "open":
         s += ("{P1} is run on one die only, to find the breakdown voltage "
               "that limits the bias of {P2} on the others. ")
@@ -226,20 +228,25 @@ def predicted(name):
     for q in procs:
         fam = pd.family(q)
         lo, hi, _ = pd.band(name, q) if q == fam else (None, None, None)
-        twin = q[:-1] + "D"
-        label = f"{q} and {twin}" if pd.stands_in(name, twin) else q
         if pd.stands_in(name, q):
             continue
+        label = ", ".join(pd.served(name, q)) if q == fam else q
+        ref, rat = pd.ratio(name, q) if q == fam else ("–", "–")
         rows.append([label, pd.cell(name, q, "edge"),
                      pd.cell(name, q, "corner"), pd.span(lo, hi),
-                     pd.span(lo, hi, pd.WIDEN)])
-    text = (f"The simulated breakdown voltages are in :numref:`{lab}`, "
-            f"with the band and agreement range of each family on the row "
-            f"of its nominal process. ")
+                     pd.span(lo, hi, pd.WIDEN),
+                     rat if rat == "–" or ref == name else
+                     f"{rat} of {{{ref}}}"])
+    rows = [[link(str(c), name) for c in r] for r in rows]
+    text = (f"The simulated breakdown voltages are in :numref:`{lab}`. "
+            f"The row of each family's nominal process also gives the "
+            f"family's band, its agreement range and the predicted ratio "
+            f"to the reference structure. ")
     return text + e.get("r", ""), table(
         f"{name}: predicted breakdown voltage by process", lab,
         ["Process", "Straight edge (V)", "Corner section (V)",
-         "Family band (V)", "Agreement range (V)"], rows, "16 21 21 21 21")
+         "Family band (V)", "Agreement range (V)", "Predicted ratio"], rows,
+        "18 16 16 17 17 16")
 
 
 def entry(name, files):

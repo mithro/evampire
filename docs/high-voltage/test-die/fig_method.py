@@ -79,12 +79,12 @@ def p1():
 def p2():
     return conn("P2: capacitance against voltage, shown on a large well",
                 "CVN", [
-        ("well", ["LCR meter, low terminal", "on the well pad",
-                  "100 kHz and 1 MHz, 30 mV"]),
-        ("sub", ["LCR meter, high terminal", "on the substrate pads",
-                 "DC bias 0 V to −10 V"])],
-        "Chuck left floating or guarded; repeat with identical probe "
-        "positions on OPEN and subtract.")
+        ("well", ["LCR meter, low terminal", "on the well pad: senses",
+                  "the current, 100 kHz and 1 MHz"]),
+        ("sub", ["LCR meter, high terminal", "on the substrate pads and",
+                 "the chuck; DC bias to −40 V"])],
+        "The chuck is joined to the high terminal or left floating, never "
+        "grounded; repeat on OPEN and subtract.")
 
 
 def p3():

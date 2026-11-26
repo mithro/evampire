@@ -38,7 +38,8 @@ import tdkit
 STRUCTS, MAN = tdkit.load()
 PRED = json.loads((tdkit.HERE / "predictions.json").read_text())
 CROSS = json.loads((tdkit.HERE / "crosscheck.json").read_text())
-WIDEN = 0.15           # agreement range: the band widened by this fraction
+WIDEN = (0.30, 0.15)   # agreement range: the band widened down and up
+RATIO = 0.15           # agreement of a ratio to the reference structure
 SHAPES = ("edge", "corner")
 ORDER = ("AL", "AD", "AnL", "AnD", "BL", "BD")
 KEY = [("NT10", "Plain N-well"), ("NT1", "P+ ring 1 µm away"),
@@ -74,10 +75,14 @@ def families():
 
 def ordered():
     order = [s["name"] for s in MAN["sites"]]
-    unknown = sorted(set(PRED["structures"]) - set(order))
-    if unknown:
-        raise SystemExit(f"predictions.json: unknown structures {unknown}")
     return [n for n in order if n in PRED["structures"]]
+
+
+def off_die():
+    """Structures in predictions.json that are no longer on the die; their
+    results are left out of every table and figure."""
+    order = {s["name"] for s in MAN["sites"]}
+    return sorted(set(PRED["structures"]) - order)
 
 
 def raw(name, proc):
@@ -85,12 +90,51 @@ def raw(name, proc):
 
 
 def stands_in(name, proc):
-    """The L process whose entry serves for a missing D one, or None."""
+    """The process whose entry serves for a missing one, or None. An
+    equals A on a structure without NAT, and on an N-well under A the L
+    entry serves for D."""
     gated, pw, deep, mod = parse(proc)
-    if raw(name, proc) or deep != "D" or pw != "A":
+    if raw(name, proc) or name not in STRUCTS:
         return None
-    twin = ("G" if gated else "") + pw + "L" + mod
-    return twin if raw(name, twin) and STRUCTS[name]["kind"] == "nw" else None
+    g = "G" if gated else ""
+    tries = []
+    if pw == "An" and STRUCTS[name]["nat_gap"] is None:
+        tries.append(g + "A" + deep + mod)
+        pw = "A"
+    if pw == "A" and deep == "D" and STRUCTS[name]["kind"] == "nw":
+        tries.append(g + "AL" + mod)
+    for twin in tries:
+        if raw(name, twin):
+            return twin
+    return None
+
+
+def served(name, fam):
+    """The families that the entry of family `fam` stands for, itself
+    first."""
+    return [fam] + [f for f in ORDER if f != fam and stands_in(name, f) == fam]
+
+
+def reference(name, fam):
+    """The structure whose breakdown a ratio is taken against."""
+    if STRUCTS[name]["kind"] == "dnw":
+        return "DT20"
+    return "NW0" if parse(fam)[1] == "A" else "NT20"
+
+
+def nominal(name, fam):
+    """Lower of the edge and corner values of a family's nominal process,
+    or None if it is not resolved."""
+    lo, hi, _ = band_of([fam], name)
+    return lo
+
+
+def ratio(name, fam):
+    ref = reference(name, fam)
+    if ref == name:
+        return ref, "1 (reference)"
+    a, b = nominal(name, fam), nominal(ref, fam)
+    return ref, f"{a / b:.2f}" if a and b else "–"
 
 
 def entry(name, proc):
@@ -152,8 +196,12 @@ def pair(name, proc):
 
 def band(name, fam):
     """(low, high, notes) over the family, or None if it has no value."""
+    return band_of(processes(fam), name)
+
+
+def band_of(procs, name):
     vals, notes = [], []
-    for p in processes(fam):
+    for p in procs:
         if not known(name, p):
             continue
         got = {s: value(name, p, s) for s in SHAPES}
@@ -175,10 +223,10 @@ def band(name, fam):
     return min(vals), max(vals), notes
 
 
-def span(lo, hi, widen=0.0):
+def span(lo, hi, widen=(0.0, 0.0)):
     if lo is None:
         return "–"
-    return f"{lo * (1 - widen):.1f} to {hi * (1 + widen):.1f}"
+    return f"{lo * (1 - widen[0]):.1f} to {hi * (1 + widen[1]):.1f}"
 
 
 def pred_table(test):
@@ -206,16 +254,15 @@ def summarise(notes):
 
 def band_table():
     rows = [["Structure", "Family", "Band (V)", "Agreement range (V)",
-             "Gaps in the simulation"]]
+             "Reference", "Predicted ratio", "Gaps in the simulation"]]
     for nm in ordered():
         for f in families():
             if stands_in(nm, f) or not any(known(nm, p)
                                            for p in processes(f)):
                 continue
             lo, hi, notes = band(nm, f)
-            twin = f[:-1] + "D"
-            label = f"{f} and {twin}" if stands_in(nm, twin) else f
-            rows.append([nm, label, span(lo, hi), span(lo, hi, WIDEN),
+            rows.append([nm, ", ".join(served(nm, f)), span(lo, hi),
+                         span(lo, hi, WIDEN), *ratio(nm, f),
                          summarise(notes) or "None"])
     return tb.write(rows)
 
@@ -236,6 +283,9 @@ def source_table():
     for k, v in src.items():
         if k != "records":
             rows.append([k.capitalize(), str(v)])
+    if off_die():
+        rows.append(["Results left out", "Structures no longer on the die: "
+                     + ", ".join(off_die())])
     for r in src.get("records", []):
         lost = r.get("not_converged", [])
         rows.append([f"Record {r['record']}",

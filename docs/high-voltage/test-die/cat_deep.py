@@ -29,7 +29,7 @@ E["DT2p6"] = dict(
     w="At 2.6 µm the ring would cut the edge's depletion region short "
       "if the edge held the voltage. If the bottom fails first, the "
       "ring's distance is irrelevant.",
-    c=[("DT5", "the ring is at 2.6 µm in place of 5 µm"),
+    c=[("DT10", "the ring is at 2.6 µm in place of 10 µm"),
        ("NT1", "the nearest ring on a deep N-well in place of on an "
                "N-well")],
     m="",
@@ -37,35 +37,14 @@ E["DT2p6"] = dict(
       "least with the ring this close.",
     l="Under assumption A a generated P-well would start 1.5 µm out, "
       "inside the ring, and would act before the ring.")
-E["DT5"] = dict(
-    p="A deep N-well with the P+ ring at 5 µm.",
-    w="The second point of the ring-distance series. It matters only "
-      "if {DT2p6} differs from {DT20}, when it shows how fast the ring's "
-      "effect dies away.",
-    c=[("DT2p6", "the ring is at 5 µm in place of 2.6 µm"),
-       ("DT10", "the ring is at 5 µm in place of 10 µm"),
-       ("NT5", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}, as the whole series should be.",
-    l="Redundant if the bottom limits, which is the expected case.")
 E["DT10"] = dict(
     p="A deep N-well with the P+ ring at 10 µm.",
-    w="The middle of the ring-distance series, between the two points "
-      "where a ring could matter and the two where it could not.",
-    c=[("DT5", "the ring is at 10 µm in place of 5 µm"),
+    w="The middle of the ring-distance series, between the closest ring "
+      "the rules allow and the default distance. If the edge held the "
+      "voltage, the three would differ as {NT1}, {NT10} and {NT20} do.",
+    c=[("DT2p6", "the ring is at 10 µm in place of 2.6 µm"),
        ("DT20", "the ring is at 10 µm in place of 20 µm"),
        ("NT10", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}.",
-    l="Redundant if the bottom limits.")
-E["DT35"] = dict(
-    p="A deep N-well with the P+ ring at 35 µm.",
-    w="The end of the ring-distance series. With the ring this far "
-      "away, the substrate contact is at its most resistive, which "
-      "shows in the slope of the current after breakdown and not in "
-      "the breakdown voltage.",
-    c=[("DT20", "the ring is at 35 µm in place of 20 µm"),
-       ("NT35", "a deep N-well in place of an N-well")],
     m="",
     r="Equal to {DT20}.",
     l="Redundant if the bottom limits.")
@@ -81,16 +60,6 @@ E["DC0"] = dict(
     r="Equal to {DT20}: corners do not matter for this well.",
     l="The N-well band under the contact follows the square outline "
       "2 µm inside the edge, and has sharp corners of its own.")
-E["DC15"] = dict(
-    p="A deep N-well with the longest corner cut.",
-    w="The counterpart of {NC15}. It can only matter if {DC0} shows "
-      "that corners matter at all.",
-    c=[("DT20", "a cut of 8.8 µm in place of 4.7 µm"),
-       ("DC0", "the longest cut in place of none"),
-       ("NC15", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}.",
-    l="Redundant if the bottom limits.")
 E["DW1p5"] = dict(
     p="A deep N-well with a drawn P-well as close as the rules allow, "
       "1.5 µm.",
@@ -98,45 +67,12 @@ E["DW1p5"] = dict(
       "N-well without anyone drawing it. If the edge held the voltage, "
       "a P-well this close would cost part of it, as on {NW1p5}.",
     c=[("DT20", "a drawn P-well from 1.5 µm in place of none"),
-       ("DW3", "the P-well starts at 1.5 µm in place of 3 µm"),
        ("NW1p5", "a deep N-well in place of an N-well")],
     m="",
     r="Equal to {DT20}: either the bottom limits, or the foundry "
       "already generates this P-well round {DT20}.",
     l="Those two readings cannot be separated here; {DAo1} separates "
       "them.")
-E["DW3"] = dict(
-    p="A deep N-well with a drawn P-well from 3 µm.",
-    w="The middle of the P-well series on a deep N-well. It adds a "
-      "point only if {DW1p5} is lower than {DT20}.",
-    c=[("DW1p5", "the P-well starts at 3 µm in place of 1.5 µm"),
-       ("DW6", "the P-well starts at 3 µm in place of 6 µm"),
-       ("NW3", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}.",
-    l="Redundant if the bottom limits.")
-E["DW6"] = dict(
-    p="A deep N-well with a drawn P-well from 6 µm.",
-    w="The far end of the P-well series. On an N-well a P-well at this "
-      "distance no longer matters, and the same is expected here for "
-      "either reason: the distance, or the bottom.",
-    c=[("DW3", "the P-well starts at 6 µm in place of 3 µm"),
-       ("NW6", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}.",
-    l="Redundant if the bottom limits.")
-E["DM1_3"] = dict(
-    p="A deep N-well with a Metal1 plate of 3 µm.",
-    w="A plate relieves the field at an edge. It does nothing for the "
-      "flat bottom, 2.5 µm down and shielded from the plate by the well "
-      "itself.",
-    c=[("DT20", "a Metal1 plate of 3 µm in place of none"),
-       ("DM1_6", "a plate of 3 µm in place of 6 µm"),
-       ("NM1_3", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}: the bottom limits. Higher: the edge limited "
-      "{DT20} and a plate helps.",
-    l="Redundant if the bottom limits.")
 E["DM1_6"] = dict(
     p="A deep N-well with a Metal1 plate of 6 µm: the deep-well "
       "counterpart of the plate that gains most among Metal1 plates on "
@@ -144,7 +80,7 @@ E["DM1_6"] = dict(
     w="If any plate could raise a deep N-well's breakdown, this one "
       "should. The comparison with {NM1_6} is the clearest single test "
       "of whether the edge or the bottom limits.",
-    c=[("DM1_3", "a plate of 6 µm in place of 3 µm"),
+    c=[("DT20", "a Metal1 plate of 6 µm in place of none"),
        ("DM1_10", "a plate of 6 µm in place of 10 µm"),
        ("NM1_6", "a deep N-well in place of an N-well"),
        ("DGM1", "the plate joined to the well in place of on its own "
@@ -197,7 +133,8 @@ E["DAo1T35"] = dict(
       "substrate and its depletion region is wide. This structure then "
       "shows whether a ring at 20 µm was limiting it.",
     c=[("DAo1", "the ring is at 35 µm in place of 20 µm"),
-       ("DT35", "NAT over the edge in place of none")],
+       ("NA0p6T35", "a deep N-well with NAT over its edge in place of "
+                    "an N-well with NAT beside it")],
     m="",
     r="Equal to {DAo1}.",
     l="Useful only if {DAo1} is much above {DT20}.")
@@ -232,7 +169,8 @@ E["DT20b"] = dict(
       "bottom depends on implant doses and not on mask edges, so the "
       "two copies should agree more closely than the plain N-well "
       "pair.",
-    c=[("DT20", "nothing but the position on the die"),
+    c=[("DT20", "nothing but the position on the die: the two stand at "
+                "opposite ends"),
        ("NT20b", "the same check on an N-well")],
     m="Swept with the same settings as {DT20} and in the same session.",
     r="A spread smaller than that of {NT20} and {NT20b} supports a "
@@ -257,7 +195,8 @@ E["CVN"] = dict(
       "against depth.",
     l="It has no fill block, so dummy fill lies inside the well. Its "
       "P+ ring is 6 µm away, and if P-well surrounds it the sweep ends "
-      "near 10 V.")
+      "near 10 V. Even then, the capacitance below 10 V differs between "
+      "a well with a deep P layer under it and one without.")
 E["CVN2"] = dict(
     p="The small N-well: 100 µm across, to separate the capacitance of "
       "the edge from that of the bottom.",
@@ -268,11 +207,11 @@ E["CVN2"] = dict(
     c=[("CVN", "100 µm across in place of 200 µm"),
        ("CVNA", "no NAT and a ring at 6 µm in place of NAT and a ring "
                 "at 20 µm"),
-       ("CVD2", "an N-well in place of a deep N-well")],
+       ("CVNA2", "no NAT in place of NAT, at half the size")],
     m="As for {CVN}.",
     r="With {CVN}, the capacitance per area and per length of edge.",
-    l="It has a fill block, and {CVN} has none. A difference caused by "
-      "the fill would be read as edge capacitance.")
+    l="Neither it nor {CVN} has a fill block, so the pair differs in "
+      "size alone. Both receive dummy fill inside the well.")
 E["CVNA"] = dict(
     p="An N-well whose capacitance can be followed beyond the plain "
       "well's breakdown. That sweep shows whether a deep P layer lies "
@@ -282,7 +221,8 @@ E["CVNA"] = dict(
       "bottom then reaches several micrometres down. If it meets a "
       "heavily doped P layer there, it stops widening and the "
       "capacitance stops falling.",
-    c=[("CVN2", "NAT and a ring at 20 µm in place of neither"),
+    c=[("CVNA2", "100 µm across in place of 200 µm"),
+       ("CVN2", "NAT and a ring at 20 µm in place of neither"),
        ("NA0p6", "a well 100 µm across in place of 30 µm")],
     m="The bias follows the well's own breakdown voltage from {P1}, "
       "and may exceed the range of the meter's internal bias.",
@@ -290,7 +230,26 @@ E["CVNA"] = dict(
       "under N-wells, assumption D. Capacitance that keeps falling: "
       "none within the depth reached.",
     l="It works only if NAT clears the edge. Its ring distance differs "
-      "from that of {CVN2}, so the two do not differ in NAT alone.")
+      "from that of {CVN2}, so the two do not differ in NAT alone. Its "
+      "edge supplies a large share of its capacitance, which {CVNA2} "
+      "removes.")
+E["CVNA2"] = dict(
+    p="The large N-well with NAT: 200 µm across, to separate the bottom "
+      "of {CVNA} from its edge at voltages the plain wells cannot reach.",
+    w="A deep P layer under the well shows in the capacitance of the "
+      "flat bottom. The edge of a well under NAT faces different silicon "
+      "from its bottom and its capacitance falls at a different rate. "
+      "With two sizes the edge's share is solved for and removed, as "
+      "{CVN} and {CVN2} do for a plain well.",
+    c=[("CVNA", "200 µm across in place of 100 µm, and a ring at 11 µm "
+                "in place of 20 µm"),
+       ("CVN", "NAT round the well in place of none")],
+    m="As for {CVNA}.",
+    r="With {CVNA}, the capacitance per area of an N-well's bottom up "
+      "to the breakdown voltage of a well under NAT.",
+    l="Its P+ ring is 11 µm away against 20 µm for {CVNA}, so the two "
+      "edges are not identical. If the ring limits it first, its sweep "
+      "ends below that of {CVNA}.")
 E["CVD"] = dict(
     p="The large deep N-well: 200 µm across, for the doping under a "
       "deep N-well.",
@@ -298,26 +257,15 @@ E["CVD"] = dict(
       "with voltage. That is what a heavily doped layer close under "
       "the well would cause, because the depletion region has little "
       "room to widen. This well measures that curve on silicon.",
-    c=[("CVD2", "200 µm across in place of 100 µm"),
-       ("CVN", "a deep N-well in place of an N-well")],
+    c=[("CVN", "a deep N-well in place of an N-well")],
     m="The bias stays below 80 % of this well's breakdown voltage, "
       "which is expected near 30 V.",
     r="A capacitance that falls as slowly as the published model's "
       "confirms a heavily doped layer under the deep N-well.",
-    l="No fill block. The N-well band under its contact adds a little "
-      "N-well capacitance at the perimeter.")
-E["CVD2"] = dict(
-    p="The small deep N-well: 100 µm across, to separate edge from "
-      "bottom for the deep N-well.",
-    w="As {CVN2} is to {CVN}. The edge of a deep N-well faces "
-      "different silicon from its bottom, so the two parts may fall "
-      "with voltage at different rates.",
-    c=[("CVD", "100 µm across in place of 200 µm"),
-       ("CVN2", "a deep N-well in place of an N-well")],
-    m="As for {CVD}.",
-    r="With {CVD}, the capacitance per area and per length of edge of "
-      "the deep N-well.",
-    l="As for {CVN2}: it has a fill block and {CVD} has none.")
+    l="It is the only large deep N-well, so its edge capacitance cannot "
+      "be separated from that of its bottom. It has no fill block, and "
+      "the N-well band under its contact adds capacitance at the "
+      "perimeter.")
 E["OPEN"] = dict(
     p="The part of every reading that is not the junction: a pad and "
       "a lead with no well.",

@@ -129,15 +129,16 @@ def rings():
     one = [(1.4, "NR1_1p4"), (2, "NR1_2"), (3, "NR1_3")]
     three = [(1.5, "NR3_1p5"), (2, "NR3_2")]
     five = [(1.4, "NR5_1p4"), (2, "NR5_2")]
+    wide = [(5, "NR1S5"), (8, "NR1S8"), (12, "NR1S12")]
     cols = (COLOUR["BL"], "#16a085", "#8e44ad")
     curves = [(f"{lab}, BL", "BL", pts, col) for (lab, pts), col in zip(
-        (("one ring", one), ("three rings", three), ("five rings", five)),
-        cols)]
-    curves += [(f"all counts, {proc}", proc, sorted(one + three + five))
+        (("one ring", one), ("three rings", three), ("five rings", five),
+         ("one ring 3 µm wide", wide)), cols + ("#d35400",))]
+    curves += [(f"all, {proc}", proc, sorted(one + three + five + wide))
                for proc in ("BD", "AL") if proc in pd.PRED["processes"]]
     return trend("Floating rings: breakdown against the first gap",
                  "gap from the well edge to ring 1 (µm)",
-                 [(x, f"{x:g}") for x in (1.4, 2, 3)], curves,
+                 [(x, f"{x:g}") for x in (1.4, 3, 5, 8, 12)], curves,
                  "A count of rings with no point has no finished "
                  "simulation.")
 
@@ -157,8 +158,7 @@ def gated():
 
 
 def dnw():
-    pts = [(2.6, "DT2p6"), (5, "DT5"), (10, "DT10"), (20, "DT20"),
-           (35, "DT35")]
+    pts = [(2.6, "DT2p6"), (10, "DT10"), (20, "DT20")]
     return trend("Deep N-wells: breakdown against the distance to the P+ "
                  "ring", "distance from the well edge to the P+ ring (µm)",
                  [(x, f"{x:g}") for x, _ in pts],
@@ -210,12 +210,13 @@ ALT = {
            "to 4 µm" + _END,
     "plates": _BV + "plate length from 1 µm to 12 µm, with separate curves "
               "for polysilicon, Metal1 and Metal2 plates" + _END,
-    "rings": _BV + "the gap from the well to ring 1, from 1.4 µm to 3 µm, "
-             "with separate curves for one, three and five rings" + _END,
+    "rings": _BV + "the gap from the well to ring 1, from 1.4 µm to 12 µm, "
+             "with separate curves for one, three and five rings and for "
+             "the wide contacted ring" + _END,
     "gated": _BV + "the four gated diodes, with the plate joined to the "
              "well and with the plate at 0 V" + _END,
     "dnw": _BV + "the distance from the edge of the deep N-well to the P+ "
-           "ring, from 2.6 µm to 35 µm" + _END,
+           "ring, from 2.6 µm to 20 µm" + _END,
     "large": "the capacitance of the 200 µm and the 100 µm N-well against "
              "reverse voltage from 0 V to 10 V, computed from the "
              "published junction model, falling from 6.4 pF to 2.5 pF and "
