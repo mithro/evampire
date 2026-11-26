@@ -116,8 +116,8 @@ Each script's docstring names the files it writes. These modules are
 helpers that the scripts above import, so run the script, not the helper:
 
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
-- `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py` and
-  every `fig_*.py`;
+- `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
+  `pred_data.py` and every `fig_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
 - `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
@@ -135,8 +135,12 @@ is written by `silicon/hvtest/export.py`. `docs/high-voltage/test-die/manifest.j
 is the floor plan: copy it from the second argument of
 `uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json`
 whenever the layout changes. `docs/high-voltage/test-die/predictions.json`
-holds the simulated breakdown voltages from mithro/gf180-tcad; its schema
-is in the docstring of `fig_pred.py`.
+holds the simulated breakdown voltages. It is written by
+`uv run python docs/high-voltage/test-die/import_predictions.py RECORD.json ...`
+from the records in `results/hv-junction/` of mithro/gf180-tcad; its schema
+is in the docstring of `pred_data.py`. `crosscheck.json` in the same folder
+holds the second-simulator results and is edited by hand. Rerun
+`figures.py` after changing either.
 
 The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
 the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
