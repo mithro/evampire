@@ -20,7 +20,7 @@ import schemdraw.elements as elm
 import schemdraw
 from circuits import GREY, HOT, OUT, box, extent, note
 
-SECOND = "#e08a00"
+SECOND = "#8e44ad"   # snapback and avalanche, as in sections.py
 # Each mode: title, the rail the tester grounds, the polarity at PAD, the
 # parts on the main path and the parts on the high-voltage second path.
 MODES = [
