@@ -7,7 +7,8 @@
 Reads each device's size from the CDL netlist of gf180mcu_fd_io__bi_t and
 gf180mcu_fd_io__dvdd, measures the same device in the cell's GDS, and
 writes both to docs/esd/gds/layout-check.csv. Exits with an error if any
-pair differs by more than 1 nm (or 0.001 µm²). GF180_IO names a checkout
+pair differs by more than 1 nm (or 0.001 µm²), or if the nets of the
+bidirectional pad do not connect as docs/esd/layout.rst says. GF180_IO names a checkout
 of the I/O library, as for figures.py:
 
     GF180_IO=$PWD/globalfoundries-pdk-libs-gf180mcu_fd_io \\
@@ -83,6 +84,32 @@ def driver(lay, window, lines, model):
     return net, gds
 
 
+def connections(cell, lines):
+    """Check the nets docs/esd/layout.rst describes against the netlist."""
+    pad, inn = gdskit.net(cell, "PAD"), gdskit.net(cell, "IN")
+    on_pad = [line for line in lines if " PAD " in line]
+    fets = [d for d in on_pad if d.startswith("M")]
+    # Every driver finger has one drain side, and two fingers share a drain.
+    fingers = sum(value(d, "nf") for d in fets)
+    drains = len(gdskit.parts(pad["comp"]))
+    resistors = len(gdskit.parts(pad["poly"]))
+    assert drains * 2 == fingers, (drains, fingers)
+    assert resistors == len([d for d in on_pad if d.startswith("R")]) == 4
+    assert len(on_pad) == len(fets) + resistors, "something else is on PAD"
+    assert len(gdskit.parts(inn["comp"])) == 4, "protected net: diode strips"
+    lay = gdskit.load(cell)
+    window = box(9.8, 71.8, 65.2, 119.1)       # inside the NMOS P+ ring
+    sources = lay["comp"].intersection(window).difference(
+        pad["comp"].union(lay["poly"]))
+    dvss = gdskit.net(cell, "DVSS")["comp"]
+    assert sources.difference(dvss.buffer(0.01)).area < 1e-6, "NMOS on DVSS"
+    window = box(10.5, 145.9, 64.5, 186.3)     # the PMOS fingers
+    sources = lay["comp"].intersection(window).difference(
+        pad["comp"].union(lay["poly"]))
+    dvdd = gdskit.net(cell, "DVDD")["comp"]
+    assert sources.difference(dvdd.buffer(0.01)).area < 1e-6, "PMOS on DVDD"
+
+
 def rows():
     out = []
 
@@ -117,9 +144,10 @@ def rows():
             ("Secondary diode to DVSS", "diode_nd2ps_06v0", "nplus")):
         (dev,) = [line for line in lines if model in line and " n20 " in line]
         parts = gdskit.parts(strips.intersection(lay[implant]))
+        (area,) = {round(p.area, 4) for p in parts}
         add(name, "Count", "", value(dev, "m"), len(parts))
-        add(name, "Area of each", "µm²", value(dev, "AREA") * UM * UM,
-            parts[0].area)
+        add(name, "Area of each", "µm²", value(dev, "AREA") * UM * UM, area)
+    connections("bi_t", lines)
 
     lay, lines = gdskit.load("dvdd"), netlist("dvdd")
     (fet,) = [line for line in lines if line.startswith("M")
@@ -146,9 +174,10 @@ def rows():
             value(cap, "l") * value(cap, "w") * UM * UM, a * b)
     (dio,) = [line for line in lines if line.startswith("D")]
     parts = gdskit.parts(lay["comp"].intersection(lay["diode"]))
+    (area,) = {round(p.area, 4) for p in parts}
     add("Supply diode", "Count", "", value(dio, "m"), len(parts))
     add("Supply diode", "Area of each", "µm²", value(dio, "AREA") * UM * UM,
-        parts[0].area)
+        area)
     return out
 
 

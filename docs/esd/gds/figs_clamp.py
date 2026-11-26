@@ -69,8 +69,8 @@ def clamp_fingers():
             colour=DVSS, weight="bold")
     f.label("Polysilicon bar joining the gates of a block (16 of its 20 fingers shown)",
             (11.8, 86), (f.px(0, 86)[0], top))
-    # Diffusion strips repeat every 1.22 µm: drain, gate, source, gate.
-    first, pitch = 74.92, 1.22
+    # The 0.52 µm strips repeat every 1.22 µm: drain, gate, source, gate.
+    first, pitch = 74.88, 1.22
     bot = f.oy + f.dh + 30
 
     def under(text, k, gx=20.6, **kw):
@@ -81,6 +81,7 @@ def clamp_fingers():
     under("N+ source,\non DVSS", 3, colour=DVSS, weight="bold")
     under("Gate", 5.5)
     gap = first + 12 * pitch + 0.185   # between a contact and the gate
+    # (0.11 µm contact half-width plus half of the 0.15 µm gap)
     f.label("Contacts 0.15 µm from each gate:\nno silicide block",
             (20.9, gap), (f.px(0, gap)[0], bot), weight="bold")
     # Dimension ticks on the fingers, named in the bare strip above them.

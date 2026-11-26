@@ -1,6 +1,7 @@
 """Read gf180mcu_fd_io cell layouts and pick out their layers and nets.
 
-Helper for figures.py: run that script, not this module. The cells come
+Helper for figures.py and check.py: run those scripts, not this module.
+The cells come
 from a checkout of the foundry I/O library named by the environment
 variable GF180_IO, at the commit docs/esd/simulation.rst pins.
 
@@ -23,7 +24,7 @@ LAYERS = {
     "metal1": (34, 0), "via1": (35, 0), "metal2": (36, 0), "via2": (38, 0),
     "metal3": (42, 0), "via3": (40, 0), "metal4": (46, 0), "via4": (41, 0),
     "metal5": (81, 0), "pad": (37, 0), "resistor": (110, 5),
-    "diode": (115, 5), "moscap": (166, 5), "esd": (24, 5),
+    "diode": (115, 5),
 }
 # The metal stack from the silicon up: each conductor and the cut above it.
 STACK = [("comp", "contact"), ("poly", "contact"), ("metal1", "via1"),
@@ -60,7 +61,8 @@ class Cell(dict):
     def __missing__(self, name):
         key = LAYERS[name]
         src = cell_path(self.cell)
-        file = CACHE / f"{self.cell}-{name}-{int(src.stat().st_mtime)}.wkb"
+        file = CACHE / (f"{self.cell}-{name}-{key[0]}-{key[1]}-"
+                        f"{int(src.stat().st_mtime)}.wkb")
         if file.exists():
             geom = shapely.from_wkb(file.read_bytes())
         else:
@@ -71,8 +73,12 @@ class Cell(dict):
             polys = [Polygon(p.points) for p in shapes
                      if (p.layer, p.datatype) == key]
             polys = [p if p.is_valid else p.buffer(0) for p in polys]
-            if name in CUTS:   # cuts never overlap: no merge needed
-                geom = shapely.MultiPolygon(polys)
+            if name in CUTS:
+                # Cuts are too many to merge quickly. Overlapping cells
+                # draw some twice, so keep one of each.
+                unique = {p.bounds: p for p in polys}
+                geom = shapely.MultiPolygon(
+                    [unique[k] for k in sorted(unique)])
             else:
                 geom = unary_union(polys)
             CACHE.mkdir(exist_ok=True)
@@ -87,13 +93,6 @@ def load(cell):
     return Cell(cell)
 
 
-@functools.cache
-def labels(cell):
-    """Return [(text, x, y, gds layer)] of the flattened cell's labels."""
-    return [(t.text, t.origin[0], t.origin[1], t.layer)
-            for t in _flat(cell).labels]
-
-
 def parts(geom):
     """The polygons of a geometry, as a list."""
     if geom.is_empty:
@@ -106,11 +105,6 @@ def parts(geom):
 def clip(geom, window):
     """The part of a geometry inside window (x0, y0, x1, y1)."""
     return geom.intersection(box(*window))
-
-
-def bounds(cell):
-    lay = load(cell)
-    return unary_union([lay["metal5"], lay["nwell"], lay["comp"]]).bounds
 
 
 # Where each net of interest starts: (layer, x, y) of one of its shapes.

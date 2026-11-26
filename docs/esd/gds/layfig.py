@@ -215,10 +215,10 @@ class Fig:
                 'stroke="{}" stroke-width="1.5"/>'.format(*seg, colour))
         self.text(*tpos, s, anchor=anchor, fill=colour, weight="bold")
 
-    def flow(self, points, colour=HOT, width=4.0, dash=None, pixels=False,
+    def flow(self, points, colour=HOT, width=4.0, dash=None,
              key="discharge current", head=True):
         """An arrow along layout points: the direction of a current."""
-        pts = points if pixels else [self.px(*p) for p in points]
+        pts = [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
         mid = {HOT: "hot", CLAMP: "clamp", SECONDARY: "second",
                SNAP: "snap"}[colour]

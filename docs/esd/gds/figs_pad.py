@@ -14,11 +14,10 @@ CELL = "bi_t"
 # Blocks of the cell, as (x0, y0, x1, y1) in GDS micrometres, from the
 # placement of the foundry's sub-cells.
 PREDRIVERS = (2.0, 211.7, 73.3, 242.3)   # comp018green_out_predrv, four
-BUFFERS = (3.6, 245.5, 70.4, 264.1)      # comp018green_out_sigbuf_*
-SECOND = (21.9, 266.6, 57.3, 309.9)      # comp018green_esd_cdm
-INPUT = (3.5, 311.6, 71.8, 348.4)        # rest of comp018green_inpath_cms_smt
+BUFFERS = (3.6, 245.5, 70.4, 264.1)      # out_sigbuf_oe, _a and sigbuf_1
+SECOND = (21.7, 266.7, 52.7, 309.9)      # comp018green_esd_cdm
+INPUT = (3.5, 311.6, 71.8, 341.8)        # rest of comp018green_inpath_cms_smt
 PULLS = (3.8, 266.7, 18.8, 309.5)        # comp018green_in_pupd resistors
-SNAPBACK = SNAP   # the purple of snapback in the other ESD figures
 
 
 def cell():
@@ -49,9 +48,9 @@ def cell():
     bot = f.oy + f.dh + 30
     f.label("Guard rings round each driver", (70.2, 96),
             (f.px(0, 126)[0], bot), also=[(70.5, 160)])
-    f.label("Secondary protection:\nresistors and diodes", (57.3, 280),
+    f.label("Secondary protection:\nresistors and diodes", (52.7, 280),
             (f.px(0, 280)[0], bot), colour=SECONDARY, weight="bold")
-    f.label("Input buffer\nand logic", (71.8, 335), (f.px(0, 335)[0], bot))
+    f.label("Input buffer\nand logic", (71.8, 330), (f.px(0, 335)[0], bot))
     f.note(HOT, "primary protection, on the PAD net")
     f.note(SECONDARY, "secondary protection", kind="box")
     f.note(GREY, "other part of the cell", kind="box")
@@ -127,7 +126,7 @@ def paths():
         for side in (-1, 1):
             f.flow([(drain + side * 0.9, 90 + side * 5),
                     (drain + side * 5.5, 90 + side * 5)],
-                   colour=SNAPBACK, width=4.0,
+                   colour=SNAP, width=4.0,
                    key="discharge current in snapback")
     x, y = f.px(7.3, 84)
     f.text(x, y + 5, "NMOS output drivers", weight="bold")
@@ -145,7 +144,7 @@ def paths():
             colour=DVSS, weight="bold")
     f.label("Positive pulse above 10.7 V:\nsnapback from each NMOS drain\n"
             "to the sources beside it, on DVSS", (59.0, 95),
-            (f.px(0, 110)[0], bot), colour=SNAPBACK, weight="bold",
+            (f.px(0, 110)[0], bot), colour=SNAP, weight="bold",
             elbow=(f.px(0, 95)[0], f.oy + f.dh + 12))
     f.label("N-well, seen between the\ndrains and its guard ring", (65.2, 150),
             (f.px(0, 166)[0], bot))
