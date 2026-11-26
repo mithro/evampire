@@ -100,6 +100,8 @@ def connections(cell, lines):
     assert len(on_pad) == len(fets) + resistors, "something else is on PAD"
     assert len(gdskit.parts(inn["comp"])) == 4, "protected net: diode strips"
     lay = gdskit.load(cell)
+    # No P-well shape is drawn under either output driver.
+    assert lay["pwell"].intersection(box(0, 66, 75, 208)).is_empty
     # The protected net reaches gates of the input buffer, beyond y = 311.
     gates = inn["poly"].intersection(lay["comp"]).intersection(
         box(0, 311, 75, 350))
@@ -166,6 +168,8 @@ def rows():
     add("Clamp transistor", "Total width", "µm", value(fet, "w") * UM,
         count * width)
     add("Clamp transistor", "Gate length", "µm", value(fet, "l") * UM, length)
+    # The clamp transistor has no silicide block.
+    assert lay["sab"].intersection(box(0, 66, 75, 195)).is_empty
     res = [line for line in lines if line.startswith("R")]
     count, (length, w) = same(spans(lay["resistor"], (0, 270, 75, 300)))
     add("Timer resistor", "Count", "", len(res), count)

@@ -61,6 +61,7 @@ def clamp_fingers():
     f.geom(nets["DVSS"], "dvss", opacity=0.7)
     f.layer("poly")
     f.geom(lay["poly"].intersection(lay["comp"]), "gate")
+    f.layer("sab", width=1.0)   # draws nothing: no silicide block here
     f.note(DVDD, "on DVDD")
     f.note(DVSS, "on DVSS")
     f.layer("contact")

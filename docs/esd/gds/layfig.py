@@ -354,8 +354,10 @@ class Fig:
             self.notes += [n for n in other.notes if n not in self.notes]
         drawn = self._content() + [line for other, _ in self.panels
                                    for line in other._content()]
-        if any('stroke-dasharray="7,5"' in line for line in drawn):
-            self.notes.append(("crop", GREY, "layout continues"))
+        crop = ("crop", GREY, "layout continues")
+        if (crop not in self.notes
+                and any('stroke-dasharray="7,5"' in line for line in drawn)):
+            self.notes.append(crop)
         legend, y_end = self._legend(x + 24, base + 9)
         h = max(self.h, y_end + 16)
         defs = [

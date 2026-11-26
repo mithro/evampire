@@ -19,6 +19,8 @@ figures share four conventions:
 * Each layer has the same colour in every figure, and the silicon layers
   have the colours of the cross-section :numref:`fig-esd-driver-section`.
   A figure about one net draws the other layers paler, or leaves them out.
+  The cross-section's P-well has no colour here, because no P-well is
+  drawn under the transistors (:ref:`esd-layout-driver-parts`).
 * Red marks the PAD net and the discharge current, blue the secondary
   protection and orange the rail clamp, as in the schematic. A purple
   arrow marks snapback, as in the cross-section. Magenta marks what
@@ -81,7 +83,7 @@ except through the drains and that wire.
    :name: fig-esd-gds-pad-net
    :alt: Layout of the pad end of the bidirectional pad with the PAD net in
          red. The bond pad, metal 2 to metal 5 stacked, joins a metal 2 bus
-         that covers both output drivers. Under the bus, four NMOS drains and
+         over both output drivers. Under the bus, four NMOS drains and
          six PMOS drains are drawn dark red; each lies between two gates. A
          metal 2 wire 2 µm wide runs on from the bus to the four secondary
          protection resistors.
@@ -89,6 +91,8 @@ except through the drains and that wire.
 
    The PAD net of gf180mcu_fd_io__bi_t: the bond pad, the metal 2 bus and
    every drain the bus connects to.
+
+.. _esd-layout-driver-parts:
 
 Output driver parts
 -------------------
@@ -116,8 +120,10 @@ No P-well shape is drawn under these transistors, nor under any ordinary
 NMOS transistor of the cell: the layout draws that layer only under the
 MOS capacitors. The foundry both draws and generates the P-well mask
 ([ESD-GF180-DRM-4-3]_), so the layout does not show whether the silicon
-under the transistors is P-well. The figures colour every area with no
-N-well as P-type silicon.
+under the transistors is P-well. The foundry names the junction of a 6 V
+NMOS drain N+ to P-well (:numref:`tab-esd-breakdown`), and the
+cross-section :numref:`fig-esd-driver-section` draws that P-well. The
+layout figures colour every area with no N-well as P-type silicon.
 
 .. figure:: figures/gds-nmos-driver.svg
    :name: fig-esd-gds-nmos-driver
@@ -194,9 +200,8 @@ crosses:
   either side.
 
 Both diode currents cross the well or substrate sideways, from under the
-drains to a ring at the edge. This is the well resistance that makes a
-real drain diode more resistive than the foundry's test diode
-(:ref:`esd-simulation`).
+drains to a ring at the edge. That path is part of the resistance a real
+drain diode adds to the foundry's test diode (:ref:`esd-simulation`).
 
 .. figure:: figures/gds-paths.svg
    :name: fig-esd-gds-paths
@@ -301,15 +306,17 @@ the silicide block is for (:ref:`esd-io-cells`).
 Path across the ring
 --------------------
 
-Metal 3, metal 4 and metal 5 cross each of these pad cells in stripes, one
-above
-another, in the direction of the cell's 75 µm width. Each stripe is in the
-same place in every cell, so the stripes of neighbouring cells join into
-rails that run round the chip. These rails are the DVDD and DVSS rings of
-:ref:`esd-io-cells`. Over the whole length of a cell there are 26 stripes:
-12 are DVDD, 10 are DVSS, and two each are the core supply VDD and its
-ground VSS. :numref:`fig-esd-gds-ring` shows those in the first 222 µm,
-which are all DVDD or DVSS.
+Metal 3, metal 4 and metal 5 cross each of these pad cells in stripes,
+one above another, in the direction of the cell's 75 µm width. Each stripe
+is in the same place in every cell, so the stripes of neighbouring cells
+join into rails that run round the chip. These rails are the DVDD and DVSS
+rings of :ref:`esd-io-cells`.
+
+Over its whole length the bidirectional pad has 26 stripes: 12 are DVDD,
+10 are DVSS, and two each are the core supply VDD and its ground VSS. The
+DVDD pad connects the two VDD stripes to DVDD, and the DVSS pad connects
+the two VSS stripes to DVSS. :numref:`fig-esd-gds-ring` shows the stripes
+of the first 222 µm, which are all DVDD or DVSS in every cell.
 
 A positive discharge from PAD to DVSS uses those rails
 (:numref:`tab-esd-paths`). :numref:`fig-esd-gds-ring` follows it through a
@@ -360,12 +367,12 @@ device, and all of them agree.
    :widths: 28 36 8 14 14
 
 The layout also confirms the connections of :numref:`fig-esd-io-cell`.
-Following each net through the contacts and vias shows that:
+Following each net through the contacts and vias shows four things:
 
-* PAD reaches only the ten driver drains and the four resistors;
-* the NMOS sources and the P+ ring round them are on DVSS;
-* the PMOS sources and the N+ ring of their N-well are on DVDD;
-* the protected net reaches the four diode strips and the input buffer.
+* PAD reaches only the ten driver drains and the four resistors.
+* The NMOS sources and the P+ ring round them are on DVSS.
+* The PMOS sources and the N+ ring of their N-well are on DVDD.
+* The protected net reaches the four diode strips and the input buffer.
 
 .. _esd-layout-method:
 
@@ -405,6 +412,7 @@ inside the P+ implant, so each diffusion has the colour of its doping.
 Most figures leave out the metal, vias and contacts that would hide the
 silicon, and show only the metal of the net in question.
 
-A net is followed through metal, contacts and vias only. A transistor's
+A net is followed through diffusion, polysilicon, metal, contacts and
+vias. A transistor's
 channel and a resistor's body do not join the two sides, so a drain and
 its source count as different nets.

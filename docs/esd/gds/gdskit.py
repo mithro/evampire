@@ -142,9 +142,8 @@ def trace(cell, layer, x, y):
     shapes["comp"] = parts(lay["comp"].difference(lay["poly"]))
     trees = {n: shapely.STRtree(s) for n, s in shapes.items()}
     cuts = {}
-    for lower, cut in STACK:
-        if cut:
-            cuts.setdefault(cut, shapely.STRtree(parts(lay[cut])))
+    for cut in sorted({cut for _, cut in STACK if cut}):
+        cuts[cut] = shapely.STRtree(parts(lay[cut]))
     above = {"comp": ["metal1"], "poly": ["metal1"], "metal1": ["metal2"],
              "metal2": ["metal3"], "metal3": ["metal4"], "metal4": ["metal5"]}
     cut_of = dict(STACK)
