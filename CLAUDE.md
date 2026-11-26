@@ -139,8 +139,9 @@ rebuilds the tables and figures from the waveforms of its last run.
 The layout figures (`docs/esd/gds/figures.py`) and the netlist-against-layout
 table (`docs/esd/gds/check.py`) read the foundry's GDS files. `GF180_IO`
 names a checkout of the gf180mcu I/O cell repository at the commit
-`docs/esd/simulation.rst` pins. Every layout figure uses the palette, scale
-bar and legend of `layfig.py`, and is drawn with the bond pad at the left.
+`docs/esd/simulation.rst` pins. Every layout figure uses the palette of
+`layfig.py` and the scale bar and legend of `laykey.py`, and is drawn with
+the bond pad at the left.
 `check.py` fails if a device's size in the layout differs from its netlist.
 
 Four scripts print the numbers their pages quote, so re-run one after

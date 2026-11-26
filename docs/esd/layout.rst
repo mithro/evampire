@@ -365,8 +365,8 @@ the voltage at the pad (:doc:`results-hbm`).
          pad cell, below, side by side as on the pad ring. Stripes of metal 3
          to 5 cross both cells, some DVDD in magenta and some DVSS in green,
          each continuing from one cell into the other. A red path with
-         arrowheads marks the current. Step 1, from the PAD bond pad along metal 2 to the PMOS
-         drains. Step 2, through the PMOS drain diode onto the DVDD stripes
+         arrowheads marks the current. Step 1, from the PAD bond pad along
+         metal 2 to the PMOS drains. Step 2, through the PMOS drain diode onto the DVDD stripes
          above. Step 3, along the DVDD rail into the supply pad. Step 4,
          through the clamp transistor, four orange blocks in parallel, from
          the DVDD stripes to metal 2 of the DVSS pad. Step 5, along the

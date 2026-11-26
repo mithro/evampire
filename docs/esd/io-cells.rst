@@ -153,9 +153,10 @@ each one turns on and :term:`snaps back <Snapback>` to about 6 V
 
 The cross-section :numref:`fig-esd-driver-section` cuts across the gates.
 :numref:`fig-esd-io-gds-driver` shows the same NMOS transistors from
-above, in the layout, with the rings that surround them. The line A–A′ in the layout is the cut that the
-cross-section draws for the NMOS: from the drain contacts at A, across
-the blocked drain, the gate and the source, to the P+ ring at A′.
+above, in the layout, with the rings that surround them. The line A–A′
+in the layout is the cut that the cross-section draws for the NMOS: from
+the drain contacts at A, across the blocked drain, the gate and the
+source, to the P+ ring at A′.
 
 .. figure:: figures/gds-pad-net.svg
    :name: fig-esd-io-gds-pad-net
@@ -404,8 +405,8 @@ follows the first path along the rails to a supply pad.
    :name: fig-esd-io-gds-ring
    :alt: The pad ends of a bidirectional pad cell and a DVSS supply pad cell,
          side by side. Stripes of metal 3 to 5, DVDD in magenta and DVSS in
-         green, cross both cells. A red arrow in five numbered steps runs from
-         the PAD bond pad to the PMOS drains, onto the DVDD stripes, along them
+         green, cross both cells. A red path with arrowheads, in five
+         numbered steps, runs from the PAD bond pad to the PMOS drains, onto the DVDD stripes, along them
          into the supply pad, through the clamp transistor and back to the DVSS
          bond pad.
    :width: 100%
