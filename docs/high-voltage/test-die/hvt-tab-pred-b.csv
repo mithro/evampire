@@ -1,64 +1,67 @@
-Structure,Group,BL: edge / corner (V),BLq: edge / corner (V),BD: edge / corner (V)
-NR1S2,Floating rings,94.0 / 89.8,94.8 / 89.6,62.9 / 61.2
-NR1S3,Floating rings,96.4 / failed,failed / 91.9,62.9 / 61.1
-NGP4,Gated diodes,94.4 / 89.2,94.7 / 89.5,62.9 / 60.8
-NGM1,Gated diodes,90.2 / 84.8,90.8 / 85.4,62.9 / 59.6
-NAGM1,Gated diodes,90.2 / 84.8,90.8 / 85.4,62.9 / 59.6
-DGM1,Gated diodes,32.4 / 30.3,failed / 31.3,32.4 / 31.3
-NT1,Plain N-well,43.5 / 44.2,42.8 / 43.8,43.6 / 44.3
-NT5,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.7
-NT10,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NT20,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NT35,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NC0,Plain N-well,76.0 / > 36.3,79.9 / > 37.7,62.9 / > 36.0
-NC15,Plain N-well,76.0 / 70.6,79.9 / 74.1,62.9 / 59.6
-NW0,Drawn P-well,19.8 / 20.0,19.7 / 19.9,19.8 / 20.0
-NW1p5,Drawn P-well,53.2 / 51.9,53.5 / 52.5,53.0 / 51.6
-NW3,Drawn P-well,72.1 / 65.2,74.5 / 67.5,62.9 / 61.2
-NW6,Drawn P-well,76.0 / 67.0,79.8 / 70.3,62.9 / 61.7
-NA0p6,NAT layer,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NA2,NAT layer,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NA0p6T10,NAT layer,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NA4,NAT layer,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NA0p6T35,NAT layer,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NA0p6C0,NAT layer,76.0 / > 36.3,79.9 / > 37.7,62.9 / > 36.0
-NAM1_3,NAT layer,88.5 / 83.2,89.0 / 83.7,62.9 / 61.2
-NAM1_6,NAT layer,90.2 / 84.8,90.8 / 85.4,62.9 / 59.6
-NAM1_10,NAT layer,90.6 / 85.2,91.3 / 85.9,62.9 / 60.8
-NAM2_12,NAT layer,87.6 / 82.3,88.4 / 83.0,62.9 / 60.8
-NP1,Field plates,86.8 / 81.7,87.3 / 82.1,62.9 / 59.6
-NP2,Field plates,90.0 / 84.8,90.4 / 85.2,62.9 / 61.2
-NP4,Field plates,94.4 / 89.2,94.7 / 89.5,62.9 / 60.8
-NM1_3,Field plates,88.5 / 83.2,89.0 / 83.7,62.9 / 61.2
-NM1_6,Field plates,90.2 / 84.8,90.8 / 85.4,62.9 / 59.6
-NM1_10,Field plates,90.6 / 85.2,91.3 / 85.9,62.9 / 60.8
-NM2_6,Field plates,87.4 / 82.1,88.1 / 82.8,62.9 / 61.2
-NM2_12,Field plates,87.6 / 82.3,88.4 / 83.0,62.9 / 60.8
-NPM12,Field plates,92.4 / 87.1,92.9 / 87.6,62.9 / 61.2
-NR1_1p4,Floating rings,80.8 / 74.6,82.8 / 76.1,62.9 / 61.1
-NR1_2,Floating rings,94.0 / 89.8,94.8 / failed,failed / 61.2
-NR1_3,Floating rings,96.4 / failed,97.7 / failed,62.9 / 61.1
-NR3W1,Floating rings,failed / failed,failed / failed,failed / failed
-DT2p6,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DT5,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DT10,Deep N-well,32.4 / 31.3,32.3 / 31.3,32.4 / 31.3
-DT20,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DT35,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DC0,Deep N-well,32.4 / 33.7,failed / 32.9,32.4 / 33.5
-DC15,Deep N-well,32.4 / 31.3,failed / failed,32.4 / 31.3
-DW1p5,Deep N-well,32.4 / 30.0,failed / 31.3,32.4 / 31.3
-DW3,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DW6,Deep N-well,32.4 / 31.3,32.3 / 31.3,32.4 / 31.3
-DM1_3,Field plates,32.3 / 31.3,32.3 / 31.3,32.4 / 31.3
-DM1_6,Field plates,32.3 / 30.3,32.3 / 31.3,32.4 / 31.3
-DM1_10,Field plates,32.4 / 30.3,32.3 / 31.3,32.3 / 29.6
-DPM12,Field plates,32.3 / 31.3,failed / 31.3,32.4 / 31.3
-DAo1,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DAo1T35,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-DAo1C0,Deep N-well,32.4 / 33.7,failed / 32.9,32.4 / 33.5
-DAo1M1_6,Deep N-well,32.3 / 30.3,32.3 / 31.3,32.4 / 31.3
-NT20b,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-DT20b,Deep N-well,32.4 / 31.3,failed / 31.3,32.4 / 31.3
-NA0p6b,NAT layer,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NT20L,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
-NT20V,Plain N-well,76.0 / 67.0,79.9 / 70.3,62.9 / 61.2
+Structure,Group,BL: edge / corner (V),BLhi: edge / corner (V),BLlo: edge / corner (V),BLq: edge / corner (V),BLq3: edge / corner (V),BD: edge / corner (V),BDhi: edge / corner (V),BDlo: edge / corner (V)
+NR1S2,Floating rings,94.0 / 89.8,–,–,94.8 / 89.6,–,62.9 / 61.2,–,–
+NR1S3,Floating rings,96.4 / 90.3,–,–,97.7 / 91.9,–,62.9 / 61.1,–,–
+NGP4,Gated diodes,94.4 / 89.2,–,–,94.7 / 89.5,–,62.9 / 60.8,–,–
+NGM1,Gated diodes,90.2 / 84.8,–,–,90.8 / 85.4,–,62.9 / 59.6,–,–
+NAGM1,Gated diodes,90.2 / 84.8,–,–,90.8 / 85.4,–,62.9 / 59.6,–,–
+DGM1,Gated diodes,32.4 / 30.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+NT1,Plain N-well,43.5 / 44.2,–,–,42.8 / 43.8,–,43.6 / 44.3,–,–
+NT5,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.7,–,–
+NT10,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NT20,Plain N-well,76.0 / 67.0,66.7 / 60.2,94.4 / 79.4,79.9 / 70.3,86.2 / 77.0,62.9 / 61.2,62.9 / 59.2,62.5 / 61.0
+NT35,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NC0,Plain N-well,76.0 / > 36.3,66.7 / > 34.5,94.4 / > 38.7,79.9 / > 37.7,86.2 / > 42.0,62.9 / > 36.0,62.9 / > 34.7,62.5 / > 38.6
+NC15,Plain N-well,76.0 / 70.6,–,–,79.9 / 74.1,–,62.9 / 59.6,–,–
+NW0,Drawn P-well,19.8 / 20.0,–,–,19.7 / 19.9,–,19.8 / 20.0,–,–
+NW1p5,Drawn P-well,53.2 / 51.9,–,–,53.5 / 52.5,–,53.0 / 51.6,–,–
+NW3,Drawn P-well,72.1 / 65.2,65.5 / 59.7,81.2 / 72.9,74.5 / 67.5,78.7 / 71.6,62.9 / 61.2,62.9 / 58.8,62.5 / 59.2
+NW6,Drawn P-well,76.0 / 67.0,–,–,79.8 / 70.3,–,62.9 / 61.7,–,–
+NA0p6,NAT layer,76.0 / 67.0,66.7 / 60.2,94.4 / 79.4,79.9 / 70.3,86.2 / 77.0,62.9 / 61.2,62.9 / 59.2,62.5 / 61.0
+NA2,NAT layer,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NA0p6T10,NAT layer,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NA4,NAT layer,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NA0p6T35,NAT layer,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NA0p6C0,NAT layer,76.0 / > 36.3,–,–,79.9 / > 37.7,–,62.9 / > 36.0,–,–
+NAM1_3,NAT layer,88.5 / 83.2,–,–,89.0 / 83.7,–,62.9 / 61.2,–,–
+NAM1_6,NAT layer,90.2 / 84.8,78.8 / 75.7,117.7 / 105.8,90.8 / 85.4,92.0 / 86.6,62.9 / 59.6,62.9 / 59.5,62.5 / 61.0
+NAM1_10,NAT layer,90.6 / 85.2,–,–,91.3 / 85.9,–,62.9 / 60.8,–,–
+NAM2_12,NAT layer,87.6 / 82.3,–,–,88.4 / 83.0,–,62.9 / 60.8,–,–
+NP1,Field plates,86.8 / 81.7,–,–,87.3 / 82.1,–,62.9 / 59.6,–,–
+NP2,Field plates,90.0 / 84.8,79.3 / 76.2,113.2 / failed,90.4 / 85.2,failed / failed,62.9 / 61.2,failed / failed,62.5 / failed
+NP4,Field plates,94.4 / 89.2,–,–,94.7 / 89.5,–,62.9 / 60.8,–,–
+NM1_3,Field plates,88.5 / 83.2,–,–,89.0 / 83.7,–,62.9 / 61.2,–,–
+NM1_6,Field plates,90.2 / 84.8,78.8 / 75.7,117.7 / 105.8,90.8 / 85.4,92.0 / failed,62.9 / 59.6,62.9 / 59.5,62.5 / 61.0
+NM1_10,Field plates,90.6 / 85.2,–,–,91.3 / 85.9,–,62.9 / 60.8,–,–
+NM2_6,Field plates,87.4 / 82.1,–,–,88.1 / 82.8,–,62.9 / 61.2,–,–
+NM2_12,Field plates,87.6 / 82.3,–,–,88.4 / 83.0,–,62.9 / 60.8,–,–
+NPM12,Field plates,92.4 / 87.1,–,–,92.9 / 87.6,–,62.9 / 61.2,–,–
+NR1_1p4,Floating rings,80.8 / 74.6,–,–,82.8 / 76.1,–,62.9 / 61.1,–,–
+NR1_2,Floating rings,94.0 / 89.8,–,–,94.8 / 89.6,–,62.9 / 61.2,–,–
+NR1_3,Floating rings,96.4 / 90.3,–,–,97.7 / 91.8,–,62.9 / 61.1,–,–
+NR3_1p5,Floating rings,failed / 107.1,–,–,failed / failed,–,failed / 61.2,–,–
+NR3_2,Floating rings,failed / failed,87.0 / 84.0,failed / failed,failed / failed,failed / failed,62.9 / failed,failed / 61.0,62.5 / failed
+NR3W1,Floating rings,failed / failed,–,–,failed / failed,–,62.9 / 60.2,–,–
+NR3M1,Floating rings,failed / failed,–,–,failed / failed,–,failed / 61.2,–,–
+DT2p6,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DT5,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DT10,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DT20,Deep N-well,32.4 / 31.3,failed / failed,failed / failed,32.3 / 31.3,failed / failed,32.4 / 31.3,failed / failed,failed / failed
+DT35,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DC0,Deep N-well,32.4 / 33.7,–,–,32.3 / 32.9,–,32.4 / 33.5,–,–
+DC15,Deep N-well,32.4 / 31.3,–,–,32.3 / failed,–,32.4 / 31.3,–,–
+DW1p5,Deep N-well,32.4 / 30.0,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DW3,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DW6,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DM1_3,Field plates,32.3 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DM1_6,Field plates,32.3 / 30.3,failed / failed,failed / failed,32.3 / 31.3,failed / failed,32.4 / 31.3,failed / failed,failed / failed
+DM1_10,Field plates,32.4 / 30.3,–,–,32.3 / 31.3,–,32.3 / 29.6,–,–
+DPM12,Field plates,32.3 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DAo1,Deep N-well,32.4 / 31.3,failed / failed,failed / failed,32.3 / 31.3,failed / failed,32.4 / 31.3,failed / failed,failed / failed
+DAo1T35,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DAo1C0,Deep N-well,32.4 / 33.7,–,–,32.3 / 32.9,–,32.4 / 33.5,–,–
+DAo1M1_6,Deep N-well,32.3 / 30.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+NT20b,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+DT20b,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+NA0p6b,NAT layer,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NT20L,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
+NT20V,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–

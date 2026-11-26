@@ -1,11 +1,17 @@
 Process,Family,Description
 AD,AD,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)"
 AL,AL,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)"
+ALhi,AL,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; substrate 5e15 cm^-3"
 AnD,AnD,"P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)"
 AnL,AnL,"P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)"
 BD,BD,P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)
+BDhi,BD,P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; substrate 5e15 cm^-3
+BDlo,BD,P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; substrate 2e15 cm^-3
 BL,BL,P-well only where the layout draws it; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)
+BLhi,BL,P-well only where the layout draws it; deep P layer under deep N-well only; substrate 5e15 cm^-3
+BLlo,BL,P-well only where the layout draws it; deep P layer under deep N-well only; substrate 2e15 cm^-3
 BLq,BL,P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 1e11 cm^-2
+BLq3,BL,P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 3e11 cm^-2
 GAD,G,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V"
 GAL,G,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V"
 GAnD,G,"P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V"

@@ -2,11 +2,17 @@
  "processes": {
   "AD": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)",
   "AL": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)",
+  "ALhi": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; substrate 5e15 cm^-3",
   "AnD": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)",
   "AnL": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)",
   "BD": "P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)",
+  "BDhi": "P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; substrate 5e15 cm^-3",
+  "BDlo": "P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; substrate 2e15 cm^-3",
   "BL": "P-well only where the layout draws it; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)",
+  "BLhi": "P-well only where the layout draws it; deep P layer under deep N-well only; substrate 5e15 cm^-3",
+  "BLlo": "P-well only where the layout draws it; deep P layer under deep N-well only; substrate 2e15 cm^-3",
   "BLq": "P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 1e11 cm^-2",
+  "BLq3": "P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 3e11 cm^-2",
   "GAD": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
   "GAL": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
   "GAnD": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
@@ -16,10 +22,10 @@
   "GBLq": "P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V"
  },
  "source": {
-  "commit": "86b458c7b1eb",
+  "commit": "37fa71eff4e3, 86b458c7b1eb",
   "records": [
    {
-    "cases": 544,
+    "cases": 554,
     "commit": "86b458c7b1eb, b30f3b79f80e",
     "image": "ghcr.io/mithro/gf180-tcad-tcad-dev@sha256:fe34752893b8078bb9053875fd43d4b45b75ca757d75150b2dca4b9ada9c0c44",
     "not_converged": [
@@ -42,7 +48,6 @@
      "NAGM1@gw|AL|edge",
      "NR1S3|AL|edge",
      "NR1S3|BL|corner",
-     "NR1S3|BLq|edge",
      "NR1_1p4|AL|edge",
      "NR1_2|AL|edge",
      "NR1_2|BD|edge",
@@ -50,7 +55,6 @@
      "NR1_3|AL|edge",
      "NR1_3|BL|corner",
      "NR1_3|BLq|corner",
-     "NR3M1|AL|edge",
      "NR3M1|BL|edge",
      "NR3M1|BL|corner",
      "NR3M1|BD|edge",
@@ -70,7 +74,6 @@
      "NR3W3|BD|corner",
      "NR3W3|BLq|edge",
      "NR3W3|BLq|corner",
-     "NR3_1p5|AL|edge",
      "NR3_1p5|BL|edge",
      "NR3_1p5|BL|corner",
      "NR3_1p5|BD|edge",
@@ -104,16 +107,128 @@
      "NR5_2|BD|edge",
      "NR5_2|BD|corner",
      "NR5_2|BLq|edge",
-     "NR5_2|BLq|corner",
-     "NT20|AL|edge",
-     "NT20L|AL|edge",
-     "NT35|AL|edge",
-     "NW0|AL|edge",
-     "NW1p5|AL|edge",
-     "NW3|AL|edge",
-     "NW6|AL|edge"
+     "NR5_2|BLq|corner"
     ],
     "record": "main.json"
+   },
+   {
+    "cases": 29,
+    "commit": "37fa71eff4e32a3d2ad0ef9a5a07045ea9cac2a7",
+    "image": "ghcr.io/mithro/gf180-tcad-tcad-dev@sha256:fe34752893b8078bb9053875fd43d4b45b75ca757d75150b2dca4b9ada9c0c44",
+    "not_converged": [
+     "DC15|BLq|corner",
+     "NAGM1@gw|AL|edge",
+     "NR1_1p4|AL|edge",
+     "NR3M1|BL|edge",
+     "NR3M1|BL|corner",
+     "NR3M1|BD|edge",
+     "NR3M1|BLq|edge",
+     "NR3M1|BLq|corner",
+     "NR3W1|BL|edge",
+     "NR3W1|BL|corner",
+     "NR3W1|BLq|edge",
+     "NR3W1|BLq|corner",
+     "NR3W3|AL|edge",
+     "NR3W3|BL|edge",
+     "NR3W3|BL|corner",
+     "NR3W3|BD|edge",
+     "NR3W3|BD|corner",
+     "NR3W3|BLq|edge",
+     "NR3W3|BLq|corner",
+     "NR3_1p5|BL|edge",
+     "NR3_1p5|BD|edge",
+     "NR3_1p5|BLq|edge",
+     "NR3_1p5|BLq|corner",
+     "NR3_2|AL|edge",
+     "NR3_2|BL|edge",
+     "NR3_2|BL|corner",
+     "NR3_2|BD|corner",
+     "NR3_2|BLq|edge",
+     "NR3_2|BLq|corner",
+     "NR4S|AL|edge",
+     "NR4S|BL|edge",
+     "NR4S|BL|corner",
+     "NR4S|BD|edge",
+     "NR4S|BD|corner",
+     "NR4S|BLq|edge",
+     "NR4S|BLq|corner",
+     "NR5_1p4|AL|edge",
+     "NR5_1p4|BL|edge",
+     "NR5_1p4|BL|corner",
+     "NR5_1p4|BD|edge",
+     "NR5_1p4|BD|corner",
+     "NR5_1p4|BLq|edge",
+     "NR5_1p4|BLq|corner",
+     "NR5_2|AL|edge",
+     "NR5_2|BL|edge",
+     "NR5_2|BL|corner",
+     "NR5_2|BD|edge",
+     "NR5_2|BD|corner",
+     "NR5_2|BLq|edge",
+     "NR5_2|BLq|corner"
+    ],
+    "record": "rest.json"
+   },
+   {
+    "cases": 71,
+    "commit": "37fa71eff4e32a3d2ad0ef9a5a07045ea9cac2a7",
+    "image": "ghcr.io/mithro/gf180-tcad-tcad-dev@sha256:fe34752893b8078bb9053875fd43d4b45b75ca757d75150b2dca4b9ada9c0c44",
+    "not_converged": [
+     "NAM1_6|ALhi|edge",
+     "NR3_2|BLlo|edge",
+     "NR3_2|BLlo|corner",
+     "NR3_2|BDlo|corner",
+     "NR3_2|BDhi|edge",
+     "NR3_2|BLq3|edge",
+     "NR3_2|BLq3|corner",
+     "NR3_2|ALhi|edge",
+     "NM1_6|BLq3|corner",
+     "NM1_6|ALhi|edge",
+     "NP2|BLlo|corner",
+     "NP2|BDlo|corner",
+     "NP2|BDhi|edge",
+     "NP2|BDhi|corner",
+     "NP2|BLq3|edge",
+     "NP2|BLq3|corner",
+     "NP2|ALhi|edge",
+     "DT20|BLlo|edge",
+     "DT20|BLlo|corner",
+     "DT20|BLhi|edge",
+     "DT20|BLhi|corner",
+     "DT20|BDlo|edge",
+     "DT20|BDlo|corner",
+     "DT20|BDhi|edge",
+     "DT20|BDhi|corner",
+     "DT20|BLq3|edge",
+     "DT20|BLq3|corner",
+     "DT20|ALhi|edge",
+     "DT20|ALhi|corner",
+     "DM1_6|BLlo|edge",
+     "DM1_6|BLlo|corner",
+     "DM1_6|BLhi|edge",
+     "DM1_6|BLhi|corner",
+     "DM1_6|BDlo|edge",
+     "DM1_6|BDlo|corner",
+     "DM1_6|BDhi|edge",
+     "DM1_6|BDhi|corner",
+     "DM1_6|BLq3|edge",
+     "DM1_6|BLq3|corner",
+     "DM1_6|ALhi|edge",
+     "DM1_6|ALhi|corner",
+     "DAo1|BLlo|edge",
+     "DAo1|BLlo|corner",
+     "DAo1|BLhi|edge",
+     "DAo1|BLhi|corner",
+     "DAo1|BDlo|edge",
+     "DAo1|BDlo|corner",
+     "DAo1|BDhi|edge",
+     "DAo1|BDhi|corner",
+     "DAo1|BLq3|edge",
+     "DAo1|BLq3|corner",
+     "DAo1|ALhi|edge",
+     "DAo1|ALhi|corner"
+    ],
+    "record": "family.json"
    }
   ],
   "repository": "mithro/gf180-tcad, experiments/hv-junction",
@@ -144,7 +259,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -171,7 +286,7 @@
    },
    "BLq": {
     "corner": 32.9,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -225,7 +340,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -258,7 +373,7 @@
    },
    "BLq": {
     "corner": 32.9,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -281,6 +396,11 @@
    "BL": {
     "corner": 31.3,
     "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -307,7 +427,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    },
    "GAD": {
@@ -332,7 +452,7 @@
    },
    "GBLq": {
     "corner": 30.8,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -440,7 +560,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -494,7 +614,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -521,7 +641,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -548,7 +668,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -575,7 +695,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -602,7 +722,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -629,7 +749,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -656,7 +776,7 @@
    },
    "BLq": {
     "corner": 31.3,
-    "edge": null,
+    "edge": 32.3,
     "ring_v": []
    }
   },
@@ -693,6 +813,11 @@
     "edge": 17.7,
     "ring_v": []
    },
+   "ALhi": {
+    "corner": null,
+    "edge": 17.8,
+    "ring_v": []
+   },
    "AnD": {
     "corner": 61.7,
     "edge": 62.9,
@@ -708,14 +833,39 @@
     "edge": 62.9,
     "ring_v": []
    },
+   "BDhi": {
+    "corner": 59.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": 61.0,
+    "edge": 62.5,
+    "ring_v": []
+   },
    "BL": {
     "corner": 67.0,
     "edge": 76.0,
     "ring_v": []
    },
+   "BLhi": {
+    "corner": 60.2,
+    "edge": 66.7,
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": 79.4,
+    "edge": 94.4,
+    "ring_v": []
+   },
    "BLq": {
     "corner": 70.3,
     "edge": 79.9,
+    "ring_v": []
+   },
+   "BLq3": {
+    "corner": 77.0,
+    "edge": 86.2,
     "ring_v": []
    }
   },
@@ -1071,14 +1221,39 @@
     "edge": 62.9,
     "ring_v": []
    },
+   "BDhi": {
+    "corner": 59.5,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": 61.0,
+    "edge": 62.5,
+    "ring_v": []
+   },
    "BL": {
     "corner": 84.8,
     "edge": 90.2,
     "ring_v": []
    },
+   "BLhi": {
+    "corner": 75.7,
+    "edge": 78.8,
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": 105.8,
+    "edge": 117.7,
+    "ring_v": []
+   },
    "BLq": {
     "corner": 85.4,
     "edge": 90.8,
+    "ring_v": []
+   },
+   "BLq3": {
+    "corner": 86.6,
+    "edge": 92.0,
     "ring_v": []
    }
   },
@@ -1120,11 +1295,32 @@
     "edge": 17.7,
     "ring_v": []
    },
+   "ALhi": {
+    "corner": null,
+    "edge": 17.9,
+    "ring_v": []
+   },
    "BD": {
     "corner": null,
     "edge": 62.9,
     "reached": {
      "corner": 36.0
+    },
+    "ring_v": []
+   },
+   "BDhi": {
+    "corner": null,
+    "edge": 62.9,
+    "reached": {
+     "corner": 34.7
+    },
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": null,
+    "edge": 62.5,
+    "reached": {
+     "corner": 38.6
     },
     "ring_v": []
    },
@@ -1136,11 +1332,35 @@
     },
     "ring_v": []
    },
+   "BLhi": {
+    "corner": null,
+    "edge": 66.7,
+    "reached": {
+     "corner": 34.5
+    },
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": null,
+    "edge": 94.4,
+    "reached": {
+     "corner": 38.7
+    },
+    "ring_v": []
+   },
    "BLq": {
     "corner": null,
     "edge": 79.9,
     "reached": {
      "corner": 37.7
+    },
+    "ring_v": []
+   },
+   "BLq3": {
+    "corner": null,
+    "edge": 86.2,
+    "reached": {
+     "corner": 42.0
     },
     "ring_v": []
    }
@@ -1309,14 +1529,39 @@
     "edge": 62.9,
     "ring_v": []
    },
+   "BDhi": {
+    "corner": 59.5,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": 61.0,
+    "edge": 62.5,
+    "ring_v": []
+   },
    "BL": {
     "corner": 84.8,
     "edge": 90.2,
     "ring_v": []
    },
+   "BLhi": {
+    "corner": 75.7,
+    "edge": 78.8,
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": 105.8,
+    "edge": 117.7,
+    "ring_v": []
+   },
    "BLq": {
     "corner": 85.4,
     "edge": 90.8,
+    "ring_v": []
+   },
+   "BLq3": {
+    "corner": null,
+    "edge": 92.0,
     "ring_v": []
    }
   },
@@ -1397,9 +1642,24 @@
     "edge": 62.9,
     "ring_v": []
    },
+   "BDlo": {
+    "corner": null,
+    "edge": 62.5,
+    "ring_v": []
+   },
    "BL": {
     "corner": 84.8,
     "edge": 90.0,
+    "ring_v": []
+   },
+   "BLhi": {
+    "corner": 76.2,
+    "edge": 79.3,
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": null,
+    "edge": 113.2,
     "ring_v": []
    },
    "BLq": {
@@ -1907,6 +2167,80 @@
    }
   },
   "NR1S3": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.02
+     ],
+     [
+      0.47,
+      0.02
+     ],
+     [
+      0.89,
+      0.02
+     ],
+     [
+      1.52,
+      0.02
+     ],
+     [
+      2.47,
+      0.02
+     ],
+     [
+      3.9,
+      0.02
+     ],
+     [
+      5.4,
+      0.02
+     ],
+     [
+      6.9,
+      0.02
+     ],
+     [
+      8.4,
+      0.02
+     ],
+     [
+      9.9,
+      0.02
+     ],
+     [
+      11.4,
+      0.02
+     ],
+     [
+      12.9,
+      0.02
+     ],
+     [
+      14.4,
+      0.02
+     ],
+     [
+      15.9,
+      0.02
+     ],
+     [
+      17.4,
+      0.02
+     ],
+     [
+      18.9,
+      0.02
+     ]
+    ]
+   },
    "BD": {
     "corner": 61.1,
     "edge": 62.9,
@@ -2006,7 +2340,7 @@
     ]
    },
    "BL": {
-    "corner": null,
+    "corner": 90.3,
     "edge": 96.4,
     "ring_v": [
      [
@@ -2157,8 +2491,181 @@
    },
    "BLq": {
     "corner": 91.9,
-    "edge": null,
-    "ring_v": []
+    "edge": 97.7,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.09,
+      0.09
+     ],
+     [
+      0.23,
+      0.16
+     ],
+     [
+      0.45,
+      0.18
+     ],
+     [
+      0.76,
+      0.2
+     ],
+     [
+      1.24,
+      0.22
+     ],
+     [
+      1.95,
+      0.27
+     ],
+     [
+      3.02,
+      0.36
+     ],
+     [
+      4.62,
+      0.54
+     ],
+     [
+      7.02,
+      1.01
+     ],
+     [
+      10.02,
+      2.18
+     ],
+     [
+      13.02,
+      3.75
+     ],
+     [
+      16.02,
+      5.49
+     ],
+     [
+      19.02,
+      7.31
+     ],
+     [
+      22.02,
+      9.19
+     ],
+     [
+      25.02,
+      11.09
+     ],
+     [
+      28.02,
+      13.03
+     ],
+     [
+      31.02,
+      14.98
+     ],
+     [
+      34.02,
+      16.96
+     ],
+     [
+      37.02,
+      18.94
+     ],
+     [
+      40.02,
+      20.94
+     ],
+     [
+      43.02,
+      22.94
+     ],
+     [
+      46.02,
+      24.95
+     ],
+     [
+      49.02,
+      26.96
+     ],
+     [
+      52.02,
+      28.98
+     ],
+     [
+      55.02,
+      31.0
+     ],
+     [
+      58.02,
+      33.02
+     ],
+     [
+      61.02,
+      35.03
+     ],
+     [
+      64.02,
+      37.04
+     ],
+     [
+      67.02,
+      39.05
+     ],
+     [
+      70.02,
+      41.05
+     ],
+     [
+      73.02,
+      43.05
+     ],
+     [
+      76.02,
+      45.06
+     ],
+     [
+      79.02,
+      47.06
+     ],
+     [
+      82.02,
+      49.06
+     ],
+     [
+      85.02,
+      51.05
+     ],
+     [
+      88.02,
+      53.04
+     ],
+     [
+      91.02,
+      55.03
+     ],
+     [
+      94.02,
+      57.02
+     ],
+     [
+      97.02,
+      59.0
+     ],
+     [
+      100.02,
+      60.97
+     ],
+     [
+      103.02,
+      62.93
+     ],
+     [
+      106.02,
+      64.88
+     ]
+    ]
    }
   },
   "NR1_1p4": {
@@ -2518,10 +3025,193 @@
    }
   },
   "NR1_2": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.02
+     ],
+     [
+      0.47,
+      0.02
+     ],
+     [
+      0.89,
+      0.02
+     ],
+     [
+      1.52,
+      0.02
+     ],
+     [
+      2.47,
+      0.02
+     ],
+     [
+      3.9,
+      0.03
+     ],
+     [
+      5.4,
+      0.03
+     ],
+     [
+      6.9,
+      0.03
+     ],
+     [
+      8.4,
+      0.03
+     ],
+     [
+      9.9,
+      0.03
+     ],
+     [
+      11.4,
+      0.03
+     ],
+     [
+      12.9,
+      0.04
+     ],
+     [
+      14.4,
+      0.04
+     ],
+     [
+      15.9,
+      0.04
+     ],
+     [
+      17.4,
+      0.04
+     ],
+     [
+      18.9,
+      0.05
+     ]
+    ]
+   },
    "BD": {
     "corner": 61.2,
-    "edge": null,
-    "ring_v": []
+    "edge": 62.9,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.38,
+      0.03
+     ],
+     [
+      0.94,
+      0.04
+     ],
+     [
+      1.78,
+      0.05
+     ],
+     [
+      3.05,
+      0.32
+     ],
+     [
+      4.95,
+      1.74
+     ],
+     [
+      7.79,
+      4.06
+     ],
+     [
+      10.79,
+      6.55
+     ],
+     [
+      13.79,
+      9.03
+     ],
+     [
+      16.79,
+      11.5
+     ],
+     [
+      19.79,
+      13.95
+     ],
+     [
+      22.79,
+      16.37
+     ],
+     [
+      25.79,
+      18.76
+     ],
+     [
+      28.79,
+      21.13
+     ],
+     [
+      31.79,
+      23.47
+     ],
+     [
+      34.79,
+      25.78
+     ],
+     [
+      37.79,
+      28.07
+     ],
+     [
+      40.79,
+      30.33
+     ],
+     [
+      43.79,
+      32.56
+     ],
+     [
+      46.79,
+      34.77
+     ],
+     [
+      49.79,
+      36.95
+     ],
+     [
+      52.79,
+      39.11
+     ],
+     [
+      55.79,
+      41.25
+     ],
+     [
+      58.79,
+      43.36
+     ],
+     [
+      61.79,
+      45.44
+     ],
+     [
+      64.79,
+      47.51
+     ],
+     [
+      67.79,
+      49.53
+     ]
+    ]
    },
    "BL": {
     "corner": 89.8,
@@ -2666,7 +3356,7 @@
     ]
    },
    "BLq": {
-    "corner": null,
+    "corner": 89.6,
     "edge": 94.8,
     "ring_v": [
      [
@@ -2813,6 +3503,80 @@
    }
   },
   "NR1_3": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.02
+     ],
+     [
+      0.47,
+      0.02
+     ],
+     [
+      0.89,
+      0.02
+     ],
+     [
+      1.52,
+      0.02
+     ],
+     [
+      2.47,
+      0.02
+     ],
+     [
+      3.9,
+      0.02
+     ],
+     [
+      5.4,
+      0.02
+     ],
+     [
+      6.9,
+      0.02
+     ],
+     [
+      8.4,
+      0.02
+     ],
+     [
+      9.9,
+      0.02
+     ],
+     [
+      11.4,
+      0.02
+     ],
+     [
+      12.9,
+      0.02
+     ],
+     [
+      14.4,
+      0.02
+     ],
+     [
+      15.9,
+      0.02
+     ],
+     [
+      17.4,
+      0.02
+     ],
+     [
+      18.9,
+      0.02
+     ]
+    ]
+   },
    "BD": {
     "corner": 61.1,
     "edge": 62.9,
@@ -2912,7 +3676,7 @@
     ]
    },
    "BL": {
-    "corner": null,
+    "corner": 90.3,
     "edge": 96.4,
     "ring_v": [
      [
@@ -3062,7 +3826,7 @@
     ]
    },
    "BLq": {
-    "corner": null,
+    "corner": 91.8,
     "edge": 97.7,
     "ring_v": [
      [
@@ -3240,6 +4004,26 @@
     ]
    }
   },
+  "NR3M1": {
+   "AL": {
+    "corner": null,
+    "edge": null,
+    "reached": {
+     "edge": 0.0
+    },
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ]
+    ]
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": null,
+    "ring_v": []
+   }
+  },
   "NR3W1": {
    "AL": {
     "corner": null,
@@ -3251,6 +4035,1074 @@
      [
       0.0,
       0.0
+     ]
+    ]
+   },
+   "BD": {
+    "corner": 60.2,
+    "edge": 62.9,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.03
+     ],
+     [
+      0.47,
+      0.03
+     ],
+     [
+      0.89,
+      0.03
+     ],
+     [
+      1.52,
+      0.04
+     ],
+     [
+      2.47,
+      0.09
+     ],
+     [
+      3.9,
+      0.89
+     ],
+     [
+      4.16,
+      1.09
+     ],
+     [
+      4.56,
+      1.4
+     ],
+     [
+      5.16,
+      1.86
+     ],
+     [
+      6.07,
+      2.57
+     ],
+     [
+      7.42,
+      3.64
+     ],
+     [
+      8.43,
+      4.46
+     ],
+     [
+      9.19,
+      5.07
+     ],
+     [
+      10.33,
+      5.98
+     ],
+     [
+      12.04,
+      7.35
+     ],
+     [
+      12.36,
+      7.61
+     ],
+     [
+      12.6,
+      7.81
+     ],
+     [
+      12.96,
+      8.1
+     ],
+     [
+      13.23,
+      8.32
+     ],
+     [
+      13.64,
+      8.64
+     ],
+     [
+      13.94,
+      8.89
+     ],
+     [
+      14.4,
+      9.26
+     ],
+     [
+      15.09,
+      9.81
+     ],
+     [
+      15.6,
+      10.23
+     ],
+     [
+      16.37,
+      10.85
+     ],
+     [
+      17.53,
+      11.78
+     ],
+     [
+      19.26,
+      13.16
+     ],
+     [
+      21.86,
+      15.23
+     ],
+     [
+      23.36,
+      16.41
+     ],
+     [
+      25.61,
+      18.16
+     ],
+     [
+      27.11,
+      19.32
+     ],
+     [
+      29.36,
+      21.04
+     ],
+     [
+      32.36,
+      23.3
+     ],
+     [
+      32.74,
+      23.58
+     ],
+     [
+      33.3,
+      24.0
+     ],
+     [
+      34.14,
+      24.62
+     ],
+     [
+      34.78,
+      25.09
+     ],
+     [
+      35.72,
+      25.79
+     ],
+     [
+      37.15,
+      26.84
+     ],
+     [
+      37.68,
+      27.23
+     ],
+     [
+      38.48,
+      27.81
+     ],
+     [
+      39.08,
+      28.24
+     ],
+     [
+      39.99,
+      28.89
+     ],
+     [
+      40.66,
+      29.38
+     ],
+     [
+      41.17,
+      29.74
+     ],
+     [
+      41.93,
+      30.28
+     ],
+     [
+      42.5,
+      30.69
+     ],
+     [
+      43.35,
+      31.29
+     ],
+     [
+      44.64,
+      32.2
+     ],
+     [
+      45.6,
+      32.87
+     ],
+     [
+      47.04,
+      33.87
+     ],
+     [
+      48.12,
+      34.61
+     ],
+     [
+      49.75,
+      35.72
+     ],
+     [
+      52.18,
+      37.34
+     ],
+     [
+      53.68,
+      38.33
+     ],
+     [
+      55.93,
+      39.77
+     ],
+     [
+      58.93,
+      41.65
+     ],
+     [
+      61.93,
+      43.48
+     ],
+     [
+      64.93,
+      45.27
+     ],
+     [
+      67.93,
+      47.03
+     ]
+    ]
+   }
+  },
+  "NR3_1p5": {
+   "AL": {
+    "corner": null,
+    "edge": null,
+    "reached": {
+     "edge": 0.0
+    },
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ]
+    ]
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": null,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 107.1,
+    "edge": null,
+    "ring_v": []
+   }
+  },
+  "NR3_2": {
+   "BD": {
+    "corner": null,
+    "edge": 62.9,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.02
+     ],
+     [
+      0.47,
+      0.03
+     ],
+     [
+      0.89,
+      0.03
+     ],
+     [
+      1.52,
+      0.04
+     ],
+     [
+      2.47,
+      0.09
+     ],
+     [
+      3.9,
+      0.92
+     ],
+     [
+      4.96,
+      1.75
+     ],
+     [
+      6.57,
+      3.05
+     ],
+     [
+      6.87,
+      3.29
+     ],
+     [
+      7.32,
+      3.66
+     ],
+     [
+      7.99,
+      4.22
+     ],
+     [
+      9.01,
+      5.06
+     ],
+     [
+      9.77,
+      5.69
+     ],
+     [
+      10.91,
+      6.63
+     ],
+     [
+      11.12,
+      6.81
+     ],
+     [
+      11.28,
+      6.94
+     ],
+     [
+      11.52,
+      7.14
+     ],
+     [
+      11.88,
+      7.44
+     ],
+     [
+      12.42,
+      7.88
+     ],
+     [
+      13.24,
+      8.56
+     ],
+     [
+      13.54,
+      8.81
+     ],
+     [
+      13.77,
+      9.0
+     ],
+     [
+      14.11,
+      9.28
+     ],
+     [
+      14.37,
+      9.5
+     ],
+     [
+      14.75,
+      9.82
+     ],
+     [
+      15.33,
+      10.29
+     ],
+     [
+      16.2,
+      11.01
+     ],
+     [
+      16.85,
+      11.55
+     ],
+     [
+      17.82,
+      12.35
+     ],
+     [
+      19.29,
+      13.56
+     ],
+     [
+      20.38,
+      14.46
+     ],
+     [
+      22.03,
+      15.8
+     ],
+     [
+      24.5,
+      17.79
+     ],
+     [
+      26.0,
+      19.0
+     ],
+     [
+      28.25,
+      20.79
+     ],
+     [
+      29.75,
+      21.98
+     ],
+     [
+      30.87,
+      22.87
+     ],
+     [
+      32.56,
+      24.19
+     ],
+     [
+      33.83,
+      25.17
+     ],
+     [
+      34.3,
+      25.54
+     ],
+     [
+      35.01,
+      26.09
+     ],
+     [
+      35.55,
+      26.51
+     ],
+     [
+      36.35,
+      27.12
+     ],
+     [
+      36.95,
+      27.59
+     ],
+     [
+      37.4,
+      27.93
+     ],
+     [
+      38.07,
+      28.45
+     ],
+     [
+      38.58,
+      28.84
+     ],
+     [
+      39.34,
+      29.42
+     ],
+     [
+      40.48,
+      30.29
+     ],
+     [
+      41.34,
+      30.93
+     ],
+     [
+      42.62,
+      31.9
+     ],
+     [
+      44.54,
+      33.34
+     ],
+     [
+      45.99,
+      34.42
+     ],
+     [
+      48.15,
+      36.02
+     ],
+     [
+      51.15,
+      38.22
+     ],
+     [
+      54.15,
+      40.4
+     ],
+     [
+      57.15,
+      42.55
+     ],
+     [
+      60.15,
+      44.69
+     ],
+     [
+      63.15,
+      46.8
+     ],
+     [
+      66.15,
+      48.88
+     ]
+    ]
+   },
+   "BDhi": {
+    "corner": 61.0,
+    "edge": null,
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": null,
+    "edge": 62.5,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.06
+     ],
+     [
+      0.47,
+      0.14
+     ],
+     [
+      0.89,
+      0.44
+     ],
+     [
+      1.21,
+      0.71
+     ],
+     [
+      1.68,
+      1.12
+     ],
+     [
+      2.04,
+      1.43
+     ],
+     [
+      2.17,
+      1.55
+     ],
+     [
+      2.37,
+      1.72
+     ],
+     [
+      2.52,
+      1.86
+     ],
+     [
+      2.63,
+      1.95
+     ],
+     [
+      2.8,
+      2.1
+     ],
+     [
+      2.93,
+      2.22
+     ],
+     [
+      3.12,
+      2.38
+     ],
+     [
+      3.4,
+      2.63
+     ],
+     [
+      3.83,
+      3.02
+     ],
+     [
+      3.99,
+      3.16
+     ],
+     [
+      4.23,
+      3.38
+     ],
+     [
+      4.41,
+      3.54
+     ],
+     [
+      4.55,
+      3.66
+     ],
+     [
+      4.75,
+      3.85
+     ],
+     [
+      5.06,
+      4.12
+     ],
+     [
+      5.51,
+      4.53
+     ],
+     [
+      5.68,
+      4.69
+     ],
+     [
+      5.94,
+      4.92
+     ],
+     [
+      6.33,
+      5.27
+     ],
+     [
+      6.9,
+      5.79
+     ],
+     [
+      7.77,
+      6.57
+     ],
+     [
+      9.07,
+      7.73
+     ],
+     [
+      11.02,
+      9.47
+     ],
+     [
+      12.49,
+      10.76
+     ],
+     [
+      13.58,
+      11.73
+     ],
+     [
+      13.99,
+      12.09
+     ],
+     [
+      14.3,
+      12.36
+     ],
+     [
+      14.77,
+      12.77
+     ],
+     [
+      15.11,
+      13.07
+     ],
+     [
+      15.63,
+      13.52
+     ],
+     [
+      16.02,
+      13.86
+     ],
+     [
+      16.61,
+      14.37
+     ],
+     [
+      17.49,
+      15.14
+     ],
+     [
+      18.81,
+      16.28
+     ],
+     [
+      19.8,
+      17.13
+     ],
+     [
+      21.28,
+      18.41
+     ],
+     [
+      23.5,
+      20.31
+     ],
+     [
+      25.0,
+      21.58
+     ],
+     [
+      27.25,
+      23.47
+     ],
+     [
+      30.25,
+      25.98
+     ],
+     [
+      33.25,
+      28.45
+     ],
+     [
+      36.25,
+      30.89
+     ],
+     [
+      39.25,
+      33.31
+     ],
+     [
+      42.25,
+      35.7
+     ],
+     [
+      45.25,
+      38.06
+     ],
+     [
+      48.25,
+      40.39
+     ],
+     [
+      51.25,
+      42.69
+     ],
+     [
+      54.25,
+      44.97
+     ],
+     [
+      57.25,
+      47.22
+     ],
+     [
+      60.25,
+      49.46
+     ],
+     [
+      63.25,
+      51.68
+     ],
+     [
+      66.25,
+      53.88
+     ]
+    ]
+   },
+   "BLhi": {
+    "corner": 84.0,
+    "edge": 87.0,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.19,
+      0.02
+     ],
+     [
+      0.47,
+      0.02
+     ],
+     [
+      0.89,
+      0.02
+     ],
+     [
+      1.52,
+      0.02
+     ],
+     [
+      2.47,
+      0.03
+     ],
+     [
+      3.9,
+      0.05
+     ],
+     [
+      6.03,
+      0.46
+     ],
+     [
+      6.78,
+      0.93
+     ],
+     [
+      7.34,
+      1.31
+     ],
+     [
+      8.19,
+      1.91
+     ],
+     [
+      8.82,
+      2.38
+     ],
+     [
+      9.77,
+      3.08
+     ],
+     [
+      10.48,
+      3.62
+     ],
+     [
+      11.55,
+      4.43
+     ],
+     [
+      13.15,
+      5.65
+     ],
+     [
+      15.55,
+      7.5
+     ],
+     [
+      17.05,
+      8.67
+     ],
+     [
+      18.18,
+      9.54
+     ],
+     [
+      19.02,
+      10.2
+     ],
+     [
+      19.66,
+      10.69
+     ],
+     [
+      20.13,
+      11.06
+     ],
+     [
+      20.49,
+      11.34
+     ],
+     [
+      21.02,
+      11.75
+     ],
+     [
+      21.82,
+      12.38
+     ],
+     [
+      22.42,
+      12.85
+     ],
+     [
+      23.32,
+      13.55
+     ],
+     [
+      23.66,
+      13.82
+     ],
+     [
+      23.91,
+      14.02
+     ],
+     [
+      24.29,
+      14.32
+     ],
+     [
+      24.87,
+      14.77
+     ],
+     [
+      25.29,
+      15.1
+     ],
+     [
+      25.93,
+      15.61
+     ],
+     [
+      26.9,
+      16.37
+     ],
+     [
+      27.62,
+      16.94
+     ],
+     [
+      28.7,
+      17.8
+     ],
+     [
+      30.32,
+      19.08
+     ],
+     [
+      30.93,
+      19.57
+     ],
+     [
+      31.85,
+      20.29
+     ],
+     [
+      33.22,
+      21.37
+     ],
+     [
+      35.27,
+      23.0
+     ],
+     [
+      36.77,
+      24.19
+     ],
+     [
+      37.9,
+      25.08
+     ],
+     [
+      39.58,
+      26.42
+     ],
+     [
+      40.85,
+      27.42
+     ],
+     [
+      42.75,
+      28.92
+     ],
+     [
+      44.17,
+      30.05
+     ],
+     [
+      46.31,
+      31.73
+     ],
+     [
+      49.31,
+      34.1
+     ],
+     [
+      52.31,
+      36.46
+     ],
+     [
+      55.31,
+      38.82
+     ],
+     [
+      58.31,
+      41.18
+     ],
+     [
+      59.81,
+      42.35
+     ],
+     [
+      62.06,
+      44.1
+     ],
+     [
+      63.56,
+      45.26
+     ],
+     [
+      65.81,
+      47.0
+     ],
+     [
+      68.81,
+      49.32
+     ],
+     [
+      70.31,
+      50.48
+     ],
+     [
+      70.87,
+      50.92
+     ],
+     [
+      71.71,
+      51.57
+     ],
+     [
+      72.98,
+      52.54
+     ],
+     [
+      73.93,
+      53.27
+     ],
+     [
+      74.64,
+      53.82
+     ],
+     [
+      75.17,
+      54.23
+     ],
+     [
+      75.98,
+      54.85
+     ],
+     [
+      77.18,
+      55.77
+     ],
+     [
+      78.98,
+      57.15
+     ],
+     [
+      81.68,
+      59.22
+     ],
+     [
+      84.68,
+      61.51
+     ],
+     [
+      87.68,
+      63.8
+     ],
+     [
+      90.68,
+      66.08
+     ],
+     [
+      93.68,
+      68.35
      ]
     ]
    }
@@ -3300,9 +5152,29 @@
    }
   },
   "NT20": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "ALhi": {
+    "corner": null,
+    "edge": 17.9,
+    "ring_v": []
+   },
    "BD": {
     "corner": 61.2,
     "edge": 62.9,
+    "ring_v": []
+   },
+   "BDhi": {
+    "corner": 59.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": 61.0,
+    "edge": 62.5,
     "ring_v": []
    },
    "BL": {
@@ -3310,13 +5182,33 @@
     "edge": 76.0,
     "ring_v": []
    },
+   "BLhi": {
+    "corner": 60.2,
+    "edge": 66.7,
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": 79.4,
+    "edge": 94.4,
+    "ring_v": []
+   },
    "BLq": {
     "corner": 70.3,
     "edge": 79.9,
     "ring_v": []
+   },
+   "BLq3": {
+    "corner": 77.0,
+    "edge": 86.2,
+    "ring_v": []
    }
   },
   "NT20L": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
    "BD": {
     "corner": 61.2,
     "edge": 62.9,
@@ -3378,6 +5270,11 @@
    }
   },
   "NT35": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
    "BD": {
     "corner": 61.2,
     "edge": 62.9,
@@ -3417,6 +5314,11 @@
    }
   },
   "NW0": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
    "BD": {
     "corner": 20.0,
     "edge": 19.8,
@@ -3434,6 +5336,11 @@
    }
   },
   "NW1p5": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
    "BD": {
     "corner": 51.6,
     "edge": 53.0,
@@ -3451,9 +5358,29 @@
    }
   },
   "NW3": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "ALhi": {
+    "corner": null,
+    "edge": 17.9,
+    "ring_v": []
+   },
    "BD": {
     "corner": 61.2,
     "edge": 62.9,
+    "ring_v": []
+   },
+   "BDhi": {
+    "corner": 58.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BDlo": {
+    "corner": 59.2,
+    "edge": 62.5,
     "ring_v": []
    },
    "BL": {
@@ -3461,13 +5388,33 @@
     "edge": 72.1,
     "ring_v": []
    },
+   "BLhi": {
+    "corner": 59.7,
+    "edge": 65.5,
+    "ring_v": []
+   },
+   "BLlo": {
+    "corner": 72.9,
+    "edge": 81.2,
+    "ring_v": []
+   },
    "BLq": {
     "corner": 67.5,
     "edge": 74.5,
     "ring_v": []
+   },
+   "BLq3": {
+    "corner": 71.6,
+    "edge": 78.7,
+    "ring_v": []
    }
   },
   "NW6": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
    "BD": {
     "corner": 61.7,
     "edge": 62.9,
