@@ -75,7 +75,8 @@ simulation adds, and :numref:`fig-esd-added` shows where each part sits.
      - Reason
    * - Adds a drain diode to each output transistor, scaled by width
      - The netlist gives the silicide-blocked output transistors no drain
-       area. The real drain forms a diode with its well, the main ESD path.
+       area. The real drain forms a diode with its well or the substrate, the
+       main ESD path.
        The added diode conducts forward only: its breakdown is the snapback
        and avalanche branches below. Dedicated diodes added beside it, in
        the wider-diode runs, keep the foundry model's breakdown
@@ -215,7 +216,8 @@ added drain diodes take the fitted model and scale it with width: the PMOS
 drain diode is 480 µm wide, so 4.8 times the test diode.
 
 The drain of a transistor is not laid out like the test diode. Its current
-also crosses the silicide-blocked drain and the well under the channel, so
+also crosses the silicide-blocked drain and the well or substrate under
+the channel, so
 the real drain diode has more resistance than the scaled test diode.
 :doc:`results-hbm` shows what doubling it changes.
 

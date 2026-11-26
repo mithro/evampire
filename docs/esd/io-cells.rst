@@ -66,10 +66,10 @@ diffusion in a well or in the substrate, so it forms a diode with it
 * The PMOS drains (P+ in an N-well tied to DVDD) form a diode from the pad
   to DVDD. Four transistors of 80 µm and four of 40 µm give 480 µm of
   width ([ESD-BI-T-CDL]_, lines 42 to 72).
-* The NMOS drains (N+ in the P substrate, which a P+ ring round the
+* The NMOS drains (N+ in P-type silicon that a P+ ring round the
   transistors ties to DVSS) form a diode from DVSS to the pad. Eight
-  transistors of 38 µm give 304 µm of width (same lines). The layout has
-  no P-well under these transistors (:numref:`fig-esd-gds-nmos-driver`).
+  transistors of 38 µm give 304 µm of width (same lines). No P-well layer
+  is drawn under these transistors (:numref:`fig-esd-gds-nmos-driver`).
 
 These transistors are drawn as ESD devices. Their drains are silicide
 blocked for 3.78 µm (NMOS) and 2.78 µm (PMOS), and the NMOS gates are
