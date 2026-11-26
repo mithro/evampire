@@ -395,7 +395,8 @@ Predicted
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. The
    ring curve runs to a higher well voltage than in :ref:`NR1S2
-   <hvt-s-nr1s2>`.
+   <hvt-s-nr1s2>`. :numref:`fig-hvt-sr-nr4s` plots the predicted rise of
+   ring 1.
 
 Limits
    Only ring 1 has a pad, so how the voltage divides among the outer rings
@@ -431,11 +432,20 @@ Limits
      - –
      - –
    * - BD
+     - 62.9
      - failed
-     - failed
      - –
      - –
      - –
+
+.. figure:: hvt-s-NR4S-ring.svg
+   :name: fig-hvt-sr-nr4s
+   :alt: Graph of the predicted rise of ring 1 of NR4S against well
+         voltage, one curve per process that has a result, with a diagonal
+         marking ring voltage equal to well voltage. Each curve leaves zero
+         after a few volts and then rises below the diagonal.
+
+   Predicted rise of ring 1 of NR4S.
 
 .. _hvt-s-nr1s5:
 
@@ -509,13 +519,61 @@ Measurement
    recorded.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure. The
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1s5`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
    well voltage at which ring current starts is what two wells 5 µm apart
-   can differ by.
+   can differ by. :numref:`fig-hvt-sr-nr1s5` plots the predicted rise of
+   ring 1.
 
 Limits
    Under assumption A the P-well between well and ring fails first, and the
    structure shows only that.
+
+.. list-table:: NR1S5: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nr1s5
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL
+     - failed
+     - –
+     - –
+     - –
+     - –
+   * - BL
+     - 77.9
+     - 67.1
+     - 67.1 to 67.1
+     - 47.0 to 77.2
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - failed
+     - failed
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 60.7
+     - 60.7 to 60.7
+     - 42.5 to 69.8
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
+
+.. figure:: hvt-s-NR1S5-ring.svg
+   :name: fig-hvt-sr-nr1s5
+   :alt: Graph of the predicted rise of ring 1 of NR1S5 against well
+         voltage, one curve per process that has a result, with a diagonal
+         marking ring voltage equal to well voltage. Each curve leaves zero
+         after a few volts and then rises below the diagonal.
+
+   Predicted rise of ring 1 of NR1S5.
 
 .. _hvt-s-nr1s8:
 
@@ -588,12 +646,50 @@ Measurement
    the result.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1s8`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure.
    Substrate current first: 8 µm isolates two wells up to the breakdown
    voltage. Ring current first: it does not.
 
 Limits
    As for :ref:`NR1S5 <hvt-s-nr1s5>`.
+
+.. list-table:: NR1S8: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nr1s8
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL
+     - failed
+     - –
+     - –
+     - –
+     - –
+   * - BL
+     - 76.0
+     - 67.0
+     - 67.0 to 67.0
+     - 46.9 to 77.0
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - failed
+     - failed
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 62.2
+     - 62.2 to 62.2
+     - 43.5 to 71.5
+     - 1.02 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nr1s12:
 
@@ -664,13 +760,51 @@ Measurement
    <hvt-s-nr1s5>`.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure. A
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1s12`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
    breakdown voltage equal to :ref:`NT20 <hvt-s-nt20>`, with no ring
    current: a neighbouring well 12 µm away changes nothing.
 
 Limits
    If ring current still flows here, the die has no wider gap to show where
    it stops.
+
+.. list-table:: NR1S12: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nr1s12
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL
+     - failed
+     - –
+     - –
+     - –
+     - –
+   * - BL
+     - 76.0
+     - 67.0
+     - 67.0 to 67.0
+     - 46.9 to 77.0
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - failed
+     - failed
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 60.7
+     - 60.7 to 60.7
+     - 42.5 to 69.8
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nr1-1p4:
 
@@ -1103,23 +1237,23 @@ Limits
      - –
      - –
    * - BL
-     - failed
+     - 110.4
      - 107.1
-     - –
-     - –
-     - –
+     - 107.1 to 108.2
+     - 75.0 to 124.4
+     - 1.60 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
-     - failed
+     - 111.2
+     - 108.2
      - –
      - –
      - –
    * - BD
-     - failed
+     - 62.8
      - 61.2
-     - –
-     - –
-     - –
+     - 61.2 to 61.2
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nr3-2:
 
@@ -1213,24 +1347,24 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.9
+     - 12.4 to 20.6
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
-     - failed
+     - 17.9
      - –
      - –
      - –
      - –
    * - BL
-     - failed
-     - failed
-     - 84.0 to 84.0
-     - 58.8 to 96.6
-     - –
+     - 105.7
+     - 101.2
+     - 84.0 to 142.9
+     - 58.8 to 164.3
+     - 1.51 of :ref:`NT20 <hvt-s-nt20>`
    * - BLhi
      - 87.0
      - 84.0
@@ -1238,38 +1372,38 @@ Limits
      - –
      - –
    * - BLlo
-     - failed
-     - failed
+     - > 150.0
+     - 142.9
      - –
      - –
      - –
    * - BLq
      - failed
-     - failed
+     - 102.6
      - –
      - –
      - –
    * - BLq3
-     - failed
-     - failed
+     - 108.6
+     - 105.1
      - –
      - –
      - –
    * - BD
      - 62.9
-     - failed
-     - –
-     - –
-     - –
+     - 61.1
+     - 59.4 to 61.1
+     - 41.6 to 70.3
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BDhi
-     - failed
+     - 62.9
      - 61.0
      - –
      - –
      - –
    * - BDlo
      - 62.5
-     - failed
+     - 59.4
      - –
      - –
      - –
@@ -1371,11 +1505,11 @@ Limits
      - –
      - –
    * - BL
-     - failed
-     - failed
-     - –
-     - –
-     - –
+     - 100.6
+     - 95.3
+     - 95.3 to 95.3
+     - 66.7 to 109.6
+     - 1.42 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - failed
      - failed
@@ -1478,30 +1612,30 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
-     - failed
-     - failed
-     - –
-     - –
-     - –
+     - 107.5
+     - 103.4
+     - 103.4 to 103.4
+     - 72.4 to 118.9
+     - 1.54 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
+     - 108.4
      - failed
      - –
      - –
      - –
    * - BD
-     - failed
-     - failed
-     - –
-     - –
-     - –
+     - 62.9
+     - 60.6
+     - 60.6 to 60.6
+     - 42.4 to 69.7
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nr5-1p4:
 
@@ -1617,7 +1751,7 @@ Limits
      - –
    * - BD
      - failed
-     - failed
+     - 61.1
      - –
      - –
      - –
@@ -1733,7 +1867,7 @@ Limits
      - –
      - –
    * - BD
-     - failed
+     - 62.9
      - failed
      - –
      - –
@@ -1840,20 +1974,20 @@ Limits
      - –
      - –
    * - BL
-     - failed
-     - failed
-     - –
-     - –
-     - –
+     - 107.2
+     - 103.4
+     - 103.4 to 104.3
+     - 72.4 to 119.9
+     - 1.54 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
-     - failed
+     - 108.0
+     - 104.3
      - –
      - –
      - –
    * - BD
-     - failed
+     - 62.9
      - 61.2
-     - –
-     - –
-     - –
+     - 61.2 to 61.2
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`

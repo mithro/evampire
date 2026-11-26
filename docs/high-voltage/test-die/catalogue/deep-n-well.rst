@@ -490,12 +490,12 @@ Limits
    * - AL, AnL
      - 32.4
      - 30.0
-     - 30.0 to 30.0
-     - 21.0 to 34.5
+     - 30.0 to 30.3
+     - 21.0 to 34.8
      - 1 (reference)
    * - ALhi
-     - failed
-     - failed
+     - 32.4
+     - 30.3
      - –
      - –
      - –
@@ -508,18 +508,18 @@ Limits
    * - BL
      - 32.4
      - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
+     - 30.3 to 31.3
+     - 21.2 to 36.0
      - 1 (reference)
    * - BLhi
-     - failed
-     - failed
+     - 32.4
+     - 31.3
      - –
      - –
      - –
    * - BLlo
-     - failed
-     - failed
+     - 32.2
+     - 31.2
      - –
      - –
      - –
@@ -530,26 +530,26 @@ Limits
      - –
      - –
    * - BLq3
-     - failed
-     - failed
+     - 32.4
+     - 30.3
      - –
      - –
      - –
    * - BD
      - 32.4
      - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
+     - 31.2 to 31.3
+     - 21.8 to 36.0
      - 1 (reference)
    * - BDhi
-     - failed
-     - failed
+     - 32.4
+     - 31.3
      - –
      - –
      - –
    * - BDlo
-     - failed
-     - failed
+     - 32.2
+     - 31.2
      - –
      - –
      - –
@@ -875,12 +875,12 @@ Limits
    * - AL
      - 32.4
      - 31.1
-     - 31.1 to 31.1
-     - 21.8 to 35.8
+     - 31.1 to 31.3
+     - 21.8 to 36.0
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`
    * - ALhi
-     - failed
-     - failed
+     - 32.4
+     - 31.3
      - –
      - –
      - –
@@ -893,18 +893,18 @@ Limits
    * - BL
      - 32.4
      - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
+     - 30.3 to 31.3
+     - 21.2 to 36.0
      - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BLhi
-     - failed
-     - failed
+     - 32.4
+     - 31.3
      - –
      - –
      - –
    * - BLlo
-     - failed
-     - failed
+     - 32.2
+     - 31.2
      - –
      - –
      - –
@@ -915,26 +915,26 @@ Limits
      - –
      - –
    * - BLq3
-     - failed
-     - failed
+     - 32.4
+     - 30.3
      - –
      - –
      - –
    * - BD
      - 32.4
      - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
+     - 31.2 to 31.3
+     - 21.8 to 36.0
      - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BDhi
-     - failed
-     - failed
+     - 32.4
+     - 31.3
      - –
      - –
      - –
    * - BDlo
-     - failed
-     - failed
+     - 32.2
+     - 31.2
      - –
      - –
      - –
