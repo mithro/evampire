@@ -48,9 +48,6 @@ NT10,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
 NT20,"AL, AD, AnL, AnD",17.7 to 17.9,12.4 to 20.6,NW0,1.00,"AL, ALhi corner not simulated"
 NT20,BL,60.2 to 79.4,42.1 to 91.3,NT20,1 (reference),None
 NT20,BD,59.2 to 61.2,41.4 to 70.4,NT20,1 (reference),None
-NT35,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
-NT35,BL,67.0 to 70.3,46.9 to 80.8,NT20,1.00,None
-NT35,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
 NC0,"AL, AD, AnL, AnD",17.7 to 17.9,12.4 to 20.6,NW0,1.00,"AL, ALhi corner not simulated"
 NC0,BL,–,–,NT20,–,BL corner not resolved above 36.3 V; BLhi corner not resolved above 34.5 V; BLlo corner not resolved above 38.7 V; BLq corner not resolved above 37.7 V; BLq3 corner not resolved above 42.0 V
 NC0,BD,–,–,NT20,–,BD corner not resolved above 36.0 V; BDhi corner not resolved above 34.7 V; BDlo corner not resolved above 38.6 V
@@ -84,16 +81,6 @@ NA0p6T10,AnL,67.0 to 67.0,46.9 to 77.0,NT20,3.79,None
 NA0p6T10,AnD,61.7 to 61.7,43.2 to 71.0,NT20,3.49,None
 NA0p6T10,BL,67.0 to 70.3,46.9 to 80.8,NT20,1.00,None
 NA0p6T10,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
-NA4,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
-NA4,AnL,67.0 to 67.0,46.9 to 77.0,NT20,3.79,None
-NA4,AnD,61.7 to 61.7,43.2 to 71.0,NT20,3.49,None
-NA4,BL,67.0 to 70.3,46.9 to 80.8,NT20,1.00,None
-NA4,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
-NA0p6T35,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
-NA0p6T35,AnL,67.0 to 67.0,46.9 to 77.0,NT20,3.79,None
-NA0p6T35,AnD,61.7 to 61.7,43.2 to 71.0,NT20,3.49,None
-NA0p6T35,BL,67.0 to 70.3,46.9 to 80.8,NT20,1.00,None
-NA0p6T35,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
 NA0p6C0,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
 NA0p6C0,AnL,–,–,NT20,–,AnL corner not resolved above 36.3 V
 NA0p6C0,AnD,–,–,NT20,–,AnD corner not resolved above 37.0 V
@@ -180,10 +167,6 @@ DT2p6,"AL, AnL",30.0 to 30.0,21.0 to 34.5,DT20,1.00,None
 DT2p6,"AD, AnD",31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
 DT2p6,BL,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
 DT2p6,BD,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
-DT10,"AL, AnL",30.0 to 30.0,21.0 to 34.5,DT20,1.00,None
-DT10,"AD, AnD",31.0 to 31.0,21.7 to 35.6,DT20,0.99,None
-DT10,BL,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
-DT10,BD,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
 DT20,"AL, AnL",30.0 to 30.3,21.0 to 34.8,DT20,1 (reference),None
 DT20,"AD, AnD",31.3 to 31.3,21.9 to 36.0,DT20,1 (reference),None
 DT20,BL,30.3 to 31.3,21.2 to 36.0,DT20,1 (reference),None
@@ -212,10 +195,6 @@ DAo1,AL,31.1 to 31.3,21.8 to 36.0,DT20,1.04,None
 DAo1,AD,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
 DAo1,BL,30.3 to 31.3,21.2 to 36.0,DT20,1.00,None
 DAo1,BD,31.2 to 31.3,21.8 to 36.0,DT20,1.00,None
-DAo1T35,AL,31.1 to 31.1,21.8 to 35.8,DT20,1.04,None
-DAo1T35,AD,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
-DAo1T35,BL,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
-DAo1T35,BD,31.3 to 31.3,21.9 to 36.0,DT20,1.00,None
 DAo1C0,AL,32.4 to 32.4,22.7 to 37.3,DT20,1.08,None
 DAo1C0,AD,32.4 to 32.4,22.7 to 37.3,DT20,1.04,None
 DAo1C0,BL,32.3 to 32.4,22.6 to 37.3,DT20,1.04,None
