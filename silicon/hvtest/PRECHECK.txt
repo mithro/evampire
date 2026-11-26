@@ -17,3 +17,4 @@ precheck: Check for KLayout antenna errors clear.
 precheck: Check for Magic DRC errors clear.
 precheck: Check for KLayout DRC errors clear.
 precheck exit: 0
+precheck rerun on the committed hvtest.oas itself: exit 0 (2026-11-27)
