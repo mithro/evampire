@@ -1,39 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="956" height="539" viewBox="0 0 956 539" font-family="sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="956" height="597" viewBox="0 0 956 597" font-family="sans-serif">
 <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-clamp" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e08a00"/></marker><marker id="arrow-second" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e9c"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
-<rect width="956" height="539" fill="#ffffff"/>
+<rect width="956" height="597" fill="#ffffff"/>
 <rect x="20.0" y="48.0" width="276.0" height="408.0" fill="#dbe8f5"/>
 <path d="M52.7,63.9L296.0,63.9L296.0,456.0L52.7,456.0L52.7,426.9L52.7,416.1L52.7,250.8L52.7,240.0L52.7,74.7Z" fill="#f5b46e" stroke="#a8651c" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M25.1,368.7L39.5,368.7L296.0,368.7L296.0,403.2L39.5,403.2L25.1,403.2L25.1,398.2L25.1,374.2ZM25.1,87.6L39.5,87.6L296.0,87.6L296.0,122.1L39.5,122.1L25.1,122.1L25.1,117.2L25.1,93.2ZM39.5,439.8L296.0,439.8L296.0,456.0L25.1,456.0L25.1,445.3L25.1,439.8L39.5,439.8Z" fill="#c9a0dc" stroke="#6f3f93" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M52.7,439.8L296.0,439.8L296.0,456.0L52.7,456.0ZM52.7,368.7L296.0,368.7L296.0,403.2L52.7,403.2ZM52.7,87.6L296.0,87.6L296.0,122.1L52.7,122.1Z" fill="#8e5bb5" stroke="#4f2a70" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M29.9,446.2L36.5,446.2L36.5,452.9L29.9,452.9ZM282.7,418.2L289.3,418.2L289.3,424.8L282.7,424.8ZM267.5,418.2L274.1,418.2L274.1,424.8L267.5,424.8ZM252.4,418.2L259.0,418.2L259.0,424.8L252.4,424.8ZM237.2,418.2L243.8,418.2L243.8,424.8L237.2,424.8ZM222.0,418.2L228.7,418.2L228.7,424.8L222.0,424.8ZM206.9,418.2L213.5,418.2L213.5,424.8L206.9,424.8ZM191.8,418.2L198.4,418.2L198.4,424.8L191.8,424.8ZM176.6,418.2L183.2,418.2L183.2,424.8L176.6,424.8ZM161.5,418.2L168.1,418.2L168.1,424.8L161.5,424.8ZM146.3,418.2L152.9,418.2L152.9,424.8L146.3,424.8ZM131.2,418.2L137.8,418.2L137.8,424.8L131.2,424.8ZM116.0,418.2L122.6,418.2L122.6,424.8L116.0,424.8ZM100.9,418.2L107.5,418.2L107.5,424.8L100.9,424.8ZM85.7,418.2L92.3,418.2L92.3,424.8L85.7,424.8ZM70.6,418.2L77.2,418.2L77.2,424.8L70.6,424.8ZM55.4,418.2L62.0,418.2L62.0,424.8L55.4,424.8ZM29.9,389.2L36.5,389.2L36.5,395.8L29.9,395.8ZM29.9,375.2L36.5,375.2L36.5,381.8L29.9,381.8ZM282.7,242.1L289.3,242.1L289.3,248.7L282.7,248.7ZM267.5,242.1L274.1,242.1L274.1,248.7L267.5,248.7ZM252.4,242.1L259.0,242.1L259.0,248.7L252.4,248.7ZM237.2,242.1L243.8,242.1L243.8,248.7L237.2,248.7ZM222.0,242.1L228.7,242.1L228.7,248.7L222.0,248.7ZM206.9,242.1L213.5,242.1L213.5,248.7L206.9,248.7ZM191.8,242.1L198.4,242.1L198.4,248.7L191.8,248.7ZM176.6,242.1L183.2,242.1L183.2,248.7L176.6,248.7ZM161.5,242.1L168.1,242.1L168.1,248.7L161.5,248.7ZM146.3,242.1L152.9,242.1L152.9,248.7L146.3,248.7ZM131.2,242.1L137.8,242.1L137.8,248.7L131.2,248.7ZM116.0,242.1L122.6,242.1L122.6,248.7L116.0,248.7ZM100.9,242.1L107.5,242.1L107.5,248.7L100.9,248.7ZM85.7,242.1L92.3,242.1L92.3,248.7L85.7,248.7ZM70.6,242.1L77.2,242.1L77.2,248.7L70.6,248.7ZM55.4,242.1L62.0,242.1L62.0,248.7L55.4,248.7ZM29.9,108.2L36.5,108.2L36.5,114.8L29.9,114.8ZM29.9,94.1L36.5,94.1L36.5,100.7L29.9,100.7ZM282.7,66.0L289.3,66.0L289.3,72.6L282.7,72.6ZM267.5,66.0L274.1,66.0L274.1,72.6L267.5,72.6ZM252.4,66.0L259.0,66.0L259.0,72.6L252.4,72.6ZM237.2,66.0L243.8,66.0L243.8,72.6L237.2,72.6ZM222.0,66.0L228.7,66.0L228.7,72.6L222.0,72.6ZM206.9,66.0L213.5,66.0L213.5,72.6L206.9,72.6ZM191.8,66.0L198.4,66.0L198.4,72.6L191.8,72.6ZM176.6,66.0L183.2,66.0L183.2,72.6L176.6,72.6ZM161.5,66.0L168.1,66.0L168.1,72.6L161.5,72.6ZM146.3,66.0L152.9,66.0L152.9,72.6L146.3,72.6ZM131.2,66.0L137.8,66.0L137.8,72.6L131.2,72.6ZM116.0,66.0L122.6,66.0L122.6,72.6L116.0,72.6ZM100.9,66.0L107.5,66.0L107.5,72.6L100.9,72.6ZM85.7,66.0L92.3,66.0L92.3,72.6L85.7,72.6ZM70.6,66.0L77.2,66.0L77.2,72.6L70.6,72.6ZM55.4,66.0L62.0,66.0L62.0,72.6L55.4,72.6Z" fill="#333333" stroke="none" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M46.1,431.4L296.0,431.4L296.0,456.0L46.1,456.0ZM46.1,255.3L296.0,255.3L296.0,411.6L46.1,411.6ZM46.1,79.2L296.0,79.2L296.0,235.5L46.1,235.5Z" fill="url(#hatch)" stroke="#222222" stroke-width="1.0" fill-rule="evenodd" opacity="1.0" stroke-dasharray="4,2"/>
-<rect x="20.0" y="48.0" width="276.0" height="408.0" fill="none" stroke="#666666" stroke-width="1"/>
-<text x="20.0" y="38.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(a) NMOS output driver</text>
-<line x1="188.0" y1="122.1" x2="188.0" y2="235.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="188.0" y1="122.1" x2="188.0" y2="235.5" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="122.1" x2="193.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="122.1" x2="193.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="235.5" x2="193.0" y2="235.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="235.5" x2="193.0" y2="235.5" stroke="#222222" stroke-width="1.5"/>
-<text x="180.0" y="183.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">3.78 µm</text>
-<line x1="188.0" y1="255.3" x2="188.0" y2="368.7" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="188.0" y1="255.3" x2="188.0" y2="368.7" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="255.3" x2="193.0" y2="255.3" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="255.3" x2="193.0" y2="255.3" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="368.7" x2="193.0" y2="368.7" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="368.7" x2="193.0" y2="368.7" stroke="#222222" stroke-width="1.5"/>
-<text x="196.0" y="317.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">3.78 µm</text>
-<line x1="254.0" y1="87.6" x2="254.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="254.0" y1="87.6" x2="254.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
-<line x1="249.0" y1="87.6" x2="259.0" y2="87.6" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="249.0" y1="87.6" x2="259.0" y2="87.6" stroke="#222222" stroke-width="1.5"/>
-<line x1="249.0" y1="122.1" x2="259.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="249.0" y1="122.1" x2="259.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
-<text x="246.0" y="109.9" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">1.15 µm</text>
-<polyline points="101.0,194.0 74.0,245.4" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="101.0,194.0 74.0,245.4" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="74.0" cy="245.4" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="101.0" y="189.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drain contacts</text>
+<path d="M46.1,431.4L296.0,431.4L296.0,456.0L46.1,456.0ZM46.1,255.3L296.0,255.3L296.0,411.6L46.1,411.6ZM46.1,79.2L296.0,79.2L296.0,235.5L46.1,235.5Z" fill="url(#hatch)" stroke="#222222" stroke-width="1.0" fill-rule="evenodd" opacity="1.0"/>
+<line x1="20.0" y1="48.0" x2="20.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="48.0" x2="20.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="296.0" y1="48.0" x2="296.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="296.0" y1="48.0" x2="296.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="48.0" x2="296.0" y2="48.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="48.0" x2="296.0" y2="48.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="456.0" x2="296.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="456.0" x2="296.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="20.0" y="38.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(a) NMOS output driver, blocked</text>
+<line x1="269.0" y1="122.1" x2="269.0" y2="235.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="269.0" y1="122.1" x2="269.0" y2="235.5" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="122.1" x2="274.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="122.1" x2="274.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="235.5" x2="274.0" y2="235.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="235.5" x2="274.0" y2="235.5" stroke="#222222" stroke-width="1.5"/>
+<text x="261.0" y="183.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 3.78 µm</text>
+<line x1="269.0" y1="255.3" x2="269.0" y2="368.7" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="269.0" y1="255.3" x2="269.0" y2="368.7" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="255.3" x2="274.0" y2="255.3" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="255.3" x2="274.0" y2="255.3" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="368.7" x2="274.0" y2="368.7" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="368.7" x2="274.0" y2="368.7" stroke="#222222" stroke-width="1.5"/>
+<text x="261.0" y="317.0" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 3.78 µm</text>
+<line x1="68.0" y1="87.6" x2="68.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="68.0" y1="87.6" x2="68.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="63.0" y1="87.6" x2="73.0" y2="87.6" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="63.0" y1="87.6" x2="73.0" y2="87.6" stroke="#222222" stroke-width="1.5"/>
+<line x1="63.0" y1="122.1" x2="73.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="63.0" y1="122.1" x2="73.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
+<text x="76.0" y="109.9" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 1.15 µm</text>
+<polyline points="76.0,265.5 69.5,245.4" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="76.0,265.5 69.5,245.4" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="69.5" cy="245.4" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="76.0" y="280.5" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Drain contacts</text>
+<polyline points="115.0,65.6 108.5,72.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="115.0,65.6 108.5,72.0" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="108.5" cy="72.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="115.0" y="60.6" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Source, not blocked</text>
 <g transform="translate(320.0,0)">
 <rect x="20.0" y="48.0" width="276.0" height="408.0" fill="#dbe8f5"/>
 <path d="M20.0,48.0L296.0,48.0L296.0,456.0L20.0,456.0Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -41,34 +52,45 @@
 <path d="M29.3,350.4L41.9,350.4L41.9,352.8L41.9,355.0L296.0,355.0L296.0,376.1L41.9,376.1L41.9,379.5L41.9,382.0L29.3,382.0L29.3,379.5L29.3,352.8ZM29.3,292.5L41.9,292.5L41.9,294.9L41.9,297.5L296.0,297.5L296.0,318.5L41.9,318.5L41.9,321.6L41.9,324.2L29.3,324.2L29.3,321.6L29.3,294.9ZM29.3,84.6L41.9,84.6L41.9,87.0L41.9,89.9L296.0,89.9L296.0,110.9L41.9,110.9L41.9,113.7L41.9,116.3L29.3,116.3L29.3,113.7L29.3,87.0Z" fill="#c9a0dc" stroke="#6f3f93" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M55.1,355.0L296.0,355.0L296.0,376.1L55.1,376.1ZM55.1,297.5L296.0,297.5L296.0,318.5L55.1,318.5ZM55.1,89.9L296.0,89.9L296.0,110.9L55.1,110.9Z" fill="#8e5bb5" stroke="#4f2a70" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M32.3,369.9L38.9,369.9L38.9,376.5L32.3,376.5ZM32.3,355.8L38.9,355.8L38.9,362.4L32.3,362.4ZM284.4,333.5L291.0,333.5L291.0,340.0L284.4,340.0ZM269.3,333.5L275.9,333.5L275.9,340.0L269.3,340.0ZM254.2,333.5L260.8,333.5L260.8,340.0L254.2,340.0ZM239.0,333.5L245.6,333.5L245.6,340.0L239.0,340.0ZM223.8,333.5L230.4,333.5L230.4,340.0L223.8,340.0ZM208.7,333.5L215.3,333.5L215.3,340.0L208.7,340.0ZM193.5,333.5L200.1,333.5L200.1,340.0L193.5,340.0ZM178.4,333.5L185.0,333.5L185.0,340.0L178.4,340.0ZM163.3,333.5L169.9,333.5L169.9,340.0L163.3,340.0ZM148.1,333.5L154.7,333.5L154.7,340.0L148.1,340.0ZM132.9,333.5L139.5,333.5L139.5,340.0L132.9,340.0ZM117.8,333.5L124.4,333.5L124.4,340.0L117.8,340.0ZM102.6,333.5L109.2,333.5L109.2,340.0L102.6,340.0ZM87.5,333.5L94.1,333.5L94.1,340.0L87.5,340.0ZM72.4,333.5L79.0,333.5L79.0,340.0L72.4,340.0ZM57.2,333.5L63.8,333.5L63.8,340.0L57.2,340.0ZM32.3,312.0L38.9,312.0L38.9,318.6L32.3,318.6ZM32.3,297.9L38.9,297.9L38.9,304.5L32.3,304.5ZM284.4,200.9L291.0,200.9L291.0,207.5L284.4,207.5ZM269.3,200.9L275.9,200.9L275.9,207.5L269.3,207.5ZM254.2,200.9L260.8,200.9L260.8,207.5L254.2,207.5ZM239.0,200.9L245.6,200.9L245.6,207.5L239.0,207.5ZM223.8,200.9L230.4,200.9L230.4,207.5L223.8,207.5ZM208.7,200.9L215.3,200.9L215.3,207.5L208.7,207.5ZM193.5,200.9L200.1,200.9L200.1,207.5L193.5,207.5ZM178.4,200.9L185.0,200.9L185.0,207.5L178.4,207.5ZM163.3,200.9L169.9,200.9L169.9,207.5L163.3,207.5ZM148.1,200.9L154.7,200.9L154.7,207.5L148.1,207.5ZM132.9,200.9L139.5,200.9L139.5,207.5L132.9,207.5ZM117.8,200.9L124.4,200.9L124.4,207.5L117.8,207.5ZM102.6,200.9L109.2,200.9L109.2,207.5L102.6,207.5ZM87.5,200.9L94.1,200.9L94.1,207.5L87.5,207.5ZM72.4,200.9L79.0,200.9L79.0,207.5L72.4,207.5ZM57.2,200.9L63.8,200.9L63.8,207.5L57.2,207.5ZM32.3,104.1L38.9,104.1L38.9,110.7L32.3,110.7ZM32.3,90.0L38.9,90.0L38.9,96.6L32.3,96.6ZM284.4,68.3L291.0,68.3L291.0,74.9L284.4,74.9ZM269.3,68.3L275.9,68.3L275.9,74.9L269.3,74.9ZM254.2,68.3L260.8,68.3L260.8,74.9L254.2,74.9ZM239.0,68.3L245.6,68.3L245.6,74.9L239.0,74.9ZM223.8,68.3L230.4,68.3L230.4,74.9L223.8,74.9ZM208.7,68.3L215.3,68.3L215.3,74.9L208.7,74.9ZM193.5,68.3L200.1,68.3L200.1,74.9L193.5,74.9ZM178.4,68.3L185.0,68.3L185.0,74.9L178.4,74.9ZM163.3,68.3L169.9,68.3L169.9,74.9L163.3,74.9ZM148.1,68.3L154.7,68.3L154.7,74.9L148.1,74.9ZM132.9,68.3L139.5,68.3L139.5,74.9L132.9,74.9ZM117.8,68.3L124.4,68.3L124.4,74.9L117.8,74.9ZM102.6,68.3L109.2,68.3L109.2,74.9L102.6,74.9ZM87.5,68.3L94.1,68.3L94.1,74.9L87.5,74.9ZM72.4,68.3L79.0,68.3L79.0,74.9L72.4,74.9ZM57.2,68.3L63.8,68.3L63.8,74.9L57.2,74.9Z" fill="#333333" stroke="none" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M48.5,346.6L296.0,346.6L296.0,456.0L48.5,456.0ZM48.5,214.1L296.0,214.1L296.0,326.9L48.5,326.9ZM48.5,81.5L296.0,81.5L296.0,194.3L48.5,194.3Z" fill="url(#hatch)" stroke="#222222" stroke-width="1.0" fill-rule="evenodd" opacity="1.0" stroke-dasharray="4,2"/>
-<rect x="20.0" y="48.0" width="276.0" height="408.0" fill="none" stroke="#666666" stroke-width="1"/>
-<text x="20.0" y="38.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(b) PMOS output driver</text>
-<line x1="188.0" y1="110.9" x2="188.0" y2="194.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="188.0" y1="110.9" x2="188.0" y2="194.2" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="110.9" x2="193.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="110.9" x2="193.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="194.2" x2="193.0" y2="194.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="194.2" x2="193.0" y2="194.2" stroke="#222222" stroke-width="1.5"/>
-<text x="180.0" y="157.6" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">2.78 µm</text>
-<line x1="188.0" y1="214.1" x2="188.0" y2="297.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="188.0" y1="214.1" x2="188.0" y2="297.5" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="214.1" x2="193.0" y2="214.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="214.1" x2="193.0" y2="214.1" stroke="#222222" stroke-width="1.5"/>
-<line x1="183.0" y1="297.5" x2="193.0" y2="297.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="183.0" y1="297.5" x2="193.0" y2="297.5" stroke="#222222" stroke-width="1.5"/>
-<text x="196.0" y="260.8" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">2.78 µm</text>
-<line x1="254.0" y1="89.9" x2="254.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="254.0" y1="89.9" x2="254.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
-<line x1="249.0" y1="89.9" x2="259.0" y2="89.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="249.0" y1="89.9" x2="259.0" y2="89.9" stroke="#222222" stroke-width="1.5"/>
-<line x1="249.0" y1="110.9" x2="259.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="249.0" y1="110.9" x2="259.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
-<text x="246.0" y="105.4" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">0.7 µm</text>
-<polyline points="101.0,167.0 74.0,204.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="101.0,167.0 74.0,204.2" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="74.0" cy="204.2" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="101.0" y="162.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drain contacts</text>
+<path d="M48.5,346.6L296.0,346.6L296.0,456.0L48.5,456.0ZM48.5,214.1L296.0,214.1L296.0,326.9L48.5,326.9ZM48.5,81.5L296.0,81.5L296.0,194.3L48.5,194.3Z" fill="url(#hatch)" stroke="#222222" stroke-width="1.0" fill-rule="evenodd" opacity="1.0"/>
+<line x1="20.0" y1="48.0" x2="20.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="48.0" x2="20.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="296.0" y1="48.0" x2="296.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="296.0" y1="48.0" x2="296.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="48.0" x2="296.0" y2="48.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="48.0" x2="296.0" y2="48.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="456.0" x2="296.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="456.0" x2="296.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="20.0" y="38.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(b) PMOS output driver, blocked</text>
+<line x1="269.0" y1="110.9" x2="269.0" y2="194.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="269.0" y1="110.9" x2="269.0" y2="194.2" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="110.9" x2="274.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="110.9" x2="274.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="194.2" x2="274.0" y2="194.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="194.2" x2="274.0" y2="194.2" stroke="#222222" stroke-width="1.5"/>
+<text x="261.0" y="157.6" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 2.78 µm</text>
+<line x1="269.0" y1="214.1" x2="269.0" y2="297.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="269.0" y1="214.1" x2="269.0" y2="297.5" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="214.1" x2="274.0" y2="214.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="214.1" x2="274.0" y2="214.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="297.5" x2="274.0" y2="297.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="297.5" x2="274.0" y2="297.5" stroke="#222222" stroke-width="1.5"/>
+<text x="261.0" y="260.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 2.78 µm</text>
+<line x1="68.0" y1="89.9" x2="68.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="68.0" y1="89.9" x2="68.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
+<line x1="63.0" y1="89.9" x2="73.0" y2="89.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="63.0" y1="89.9" x2="73.0" y2="89.9" stroke="#222222" stroke-width="1.5"/>
+<line x1="63.0" y1="110.9" x2="73.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="63.0" y1="110.9" x2="73.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
+<text x="76.0" y="105.4" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 0.7 µm</text>
+<polyline points="76.0,224.4 69.5,204.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="76.0,224.4 69.5,204.2" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="69.5" cy="204.2" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="76.0" y="239.4" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Drain contacts</text>
+<polyline points="115.0,68.6 108.5,75.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="115.0,68.6 108.5,75.0" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="108.5" cy="75.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="115.0" y="63.6" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Source, not blocked</text>
 </g>
 <g transform="translate(640.0,0)">
 <rect x="20.0" y="48.0" width="276.0" height="408.0" fill="#dbe8f5"/>
@@ -77,28 +99,54 @@
 <path d="M36.2,290.7L42.8,290.7L296.0,290.7L296.0,311.7L42.8,311.7L36.2,311.7ZM36.2,254.1L42.8,254.1L296.0,254.1L296.0,275.1L42.8,275.1L36.2,275.1ZM36.2,191.7L42.8,191.7L296.0,191.7L296.0,212.7L42.8,212.7L36.2,212.7ZM36.2,327.3L42.8,327.3L296.0,327.3L296.0,348.3L36.2,348.3ZM36.2,155.1L42.8,155.1L296.0,155.1L296.0,176.1L36.2,176.1ZM36.2,118.5L42.8,118.5L296.0,118.5L296.0,139.5L36.2,139.5ZM36.2,81.9L42.8,81.9L296.0,81.9L296.0,102.9L36.2,102.9ZM36.2,426.3L296.0,426.3L296.0,447.3L36.2,447.3ZM36.2,389.7L296.0,389.7L296.0,410.7L36.2,410.7Z" fill="#c9a0dc" stroke="#6f3f93" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M42.8,426.3L296.0,426.3L296.0,447.3L42.8,447.3ZM42.8,389.7L296.0,389.7L296.0,410.7L42.8,410.7ZM42.8,327.3L296.0,327.3L296.0,348.3L42.8,348.3ZM42.8,290.7L296.0,290.7L296.0,311.7L42.8,311.7ZM42.8,254.1L296.0,254.1L296.0,275.1L42.8,275.1ZM42.8,191.7L296.0,191.7L296.0,212.7L42.8,212.7ZM42.8,155.1L296.0,155.1L296.0,176.1L42.8,176.1ZM42.8,118.5L296.0,118.5L296.0,139.5L42.8,139.5ZM42.8,81.9L296.0,81.9L296.0,102.9L42.8,102.9Z" fill="#8e5bb5" stroke="#4f2a70" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M287.3,451.8L293.9,451.8L293.9,456.0L287.3,456.0ZM272.2,451.8L278.8,451.8L278.8,456.0L272.2,456.0ZM257.0,451.8L263.6,451.8L263.6,456.0L257.0,456.0ZM241.8,451.8L248.5,451.8L248.5,456.0L241.8,456.0ZM226.7,451.8L233.3,451.8L233.3,456.0L226.7,456.0ZM211.5,451.8L218.1,451.8L218.1,456.0L211.5,456.0ZM196.4,451.8L203.0,451.8L203.0,456.0L196.4,456.0ZM181.2,451.8L187.8,451.8L187.8,456.0L181.2,456.0ZM166.1,451.8L172.7,451.8L172.7,456.0L166.1,456.0ZM151.0,451.8L157.6,451.8L157.6,456.0L151.0,456.0ZM135.8,451.8L142.4,451.8L142.4,456.0L135.8,456.0ZM120.6,451.8L127.2,451.8L127.2,456.0L120.6,456.0ZM105.5,451.8L112.1,451.8L112.1,456.0L105.5,456.0ZM90.3,451.8L96.9,451.8L96.9,456.0L90.3,456.0ZM75.2,451.8L81.8,451.8L81.8,456.0L75.2,456.0ZM60.1,451.8L66.7,451.8L66.7,456.0L60.1,456.0ZM44.9,451.8L51.5,451.8L51.5,456.0L44.9,456.0ZM288.1,415.2L294.7,415.2L294.7,421.8L288.1,421.8ZM272.9,415.2L279.5,415.2L279.5,421.8L272.9,421.8ZM257.8,415.2L264.3,415.2L264.3,421.8L257.8,421.8ZM242.6,415.2L249.2,415.2L249.2,421.8L242.6,421.8ZM227.4,415.2L234.0,415.2L234.0,421.8L227.4,421.8ZM212.3,415.2L218.9,415.2L218.9,421.8L212.3,421.8ZM197.2,415.2L203.8,415.2L203.8,421.8L197.2,421.8ZM182.0,415.2L188.6,415.2L188.6,421.8L182.0,421.8ZM166.8,415.2L173.5,415.2L173.5,421.8L166.8,421.8ZM151.7,415.2L158.3,415.2L158.3,421.8L151.7,421.8ZM136.5,415.2L143.1,415.2L143.1,421.8L136.5,421.8ZM121.4,415.2L128.0,415.2L128.0,421.8L121.4,421.8ZM106.1,415.2L112.7,415.2L112.7,421.8L106.1,421.8ZM90.8,415.2L97.4,415.2L97.4,421.8L90.8,421.8ZM75.5,415.2L82.1,415.2L82.1,421.8L75.5,421.8ZM60.2,415.2L66.8,415.2L66.8,421.8L60.2,421.8ZM44.9,415.2L51.5,415.2L51.5,421.8L44.9,421.8ZM288.1,378.6L294.7,378.6L294.7,385.2L288.1,385.2ZM272.9,378.6L279.5,378.6L279.5,385.2L272.9,385.2ZM257.8,378.6L264.3,378.6L264.3,385.2L257.8,385.2ZM242.6,378.6L249.2,378.6L249.2,385.2L242.6,385.2ZM227.4,378.6L234.0,378.6L234.0,385.2L227.4,385.2ZM212.3,378.6L218.9,378.6L218.9,385.2L212.3,385.2ZM197.2,378.6L203.8,378.6L203.8,385.2L197.2,385.2ZM182.0,378.6L188.6,378.6L188.6,385.2L182.0,385.2ZM166.8,378.6L173.5,378.6L173.5,385.2L166.8,385.2ZM151.7,378.6L158.3,378.6L158.3,385.2L151.7,385.2ZM136.5,378.6L143.1,378.6L143.1,385.2L136.5,385.2ZM121.4,378.6L128.0,378.6L128.0,385.2L121.4,385.2ZM106.1,378.6L112.7,378.6L112.7,385.2L106.1,385.2ZM90.8,378.6L97.4,378.6L97.4,385.2L90.8,385.2ZM75.5,378.6L82.1,378.6L82.1,385.2L75.5,385.2ZM60.2,378.6L66.8,378.6L66.8,385.2L60.2,385.2ZM44.9,378.6L51.5,378.6L51.5,385.2L44.9,385.2ZM287.3,352.8L293.9,352.8L293.9,359.4L287.3,359.4ZM272.2,352.8L278.8,352.8L278.8,359.4L272.2,359.4ZM257.0,352.8L263.6,352.8L263.6,359.4L257.0,359.4ZM241.8,352.8L248.5,352.8L248.5,359.4L241.8,359.4ZM226.7,352.8L233.3,352.8L233.3,359.4L226.7,359.4ZM211.5,352.8L218.1,352.8L218.1,359.4L211.5,359.4ZM196.4,352.8L203.0,352.8L203.0,359.4L196.4,359.4ZM181.2,352.8L187.8,352.8L187.8,359.4L181.2,359.4ZM166.1,352.8L172.7,352.8L172.7,359.4L166.1,359.4ZM151.0,352.8L157.6,352.8L157.6,359.4L151.0,359.4ZM135.8,352.8L142.4,352.8L142.4,359.4L135.8,359.4ZM120.6,352.8L127.2,352.8L127.2,359.4L120.6,359.4ZM105.5,352.8L112.1,352.8L112.1,359.4L105.5,359.4ZM90.3,352.8L96.9,352.8L96.9,359.4L90.3,359.4ZM75.2,352.8L81.8,352.8L81.8,359.4L75.2,359.4ZM60.1,352.8L66.7,352.8L66.7,359.4L60.1,359.4ZM44.9,352.8L51.5,352.8L51.5,359.4L44.9,359.4ZM287.3,316.2L293.9,316.2L293.9,322.8L287.3,322.8ZM272.2,316.2L278.8,316.2L278.8,322.8L272.2,322.8ZM257.0,316.2L263.6,316.2L263.6,322.8L257.0,322.8ZM241.8,316.2L248.5,316.2L248.5,322.8L241.8,322.8ZM226.7,316.2L233.3,316.2L233.3,322.8L226.7,322.8ZM211.5,316.2L218.1,316.2L218.1,322.8L211.5,322.8ZM196.4,316.2L203.0,316.2L203.0,322.8L196.4,322.8ZM181.2,316.2L187.8,316.2L187.8,322.8L181.2,322.8ZM166.1,316.2L172.7,316.2L172.7,322.8L166.1,322.8ZM151.0,316.2L157.6,316.2L157.6,322.8L151.0,322.8ZM135.8,316.2L142.4,316.2L142.4,322.8L135.8,322.8ZM120.6,316.2L127.2,316.2L127.2,322.8L120.6,322.8ZM105.5,316.2L112.1,316.2L112.1,322.8L105.5,322.8ZM90.3,316.2L96.9,316.2L96.9,322.8L90.3,322.8ZM75.2,316.2L81.8,316.2L81.8,322.8L75.2,322.8ZM60.1,316.2L66.7,316.2L66.7,322.8L60.1,322.8ZM44.9,316.2L51.5,316.2L51.5,322.8L44.9,322.8ZM287.3,279.6L293.9,279.6L293.9,286.2L287.3,286.2ZM272.2,279.6L278.8,279.6L278.8,286.2L272.2,286.2ZM257.0,279.6L263.6,279.6L263.6,286.2L257.0,286.2ZM241.8,279.6L248.5,279.6L248.5,286.2L241.8,286.2ZM226.7,279.6L233.3,279.6L233.3,286.2L226.7,286.2ZM211.5,279.6L218.1,279.6L218.1,286.2L211.5,286.2ZM196.4,279.6L203.0,279.6L203.0,286.2L196.4,286.2ZM181.2,279.6L187.8,279.6L187.8,286.2L181.2,286.2ZM166.1,279.6L172.7,279.6L172.7,286.2L166.1,286.2ZM151.0,279.6L157.6,279.6L157.6,286.2L151.0,286.2ZM135.8,279.6L142.4,279.6L142.4,286.2L135.8,286.2ZM120.6,279.6L127.2,279.6L127.2,286.2L120.6,286.2ZM105.5,279.6L112.1,279.6L112.1,286.2L105.5,286.2ZM90.3,279.6L96.9,279.6L96.9,286.2L90.3,286.2ZM75.2,279.6L81.8,279.6L81.8,286.2L75.2,286.2ZM60.1,279.6L66.7,279.6L66.7,286.2L60.1,286.2ZM44.9,279.6L51.5,279.6L51.5,286.2L44.9,286.2ZM287.3,243.0L293.9,243.0L293.9,249.6L287.3,249.6ZM272.2,243.0L278.8,243.0L278.8,249.6L272.2,249.6ZM257.0,243.0L263.6,243.0L263.6,249.6L257.0,249.6ZM241.8,243.0L248.5,243.0L248.5,249.6L241.8,249.6ZM226.7,243.0L233.3,243.0L233.3,249.6L226.7,249.6ZM211.5,243.0L218.1,243.0L218.1,249.6L211.5,249.6ZM196.4,243.0L203.0,243.0L203.0,249.6L196.4,249.6ZM181.2,243.0L187.8,243.0L187.8,249.6L181.2,249.6ZM166.1,243.0L172.7,243.0L172.7,249.6L166.1,249.6ZM151.0,243.0L157.6,243.0L157.6,249.6L151.0,249.6ZM135.8,243.0L142.4,243.0L142.4,249.6L135.8,249.6ZM120.6,243.0L127.2,243.0L127.2,249.6L120.6,249.6ZM105.5,243.0L112.1,243.0L112.1,249.6L105.5,249.6ZM90.3,243.0L96.9,243.0L96.9,249.6L90.3,249.6ZM75.2,243.0L81.8,243.0L81.8,249.6L75.2,249.6ZM60.1,243.0L66.7,243.0L66.7,249.6L60.1,249.6ZM44.9,243.0L51.5,243.0L51.5,249.6L44.9,249.6ZM287.3,217.2L293.9,217.2L293.9,223.8L287.3,223.8ZM272.2,217.2L278.8,217.2L278.8,223.8L272.2,223.8ZM257.0,217.2L263.6,217.2L263.6,223.8L257.0,223.8ZM241.8,217.2L248.5,217.2L248.5,223.8L241.8,223.8ZM226.7,217.2L233.3,217.2L233.3,223.8L226.7,223.8ZM211.5,217.2L218.1,217.2L218.1,223.8L211.5,223.8ZM196.4,217.2L203.0,217.2L203.0,223.8L196.4,223.8ZM181.2,217.2L187.8,217.2L187.8,223.8L181.2,223.8ZM166.1,217.2L172.7,217.2L172.7,223.8L166.1,223.8ZM151.0,217.2L157.6,217.2L157.6,223.8L151.0,223.8ZM135.8,217.2L142.4,217.2L142.4,223.8L135.8,223.8ZM120.6,217.2L127.2,217.2L127.2,223.8L120.6,223.8ZM105.5,217.2L112.1,217.2L112.1,223.8L105.5,223.8ZM90.3,217.2L96.9,217.2L96.9,223.8L90.3,223.8ZM75.2,217.2L81.8,217.2L81.8,223.8L75.2,223.8ZM60.1,217.2L66.7,217.2L66.7,223.8L60.1,223.8ZM44.9,217.2L51.5,217.2L51.5,223.8L44.9,223.8ZM287.3,180.6L293.9,180.6L293.9,187.2L287.3,187.2ZM272.2,180.6L278.8,180.6L278.8,187.2L272.2,187.2ZM257.0,180.6L263.6,180.6L263.6,187.2L257.0,187.2ZM241.8,180.6L248.5,180.6L248.5,187.2L241.8,187.2ZM226.7,180.6L233.3,180.6L233.3,187.2L226.7,187.2ZM211.5,180.6L218.1,180.6L218.1,187.2L211.5,187.2ZM196.4,180.6L203.0,180.6L203.0,187.2L196.4,187.2ZM181.2,180.6L187.8,180.6L187.8,187.2L181.2,187.2ZM166.1,180.6L172.7,180.6L172.7,187.2L166.1,187.2ZM151.0,180.6L157.6,180.6L157.6,187.2L151.0,187.2ZM135.8,180.6L142.4,180.6L142.4,187.2L135.8,187.2ZM120.6,180.6L127.2,180.6L127.2,187.2L120.6,187.2ZM105.5,180.6L112.1,180.6L112.1,187.2L105.5,187.2ZM90.3,180.6L96.9,180.6L96.9,187.2L90.3,187.2ZM75.2,180.6L81.8,180.6L81.8,187.2L75.2,187.2ZM60.1,180.6L66.7,180.6L66.7,187.2L60.1,187.2ZM44.9,180.6L51.5,180.6L51.5,187.2L44.9,187.2ZM287.3,144.0L293.9,144.0L293.9,150.6L287.3,150.6ZM272.2,144.0L278.8,144.0L278.8,150.6L272.2,150.6ZM257.0,144.0L263.6,144.0L263.6,150.6L257.0,150.6ZM241.8,144.0L248.5,144.0L248.5,150.6L241.8,150.6ZM226.7,144.0L233.3,144.0L233.3,150.6L226.7,150.6ZM211.5,144.0L218.1,144.0L218.1,150.6L211.5,150.6ZM196.4,144.0L203.0,144.0L203.0,150.6L196.4,150.6ZM181.2,144.0L187.8,144.0L187.8,150.6L181.2,150.6ZM166.1,144.0L172.7,144.0L172.7,150.6L166.1,150.6ZM151.0,144.0L157.6,144.0L157.6,150.6L151.0,150.6ZM135.8,144.0L142.4,144.0L142.4,150.6L135.8,150.6ZM120.6,144.0L127.2,144.0L127.2,150.6L120.6,150.6ZM105.5,144.0L112.1,144.0L112.1,150.6L105.5,150.6ZM90.3,144.0L96.9,144.0L96.9,150.6L90.3,150.6ZM75.2,144.0L81.8,144.0L81.8,150.6L75.2,150.6ZM60.1,144.0L66.7,144.0L66.7,150.6L60.1,150.6ZM44.9,144.0L51.5,144.0L51.5,150.6L44.9,150.6ZM287.3,107.4L293.9,107.4L293.9,114.0L287.3,114.0ZM272.2,107.4L278.8,107.4L278.8,114.0L272.2,114.0ZM257.0,107.4L263.6,107.4L263.6,114.0L257.0,114.0ZM241.9,107.4L248.5,107.4L248.5,114.0L241.9,114.0ZM226.7,107.4L233.3,107.4L233.3,114.0L226.7,114.0ZM211.5,107.4L218.1,107.4L218.1,114.0L211.5,114.0ZM196.4,107.4L203.0,107.4L203.0,114.0L196.4,114.0ZM181.2,107.4L187.8,107.4L187.8,114.0L181.2,114.0ZM166.1,107.4L172.7,107.4L172.7,114.0L166.1,114.0ZM151.0,107.4L157.6,107.4L157.6,114.0L151.0,114.0ZM135.8,107.4L142.4,107.4L142.4,114.0L135.8,114.0ZM120.6,107.4L127.2,107.4L127.2,114.0L120.6,114.0ZM105.5,107.4L112.1,107.4L112.1,114.0L105.5,114.0ZM90.3,107.4L96.9,107.4L96.9,114.0L90.3,114.0ZM75.2,107.4L81.8,107.4L81.8,114.0L75.2,114.0ZM60.1,107.4L66.7,107.4L66.7,114.0L60.1,114.0ZM44.9,107.4L51.5,107.4L51.5,114.0L44.9,114.0ZM287.3,70.8L293.9,70.8L293.9,77.4L287.3,77.4ZM272.2,70.8L278.8,70.8L278.8,77.4L272.2,77.4ZM257.0,70.8L263.6,70.8L263.6,77.4L257.0,77.4ZM241.9,70.8L248.5,70.8L248.5,77.4L241.9,77.4ZM226.7,70.8L233.3,70.8L233.3,77.4L226.7,77.4ZM211.5,70.8L218.1,70.8L218.1,77.4L211.5,77.4ZM196.4,70.8L203.0,70.8L203.0,77.4L196.4,77.4ZM181.2,70.8L187.8,70.8L187.8,77.4L181.2,77.4ZM166.1,70.8L172.7,70.8L172.7,77.4L166.1,77.4ZM151.0,70.8L157.6,70.8L157.6,77.4L151.0,77.4ZM135.8,70.8L142.4,70.8L142.4,77.4L135.8,77.4ZM120.6,70.8L127.2,70.8L127.2,77.4L120.6,77.4ZM105.5,70.8L112.1,70.8L112.1,77.4L105.5,77.4ZM90.3,70.8L96.9,70.8L96.9,77.4L90.3,77.4ZM75.2,70.8L81.8,70.8L81.8,77.4L75.2,77.4ZM60.1,70.8L66.7,70.8L66.7,77.4L60.1,77.4ZM44.9,70.8L51.5,70.8L51.5,77.4L44.9,77.4Z" fill="#333333" stroke="none" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<rect x="20.0" y="48.0" width="276.0" height="408.0" fill="none" stroke="#666666" stroke-width="1"/>
-<text x="20.0" y="38.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(c) Pre-driver, not blocked</text>
-<polyline points="167.0,469.0 131.0,189.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="167.0,469.0 131.0,189.0" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="131.0" cy="189.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="167.0" y="484.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">contacts beside</text>
-<text x="167.0" y="500.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">every gate</text>
+<line x1="20.0" y1="48.0" x2="20.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="48.0" x2="20.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="296.0" y1="48.0" x2="296.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="296.0" y1="48.0" x2="296.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="48.0" x2="296.0" y2="48.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="48.0" x2="296.0" y2="48.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="456.0" x2="296.0" y2="456.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="456.0" x2="296.0" y2="456.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="20.0" y="38.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(c) PMOS pre-driver, not blocked</text>
+<line x1="65.0" y1="254.1" x2="65.0" y2="275.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="65.0" y1="254.1" x2="65.0" y2="275.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="60.0" y1="254.1" x2="70.0" y2="254.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="60.0" y1="254.1" x2="70.0" y2="254.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="60.0" y1="275.1" x2="70.0" y2="275.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="60.0" y1="275.1" x2="70.0" y2="275.1" stroke="#222222" stroke-width="1.5"/>
+<text x="73.0" y="269.6" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 0.7 µm</text>
+<polyline points="158.0,471.0 158.0,420.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="158.0,471.0 158.0,420.0" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="158.0" cy="420.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="158.0" y="486.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Contacts beside every gate, on strips</text>
+<text x="158.0" y="502.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">0.52 µm wide, all of it silicided</text>
 </g>
-<rect x="20.0" y="490.0" width="30.0" height="6" fill="#222222"/>
-<text x="58.0" y="498.0" font-size="14" fill="#222222">1 µm</text>
-<rect x="115.6" y="487.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f"/>
-<text x="147.6" y="499.0" font-size="14" fill="#222222">N-well</text>
-<rect x="212.6" y="487.0" width="26" height="14" fill="#f5b46e" stroke="#a8651c"/>
-<text x="244.6" y="499.0" font-size="14" fill="#222222">N+ diffusion</text>
-<rect x="356.7" y="487.0" width="26" height="14" fill="#7fa7d6" stroke="#3d6294"/>
-<text x="388.7" y="499.0" font-size="14" fill="#222222">P+ diffusion</text>
-<rect x="500.8" y="487.0" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93"/>
-<text x="532.8" y="499.0" font-size="14" fill="#222222">polysilicon</text>
-<rect x="637.0" y="487.0" width="26" height="14" fill="url(#hatch)" stroke="#222222" stroke-dasharray="4,2"/>
-<text x="669.0" y="499.0" font-size="14" fill="#222222">silicide block</text>
-<rect x="796.8" y="487.0" width="26" height="14" fill="#333333" stroke="none"/>
-<text x="828.8" y="499.0" font-size="14" fill="#222222">contact</text>
-<rect x="115.6" y="511.0" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70"/>
-<text x="147.6" y="523.0" font-size="14" fill="#222222">gate over diffusion</text>
+<rect x="20.0" y="524.0" width="30.0" height="6" fill="#222222"/>
+<text x="58.0" y="532.0" font-size="14" fill="#222222">1 µm, all panels</text>
+<rect x="216.4" y="521.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="216.4" y="521.0" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
+<text x="250.4" y="533.0" font-size="14" fill="#222222">P substrate</text>
+<rect x="364.5" y="521.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="364.5" y="521.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
+<text x="398.5" y="533.0" font-size="14" fill="#222222">N-well</text>
+<rect x="567.4" y="521.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="567.4" y="521.0" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
+<text x="601.4" y="533.0" font-size="14" fill="#222222">N+ diffusion</text>
+<rect x="216.4" y="545.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="216.4" y="545.0" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
+<text x="250.4" y="557.0" font-size="14" fill="#222222">P+ diffusion</text>
+<rect x="364.5" y="545.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="364.5" y="545.0" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
+<text x="398.5" y="557.0" font-size="14" fill="#222222">polysilicon</text>
+<rect x="567.4" y="545.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="567.4" y="545.0" width="26" height="14" fill="url(#hatch)" stroke="#222222" opacity="1.0"/>
+<text x="601.4" y="557.0" font-size="14" fill="#222222">silicide block, over any layer</text>
+<rect x="216.4" y="569.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="225.4" y="572.0" width="8" height="8" fill="#333333" stroke="none" opacity="1.0"/>
+<text x="250.4" y="581.0" font-size="14" fill="#222222">contact</text>
+<rect x="364.5" y="569.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="364.5" y="569.0" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
+<text x="398.5" y="581.0" font-size="14" fill="#222222">gate over diffusion</text>
+<line x1="567.4" y1="576.0" x2="593.4" y2="576.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="601.4" y="581.0" font-size="14" fill="#222222">layout continues</text>
 </svg>
