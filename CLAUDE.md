@@ -130,8 +130,9 @@ helpers that the scripts above import, so run the script, not the helper:
 USB Power Delivery graph. Every script reproduces its committed files byte
 for byte, so a rerun that changes a file means its inputs changed.
 
-The test-die script reads three inputs. `silicon/hvtest/structures.json`
-is written by `silicon/hvtest/export.py`. `docs/high-voltage/test-die/manifest.json`
+The test-die script reads these inputs. `silicon/hvtest/structures.json`
+is written by `silicon/hvtest/export.py`, and `silicon/hvtest/PRECHECK.txt`
+by the layout build. `docs/high-voltage/test-die/manifest.json`
 is the floor plan: copy it from the second argument of
 `uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json`
 whenever the layout changes. `docs/high-voltage/test-die/predictions.json`
