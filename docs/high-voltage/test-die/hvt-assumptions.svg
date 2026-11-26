@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="700" viewBox="0 0 640 700" font-family="sans-serif" font-size="13">
-<rect width="640" height="700" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1085" viewBox="0 0 640 1085" font-family="sans-serif" font-size="13">
+<rect width="640" height="1085" fill="white"/>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
 <text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Where the P-well lies under each assumption</text>
 <text x="30" y="56" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NT20, assumption A: generated P-well up to the well edge</text>
@@ -21,46 +21,89 @@
 <rect x="535.5" y="82" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
 <rect x="519.4" y="74" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
 <text x="537.5" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
-<text x="30" y="271" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NA2, assumption A with NAT: no P-well under the NAT layer</text>
-<rect x="30" y="325" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
-<rect x="156.9" y="325" width="36.2" height="36" rx="0" fill="#aac6e6" stroke="#222222"/>
-<text x="175.0" y="355" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222"></text>
-<rect x="510.3" y="325" width="99.7" height="36" rx="0" fill="#aac6e6" stroke="#222222"/>
-<text x="560.2" y="355" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222"></text>
-<path d="M30.0,325 L30.0,367 L147.9,367 Q156.9,367 156.9,358 L156.9,325 Z" fill="#fbd9b5" stroke="#222222"/>
-<text x="36" y="359" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
-<rect x="30.0" y="325" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
-<rect x="120.6" y="325" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
-<rect x="555.6" y="325" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
-<rect x="84.4" y="325" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
-<rect x="519.4" y="325" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
-<text x="102.5" y="347" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
-<text x="537.5" y="347" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
-<text x="604" y="413" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
-<rect x="193.1" y="321" width="317.2" height="50" rx="0" fill="none" stroke="#2e8b57" stroke-dasharray="5 3"/>
-<text x="351.7" y="389" text-anchor="middle" font-size="11" font-weight="normal" fill="#2e8b57">NAT layer</text>
-<rect x="100.5" y="297" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
-<rect x="84.4" y="289" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
-<rect x="535.5" y="297" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
-<rect x="519.4" y="289" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
-<text x="537.5" y="283" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
-<text x="30" y="486" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NT20, assumption B: no P-well unless the layout draws one</text>
-<rect x="30" y="540" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
-<path d="M30.0,540 L30.0,582 L147.9,582 Q156.9,582 156.9,573 L156.9,540 Z" fill="#fbd9b5" stroke="#222222"/>
-<text x="36" y="574" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
-<rect x="30.0" y="540" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
-<rect x="120.6" y="540" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
-<rect x="555.6" y="540" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
-<rect x="84.4" y="540" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
-<rect x="519.4" y="540" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
-<text x="102.5" y="562" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
-<text x="537.5" y="562" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
-<text x="604" y="628" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
-<rect x="100.5" y="512" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
-<rect x="84.4" y="504" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
-<rect x="535.5" y="512" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
-<rect x="519.4" y="504" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
-<text x="537.5" y="498" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
-<rect x="30" y="678" width="16" height="12" rx="0" fill="#aac6e6" stroke="#222222"/>
-<text x="52" y="689" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">P-well that the foundry generates</text>
+<text x="30" y="261" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NA2, assumption A with NAT: P-well in the strip beside the well</text>
+<rect x="30" y="315" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<rect x="156.9" y="315" width="36.2" height="36" rx="0" fill="#aac6e6" stroke="#222222"/>
+<text x="175.0" y="345" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222"></text>
+<rect x="510.3" y="315" width="99.7" height="36" rx="0" fill="#aac6e6" stroke="#222222"/>
+<text x="560.2" y="345" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222"></text>
+<path d="M30.0,315 L30.0,357 L147.9,357 Q156.9,357 156.9,348 L156.9,315 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="36" y="349" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
+<rect x="30.0" y="315" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="120.6" y="315" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="555.6" y="315" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="84.4" y="315" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
+<rect x="519.4" y="315" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="102.5" y="337" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
+<text x="537.5" y="337" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
+<text x="604" y="403" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
+<rect x="193.1" y="311" width="317.2" height="50" rx="0" fill="none" stroke="#2e8b57" stroke-dasharray="5 3"/>
+<text x="351.7" y="379" text-anchor="middle" font-size="11" font-weight="normal" fill="#2e8b57">NAT layer</text>
+<rect x="100.5" y="287" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="84.4" y="279" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="535.5" y="287" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="519.4" y="279" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<text x="537.5" y="273" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
+<text x="30" y="466" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NA2, assumption An: as A, but no P-well in the strip</text>
+<rect x="30" y="520" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<rect x="510.3" y="520" width="99.7" height="36" rx="0" fill="#aac6e6" stroke="#222222"/>
+<text x="560.2" y="550" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222"></text>
+<path d="M30.0,520 L30.0,562 L147.9,562 Q156.9,562 156.9,553 L156.9,520 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="36" y="554" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
+<rect x="30.0" y="520" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="120.6" y="520" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="555.6" y="520" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="84.4" y="520" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
+<rect x="519.4" y="520" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="102.5" y="542" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
+<text x="537.5" y="542" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
+<text x="604" y="608" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
+<rect x="193.1" y="516" width="317.2" height="50" rx="0" fill="none" stroke="#2e8b57" stroke-dasharray="5 3"/>
+<text x="351.7" y="584" text-anchor="middle" font-size="11" font-weight="normal" fill="#2e8b57">NAT layer</text>
+<rect x="100.5" y="492" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="84.4" y="484" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="535.5" y="492" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="519.4" y="484" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<text x="537.5" y="478" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
+<text x="30" y="671" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">DAo1, assumption A: NAT overlaps the deep N-well, so no strip exists</text>
+<rect x="30" y="725" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<rect x="510.3" y="725" width="99.7" height="36" rx="0" fill="#aac6e6" stroke="#222222"/>
+<text x="560.2" y="755" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222"></text>
+<path d="M30.0,725 L30.0,785 L147.9,785 Q156.9,785 156.9,776 L156.9,725 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="36" y="777" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">deep N-well</text>
+<rect x="78.9" y="725" width="47.1" height="30" rx="0" fill="#f8c58f" stroke="#222222"/>
+<rect x="30.0" y="725" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="120.6" y="725" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="555.6" y="725" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="84.4" y="725" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
+<rect x="519.4" y="725" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="102.5" y="747" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
+<text x="537.5" y="747" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
+<text x="604" y="813" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
+<rect x="138.8" y="721" width="371.6" height="50" rx="0" fill="none" stroke="#2e8b57" stroke-dasharray="5 3"/>
+<text x="324.5" y="789" text-anchor="middle" font-size="11" font-weight="normal" fill="#2e8b57">NAT layer</text>
+<rect x="100.5" y="697" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="84.4" y="689" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="535.5" y="697" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="519.4" y="689" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<text x="537.5" y="683" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
+<text x="30" y="876" text-anchor="start" font-size="13" font-weight="normal" fill="#222222">NT20, assumption B: no P-well unless the layout draws one</text>
+<rect x="30" y="930" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
+<path d="M30.0,930 L30.0,972 L147.9,972 Q156.9,972 156.9,963 L156.9,930 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="36" y="964" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
+<rect x="30.0" y="930" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="120.6" y="930" width="398.8" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="555.6" y="930" width="54.4" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
+<rect x="84.4" y="930" width="36.2" height="10" rx="0" fill="#f5b46e" stroke="#222222"/>
+<rect x="519.4" y="930" width="36.2" height="10" rx="0" fill="#7fa7d6" stroke="#222222"/>
+<text x="102.5" y="952" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">N+</text>
+<text x="537.5" y="952" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">P+</text>
+<text x="604" y="1018" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
+<rect x="100.5" y="902" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="84.4" y="894" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="535.5" y="902" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
+<rect x="519.4" y="894" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<text x="537.5" y="888" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
+<rect x="30" y="1063" width="16" height="12" rx="0" fill="#aac6e6" stroke="#222222"/>
+<text x="52" y="1074" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">P-well that the foundry generates</text>
 </svg>
