@@ -44,7 +44,7 @@ STYLES = {
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
     "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD, metal 3 to 5"),
     "dvssrail": ("#a3d2ca", "#0d5045", "DVSS, metal 3 to 5"),
-    "dvsslink": ("#6fb3a8", "#0d5045", "DVSS, metal 2"),
+    "dvsslink": ("#6fb3a8", "#0d5045", "DVSS pad, metal 2"),
     "innet": (SECONDARY, "#12305f", "protected net, metal 1 and 2"),
     "other": ("#c4c9cf", "#8a9199", "other diffusion"),
     "resistor": ("none", SECONDARY, "resistor body"),

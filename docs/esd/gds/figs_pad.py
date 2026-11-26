@@ -74,7 +74,7 @@ def pad_net():
     x, y = f.px(37.5, 32)
     f.text(x, y - 16, "Bond pad", weight="bold")
     f.text(x, y + 2, "metal 2 to 5, stacked;")
-    f.text(x, y + 19, "metal 2 is slotted")
+    f.text(x, y + 19, "metal 2 shown, slotted")
     top = f.oy - 34
     f.label("4 NMOS drains,\neach between 2 gates", (19.78, 95),
             (f.px(0, 95)[0], top), colour=HOT, weight="bold")

@@ -78,19 +78,19 @@ def clamp_fingers():
         gy = first + k * pitch
         f.label(text, (gx, gy), (f.px(0, gy)[0], bot), **kw)
 
-    under("N+ drain,\non DVDD", 0, colour=DVDD, weight="bold")
-    under("N+ source,\non DVSS", 3, colour=DVSS, weight="bold")
-    under("Gate", 5.5)
+    under("N+ drain,\non DVDD", 2, colour=DVDD, weight="bold")
+    under("N+ source,\non DVSS", 5, colour=DVSS, weight="bold")
+    under("Gate", 7.5)
     gap = first + 12 * pitch + 0.185   # between a contact and the gate
     # (0.11 µm contact half-width plus half of the 0.15 µm gap)
     f.label("Contacts 0.15 µm from each gate:\nno silicide block",
             (20.9, gap), (f.px(0, gap)[0], bot), weight="bold")
     # Dimension ticks on the fingers, named in the bare strip above them.
     band = f.px(10.55, 0)[1] + 5
-    g0 = first + 6.5 * pitch - 0.35
+    g0 = first + 8.5 * pitch - 0.35
     f.dim((13.2, g0), (13.2, g0 + 0.7), "")
     f.label("gate length: 0.7 µm", (13.2, g0 + 0.35),
-            (f.px(0, g0)[0] - 30, band), weight="bold")
+            (f.px(0, g0)[0] - 70, band), weight="bold")
     d0 = first + 12 * pitch - 0.26
     f.dim((13.2, d0), (13.2, d0 + 0.52), "")
     f.label("drain strip: 0.52 µm", (13.2, d0 + 0.26),
@@ -115,12 +115,13 @@ def ring():
     for cell, shift in (("bi_t", 0.0), ("dvss", PITCH)):
         for name, style in (("DVDD", "dvddrail"), ("DVSS", "dvssrail")):
             f.geom(translate(_stack(cell, name), xoff=shift), style)
-    # Metal 2 joins the DVSS stripes to the DVSS bond pad.
+    # The DVSS bond pad's metal 2 runs on as six buses over the clamp
+    # transistor, whose sources connect to it.
     link = gdskit.net("dvss", "DVSS")["metal2"].intersection(
-        box(0, 60, 75, 76))
+        box(0, 60, 75, 200)).buffer(0.6).buffer(-0.6)
     f.geom(translate(link, xoff=PITCH), "dvsslink")
     f.geom(translate(fet, xoff=PITCH), "clampfet", opacity=0.45, key=False)
-    f.note(CLAMP, "clamp transistor, under the stripes", kind="outline")
+    f.note(CLAMP, "clamp transistor, under the metal", kind="outline")
     pad = gdskit.net("bi_t", "PAD")
     top_metal = pad["metal5"].union(pad["metal2"].intersection(
         box(0, 0, 75, 201))).buffer(1.5).buffer(-1.5)
@@ -144,14 +145,10 @@ def ring():
     x, y = f.px(PITCH, 0)
     f.text(x + 6, y - 6, "Cell boundary", anchor="start")
     # The current: along the pad's metal, down the DVDD rail, through the
-    # clamp transistor under the stripes, and along DVSS to its pad.
-    y_rail, y_out = 181.5, 70.0
-    f.flow([(42.5, 64), (42.5, y_rail), (PITCH + 37.5, y_rail)], width=5.0,
-           head=False)
-    f.flow([(PITCH + 37.5, y_rail), (PITCH + 37.5, y_out)], width=5.0,
-           dash="9,6", head=False,
-           key="current under the stripes (schematic)")
-    f.flow([(PITCH + 37.5, y_out), (PITCH + 37.5, 56)], width=5.0)
+    # clamp transistor, and back along a metal 2 bus of the DVSS pad.
+    y_rail, bus = 181.5, PITCH + 44.3
+    f.flow([(42.5, 64), (42.5, y_rail), (bus, y_rail), (bus, 56)],
+           width=5.0)
     top = f.oy - 38
     f.label("1  Positive pulse: from the bond pad\nalong metal 2 to the "
             "PMOS drains", (42.5, 100), (f.px(0, 84)[0], top), colour=HOT,
@@ -160,11 +157,11 @@ def ring():
             "stripes over it", (42.5, y_rail), (f.px(0, 190)[0], top),
             colour=HOT, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("5  DVSS stripes, then metal 2,\nto the DVSS bond pad", (PITCH + 37.5, 66),
-            (f.px(0, 56)[0], bot), colour=HOT, weight="bold")
-    f.label("4  Clamp transistor, 4 blocks in parallel under the\n"
-            "stripes: drains on DVDD, sources on DVSS", (PITCH + 37.5, 140),
-            (f.px(0, 150)[0], bot), colour=HOT, weight="bold")
+    f.label("5  Metal 2 buses over the clamp,\nback to the DVSS bond pad",
+            (bus, 100), (f.px(0, 56)[0], bot), colour=HOT, weight="bold")
+    f.label("4  Clamp transistor, 4 blocks in parallel: from the\nDVDD "
+            "stripes to metal 2 of the DVSS pad", (bus, y_rail),
+            (f.px(0, 158)[0], bot), colour=HOT, weight="bold")
     x, y = f.px(PITCH + 5, y_rail)
     f.label("3  DVDD rail into\nthe next cell", (PITCH + 5, y_rail),
             (f.ox + f.dw + 14, y), anchor="start", colour=HOT, weight="bold",

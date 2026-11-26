@@ -90,7 +90,7 @@ def silicide_block():
     c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, not blocked")
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
     bot = c.oy + c.dh + 30
-    c.label("Contacts beside every gate, on strips\n0.52 µm wide, all silicided", (32.7, 217.5),
+    c.label("Contacts beside every gate, between gates\n0.52 µm apart, all silicided", (32.7, 217.5),
             (c.px(0, 217.5)[0], bot))
     a.attach(b)
     a.attach(c)

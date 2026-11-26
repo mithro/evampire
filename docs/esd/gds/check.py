@@ -61,7 +61,7 @@ def same(sizes):
     return len(sizes), sizes[0]
 
 
-def driver(lay, window, lines, model):
+def driver(lay, window, lines, model, pad):
     """Fingers, width, length and silicide block of an output driver."""
     devs = [line for line in lines if model in line]
     net = {"fingers": sum(value(d, "nf") for d in devs),
@@ -75,8 +75,13 @@ def driver(lay, window, lines, model):
     sides = set()
     for g in gates:
         (b,) = [b for b in blocks if b.intersects(g)]
-        over = sorted((round(g.bounds[0] - b.bounds[0], 4),
-                       round(b.bounds[2] - g.bounds[2], 4)))
+        x0, y0, x1, y1 = g.bounds
+        over = [round(x0 - b.bounds[0], 4), round(b.bounds[2] - x1, 4)]
+        # The drain is the side whose diffusion is on the PAD net.
+        if pad.intersects(box(x0 - 0.2, y0 + 1, x0 - 0.1, y1 - 1)):
+            over.reverse()
+        else:
+            assert pad.intersects(box(x1 + 0.1, y0 + 1, x1 + 0.2, y1 - 1))
         sides.add(tuple(over))
     (side,) = sides
     count, (length, width) = same(spans(lay["poly"].intersection(lay["comp"]),
@@ -133,7 +138,8 @@ def rows():
     for name, window, model in (
             ("NMOS output driver", (13, 74, 62, 115), "nfet_06v0_dss"),
             ("PMOS output driver", (10, 145, 65, 187), "pfet_06v0_dss")):
-        net, gds = driver(lay, window, lines, model)
+        net, gds = driver(lay, window, lines, model,
+                          gdskit.net("bi_t", "PAD")["comp"])
         add(name, "Fingers", "", net["fingers"], gds["fingers"])
         add(name, "Total width", "µm", net["width"], gds["width"])
         add(name, "Gate length", "µm", net["length"], gds["length"])
