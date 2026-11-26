@@ -77,6 +77,7 @@ class Fig:
         self.h = top + self.dh + bottom
         self.body, self.over, self.keys, self.panels = [], [], [], []
         self.alpha, self.notes = {}, []
+        self.wells = True   # False for a figure that draws no silicon
         self.body.append(
             f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" width="{self.dw:.1f}" '
             f'height="{self.dh:.1f}" fill="{SUB}"/>')
@@ -266,7 +267,10 @@ class Fig:
 
     def _legend(self, x, y):
         """Swatches in columns of one width, drawn as they are in the layout."""
-        items = [("swatch", (SUB, GREY, None, 1.0), "P-type silicon, no N-well")]
+        items = []
+        if self.wells:
+            items.append(("swatch", (SUB, GREY, None, 1.0),
+                          "P-type silicon, no N-well"))
         for k in STYLES:
             if k in self.keys:
                 fill, stroke, name = STYLES[k]

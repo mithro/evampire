@@ -32,8 +32,8 @@ Bidirectional pad floorplan
 ---------------------------
 
 The bidirectional pad ``gf180mcu_fd_io__bi_t`` is 75 µm wide and 350 µm
-long ([ESD-BI-T-GDS]_). Its parts lie in the order the signal meets them,
-from the bond pad towards the core (:numref:`fig-esd-gds-cell`):
+long ([ESD-BI-T-GDS]_). Its parts lie in this order from the bond pad
+towards the core (:numref:`fig-esd-gds-cell`):
 
 #. The bond pad, with a 60 µm × 60 µm opening in the passivation.
 #. The NMOS output drivers, which are the NMOS output transistors of
@@ -43,7 +43,7 @@ from the bond pad towards the core (:numref:`fig-esd-gds-cell`):
 #. The four pre-drivers that switch the output drivers' gates, and the
    buffers of the signals that control them.
 #. The secondary protection. The foundry's name for this block,
-   ``comp018green_esd_cdm``, gives its purpose: the
+   ``comp018green_esd_cdm``, suggests its purpose: the
    :term:`charged device model`.
 #. The input buffer and the rest of the logic, next to the core.
 
@@ -258,7 +258,7 @@ Rail clamp layout
 -----------------
 
 The supply pad ``gf180mcu_fd_io__dvdd`` has the same outline as the
-bidirectional pad, and the rail clamp fills it ([ESD-DVDD-GDS]_,
+bidirectional pad, and the rail clamp fills most of it ([ESD-DVDD-GDS]_,
 :numref:`fig-esd-gds-clamp`). The clamp transistor takes the place of the
 output drivers: four blocks of 20 fingers, each finger 50 µm wide. Behind
 it lie the three inverters, the eight timer capacitors and the twelve
@@ -412,7 +412,7 @@ The other modules in the same folder do the work:
   :download:`gds/figs_driver.py <gds/figs_driver.py>` and
   :download:`gds/figs_clamp.py <gds/figs_clamp.py>` hold the figures.
 
-The figures show what the masks draw, with two changes. N+ diffusion is
+The figures show what the layout draws, with two changes. N+ diffusion is
 the active area inside the N+ implant, and P+ diffusion the active area
 inside the P+ implant, so each diffusion has the colour of its doping.
 Most figures leave out the metal, vias and contacts that would hide the

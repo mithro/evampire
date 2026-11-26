@@ -50,8 +50,9 @@ def _flat(cell):
 class Cell(dict):
     """{layer name: merged shapely geometry}, each merged when first used.
 
-    Reading a pad cell and merging its layers takes minutes, so each layer
-    is kept in the git-ignored cache folder beside this file. Contacts and
+    Reading a pad cell and merging its layers takes about a minute, so each
+    layer is kept in the git-ignored cache folder beside this file: delete
+    that folder after changing how a layer is merged here. Contacts and
     vias are kept as separate shapes, not merged.
     """
 

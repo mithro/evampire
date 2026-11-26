@@ -109,6 +109,7 @@ def ring():
     """A positive pulse from PAD to DVSS, across two cells of the ring."""
     f = Fig("bi_t", (0, 0, 2 * PITCH, 222), 3.7, left=20, top=70, right=190,
             bottom=136)
+    f.wells = False
     lay = gdskit.load("dvss")
     fet = lay["comp"].intersection(lay["nplus"]).intersection(
         box(10, 72, 65, 192))

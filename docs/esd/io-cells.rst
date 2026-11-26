@@ -86,10 +86,10 @@ each one turns on and :term:`snaps back <Snapback>` to about 6 V
 .. figure:: figures/driver-section.svg
    :name: fig-esd-driver-section
    :alt: Cross-section of the two output transistors. Left, a PMOS in an
-         N-well on DVDD: its P+ drain, connected to PAD and without
-         silicide for 2.78 µm beside the gate, forms a diode from PAD to
+         N-well on DVDD: its P+ drain, connected to PAD and silicide
+         blocked for 2.78 µm beside the gate, forms a diode from PAD to
          DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well on
-         DVSS: its N+ drain, connected to PAD and without silicide for
+         DVSS: its N+ drain, connected to PAD and silicide blocked for
          3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
          all; its gate is 1.15 µm long. A parasitic NPN transistor inside
          the NMOS, with the drain as collector, the P-well as base and the
