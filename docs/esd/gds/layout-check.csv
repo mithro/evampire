@@ -1,0 +1,30 @@
+Device,Quantity,Unit,Netlist,Layout
+NMOS output driver,Fingers,,8,8
+NMOS output driver,Total width,µm,304,304
+NMOS output driver,Gate length,µm,1.15,1.15
+NMOS output driver,Silicide block over the drain,µm,3.78,3.78
+NMOS output driver,Silicide block over the source,µm,0.28,0.28
+PMOS output driver,Fingers,,12,12
+PMOS output driver,Total width,µm,480,480
+PMOS output driver,Gate length,µm,0.7,0.7
+PMOS output driver,Silicide block over the drain,µm,2.78,2.78
+PMOS output driver,Silicide block over the source,µm,0.28,0.28
+Secondary resistor,Count,,4,4
+Secondary resistor,Width,µm,2.5,2.5
+Secondary resistor,Length,µm,2.8,2.8
+Secondary diode to DVDD,Count,,2,2
+Secondary diode to DVDD,Area of each,µm²,20,20
+Secondary diode to DVSS,Count,,2,2
+Secondary diode to DVSS,Area of each,µm²,20,20
+Clamp transistor,Fingers,,80,80
+Clamp transistor,Total width,µm,4000,4000
+Clamp transistor,Gate length,µm,0.7,0.7
+Timer resistor,Count,,12,12
+Timer resistor,Width,µm,0.8,0.8
+Timer resistor,Length,µm,63.855,63.855
+Timer capacitor,Count,,8,8
+Timer capacitor,Plate area of each,µm²,250,250
+Supply capacitor,Count,,4,4
+Supply capacitor,Plate area of each,µm²,225,225
+Supply diode,Count,,4,4
+Supply diode,Area of each,µm²,40,40
