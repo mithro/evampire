@@ -43,29 +43,34 @@
 <circle cx="127.1" cy="86.3" r="3.6" fill="#16a085" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="72.0" r="3.6" fill="#16a085" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="76" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">three rings, BL</text>
+<circle cx="107.6" cy="68.3" r="3.6" fill="#8e44ad" stroke="#222222" stroke-width="0.6"/>
+<circle cx="496.0" cy="90.0" r="3.6" fill="#8e44ad" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">five rings, BL</text>
 <polyline points="224.7,163.0 322.3,163.2 452.4,163.2" stroke="#d35400" stroke-width="1.6" fill="none"/>
 <circle cx="224.7" cy="163.0" r="3.6" fill="#d35400" stroke="#222222" stroke-width="0.6"/>
 <circle cx="322.3" cy="163.2" r="3.6" fill="#d35400" stroke="#222222" stroke-width="0.6"/>
 <circle cx="452.4" cy="163.2" r="3.6" fill="#d35400" stroke="#222222" stroke-width="0.6"/>
-<circle cx="496.0" cy="90.0" r="3.6" fill="#d35400" stroke="#222222" stroke-width="0.6"/>
-<text x="506" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">one ring, wide gap, BL</text>
-<polyline points="107.6,176.5 110.8,176.3 127.1,176.3 127.1,176.5 159.6,176.5 224.7,177.4 322.3,174.1 452.4,177.4" stroke="#1b3a6b" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
+<circle cx="496.0" cy="108.0" r="3.6" fill="#d35400" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="112" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">one ring, wide gap, BL</text>
+<polyline points="107.6,176.5 107.6,179.5 110.8,176.3 127.1,176.3 127.1,176.5 127.1,176.8 159.6,176.5 224.7,177.4 322.3,174.1 452.4,177.4" stroke="#1b3a6b" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
 <circle cx="107.6" cy="176.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="107.6" cy="179.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="110.8" cy="176.3" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="176.3" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="176.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="127.1" cy="176.8" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="159.6" cy="176.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="224.7" cy="177.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="322.3" cy="174.1" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="452.4" cy="177.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<circle cx="496.0" cy="108.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<text x="506" y="112" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, BD</text>
+<circle cx="496.0" cy="126.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, BD</text>
 <polyline points="127.1,274.2 127.1,274.2 159.6,274.2" stroke="#c0392b" stroke-width="1.6" fill="none"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="159.6" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<circle cx="496.0" cy="126.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, AL</text>
+<circle cx="496.0" cy="144.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="148" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, AL</text>
 <text x="20" y="372" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Each point: the lower of the straight-edge and corner values. Open triangle: a lower bound.</text>
 <text x="20" y="388" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">A count of rings with no point has no finished simulation.</text>
 </svg>
