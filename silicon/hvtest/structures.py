@@ -10,7 +10,7 @@ micrometres (a "p" stands for the decimal point). Unless a name says otherwise t
   P / M1 / M2   field plate of poly / Metal1 / Metal2, length beyond the well edge
   R   floating rings (number, then first gap)
   G   gated diode: the plate has its own pad      S  ring 1 has its own pad
-  b   second copy                                  L  wide Metal5 lead
+  b, c  further copies                             L  wide Metal5 lead
   V   in the 6 V (Dualgate) area
 
 The P+ ring of a ring structure is at least 15 um beyond its last ring, so that the rings
@@ -48,15 +48,15 @@ ONE_PAD = [
     # the second copy of the deep N-well reference, at the other end of the die from the first
     ("DT20b", s(kind="dnw")),
     # what surrounds a plain N-well: distance to the P+ ring, and the corner
-    ("NT1", s(term=1.0)), ("NT5", s(term=5.0)), ("NT10", s(term=10.0)), ("NT20", s()), ("NT35", s(term=35.0)),
+    ("NT1", s(term=1.0)), ("NT5", s(term=5.0)), ("NT10", s(term=10.0)), ("NT20", s()),
     ("NC0", s(corner=0.0)), ("NC15", s(corner=15.0)),
     # a drawn P-well at a set distance
     ("NW0", s(pwell_gap=0.0)), ("NW1p5", s(pwell_gap=1.5)),
     ("NW3", s(pwell_gap=3.0)), ("NW6", s(pwell_gap=6.0)),
     # NAT keeps the generated P-well away
     ("NA0p6", s(nat_gap=0.6)), ("NA2", s(nat_gap=2.0)), ("NA0p6T10", s(nat_gap=0.6, term=10.0)),
-    ("NA4", s(nat_gap=4.0)),
-    ("NA0p6T35", s(nat_gap=0.6, term=35.0)), ("NA0p6C0", s(nat_gap=0.6, corner=0.0)),
+
+    ("NA0p6C0", s(nat_gap=0.6, corner=0.0)),
     ("NAM1_3", s(nat_gap=0.6, plates={"m1": 3.0})), ("NAM1_6", s(nat_gap=0.6, plates={"m1": 6.0})),
     ("NAM1_10", s(nat_gap=0.6, plates={"m1": 10.0})),
     ("NAM2_12", s(nat_gap=0.6, plates={"m2": 12.0})),
@@ -74,7 +74,7 @@ ONE_PAD = [
     ("NR5_2", s(rings=rings(2.0, 2.5, 3.0, 3.5, 4.0), term=40.0)),
     ("NR3M1", s(rings=rings(2.0, 2.5, 3.0), plates={"m1": 3.0}, term=30.0)),
     # deep N-well
-    ("DT2p6", s(kind="dnw", term=2.6)), ("DT10", s(kind="dnw", term=10.0)),
+    ("DT2p6", s(kind="dnw", term=2.6)),
     ("DT20", s(kind="dnw")),
     ("DC0", s(kind="dnw", corner=0.0)),
     ("DW1p5", s(kind="dnw", pwell_gap=1.5)),
@@ -82,7 +82,7 @@ ONE_PAD = [
     ("DM1_10", s(kind="dnw", plates={"m1": 10.0})),
     ("DPM12", s(kind="dnw", plates={"poly": 2.0, "m1": 5.0, "m2": 9.0})),
     # deep N-well with NAT overlapping its edge: no P-well can lie beside the junction
-    ("DAo1", s(kind="dnw", nat_gap=-1.0)), ("DAo1T35", s(kind="dnw", nat_gap=-1.0, term=35.0)),
+    ("DAo1", s(kind="dnw", nat_gap=-1.0)),
     ("DAo1C0", s(kind="dnw", nat_gap=-1.0, corner=0.0)),
     ("DAo1M1_6", s(kind="dnw", nat_gap=-1.0, plates={"m1": 6.0})),
     # references: a pad and lead with no junction; second copies of three structures, placed
@@ -90,6 +90,14 @@ ONE_PAD = [
     # is 30 um wide, to show what the lead itself does to the junction it crosses
     ("OPEN", s(kind="open")), ("NT20b", s()),
     ("NA0p6b", s(nat_gap=0.6)), ("NT20L", s(lead_w=30.0)),
+    # more copies of the two structures whose ratio decides whether a deep P layer lies
+    # under N-well (a plate gains about a quarter over the plain well, or nothing), the
+    # wide-lead control on the plate structure, and the plate on a square-cornered well:
+    # whether a plate rescues a 90-degree vertex
+    ("NT20c", s()), ("NM1_6b", s(plates={"m1": 6.0})),
+    ("NM1_6L", s(plates={"m1": 6.0}, lead_w=30.0)),
+    ("NM1_6C0", s(plates={"m1": 6.0}, corner=0.0)),
+    ("NR1_2L", s(rings=rings(2.0), lead_w=30.0)),
     # the plain well in the 6 V area: the PDK models give the N-well 14 V there and 11 V
     # in the 3.3 V area (where every other structure is) with the same capacitance
     ("NT20V", s(dualgate=True)),

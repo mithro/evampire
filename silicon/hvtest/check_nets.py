@@ -96,6 +96,26 @@ def main(argv):
                 want = net(PLATE_LAYER[layer], cx, cy - (p["half"] + length - 0.3))
             if want is None or want != aux:
                 problems.append(f"{name}: second pad does not reach its {s['aux_role']}")
+        # every ring other than a sensed ring 1 floats: its net holds no pad and no P+ ring
+        d = 0.0
+        for k, (gap, width) in enumerate(p["rings"]):
+            d += gap
+            for dx, dy in ((0, -1), (0, 1), (-1, 0), (1, 0)):
+                r = p["half"] + d + width / 2
+                ring = net(L.NWELL, cx + dx * r, cy + dy * r)
+                sensed = k == 0 and p["sense"]
+                if ring is None or (not sensed and (ring == pad or ring == sub or ring in seen)):
+                    problems.append(f"{name}: ring {k + 1} is missing or connected")
+                if sensed and ring != net(L.METAL5, *s["aux_pad"]):
+                    problems.append(f"{name}: ring 1 is not continuous to its pad")
+            d += width
+        # a plate that is not gated is tied to the well, on every side
+        if not p["gate"]:
+            for layer, length in p["plates"].items():
+                for dx, dy in ((0, -1), (0, 1), (-1, 0)):
+                    r = p["half"] + length - 0.3
+                    if net(PLATE_LAYER[layer], cx + dx * r, cy + dy * r) != pad:
+                        problems.append(f"{name}: {layer} plate is not tied to the well")
     for line in problems:
         print("PROBLEM", line)
     print(f"{len(man['sites'])} sites checked, {len(problems)} problem(s)")
