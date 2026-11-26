@@ -578,11 +578,12 @@ did not converge, not a result.
    :header-rows: 1
    :widths: 55 45
 
-Other cases have no result. The structures with three or more rings are
-not finished, and several runs failed outright
-(:numref:`tab-hvt-pred-source`). The values of NW0 under B and of NT1 were
-limited by the mesh, by about 12 % and within 20 %, and are being
-repeated on a finer one.
+A few cases have no result: their runs failed or stopped short of breakdown,
+and the tables mark them (:numref:`tab-hvt-pred-source`). The structures
+with three or more rings took hours each, because the solver needs small
+voltage steps while each ring is reached in turn. NW0 under B and NT1 have
+a heavy P region within 1.5 µm of the edge, and are simulated on the same
+fine mesh as the abutting junctions.
 
 Second simulator
 ----------------
@@ -690,8 +691,6 @@ Open questions
   wells, and no public document names such a layer.
 * Is the deep N-well N-type up to the surface? The model assumes a buried
   layer.
-* What do the structures with three or more rings hold? Their runs are
-  not finished.
 * What does a vertex of 90° or 135° hold against the smooth arc of a
   corner section? The sharp-corner sections did not converge either.
 * Why does the simulated N-well to P-well junction break down about 25 %
