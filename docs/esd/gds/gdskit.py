@@ -175,6 +175,6 @@ def trace(cell, layer, x, y):
                         seen.add(key)
                         todo.append(key)
     net = {}
-    for name, i in seen:
+    for name, i in sorted(seen):   # a fixed order, so reruns are identical
         net.setdefault(name, []).append(shapes[name][i])
     return {name: unary_union(g) for name, g in net.items()}

@@ -86,7 +86,7 @@ class Fig:
 
     def _path(self, geom):
         d = []
-        for poly in gdskit.parts(geom):
+        for poly in gdskit.parts(geom.normalize()):
             for ring in [poly.exterior, *poly.interiors]:
                 pts = [self.px(x, y) for x, y in ring.coords[:-1]]
                 d.append("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
