@@ -471,10 +471,40 @@ left open.
    :file: hvt-tab-pred-band.csv
    :header-rows: 1
 
+Copies and lead controls have no simulation of their own. A copy is the
+same drawing, and a two-dimensional section cannot contain the Metal5
+lead, so each takes the section and the values of its original.
+
 For the structures with a pad on ring 1, the simulation also records how
 far the potential of the ring rises at each well voltage, on the
 straight-edge section (:numref:`fig-hvt-pred-ring`). The measured curve
 of procedure P3 is compared with it.
+
+A second set of runs holds ring 1 at 0 V through a contact, as procedure
+P5 does, and sweeps the well. The well current times the perimeter of
+ring 1 is the current that P5 measures, and the well voltage at which it
+reaches 1 nA is the predicted punch-through voltage
+(:numref:`tab-hvt-p5`, :numref:`fig-hvt-p5`). The second value of each
+cell is the breakdown voltage with the ring grounded. Where the first
+value is above the second, or is a lower bound, the junction breaks down
+before the ring draws 1 nA.
+
+.. csv-table:: Predicted punch-through voltage and breakdown voltage
+               with ring 1 held at 0 V
+   :name: tab-hvt-p5
+   :file: hvt-tab-p5.csv
+   :header-rows: 1
+
+.. figure:: hvt-p5.svg
+   :name: fig-hvt-p5
+   :alt: Graph of the predicted well voltage at which the current into a
+         grounded ring reaches 1 nA, against the gap from the well to the
+         ring at 2, 3, 5, 8 and 12 µm, one curve per process, with an open
+         triangle where the current did not reach 1 nA by the end of the
+         sweep. The graph reads "not yet simulated" until the results file
+         of these runs exists.
+
+   Predicted punch-through voltage to a grounded ring against the gap.
 
 .. figure:: hvt-pred-ring.svg
    :name: fig-hvt-pred-ring

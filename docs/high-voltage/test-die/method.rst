@@ -330,8 +330,10 @@ A floating ring stays near 0 V until the depletion region of the well
 reaches it, and then follows the well at a fixed step below it
 (:ref:`hv-grading`). The well voltage at which the ring starts to follow is
 the :term:`punch-through` voltage of the gap. The procedure applies to
-NR1S2, NR1S3 and NR4S, whose ring 1 has a pad at a gap of 3 µm or less
-(:numref:`fig-hvt-conn-p3`).
+the six structures with a pad on ring 1 (:numref:`fig-hvt-conn-p3`). On
+NR1S5, NR1S8 and NR1S12 the ring is 5 µm or more from the well and is
+reached late or not at all, so P5 is their main procedure. Their floating
+potential is recorded all the same.
 
 .. figure:: hvt-conn-p3.svg
    :name: fig-hvt-conn-p3
@@ -435,12 +437,15 @@ falls to a level between the two (:numref:`fig-hvt-gated-iv`).
    * - Setting
      - Value
    * - Well pad, first part
-     - Held at 2 V, then at 5 V, with the current recorded at 10 fA
+     - Held at 2 V, then at 5 V, under a Metal1 plate; at 0 V, then at
+       2 V, under the polysilicon plate. The current is recorded at 10 fA
        resolution
    * - Plate pad, Metal1
      - −20 V to +60 V in steps of 0.25 V
    * - Plate pad, polysilicon
-     - −10 V to +30 V in steps of 0.25 V
+     - −10 V to +60 V in steps of 0.25 V. The range reaches the threshold
+       over P-well, about 31 V with the well at 0 V and about 58 V with it
+       at 2 V
    * - Plate current limit
      - 100 nA. Any plate current means the oxide conducts, and ends the
        sweep
@@ -635,8 +640,8 @@ Three terms have fixed meanings. "Near 14 V" is a breakdown voltage
 between 8 V and 25 V, around the published 10 V minimum and 14 V typical
 [HV-GF180-EP-5]_. "Much higher" is above 40 V. Two values are "the same"
 when they differ by less than 15 % or 3 V, whichever is larger. These
-limits are choices. The second copies NT20b, NA0p6b and DT20b show whether
-the spread across a die fits inside them. The same limits apply to the
+limits are choices. The copies NT20b, NT20c, NM1_6b, NA0p6b and DT20b
+show whether the spread across a die fits inside them. The same limits apply to the
 ratios of the next section.
 
 The pattern across groups 1 to 3 answers the first question
@@ -671,18 +676,18 @@ The pattern across groups 1 to 3 answers the first question
      - Any
      - Drawing any P-well stops the generation in that structure. A
        distant drawn P-well is then itself a way to clear the edge
-   * - No knee, or a value still rising between ring distances of 20 µm
-       and 35 µm
+   * - No knee, or a value still rising between ring distances of 10 µm
+       and 20 µm
      - Any
      - Any
      - Not avalanche, or the P+ ring is reached first: see
        :numref:`tab-hvt-inconclusive`
 
-Three structures of group 1 refine the result. If NT1 is near 14 V while
+Some structures of group 1 refine the result. If NT1 is near 14 V while
 the wells with a distant ring are much higher, a P+ region close to the
 well can explain the published value. NT20V against NT20 shows whether
 the 6 V area differs. NT20L against NT20 shows how far the lead moves a
-result. Within group 3, a breakdown voltage that is near 14 V at 4 µm and
+result. Within group 3, a breakdown voltage that is near 14 V at 2 µm and
 much higher at 0.6 µm means the foundry generates P-well in a wide strip
 beside the well but not in a narrow one.
 
@@ -699,7 +704,12 @@ large wells answers it in every case.
    * - Measurement
      - Layer under deep N-well only (L)
      - Layer under the whole wafer (D)
-   * - Breakdown of N-wells with plates or rings, against the plain well
+   * - Mean of NM1_6 and NM1_6b divided by the mean of NT20, NT20b and
+       NT20c
+     - Above 1 by the predicted ratio (:numref:`tab-hvt-pred-band`)
+     - 1: the plate adds nothing
+   * - Breakdown of the other N-wells with plates or rings, against the
+       plain well
      - Higher than the plain well, by different amounts
      - The same as the plain well: all stop at one voltage, set at the
        bottom of the well
@@ -781,10 +791,15 @@ structures, and some not at all (:numref:`tab-hvt-tell`).
    * - Deep P layer under N-wells or not (D or L), when some N-well edge
        is clear of P-well
      - Yes, indirectly
-     - Plates and rings against the plain well, and the capacitance
+     - The mean of the two Metal1 plates of 6 µm over the mean of the
+       three plain wells, the other plates and rings, and the capacitance
        wells. Plain wells alone cannot: their predictions under L, under
        L with heavier substrate and under D lie within a few volts
        (:numref:`tab-hvt-pred-b`)
+   * - Whether a plate rescues a 90° vertex
+     - Yes
+     - NM1_6C0 against NC0 and against NM1_6, with the photographs of the
+       avalanche light
    * - Deep P layer under N-wells or not, when P-well lies against every
        N-well
      - By capacitance only
@@ -874,10 +889,11 @@ check for each (:numref:`tab-hvt-inconclusive`).
      - OPEN swept to 150 V on every die. A reading counts only if it is
        ten times the OPEN current at that voltage
    * - Depletion region reaches the P+ ring
-     - Breakdown voltage still rising between ring distances of 20 µm and
-       35 µm
+     - Breakdown voltage still rising between ring distances of 10 µm and
+       20 µm
      - The T series. The value at 20 µm is then a lower bound for the
-       other structures, which share that distance
+       other structures, which share that distance. No plain well has a
+       ring further away
    * - Charge trapped in the oxide
      - Walk-out between the first and third sweep
      - Both values reported. The first sweep on a fresh die is the one

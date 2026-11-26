@@ -216,10 +216,10 @@ edge. A dimension the name does not mention has the value in
      - Example
    * - T
      - Distance from the well edge to the P+ ring
-     - NT35, DT2p6
+     - NT10, DT2p6
    * - C
      - Corner radius of the well
-     - NC0, DC15
+     - NC0, NC15
    * - W
      - Distance at which a drawn P-well starts
      - NW1p5
@@ -249,9 +249,9 @@ edge. A dimension the name does not mention has the value in
        A a well with NAT round it
      - CVN, CVN2, CVNA
    * - b, L, V
-     - None, at the end of a name: a second copy far from the first, a
-       Metal5 lead 30 µm wide, and a well in the 6 V area
-     - NT20b, NT20L, NT20V
+     - None, at the end of a name: a second and a third copy far from
+       the first, a Metal5 lead 30 µm wide, and a well in the 6 V area
+     - NT20b, NT20c, NM1_6L, NT20V
 
 Plain N-well surroundings
 -------------------------
@@ -259,7 +259,7 @@ Plain N-well surroundings
 Group 1 varies what lies around an N-well that has nothing drawn in its
 termination zone (:numref:`fig-hvt-surround`,
 :numref:`tab-hvt-surround`). The T series moves the P+ ring from 1 µm to
-35 µm. If the substrate alone surrounds the well, the breakdown voltage
+20 µm. If the substrate alone surrounds the well, the breakdown voltage
 rises with that distance until the :term:`depletion region` no longer
 reaches the ring. If P-well surrounds the well, the distance changes
 nothing. NT1, with the ring 1 µm away, tests another explanation of the
@@ -267,9 +267,9 @@ published 14 V: a P+ region close to the well. The C series changes the
 corner cut from none to that of a 15 µm radius, which shows how much of
 the breakdown is set at the vertices (:ref:`hv-junctions`).
 
-Three more structures are NT20 with one change each. NT20b is a second
-copy at the far side of the die, and the difference between the two is the
-spread across one die. NT20L has a Metal5 lead 30 µm wide in place of
+Four more structures are NT20 with one change or none. NT20b and NT20c
+are copies elsewhere on the die, and the differences among the three are
+the spread across one die. NT20L has a Metal5 lead 30 µm wide in place of
 6 µm where it crosses the termination zone, which shows what the lead
 itself does to the junction below it. NT20V lies under the layer that
 marks the 6 V area. The two N-well diode models of the PDK have the same
@@ -281,7 +281,7 @@ the silicon differs.
    :name: fig-hvt-surround
    :alt: Top, a cross-section of structure NT10: an N-well, a bare
          termination zone and a P+ ring 10 µm from the well edge, with the
-         distance T marked as 1, 5, 10, 20 or 35 µm. Bottom, plan views to
+         distance T marked as 1, 5, 10 or 20 µm. Bottom, plan views to
          one scale of NC0, NT20 and NC15, whose wells have corner radii
          of 0, 8 and 15 µm inside identical P+ rings.
 
@@ -330,7 +330,7 @@ outwards, to 0.5 µm short of the P+ ring (:numref:`fig-hvt-nat`,
 [HV-GF180-DRM]_ (Section 10.5), so the nearest start is 0.6 µm. A strip of
 silicon that NAT does not cover therefore always remains beside the well.
 Whether the foundry generates P-well in so narrow a strip is not known, so
-the series widens it to 4 µm. The group repeats the corner, ring-distance
+a second member widens it to 2 µm. The group repeats the corner, ring-distance
 and metal-plate variations of the other groups under NAT, and NA0p6b is a
 second copy of NA0p6 far from the first.
 
@@ -385,9 +385,8 @@ the far ring, the sharp corner and the Metal1 plate.
 .. figure:: hvt-dnw.svg
    :name: fig-hvt-dnw
    :alt: Two cross-sections of a deep N-well, drawn deeper than an N-well,
-         with an N+ contact ring. In DT10 the P+ ring is 10 µm from the
-         edge, and the distance T is 2.6, 10 or 20 µm over the
-         series. In DW1p5 a drawn P-well starts 1.5 µm from the edge of
+         with an N+ contact ring. In DT20 the P+ ring is 20 µm from the
+         edge, and the distance T is 2.6 µm or 20 µm in the group. In DW1p5 a drawn P-well starts 1.5 µm from the edge of
          the deep N-well. In DAo1 a dashed outline marks the NAT layer from
          1 µm inside the edge of the deep N-well to just short of the P+
          ring. A band of N-well lies under the N+ ring in all three.
@@ -411,6 +410,12 @@ one. The stepped plates combine the layers, each reaching further than the
 one below it (:ref:`hv-grading`). Every plate length is the distance the
 plate extends beyond the well edge. The plates on a deep N-well are in
 group 4.
+
+Three members repeat the Metal1 plate of 6 µm with one change or none.
+NM1_6b is a copy, because the plated well against the plain well decides
+the deep-layer question and the spread on the die matters there. NM1_6L
+has the lead 30 µm wide. NM1_6C0 puts the plate on a well with square
+corners, to see whether a plate rescues a 90° vertex.
 
 .. figure:: hvt-plates.svg
    :name: fig-hvt-plates
@@ -652,13 +657,13 @@ Open questions
   measure this (:ref:`hv-test-method`).
 * Does the foundry accept NAT over the edge of a deep N-well with no
   transistor in it? The rule check passes it.
-* Does the foundry generate P-well in the strip of 0.6 µm to 4 µm between
+* Does the foundry generate P-well in the strip of 0.6 µm or 2 µm between
   an N-well and the NAT layer of group 3?
 * How much lower does a vertex break down than the smooth arc that the
   simulation assumes? The die compares vertices of 90° and 135°, and no
   three-dimensional simulation exists.
 * How much does the Metal5 lead, which crosses every termination zone at
-  the well's voltage, change the breakdown? NT20L bounds it for one case,
-  a plain well.
+  the well's voltage, change the breakdown? NT20L, NM1_6L and NR1_2L
+  bound it for a plain well, a plate and a ring.
 * Does the fill inside the large wells change their capacitance by an
   amount that matters?

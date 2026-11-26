@@ -55,10 +55,11 @@ Checks
 ------
 
 The precheck is the set of checks that wafer.space runs on every
-submission. The submitted file passes all of them
-(:numref:`tab-hvt-precheck`), also when the precheck is run again on the
-committed file itself. The table is drawn from the record of that run,
-``silicon/hvtest/PRECHECK.txt``.
+submission. :numref:`tab-hvt-precheck` gives the result for the submitted
+file. The table is drawn from the record of that run,
+``silicon/hvtest/PRECHECK.txt``, and so is the next sentence.
+
+.. include:: hvt-precheck-note.inc
 
 .. csv-table:: Precheck result of the submitted file
    :name: tab-hvt-precheck
@@ -148,6 +149,19 @@ layout and the method together. Each changed the die
      - Six deep N-well structures were predicted to give the same result
        as their neighbours
      - DT5, DT35, DC15, DW3, DW6, DM1_3 and CVD2 removed
+   * - Reassessment
+     - The ratio that decides the deep-layer question, a plated well over
+       a plain one, is predicted only a little above the agreement limit
+     - NT20c and NM1_6b added, so that the ratio is formed from means
+   * - Reassessment
+     - The lead control existed for a plain well only, and no structure
+       showed whether a plate rescues a square corner
+     - NM1_6L and NR1_2L added, and NM1_6C0; NT35, NA4, NA0p6T35, DT10
+       and DAo1T35 removed, each predicted identical to a neighbour
+   * - Reassessment
+     - No simulation matched procedure P5
+     - Ring 1 held at 0 V is simulated for the six ring-sense structures
+       (:numref:`tab-hvt-p5`)
    * - Final
      - A symmetric tolerance of 15 % did not fit predictions known to run
        high; the capacitance connection and the ring retrace test would
@@ -159,30 +173,36 @@ layout and the method together. Each changed the die
      - None possible: the rules allow only 45° edges on a well. The
        avalanche light is photographed on three structures instead
 
-The final review also put numbers on its confidence, for the die and
-method as they stood before the last four rows of the table
-(:numref:`tab-hvt-confidence`). They are one reviewer's estimates, not
-measurements, and the changes that followed were aimed at the lowest of
-them.
+The final review also put numbers on its confidence, first for the die
+and method as it found them and again after the corrections of the rows
+marked "Final" (:numref:`tab-hvt-confidence`). They are one reviewer's
+estimates, not measurements. The rows marked "Reassessment" were made
+after the second set of figures and are not reflected in them.
 
-.. list-table:: Confidence stated by the final review, before its own
-               corrections were made
+.. list-table:: Confidence stated by the final review, before and after
+               its first corrections
    :name: tab-hvt-confidence
    :header-rows: 1
-   :widths: 60 40
+   :widths: 60 20 20
 
    * - Statement
-     - Probability
+     - Before
+     - After
    * - The layout passes the wafer.space precheck
+     - 85 %
      - 85 %
    * - The breakdown measurements work as intended
      - 85 %
+     - 87 %
    * - The method gives patterns and ratios comparable with the simulation
      - 60 %
+     - 72 %
    * - The method gives absolute values within 15 % of the simulation
      - 35 %
+     - 50 %
    * - The set of structures is sufficient
      - 45 %
+     - 60 %
 
 The review named four missing items behind the last figure: a smoother
 corner, wider gaps to a contacted well, a 200 µm well under NAT, and
@@ -191,8 +211,8 @@ are now on the die, the first cannot be drawn, and the fourth is still
 running.
 
 The reviews left four things open. No simulation represents a vertex in
-three dimensions. The effect of the Metal5 lead is bounded by NT20L for a
-plain well only. The precheck container is one release of the process
+three dimensions. The effect of the Metal5 lead is bounded by three
+structures, for a plain well, a plate and a ring, and not simulated. The precheck container is one release of the process
 files behind the one the wafer.space platform runs. No silicon has been
 measured, so every prediction rests on public numbers alone.
 
