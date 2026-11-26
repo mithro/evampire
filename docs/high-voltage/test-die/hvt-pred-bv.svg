@@ -25,9 +25,9 @@
 <text x="102" y="68.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NT1</text>
 <rect x="183.8" y="51.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="53.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="288.3" y="67.8" width="2.9" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
-<circle cx="291.2" cy="70.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<rect x="291.0" y="67.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
+<rect x="278.8" y="67.8" width="9.6" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<circle cx="278.8" cy="70.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<rect x="281.0" y="67.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
 <rect x="291.7" y="72.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
 <circle cx="291.7" cy="74.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <rect x="291.4" y="71.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
@@ -230,6 +230,7 @@
 <circle cx="372.1" cy="550.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <rect x="361.8" y="547.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <text x="102" y="572.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NAM1_6</text>
+<rect x="183.3" y="555.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <path d="M168.5,553.5 L176.5,557.5 L168.5,561.5 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
 <rect x="463.3" y="563.4" width="1" height="5" rx="0" fill="#2e8b57" stroke="none" fill-opacity="0.3"/>
 <circle cx="485.8" cy="565.9" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
