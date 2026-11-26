@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" font-family="sans-serif" font-size="13">
+<rect width="640" height="360" fill="white"/>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">NR4S: predicted rise of ring 1</text>
+<rect x="90" y="40" width="520" height="260" rx="0" fill="none" stroke="#222222"/>
+<line x1="90.0" y1="40" x2="90.0" y2="300" stroke="#dddddd" stroke-width="1"/>
+<text x="90.0" y="317" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="220.0" y1="40" x2="220.0" y2="300" stroke="#dddddd" stroke-width="1"/>
+<text x="220.0" y="317" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="350.0" y1="40" x2="350.0" y2="300" stroke="#dddddd" stroke-width="1"/>
+<text x="350.0" y="317" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="480.0" y1="40" x2="480.0" y2="300" stroke="#dddddd" stroke-width="1"/>
+<text x="480.0" y="317" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">60</text>
+<line x1="610.0" y1="40" x2="610.0" y2="300" stroke="#dddddd" stroke-width="1"/>
+<text x="610.0" y="317" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">80</text>
+<line x1="90" y1="300.0" x2="610" y2="300.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="304.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="90" y1="235.0" x2="610" y2="235.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="239.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="90" y1="170.0" x2="610" y2="170.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="174.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="90" y1="105.0" x2="610" y2="105.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="109.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">60</text>
+<line x1="90" y1="40.0" x2="610" y2="40.0" stroke="#dddddd" stroke-width="1"/>
+<text x="84" y="44.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">80</text>
+<text x="350.0" y="338" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">well voltage (V)</text>
+<text x="40" y="170.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 40 170.0)">rise of ring 1 (V)</text>
+<polyline points="90.0,300.0 610.0,40.0" stroke="#666666" stroke-width="1.2" fill="none" stroke-dasharray="6 4"/>
+<polyline points="90.0,300.0 91.2,299.8 93.1,299.7 94.4,299.5 95.5,299.2 97.0,298.7 99.3,297.8 102.8,296.4 105.4,295.2 109.3,293.5 112.2,292.1 116.6,290.2 117.4,289.8 118.7,289.2 119.6,288.8 121.0,288.2 122.0,287.7 123.6,287.0 124.8,286.4 125.6,286.0 127.0,285.4 128.9,284.5 131.9,283.1 136.3,281.1 139.7,279.5 144.7,277.2 152.2,273.7 157.9,271.1 162.1,269.2 165.3,267.7 170.0,265.5 177.1,262.2 179.8,261.0 181.8,260.1 184.8,258.7 187.1,257.7 188.8,256.9 191.3,255.7 193.2,254.9 196.1,253.6 198.2,252.6 201.4,251.1 206.2,248.9 213.5,245.7 216.2,244.4 220.3,242.6 226.4,239.8 235.5,235.7 242.4,232.6 252.6,228.0 260.4,224.6 271.9,219.4 289.4,211.8 308.9,203.2 318.6,199.0 322.2,197.4 327.7,195.0 336.0,191.5 339.0,190.2 343.6,188.2 350.6,185.2 355.8,183.0 359.7,181.3 362.6,180.1 367.0,178.2 373.6,175.4 378.5,173.3 382.2,171.8 387.8,169.4 392.0,167.7 398.2,165.1 407.7,161.2 421.7,155.4 441.2,147.4 460.7,139.5 480.2,131.7 499.7,124.0 519.2,116.3" stroke="#2e86de" stroke-width="2.2" fill="none"/>
+<text x="100" y="60" text-anchor="start" font-size="12" font-weight="normal" fill="#2e86de">process BD</text>
+<line x1="90" y1="300" x2="610" y2="300" stroke="#222222" stroke-width="1"/>
+</svg>
