@@ -170,10 +170,10 @@ def secondary():
     f.geom(metal, "innet", opacity=0.3, key=False)
     f.outline(metal, "#12305f", width=2.0)
     # Outline the diode strips, which the metal covers.
-    f.outline(inn["comp"].intersection(lay["pplus"]), INK, width=2.6,
-              dash="5,3")
-    f.outline(inn["comp"].intersection(lay["nplus"]), INK, width=2.6,
-              dash="5,3")
+    f.outline(inn["comp"].intersection(lay["pplus"]), INK, width=2.0,
+              dash="5,4")
+    f.outline(inn["comp"].intersection(lay["nplus"]), INK, width=2.0,
+              dash="5,4")
     y = f.px(37.5, 0)[1] + 5
     f.label("PAD, on a metal 2\nwire from the\ndrivers", (37.5, 265.4),
             (f.ox - 12, y - 17), anchor="end", colour=HOT, weight="bold",

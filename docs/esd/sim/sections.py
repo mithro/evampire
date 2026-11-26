@@ -19,7 +19,6 @@ PWELL = "#b9cfe8"
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
-POLY = "#c9a0dc"
 GATE = "#8e5bb5"       # polysilicon over a channel, as in the layout figures
 METAL = "#9aa5b1"
 INK = "#222222"

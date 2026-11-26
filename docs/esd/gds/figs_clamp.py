@@ -31,8 +31,8 @@ def clamp():
     f.note(CLAMP, "the inverters", kind="box")
     top = f.oy - 34
     # Each label gives the total that the schematic of schematic.py names.
-    f.label("Clamp NMOS: 4 blocks of 20\nfingers, each finger 50 µm\n"
-            "wide, 4000 µm in all",
+    f.label("Clamp NMOS transistor: 4\nblocks of 20 fingers, each\n"
+            "50 µm wide, 4000 µm in all",
             (37.5, 116), (f.px(0, 131)[0], top - 17), colour=CLAMP,
             weight="bold")
     f.label("MOS capacitor of the\ntimer: 8 of 10 µm ×\n25 µm in parallel",
@@ -152,15 +152,16 @@ def ring():
     y_rail, bus = 181.5, PITCH + 44.3
     route = [(42.5, 64), (42.5, y_rail), (bus, y_rail), (bus, 56)]
     f.flow(route, width=5.0)
-    for (ax, ay), (bx, by) in zip(route, route[1:]):   # a head on each run
+    # A head part-way along the first two runs; the last has the end's.
+    for (ax, ay), (bx, by) in list(zip(route, route[1:]))[:2]:
         f.flow([(ax, ay), (ax + 0.62 * (bx - ax), ay + 0.62 * (by - ay))],
                width=5.0)
     top = f.oy - 38
     f.label("1  Positive pulse: from the bond pad\nalong metal 2 to the "
             "PMOS drains", (42.5, 100), (f.px(0, 84)[0], top), colour=HOT, leader=INK,
             weight="bold")
-    f.label("2  PMOS drain diode: P+ drain to N-well,\nthen up to the DVDD "
-            "stripes over it", (42.5, y_rail), (f.px(0, 190)[0], top),
+    f.label("2  PMOS drain diode: P+ drain to N-well,\nthen to the DVDD "
+            "stripes, metal 3 to 5", (42.5, y_rail), (f.px(0, 190)[0], top),
             colour=HOT, leader=INK, weight="bold")
     bot = f.oy + f.dh + 30
     f.label("5  Metal 2 buses over the clamp,\nback to the DVSS bond pad",
