@@ -29,7 +29,7 @@ graph connect {
            fillcolor="#e2f0d9"];
     vbus  [pos="6.5,3.55!", width=1.0, height=0.45, label="VBUS\npresent",
            fillcolor="#ffffff"];
-    trx   [pos="6.7,1.7!", width=0.95, height=1.2, label="driver\nand\nreceivers",
+    trx   [pos="6.7,1.7!", width=0.95, height=1.6, label="driver\nand\nreceivers",
            fillcolor="#fbe5d6"];
 
     // Text labels.
