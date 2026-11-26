@@ -3,7 +3,7 @@
 Test structures
 ===============
 
-The test die holds 71 junction test structures and four large wells on one
+The test die holds 71 junction test structures and five large wells on one
 gf180mcu die of 1936 µm by 2531 µm. Each structure is a well with one kind
 of edge termination, and differs from its neighbours in one drawn
 dimension. The layout comes from a generator, ``silicon/hvtest`` in the
@@ -62,7 +62,8 @@ and groups 8 and 9 supply the doping and the reference for the instruments.
    * - 4
      - Deep N-well
      - What does a deep N-well hold, and is P-well kept away from it?
-     - The same series as groups 1 and 2, on a deep N-well
+     - The same series as groups 1 and 2, on a deep N-well, and with NAT
+       over its edge
    * - 5
      - Field plates
      - How much does a plate of each layer and length raise the
@@ -81,7 +82,8 @@ and groups 8 and 9 supply the doping and the reference for the instruments.
    * - 8
      - Large wells
      - What is the doping profile under a well?
-     - Capacitance against voltage at two well sizes
+     - Capacitance against voltage at two well sizes, and with NAT round
+       the well
    * - 9
      - Open reference
      - How much of a reading is the pad, the lead and the probe?
@@ -156,7 +158,7 @@ dimensions that the structures share.
      - None
    * - Distance from the well edge to the P+ ring
      - 20
-     - Each table below
+     - Each table below; large wells: 6, and 20 on CVNA
    * - Width of the P+ ring
      - 2
      - None
@@ -171,7 +173,7 @@ dimensions that the structures share.
      - None
    * - Site pitch, east and north
      - 300 and 150
-     - Large wells: 440 east
+     - Large wells stand side by side, 60 µm apart
 
 Naming scheme
 -------------
@@ -201,8 +203,9 @@ edge. A dimension the name does not mention has the value in
      - Distance at which a drawn P-well starts
      - NW0p5
    * - A
-     - Distance at which the NAT layer starts
-     - NA2
+     - Distance at which the NAT layer starts. "o1" means NAT overlaps
+       the edge of a deep N-well by 1 µm
+     - NA2, DAo1
    * - P, M1, M2
      - Length of a polysilicon, Metal1 or Metal2 field plate beyond the
        well edge
@@ -221,8 +224,9 @@ edge. A dimension the name does not mention has the value in
      - None, or the first gap: ring 1 has its own pad
      - NR1S2, NR4S
    * - CV
-     - None: a large well for capacitance; 2 marks the smaller size
-     - CVN, CVD2
+     - None: a large well for capacitance; 2 marks the smaller size and
+       A a well with NAT round it
+     - CVN, CVD2, CVNA
 
 Plain N-well surroundings
 -------------------------
@@ -235,8 +239,7 @@ rises with that distance until the :term:`depletion region` no longer
 reaches the ring. If P-well surrounds the well, the distance changes
 nothing. The C series changes the corner radius from a sharp corner to
 15 µm, a fully rounded well, which shows how much of the breakdown is set
-at the corners (:ref:`hv-junctions`). NT20b repeats NT20 at the far side of
-the die, and the difference between the two is the spread across one die.
+at the corners (:ref:`hv-junctions`).
 
 .. figure:: hvt-surround.svg
    :name: fig-hvt-surround
@@ -313,8 +316,11 @@ and metal-plate variations of the other groups under NAT.
 Deep N-well
 -----------
 
-Group 4 replaces the N-well with a :term:`deep N-well`, contacted by the
-same N+ ring (:numref:`fig-hvt-dnw`, :numref:`tab-hvt-dnw`). The only
+Group 4 replaces the N-well with a :term:`deep N-well`
+(:numref:`fig-hvt-dnw`, :numref:`tab-hvt-dnw`). A band of N-well lies
+under its N+ contact ring, 0.3 µm wider than the ring on each side. The
+deep N-well alone is lightly doped at the surface, and the N-well makes
+the contact a known one. The only
 published breakdown for this junction is the fitted value of 30.48 V in
 its diode model [HV-GF180-MODELS]_. Rule LPW.11 keeps a drawn P-well
 1.5 µm from a deep N-well [HV-GF180-DRM]_ (Section 7.3). If the generated
@@ -323,15 +329,25 @@ it that an N-well lacks. The group repeats the ring-distance, corner and
 drawn-P-well series. Its nearest P+ ring is at 2.6 µm, because rule DF.18
 keeps P+ in the substrate 2.5 µm from a deep N-well.
 
+Four structures cover the edge of the deep N-well with NAT, which the
+rule check allows on a deep N-well and not on an N-well
+(:numref:`tab-hvt-rules`). NAT starts 1 µm inside the edge, so no strip of
+uncovered silicon remains beside the junction. If NAT blocks the P-well at
+all, these edges face bare substrate. They repeat the plain edge, the far
+ring, the sharp corner and the Metal1 plate.
+
 .. figure:: hvt-dnw.svg
    :name: fig-hvt-dnw
    :alt: Two cross-sections of a deep N-well, drawn deeper than an N-well,
          with an N+ contact ring. In DT10 the P+ ring is 10 µm from the
          edge, and the distance T ranges from 2.6 to 35 µm over the
          series. In DW3 a drawn P-well starts 3 µm from the edge of the
-         deep N-well.
+         deep N-well. In DAo1 a dashed outline marks the NAT layer from
+         1 µm inside the edge of the deep N-well to just short of the P+
+         ring. A band of N-well lies under the N+ ring in all three.
 
-   A deep N-well with a bare termination zone, and with a drawn P-well.
+   A deep N-well with a bare termination zone, with a drawn P-well, and
+   with the NAT layer over its edge.
 
 .. csv-table:: Group 4, deep N-wells
    :name: tab-hvt-dnw
@@ -371,7 +387,7 @@ Floating rings
 Group 6 places :term:`floating field rings <floating field ring>` of
 N-well between the well and the P+ ring (:numref:`fig-hvt-rings`,
 :numref:`tab-hvt-rings`). One series has a single ring at gaps from 1.4 µm
-to 4.5 µm, which finds the gap at which the ring starts to take voltage.
+to 3 µm, which finds the gap at which the ring starts to take voltage.
 Others have three and five rings with gaps that widen outwards, rings
 1 µm and 3 µm wide, and three rings under a Metal1 plate. Three structures
 bring ring 1 out to a second pad through an N+ contact, so that its
@@ -420,12 +436,17 @@ Metal1 on a deep N-well.
 Large wells and open reference
 ------------------------------
 
-Group 8 has four wells large enough for their capacitance to be measured:
-an N-well and a deep N-well, each at sides of 200 µm and 100 µm
-(:numref:`fig-hvt-large`, :numref:`tab-hvt-large`). Two sizes separate the
+Group 8 has five wells large enough for their capacitance to be measured
+(:numref:`fig-hvt-large`, :numref:`tab-hvt-large`). An N-well and a deep
+N-well each come at sides of 200 µm and 100 µm. Two sizes separate the
 capacitance of the flat bottom from that of the edge
 (:ref:`hv-test-method`). Their P+ ring is 6 µm from the well edge, to keep
 the resistance of the substrate path low.
+
+The fifth, CVNA, is an N-well of 100 µm with NAT round it from 0.6 µm and
+its P+ ring 20 µm away. If NAT clears the P-well from its edge, it breaks
+down later than the others, and its capacitance can be followed to a
+higher voltage and so to a greater depth.
 
 Group 9 is the structure OPEN: a Metal5 lead and a pad on a standard site,
 with no junction (:numref:`tab-hvt-open`). It gives the capacitance and the
@@ -437,7 +458,9 @@ includes.
    :alt: Plan views to one scale. CVN is a well 200 µm across and CVN2 a
          well 100 µm across, both with corners cut and a P+ ring close
          around them. CVD and CVD2 are the same shapes in deep N-well.
-         OPEN is a short Metal5 lead joined to a pad, with no well.
+         CVNA is a well 100 µm across with the NAT layer round it and its
+         P+ ring 20 µm away. OPEN is a short Metal5 lead joined to a pad,
+         with no well.
 
    The large wells and the open reference.
 
@@ -460,7 +483,8 @@ The die is the smallest wafer.space slot, 1936 µm by 2531 µm
 of the structure is written in Metal5 above the pad. Six of the seven
 two-pad structures stand in the lowest row and one in the third row, each
 with its second pad in the site to its north. The large wells form a band along the north
-edge.
+edge, each with a Metal1 strap from its P+ ring down to a bus along the
+top of the columns.
 
 Every P+ ring joins a Metal1 bus that runs up the west side of its column.
 The six buses join along the south edge, where six substrate pads connect
@@ -477,8 +501,8 @@ positions of each structure are in the table of its group.
          with its named pad to the east, coloured by group. The lowest
          row holds three ring-sense structures and three gated diodes, and
          the third row a fourth gated diode. Their second pads, drawn
-         dashed, are in the row above each. Four large wells, CVN, CVN2, CVD and CVD2, form a
-         band along the north edge at y of 2320 µm.
+         dashed, are in the row above each. Five large wells, CVN, CVD, CVN2, CVD2 and CVNA from
+         west to east, form a band along the north edge at y of 2320 µm.
 
    Floor plan of the test die, drawn from the positions the layout
    generator reports.
@@ -515,9 +539,10 @@ circuits at 6 V or less, so passing them says nothing about holding 57 V.
        under NAT
    * - DN.3 [HV-GF180-DRM]_ (Section 7.2)
      - A P+ ring surrounds each deep N-well directly. The rule check
-       rejects an N-well inside that ring that does not touch the deep
-       N-well [HV-GF180-PV]_
-     - No floating rings around a deep N-well
+       rejects an N-well or NAT inside that ring that does not touch the
+       deep N-well [HV-GF180-PV]_
+     - No floating rings around a deep N-well. NAT round a deep N-well
+       overlaps its edge
    * - DF.18 and LPW.11 [HV-GF180-DRM]_ (Sections 7.5 and 7.3)
      - P+ in the substrate stays 2.5 µm, and a drawn P-well 1.5 µm, from
        a deep N-well
@@ -526,7 +551,8 @@ circuits at 6 V or less, so passing them says nothing about holding 57 V.
      - A fill-blocking shape is at most 15000 µm²
      - Each standard structure blocks fill out to 3 µm beyond its P+
        ring. The largest block is 120 µm square. The large wells exceed
-       the limit and carry no block
+       the limit and carry no block, except CVNA, which blocks fill over
+       its termination zone only
    * - MDN.10f [HV-GF180-DRM]_ (Section 10.12.1)
      - Polysilicon more than 6 V from the substrate is "not allowed".
        No rule check exists for it
@@ -542,8 +568,9 @@ Dummy fill matters because the foundry needs a minimum density of active
 silicon, polysilicon and metal everywhere, and the fill script places
 floating squares to reach it. A floating square of active silicon or
 polysilicon inside a termination zone would change the field there. The
-layers NDMY and PMNDMY block the fill over each standard structure. The
-large wells receive fill, which adds no junction inside a well.
+layers NDMY and PMNDMY block the fill over each standard structure and
+over the termination zone of CVNA. The large wells receive fill inside the
+well, which adds no junction there.
 
 The pads are bare squares of Metal5 with an opening in the passivation,
 and no protection device. Every pad cell in the gf180mcu libraries has
@@ -559,12 +586,10 @@ Open questions
 * Where does the foundry's generated P-well land: against every N-well
   edge, 1.5 µm from a deep N-well, and nowhere under NAT? Groups 1 to 4
   measure this (:ref:`hv-test-method`).
+* Does the foundry accept NAT over the edge of a deep N-well with no
+  transistor in it? The rule check passes it.
 * Does the foundry generate P-well in the strip of 0.6 µm to 4 µm between
   an N-well and the NAT layer of group 3?
-* Does the N+ ring alone make a low-resistance contact to a deep N-well?
-  The deep N-well's doping at the surface is not published. A poor contact
-  would show as a series resistance in the forward direction and in the
-  capacitance measurement.
 * How much does the Metal5 lead, which crosses every termination zone at
   the well's voltage, change the breakdown? No structure varies it.
 * Does the fill inside the large wells, or its absence near their edges,

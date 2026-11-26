@@ -18,9 +18,14 @@ comparing the results with device simulation.
    How the breakdown voltage of each structure is simulated, the
    assumptions behind it, and the predicted values.
 
+:doc:`test-die/submission`
+   The slot, the build steps, the checks the layout passes and the file
+   to submit.
+
 .. toctree::
    :hidden:
 
    test-die/structures
    test-die/method
    test-die/predictions
+   test-die/submission

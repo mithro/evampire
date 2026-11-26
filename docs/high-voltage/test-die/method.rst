@@ -117,7 +117,7 @@ recorded. A difference larger than one step of 0.5 V counts as walk-out.
 
 The second temperature separates the mechanisms. The avalanche breakdown
 voltage rises with temperature, because hotter carriers lose more energy
-to the lattice between collisions [HV-SZE-NG]_ (Section 2.4). A current
+to the lattice between collisions [HV-SZE-NG]_. A current
 from tunnelling changes little, and a leakage current along the surface
 rises steeply and has no knee. A knee that moves up at 85 °C is therefore
 avalanche.
@@ -132,7 +132,7 @@ Capacitance against voltage (P2)
 
 The capacitance of a reverse-biased junction gives the doping on its
 lightly doped side, here the substrate under the well. The procedure
-applies to the large wells CVN, CVN2, CVD and CVD2, and to OPEN
+applies to the large wells CVN, CVN2, CVD, CVD2 and CVNA, and to OPEN
 (:numref:`fig-hvt-conn-p2`).
 
 .. figure:: hvt-conn-p2.svg
@@ -156,8 +156,11 @@ series resistance of the well and substrate is negligible.
 
 The same sweep on OPEN gives the capacitance of a pad, its lead and the
 probe, which is subtracted at each bias. A Metal5 pad of 100 µm by 100 µm
-has about 58 fF to the substrate, against 1.7 pF and 6.4 pF expected for
-the two N-wells (:download:`calc.py <calc.py>`, section 2).
+directly over the substrate would have about 58 fF. Dummy Metal4 fill lies
+under every pad, which raises that value by an amount the layout does not
+fix. OPEN carries the same fill, so the subtraction removes it. The two
+N-wells are expected to have 1.7 pF and 6.4 pF
+(:download:`calc.py <calc.py>`, section 2).
 
 A well's capacitance has a part from its flat bottom, in proportion to its
 area, and a part from its edge, in proportion to its perimeter. Two wells
@@ -217,7 +220,7 @@ correction matters.
 The doping follows from how the area capacitance changes with bias. For a
 junction far more heavily doped on one side, each bias gives the doping at
 the edge of the depletion region and the depth of that edge
-[HV-SZE-NG]_ (Section 2.2):
+[HV-SZE-NG]_:
 
 .. math::
 
@@ -276,7 +279,10 @@ where :numref:`fig-hv-cv-doping` plots :math:`1/C^2` against voltage. The
 measurement replaces the model with silicon, and gives the doping at each
 depth instead of one value. The profile reaches only as deep as the bias
 can push the depletion region, about 1.8 µm at 10 V in this example. A
-large well that breaks down early limits the bias, and so the depth.
+large well that breaks down early limits the bias, and so the depth. CVNA
+has NAT round it for that reason: if NAT clears the P-well from its edge,
+its bias can go several times higher. Its area and perimeter equal those
+of CVN2, so the two together also show what the NAT layer changes.
 
 Floating-ring potential (P3)
 ----------------------------
@@ -485,8 +491,11 @@ it. The breakdown voltage against plate voltage is compared with the
 simulation of the same structure at the same plate voltages.
 
 The voltage between plate and well stays below 64 V on the polysilicon
-plate. That is a field of 2 MV/cm in 0.32 µm of trench oxide, a limit
-chosen for this procedure. No strength is published for that oxide.
+plate. That is an average field of 2 MV/cm in 0.32 µm of trench oxide, a
+limit chosen for this procedure. No strength is published for that oxide.
+The simulation finds a higher field at the end of a polysilicon plate
+held at 0 V (:ref:`hv-test-predictions`). NGP4 is therefore swept last
+with its plate at 0 V, and a plate current ends the sweep.
 
 Punch-through to a contacted ring (P5)
 --------------------------------------
@@ -551,51 +560,67 @@ Process assumption decision
 ---------------------------
 
 The pattern of breakdown voltages across groups 1 to 4 shows where the
-foundry places P-well (:numref:`tab-hvt-decision`). The simulations use
-two assumptions, A and B, drawn in :numref:`fig-hvt-assumptions`. Two
-further patterns are possible, and none of the predictions covers them.
+foundry places P-well (:numref:`tab-hvt-decision`). The simulations cover
+three cases, A, An and B, drawn in :numref:`fig-hvt-assumptions`. Two
+further patterns are possible, and no prediction covers them.
 
-"The same" means within the spread between NT20 and NT20b and between
-dies. "Near 14 V" means within the published range of 10 V minimum to
-14 V typical [HV-GF180-EP-5]_, or a few volts above it.
+The table uses three terms with fixed meanings. "Near 14 V" is a breakdown
+voltage between 8 V and 25 V, around the published 10 V minimum and 14 V
+typical [HV-GF180-EP-5]_. "Much higher" is above 40 V. Two values are "the
+same" when they differ by less than 15 % or 3 V, whichever is larger.
+These limits are choices, set wide enough to absorb the spread between
+dies and narrow enough to keep the patterns apart.
 
 .. list-table:: Measured patterns and the assumption each selects
    :name: tab-hvt-decision
    :header-rows: 1
-   :widths: 19 19 19 19 24
+   :widths: 15 15 15 15 15 25
 
    * - Group 1, plain N-wells
      - Group 2, drawn P-well
-     - Group 3, NAT
-     - Group 4, deep N-well
+     - Group 3, NAT beside an N-well
+     - Group 4, deep N-well without NAT
+     - Group 4, NAT over the edge (DAo1)
      - Conclusion
-   * - Near 14 V. The same at every ring distance
+   * - Near 14 V at every ring distance
      - The same as group 1 at every distance
-     - Far higher than group 1
-     - The same at every ring distance, and with a drawn P-well at 3 µm
-       and 6 µm
-     - A: the foundry generates P-well everywhere, and NAT blocks it
-   * - Far above 14 V. Rises with ring distance
-     - Low at 0 µm. Rises with distance to the group 1 value by 6 µm to
-       10 µm
-     - The same as group 1
-     - Rises with ring distance and with P-well distance
-     - B: only drawn P-well exists
-   * - Near 14 V. The same at every ring distance
+     - Much higher
+     - Any
+     - Much higher
+     - An: the foundry generates P-well everywhere, and NAT blocks it,
+       also in the strip beside an N-well
+   * - Near 14 V at every ring distance
      - The same as group 1 at every distance
      - The same as group 1
      - Any
+     - Much higher
+     - A: the foundry generates P-well everywhere, including the strip
+       between an N-well and NAT. NAT works only where it can touch the
+       well, which is on a deep N-well
+   * - Near 14 V at every ring distance
+     - The same as group 1 at every distance
+     - The same as group 1
+     - Any
+     - The same as without NAT
      - P-well everywhere, and NAT does not block it without a
-       transistor. An N-well cannot be cleared of P-well. Group 4 decides
-       whether a deep N-well can
-   * - Near 14 V. The same at every ring distance
+       transistor. The deep N-well without NAT then shows what its
+       1.5 µm clearance is worth
+   * - Much higher
+     - Near 14 V at 0 µm. Rises with distance to the group 1 value
+     - The same as group 1
+     - Much higher
+     - The same as without NAT
+     - B: only drawn P-well exists
+   * - Near 14 V at every ring distance
      - Rises with distance
+     - Any
      - Any
      - Any
      - Drawing any P-well stops the generation in that structure. A
        distant drawn P-well is then itself a way to clear the edge
-   * - Any pattern with no knee, or one that rises with ring distance at
-       every distance
+   * - No knee, or a value still rising between ring distances of 20 µm
+       and 35 µm
+     - Any
      - Any
      - Any
      - Any
@@ -603,26 +628,33 @@ dies. "Near 14 V" means within the published range of 10 V minimum to
        :numref:`tab-hvt-inconclusive`
 
 Within group 3, the start of the NAT layer adds detail. A breakdown
-voltage that is low at 4 µm and high at 0.6 µm means the foundry generates
-P-well in a wide strip beside the well but not in a narrow one.
+voltage that is near 14 V at 4 µm and much higher at 0.6 µm means the
+foundry generates P-well in a wide strip beside the well but not in a
+narrow one.
 
 Comparison with predictions
 ---------------------------
 
 Once an assumption is selected, each remaining structure is compared with
-its prediction under that assumption. A structure agrees when its measured
-breakdown voltage lies within the tolerance band of the prediction
-(:numref:`tab-hvt-pred-band`). The band is the range of predictions over
-the family of doping profiles that fit the published data, so it states
-how far the unknown doping can move the result
+its prediction under that assumption. :numref:`tab-hvt-pred-band` gives
+each structure a band, the range of its predictions over the family of
+doping profiles and oxide charges, and an agreement range, the band
+widened by 15 % at each end. A structure agrees when its measured
+breakdown voltage lies within the agreement range. The 15 % stands for the
+uncertainty of the ionisation coefficients, and is a choice
 (:ref:`hv-test-predictions`).
 
 The measured value used is the median over the dies, from the first
-sweep, at 1 µA. A structure outside its band is reported with the
+sweep, at 1 µA. A structure outside its range is reported with the
 direction and size of the difference. Differences in one direction across
 a group point to a wrong profile or oxide charge, which the capacitance
 and gated-diode results then correct. A difference on one structure alone
-points to that termination.
+points to that termination. A structure whose simulation did not finish
+has no range, and its measurement stands alone.
+
+A gated diode has two predictions under each process. The sweep with the
+plate pad joined to the well pad is compared with the band above. The
+sweep with the plate at 0 V is compared with :numref:`tab-hvt-pred-g`.
 
 Sample size and records
 -----------------------
@@ -721,12 +753,13 @@ check for each (:numref:`tab-hvt-inconclusive`).
 Open questions
 --------------
 
-* How wide is the tolerance band of each prediction? It comes from the
-  family of doping profiles, which is not yet fixed
-  (:ref:`hv-test-predictions`).
+* Are the decision limits of 8 V, 25 V and 40 V, and the 15 % of the
+  agreement range, wide enough for the spread between dies? No structure
+  is repeated on the die, so only the spread between dies is measured.
 * What breakdown voltage does a large well have? It bounds the bias, and
   so the depth, of the capacitance profile. If P-well surrounds the large
-  wells, the profile may reach less than 2 µm below the well.
+  wells and NAT does not clear it from CVNA, the profile may reach less
+  than 2 µm below the well.
 * Can the instrument at hand resolve the surface-generation step of P4?
   The step may be as small as 12 fA at 25 °C.
 * Does a probe on a bare Metal5 pad, or a wire bond, survive 150 V next to
