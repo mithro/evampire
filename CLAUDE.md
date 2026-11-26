@@ -194,8 +194,9 @@ comes from the gf180mcu PDK and is not in this repository.
   centres a fixed 46em column by default), sets figure and table captions
   smaller and grey with a bold number, puts a white panel behind diagrams
   in dark mode and limits diagrams to the column width.
-  `diagram-links.js` adds an "Open diagram at full size" link that shows on
-  narrow screens only.
+  `diagram-viewer.js` opens a diagram over the whole window when it is
+  clicked, where the reader zooms with the wheel or a pinch and pans by
+  dragging. Its styles are in `custom.css`.
 
 ## Roles defined in `docs/conf.py`
 

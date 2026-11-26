@@ -109,17 +109,145 @@ div.citation {
   overflow-wrap: anywhere;
 }
 
-/* The "Open diagram at full size" link added by diagram-links.js is only
- * shown on narrow screens, where diagrams are scaled down. */
-a.diagram-full-size {
-  display: none;
+/* Diagram viewer (diagram-viewer.js). Every diagram is wrapped in a link
+ * that opens it over the whole window. A Graphviz diagram is an <object>,
+ * which keeps clicks to itself, so it passes them on to the link. */
+a.diagram-zoom {
+  cursor: zoom-in;
 }
 
+a.diagram-zoom-object {
+  display: inline-block;
+  max-width: 100%;
+}
+
+a.diagram-zoom-object > object {
+  pointer-events: none;
+}
+
+/* The page behind the viewer does not scroll. */
+html.diagram-viewer-open {
+  overflow: hidden;
+}
+
+dialog.diagram-viewer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-background-primary);
+  color: var(--color-foreground-primary);
+  flex-direction: column;
+}
+
+dialog.diagram-viewer[open] {
+  display: flex;
+}
+
+.diagram-viewer-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--color-background-border);
+  font-size: var(--font-size--small);
+}
+
+.diagram-viewer-hint {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--color-foreground-secondary);
+}
+
+.diagram-viewer-bar button,
+.diagram-viewer-bar a {
+  flex: none;
+  box-sizing: border-box;
+  min-width: 2.4rem;
+  height: 2.4rem;
+  padding: 0 0.7rem;
+  border: 1px solid var(--color-background-border);
+  border-radius: 0.4rem;
+  background: var(--color-background-secondary);
+  color: var(--color-foreground-primary);
+  font: inherit;
+  line-height: calc(2.4rem - 2px);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.diagram-viewer-bar button:hover:not(:disabled),
+.diagram-viewer-bar a:hover {
+  background: var(--color-background-hover);
+}
+
+.diagram-viewer-bar button:disabled {
+  color: var(--color-foreground-muted);
+  cursor: default;
+}
+
+/* The stage handles every touch itself, so the browser neither scrolls nor
+ * zooms the page under a drag or a pinch. */
+.diagram-viewer-stage {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The selectors are long so that they override the diagram rules above,
+ * which limit the width and add padding in dark mode. */
+body dialog.diagram-viewer img.diagram-viewer-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  padding: 0;
+  border-radius: 0;
+  background: #ffffff;
+  transform-origin: 0 0;
+  cursor: zoom-in;
+}
+
+.diagram-viewer-stage.is-zoomed img.diagram-viewer-image {
+  cursor: grab;
+}
+
+.diagram-viewer-stage.is-dragging,
+.diagram-viewer-stage.is-dragging img.diagram-viewer-image {
+  cursor: grabbing;
+}
+
+.diagram-viewer-caption {
+  flex: none;
+  max-height: 4.5em;
+  overflow: auto;
+  padding: 0.4rem 0.8rem;
+  border-top: 1px solid var(--color-background-border);
+  font-size: var(--font-size--small);
+  line-height: 1.5;
+  color: var(--color-foreground-secondary);
+}
+
+/* On a narrow screen the buttons need the whole bar. */
 @media (max-width: 46em) {
-  a.diagram-full-size {
-    display: block;
-    font-size: 0.85em;
-    margin-top: 0.25rem;
+  .diagram-viewer-hint {
+    display: none;
   }
 }
 
