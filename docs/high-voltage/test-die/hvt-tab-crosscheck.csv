@@ -8,3 +8,5 @@ Bare N-well edge,77.44,77.55,78.27,"N-well edge in substrate of 3e15 cm^-3, 2359
 "NR1_2, one ring",98.74,101.05,102.82,"One floating ring at 2 um under assumption B; last converged avalanche solution, with a 100-fold current rise at 102.74 V"
 "DT20, deep N-well",94.25,94.33,94.94,Deep N-well edge under assumption B; last converged avalanche solution
 "NW1p5, drawn P-well",51.88,52.16,52.64,Drawn P-well 1.5 um from the edge under assumption B; last converged avalanche solution
+"NP4, polysilicon plate (present model)",94.40,94.52,95.51,"Polysilicon plate 4 um beyond the edge under BL, present doping family; 100-fold rise of the avalanche current"
+NT20 under BD (present model),62.85,62.86,62.44,"Plain N-well edge with the deep P layer under the whole wafer, present doping family; 100-fold rise of the avalanche current"

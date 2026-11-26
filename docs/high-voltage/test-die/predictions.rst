@@ -494,9 +494,9 @@ early breakdown.
 Second simulator
 ----------------
 
-A second simulator, Charon, repeats nine cases on the identical mesh and
+A second simulator, Charon, repeats eleven cases on the identical mesh and
 doping [HV-GF180-TCAD]_: two one-dimensional diodes, a bare N-well edge,
-and six sections of the die. It differs from the first in the ways that
+and eight sections of the die. It differs from the first in the ways that
 matter for a cross-check (:numref:`tab-hvt-crosscheck-source`). Its
 equations include the generation of carriers by impact ionisation, so its
 current itself runs away at breakdown, and it discretises the equations
@@ -551,10 +551,12 @@ per cent.
    :file: hvt-tab-crosscheck-ring.csv
    :header-rows: 1
 
-The cross-check has three gaps. Charon has no cylindrical coordinates, so
-no corner section is checked. No polysilicon plate is checked yet. Its
-peak field on the die sections is lower than the first simulator's by an
-amount that is not explained (:numref:`tab-hvt-crosscheck-source`).
+Two of the cases use the present doping family: the polysilicon plate, whose
+first simulation was wrong, and the plain well with the deep P layer under
+the whole wafer. The cross-check has two gaps. Charon has no cylindrical
+coordinates, so no corner section is checked. Its peak field on the die
+sections is lower than the first simulator's by an amount that is not
+explained (:numref:`tab-hvt-crosscheck-source`).
 
 Limits of the predictions
 -------------------------
