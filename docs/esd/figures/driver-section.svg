@@ -2,9 +2,9 @@
 <rect width="660" height="400" fill="white"/>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
 <rect x="10" y="170" width="640" height="200" fill="#dbe8f5" stroke="#222222"/>
-<text x="20" y="362" text-anchor="start" font-size="13" fill="#222222" font-weight="normal">P substrate</text>
+<text x="20" y="362" text-anchor="start" font-size="13" fill="#222222" font-weight="normal">P substrate, on DVSS</text>
 <rect x="20" y="170" width="300" height="110" fill="#fbd9b5" stroke="#222222"/>
-<text x="170" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N-well, tied to DVDD</text>
+<text x="170" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N-well, on DVDD</text>
 <rect x="30" y="170" width="30" height="22" fill="#f5b46e" stroke="#222222"/>
 <rect x="80" y="170" width="45" height="22" fill="#7fa7d6" stroke="#222222"/>
 <rect x="130" y="160" width="30" height="10" fill="#c9a0dc" stroke="#222222"/>
@@ -13,9 +13,7 @@
 <line x1="160" y1="208" x2="236" y2="208" stroke="#222222" stroke-width="1"/>
 <line x1="160" y1="204" x2="160" y2="212" stroke="#222222" stroke-width="1"/>
 <line x1="236" y1="204" x2="236" y2="212" stroke="#222222" stroke-width="1"/>
-<text x="198.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">no silicide, 2.78 µm</text>
-<rect x="340" y="170" width="300" height="110" fill="#b9cfe8" stroke="#222222"/>
-<text x="490" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P-well, tied to DVSS</text>
+<text x="198.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">blocked drain: 2.78 µm</text>
 <rect x="355" y="170" width="120" height="22" fill="#f5b46e" stroke="#222222"/>
 <text x="415" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N+ drain</text>
 <rect x="480" y="160" width="34" height="10" fill="#c9a0dc" stroke="#222222"/>
@@ -24,8 +22,8 @@
 <line x1="399" y1="208" x2="480" y2="208" stroke="#222222" stroke-width="1"/>
 <line x1="399" y1="204" x2="399" y2="212" stroke="#222222" stroke-width="1"/>
 <line x1="480" y1="204" x2="480" y2="212" stroke="#222222" stroke-width="1"/>
-<text x="480" y="224" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">no silicide, 3.78 µm</text>
-<text x="497" y="154" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">1.15 µm gate</text>
+<text x="480" y="224" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">blocked drain: 3.78 µm</text>
+<text x="530" y="154" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">gate length: 1.15 µm</text>
 <text x="45" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
 <text x="102" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
 <text x="541" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
@@ -33,7 +31,7 @@
 <rect x="266" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
 <rect x="366" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
 <rect x="266" y="56" width="112" height="8" fill="#9aa5b1" stroke="#222222"/>
-<rect x="290" y="24" width="64" height="26" fill="#fde9d3" stroke="#222222"/>
+<rect x="290" y="24" width="64" height="26" fill="#ffffff" stroke="#222222"/>
 <text x="322" y="42" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">PAD</text>
 <line x1="322" y1="50" x2="322" y2="56" stroke="#222222" stroke-width="3"/>
 <rect x="42" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
@@ -53,12 +51,12 @@
 <polygon points="407,243 423,243 415,229" fill="#c0392b" stroke="#c0392b"/>
 <line x1="407" y1="229" x2="423" y2="229" stroke="#c0392b" stroke-width="2.5"/>
 <text x="427" y="241" text-anchor="start" font-size="12" fill="#c0392b" font-weight="normal"></text>
-<text x="450" y="298" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">P-well to N+ drain: diode from DVSS</text>
+<text x="450" y="298" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">Substrate to N+ drain: diode from DVSS</text>
 <text x="450" y="314" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">to PAD, 304 µm in all</text>
 <line x1="497" y1="210" x2="497" y2="234" stroke="#8e44ad" stroke-width="3"/>
 <line x1="497" y1="217" x2="470" y2="194" stroke="#8e44ad" stroke-width="2"/>
 <line x1="497" y1="227" x2="530" y2="194" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow)"/>
 <line x1="497" y1="222" x2="487" y2="222" stroke="#8e44ad" stroke-width="2"/>
-<text x="640" y="342" text-anchor="end" font-size="12" fill="#8e44ad" font-weight="normal">parasitic NPN (drain, P-well, source): triggers at 10.7 V,</text>
+<text x="640" y="342" text-anchor="end" font-size="12" fill="#8e44ad" font-weight="normal">parasitic NPN (drain, substrate, source): triggers at 10.7 V,</text>
 <text x="640" y="358" text-anchor="end" font-size="12" fill="#8e44ad" font-weight="normal">snaps back to about 6 V</text>
 </svg>
