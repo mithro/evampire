@@ -34,16 +34,16 @@ STYLES = {
     "ndiff": (NPLUS, "#a8651c", "N+ diffusion"),
     "pdiff": (PPLUS, "#3d6294", "P+ diffusion"),
     "poly": (POLY, "#6f3f93", "polysilicon"),
-    "sab": ("url(#hatch)", INK, "silicide block"),
+    "sab": ("url(#hatch)", INK, "silicide block, over any layer"),
     "contact": ("#333333", "none", "contact"),
-    "metal": (METAL, "#6b7684", "metal"),
+    "metal": (METAL, "#6b7684", "bond pad metal"),
     "pad": ("none", INK, "pad opening"),
     "padnet": (HOT, "#7d1f14", "PAD net, metal 2"),
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
-    "dvddrail": (DVDD, "#6a1c53", "DVDD rail, metal 5"),
-    "dvssrail": (DVSS, "#0d5045", "DVSS rail, metal 5"),
+    "dvddrail": (DVDD, "#6a1c53", "DVDD, metal 5"),
+    "dvssrail": (DVSS, "#0d5045", "DVSS, metal 5"),
     "innet": (SECONDARY, "#12305f", "protected input net"),
     "other": ("#c4c9cf", "#8a9199", "other diffusion"),
     "resistor": ("none", SECONDARY, "resistor body"),
@@ -75,6 +75,7 @@ class Fig:
         self.w = left + self.dw + right
         self.h = top + self.dh + bottom
         self.body, self.over, self.keys, self.panels = [], [], [], []
+        self.alpha, self.notes = {}, []
         self.body.append(
             f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" width="{self.dw:.1f}" '
             f'height="{self.dh:.1f}" fill="{SUB}"/>')
@@ -107,6 +108,7 @@ class Fig:
             f'opacity="{opacity}"{extra}/>')
         if key and style not in self.keys:
             self.keys.append(style)
+            self.alpha[style] = opacity
 
     def layer(self, name, cell=None, shift=0.0, **kw):
         """Draw a layer of a cell, moved by `shift` along GDS x."""
@@ -144,7 +146,7 @@ class Fig:
         self.over.extend(out)
 
     def label(self, s, target, at, anchor="middle", colour=INK, elbow=None,
-              weight="normal", lead="auto"):
+              weight="normal", lead="auto", also=()):
         """Text at pixel position `at` with a leader to a layout point.
 
         The leader leaves the text below or above it (lead="auto", for
@@ -172,6 +174,14 @@ class Fig:
                          f'stroke="{colour}" stroke-width="1.3"/>')
         self.over.append(f'<circle cx="{tx:.1f}" cy="{ty:.1f}" r="3.2" '
                          f'fill="{colour}" stroke="#fff" stroke-width="1"/>')
+        for extra in also:   # further leaders from the same text
+            ex, ey = self.px(*extra)
+            self.over.append(
+                f'<line x1="{start[0]:.1f}" y1="{start[1]:.1f}" x2="{ex:.1f}" '
+                f'y2="{ey:.1f}" stroke="{colour}" stroke-width="1.3"/>')
+            self.over.append(
+                f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="3.2" fill="{colour}" '
+                'stroke="#fff" stroke-width="1"/>')
         self.text(ax, ay, s, anchor=anchor, fill=colour, weight=weight)
 
     def dim(self, a, b, s, offset=0.0, colour=INK, side="above"):
@@ -198,12 +208,15 @@ class Fig:
                 'stroke="{}" stroke-width="1.5"/>'.format(*seg, colour))
         self.text(*tpos, s, anchor=anchor, fill=colour, weight="bold")
 
-    def flow(self, points, colour=HOT, width=4.0, dash=None, pixels=False):
+    def flow(self, points, colour=HOT, width=4.0, dash=None, pixels=False,
+             key="discharge current"):
         """An arrow along layout points: the direction of a current."""
         pts = points if pixels else [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
         mid = {HOT: "hot", CLAMP: "clamp", SECONDARY: "second",
                SNAP: "snap"}[colour]
+        if key and ("arrow", colour, key) not in self.notes:
+            self.notes.append(("arrow", colour, key))
         extra = f' stroke-dasharray="{dash}"' if dash else ""
         self.over.append(f'<polyline points="{d}" fill="none" stroke="#fff" '
                          f'stroke-width="{width + 3}" opacity="0.9" '
@@ -230,6 +243,7 @@ class Fig:
         self.w += gap + other.w - 20
         self.h = max(self.h, other.h)
         self.keys += [k for k in other.keys if k not in self.keys]
+        self.alpha = {**other.alpha, **self.alpha}
 
     def title(self, s):
         """A panel title above the top-left corner of the layout."""
@@ -244,40 +258,87 @@ class Fig:
         x0, x1 = self.ox, self.ox + length * self.s
         out = [f'<rect x="{x0:.1f}" y="{y}" width="{x1 - x0:.1f}" height="6" '
                f'fill="{INK}"/>']
-        label = f"{length:g} µm"
+        label = f"{length:g} µm" + (", all panels" if self.panels else "")
         out.append(f'<text x="{x1 + 8:.1f}" y="{y + 8}" font-size="{FONT}" '
                    f'fill="{INK}">{label}</text>')
         return out, x1 + 8 + len(label) * FONT * 0.6
 
-    def _legend(self, x, y, extra):
+    def note(self, colour, text):
+        """Explain a label colour in the legend."""
+        self.notes.append(("label", colour, text))
+
+    def _legend(self, x, y):
+        """Swatches in columns of one width, drawn as they are in the layout."""
+        items = [("swatch", (SUB, GREY, None, 1.0), "P substrate")]
+        for k in STYLES:
+            if k in self.keys:
+                fill, stroke, name = STYLES[k]
+                dash = "4,2" if k in ("pad", "sab") else None
+                kind = "contact" if k == "contact" else "swatch"
+                items.append((kind, (fill, stroke, dash, self.alpha[k]), name))
+        items += [(kind, colour, text) for kind, colour, text in self.notes]
+        widths = [26 + 6 + len(name) * FONT * 0.56 + 22 for _, _, name in items]
+        # As many columns as fit, each as wide as its widest entry.
+        for per_row in range(len(items), 0, -1):
+            cols = [max(widths[i::per_row]) for i in range(per_row)]
+            if sum(cols) <= self.w - 10 - x:
+                break
+        lefts = [x + sum(cols[:i]) for i in range(per_row)]
         out = []
-        items = [(STYLES[k][0], STYLES[k][1], STYLES[k][2],
-                  "4,2" if k in ("pad", "sab") else None)
-                 for k in STYLES if k in self.keys] + extra
-        x_start = x
-        for fill, stroke, name, dash in items:
-            width = 26 + 6 + len(name) * FONT * 0.56 + 18
-            if x + width > self.w - 10:
-                x, y = x_start, y + 24
-            d = f' stroke-dasharray="{dash}"' if dash else ""
-            out.append(f'<rect x="{x:.1f}" y="{y - 12}" width="26" '
-                       f'height="14" fill="{fill}" stroke="{stroke}"{d}/>')
-            out.append(f'<text x="{x + 32:.1f}" y="{y}" font-size="{FONT}" '
+        for i, (kind, style, name) in enumerate(items):
+            cx, cy = lefts[i % per_row], y + (i // per_row) * 24
+            if kind == "crop":
+                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 26:.1f}" '
+                           f'y2="{cy - 5}" stroke="{style}" stroke-width="1.2" '
+                           'stroke-dasharray="7,5"/>')
+            elif kind == "arrow":
+                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 18:.1f}" '
+                           f'y2="{cy - 5}" stroke="{style}" stroke-width="4"/>')
+                out.append(f'<path d="M{cx + 16:.1f},{cy - 11} L{cx + 27:.1f},'
+                           f'{cy - 5} L{cx + 16:.1f},{cy + 1} z" fill="{style}"/>')
+            elif kind == "label":
+                out.append(f'<text x="{cx:.1f}" y="{cy}" font-size="{FONT}" '
+                           f'font-weight="bold" fill="{style}">Abc</text>')
+            else:
+                fill, stroke, dash, alpha = style
+                d = f' stroke-dasharray="{dash}"' if dash else ""
+                w, h, dx = (8, 8, 9) if kind == "contact" else (26, 14, 0)
+                out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
+                           f'height="14" fill="{SUB}"/>')
+                out.append(
+                    f'<rect x="{cx + dx:.1f}" y="{cy - 12 + (14 - h) / 2:.1f}" '
+                    f'width="{w}" height="{h}" fill="{fill}" stroke="{stroke}" '
+                    f'opacity="{alpha}"{d}/>')
+            out.append(f'<text x="{cx + 34:.1f}" y="{cy}" font-size="{FONT}" '
                        f'fill="{INK}">{name}</text>')
-            x += width
-        return out, y
+        return out, y + ((len(items) - 1) // per_row) * 24
 
     def _content(self):
-        return [*self.body,
-                f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" '
-                f'width="{self.dw:.1f}" height="{self.dh:.1f}" fill="none" '
-                f'stroke="{GREY}" stroke-width="1"/>', *self.over]
+        """The layout and its labels, in a frame dashed where it is cropped."""
+        x0, y0, x1, y1 = self.win
+        l, t, r, b = self.ox, self.oy, self.ox + self.dw, self.oy + self.dh
+        edges = [((l, t, l, b), y0 > 0.5), ((r, t, r, b), y1 < 349),
+                 ((l, t, r, t), x0 > 0.5),
+                 ((l, b, r, b), 0.5 < x1 % 75 < 74.5)]
+        frame = []
+        for (xa, ya, xb, yb), cropped in edges:
+            dash = ' stroke-dasharray="7,5"' if cropped else ""
+            frame.append(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" '
+                         f'y2="{yb:.1f}" stroke="{GREY}" stroke-width="1.2"'
+                         f'{dash}/>')
+        return [*self.body, *frame, *self.over]
 
-    def save(self, path, extra_keys=()):
+    def save(self, path):
         """Write the SVG, with the scale bar and legend under the layout."""
         base = self.h - 44
         bar, x = self._scalebar(base)
-        legend, y_end = self._legend(x + 24, base + 9, list(extra_keys))
+        for other, _ in self.panels:
+            self.notes += [n for n in other.notes if n not in self.notes]
+        drawn = self._content() + [line for other, _ in self.panels
+                                   for line in other._content()]
+        if any('stroke-dasharray="7,5"' in line for line in drawn):
+            self.notes.append(("crop", GREY, "layout continues"))
+        legend, y_end = self._legend(x + 24, base + 9)
         h = max(self.h, y_end + 16)
         defs = [
             '<pattern id="hatch" width="6" height="6" '
