@@ -119,8 +119,9 @@ def tables():
     for key, cols in COLUMNS.items():
         rows = [["Name"] + [c[0] for c in cols]]
         for name in tdkit.members(structs, man, key):
-            rows.append([name] + [c[1](name, structs[name], sites[name])
-                                  for c in cols])
+            ref = f":ref:`{name} <hvt-s-{name.lower().replace('_', '-')}>`"
+            rows.append([ref] + [c[1](name, structs[name], sites[name])
+                                 for c in cols])
         files[f"hvt-tab-{key}.csv"] = write(rows)
     rows = [["Pad", "Connects to", "Centre x, y (µm)"]]
     for k, (x, y) in enumerate(man["sub_pads"]):
