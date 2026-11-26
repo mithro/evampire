@@ -45,6 +45,14 @@ def bar(p, xc, w, lo, hi, fill, labels=True, size=10, side="right"):
     return out
 
 
+def detach(p, x, v):
+    """The detach label of a sink bar, ending at x, on two lines so that it
+    fits between the bar and whatever is on its left."""
+    y = p.y(v / 2)
+    return [text(x, y - 2, "detach", 10, "end"),
+            text(x, y + 11, f"≤ {v:.3f}", 10, "end")]
+
+
 def cc_thresholds():
     p = Plot(58, 58, 600, 400, (0, 1), (0, 2.6))
     body = [p.frame()]
@@ -74,8 +82,7 @@ def cc_thresholds():
                          (1.369, 2.042, "3.0 A")):
         body.append(text(x - w / 2 - 4, p.y((lo + hi) / 2) + 4, name, 10,
                          "end"))
-    body.append(text(x - w / 2 - 4, p.y(0.138) + 4, "detach ≤ 0.276", 10,
-                         "end"))
+    body += detach(p, x - w / 2 - 4, 0.276)
     for v in (0.42, 0.94, 1.7):
         body.append(f'<circle cx="{x:.1f}" cy="{p.y(v):.1f}" r="3.2" '
                     f'fill="{INK}"/>')
@@ -85,8 +92,7 @@ def cc_thresholds():
     body += bar(p, x, w, 0, 0.248, FILL, labels=False)
     body += bar(p, x, w, 0.249, 2.181, SNK)
     body.append(text(x + w / 2 + 4, p.y(1.2) + 4, "attached", 10))
-    body.append(text(x - w / 2 - 4, p.y(0.124) + 4, "detach ≤ 0.248", 10,
-                         "end"))
+    body += detach(p, x - w / 2 - 4, 0.248)
 
     # Source with a current-source Rp (Table 4-37), at the nominal current.
     for x, i_ua, wlo, whi, vopen in (
@@ -239,13 +245,18 @@ def dc_level():
     body.append(polyline(pe.pts(wave), INK, 2.0))
     body.append(line(pe.x(t_end), pe.y(-0.3), pe.x(t_end + 23), pe.y(-0.3),
                      arrow="both"))
+    # On two lines: as one line the label is wider than the arrow.
+    body.append(text(pe.x(t_end + 11.5), pe.y(-0.3) - 19,
+                     "release by 23 µs", 11, "middle"))
     body.append(text(pe.x(t_end + 11.5), pe.y(-0.3) - 5,
-                     "release by 23 µs (tEndDriveBMC)", 11, "middle"))
+                     "(tEndDriveBMC)", 11, "middle"))
     body.append(line(pe.x(t_end), pe.top, pe.x(t_end), pe.bottom, INK, 0.8,
                      "4,3"))
-    body.append(text(pe.x(t_end) + 4, pe.y(0.6), "low ≥ 1 µs", 11))
-    body.append(text(pe.x(t_end) + 4, pe.y(0.6) + 14, "(tHoldLowBMC),", 11))
-    body.append(text(pe.x(t_end) + 4, pe.y(0.6) + 28, "then released", 11))
+    # Right of the rising edge, between the two dashed idle levels.
+    x_note, y_note = pe.x(t_rel + 1.6), pe.y(0.9) + 16
+    body.append(text(x_note, y_note, "low ≥ 1 µs", 11))
+    body.append(text(x_note, y_note + 14, "(tHoldLowBMC),", 11))
+    body.append(text(x_note, y_note + 28, "then released", 11))
     body.append(text(pe.x(t_end) - 4, pe.top + 14, "end of", 11, "end"))
     body.append(text(pe.x(t_end) - 4, pe.top + 28, "last bit", 11, "end"))
     body += ps.xticks([0, 5, 10, 15, 20], "time (µs)", grid=False)
