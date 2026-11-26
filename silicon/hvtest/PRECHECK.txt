@@ -1,20 +1,19 @@
 # Result of silicon/hvtest/flow.py on the layout of this commit's generator
-date: 2026-11-26
+date: 2026-11-27
 precheck image: ghcr.io/wafer-space/gf180mcu-precheck:latest (1.7.3, PDK open_pdks d658698)
-sha256 hvtest.oas: 443f8a701420e73498fc6e98da9c34ae3131ecdda85dc3e342a5ca5d91950935
-connections (check_nets.py): 76 sites checked, 0 problem(s)
-density COMP ratio	28.994164931298183 %
-density Poly2 ratio	16.74984882804464 %
-density Metal1 ratio	35.683904072966286 %
-density Metal2 ratio	32.55788401915422 %
-density Metal3 ratio	33.824318124675514 %
-density Metal4 ratio	34.09541928026357 %
-density Metal5 ratio	37.11357715464602 %
-density MetalTop ratio	37.11357715464602 %
+sha256 hvtest.oas: d4ec6d1151c64968fd6b1eefe7c55c79ddd0cc2031615312da68cbdc94fe27b9
+connections (check_nets.py): 73 sites checked, 0 problem(s)
+density COMP ratio	29.124838435221434 %
+density Poly2 ratio	17.079447751803258 %
+density Metal1 ratio	35.72943225491509 %
+density Metal2 ratio	32.66144368100022 %
+density Metal3 ratio	33.93508755889776 %
+density Metal4 ratio	34.24708654012558 %
+density Metal5 ratio	37.231292663126 %
+density MetalTop ratio	37.231292663126 %
 precheck: Check for KLayout density errors clear.
 precheck: Check for KLayout zero area polygons count clear.
 precheck: Check for KLayout antenna errors clear.
 precheck: Check for Magic DRC errors clear.
 precheck: Check for KLayout DRC errors clear.
 precheck exit: 0
-precheck rerun on the committed hvtest.oas itself: exit 0 (2026-11-27)
