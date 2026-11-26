@@ -43,14 +43,14 @@ STYLES = {
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
-    "dvddrail": (DVDD, "#6a1c53", "DVDD, metal 3 to 5"),
-    "dvssrail": (DVSS, "#0d5045", "DVSS, metal 3 to 5"),
-    "dvsslink": (DVSS, "#0d5045", "DVSS, metal 2"),
+    "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD, metal 3 to 5"),
+    "dvssrail": ("#a3d2ca", "#0d5045", "DVSS, metal 3 to 5"),
+    "dvsslink": ("#6fb3a8", "#0d5045", "DVSS, metal 2"),
     "innet": (SECONDARY, "#12305f", "protected net, metal 1 and 2"),
     "other": ("#c4c9cf", "#8a9199", "other diffusion"),
     "resistor": ("none", SECONDARY, "resistor body"),
     "gate": ("#8e5bb5", "#4f2a70", "gate over diffusion"),
-    "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
+    "clampfet": (CLAMP, "#8a5500", "clamp transistor, under the stripes"),
 }
 FONT = 14
 
@@ -124,6 +124,11 @@ class Fig:
         """The layers that make the devices, from the wells up."""
         for name in ("nwell", "pdiff", "ndiff", "poly"):
             self.layer(name, **kw)
+        lay = gdskit.load(kw.get("cell") or self.cell)
+        gates = lay["poly"].intersection(lay["comp"])
+        if kw.get("shift"):
+            gates = translate(gates, xoff=kw["shift"])
+        self.geom(gates, "gate", opacity=kw.get("opacity", 1.0))
         if contacts:
             self.layer("contact", **kw)
 

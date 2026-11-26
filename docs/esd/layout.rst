@@ -19,8 +19,9 @@ figures share four conventions:
 * Each layer has the same colour in every figure, and the silicon layers
   have the colours of the cross-section :numref:`fig-esd-driver-section`.
 * Red marks the PAD net and the discharge current, blue the secondary
-  protection and orange the rail clamp, as in the schematic. Magenta marks
-  what connects to DVDD and green what connects to DVSS.
+  protection and orange the rail clamp, as in the schematic. Purple marks
+  snapback, as in the cross-section. Magenta marks what connects to DVDD
+  and green what connects to DVSS.
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
 
@@ -188,7 +189,7 @@ real drain diode more resistive than the foundry's test diode
          net: drains on PAD dark red, diffusion on DVDD magenta, diffusion
          on DVSS green. Left, the NMOS drivers: red arrows run from the P+
          ring on DVSS inwards to the N+ drains, the negative pulse through
-         the NMOS drain diode; orange arrows run from each drain to the
+         the NMOS drain diode; purple arrows run from each drain to the
          sources beside it, the snapback of a positive pulse above 10.7 V.
          Right, the PMOS
          drivers: red arrows run outwards from the P+ drains across the

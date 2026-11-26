@@ -18,7 +18,7 @@ INVERTERS = (15.8, 195.4, 59.6, 214.6)
 
 def clamp():
     """The whole DVDD pad: the rail clamp and its timer."""
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=62, right=20, bottom=132)
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=62, right=75, bottom=164)
     lay = gdskit.load(CELL)
     f.silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
@@ -47,6 +47,8 @@ def clamp():
     f.label("4 diodes from\nDVSS to DVDD", (56, 305.7),
             (f.px(0, 305.7)[0], bot))
     f.note(CLAMP, "part of the rail clamp")
+    f.dim((75, 0), (75, 350), "350 µm", offset=92, side="below")
+    f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f
 
 
@@ -55,15 +57,17 @@ def clamp_fingers():
     f = Fig(CELL, (8.6, 72.6, 21.4, 94.4), 40, top=64, right=20, bottom=128)
     lay = gdskit.load(CELL)
     nets = {n: gdskit.net(CELL, n)["comp"] for n in ("DVDD", "DVSS")}
-    f.geom(nets["DVDD"], "dvdd", opacity=0.85)
-    f.geom(nets["DVSS"], "dvss", opacity=0.85)
+    f.geom(nets["DVDD"], "dvdd", opacity=0.7)
+    f.geom(nets["DVSS"], "dvss", opacity=0.7)
     f.layer("poly")
     f.geom(lay["poly"].intersection(lay["comp"]), "gate")
+    f.note(DVDD, "on DVDD")
+    f.note(DVSS, "on DVSS")
     f.layer("contact")
     top = f.oy - 30
     f.label("P+ guard ring, on DVSS", (9.3, 76.5), (f.px(0, 76.5)[0], top),
             colour=DVSS, weight="bold")
-    f.label("Polysilicon bar joining the gates of a block (16 of its 20 shown)",
+    f.label("Polysilicon bar joining the gates of a block (16 of its 20 fingers shown)",
             (11.8, 86), (f.px(0, 86)[0], top))
     # Diffusion strips repeat every 1.22 µm: drain, gate, source, gate.
     first, pitch = 74.92, 1.22
@@ -106,15 +110,14 @@ def ring():
     lay = gdskit.load("dvss")
     fet = lay["comp"].intersection(lay["nplus"]).intersection(
         box(10, 72, 65, 192))
-    f.geom(translate(fet, xoff=PITCH), "clampfet")
     for cell, shift in (("bi_t", 0.0), ("dvss", PITCH)):
         for name, style in (("DVDD", "dvddrail"), ("DVSS", "dvssrail")):
-            f.geom(translate(_stack(cell, name), xoff=shift), style,
-                   opacity=0.4)
+            f.geom(translate(_stack(cell, name), xoff=shift), style)
     # Metal 2 joins the DVSS stripes to the DVSS bond pad.
     link = gdskit.net("dvss", "DVSS")["metal2"].intersection(
         box(0, 60, 75, 76))
-    f.geom(translate(link, xoff=PITCH), "dvsslink", opacity=0.8)
+    f.geom(translate(link, xoff=PITCH), "dvsslink")
+    f.geom(translate(fet, xoff=PITCH), "clampfet", opacity=0.45)
     pad = gdskit.net("bi_t", "PAD")
     top_metal = pad["metal5"].union(pad["metal2"].intersection(
         box(0, 0, 75, 201))).buffer(1.5).buffer(-1.5)
@@ -136,21 +139,21 @@ def ring():
     x, y = f.px(69.5, 166)
     f.text(x, y + 5, "PMOS drains")
     x, y = f.px(PITCH, 0)
-    f.text(x + 6, y - 6, "cell boundary", anchor="start")
+    f.text(x + 6, y - 6, "Cell boundary", anchor="start")
     # The current: along the pad's metal, down the DVDD rail, through the
     # clamp transistor under the stripes, and along DVSS to its pad.
     y_rail, y_out = 181.5, 70.0
-    f.flow([(37.5, 64), (37.5, y_rail), (PITCH + 37.5, y_rail)], width=5.0,
+    f.flow([(42.5, 64), (42.5, y_rail), (PITCH + 37.5, y_rail)], width=5.0,
            head=False)
     f.flow([(PITCH + 37.5, y_rail), (PITCH + 37.5, y_out)], width=5.0,
            dash="9,6", head=False, key="current under the stripes")
     f.flow([(PITCH + 37.5, y_out), (PITCH + 37.5, 56)], width=5.0)
     top = f.oy - 38
     f.label("1  Positive pulse: from the bond pad\nalong metal 2 to the "
-            "PMOS drains", (37.5, 118), (f.px(0, 84)[0], top), colour=HOT,
+            "PMOS drains", (42.5, 100), (f.px(0, 84)[0], top), colour=HOT,
             weight="bold")
     f.label("2  PMOS drain diode: P+ drain to N-well,\nthen up to the DVDD "
-            "stripes over it", (37.5, y_rail), (f.px(0, 190)[0], top),
+            "stripes over it", (42.5, y_rail), (f.px(0, 190)[0], top),
             colour=HOT, weight="bold")
     bot = f.oy + f.dh + 30
     f.label("5  DVSS stripes, then metal 2,\nto the DVSS bond pad", (PITCH + 37.5, 66),

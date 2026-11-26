@@ -8,7 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 from shapely.geometry import box
 
 import gdskit
-from layfig import CLAMP, DVDD, DVSS, GREY, HOT, SECONDARY, Fig
+from layfig import DVDD, DVSS, GREY, HOT, SECONDARY, SNAP, Fig
 
 CELL = "bi_t"
 # Blocks of the cell, as (x0, y0, x1, y1) in GDS micrometres, from the
@@ -18,7 +18,7 @@ BUFFERS = (3.6, 245.5, 70.4, 264.1)      # comp018green_out_sigbuf_*
 SECOND = (21.9, 266.6, 57.3, 309.9)      # comp018green_esd_cdm
 INPUT = (3.5, 311.6, 71.8, 348.4)        # rest of comp018green_inpath_cms_smt
 PULLS = (3.8, 266.7, 18.8, 309.5)        # comp018green_in_pupd resistors
-SNAPBACK = CLAMP   # the orange of the snapback path in figures/paths.svg
+SNAPBACK = SNAP   # the purple of snapback in the other ESD figures
 
 
 def cell():
@@ -52,9 +52,9 @@ def cell():
     f.label("Secondary protection:\nresistors and diodes", (57.3, 280),
             (f.px(0, 280)[0], bot), colour=SECONDARY, weight="bold")
     f.label("Input buffer\nand logic", (71.8, 335), (f.px(0, 335)[0], bot))
-    f.note(HOT, "primary protection")
+    f.note(HOT, "primary protection, on the PAD net")
     f.note(SECONDARY, "secondary protection", kind="box")
-    f.note(GREY, "other block of the cell", kind="box")
+    f.note(GREY, "other part of the cell", kind="box")
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f
@@ -65,7 +65,7 @@ def pad_net():
     f = Fig(CELL, (0, 0, 75, 285), 3.3, top=62, bottom=120)
     lay = gdskit.load(CELL)
     net = gdskit.net(CELL, "PAD")
-    f.silicon(opacity=0.28)
+    f.silicon(opacity=0.45)
     # The drivers' gates at full strength: every drain lies between two.
     f.geom(lay["poly"].intersection(box(5, 70, 70, 190)), "poly", key=False)
     f.geom(net["metal2"], "padnet", opacity=0.7)
@@ -74,7 +74,7 @@ def pad_net():
     f.layer("pad", width=1.6, dash="5,3")
     x, y = f.px(37.5, 32)
     f.text(x, y - 16, "Bond pad", weight="bold")
-    f.text(x, y + 2, "metal 2 to metal 5, stacked;")
+    f.text(x, y + 2, "metal 2 to 5, stacked;")
     f.text(x, y + 19, "metal 2 is slotted")
     top = f.oy - 34
     f.label("4 NMOS drains,\neach between 2 gates", (19.78, 95),
@@ -84,7 +84,7 @@ def pad_net():
     f.label("Metal 2 wire, 2 µm wide", (37.5, 232), (f.px(0, 232)[0], top + 17),
             colour=HOT, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("Gate, a polysilicon strip", (59.68, 104), (f.px(0, 98)[0], bot))
+    f.label("Gate\n(polysilicon)", (59.68, 104), (f.px(0, 100)[0], bot))
     f.label("Metal 2 joining the drains\nof both drivers", (62, 126),
             (f.px(0, 150)[0], bot), colour=HOT, weight="bold")
     f.label("4 secondary protection\nresistors", (43.4, 272.1),
@@ -104,11 +104,12 @@ def paths():
     for g in nets.values():
         rest = rest.difference(g)
     f.geom(rest, "other", opacity=0.6)
-    f.geom(nets["DVDD"], "dvdd", opacity=0.55)
-    f.geom(nets["DVSS"], "dvss", opacity=0.55)
+    f.geom(nets["DVDD"], "dvdd", opacity=0.7)
+    f.geom(nets["DVSS"], "dvss", opacity=0.7)
     f.geom(nets["PAD"], "paddrain")
-    f.layer("poly", opacity=0.9)
-    diode = "forward current of a drain diode"
+    f.layer("poly", opacity=0.7)
+    f.geom(lay["poly"].intersection(lay["comp"]), "gate", opacity=0.7)
+    diode = "discharge current through a drain diode"
     # Positive pulse: P+ drains into the N-well and out through its N+ ring.
     for gx, ring in ((15.4, 8.6), (59.6, 66.4)):
         f.flow([(gx, 166), (ring, 166)], key=diode)
@@ -126,28 +127,31 @@ def paths():
         for side in (-1, 1):
             f.flow([(drain + side * 0.9, 90 + side * 5),
                     (drain + side * 5.5, 90 + side * 5)],
-                   colour=SNAPBACK, width=4.0, key="snapback current")
+                   colour=SNAPBACK, width=4.0,
+                   key="discharge current in snapback")
     x, y = f.px(7.3, 84)
     f.text(x, y + 5, "NMOS output drivers", weight="bold")
     x, y = f.px(3.4, 146)
     f.text(x, y + 5, "PMOS output drivers", weight="bold")
     top = f.oy - 56
-    f.label("Negative pulse: NMOS drain diode, from\nthe P+ ring on DVSS "
+    f.label("Negative pulse: NMOS drain diode, from the\nP+ guard ring on DVSS "
             "into the N+ drains", (15.5, 101), (f.px(0, 104)[0], top),
             colour=HOT, weight="bold")
     f.label("Positive pulse: PMOS drain diode, from the P+ drains\ninto "
-            "the N-well and out through its N+ ring on DVDD", (11.5, 166),
+            "the N-well and out through its N+ guard ring on DVDD", (11.5, 166),
             (f.px(0, 170)[0], top), colour=HOT, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("P+ ring,\non DVSS", (64.3, 80), (f.ox, bot), anchor="start",
+    f.label("P+ guard ring,\non DVSS", (64.3, 80), (f.ox, bot), anchor="start",
             colour=DVSS, weight="bold")
     f.label("Positive pulse above 10.7 V: snapback from each\nNMOS drain "
             "to the sources beside it, on DVSS", (58.4, 95),
-            (f.px(0, 110)[0], bot), colour=SNAPBACK, weight="bold")
-    f.label("N-well, seen between the\ndrains and its N+ ring", (65.2, 150),
-            (f.px(0, 160)[0], bot))
-    f.label("N+ ring,\non DVDD", (67.3, 188), (f.px(0, 192)[0], bot),
-            colour=DVDD, weight="bold")
+            (f.px(0, 122)[0], bot), colour=SNAPBACK, weight="bold")
+    f.label("N-well, seen between the\ndrains and its guard ring", (65.2, 150),
+            (f.px(0, 166)[0], bot))
+    f.label("N+ guard ring,\non DVDD", (67.3, 188), (f.ox + f.dw, bot),
+            anchor="end", colour=DVDD, weight="bold")
+    f.note(DVDD, "on DVDD")
+    f.note(DVSS, "on DVSS")
     return f
 
 
@@ -175,19 +179,23 @@ def secondary():
             colour=SECONDARY, weight="bold", lead="left")
     top = f.oy - 40
     f.label("4 polysilicon resistors in parallel, each\n2.5 µm wide and "
-            "2.8 µm long under the block", (32.85, 272.1),
+            "2.8 µm long under the silicide block", (32.85, 272.1),
             (f.px(0, 272.1)[0] - 40, top), colour=SECONDARY, weight="bold")
     f.label("Protected net, also to the\npull-up and pull-down resistors",
             (22.3, 292.9), (f.px(0, 292.9)[0] + 70, top), colour=SECONDARY,
             weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("2 P+ diodes, 20 µm × 1 µm each, in an\nN-well tied to DVDD "
-            "by the N+ ring", (46.5, 283.2), (f.px(0, 278)[0], bot),
+    f.label("2 P+ diodes, 20 µm × 1 µm each, in an N-well\nheld on DVDD "
+            "by the N+ ring directly round them", (46.5, 283.2), (f.px(0, 278)[0], bot),
             colour=DVDD, weight="bold", also=[(46.5, 287.87)])
-    f.label("2 N+ diodes, 20 µm × 1 µm each, in substrate\ntied to DVSS "
-            "by the P+ ring", (46.5, 304.05), (f.px(0, 304)[0], bot),
+    f.label("2 N+ diodes, 20 µm × 1 µm each, in substrate\nheld on DVSS "
+            "by the P+ ring directly round them", (46.5, 304.05), (f.px(0, 304)[0], bot),
             colour=DVSS, weight="bold", also=[(46.5, 299.38)])
     f.note("#12305f", "edge of the protected net's metal", kind="outline")
+    f.note(HOT, "on the PAD net")
+    f.note(SECONDARY, "on the protected net")
+    f.note(DVDD, "on DVDD")
+    f.note(DVSS, "on DVSS")
     f.note(DVDD, "P+ diode strip, under the metal", kind="outline")
     f.note(DVSS, "N+ diode strip, under the metal", kind="outline")
     return f
