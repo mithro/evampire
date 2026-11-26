@@ -17,6 +17,7 @@ than the test a chip is rated by (:doc:`events`).
 
    events
    io-cells
+   layout
    simulation
    results-hbm
    results-iec
@@ -27,6 +28,8 @@ than the test a chip is rated by (:doc:`events`).
   leaves only volts on the pin.
 * :doc:`io-cells`: the protection inside the gf180mcu I/O cells, and the
   limits of each device as the foundry measured them.
+* :doc:`layout`: the same protection in the cells' mask layouts, drawn
+  from the foundry's GDS files and checked against the netlists.
 * :doc:`simulation`: how the simulation is built from the foundry's
   netlists and models, and how its models are checked against measurement.
 * :doc:`results-hbm`: simulated human body model discharges into the

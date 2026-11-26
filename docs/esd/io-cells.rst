@@ -33,6 +33,8 @@ Protection structure
 The protection of the bidirectional pad has three parts: the output
 driver, the secondary protection of the input gates and the rail clamp.
 :numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
+:doc:`layout` shows the same parts in the cells' layouts, starting with
+:numref:`fig-esd-gds-cell`.
 Every pad sits on two rings of metal that run round the chip: DVDD and
 DVSS.
 
@@ -73,7 +75,8 @@ blocked for 3.78 µm (NMOS) and 2.78 µm (PMOS), and the NMOS gates are
 requires silicide blocking at the drain of a transistor that must survive
 the turn-on of its :term:`parasitic bipolar transistor <Snapback>`
 ([ESD-GF180-DRM-14-4]_). The blocked silicide adds resistance that spreads
-the current across the whole width.
+the current across the whole width. :numref:`fig-esd-gds-silicide-block`
+shows the blocked drains in the layout.
 
 The NMOS output transistors, with their gates held low, also act as a
 grounded-gate NMOS. Above about 10.7 V the parasitic NPN transistor inside
@@ -125,7 +128,8 @@ rail clamp ([ESD-DVDD-CDL]_):
 #. The transistor turns on and conducts the discharge current from DVDD to
    DVSS at a few volts.
 
-The clamp needs no supply. The discharge itself raises DVDD, which powers
+:numref:`fig-esd-gds-clamp` shows these parts in the layout. The clamp
+needs no supply. The discharge itself raises DVDD, which powers
 the inverters. The timer's time constant decides which events turn it on:
 
 .. math::
