@@ -1,24 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="546" viewBox="0 0 640 546" font-family="sans-serif" font-size="13">
-<rect width="640" height="546" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="634" viewBox="0 0 640 634" font-family="sans-serif" font-size="13">
+<rect width="640" height="634" fill="white"/>
 <text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Second simulator minus first, by case</text>
-<rect x="200" y="50" width="410" height="396" rx="0" fill="none" stroke="#222222"/>
-<line x1="200.0" y1="50" x2="200.0" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="200.0" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-1</text>
-<line x1="268.3" y1="50" x2="268.3" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="268.3" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
-<line x1="336.7" y1="50" x2="336.7" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="336.7" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+1</text>
-<line x1="405.0" y1="50" x2="405.0" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="405.0" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+2</text>
-<line x1="473.3" y1="50" x2="473.3" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="473.3" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+3</text>
-<line x1="541.7" y1="50" x2="541.7" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="541.7" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+4</text>
-<line x1="610.0" y1="50" x2="610.0" y2="446" stroke="#dddddd" stroke-width="1"/>
-<text x="610.0" y="463" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+5</text>
-<text x="405.0" y="484" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">Charon minus DEVSIM (V)</text>
-<text x="150" y="248.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 150 248.0)"></text>
-<line x1="268.3" y1="50" x2="268.3" y2="446" stroke="#222222" stroke-width="1.2"/>
+<rect x="200" y="50" width="410" height="484" rx="0" fill="none" stroke="#222222"/>
+<line x1="200.0" y1="50" x2="200.0" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="200.0" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">-1</text>
+<line x1="268.3" y1="50" x2="268.3" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="268.3" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="336.7" y1="50" x2="336.7" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="336.7" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+1</text>
+<line x1="405.0" y1="50" x2="405.0" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="405.0" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+2</text>
+<line x1="473.3" y1="50" x2="473.3" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="473.3" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+3</text>
+<line x1="541.7" y1="50" x2="541.7" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="541.7" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+4</text>
+<line x1="610.0" y1="50" x2="610.0" y2="534" stroke="#dddddd" stroke-width="1"/>
+<text x="610.0" y="551" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">+5</text>
+<text x="405.0" y="572" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">Charon minus DEVSIM (V)</text>
+<text x="150" y="292.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 150 292.0)"></text>
+<line x1="268.3" y1="50" x2="268.3" y2="534" stroke="#222222" stroke-width="1.2"/>
 <text x="192" y="70.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">Diode strip, 1e17</text>
 <text x="192" y="85.0" text-anchor="end" font-size="11" font-weight="normal" fill="#666666">DEVSIM 14.89 V</text>
 <circle cx="268.4" cy="72.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
@@ -55,8 +55,16 @@
 <text x="192" y="437.0" text-anchor="end" font-size="11" font-weight="normal" fill="#666666">DEVSIM 51.88 V</text>
 <circle cx="287.5" cy="424.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <rect x="317.1" y="420.8" width="6.4" height="6.4" rx="0" fill="white" stroke="#c0392b"/>
-<circle cx="26.0" cy="502.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<text x="36" y="506" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">ionisation integral on Charon's potential</text>
-<rect x="22.8" y="518.8" width="6.4" height="6.4" rx="0" fill="white" stroke="#c0392b"/>
-<text x="36" y="526" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Charon's own avalanche current</text>
+<text x="192" y="466.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NP4, polysilicon plate (present model)</text>
+<text x="192" y="481.0" text-anchor="end" font-size="11" font-weight="normal" fill="#666666">DEVSIM 94.40 V</text>
+<circle cx="276.5" cy="468.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<rect x="341.0" y="464.8" width="6.4" height="6.4" rx="0" fill="white" stroke="#c0392b"/>
+<text x="192" y="510.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">NT20 under BD (present model)</text>
+<text x="192" y="525.0" text-anchor="end" font-size="11" font-weight="normal" fill="#666666">DEVSIM 62.85 V</text>
+<circle cx="269.0" cy="512.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<rect x="237.1" y="508.8" width="6.4" height="6.4" rx="0" fill="white" stroke="#c0392b"/>
+<circle cx="26.0" cy="590.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<text x="36" y="594" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">ionisation integral on Charon's potential</text>
+<rect x="22.8" y="606.8" width="6.4" height="6.4" rx="0" fill="white" stroke="#c0392b"/>
+<text x="36" y="614" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Charon's own avalanche current</text>
 </svg>
