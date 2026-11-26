@@ -19,7 +19,7 @@ PWELL = "#b9cfe8"
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
-POLY = "#c9a0dc"
+GATE = "#8e5bb5"       # polysilicon over a channel, as in the layout figures
 METAL = "#9aa5b1"
 INK = "#222222"
 HOT = "#c0392b"
@@ -72,30 +72,36 @@ def driver_section():
     b.append(text(20, 362, "P substrate", size=13, anchor="start"))
     # PMOS in an N-well tied to DVDD.
     b.append(rect(20, top, 300, 110, NWELL))
-    b.append(text(170, top + 100, "N-well, tied to DVDD", size=12))
+    b.append(text(170, top + 100, "N-well, on DVDD", size=12))
     b.append(rect(30, top, 30, 22, NPLUS))
     b.append(rect(80, top, 45, 22, PPLUS))
-    b.append(rect(130, top - 10, 30, 10, POLY))
+    b.append(rect(130, top - 10, 30, 10, GATE))
     b.append(rect(165, top, 120, 22, PPLUS))
     b.append(text(225, top + 16, "P+ drain", size=12))
-    b += bracket(160, 236, top + 38, "no silicide, 2.78 µm")
+    b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
     # NMOS in a P-well tied to DVSS.
     b.append(rect(340, top, 300, 110, PWELL))
-    b.append(text(490, top + 100, "P-well, tied to DVSS", size=12))
+    b.append(text(490, top + 100, "P-well, on DVSS", size=12))
     b.append(rect(355, top, 120, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
-    b.append(rect(480, top - 10, 34, 10, POLY))
+    b.append(rect(480, top - 10, 34, 10, GATE))
     b.append(rect(519, top, 45, 22, NPLUS))
     b.append(rect(585, top, 30, 22, PPLUS))
-    b += bracket(399, 480, top + 38, "no silicide, 3.78 µm", anchor="end")
-    b.append(text(497, top - 16, "1.15 µm gate", size=11))
+    b += bracket(399, 480, top + 38, "blocked drain: 3.78 µm", anchor="end")
+    b.append(text(530, top - 16, "gate length: 1.15 µm", size=11,
+                  anchor="end"))
+    # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
+    b.append(text(387, top - 6, "A", size=13, weight="bold"))
+    b.append(text(614, top - 6, "A′", size=13, weight="bold"))
+    b.append(text(455, top - 36, "cut A–A′ of the layout",
+                  size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):
         b.append(text(x, top + 16, s, size=11))
     # Wiring: PAD to both drains, DVDD and DVSS to sources and taps.
     for x in (270, 370):
         b.append(rect(x - 4, 60, 8, top - 60, METAL))
     b.append(rect(266, 56, 112, 8, METAL))
-    b.append(rect(290, 24, 64, 26, "#fde9d3"))
+    b.append(rect(290, 24, 64, 26, "#ffffff"))
     b.append(text(322, 42, "PAD", size=13, weight="bold"))
     b.append(line(322, 50, 322, 56, width=3))
     for x in (45, 102):

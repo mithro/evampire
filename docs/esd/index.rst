@@ -16,23 +16,17 @@ than the test a chip is rated by (:doc:`events`).
    :hidden:
 
    events
-   io-cells
-   simulation
-   results-hbm
-   results-iec
+   cells
+   discharges
    higher-levels
    references
 
 * :doc:`events`: the ESD tests, their levels, and why a kilovolt test
   leaves only volts on the pin.
-* :doc:`io-cells`: the protection inside the gf180mcu I/O cells, and the
-  limits of each device as the foundry measured them.
-* :doc:`simulation`: how the simulation is built from the foundry's
-  netlists and models, and how its models are checked against measurement.
-* :doc:`results-hbm`: simulated human body model discharges into the
-  bidirectional pad, with and without the rail clamp.
-* :doc:`results-iec`: simulated :std:`IEC 61000-4-2` discharges, and every
-  test level of both tests compared with the measured limits.
+* :doc:`cells`: the protection inside the gf180mcu I/O cells, in their
+  netlists and in their mask layouts.
+* :doc:`discharges`: the simulation of the foundry's netlists and models,
+  and the human body model and :std:`IEC 61000-4-2` discharges it gives.
 * :doc:`higher-levels`: what a pin needs to survive the system-level test
   at 8 kV contact or 15 kV air discharge, and the ways to provide it.
 * :doc:`references`: the documents, netlists and tools cited.

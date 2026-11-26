@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Design documentation for evampire, a gf180mcu chip made through wafer.space.
 It is a three-port gigabit Ethernet hub with a RISC-V processor that moves
-power between Power over Ethernet and USB Type-C. There is no silicon and no
-RTL yet. The repository is a Sphinx site published on Read the Docs
+power between Power over Ethernet and USB Type-C. There is no RTL yet, and the
+only layout is a test die of high-voltage structures (`silicon/hvtest/`). The repository is a Sphinx site published on Read the Docs
 (https://evampire.readthedocs.io/). Every pull request gets a preview at
 `https://evampire--<PR>.org.readthedocs.build/en/<PR>/`.
 
@@ -77,6 +77,8 @@ uv run docs/esd/sim/paths.py
 uv run python docs/esd/sim/sections.py
 uv run docs/esd/sim/plots.py
 uv run docs/esd/sim/model_figs.py
+GF180_IO=<fd_io checkout> uv run docs/esd/gds/figures.py  # the gds-*.svg layout figures
+GF180_IO=<fd_io checkout> uv run docs/esd/gds/check.py    # writes docs/esd/gds/layout-check.csv
 uv run docs/ethernet/rgmii/figures.py
 uv run docs/ethernet/magnetics/plots.py
 uv run docs/ethernet/magnetics/drawings.py
@@ -119,6 +121,7 @@ helpers that the scripts above import, so run the script, not the helper:
 - `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
   `pred_data.py`, `pred_extra.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
   every `fig_*.py`;
+- `docs/esd/gds/`: `gdskit.py`, `layfig.py`, `laykey.py` and every `figs_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
 - `docs/ethernet/magnetics/`: `plotkit.py`, `plots_rl.py`, `plots_gb.py`
@@ -163,6 +166,14 @@ model and I/O cell repositories at pinned commits, and takes about twenty
 minutes; `docs/esd/simulation.rst` gives the command. With `--reuse` it
 rebuilds the tables and figures from the waveforms of its last run.
 
+The layout figures (`docs/esd/gds/figures.py`) and the netlist-against-layout
+table (`docs/esd/gds/check.py`) read the foundry's GDS files. `GF180_IO`
+names a checkout of the gf180mcu I/O cell repository at the commit
+`docs/esd/simulation.rst` pins. Every layout figure uses the palette of
+`layfig.py` and the scale bar and legend of `laykey.py`, and is drawn with
+the bond pad at the left.
+`check.py` fails if a device's size in the layout differs from its netlist.
+
 Five scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
 
@@ -175,6 +186,32 @@ changing an input and update the page to match:
 `docs/usb-serial/calc.py` prints its last table only when given the path to
 the gf180mcu I/O liberty file `gf180mcu_fd_io__bi_t__tt_025C_3v30.lib`, which
 comes from the gf180mcu PDK and is not in this repository.
+
+## Test die (`silicon/hvtest/`)
+
+The one piece of layout in the repository: a full-custom gf180mcuD test die of
+high-voltage junction structures for a wafer.space shuttle, described on
+`docs/high-voltage/test-die.rst` and its pages. It needs Docker and the
+`ghcr.io/wafer-space/gf180mcu-precheck` image.
+
+```sh
+uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json   # the layout
+uv run python silicon/hvtest/drc.py OUT.gds WORKDIR                         # KLayout DRC only
+uv run python silicon/hvtest/flow.py OUT.gds MANIFEST.json WORKDIR          # nets, seal ring, fill, precheck
+uv run --with klayout python silicon/hvtest/export.py silicon/hvtest/structures.json
+```
+
+- `structures.py` is the list of structures and `junction.py` draws one. After
+  changing either, rerun `export.py`, the flow (about an hour), and commit
+  `hvtest.oas`, `manifest.json` and `PRECHECK.txt` from its work directory;
+  then copy the manifest to `docs/high-voltage/test-die/` and rerun the
+  test-die figures script.
+- `check_nets.py` extracts the nets from the layout. DRC cannot see an open or
+  a wrong connection, and one was found that way, so the flow runs it first.
+- The simulated predictions come from mithro/gf180-tcad
+  (`experiments/hv-junction`), which holds a copy of `structures.json`.
+  `docs/high-voltage/test-die/import_predictions.py` reads its records.
+- WORKDIR must be outside the repository; the precheck container writes there.
 
 ## Structure
 
@@ -215,8 +252,9 @@ comes from the gf180mcu PDK and is not in this repository.
   centres a fixed 46em column by default), sets figure and table captions
   smaller and grey with a bold number, puts a white panel behind diagrams
   in dark mode and limits diagrams to the column width.
-  `diagram-links.js` adds an "Open diagram at full size" link that shows on
-  narrow screens only.
+  `diagram-viewer.js` opens a diagram over the whole window when it is
+  clicked, where the reader zooms with the wheel or a pinch and pans by
+  dragging. Its styles are in `custom.css`.
 
 ## Roles defined in `docs/conf.py`
 

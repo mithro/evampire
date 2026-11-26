@@ -21,3 +21,6 @@ tmp/
 
 # Waveforms cached by docs/esd/sim/esd_sim.py for --reuse
 docs/esd/sim/cache/
+
+# Merged layers cached by docs/esd/gds/gdskit.py
+docs/esd/gds/cache/

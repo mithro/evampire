@@ -123,9 +123,9 @@ html_static_path = ["_static"]
 # address that used to be a page to the page that replaced it.
 html_extra_path = ["_extra"]
 html_css_files = ["custom.css"]
-# Adds an "Open diagram at full size" link under each diagram on narrow
-# screens, where diagrams are scaled down to the column width.
-html_js_files = ["diagram-links.js"]
+# Opens a diagram over the whole window when it is clicked, where the reader
+# can zoom in and pan around.
+html_js_files = ["diagram-viewer.js"]
 
 # Pull request previews on Read the Docs are built from a commit that is not
 # on main; point the "view source" links at that commit.

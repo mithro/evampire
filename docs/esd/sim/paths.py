@@ -20,7 +20,7 @@ import schemdraw.elements as elm
 import schemdraw
 from circuits import GREY, HOT, OUT, box, extent, note
 
-SECOND = "#e08a00"
+SECOND = "#8e44ad"   # snapback and avalanche, as in sections.py
 # Each mode: title, the rail the tester grounds, the polarity at PAD, the
 # parts on the main path and the parts on the high-voltage second path.
 MODES = [
@@ -94,7 +94,7 @@ def main():
         for k, mode in enumerate(MODES):
             panel(d, (k % 2) * 13.0, -(k // 2) * 10.4, mode)
         extent(d, -1.8, 24.6, -11.6)
-        note(d, 0.2, -12.0, "thick red: the main path; dashed orange: a "
+        note(d, 0.2, -12.0, "thick red: the main path; dashed purple: a "
              "second path\nat higher voltage", color=GREY, halign="left")
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "paths.svg"))
