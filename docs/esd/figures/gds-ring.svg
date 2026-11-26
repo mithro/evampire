@@ -48,8 +48,8 @@
 <polyline points="575.0,640.0 538.0,486.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="575.0,640.0 538.0,486.2" fill="none" stroke="#c0392b" stroke-width="1.3"/>
 <circle cx="538.0" cy="486.2" r="3.2" fill="#c0392b" stroke="#fff" stroke-width="1"/>
-<text x="575.0" y="655.0" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">4  Clamp transistor (4 blocks), under the stripes:</text>
-<text x="575.0" y="671.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drains on DVDD, sources on DVSS</text>
+<text x="575.0" y="655.0" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">4  Clamp transistor, 4 blocks in parallel under the</text>
+<text x="575.0" y="671.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">stripes: drains on DVDD, sources on DVSS</text>
 <polyline points="849.4,369.5 691.6,366.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="849.4,369.5 691.6,366.0" fill="none" stroke="#c0392b" stroke-width="1.3"/>
 <circle cx="691.6" cy="366.0" r="3.2" fill="#c0392b" stroke="#fff" stroke-width="1"/>
@@ -60,29 +60,28 @@
 <rect x="168.0" y="714.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="168.0" y="714.0" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
 <text x="202.0" y="726.0" font-size="14" fill="#222222">P substrate</text>
-<rect x="496.4" y="714.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="496.4" y="714.0" width="26" height="14" fill="#c0392b" stroke="#7d1f14" opacity="0.7"/>
-<text x="530.4" y="726.0" font-size="14" fill="#222222">PAD net, bond pad and metal 2</text>
+<rect x="512.1" y="714.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="512.1" y="714.0" width="26" height="14" fill="#c0392b" stroke="#7d1f14" opacity="0.7"/>
+<text x="546.1" y="726.0" font-size="14" fill="#222222">PAD net, bond pad and metal 2</text>
 <rect x="168.0" y="738.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="168.0" y="738.0" width="26" height="14" fill="#7d1f14" stroke="#4a0f08" opacity="1.0"/>
 <text x="202.0" y="750.0" font-size="14" fill="#222222">drain on the PAD net</text>
-<rect x="496.4" y="738.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="496.4" y="738.0" width="26" height="14" fill="#dfa8cc" stroke="#6a1c53" opacity="1.0"/>
-<text x="530.4" y="750.0" font-size="14" fill="#222222">DVDD, metal 3 to 5</text>
+<rect x="512.1" y="738.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="512.1" y="738.0" width="26" height="14" fill="#dfa8cc" stroke="#6a1c53" opacity="1.0"/>
+<text x="546.1" y="750.0" font-size="14" fill="#222222">DVDD, metal 3 to 5</text>
 <rect x="168.0" y="762.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="168.0" y="762.0" width="26" height="14" fill="#a3d2ca" stroke="#0d5045" opacity="1.0"/>
 <text x="202.0" y="774.0" font-size="14" fill="#222222">DVSS, metal 3 to 5</text>
-<rect x="496.4" y="762.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="496.4" y="762.0" width="26" height="14" fill="#6fb3a8" stroke="#0d5045" opacity="1.0"/>
-<text x="530.4" y="774.0" font-size="14" fill="#222222">DVSS, metal 2</text>
-<rect x="168.0" y="786.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="168.0" y="786.0" width="26" height="14" fill="#e08a00" stroke="#8a5500" opacity="0.45"/>
+<rect x="512.1" y="762.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="512.1" y="762.0" width="26" height="14" fill="#6fb3a8" stroke="#0d5045" opacity="1.0"/>
+<text x="546.1" y="774.0" font-size="14" fill="#222222">DVSS, metal 2</text>
+<rect x="168.0" y="786.0" width="26" height="14" fill="none" stroke="#e08a00" stroke-width="2"/>
 <text x="202.0" y="798.0" font-size="14" fill="#222222">clamp transistor, under the stripes</text>
-<line x1="496.4" y1="793.0" x2="514.4" y2="793.0" stroke="#c0392b" stroke-width="4"/>
-<path d="M512.4,787.0 L523.4,793.0 L512.4,799.0 z" fill="#c0392b"/>
-<text x="530.4" y="798.0" font-size="14" fill="#222222">discharge current</text>
+<line x1="512.1" y1="793.0" x2="530.1" y2="793.0" stroke="#c0392b" stroke-width="4"/>
+<path d="M528.1,787.0 L539.1,793.0 L528.1,799.0 z" fill="#c0392b"/>
+<text x="546.1" y="798.0" font-size="14" fill="#222222">discharge current</text>
 <line x1="168.0" y1="817.0" x2="195.0" y2="817.0" stroke="#c0392b" stroke-width="4" stroke-dasharray="7,4"/>
-<text x="202.0" y="822.0" font-size="14" fill="#222222">current under the stripes</text>
-<line x1="496.4" y1="817.0" x2="522.4" y2="817.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<text x="530.4" y="822.0" font-size="14" fill="#222222">layout continues</text>
+<text x="202.0" y="822.0" font-size="14" fill="#222222">current under the stripes (schematic)</text>
+<line x1="512.1" y1="817.0" x2="538.1" y2="817.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="546.1" y="822.0" font-size="14" fill="#222222">layout continues</text>
 </svg>
