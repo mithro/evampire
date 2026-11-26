@@ -7,8 +7,9 @@
 Reads each device's size from the CDL netlist of gf180mcu_fd_io__bi_t and
 gf180mcu_fd_io__dvdd, measures the same device in the cell's GDS, and
 writes both to docs/esd/gds/layout-check.csv. Exits with an error if any
-pair differs by more than 1 nm (or 0.001 µm²), or if the nets of the
-bidirectional pad do not connect as docs/esd/layout.rst says. GF180_IO names a checkout
+pair differs by more than 1 nm (or 0.001 µm²), or if the PAD net, the
+protected net or the drivers' sources and rings in the bidirectional pad
+do not connect as docs/esd/layout.rst says. GF180_IO names a checkout
 of the I/O library, as for figures.py:
 
     GF180_IO=$PWD/globalfoundries-pdk-libs-gf180mcu_fd_io \\
@@ -36,7 +37,8 @@ def netlist(cell):
     path = (pathlib.Path(os.environ["GF180_IO"]) / "cells" / cell
             / f"gf180mcu_fd_io__{cell}.cdl")
     text = re.sub(r"\n\+", " ", path.read_text())
-    return [line for line in text.splitlines() if line[:1] in "MRDC"]
+    return [line for line in text.splitlines()
+            if line[:1] in ("M", "R", "D", "C")]
 
 
 def value(line, key):
@@ -98,16 +100,22 @@ def connections(cell, lines):
     assert len(on_pad) == len(fets) + resistors, "something else is on PAD"
     assert len(gdskit.parts(inn["comp"])) == 4, "protected net: diode strips"
     lay = gdskit.load(cell)
-    window = box(9.8, 71.8, 65.2, 119.1)       # inside the NMOS P+ ring
-    sources = lay["comp"].intersection(window).difference(
-        pad["comp"].union(lay["poly"]))
+    # The protected net reaches gates of the input buffer, beyond y = 311.
+    gates = inn["poly"].intersection(lay["comp"]).intersection(
+        box(0, 311, 75, 350))
+    assert gates.area > 0, "protected net: input buffer gates"
     dvss = gdskit.net(cell, "DVSS")["comp"]
-    assert sources.difference(dvss.buffer(0.01)).area < 1e-6, "NMOS on DVSS"
-    window = box(10.5, 145.9, 64.5, 186.3)     # the PMOS fingers
-    sources = lay["comp"].intersection(window).difference(
-        pad["comp"].union(lay["poly"]))
     dvdd = gdskit.net(cell, "DVDD")["comp"]
-    assert sources.difference(dvdd.buffer(0.01)).area < 1e-6, "PMOS on DVDD"
+    # Everything but the drains and channels on DVSS, within and including
+    # the NMOS drivers' P+ ring; likewise on DVDD, within and including the
+    # N+ ring of the PMOS drivers' N-well.
+    for window, rail, name in (((9.8, 71.8, 65.2, 119.1), dvss, "NMOS"),
+                               ((6.9, 132.4, 68.1, 199.0), dvdd, "PMOS")):
+        rest = lay["comp"].intersection(box(*window)).difference(
+            pad["comp"].union(lay["poly"]))
+        assert rest.area > 100, f"{name}: nothing to check"
+        assert rest.difference(rail.buffer(0.01)).area < 1e-6, (
+            f"{name} sources and ring are not all on their rail")
 
 
 def rows():

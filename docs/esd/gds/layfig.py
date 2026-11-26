@@ -9,10 +9,9 @@ SPDX-License-Identifier: Apache-2.0
 """
 
 import gdskit
-from shapely.affinity import translate
 
 # Silicon colours match the cross-sections of docs/esd/sim/sections.py.
-SUB = "#dbe8f5"
+SUB = "#dbe8f5"        # P-type silicon: every area with no N-well drawn
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
@@ -50,7 +49,7 @@ STYLES = {
     "other": ("#c4c9cf", "#8a9199", "other diffusion"),
     "resistor": ("none", SECONDARY, "resistor body"),
     "gate": ("#8e5bb5", "#4f2a70", "gate over diffusion"),
-    "clampfet": (CLAMP, "#8a5500", "clamp transistor, under the stripes"),
+    "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
 }
 FONT = 14
 
@@ -112,25 +111,16 @@ class Fig:
             self.keys.append(style)
             self.alpha[style] = opacity
 
-    def layer(self, name, cell=None, shift=0.0, **kw):
-        """Draw a layer of a cell, moved by `shift` along GDS x."""
-        style = kw.pop("style", name)
-        geom = derived(cell or self.cell, name)
-        if shift:
-            geom = translate(geom, xoff=shift)
-        self.geom(geom, style, **kw)
+    def layer(self, name, **kw):
+        """Draw a layer of the figure's cell in the style of its name."""
+        self.geom(derived(self.cell, name), name, **kw)
 
-    def silicon(self, contacts=False, **kw):
+    def silicon(self, **kw):
         """The layers that make the devices, from the wells up."""
         for name in ("nwell", "pdiff", "ndiff", "poly"):
             self.layer(name, **kw)
-        lay = gdskit.load(kw.get("cell") or self.cell)
-        gates = lay["poly"].intersection(lay["comp"])
-        if kw.get("shift"):
-            gates = translate(gates, xoff=kw["shift"])
-        self.geom(gates, "gate", opacity=kw.get("opacity", 1.0))
-        if contacts:
-            self.layer("contact", **kw)
+        lay = gdskit.load(self.cell)
+        self.geom(lay["poly"].intersection(lay["comp"]), "gate", **kw)
 
     def outline(self, geom, colour, width=2.0, dash=None):
         d = self._path(gdskit.clip(geom, self.win))
@@ -220,8 +210,7 @@ class Fig:
         """An arrow along layout points: the direction of a current."""
         pts = [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
-        mid = {HOT: "hot", CLAMP: "clamp", SECONDARY: "second",
-               SNAP: "snap"}[colour]
+        mid = {HOT: "hot", SNAP: "snap"}[colour]
         kind = "dashes" if dash else "arrow"
         if key and (kind, colour, key) not in self.notes:
             self.notes.append((kind, colour, key))
@@ -277,7 +266,7 @@ class Fig:
 
     def _legend(self, x, y):
         """Swatches in columns of one width, drawn as they are in the layout."""
-        items = [("swatch", (SUB, GREY, None, 1.0), "P substrate")]
+        items = [("swatch", (SUB, GREY, None, 1.0), "P-type silicon, no N-well")]
         for k in STYLES:
             if k in self.keys:
                 fill, stroke, name = STYLES[k]
@@ -374,8 +363,7 @@ class Fig:
             'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
             'stroke-width="1.2"/></pattern>']
-        for name, colour in (("hot", HOT), ("clamp", CLAMP),
-                             ("second", SECONDARY), ("snap", SNAP)):
+        for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
                 f'<marker id="arrow-{name}" viewBox="0 0 10 10" refX="7" '
                 'refY="5" markerWidth="4.5" markerHeight="4.5" '
