@@ -18,8 +18,8 @@
 <text x="106.4" y="194.2" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">opening</text>
 <rect x="591.6" y="79.4" width="82.6" height="192.5" fill="none" stroke="#666666" stroke-width="1.4" stroke-dasharray="5,4"/>
 <rect x="682.9" y="83.7" width="50.2" height="180.4" fill="none" stroke="#666666" stroke-width="1.4" stroke-dasharray="5,4"/>
-<rect x="861.3" y="83.5" width="99.4" height="184.4" fill="none" stroke="#666666" stroke-width="1.4" stroke-dasharray="5,4"/>
-<rect x="739.8" y="133.1" width="116.9" height="95.6" fill="none" stroke="#1f4e9c" stroke-width="2.2" stroke-dasharray="6,4"/>
+<rect x="861.3" y="83.5" width="81.5" height="184.4" fill="none" stroke="#666666" stroke-width="1.4" stroke-dasharray="5,4"/>
+<rect x="740.1" y="132.6" width="116.6" height="83.7" fill="none" stroke="#1f4e9c" stroke-width="2.2" stroke-dasharray="6,4"/>
 <rect x="740.1" y="84.3" width="115.6" height="40.5" fill="none" stroke="#666666" stroke-width="1.4" stroke-dasharray="5,4"/>
 <polyline points="276.5,49.8 276.5,155.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="276.5,49.8 276.5,155.0" fill="none" stroke="#c0392b" stroke-width="1.3"/>
@@ -52,14 +52,14 @@
 <line x1="360.2" y1="291.5" x2="452.0" y2="264.4" stroke="#222222" stroke-width="1.3"/>
 <circle cx="452.0" cy="264.4" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="360.2" y="306.5" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Guard rings round each driver</text>
-<polyline points="776.0,291.5 776.0,228.7" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="776.0,291.5 776.0,228.7" fill="none" stroke="#1f4e9c" stroke-width="1.3"/>
-<circle cx="776.0" cy="228.7" r="3.2" fill="#1f4e9c" stroke="#fff" stroke-width="1"/>
+<polyline points="776.0,291.5 776.0,216.3" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="776.0,291.5 776.0,216.3" fill="none" stroke="#1f4e9c" stroke-width="1.3"/>
+<circle cx="776.0" cy="216.3" r="3.2" fill="#1f4e9c" stroke="#fff" stroke-width="1"/>
 <text x="776.0" y="306.5" text-anchor="middle" font-size="14" fill="#1f4e9c" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Secondary protection:</text>
 <text x="776.0" y="323.3" text-anchor="middle" font-size="14" fill="#1f4e9c" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">resistors and diodes</text>
-<polyline points="924.5,291.5 924.5,267.9" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="924.5,291.5 924.5,267.9" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="924.5" cy="267.9" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<polyline points="924.5,291.5 911.0,267.9" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="924.5,291.5 911.0,267.9" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="911.0" cy="267.9" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="924.5" y="306.5" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Input buffer</text>
 <text x="924.5" y="323.3" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">and logic</text>
 <line x1="20.0" y1="354.5" x2="965.0" y2="354.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
