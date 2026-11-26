@@ -1,4 +1,10 @@
 Case,"DEVSIM, integral (V)","Charon, integral (V)","Charon, current (V)",Description
-"Diode strip, 1e17",14.89,14.89,14.25,"One-sided abrupt junction, 1e17 cm^-3; Charon's avalanche current diverges at the current value"
-"Diode strip, 1e16",55.34,55.35,55.25,"One-sided abrupt junction, 1e16 cm^-3; Charon's avalanche current diverges at the current value"
-Bare N-well edge,77.44,77.55,78.27,"Two-dimensional N-well edge in substrate of 3e15 cm^-3, 23597 silicon nodes; current value at a 100-fold rise of the current, last converged point 78.5 V"
+"Diode strip, 1e17",14.89,14.89,14.25,"One-sided abrupt junction, 1e17 cm^-3; current value where Charon's avalanche current diverges"
+"Diode strip, 1e16",55.34,55.35,55.25,"One-sided abrupt junction, 1e16 cm^-3; current value where Charon's avalanche current diverges"
+Bare N-well edge,77.44,77.55,78.27,"N-well edge in substrate of 3e15 cm^-3, 23597 silicon nodes; current value at a 100-fold rise of the current, last converged point 78.5 V"
+"NT20, P-well at the edge",18.07,18.50,18.19,Plain N-well edge under assumption A; current value is Charon's last converged avalanche solution
+"NT20, bare substrate",67.56,68.29,68.76,Plain N-well edge under assumption B; current value is Charon's last converged avalanche solution
+"NM1_6, Metal1 plate",92.23,92.59,93.75,Metal1 field plate of 6 um under assumption B; last converged avalanche solution
+"NR1_2, one ring",98.74,101.05,102.82,"One floating ring at 2 um under assumption B; last converged avalanche solution, with a 100-fold current rise at 102.74 V"
+"DT20, deep N-well",94.25,94.33,94.94,Deep N-well edge under assumption B; last converged avalanche solution
+"NW1p5, drawn P-well",51.88,52.16,52.64,Drawn P-well 1.5 um from the edge under assumption B; last converged avalanche solution
