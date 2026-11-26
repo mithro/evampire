@@ -6,6 +6,7 @@ hvt-iv.svg         the shapes of reverse current against voltage.
 hvt-ring-follow.svg  ring potential against well voltage.
 hvt-gated-iv.svg   well current against plate voltage.
 hvt-order.svg      the order of work.
+hvt-build.svg      the steps from the layout generator to the submission.
 
 The curves are schematic: they show the shapes that the procedures look
 for, not predictions. figures.py calls this module; it writes no files
@@ -249,9 +250,22 @@ def order():
         ("8", "P1 at 85 °C", "a subset, to separate the mechanisms"),
         ("9", "Comparison", "each structure against its prediction"),
     ]
+    return flow("Order of work on each die", steps)
+
+
+def build():
+    return flow("From the generator to the submitted file", [
+        ("1", "chip.py", "raw.gds: structures, pads, buses; manifest.json"),
+        ("2", "Seal ring", "PDK script: ring.gds, 1936 µm × 2531 µm"),
+        ("3", "Dummy fill", "PDK script, Metal4 fill allowed under Metal5"),
+        ("4", "Precheck", "wafer.space checks for slot 0p5x0p5"),
+        ("5", "hvtest.oas", "the file to submit, top cell hvtest"),
+    ])
+
+
+def flow(title, steps):
     w, h = 640, 60 + 46 * len(steps)
-    b = [ARROW, text(20, 24, "Order of work on each die", anchor="start",
-                     weight="bold")]
+    b = [ARROW, text(20, 24, title, anchor="start", weight="bold")]
     for k, (num, name, detail) in enumerate(steps):
         y = 44 + 46 * k
         b.append(rect(60, y, 520, 32, BOX, rx=5))
@@ -267,4 +281,4 @@ FIGURES = {"hvt-conn-p1.svg": p1, "hvt-conn-p2.svg": p2,
            "hvt-conn-p3.svg": p3, "hvt-conn-p4.svg": p4,
            "hvt-conn-p5.svg": p5, "hvt-iv.svg": iv,
            "hvt-ring-follow.svg": ring_follow, "hvt-gated-iv.svg": gated_iv,
-           "hvt-order.svg": order}
+           "hvt-order.svg": order, "hvt-build.svg": build}

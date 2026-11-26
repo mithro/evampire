@@ -33,6 +33,13 @@ def gaps(p):
     return ", ".join(num(g) for g, _ in p["rings"]) or "–"
 
 
+def nat(p):
+    v = p["nat_gap"]
+    if v is None:
+        return "–"
+    return f"overlaps the well by {num(-v)}" if v < 0 else num(v)
+
+
 def pad(site):
     return f"{site['pad'][0]:.0f}, {site['pad'][1]:.0f}"
 
@@ -53,10 +60,11 @@ COLUMNS = {
     "surround": [T, C, PAD],
     "pwell": [("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
               T, PAD],
-    "nat": [("NAT start (µm)", lambda n, p, s: opt(p["nat_gap"])), T, C,
+    "nat": [("NAT start (µm)", lambda n, p, s: nat(p)), T, C,
             PLATES[1], PLATES[2], PAD],
     "dnw": [T, C,
-            ("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])), PAD],
+            ("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
+            ("NAT start (µm)", lambda n, p, s: nat(p)), PLATES[1], PAD],
     "plates": [KIND] + PLATES + [PAD],
     "rings": [("Rings", lambda n, p, s: str(len(p["rings"]))),
               ("Gaps, innermost first (µm)", lambda n, p, s: gaps(p)),
@@ -69,11 +77,12 @@ COLUMNS = {
               ("Plate", lambda n, p, s: LAYER[next(iter(p["plates"]))]),
               ("Plate length (µm)", lambda n, p, s:
                num(next(iter(p["plates"].values())))),
-              ("NAT start (µm)", lambda n, p, s: opt(p["nat_gap"])),
+              ("NAT start (µm)", lambda n, p, s: nat(p)),
               ("Plate pad x, y (µm)", lambda n, p, s:
                "{:.0f}, {:.0f}".format(*s["aux_pad"])), PAD],
     "large": [KIND, ("Side (µm)", lambda n, p, s: num(2 * p["half"])),
-              C, T, ("Area (µm²)", lambda n, p, s: area(p)[0]),
+              C, T, ("NAT start (µm)", lambda n, p, s: nat(p)),
+              ("Area (µm²)", lambda n, p, s: area(p)[0]),
               ("Perimeter (µm)", lambda n, p, s: area(p)[1]), PAD],
     "open": [("Contents", lambda n, p, s: "Metal5 lead and pad only"), PAD],
 }

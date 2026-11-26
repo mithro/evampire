@@ -30,16 +30,17 @@ GROUPS = [
      lambda n, p: p["kind"] == "nw" and n[:2] in ("NT", "NC")),
     ("pwell", "Drawn P-well", lambda n, p: n.startswith("NW")),
     ("nat", "NAT layer",
-     lambda n, p: p["nat_gap"] is not None and not p["gate"]),
+     lambda n, p: p["kind"] == "nw" and p["nat_gap"] is not None
+     and not p["gate"] and p["half"] < 50),
     ("dnw", "Deep N-well",
-     lambda n, p: p["kind"] == "dnw" and not p["gate"]
-     and p["block"] and not p["plates"]),
+     lambda n, p: p["kind"] == "dnw" and not p["gate"] and p["half"] < 50
+     and (not p["plates"] or p["nat_gap"] is not None)),
     ("plates", "Field plates",
-     lambda n, p: bool(p["plates"]) and not p["gate"]
+     lambda n, p: bool(p["plates"]) and not p["gate"] and p["half"] < 50
      and not p["rings"] and p["nat_gap"] is None),
     ("rings", "Floating rings", lambda n, p: bool(p["rings"])),
     ("gated", "Gated diodes", lambda n, p: p["gate"]),
-    ("large", "Large wells", lambda n, p: not p["block"]),
+    ("large", "Large wells", lambda n, p: p["half"] >= 50),
     ("open", "Open reference", lambda n, p: p["kind"] == "open"),
 ]
 
@@ -60,10 +61,10 @@ def load():
 
 
 def group_of(name, p):
-    for key, _, test in GROUPS:
-        if test(name, p):
-            return key
-    raise SystemExit(f"{name}: no group")
+    hits = [key for key, _, test in GROUPS if test(name, p)]
+    if len(hits) != 1:
+        raise SystemExit(f"{name}: in groups {hits}, expected exactly one")
+    return hits[0]
 
 
 def members(structs, man, key):
@@ -128,6 +129,8 @@ class Section:
                           size=11))
             d += width
         ins, w, term = p["inset"], p["ncomp_w"], p["term"]
+        if deep:    # the N-well drawn under the contact ring of a deep N-well
+            b.append(self.box(-ins - w - 0.3, -ins + 0.3, 0, 30, "#f8c58f"))
         for a, e in ((self.left, -ins - w), (-ins, term),
                      (term + w, self.right)):
             b.append(self.box(a, e, 0, 7, FOX, stroke="none"))

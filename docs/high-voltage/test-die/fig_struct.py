@@ -194,7 +194,9 @@ def dnw():
         [("DT10", "P+ ring 10 µm from the edge of the deep N-well", [],
           [(0, 10, "T = 2.6 to 35 µm")], False),
          ("DW3", "a drawn P-well that starts 3 µm out",
-          [(3, far, "drawn P-well")], [(0, 3, "W = 3")], False)],
+          [(3, far, "drawn P-well")], [(0, 3, "W = 3")], False),
+         ("DAo1", "the NAT layer overlaps the edge of the deep N-well by "
+          "1 µm", [], [(-1, 0, "1")], False)],
         height=215, top=70)
 
 
@@ -244,24 +246,25 @@ def gated():
 
 
 def large():
-    """The four large wells and the open reference, in plan to one scale."""
-    w, h = 640, 320
-    s = 0.9
+    """The large wells and the open reference, in plan to one scale."""
+    w, h = 640, 300
+    s = 0.72
     b = [ARROW, text(20, 24, "Large wells and the open reference, to one "
                      "scale", anchor="start", weight="bold")]
-    for name, cx in (("CVN", 130), ("CVN2", 340)):
+    for name, cx, note in (("CVN", 100, "CVD: the same in deep N-well"),
+                           ("CVN2", 245, "CVD2 likewise"),
+                           ("CVNA", 385, "NAT from 0.6 µm")):
         p = STRUCTS[name]
-        b += plan(p, cx, 170, s)
-        b.append(text(cx, 166, name, size=13, weight="bold"))
-        b.append(text(cx, 280, f"{num(2 * p['half'])} µm across", size=12))
-    b.append(text(130, 298, "CVD: the same in deep N-well", size=12))
-    b.append(text(340, 298, "CVD2 likewise", size=12))
-    ox = 470
-    b.append(rect(ox, 170 - 3, 60, 6, METAL))
-    b.append(rect(ox + 60, 170 - 45, 90, 90, METAL))
-    b.append(text(ox + 105, 174, "pad", size=12))
-    b.append(text(ox + 75, 240, "OPEN: lead and pad,", size=12))
-    b.append(text(ox + 75, 256, "no junction", size=12))
+        b += plan(p, cx, 150, s)
+        b.append(text(cx, 154, name, size=13, weight="bold"))
+        b.append(text(cx, 250, f"{num(2 * p['half'])} µm across", size=12))
+        b.append(text(cx, 268, note, size=12))
+    ox = 490
+    b.append(rect(ox, 150 - 2, 50, 4, METAL))
+    b.append(rect(ox + 50, 150 - 36, 72, 72, METAL))
+    b.append(text(ox + 86, 154, "pad", size=12))
+    b.append(text(ox + 66, 250, "OPEN: lead and", size=12))
+    b.append(text(ox + 66, 268, "pad, no junction", size=12))
     return svg(w, h, b)
 
 
