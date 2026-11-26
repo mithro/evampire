@@ -120,6 +120,10 @@ against :term:`latch-up`. Outside both rings, a bar of P+ diffusion on
 the core ground VSS runs along the pad side of the drivers. It lies just
 inside the P+ ring round the whole cell, on the same net.
 
+The line A–A′ in :numref:`fig-esd-gds-nmos-driver` is the cut that the
+cross-section :numref:`fig-esd-driver-section` draws for the NMOS. It runs
+from the drain contacts at A to the P+ ring at A′.
+
 No P-well shape is drawn under these transistors, nor under any ordinary
 NMOS transistor of the cell: the layout draws that layer only under the
 MOS capacitors. The P-well mask is both drawn and generated
@@ -140,7 +144,9 @@ layout figures colour every area with no N-well as P-type silicon.
          silicide blocked for 3.78 µm on each side of a row of drain contacts
          on the PAD net. Then the gate of the second finger, a source shared
          by two fingers, and the gate of the third finger. Each gate has
-         contacts at its end, which connect to the pre-drivers.
+         contacts at its end, which connect to the pre-drivers. A dash-dot
+         line A–A′ runs from the drain contacts across the first gate and
+         source to the P+ guard ring.
    :width: 100%
 
    One corner of the NMOS output drivers of gf180mcu_fd_io__bi_t. Three of
