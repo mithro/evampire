@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="949" height="835" viewBox="0 0 949 835" font-family="sans-serif">
-<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-clamp" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e08a00"/></marker><marker id="arrow-second" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e9c"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
 <rect width="949" height="835" fill="#ffffff"/>
 <rect x="20.0" y="84.0" width="908.8" height="480.0" fill="#dbe8f5"/>
 <path d="M867.0,125.9L884.8,125.9L884.8,125.9L885.9,125.9L885.9,522.1L884.8,522.1L884.7,522.1L877.9,522.1L867.0,522.1L453.7,522.1L453.7,125.9L867.0,125.9ZM51.3,107.5L405.4,107.5L405.4,145.5L405.4,146.8L405.4,501.2L405.4,502.5L405.4,539.4L51.3,539.4L51.3,502.5L51.3,501.2L51.3,146.8L51.3,145.5ZM69.5,146.8L69.5,501.2L373.9,501.2L373.9,146.8Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -100,7 +100,7 @@
 <text x="156.0" y="674.0" font-size="14" fill="#222222">20 µm</text>
 <rect x="222.0" y="663.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="222.0" y="663.0" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
-<text x="256.0" y="675.0" font-size="14" fill="#222222">P substrate</text>
+<text x="256.0" y="675.0" font-size="14" fill="#222222">P-type silicon, no N-well</text>
 <rect x="581.8" y="663.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="581.8" y="663.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
 <text x="615.8" y="675.0" font-size="14" fill="#222222">N-well</text>
