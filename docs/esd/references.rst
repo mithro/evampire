@@ -117,6 +117,11 @@ Netlists and models
    <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_04_1.html>`__:
    the GDS layer and datatype numbers of each mask layer.
 
+.. [ESD-GF180-DRM-4-3] GlobalFoundries, `gf180mcu design manual, section
+   4.3, Mask Layer Numbering
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_04_3.html>`__:
+   the table lists the P-well mask, LVPWELL, as drawn and generated.
+
 .. [ESD-GDSTK] L. H. Gabrielli, `gdstk, a library for creation and
    manipulation of GDSII and OASIS files
    <https://heitzmann.github.io/gdstk/>`__.

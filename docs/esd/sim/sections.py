@@ -15,6 +15,7 @@ import pathlib
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
 SUB = "#dbe8f5"      # P substrate
+PWELL = "#b9cfe8"
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
@@ -68,7 +69,7 @@ def driver_section():
          f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker></defs>']
     top = 170
     b.append(rect(10, top, 640, 200, SUB))
-    b.append(text(20, 362, "P substrate, on DVSS", size=13, anchor="start"))
+    b.append(text(20, 362, "P substrate", size=13, anchor="start"))
     # PMOS in an N-well tied to DVDD.
     b.append(rect(20, top, 300, 110, NWELL))
     b.append(text(170, top + 100, "N-well, on DVDD", size=12))
@@ -78,8 +79,9 @@ def driver_section():
     b.append(rect(165, top, 120, 22, PPLUS))
     b.append(text(225, top + 16, "P+ drain", size=12))
     b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
-    # NMOS in the substrate, which its P+ tap ties to DVSS: the layout
-    # has no P-well under the output drivers.
+    # NMOS in a P-well tied to DVSS.
+    b.append(rect(340, top, 300, 110, PWELL))
+    b.append(text(490, top + 100, "P-well, on DVSS", size=12))
     b.append(rect(355, top, 120, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
     b.append(rect(480, top - 10, 34, 10, POLY))
@@ -113,18 +115,18 @@ def driver_section():
     b.append(text(170, top + 144, "to DVDD, 480 µm in all", size=12,
                   fill=HOT))
     b += diode(415, top + 66, True, "", "start")
-    b.append(text(450, top + 128, "Substrate to N+ drain: diode from DVSS",
+    b.append(text(450, top + 128, "P-well to N+ drain: diode from DVSS",
                   size=12, fill=HOT))
     b.append(text(450, top + 144, "to PAD, 304 µm in all", size=12,
                   fill=HOT))
-    # Parasitic NPN: drain collector, substrate base, source emitter.
+    # Parasitic NPN: drain collector, P-well base, source emitter.
     bx, by = 497, top + 52
     b.append(line(bx, by - 12, bx, by + 12, stroke=SNAP, width=3))
     b.append(line(bx, by - 5, 470, top + 24, stroke=SNAP, width=2))
     b.append(line(bx, by + 5, 530, top + 24, stroke=SNAP, width=2,
                   arrow=True))
     b.append(line(bx, by, bx - 10, by, stroke=SNAP, width=2))
-    b.append(text(640, top + 172, "parasitic NPN (drain, substrate, source): "
+    b.append(text(640, top + 172, "parasitic NPN (drain, P-well, source): "
                   "triggers at 10.7 V,", size=12, fill=SNAP, anchor="end"))
     b.append(text(640, top + 188, "snaps back to about 6 V", size=12,
                   fill=SNAP, anchor="end"))

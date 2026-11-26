@@ -18,10 +18,11 @@ figures share four conventions:
   quarter turn clockwise.
 * Each layer has the same colour in every figure, and the silicon layers
   have the colours of the cross-section :numref:`fig-esd-driver-section`.
+  A figure about one net draws the other layers paler, or leaves them out.
 * Red marks the PAD net and the discharge current, blue the secondary
-  protection and orange the rail clamp, as in the schematic. Purple marks
-  snapback, as in the cross-section. Magenta marks what connects to DVDD
-  and green what connects to DVSS.
+  protection and orange the rail clamp, as in the schematic. A purple
+  arrow marks snapback, as in the cross-section. Magenta marks what
+  connects to DVDD and green what connects to DVSS.
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
 
@@ -33,8 +34,10 @@ long ([ESD-BI-T-GDS]_). Its parts lie in the order the signal meets them,
 from the bond pad towards the core (:numref:`fig-esd-gds-cell`):
 
 #. The bond pad, with a 60 µm × 60 µm opening in the passivation.
-#. The NMOS output drivers, inside two guard rings.
-#. The PMOS output drivers, in their own N-well.
+#. The NMOS output drivers, which are the NMOS output transistors of
+   :ref:`esd-io-cells`, inside two guard rings.
+#. The PMOS output drivers, the PMOS output transistors, in their own
+   N-well.
 #. The four pre-drivers that switch the output drivers' gates, and the
    buffers of the signals that control them.
 #. The secondary protection. The foundry's name for this block,
@@ -42,8 +45,8 @@ from the bond pad towards the core (:numref:`fig-esd-gds-cell`):
    :term:`charged device model`.
 #. The input buffer and the rest of the logic, next to the core.
 
-The two output drivers and their guard rings reach from 67 µm to 208 µm
-along the cell, 141 µm of its 350 µm. The output drivers are therefore the
+The two output drivers and their guard rings reach from 69 µm to 208 µm
+along the cell, 139 µm of its 350 µm. The output drivers are therefore the
 largest part of the cell, and they are also its primary ESD protection
 (:ref:`esd-io-cells`).
 
@@ -54,7 +57,7 @@ largest part of the cell, and they are also its primary ESD protection
          the bond pad with a 60 µm by 60 µm opening. The NMOS output drivers
          inside guard rings. The PMOS output drivers in an N-well, each
          driver inside guard rings. The pre-drivers. The output signal
-         buffers. A blue box round the secondary protection, resistors and
+         buffers. The pull-up and pull-down resistors. A blue box round the secondary protection, resistors and
          diodes. The input buffer and logic at the right edge.
    :width: 100%
 
@@ -91,8 +94,8 @@ Output driver parts
 -------------------
 
 The NMOS output drivers are eight transistors of one finger each, side by
-side, and neighbouring fingers share a source or a drain. :numref:`fig-esd-gds-nmos-driver` shows
-one corner of them. Across the fingers the diffusion repeats as source,
+side, and neighbouring fingers share a source or a drain.
+:numref:`fig-esd-gds-nmos-driver` shows one corner of them. Across the fingers the diffusion repeats as source,
 gate, drain, gate, source:
 
 * A source is a narrow strip with one row of contacts to DVSS.
@@ -102,16 +105,19 @@ gate, drain, gate, source:
 
 Two rings surround the fingers. The inner one is P+ diffusion, tied to
 DVSS: it is the body contact of the transistors and the anode of the
-NMOS drain diode. No P-well layer is drawn under the transistors: in this
-cell that layer is drawn only under MOS capacitors. Their body is
-therefore at the potential of the substrate, which the P+ ring holds on
-DVSS. The foundry measured the limits of :numref:`tab-esd-limits` on
-N+/P-well structures, so a drain with no drawn P-well may differ from
-them. The outer ring is N+ diffusion in an N-well, tied to DVDD. It collects electrons that a forward-biased drain injects
-into the substrate, before they reach other circuits, which is the
-protection against :term:`latch-up`. Outside both rings, a bar of P+ diffusion on the core ground VSS runs
-along the pad side of the drivers. It is part of a P+ ring round the
-whole cell.
+NMOS drain diode. The outer ring is N+ diffusion in an N-well, tied to
+DVDD. It collects electrons that a forward-biased drain injects into the
+substrate, before they reach other circuits, which is the protection
+against :term:`latch-up`. Outside both rings, a bar of P+ diffusion on
+the core ground VSS runs along the pad side of the drivers. It lies just
+inside the P+ ring round the whole cell, on the same net.
+
+No P-well shape is drawn under these transistors, nor under any ordinary
+NMOS transistor of the cell: the layout draws that layer only under the
+MOS capacitors. The foundry both draws and generates the P-well mask
+([ESD-GF180-DRM-4-3]_), so the layout does not show whether the silicon
+under the transistors is P-well. The figures colour every area with no
+N-well as P-type silicon.
 
 .. figure:: figures/gds-nmos-driver.svg
    :name: fig-esd-gds-nmos-driver
@@ -141,8 +147,9 @@ the drain contacts stand on it. On the source side the block reaches only
 0.28 µm past the gate.
 
 A drain's current must therefore cross 3.78 µm or 2.78 µm of unsilicided
-diffusion between the contacts and the gate. That length is the ballast
-resistance of :ref:`esd-io-cells`. An ordinary transistor has none: in a
+diffusion between the contacts and the gate. That length is the added
+resistance of :ref:`esd-io-cells`, which spreads the current across the
+width. An ordinary transistor has none: in a
 pre-driver the contacts stand directly beside each gate
 (:numref:`fig-esd-gds-silicide-block`, c).
 
@@ -213,7 +220,8 @@ Secondary protection layout
 The secondary protection fits in an area about 30 µm × 43 µm
 (:numref:`fig-esd-gds-secondary`). The 2 µm wire from the pad ends on four
 polysilicon resistors side by side, each 2.5 µm wide and 2.8 µm long under
-one silicide block. Their far ends join in one net that passes over the
+one silicide block. Their far ends join in one net, the protected net,
+that passes over the
 diodes and continues to the gates of the input buffer:
 
 * Two P+ strips, each 20 µm × 1 µm, in an N-well tied to DVDD. They are
@@ -265,8 +273,8 @@ four diodes from DVSS to DVDD and four capacitors between the rails.
 The clamp transistor has no silicide block
 (:numref:`fig-esd-gds-clamp-fingers`). Its drains and sources are strips
 0.52 µm wide between gates 0.7 µm long, each with one row of contacts
-0.15 µm from the gates on either side. The drains connect to DVDD and the sources to
-DVSS, alternately. A bar of polysilicon at each end of the fingers joins
+0.15 µm from the gates on either side. The drains connect to DVDD and the
+sources to DVSS, alternately. A bar of polysilicon at each end of the fingers joins
 the 20 gates of a block.
 
 The difference from the output drivers follows from how each conducts.
@@ -293,13 +301,15 @@ the silicide block is for (:ref:`esd-io-cells`).
 Path across the ring
 --------------------
 
-Metal 3, metal 4 and metal 5 cross every pad cell in stripes, one above
+Metal 3, metal 4 and metal 5 cross each of these pad cells in stripes, one
+above
 another, in the direction of the cell's 75 µm width. Each stripe is in the
 same place in every cell, so the stripes of neighbouring cells join into
 rails that run round the chip. These rails are the DVDD and DVSS rings of
-:ref:`esd-io-cells`. Of the 26 stripes, 12 are DVDD, 10 are DVSS, and two
-each are the core supply VDD and its ground VSS
-(:numref:`fig-esd-gds-ring`).
+:ref:`esd-io-cells`. Over the whole length of a cell there are 26 stripes:
+12 are DVDD, 10 are DVSS, and two each are the core supply VDD and its
+ground VSS. :numref:`fig-esd-gds-ring` shows those in the first 222 µm,
+which are all DVDD or DVSS.
 
 A positive discharge from PAD to DVSS uses those rails
 (:numref:`tab-esd-paths`). :numref:`fig-esd-gds-ring` follows it through a
@@ -338,7 +348,8 @@ the voltage at the pad (:doc:`results-hbm`).
 Netlist and layout comparison
 -----------------------------
 
-Every size that :doc:`io-cells` takes from a netlist can also be measured
+Every size that :doc:`io-cells` takes from the netlists of the
+bidirectional pad and the DVDD pad can also be measured
 in the layout. :numref:`tab-esd-gds-check` gives both for each protection
 device, and all of them agree.
 
@@ -376,7 +387,7 @@ pins:
    GF180_IO=$PWD/globalfoundries-pdk-libs-gf180mcu_fd_io \
        uv run docs/esd/gds/check.py
 
-Three modules in the same folder do the work:
+The other modules in the same folder do the work:
 
 * :download:`gds/gdskit.py <gds/gdskit.py>` flattens a cell, merges the
   shapes of each layer and follows a net from one shape through the
