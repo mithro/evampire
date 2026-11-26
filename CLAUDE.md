@@ -141,8 +141,9 @@ holds the simulated breakdown voltages. It is written by
 `uv run python docs/high-voltage/test-die/import_predictions.py RECORD.json ...`
 from the records in `results/hv-junction/` of mithro/gf180-tcad; its schema
 is in the docstring of `pred_data.py`. `crosscheck.json` in the same folder
-holds the second-simulator results and is edited by hand. Rerun
-`figures.py` after changing either.
+holds the second-simulator results and `model_checks.json` the values
+from the final review that no simulation record holds yet; both are edited
+by hand. Rerun `figures.py` after changing any of them.
 
 `figures.py` also writes the structure catalogue:
 `docs/high-voltage/test-die/catalogue.rst` and everything in
