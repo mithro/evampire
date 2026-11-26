@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" font-family="sans-serif" font-size="13">
 <rect width="640" height="640" fill="white"/>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker></defs>
-<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">NR1S12: one floating ring 3 µm wide, gap 12 µm</text>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">NR1S12: one floating ring 2 µm wide, gap 12 µm</text>
 <rect x="40" y="66" width="210" height="210" rx="0" fill="#f4f4f4" stroke="#666666" stroke-dasharray="2 3"/>
 <path d="M95.8,72.1 L194.2,72.1 L243.9,121.8 L243.9,220.2 L194.2,269.9 L95.8,269.9 L46.1,220.2 L46.1,121.8 Z" fill="#7fa7d6" stroke="#222222" stroke-width="1"/>
 <path d="M97.4,76.1 L192.6,76.1 L239.9,123.4 L239.9,218.6 L192.6,265.9 L97.4,265.9 L50.1,218.6 L50.1,123.4 Z" fill="white" stroke="#222222" stroke-width="1"/>
-<path d="M111.6,110.4 L178.4,110.4 L205.6,137.6 L205.6,204.4 L178.4,231.6 L111.6,231.6 L84.4,204.4 L84.4,137.6 Z" fill="#fbd9b5" stroke="#222222" stroke-width="1"/>
+<path d="M112.5,112.4 L177.5,112.4 L203.6,138.5 L203.6,203.5 L177.5,229.6 L112.5,229.6 L86.4,203.5 L86.4,138.5 Z" fill="#fbd9b5" stroke="#222222" stroke-width="1"/>
 <path d="M114.1,116.5 L175.9,116.5 L199.5,140.1 L199.5,201.9 L175.9,225.5 L114.1,225.5 L90.5,201.9 L90.5,140.1 Z" fill="white" stroke="#222222" stroke-width="1"/>
 <path d="M124.2,140.7 L165.8,140.7 L175.3,150.2 L175.3,191.8 L165.8,201.3 L124.2,201.3 L114.7,191.8 L114.7,150.2 Z" fill="#fbd9b5" stroke="#222222" stroke-width="1"/>
 <path d="M125.8,144.8 L164.2,144.8 L171.2,151.8 L171.2,190.2 L164.2,197.2 L125.8,197.2 L118.8,190.2 L118.8,151.8 Z" fill="#f5b46e" stroke="#222222" stroke-width="1"/>
@@ -32,8 +32,8 @@
 <rect x="30" y="440" width="580" height="96" rx="0" fill="#dbe8f5" stroke="#222222"/>
 <path d="M30.0,440 L30.0,482 L113.3,482 Q122.3,482 122.3,473 L122.3,440 Z" fill="#fbd9b5" stroke="#222222"/>
 <text x="36" y="474" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">N-well</text>
-<path d="M280.5,440 L280.5,476 Q280.5,482 285.5,482 L315.0,482 Q320.0,482 320.0,476 L320.0,440 Z" fill="#fbd9b5" stroke="#222222"/>
-<text x="300.2" y="496" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">1</text>
+<path d="M280.5,440 L280.5,476 Q280.5,482 285.5,482 L301.8,482 Q306.8,482 306.8,476 L306.8,440 Z" fill="#fbd9b5" stroke="#222222"/>
+<text x="293.6" y="496" text-anchor="middle" font-size="11" font-weight="normal" fill="#222222">1</text>
 <rect x="30.0" y="440" width="39.5" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
 <rect x="95.9" y="440" width="448.2" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
 <rect x="570.5" y="440" width="39.5" height="7" rx="0" fill="#cfcfcf" stroke="none"/>
@@ -51,8 +51,8 @@
 <rect x="74.7" y="348" width="535.3" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
 <text x="606" y="342" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">Metal5 lead to the well pad</text>
 <text x="82.7" y="398" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">+V</text>
-<rect x="298.7" y="380" width="3" height="60" rx="0" fill="#6f7d8c" stroke="none"/>
-<text x="306.2" y="378" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">to the ring 1 pad</text>
+<rect x="292.1" y="380" width="3" height="60" rx="0" fill="#6f7d8c" stroke="none"/>
+<text x="299.6" y="378" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">to the ring 1 pad</text>
 <line x1="122.3" y1="440" x2="122.3" y2="552" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
 <line x1="280.5" y1="440" x2="280.5" y2="552" stroke="#666666" stroke-width="1" stroke-dasharray="2 3"/>
 <line x1="123.3" y1="552" x2="279.5" y2="552" stroke="#222222" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
