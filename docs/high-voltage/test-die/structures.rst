@@ -8,7 +8,9 @@ gf180mcu die of 1936 µm by 2531 µm. Each structure is a well with one kind
 of edge termination, and differs from its neighbours in one drawn
 dimension. The layout comes from a generator, ``silicon/hvtest`` in the
 evampire repository, so every dimension quoted here is a parameter of that
-generator.
+generator. The :ref:`structure catalogue <hvt-catalogue>` has an entry for
+each structure, and the names in the tables of the groups link to
+them.
 
 Unknowns behind the structures
 ------------------------------

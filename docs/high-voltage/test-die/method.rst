@@ -48,6 +48,8 @@ at 0 V.
        heated to 85 °C
      - All
 
+.. _hvt-p1:
+
 Breakdown sweep (P1)
 --------------------
 
@@ -134,6 +136,8 @@ The well current and the substrate current are equal and opposite when the
 junction is the only path. A well current that exceeds the substrate
 current flows somewhere else: through the chuck, a probe, or the second
 pad.
+
+.. _hvt-p2:
 
 Capacitance against voltage (P2)
 --------------------------------
@@ -299,6 +303,8 @@ capacitance then stops falling, and the doping profile shows a steep rise
 at that depth. A profile that stays flat means no such layer lies within
 the depth reached.
 
+.. _hvt-p3:
+
 Floating-ring potential (P3)
 ----------------------------
 
@@ -357,6 +363,8 @@ The punch-through voltage is the well voltage at which the ring reaches
 well voltage reached. Both are compared with the simulated ring potential
 (:numref:`fig-hvt-pred-ring`).
 
+.. _hvt-p4:
+
 Gated diode (P4)
 ----------------
 
@@ -409,17 +417,18 @@ falls to a level between the two (:numref:`fig-hvt-gated-iv`).
      - Held at 2 V, then at 5 V, with the current recorded at 10 fA
        resolution
    * - Plate pad, Metal1
-     - −20 V to +40 V in steps of 0.25 V
+     - −20 V to +60 V in steps of 0.25 V
    * - Plate pad, polysilicon
      - −10 V to +30 V in steps of 0.25 V
    * - Plate current limit
      - 100 nA. Any plate current means the oxide conducts, and ends the
        sweep
    * - Voltage between well and plate
-     - At most 40 V in either direction, in both parts
+     - At most 80 V in either direction, in both parts; 64 V on the
+       polysilicon plate
    * - Well pad, second part
      - P1, repeated with the plate at −10 V, 0 V, +10 V and +20 V. Each
-       sweep ends when the well is 40 V above the plate
+       sweep ends when the well is 80 V above the plate
 
 The field threshold rises with the well voltage, because the inversion
 layer sits at the well's potential and the plate must deplete the silicon
@@ -507,14 +516,18 @@ positive plate relieves it. The breakdown voltage against plate voltage is
 compared with the simulation of the same structure with its plate at 0 V
 (:numref:`tab-hvt-pred-g`).
 
-The voltage between the well and the plate stays at or below 40 V. The
-plate's Metal1 lies 1 µm from the well's own Metal1, and that gap, not
-the oxide under the plate, sets the limit. The limit is a choice: no
-strength is published for the oxide between two metal lines. It has two
-consequences. A sweep with the plate at 0 V ends at 40 V on the well, so
-it finds a breakdown voltage only if that is below 40 V. The sweep with
-the plate joined to the well has no such limit, because plate and well
-are shorted at the probes and stay at one voltage.
+The voltage between the well and the plate stays within 80 V. The
+plate's Metal1 lies 1 µm from the well's own Metal1, and 80 V across that
+gap is a field of 0.8 MV/cm, well below what deposited oxide withstands.
+On the polysilicon plate the limit is 64 V, because the 0.32 µm of trench
+oxide between that plate and the well then sees 2 MV/cm. Both limits are
+choices: no strength is published for either oxide. A sweep with the
+plate at 0 V therefore ends at 80 V on the well, which is above the
+breakdown voltage predicted for that case (:numref:`tab-hvt-pred-g`). The
+sweep with the plate joined to the well has no such limit, because plate
+and well are shorted at the probes and stay at one voltage.
+
+.. _hvt-p5:
 
 Punch-through to a contacted ring (P5)
 --------------------------------------
@@ -799,9 +812,6 @@ Open questions
   dies?
 * Under A, does P-well fill the strip beside NAT, or does NAT not block
   it? No structure on the die separates the two.
-* What do the gated diodes hold with the plate at 0 V? The prediction is
-  above the 40 V that the gap between plate and well allows, so the die
-  can confirm only that it exceeds 40 V.
 * What breakdown voltage does a large well have? It bounds the bias, and
   so the depth, of the capacitance profile. If P-well surrounds the large
   wells and NAT does not clear it from CVNA, the profile may reach less

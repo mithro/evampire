@@ -11,6 +11,9 @@ comparing the results with device simulation.
    The questions the die answers, the anatomy of a structure, each group
    of structures with its dimensions, and the floor plan with pad
    positions.
+:doc:`test-die/catalogue`
+   One entry for every structure on the die: what it tests, how it works,
+   what it is compared with, how it is measured and what is predicted.
 :doc:`test-die/method`
    The five measurement procedures, the order of work, and the table that
    turns the results into a conclusion about the process.
@@ -26,6 +29,7 @@ comparing the results with device simulation.
    :hidden:
 
    test-die/structures
+   test-die/catalogue
    test-die/method
    test-die/predictions
    test-die/submission

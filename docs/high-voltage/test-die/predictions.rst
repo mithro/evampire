@@ -260,7 +260,8 @@ voltage is too low, for a well that faces only the light substrate.
    * - Capacitance, N-well to substrate
      - 1.4914 × 10\ :sup:`-4` F/m² at zero bias, grading 0.305
      - [HV-GF180-MODELS]_
-     - Within 4 % from 0 V to 10 V
+     - Within 4 % from 0 V to 10 V with the deep P layer under the
+       N-well; 17 % apart at 10 V without it
    * - Sheet resistance of the N-well
      - 800 Ω, 1000 Ω and 1200 Ω per square
      - [HV-GF180-EP-5-1]_
@@ -312,6 +313,16 @@ The second is where the deep P layer lies. The published data place it
 under the deep N-well and cannot say whether it continues elsewhere. Under
 L it lies under deep N-well only. Under D it lies under the whole wafer,
 N-wells included.
+
+The N-well's own capacitance gives weak evidence for D. With the layer
+under the N-well, the fitted profile follows the published N-well
+capacitance within 4 % from 0 V to 10 V. Without it, the published
+capacitance at 10 V is 17 % above the simulated one: the model's
+capacitance falls more slowly than a well over light substrate allows.
+The evidence is weak because one fitted profile is not the only one
+possible. Under D a plain N-well cannot hold more than its flat bottom
+does (:numref:`tab-hvt-pred-key`), and the capacitance sweep of
+:ref:`CVNA <hvt-s-cvna>` is the measurement that decides.
 
 A process name joins the two: BL is assumption B with the layer under
 deep N-well only. A further letter marks a member of the family, such as
