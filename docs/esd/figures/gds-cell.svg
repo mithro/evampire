@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1040" height="502" viewBox="0 0 1040 502" font-family="sans-serif">
-<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-clamp" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e08a00"/></marker><marker id="arrow-second" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e9c"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
 <rect width="1040" height="502" fill="#ffffff"/>
 <rect x="20.0" y="74.0" width="945.0" height="202.5" fill="#dbe8f5"/>
 <path d="M592.1,78.9L645.1,78.9L645.1,82.4L645.1,95.8L644.1,95.8L637.6,95.8L632.4,95.8L632.4,126.2L632.4,126.2L632.4,129.7L632.4,129.7L632.4,160.0L637.6,160.0L644.1,160.0L645.1,160.0L645.1,173.5L645.1,173.5L645.1,177.0L645.1,177.0L645.1,190.5L644.1,190.5L637.6,190.5L632.4,190.5L632.4,220.8L632.4,220.8L632.4,224.3L632.4,224.3L632.4,254.7L637.6,254.7L644.1,254.7L645.1,254.7L645.1,268.1L645.1,271.6L592.1,271.6L592.1,269.5L592.1,268.1L592.1,224.3L592.1,224.3L592.1,222.9L592.1,222.2L592.1,220.8L592.1,220.8L592.1,177.0L592.1,177.0L592.1,175.6L592.1,174.9L592.1,173.5L592.1,173.5L592.1,129.7L592.1,129.7L592.1,128.3L592.1,127.6L592.1,126.2L592.1,126.2L592.1,82.4L592.1,81.0ZM925.5,180.8L926.8,180.8L941.1,180.8L942.9,180.8L942.9,182.9L942.9,184.3L942.9,190.0L942.9,191.4L942.9,192.1L942.9,193.5L942.9,199.3L942.9,200.7L942.9,202.7L941.1,202.7L926.8,202.7L925.5,202.7L925.5,193.5L925.5,190.0ZM864.4,86.8L879.1,86.8L879.1,105.7L880.6,105.7L881.9,105.7L881.9,109.1L882.8,109.1L882.8,119.9L881.9,119.9L881.9,198.5L880.6,198.5L864.4,198.5L864.4,196.4L864.4,195.0L864.4,109.2L864.4,107.9L864.4,107.1L864.4,105.7ZM710.4,211.8L710.9,211.8L733.4,211.8L733.4,213.8L733.4,215.2L733.4,223.5L733.4,223.5L733.4,224.9L733.4,225.6L733.4,227.0L733.4,232.8L733.4,234.2L733.4,236.2L710.9,236.2L710.4,236.2L710.4,227.0L710.4,223.5ZM812.7,134.3L820.2,134.3L856.6,134.3L856.6,216.2L837.4,216.2L837.4,217.9L837.4,220.1L837.4,221.4L837.4,228.5L824.7,228.5L821.2,228.5L821.2,221.4L821.2,220.1L821.2,220.0L821.2,217.9L821.2,216.2L812.7,216.2ZM820.2,141.8L820.2,208.7L849.1,208.7L849.1,141.8ZM710.4,104.3L710.9,104.3L733.4,104.3L733.4,106.4L733.4,107.8L733.4,118.6L733.4,120.0L733.4,120.7L733.4,122.1L733.4,122.1L733.4,132.9L733.4,134.3L733.4,136.4L710.9,136.4L710.4,136.4L710.4,122.1L710.4,118.6ZM798.9,228.5L800.2,228.5L816.4,228.5L816.4,230.5L816.4,231.9L816.4,241.5L816.4,242.9L816.4,243.6L816.4,245.0L816.4,254.5L816.4,255.9L816.4,258.0L800.2,258.0L798.9,258.0L798.9,245.0L798.9,241.5ZM925.5,207.3L926.8,207.3L942.9,207.3L942.9,209.4L942.9,210.8L942.9,225.4L942.9,226.8L942.9,227.5L942.9,228.9L942.9,243.6L942.9,244.9L942.9,247.0L926.8,247.0L925.5,247.0L925.5,228.9L925.5,225.4ZM710.4,175.1L710.9,175.1L733.4,175.1L733.4,177.2L733.4,178.6L733.4,189.4L733.4,190.8L733.4,191.5L733.4,192.9L733.4,203.7L733.4,205.1L733.4,207.2L710.9,207.2L710.4,207.2L710.4,192.9L710.4,189.4ZM710.4,141.0L733.4,141.0L733.4,143.1L733.4,144.4L733.4,154.0L733.4,155.4L733.4,156.1L733.4,157.5L733.4,157.5L733.4,167.1L733.4,168.4L733.4,170.5L710.9,170.5L710.4,170.5L710.4,157.5L710.4,154.0ZM925.5,136.5L926.8,136.5L942.9,136.5L942.9,138.6L942.9,140.0L942.9,154.6L942.9,156.0L942.9,156.7L942.9,158.1L942.9,172.8L942.9,174.1L942.9,176.2L926.8,176.2L925.5,176.2L925.5,158.1L925.5,154.6ZM907.5,85.4L916.0,85.4L919.7,85.4L928.2,85.4L928.2,85.4L928.2,110.7L928.2,110.7L928.2,110.7L919.7,110.7L919.7,110.7L916.0,110.7L916.0,110.7L907.5,110.7L907.5,110.7L907.5,102.2L907.5,93.9ZM925.5,119.3L926.8,119.3L941.1,119.3L942.9,119.3L942.9,121.3L942.9,122.7L942.9,128.5L942.9,129.9L942.9,131.9L941.1,131.9L926.8,131.9L925.5,131.9ZM550.1,91.7L557.7,91.7L557.7,91.7L558.1,91.7L558.1,258.8L557.7,258.8L557.6,258.8L554.7,258.8L550.1,258.8L375.8,258.8L375.8,91.7L550.1,91.7ZM206.0,83.9L355.4,83.9L355.4,100.0L355.4,100.5L355.4,250.0L355.4,250.6L355.4,266.1L206.0,266.1L206.0,250.6L206.0,250.0L206.0,100.5L206.0,100.0ZM213.7,100.5L213.7,250.0L342.1,250.0L342.1,100.5ZM925.5,251.6L926.8,251.6L941.1,251.6L942.9,251.6L942.9,253.7L942.9,255.1L942.9,260.8L942.9,262.2L942.9,264.3L926.8,264.3L925.5,264.3ZM852.1,84.3L853.5,84.3L855.6,84.3L855.6,120.1L855.6,124.5L797.9,124.5L743.6,124.5L740.1,124.5L740.1,124.5L740.1,84.3L797.9,84.3ZM710.4,240.8L710.9,240.8L733.4,240.8L733.4,242.9L733.4,244.3L733.4,260.2L733.4,261.6L733.4,263.7L710.9,263.7L710.4,263.7ZM820.0,234.3L836.2,234.3L837.5,234.3L837.5,267.3L836.2,267.3L820.0,267.3L820.0,265.2L820.0,263.9L820.0,237.8L820.0,236.4ZM864.4,219.1L880.6,219.1L881.9,219.1L881.9,265.0L864.4,265.0L864.4,264.3L864.4,262.3L864.4,260.9L864.4,222.6L864.4,220.8ZM864.4,201.8L876.8,201.8L878.2,201.8L878.2,214.5L876.8,214.5L864.4,214.5L864.4,212.4L864.4,211.1L864.4,205.3L864.4,203.9ZM710.4,83.2L710.9,83.2L733.4,83.2L733.4,85.3L733.4,86.7L733.4,96.3L733.4,97.6L733.4,99.7L733.4,99.7L710.4,99.7ZM740.6,225.3L746.9,225.3L749.1,225.3L755.4,225.3L755.4,233.9L749.1,233.9L746.9,233.9L740.6,233.9ZM684.5,176.0L691.6,176.0L691.6,183.1L684.5,183.1ZM684.5,164.2L691.6,164.2L691.6,171.3L684.5,171.3ZM776.6,141.6L805.3,141.6L805.3,208.9L776.6,208.9ZM684.5,140.2L691.6,140.2L691.6,147.3L684.5,147.3ZM740.1,134.3L769.2,134.3L769.2,216.2L740.1,216.2ZM684.5,128.3L691.6,128.3L691.6,135.5L684.5,135.5ZM684.5,105.2L691.6,105.2L691.6,112.4L684.5,112.4ZM684.5,93.4L691.6,93.4L691.6,100.5L684.5,100.5Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -80,31 +80,31 @@
 <text x="163.0" y="412.5" font-size="14" fill="#222222">50 µm</text>
 <rect x="229.0" y="401.5" width="26" height="14" fill="#dbe8f5"/>
 <rect x="229.0" y="401.5" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
-<text x="263.0" y="413.5" font-size="14" fill="#222222">P substrate</text>
-<rect x="439.8" y="401.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="439.8" y="401.5" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
-<text x="473.8" y="413.5" font-size="14" fill="#222222">N-well</text>
-<rect x="666.3" y="401.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="666.3" y="401.5" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
-<text x="700.3" y="413.5" font-size="14" fill="#222222">N+ diffusion</text>
+<text x="263.0" y="413.5" font-size="14" fill="#222222">P-type silicon, no N-well</text>
+<rect x="479.0" y="401.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="479.0" y="401.5" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
+<text x="513.0" y="413.5" font-size="14" fill="#222222">N-well</text>
+<rect x="705.5" y="401.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="705.5" y="401.5" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
+<text x="739.5" y="413.5" font-size="14" fill="#222222">N+ diffusion</text>
 <rect x="229.0" y="425.5" width="26" height="14" fill="#dbe8f5"/>
 <rect x="229.0" y="425.5" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
 <text x="263.0" y="437.5" font-size="14" fill="#222222">P+ diffusion</text>
-<rect x="439.8" y="425.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="439.8" y="425.5" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
-<text x="473.8" y="437.5" font-size="14" fill="#222222">polysilicon</text>
-<rect x="666.3" y="425.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="666.3" y="425.5" width="26" height="14" fill="#9aa5b1" stroke="#6b7684" opacity="0.55"/>
-<text x="700.3" y="437.5" font-size="14" fill="#222222">bond pad metal</text>
+<rect x="479.0" y="425.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="479.0" y="425.5" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
+<text x="513.0" y="437.5" font-size="14" fill="#222222">polysilicon</text>
+<rect x="705.5" y="425.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="705.5" y="425.5" width="26" height="14" fill="#9aa5b1" stroke="#6b7684" opacity="0.55"/>
+<text x="739.5" y="437.5" font-size="14" fill="#222222">bond pad metal</text>
 <rect x="229.0" y="449.5" width="26" height="14" fill="none" stroke="#222222" opacity="1.0" stroke-dasharray="4,2"/>
 <text x="263.0" y="461.5" font-size="14" fill="#222222">pad opening</text>
-<rect x="439.8" y="449.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="439.8" y="449.5" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
-<text x="473.8" y="461.5" font-size="14" fill="#222222">gate over diffusion</text>
-<text x="666.3" y="461.5" font-size="14" font-weight="bold" fill="#c0392b">Abc</text>
-<text x="700.3" y="461.5" font-size="14" fill="#222222">primary protection, on the PAD net</text>
+<rect x="479.0" y="449.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="479.0" y="449.5" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
+<text x="513.0" y="461.5" font-size="14" fill="#222222">gate over diffusion</text>
+<text x="705.5" y="461.5" font-size="14" font-weight="bold" fill="#c0392b">Abc</text>
+<text x="739.5" y="461.5" font-size="14" fill="#222222">primary protection, on the PAD net</text>
 <rect x="229.0" y="473.5" width="26" height="14" fill="none" stroke="#1f4e9c" stroke-width="2" stroke-dasharray="5,4"/>
 <text x="263.0" y="485.5" font-size="14" fill="#222222">secondary protection</text>
-<rect x="439.8" y="473.5" width="26" height="14" fill="none" stroke="#666666" stroke-width="2" stroke-dasharray="5,4"/>
-<text x="473.8" y="485.5" font-size="14" fill="#222222">other part of the cell</text>
+<rect x="479.0" y="473.5" width="26" height="14" fill="none" stroke="#666666" stroke-width="2" stroke-dasharray="5,4"/>
+<text x="513.0" y="485.5" font-size="14" fill="#222222">other part of the cell</text>
 </svg>
