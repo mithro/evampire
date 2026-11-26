@@ -8,5 +8,5 @@ Record main.json,"554 cases, commit 86b458c7b1eb; 79 cases gave no result: DAo1 
 Record rest.json,"73 cases, commit 37fa71eff4e3; 6 cases gave no result: NR4S AL edge, NR5_1p4 AL edge, NR5_1p4 BLq corner, NR5_2 AL edge, NR5_2 BLq edge, NR5_2 BLq corner"
 Record rest2.json,"46 cases, commit 31d1842c0942; 6 cases gave no result: NR1S12 AL edge, NR1S5 AL edge, NR1S8 AL edge, NR5_1p4 AL edge, NR5_1p4 BLq edge, NR5_1p4 BLq corner"
 Record rest3.json,"35 cases, commit 5e624bfb7803; 0 cases gave no result"
-Record mem.json,"4 cases, commit 597d7c069240; 4 cases gave no result: NR5_1p4 BLq corner, NR5_1p4 AL edge, NR4S AL edge, NR5_1p4 BLq edge"
+Record mem.json,"5 cases, commit 597d7c069240; 3 cases gave no result: NR5_1p4 BLq corner, NR5_1p4 AL edge, NR5_1p4 BLq edge"
 Record family.json,"124 cases, commit 37fa71eff4e3; 0 cases gave no result"

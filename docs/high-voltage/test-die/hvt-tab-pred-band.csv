@@ -5,7 +5,7 @@ NR1S2,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
 NR1S3,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
 NR1S3,BL,90.3 to 91.9,63.2 to 105.7,NT20,1.35,None
 NR1S3,BD,61.1 to 61.1,42.8 to 70.3,NT20,1.00,None
-NR4S,AL,–,–,NW0,–,AL edge gave no result; AL corner not simulated
+NR4S,"AL, AD, AnL, AnD",18.1 to 18.1,12.7 to 20.8,NW0,1.02,AL corner not simulated
 NR4S,BL,106.3 to 107.4,74.4 to 123.5,NT20,1.59,None
 NR4S,BD,61.1 to 61.1,42.8 to 70.3,NT20,1.00,None
 NR1S5,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated

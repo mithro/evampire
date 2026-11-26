@@ -417,12 +417,12 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 18.1
      - –
-     - –
-     - –
-     - –
+     - 18.1 to 18.1
+     - 12.7 to 20.8
+     - 1.02 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 109.7
      - 106.3
