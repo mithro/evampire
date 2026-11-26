@@ -1581,12 +1581,50 @@ Measurement
    same session.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure. The
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-6b`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
    mean of :ref:`NM1_6 <hvt-s-nm1-6>` and this copy, divided by the mean of
    the three plain wells, is compared with the predicted ratio.
 
 Limits
    Two copies give a difference, not a distribution.
+
+.. list-table:: NM1_6b: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nm1-6b
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL
+     - failed
+     - –
+     - –
+     - –
+     - –
+   * - BL
+     - 90.2
+     - 84.8
+     - 84.8 to 85.4
+     - 59.4 to 98.2
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 90.8
+     - 85.4
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 60.1
+     - 60.1 to 60.1
+     - 42.1 to 69.1
+     - 0.98 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nm1-6l:
 
@@ -1654,14 +1692,52 @@ Measurement
    Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 2095 µm.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
-   Equal to :ref:`NM1_6 <hvt-s-nm1-6>`: the lead does not disturb the
-   plate's end. Lower: it does, on every plated structure.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-6l`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NM1_6 <hvt-s-nm1-6>`: the lead does not disturb the plate's end.
+   Lower: it does, on every plated structure.
 
 Limits
    As for :ref:`NT20L <hvt-s-nt20l>`, a lead that helps is hidden by the
    three sides it does not cover. The simulation has no lead, so its
    prediction is that of :ref:`NM1_6 <hvt-s-nm1-6>`.
+
+.. list-table:: NM1_6L: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nm1-6l
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
+     - 17.5
+     - –
+     - 17.5 to 17.5
+     - 12.2 to 20.1
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
+   * - BL
+     - 90.2
+     - 84.8
+     - 84.8 to 85.4
+     - 59.4 to 98.2
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 90.8
+     - 85.4
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 60.1
+     - 60.1 to 60.1
+     - 42.1 to 69.1
+     - 0.98 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nm1-6c0:
 
@@ -1731,8 +1807,10 @@ Measurement
    whether the vertices still fail first.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
-   Equal to :ref:`NM1_6 <hvt-s-nm1-6>`: under a plate the vertex no longer
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-6c0`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NM1_6 <hvt-s-nm1-6>`: under a plate the vertex no longer
    matters. Close to :ref:`NC0 <hvt-s-nc0>`: the plate does not reach the
    vertex's weak point.
 
@@ -1740,3 +1818,39 @@ Limits
    The plate's own outline has 90° corners over the oxide, where the field
    in the oxide is highest. The corner section of the simulation assumes an
    arc.
+
+.. list-table:: NM1_6C0: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nm1-6c0
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
+     - 17.5
+     - –
+     - 17.5 to 17.5
+     - 12.2 to 20.1
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
+   * - BL
+     - 90.2
+     - 63.6
+     - 63.6 to 65.9
+     - 44.5 to 75.8
+     - 0.95 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 90.8
+     - 65.9
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 63.3
+     - 62.9 to 62.9
+     - 44.0 to 72.3
+     - 1.03 of :ref:`NT20 <hvt-s-nt20>`

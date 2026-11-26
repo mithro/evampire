@@ -151,21 +151,21 @@ Limits
    * - BL
      - 40.5
      - 41.8
-     - 40.5 to 42.8
-     - 28.3 to 49.2
+     - 39.8 to 40.5
+     - 27.9 to 46.6
      - 0.60 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - 42.8
-     - 43.8
+     - 39.8
+     - 41.1
      - –
      - –
      - –
    * - BD
-     - 43.6
-     - 44.3
-     - 43.6 to 43.6
-     - 30.5 to 50.1
-     - 0.71 of :ref:`NT20 <hvt-s-nt20>`
+     - 40.7
+     - 41.9
+     - 40.7 to 40.7
+     - 28.5 to 46.8
+     - 0.67 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt5:
 
@@ -1093,12 +1093,50 @@ Measurement
    session.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure. The
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20c`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
    mean of the three plain wells is the denominator of the plate ratio.
 
 Limits
    Three points on one die still cannot separate a gradient from random
    variation.
+
+.. list-table:: NT20c: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nt20c
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - BL
+     - 76.0
+     - 67.0
+     - 67.0 to 70.2
+     - 46.9 to 80.7
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 79.8
+     - 70.2
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 62.2
+     - 62.2 to 62.2
+     - 43.5 to 71.5
+     - 1.02 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt20v:
 

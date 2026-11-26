@@ -1,15 +1,15 @@
 Item,Result
 Date,2026-11-27
 Precheck image,"ghcr.io/wafer-space/gf180mcu-precheck:latest (1.7.3, PDK open_pdks d658698)"
-Sha256 hvtest.oas,d4ec6d1151c64968fd6b1eefe7c55c79ddd0cc2031615312da68cbdc94fe27b9
+Sha256 hvtest.oas,158138b014ce03d2f9c22608049f246016bcf8dd62bb16d7a4543e2f6045e61f
 Connections (check_nets.py),"73 sites checked, 0 problem(s)"
-"Density, COMP",29.1 %
-"Density, Poly2",17.1 %
-"Density, Metal1",35.7 %
-"Density, Metal2",32.7 %
-"Density, Metal3",33.9 %
-"Density, Metal4",34.2 %
-"Density, Metal5",37.2 %
+"Density, COMP",29.3 %
+"Density, Poly2",17.2 %
+"Density, Metal1",35.9 %
+"Density, Metal2",32.8 %
+"Density, Metal3",34.0 %
+"Density, Metal4",34.4 %
+"Density, Metal5",37.3 %
 KLayout density errors,Clear
 KLayout zero area polygons count,Clear
 KLayout antenna errors,Clear

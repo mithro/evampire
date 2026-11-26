@@ -1,0 +1,54 @@
+{
+ "source": {
+  "criterion": "ring current of 1 nA, as in procedure P5",
+  "records": [
+   {
+    "cases": 5,
+    "commit": "5e624bfb7803c417aaae214a87892bc3191ee9a4",
+    "record": "p5.json"
+   }
+  ]
+ },
+ "structures": {
+  "NR1S12": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 195.2,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   }
+  },
+  "NR1S2": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 128.9,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   }
+  },
+  "NR1S3": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 135.5,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   }
+  },
+  "NR1S5": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 148.8,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   }
+  },
+  "NR1S8": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   }
+  }
+ }
+}

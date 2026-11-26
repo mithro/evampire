@@ -138,9 +138,8 @@ Predicted
    agreement range and the predicted ratio to the reference structure. The
    well voltage at which the ring starts to follow, and the step it then
    keeps, are compared with the predicted curve. The prediction with ring 1
-   held at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where
-   it is not yet simulated. :numref:`fig-hvt-sr-nr1s2` plots the predicted
-   rise of ring 1.
+   held at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`.
+   :numref:`fig-hvt-sr-nr1s2` plots the predicted rise of ring 1.
 
 Limits
    The pad, its lead and the meter's cable load the ring with capacitance
@@ -267,8 +266,8 @@ Predicted
    agreement range and the predicted ratio to the reference structure. A
    later onset and a larger step than :ref:`NR1S2 <hvt-s-nr1s2>`, in the
    ratio the simulation gives. The prediction with ring 1 held at 0 V, as in
-   :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not yet
-   simulated. :numref:`fig-hvt-sr-nr1s3` plots the predicted rise of ring 1.
+   :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`.
+   :numref:`fig-hvt-sr-nr1s3` plots the predicted rise of ring 1.
 
 Limits
    As for :ref:`NR1S2 <hvt-s-nr1s2>`.
@@ -426,22 +425,22 @@ Limits
      - –
    * - BL
      - failed
-     - failed
+     - 106.3
      - –
      - –
      - –
    * - BLq
-     - failed
+     - 110.5
      - failed
      - –
      - –
      - –
    * - BD
      - 62.9
-     - failed
-     - –
-     - –
-     - –
+     - 61.1
+     - 61.1 to 61.1
+     - 42.8 to 70.3
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. figure:: hvt-s-NR4S-ring.svg
    :name: fig-hvt-sr-nr4s
@@ -530,8 +529,8 @@ Predicted
    agreement range and the predicted ratio to the reference structure. The
    well voltage at which ring current starts is what two wells 5 µm apart
    can differ by. The prediction with ring 1 held at 0 V, as in :ref:`P5
-   <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not yet simulated.
-   :numref:`fig-hvt-sr-nr1s5` plots the predicted rise of ring 1.
+   <hvt-p5>`, is in :numref:`tab-hvt-p5`. :numref:`fig-hvt-sr-nr1s5` plots
+   the predicted rise of ring 1.
 
 Limits
    Under assumption A the P-well between well and ring fails first, and the
@@ -557,12 +556,12 @@ Limits
    * - BL
      - 77.9
      - 67.1
-     - 67.1 to 67.1
-     - 47.0 to 77.2
+     - 67.1 to 71.7
+     - 47.0 to 82.5
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
-     - failed
+     - 85.1
+     - 71.7
      - –
      - –
      - –
@@ -658,8 +657,7 @@ Predicted
    agreement range and the predicted ratio to the reference structure.
    Substrate current first: 8 µm isolates two wells up to the breakdown
    voltage. Ring current first: it does not. The prediction with ring 1 held
-   at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is
-   not yet simulated.
+   at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`.
 
 Limits
    As for :ref:`NR1S5 <hvt-s-nr1s5>`.
@@ -689,7 +687,7 @@ Limits
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - failed
-     - failed
+     - 70.3
      - –
      - –
      - –
@@ -775,7 +773,7 @@ Predicted
    breakdown voltage equal to :ref:`NT20 <hvt-s-nt20>`, with no ring
    current: a neighbouring well 12 µm away changes nothing. The prediction
    with ring 1 held at 0 V, as in :ref:`P5 <hvt-p5>`, is in
-   :numref:`tab-hvt-p5`, where it is not yet simulated.
+   :numref:`tab-hvt-p5`.
 
 Limits
    If ring current still flows here, the die has no wider gap to show where
@@ -806,7 +804,7 @@ Limits
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - failed
-     - failed
+     - 70.2
      - –
      - –
      - –
@@ -1389,7 +1387,7 @@ Limits
      - –
      - –
    * - BLq
-     - failed
+     - 106.7
      - 102.6
      - –
      - –
@@ -1518,12 +1516,12 @@ Limits
    * - BL
      - 100.6
      - 95.3
-     - 95.3 to 95.3
-     - 66.7 to 109.6
+     - 95.3 to 96.4
+     - 66.7 to 110.9
      - 1.42 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
-     - failed
+     - 101.6
+     - 96.4
      - –
      - –
      - –
@@ -1632,12 +1630,12 @@ Limits
    * - BL
      - 107.5
      - 103.4
-     - 103.4 to 103.4
-     - 72.4 to 118.9
+     - 103.4 to 104.8
+     - 72.4 to 120.5
      - 1.54 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 108.4
-     - failed
+     - 104.8
      - –
      - –
      - –
@@ -1749,23 +1747,23 @@ Limits
      - –
      - –
    * - BL
-     - failed
-     - failed
-     - –
-     - –
-     - –
+     - 111.9
+     - 109.2
+     - 109.2 to 109.2
+     - 76.4 to 125.6
+     - 1.63 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
+     - 112.6
      - failed
      - –
      - –
      - –
    * - BD
-     - failed
-     - 61.1
-     - –
-     - –
-     - –
+     - 62.9
+     - 59.8
+     - 59.8 to 59.8
+     - 41.9 to 68.8
+     - 0.98 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nr5-2:
 
@@ -1879,10 +1877,10 @@ Limits
      - –
    * - BD
      - 62.9
-     - failed
-     - –
-     - –
-     - –
+     - 61.0
+     - 61.0 to 61.0
+     - 42.7 to 70.1
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nr3m1:
 
@@ -2069,11 +2067,49 @@ Measurement
    Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 2095 µm.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
-   Equal to :ref:`NR1_2 <hvt-s-nr1-2>`: the lead does not disturb a ring.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1-2l`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NR1_2 <hvt-s-nr1-2>`: the lead does not disturb a ring.
    Different: every ring structure carries that effect over 6 µm.
 
 Limits
    The ring is one conductor, so an effect on its east side shows all round
    and cannot be located. The simulation has no lead, so its prediction is
    that of :ref:`NR1_2 <hvt-s-nr1-2>`.
+
+.. list-table:: NR1_2L: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nr1-2l
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - BL
+     - 94.0
+     - 89.8
+     - 89.6 to 89.8
+     - 62.7 to 103.3
+     - 1.34 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 94.8
+     - 89.6
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 61.2
+     - 61.2 to 61.2
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
