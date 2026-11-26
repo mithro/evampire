@@ -1,0 +1,71 @@
+Structure,Group,B: edge / corner (V),Bq: edge / corner (V)
+NR1S2,Floating rings,98.7 / 98.4,98.5 / 97.2
+NR1S3,Floating rings,89.9 / 77.2,95.6 / 83.2
+NR4S,Floating rings,112.6 / 108.0,–
+NGP4,Gated diodes,64.3 / 58.3,68.1 / 61.4
+NGM1,Gated diodes,92.2 / 83.2,94.6 / 85.7
+NAGM1,Gated diodes,92.2 / 83.2,94.6 / 85.7
+DGM1,Gated diodes,99.2 / 93.4,99.7 / 93.8
+NT5,Plain N-well,67.6 / 60.9,70.7 / 63.5
+NT10,Plain N-well,67.6 / 60.9,70.7 / 63.5
+NT20,Plain N-well,67.6 / 60.9,70.7 / 63.5
+NT35,Plain N-well,67.6 / 60.9,70.7 / 63.5
+NC0,Plain N-well,67.6 / 50.4,70.7 / 52.4
+NC3,Plain N-well,67.6 / 53.8,70.7 / 56.2
+NC15,Plain N-well,67.6 / 63.6,70.7 / 66.4
+NW0,Drawn P-well,19.5 / 19.7,19.3 / 19.5
+NW0p5,Drawn P-well,27.9 / 28.2,27.6 / 28.0
+NW1p5,Drawn P-well,51.9 / 50.0,52.5 / 50.7
+NW3,Drawn P-well,65.5 / 59.9,67.7 / 61.9
+NW6,Drawn P-well,67.6 / 60.9,70.7 / 63.5
+NW10,Drawn P-well,67.6 / 60.9,70.7 / 63.5
+NA0p6,NAT layer,67.6 / 60.9,70.7 / 63.5
+NA1,NAT layer,67.6 / 60.9,70.7 / 63.5
+NA2,NAT layer,67.6 / 60.9,70.7 / 63.5
+NA4,NAT layer,67.6 / 60.9,70.7 / 63.5
+NA0p6T35,NAT layer,67.6 / 60.9,70.7 / 63.5
+NA0p6C0,NAT layer,67.6 / 50.4,70.7 / 52.4
+NAM1_3,NAT layer,87.0 / 78.6,89.2 / 80.8
+NAM1_6,NAT layer,92.2 / 83.2,94.6 / 85.7
+NAM1_10,NAT layer,93.4 / 84.2,95.9 / 86.9
+NAM2_6,NAT layer,80.4 / 71.9,83.5 / 74.9
+NAM2_12,NAT layer,80.8 / 72.3,84.1 / 75.3
+NP1,Field plates,76.8 / 69.0,79.4 / 71.5
+NP2,Field plates,72.9 / 65.1,76.8 / 68.6
+NP4,Field plates,64.3 / 58.3,68.1 / 61.4
+NM1_3,Field plates,87.0 / 78.6,89.2 / 80.8
+NM1_6,Field plates,92.2 / 83.2,94.6 / 85.7
+NM1_10,Field plates,93.4 / 84.2,95.9 / 86.9
+NM2_6,Field plates,80.4 / 71.9,83.5 / 74.9
+NM2_12,Field plates,80.8 / 72.3,84.1 / 75.3
+NP1M1_3,Field plates,87.3 / 78.6,89.7 / 81.0
+NPM12,Field plates,81.7 / 72.2,86.4 / 76.7
+NR1_1p4,Floating rings,79.3 / 75.4,80.4 / 76.0
+NR1_2,Floating rings,98.7 / 98.4,98.5 / 97.2
+NR1_3,Floating rings,89.9 / 77.2,95.6 / 83.2
+NR3_1p5,Floating rings,113.4 / 109.0,114.2 / 110.1
+NR3_2,Floating rings,108.6 / 102.9,–
+NR3W1,Floating rings,104.0 / 97.3,105.1 / –
+NR3W3,Floating rings,110.6 / 105.4,– / 106.7
+NR5_1p4,Floating rings,114.9 / 110.9,– / 111.9
+NR5_2,Floating rings,> 37.1 / > 13.3,–
+NR3M1,Floating rings,111.3 / 106.8,–
+DT2p6,Deep N-well,92.7 / 88.7,92.8 / 88.7
+DT5,Deep N-well,94.3 / 89.3,94.6 / 89.5
+DT10,Deep N-well,94.3 / 89.3,94.7 / 89.5
+DT20,Deep N-well,94.3 / 89.3,94.7 / 89.5
+DT35,Deep N-well,94.3 / 89.3,94.7 / 89.5
+DC0,Deep N-well,94.3 / > 46.0,94.7 / > 49.1
+DC15,Deep N-well,94.3 / 91.2,94.7 / 91.6
+DW1p5,Deep N-well,71.0 / 75.5,69.4 / 75.0
+DW3,Deep N-well,92.3 / 88.5,92.4 / 88.5
+DW6,Deep N-well,94.2 / 89.3,94.6 / 89.5
+DM1_3,Field plates,97.6 / 91.8,98.0 / 92.2
+DM1_6,Field plates,99.2 / 93.4,99.7 / 93.8
+DM1_10,Field plates,99.7 / 93.9,100.2 / 94.3
+DM2_8,Field plates,97.2 / 91.5,97.7 / 91.9
+DPM12,Field plates,98.8 / 93.0,99.2 / 93.4
+DAo1,Deep N-well,94.3 / 89.3,94.7 / 89.5
+DAo1T35,Deep N-well,94.3 / 89.3,94.7 / 89.5
+DAo1C0,Deep N-well,94.3 / > 46.0,94.7 / > 49.1
+DAo1M1_6,Deep N-well,99.2 / 93.4,99.7 / 93.8

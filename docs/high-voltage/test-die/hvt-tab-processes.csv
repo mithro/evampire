@@ -1,3 +1,11 @@
-Process,Description
-A,"PLACEHOLDER. P-well generated wherever no N-well, deep N-well or NAT is drawn; nominal doping"
-B,PLACEHOLDER. P-well only where the layout draws it; nominal doping
+Process,Family,Description
+A,A,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; nominal doping"
+An,An,"As A, but no P-well in the strip between an N-well and NAT"
+Aq,A,"As A, with fixed oxide charge of 1e11 cm^-2"
+B,B,P-well only where the layout draws it; nominal doping (substrate 3.5e15 cm^-3)
+Bq,B,"As B, with fixed oxide charge of 1e11 cm^-2"
+GA,G,"P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; nominal doping; the gated plate held at 0 V"
+GAn,G,"As A, but no P-well in the strip between an N-well and NAT; the gated plate held at 0 V"
+GAq,G,"As A, with fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V"
+GB,G,P-well only where the layout draws it; nominal doping (substrate 3.5e15 cm^-3); the gated plate held at 0 V
+GBq,G,"As B, with fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V"

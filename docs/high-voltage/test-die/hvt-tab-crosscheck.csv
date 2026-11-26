@@ -1,0 +1,4 @@
+Case,"DEVSIM, integral (V)","Charon, integral (V)","Charon, current (V)",Description
+"Diode strip, 1e17",14.89,14.89,14.25,"One-sided abrupt junction, 1e17 cm^-3; Charon's avalanche current diverges at the current value"
+"Diode strip, 1e16",55.34,55.35,55.25,"One-sided abrupt junction, 1e16 cm^-3; Charon's avalanche current diverges at the current value"
+Bare N-well edge,77.44,77.55,78.27,"Two-dimensional N-well edge in substrate of 3e15 cm^-3, 23597 silicon nodes; current value at a 100-fold rise of the current, last converged point 78.5 V"

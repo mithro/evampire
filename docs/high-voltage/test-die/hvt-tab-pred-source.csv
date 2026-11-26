@@ -1,6 +1,6 @@
 Item,Value
-status,PLACEHOLDER: invented values that only exercise the tables and graphs; not simulation output
-simulator,none
-repository,"mithro/gf180-tcad, experiments/hv-junction"
-commit,none
-date,2026-11-26
+Commit,48c2657fe82c
+Repository,"mithro/gf180-tcad, experiments/hv-junction"
+Simulator,DEVSIM 2.11.1 (gf180-tcad dev image)
+Status,"DEVSIM 2.11.1 drift-diffusion, breakdown by the ionisation integral"
+Record main.json,"467 cases, commit 48c2657fe82c; 11 cases gave no result: NR3M1 Bq edge, NR3M1 Bq corner, NR3W1 Bq corner, NR3W3 Bq edge, NR3_2 Bq edge, NR3_2 Bq corner, NR4S Bq edge, NR4S Bq corner, NR5_1p4 Bq edge, NR5_2 Bq edge, NR5_2 Bq corner"
