@@ -1,16 +1,16 @@
 Structure,Termination,AL: edge / corner (V),AnL: edge / corner (V),BL: edge / corner (V),BD: edge / corner (V)
-NT10,Plain N-well,17.7 / –,–,76.0 / 67.0,62.9 / 61.2
-NT1,P+ ring 1 µm away,17.7 / –,–,43.5 / 44.2,43.6 / 44.3
-NC15,Largest corner cut,17.7 / –,–,76.0 / 70.6,62.9 / 59.6
-NC0,Sharp corner,17.7 / –,–,76.0 / > 36.3,62.9 / > 36.0
-NW0,Drawn P-well touching,17.7 / –,–,19.8 / 20.0,19.8 / 20.0
-NW1p5,Drawn P-well at 1.5 µm,17.7 / –,–,53.2 / 51.9,53.0 / 51.6
-NW3,Drawn P-well at 3 µm,17.7 / –,–,72.1 / 65.2,62.9 / 61.2
+NT10,Plain N-well,17.7 / –,17.7 / –,76.0 / 67.0,62.9 / 61.2
+NT1,P+ ring 1 µm away,17.7 / –,17.7 / –,43.5 / 44.2,43.6 / 44.3
+NC15,Largest corner cut,17.7 / –,17.7 / –,76.0 / 70.6,62.9 / 59.6
+NC0,Sharp corner,17.7 / –,17.7 / –,76.0 / > 36.3,62.9 / > 36.0
+NW0,Drawn P-well touching,17.7 / –,17.7 / –,19.8 / 20.0,19.8 / 20.0
+NW1p5,Drawn P-well at 1.5 µm,17.7 / –,17.7 / –,53.2 / 51.9,53.0 / 51.6
+NW3,Drawn P-well at 3 µm,17.7 / –,17.7 / –,72.1 / 65.2,62.9 / 61.2
 NA0p6,NAT from 0.6 µm,17.7 / –,76.0 / 67.0,76.0 / 67.0,62.9 / 61.2
-NP4,"Polysilicon plate, 4 µm",17.4 / –,–,94.4 / 89.2,62.9 / 60.8
-NM1_6,"Metal1 plate, 6 µm",17.6 / –,–,90.2 / 84.8,62.9 / 59.6
-NM2_12,"Metal2 plate, 12 µm",17.6 / –,–,87.6 / 82.3,62.9 / 60.8
-NR1_2,One ring at 2 µm,17.7 / –,–,94.0 / 89.8,62.9 / 61.2
+NP4,"Polysilicon plate, 4 µm",17.4 / –,17.4 / –,94.4 / 89.2,62.9 / 60.8
+NM1_6,"Metal1 plate, 6 µm",17.6 / –,17.6 / –,90.2 / 84.8,62.9 / 59.6
+NM2_12,"Metal2 plate, 12 µm",17.6 / –,17.6 / –,87.6 / 82.3,62.9 / 60.8
+NR1_2,One ring at 2 µm,17.7 / –,17.7 / –,94.0 / 89.8,62.9 / 61.2
 NR3_2,Three rings,failed / –,–,failed / failed,62.9 / failed
-DT20,Deep N-well,32.4 / 30.0,–,32.4 / 31.3,32.4 / 31.3
+DT20,Deep N-well,32.4 / 30.0,32.4 / 30.0,32.4 / 31.3,32.4 / 31.3
 DAo1,Deep N-well with NAT over its edge,32.4 / 31.1,–,32.4 / 31.3,32.4 / 31.3

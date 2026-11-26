@@ -5,6 +5,7 @@ NGP4,Gated diodes,94.4 / 89.2,–,–,94.7 / 89.5,–,62.9 / 60.8,–,–
 NGM1,Gated diodes,90.2 / 84.8,–,–,90.8 / 85.4,–,62.9 / 59.6,–,–
 NAGM1,Gated diodes,90.2 / 84.8,–,–,90.8 / 85.4,–,62.9 / 59.6,–,–
 DGM1,Gated diodes,32.4 / 30.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
+DT20b,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 NT1,Plain N-well,43.5 / 44.2,–,–,42.8 / 43.8,–,43.6 / 44.3,–,–
 NT5,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.7,–,–
 NT10,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
@@ -43,16 +44,10 @@ NR3_2,Floating rings,failed / failed,87.0 / 84.0,failed / failed,failed / failed
 NR3W1,Floating rings,failed / failed,–,–,failed / failed,–,62.9 / 60.2,–,–
 NR3M1,Floating rings,failed / failed,–,–,failed / failed,–,failed / 61.2,–,–
 DT2p6,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
-DT5,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 DT10,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 DT20,Deep N-well,32.4 / 31.3,failed / failed,failed / failed,32.3 / 31.3,failed / failed,32.4 / 31.3,failed / failed,failed / failed
-DT35,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 DC0,Deep N-well,32.4 / 33.7,–,–,32.3 / 32.9,–,32.4 / 33.5,–,–
-DC15,Deep N-well,32.4 / 31.3,–,–,32.3 / failed,–,32.4 / 31.3,–,–
 DW1p5,Deep N-well,32.4 / 30.0,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
-DW3,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
-DW6,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
-DM1_3,Field plates,32.3 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 DM1_6,Field plates,32.3 / 30.3,failed / failed,failed / failed,32.3 / 31.3,failed / failed,32.4 / 31.3,failed / failed,failed / failed
 DM1_10,Field plates,32.4 / 30.3,–,–,32.3 / 31.3,–,32.3 / 29.6,–,–
 DPM12,Field plates,32.3 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
@@ -61,7 +56,6 @@ DAo1T35,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 DAo1C0,Deep N-well,32.4 / 33.7,–,–,32.3 / 32.9,–,32.4 / 33.5,–,–
 DAo1M1_6,Deep N-well,32.3 / 30.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 NT20b,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
-DT20b,Deep N-well,32.4 / 31.3,–,–,32.3 / 31.3,–,32.4 / 31.3,–,–
 NA0p6b,NAT layer,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
 NT20L,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
 NT20V,Plain N-well,76.0 / 67.0,–,–,79.9 / 70.3,–,62.9 / 61.2,–,–
