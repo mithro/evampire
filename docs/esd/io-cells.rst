@@ -33,6 +33,8 @@ Protection structure
 The protection of the bidirectional pad has three parts: the output
 driver, the secondary protection of the input gates and the rail clamp.
 :numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
+:doc:`layout` shows the same parts in the cells' layouts, starting with
+:numref:`fig-esd-gds-cell`.
 Every pad sits on two rings of metal that run round the chip: DVDD and
 DVSS.
 
@@ -73,7 +75,8 @@ blocked for 3.78 µm (NMOS) and 2.78 µm (PMOS), and the NMOS gates are
 requires silicide blocking at the drain of a transistor that must survive
 the turn-on of its :term:`parasitic bipolar transistor <Snapback>`
 ([ESD-GF180-DRM-14-4]_). The blocked silicide adds resistance that spreads
-the current across the whole width.
+the current across the whole width. :numref:`fig-esd-gds-silicide-block`
+shows the blocked drains in the layout.
 
 The NMOS output transistors, with their gates held low, also act as a
 grounded-gate NMOS. Above about 10.7 V the parasitic NPN transistor inside
@@ -83,10 +86,10 @@ each one turns on and :term:`snaps back <Snapback>` to about 6 V
 .. figure:: figures/driver-section.svg
    :name: fig-esd-driver-section
    :alt: Cross-section of the two output transistors. Left, a PMOS in an
-         N-well tied to DVDD: its P+ drain, connected to PAD and without
-         silicide for 2.78 µm beside the gate, forms a diode from PAD to
-         DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well tied
-         to DVSS: its N+ drain, connected to PAD and without silicide for
+         N-well on DVDD: its P+ drain, connected to PAD and silicide
+         blocked for 2.78 µm beside the gate, forms a diode from PAD to
+         DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well on
+         DVSS: its N+ drain, connected to PAD and silicide blocked for
          3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
          all; its gate is 1.15 µm long. A parasitic NPN transistor inside
          the NMOS, with the drain as collector, the P-well as base and the
@@ -125,15 +128,17 @@ rail clamp ([ESD-DVDD-CDL]_):
 #. The transistor turns on and conducts the discharge current from DVDD to
    DVSS at a few volts.
 
-The clamp needs no supply. The discharge itself raises DVDD, which powers
+:numref:`fig-esd-gds-clamp` shows these parts in the layout. The clamp
+needs no supply. The discharge itself raises DVDD, which powers
 the inverters. The timer's time constant decides which events turn it on:
 
 .. math::
 
-   \tau_\text{clamp} = R_\text{clamp} \times C_\text{clamp},
-   \qquad
-   C_\text{clamp} = \frac{\varepsilon_0 \times \varepsilon_\text{ox}}{t_\text{ox}}
-   \times A_\text{clamp}
+   \begin{aligned}
+   \tau_\text{clamp} &= R_\text{clamp} \times C_\text{clamp} \\
+   C_\text{clamp} &= \frac{\varepsilon_0 \times
+   \varepsilon_\text{ox}}{t_\text{ox}} \times A_\text{clamp}
+   \end{aligned}
 
 .. list-table::
    :header-rows: 1

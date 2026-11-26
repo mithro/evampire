@@ -46,6 +46,16 @@ gf180mcu foundry documents
    <https://gf180mcu-pdk.readthedocs.io/en/latest/IPs/IO/gf180mcu_fd_io/index.html>`__:
    ESD protection and latch-up immunity pages.
 
+.. [ESD-GF180-DRM-4-1] GlobalFoundries, `gf180mcu design manual, section
+   4.1, Drawn layer definition and abbreviation
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_04_1.html>`__:
+   the GDS layer and datatype numbers of each mask layer.
+
+.. [ESD-GF180-DRM-4-3] GlobalFoundries, `gf180mcu design manual, section
+   4.3, Mask Layer Numbering
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_04_3.html>`__:
+   the table lists the P-well mask, LVPWELL, as drawn and generated.
+
 .. [ESD-GF180-DRM-14-4] GlobalFoundries, `gf180mcu design manual, section
    14.4, ESD Layout Guidelines
    <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_14_4.html>`__.
@@ -80,7 +90,8 @@ Netlists and models
 .. [ESD-GF180-IO-SRC] GlobalFoundries and Google, `gf180mcu_fd_io library
    source, commit 2aeec51
    <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/tree/2aeec51ea2824b6cc0b396acfc39f4535f40b23a>`__:
-   the cell netlists in ``cells/*/*.cdl``.
+   the cell netlists in ``cells/*/*.cdl`` and the layouts in
+   ``cells/*/*.gds``.
 
 .. [ESD-BI-T-CDL] `gf180mcu_fd_io__bi_t.cdl
    <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/blob/2aeec51ea2824b6cc0b396acfc39f4535f40b23a/cells/bi_t/gf180mcu_fd_io__bi_t.cdl>`__,
@@ -95,6 +106,25 @@ Netlists and models
    <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/blob/2aeec51ea2824b6cc0b396acfc39f4535f40b23a/cells/asig_5p0/gf180mcu_fd_io__asig_5p0.cdl#L15-L20>`__,
    the netlist of the analogue pad, lines 15 to 20, in
    [ESD-GF180-IO-SRC]_.
+
+.. [ESD-BI-T-GDS] `gf180mcu_fd_io__bi_t_5lm.gds
+   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/blob/2aeec51ea2824b6cc0b396acfc39f4535f40b23a/cells/bi_t/gf180mcu_fd_io__bi_t_5lm.gds>`__,
+   the layout of the bidirectional pad for five metal layers, in
+   [ESD-GF180-IO-SRC]_.
+
+.. [ESD-DVDD-GDS] `gf180mcu_fd_io__dvdd_5lm.gds
+   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/blob/2aeec51ea2824b6cc0b396acfc39f4535f40b23a/cells/dvdd/gf180mcu_fd_io__dvdd_5lm.gds>`__,
+   the layout of the DVDD supply pad for five metal layers, in
+   [ESD-GF180-IO-SRC]_.
+
+.. [ESD-DVSS-GDS] `gf180mcu_fd_io__dvss_5lm.gds
+   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/blob/2aeec51ea2824b6cc0b396acfc39f4535f40b23a/cells/dvss/gf180mcu_fd_io__dvss_5lm.gds>`__,
+   the layout of the DVSS supply pad for five metal layers, in
+   [ESD-GF180-IO-SRC]_.
+
+.. [ESD-GDSTK] L. H. Gabrielli, `gdstk, a library for creation and
+   manipulation of GDSII and OASIS files
+   <https://heitzmann.github.io/gdstk/>`__.
 
 .. [ESD-GF180-MODELS] GlobalFoundries and Google, `gf180mcu ngspice models,
    sm141064.ngspice, commit 9f992d5

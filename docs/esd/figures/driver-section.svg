@@ -4,7 +4,7 @@
 <rect x="10" y="170" width="640" height="200" fill="#dbe8f5" stroke="#222222"/>
 <text x="20" y="362" text-anchor="start" font-size="13" fill="#222222" font-weight="normal">P substrate</text>
 <rect x="20" y="170" width="300" height="110" fill="#fbd9b5" stroke="#222222"/>
-<text x="170" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N-well, tied to DVDD</text>
+<text x="170" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N-well, on DVDD</text>
 <rect x="30" y="170" width="30" height="22" fill="#f5b46e" stroke="#222222"/>
 <rect x="80" y="170" width="45" height="22" fill="#7fa7d6" stroke="#222222"/>
 <rect x="130" y="160" width="30" height="10" fill="#c9a0dc" stroke="#222222"/>
@@ -13,9 +13,9 @@
 <line x1="160" y1="208" x2="236" y2="208" stroke="#222222" stroke-width="1"/>
 <line x1="160" y1="204" x2="160" y2="212" stroke="#222222" stroke-width="1"/>
 <line x1="236" y1="204" x2="236" y2="212" stroke="#222222" stroke-width="1"/>
-<text x="198.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">no silicide, 2.78 µm</text>
+<text x="198.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">blocked drain: 2.78 µm</text>
 <rect x="340" y="170" width="300" height="110" fill="#b9cfe8" stroke="#222222"/>
-<text x="490" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P-well, tied to DVSS</text>
+<text x="490" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P-well, on DVSS</text>
 <rect x="355" y="170" width="120" height="22" fill="#f5b46e" stroke="#222222"/>
 <text x="415" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N+ drain</text>
 <rect x="480" y="160" width="34" height="10" fill="#c9a0dc" stroke="#222222"/>
@@ -24,8 +24,8 @@
 <line x1="399" y1="208" x2="480" y2="208" stroke="#222222" stroke-width="1"/>
 <line x1="399" y1="204" x2="399" y2="212" stroke="#222222" stroke-width="1"/>
 <line x1="480" y1="204" x2="480" y2="212" stroke="#222222" stroke-width="1"/>
-<text x="480" y="224" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">no silicide, 3.78 µm</text>
-<text x="497" y="154" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">1.15 µm gate</text>
+<text x="480" y="224" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">blocked drain: 3.78 µm</text>
+<text x="530" y="154" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">gate length: 1.15 µm</text>
 <text x="45" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
 <text x="102" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
 <text x="541" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
@@ -33,7 +33,7 @@
 <rect x="266" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
 <rect x="366" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
 <rect x="266" y="56" width="112" height="8" fill="#9aa5b1" stroke="#222222"/>
-<rect x="290" y="24" width="64" height="26" fill="#fde9d3" stroke="#222222"/>
+<rect x="290" y="24" width="64" height="26" fill="#ffffff" stroke="#222222"/>
 <text x="322" y="42" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">PAD</text>
 <line x1="322" y1="50" x2="322" y2="56" stroke="#222222" stroke-width="3"/>
 <rect x="42" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
