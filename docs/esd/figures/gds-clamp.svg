@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="478" viewBox="0 0 1040 478" font-family="sans-serif">
-<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-clamp" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e08a00"/></marker><marker id="arrow-second" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e9c"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
-<rect width="1040" height="478" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="502" viewBox="0 0 1040 502" font-family="sans-serif">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
+<rect width="1040" height="502" fill="#ffffff"/>
 <rect x="20.0" y="62.0" width="945.0" height="202.5" fill="#dbe8f5"/>
 <path d="M770.2,70.3L772.2,70.3L773.6,70.3L822.0,70.3L824.1,70.3L824.1,70.3L824.1,256.2L824.1,256.2L822.0,256.2L820.6,256.2L773.6,256.2L772.2,256.2L770.2,256.2ZM829.5,95.3L899.1,95.3L899.1,101.4L899.1,102.8L899.1,223.7L899.1,225.1L899.1,231.2L829.5,231.2L829.5,225.1L829.5,223.7L829.5,102.8L829.5,101.4ZM837.0,102.8L837.0,223.7L891.6,223.7L891.6,102.8ZM202.2,75.1L545.9,75.1L545.9,81.2L545.9,82.6L545.9,243.9L545.9,245.3L545.9,251.4L202.2,251.4L202.2,245.3L202.2,243.9L202.2,82.6L202.2,81.2ZM209.7,82.6L209.7,243.9L538.3,243.9L538.3,82.6ZM577.6,105.1L594.9,105.1L596.3,105.1L598.3,105.1L598.3,221.4L596.3,221.4L594.9,221.4L577.6,221.4L577.6,218.0L577.6,108.5Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M579.8,135.9L593.3,135.9L593.3,136.9L593.3,139.2L593.3,140.2L593.3,142.5L593.3,143.5L593.3,145.8L593.3,146.8L593.3,149.1L593.3,150.1L593.3,152.4L593.3,153.4L593.3,155.7L593.3,156.7L593.3,159.0L593.3,160.0L593.3,162.3L593.3,163.2L593.3,165.6L593.3,166.5L593.3,168.9L593.3,169.8L593.3,172.2L593.3,173.1L593.3,175.5L593.3,176.4L593.3,178.7L593.3,179.7L593.3,182.0L593.3,183.0L593.3,185.3L593.3,186.3L593.3,188.6L593.3,189.6L593.3,191.9L593.3,192.9L593.3,195.2L593.3,196.2L593.3,198.5L593.3,199.5L593.3,201.8L593.3,202.8L593.3,205.1L593.3,206.1L593.3,208.4L593.3,209.4L593.3,211.7L593.3,212.7L593.3,215.0L593.3,216.0L579.8,216.0L579.8,215.0L579.8,212.7L579.8,211.7L579.8,209.4L579.8,208.4L579.8,206.1L579.8,205.1L579.8,202.8L579.8,201.8L579.8,199.5L579.8,198.5L579.8,196.2L579.8,195.2L579.8,192.9L579.8,191.9L579.8,189.6L579.8,188.6L579.8,186.3L579.8,185.3L579.8,183.0L579.8,182.0L579.8,179.7L579.8,178.7L579.8,176.4L579.8,175.5L579.8,173.1L579.8,172.2L579.8,169.8L579.8,168.9L579.8,166.5L579.8,165.6L579.8,163.2L579.8,162.3L579.8,160.0L579.8,159.0L579.8,156.7L579.8,155.7L579.8,153.4L579.8,152.4L579.8,150.1L579.8,149.1L579.8,146.8L579.8,145.8L579.8,143.5L579.8,142.5L579.8,140.2L579.8,139.2L579.8,136.9ZM579.8,110.5L593.3,110.5L593.3,111.5L593.3,113.8L593.3,114.8L593.3,117.1L593.3,118.1L593.3,120.4L593.3,121.4L593.3,123.7L593.3,124.7L593.3,124.7L593.3,127.0L593.3,128.0L593.3,130.3L593.3,131.3L593.3,133.6L593.3,134.6L579.8,134.6L579.8,133.6L579.8,131.3L579.8,130.3L579.8,128.0L579.8,127.0L579.8,124.7L579.8,124.7L579.8,123.7L579.8,121.4L579.8,120.4L579.8,118.1L579.8,117.1L579.8,114.8L579.8,113.8L579.8,111.5ZM600.7,95.3L603.5,95.3L603.5,95.7L603.5,230.8L603.5,231.7L763.9,231.7L763.9,230.8L763.9,95.7L763.9,95.3L766.6,95.3L766.6,95.7L766.6,230.8L766.6,231.7L766.6,232.4L766.6,234.4L600.7,234.4L600.7,232.4L600.7,231.7L600.7,230.8L600.7,230.8L600.7,95.7L600.7,95.7ZM838.4,103.9L840.2,103.9L861.6,103.9L874.2,103.9L888.3,103.9L890.1,103.9L890.1,104.3L890.1,104.3L890.1,222.2L890.1,222.2L890.1,222.6L888.3,222.6L840.2,222.6L838.4,222.6L838.4,222.2L838.4,107.2L838.4,104.3ZM879.6,107.2L879.6,108.1L879.6,218.4L879.6,219.3L886.8,219.3L886.8,218.4L886.8,218.4L886.8,108.1L886.8,108.1L886.8,107.2ZM866.9,107.2L866.9,108.1L866.9,218.4L866.9,219.3L874.2,219.3L874.2,218.4L874.2,108.1L874.2,107.2ZM841.7,107.2L841.7,108.1L841.7,218.4L841.7,219.3L849.0,219.3L849.0,218.4L849.0,108.1L849.0,107.2ZM854.3,107.2L854.3,108.1L854.3,218.4L854.3,219.3L861.6,219.3L861.6,107.2ZM550.0,106.2L551.2,106.2L552.1,106.2L569.8,106.2L574.2,106.2L574.2,126.0L574.2,164.0L574.2,168.4L574.2,214.1L574.2,220.3L569.8,220.3L552.1,220.3L551.2,220.3L550.0,220.3ZM551.2,107.4L551.2,219.1L552.1,219.1L569.8,219.1L573.0,219.1L573.0,214.1L573.0,168.4L573.0,164.0L573.0,126.0L573.0,107.4L569.8,107.4L552.1,107.4ZM600.7,92.1L766.6,92.1L766.6,94.8L766.6,95.3L763.9,95.3L763.9,94.8L685.7,94.8L685.7,95.3L682.9,95.3L682.9,94.8L603.5,94.8L603.5,95.3L600.7,95.3L600.7,94.8ZM211.4,83.6L536.6,83.6L536.6,88.9L536.6,89.7L536.6,236.8L536.6,237.6L536.6,242.9L211.4,242.9L211.4,237.6L211.4,236.8L211.4,89.7L211.4,88.9ZM454.6,88.9L454.6,89.7L454.6,236.8L454.6,237.6L531.4,237.6L531.4,236.8L531.4,236.8L531.4,89.7L531.4,89.7L531.4,88.9ZM296.0,88.9L296.0,89.7L296.0,236.8L296.0,237.6L372.7,237.6L372.7,236.8L372.7,236.8L372.7,89.7L372.7,89.7L372.7,88.9ZM375.3,88.9L375.3,89.7L375.3,236.8L375.3,237.6L452.0,237.6L452.0,236.8L452.0,89.7L452.0,88.9ZM216.7,88.9L216.7,89.7L216.7,236.8L216.7,237.6L293.5,237.6L293.5,236.8L293.5,89.7L293.5,88.9ZM196.8,62.0L197.0,62.0L199.4,62.0L962.0,62.0L964.6,62.0L964.6,64.5L964.6,262.9L964.6,264.5L962.0,264.5L199.4,264.5L197.0,264.5L196.8,264.5ZM199.4,63.3L199.4,64.1L197.9,64.1L197.9,64.1L199.4,64.1L199.4,64.5L199.4,262.9L199.4,263.2L962.0,263.2L962.0,262.9L962.0,64.5L962.0,63.3ZM957.4,68.3L958.6,68.3L958.6,68.7L958.6,68.7L958.6,257.8L958.6,257.8L958.6,258.6L957.4,258.6L957.4,257.8L957.4,68.7L957.4,68.7ZM905.4,68.3L906.6,68.3L906.6,68.7L906.6,68.7L906.6,257.8L906.6,258.6L905.4,258.6L905.4,257.8L905.4,257.8L905.4,68.7L905.4,68.7ZM905.4,66.7L958.6,66.7L958.6,67.9L958.6,67.9L958.6,68.3L957.4,68.3L957.4,67.9L906.6,67.9L906.6,68.3L905.4,68.3L905.4,67.9ZM682.9,95.7L685.7,95.7L685.7,230.8L685.7,231.7L682.9,231.7L682.9,230.8ZM905.4,258.6L958.6,258.6L958.6,259.8L905.4,259.8ZM203.3,254.4L763.4,254.4L763.4,261.0L203.3,261.0ZM554.3,237.7L763.4,237.7L763.4,251.0L554.3,251.0ZM830.6,234.2L897.9,234.2L897.9,261.0L830.6,261.0ZM682.9,95.3L685.7,95.3L685.7,95.7L682.9,95.7ZM203.3,65.5L763.4,65.5L763.4,72.1L203.3,72.1ZM830.6,65.5L897.9,65.5L897.9,92.3L830.6,92.3Z" fill="#7fa7d6" stroke="#3d6294" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -75,29 +75,29 @@
 <text x="163.0" y="412.5" font-size="14" fill="#222222">50 µm</text>
 <rect x="229.0" y="401.5" width="26" height="14" fill="#dbe8f5"/>
 <rect x="229.0" y="401.5" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
-<text x="263.0" y="413.5" font-size="14" fill="#222222">P substrate</text>
-<rect x="384.9" y="401.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="384.9" y="401.5" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
-<text x="418.9" y="413.5" font-size="14" fill="#222222">N-well</text>
-<rect x="611.4" y="401.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="611.4" y="401.5" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
-<text x="645.4" y="413.5" font-size="14" fill="#222222">N+ diffusion</text>
-<rect x="759.5" y="401.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="759.5" y="401.5" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
-<text x="793.5" y="413.5" font-size="14" fill="#222222">P+ diffusion</text>
+<text x="263.0" y="413.5" font-size="14" fill="#222222">P-type silicon, no N-well</text>
+<rect x="479.0" y="401.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="479.0" y="401.5" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
+<text x="513.0" y="413.5" font-size="14" fill="#222222">N-well</text>
+<rect x="682.0" y="401.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="682.0" y="401.5" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
+<text x="716.0" y="413.5" font-size="14" fill="#222222">N+ diffusion</text>
 <rect x="229.0" y="425.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="229.0" y="425.5" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
-<text x="263.0" y="437.5" font-size="14" fill="#222222">polysilicon</text>
-<rect x="384.9" y="425.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="384.9" y="425.5" width="26" height="14" fill="#9aa5b1" stroke="#6b7684" opacity="0.55"/>
-<text x="418.9" y="437.5" font-size="14" fill="#222222">bond pad metal</text>
-<rect x="611.4" y="425.5" width="26" height="14" fill="none" stroke="#222222" opacity="1.0" stroke-dasharray="4,2"/>
-<text x="645.4" y="437.5" font-size="14" fill="#222222">pad opening</text>
-<rect x="759.5" y="425.5" width="26" height="14" fill="#dbe8f5"/>
-<rect x="759.5" y="425.5" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
-<text x="793.5" y="437.5" font-size="14" fill="#222222">gate over diffusion</text>
-<rect x="229.0" y="449.5" width="26" height="14" fill="none" stroke="#e08a00" stroke-width="2" stroke-dasharray="5,4"/>
-<text x="263.0" y="461.5" font-size="14" fill="#222222">the inverters</text>
-<text x="384.9" y="461.5" font-size="14" font-weight="bold" fill="#e08a00">Abc</text>
-<text x="418.9" y="461.5" font-size="14" fill="#222222">part of the rail clamp</text>
+<rect x="229.0" y="425.5" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
+<text x="263.0" y="437.5" font-size="14" fill="#222222">P+ diffusion</text>
+<rect x="479.0" y="425.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="479.0" y="425.5" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
+<text x="513.0" y="437.5" font-size="14" fill="#222222">polysilicon</text>
+<rect x="682.0" y="425.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="682.0" y="425.5" width="26" height="14" fill="#9aa5b1" stroke="#6b7684" opacity="0.55"/>
+<text x="716.0" y="437.5" font-size="14" fill="#222222">bond pad metal</text>
+<rect x="229.0" y="449.5" width="26" height="14" fill="none" stroke="#222222" opacity="1.0" stroke-dasharray="4,2"/>
+<text x="263.0" y="461.5" font-size="14" fill="#222222">pad opening</text>
+<rect x="479.0" y="449.5" width="26" height="14" fill="#dbe8f5"/>
+<rect x="479.0" y="449.5" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
+<text x="513.0" y="461.5" font-size="14" fill="#222222">gate over diffusion</text>
+<rect x="682.0" y="449.5" width="26" height="14" fill="none" stroke="#e08a00" stroke-width="2" stroke-dasharray="5,4"/>
+<text x="716.0" y="461.5" font-size="14" fill="#222222">the inverters</text>
+<text x="229.0" y="485.5" font-size="14" font-weight="bold" fill="#e08a00">Abc</text>
+<text x="263.0" y="485.5" font-size="14" fill="#222222">part of the rail clamp</text>
 </svg>
