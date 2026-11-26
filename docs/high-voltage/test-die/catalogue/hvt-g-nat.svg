@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="sans-serif" font-size="13">
+<rect width="640" height="400" fill="white"/>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">NAT beside an N-well: breakdown against where NAT starts</text>
+<rect x="80" y="44" width="400" height="270" rx="0" fill="none" stroke="#222222"/>
+<line x1="107.6" y1="44" x2="107.6" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="107.6" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0.6</text>
+<line x1="249.6" y1="44" x2="249.6" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="249.6" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">2</text>
+<line x1="452.4" y1="44" x2="452.4" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="452.4" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">4</text>
+<line x1="80" y1="314.0" x2="480" y2="314.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="318.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="80" y1="246.5" x2="480" y2="246.5" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="250.5" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="80" y1="179.0" x2="480" y2="179.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="183.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="80" y1="111.5" x2="480" y2="111.5" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="115.5" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">60</text>
+<line x1="80" y1="44.0" x2="480" y2="44.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="48.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">80</text>
+<text x="280.0" y="352" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">distance from the well edge to the NAT layer (µm)</text>
+<text x="30" y="179.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 30 179.0)">predicted breakdown (V)</text>
+<line x1="80" y1="266.8" x2="480" y2="266.8" stroke="#666666" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="476" y="262.8" text-anchor="end" font-size="10" font-weight="normal" fill="#666666">published 14 V</text>
+<line x1="80" y1="121.6" x2="480" y2="121.6" stroke="#666666" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="476" y="117.6" text-anchor="end" font-size="10" font-weight="normal" fill="#666666">57 V</text>
+<polyline points="107.6,254.3 249.6,254.3 452.4,254.3" stroke="#c0392b" stroke-width="1.6" fill="none"/>
+<circle cx="107.6" cy="254.3" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.6" cy="254.3" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="254.3" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="496.0" cy="54.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="58" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AL</text>
+<polyline points="107.6,87.9 249.6,87.9 452.4,87.9" stroke="#2e8b57" stroke-width="1.6" fill="none"/>
+<circle cx="107.6" cy="87.9" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.6" cy="87.9" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="87.9" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
+<circle cx="496.0" cy="72.0" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="76" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AnL</text>
+<polyline points="107.6,105.8 249.6,105.8 452.4,105.8" stroke="#145a32" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
+<circle cx="107.6" cy="105.8" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.6" cy="105.8" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="105.8" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
+<circle cx="496.0" cy="90.0" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AnD</text>
+<polyline points="107.6,87.9 249.6,87.9 452.4,87.9" stroke="#2e86de" stroke-width="1.6" fill="none"/>
+<circle cx="107.6" cy="87.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.6" cy="87.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="87.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<circle cx="496.0" cy="108.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="112" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BL</text>
+<polyline points="107.6,107.4 249.6,107.4 452.4,107.4" stroke="#1b3a6b" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
+<circle cx="107.6" cy="107.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.6" cy="107.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="107.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="496.0" cy="126.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BD</text>
+<text x="20" y="372" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Each point: the lower of the straight-edge and corner values. Open triangle: a lower bound.</text>
+<text x="20" y="388" text-anchor="start" font-size="11" font-weight="normal" fill="#222222"></text>
+</svg>
