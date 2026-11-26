@@ -33,16 +33,16 @@
 <circle cx="452.4" cy="254.3" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="54.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="58" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AL</text>
-<polyline points="107.6,247.2 193.8,138.8 280.0,93.9 452.4,87.9" stroke="#2e86de" stroke-width="1.6" fill="none"/>
-<circle cx="107.6" cy="247.2" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<circle cx="193.8" cy="138.8" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<polyline points="107.6,253.9 193.8,140.9 280.0,93.9 452.4,87.9" stroke="#2e86de" stroke-width="1.6" fill="none"/>
+<circle cx="107.6" cy="253.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<circle cx="193.8" cy="140.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <circle cx="280.0" cy="93.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <circle cx="452.4" cy="87.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="72.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="76" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BL</text>
-<polyline points="107.6,247.2 193.8,139.8 280.0,107.4 452.4,105.8" stroke="#1b3a6b" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
-<circle cx="107.6" cy="247.2" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<circle cx="193.8" cy="139.8" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<polyline points="107.6,253.9 193.8,141.9 280.0,107.4 452.4,105.8" stroke="#1b3a6b" stroke-width="1.6" fill="none" stroke-dasharray="6 4"/>
+<circle cx="107.6" cy="253.9" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="193.8" cy="141.9" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="280.0" cy="107.4" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="452.4" cy="105.8" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="90.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
