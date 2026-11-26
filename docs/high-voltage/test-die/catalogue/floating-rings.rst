@@ -399,8 +399,8 @@ Predicted
    agreement range and the predicted ratio to the reference structure. The
    ring curve runs to a higher well voltage than in :ref:`NR1S2
    <hvt-s-nr1s2>`. The prediction with ring 1 held at 0 V, as in :ref:`P5
-   <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not yet simulated.
-   :numref:`fig-hvt-sr-nr4s` plots the predicted rise of ring 1.
+   <hvt-p5>`, is in :numref:`tab-hvt-p5`. :numref:`fig-hvt-sr-nr4s` plots
+   the predicted rise of ring 1.
 
 Limits
    Only ring 1 has a pad, so how the voltage divides among the outer rings
@@ -424,11 +424,11 @@ Limits
      - –
      - –
    * - BL
-     - failed
+     - 109.7
      - 106.3
-     - –
-     - –
-     - –
+     - 106.3 to 106.3
+     - 74.4 to 122.2
+     - 1.59 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 110.5
      - failed
@@ -682,11 +682,11 @@ Limits
    * - BL
      - 76.0
      - 67.0
-     - 67.0 to 67.0
-     - 46.9 to 77.0
+     - 67.0 to 70.3
+     - 46.9 to 80.8
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
+     - 79.8
      - 70.3
      - –
      - –
@@ -799,11 +799,11 @@ Limits
    * - BL
      - 76.0
      - 67.0
-     - 67.0 to 67.0
-     - 46.9 to 77.0
+     - 67.0 to 70.2
+     - 46.9 to 80.7
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
-     - failed
+     - 79.9
      - 70.2
      - –
      - –
@@ -902,12 +902,12 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - 21.8
      - –
-     - –
-     - –
-     - –
+     - 21.8 to 21.8
+     - 15.3 to 25.1
+     - 1.23 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 80.8
      - 74.6
@@ -1864,8 +1864,8 @@ Limits
      - –
      - –
    * - BL
-     - failed
-     - failed
+     - 105.7
+     - > 38.4
      - –
      - –
      - –
