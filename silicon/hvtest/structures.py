@@ -84,8 +84,8 @@ ONE_PAD = [
     # is 30 um wide, to show what the lead itself does to the junction it crosses
     ("OPEN", s(kind="open")), ("NT20b", s()), ("DT20b", s(kind="dnw")),
     ("NA0p6b", s(nat_gap=0.6)), ("NT20L", s(lead_w=30.0)),
-    # the plain well in the 6 V area: the PDK models give the N-well 11 V there and 14 V
-    # in the 3.3 V area with the same capacitance
+    # the plain well in the 6 V area: the PDK models give the N-well 14 V there and 11 V
+    # in the 3.3 V area (where every other structure is) with the same capacitance
     ("NT20V", s(dualgate=True)),
 ]
 
