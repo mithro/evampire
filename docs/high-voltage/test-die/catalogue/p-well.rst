@@ -56,7 +56,7 @@ NW0
    :alt: Plan view and cross-section of NW0: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 0 µm. A
-         Metal5 lead joins the well to a pad at 1490, 895 µm.
+         Metal5 lead joins the well to a pad at 1190, 895 µm.
 
    NW0 in plan view and in cross-section.
 
@@ -86,9 +86,9 @@ NW0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 5 from the south
+     - Column 4 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1490, 895 µm
+     - 1190, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -108,7 +108,7 @@ Compared with
    * :ref:`NW1p5 <hvt-s-nw1p5>`: the P-well starts at 0 µm in place of 1.5 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 895 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 895 µm.
    Swept again at 85 °C. The knee is expected early and sharp.
 
 Predicted
@@ -169,7 +169,7 @@ NW1p5
    :alt: Plan view and cross-section of NW1p5: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 1.5 µm.
-         A Metal5 lead joins the well to a pad at 1790, 895 µm.
+         A Metal5 lead joins the well to a pad at 1490, 895 µm.
 
    NW1p5 in plan view and in cross-section.
 
@@ -199,9 +199,9 @@ NW1p5
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 5 from the south
+     - Column 5 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1790, 895 µm
+     - 1490, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -223,7 +223,7 @@ Compared with
    * :ref:`NT1 <hvt-s-nt1>`: a P-well in place of a P+ ring at a similar distance.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 895 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 895 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw1p5`. The
@@ -283,7 +283,7 @@ NW3
    :alt: Plan view and cross-section of NW3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 3 µm. A
-         Metal5 lead joins the well to a pad at 290, 1045 µm.
+         Metal5 lead joins the well to a pad at 1790, 895 µm.
 
    NW3 in plan view and in cross-section.
 
@@ -313,9 +313,9 @@ NW3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 6 from the south
+     - Column 6 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 290, 1045 µm
+     - 1790, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -334,7 +334,7 @@ Compared with
    * :ref:`NW6 <hvt-s-nw6>`: the P-well starts at 3 µm in place of 6 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 895 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw3`. The row
@@ -429,7 +429,7 @@ NW6
    :alt: Plan view and cross-section of NW6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 6 µm. A
-         Metal5 lead joins the well to a pad at 590, 1045 µm.
+         Metal5 lead joins the well to a pad at 290, 1045 µm.
 
    NW6 in plan view and in cross-section.
 
@@ -459,9 +459,9 @@ NW6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 6 from the south
+     - Column 1 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 590, 1045 µm
+     - 290, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -480,7 +480,7 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: a P-well from 6 µm in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw6`. The row

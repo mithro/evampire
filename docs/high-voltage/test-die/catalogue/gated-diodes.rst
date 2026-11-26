@@ -106,9 +106,10 @@ Purpose
 
 How it works
    The plate lies on 0.32 µm of trench oxide, from 1 µm inside the well edge
-   to 4 µm outside it. Over oxide that thin, even a heavily doped surface
-   inverts within the plate's range, so the threshold can be read whether
-   P-well or substrate lies beneath.
+   to 4 µm outside it. Over oxide that thin, bare substrate inverts at a few
+   volts. P-well at 4 × 10\ :sup:`17` cm\ :sup:`-3` inverts at about 31 V
+   with the well at 0 V and about 58 V with it at 2 V, by the threshold
+   equation of the method.
 
 Compared with
    * :ref:`NP4 <hvt-s-np4>`: the plate on its own pad in place of joined to the well.
@@ -118,20 +119,22 @@ Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
    is at 290, 595 µm and the plate pad at 290, 745 µm. For :ref:`P1
    <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
-   the voltage between well and plate stays within 60 V. The oxide under
-   this plate sees the whole voltage between plate and well, so that voltage
-   stays within 60 V here, which is 1.8 MV/cm across 0.33 µm.
+   the voltage between well and plate stays within 60 V. The plate is swept
+   to +60 V with the well at 0 V and at 2 V, so that a threshold over P-well
+   falls inside the sweep. The oxide under the plate sees the whole voltage
+   between plate and well, which stays within 60 V: 1.8 MV/cm across 0.33
+   µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-ngp4`. The
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. A
-   threshold of a few volts: bare substrate beside the well. Several times
-   higher: P-well.
+   threshold of a few volts: bare substrate beside the well. A threshold
+   near 30 V with the well at 0 V: P-well.
 
 Limits
-   The thin oxide limits the voltage between plate and well more than the
-   Metal1 gap does.
+   The threshold over P-well lies close to the 60 V limit once the well is
+   at 2 V, so the second point may be out of reach.
 
 .. list-table:: NGP4: predicted breakdown voltage by process
    :name: tab-hvt-sp-ngp4

@@ -9,13 +9,14 @@ what more rings add. Six of them bring ring 1 out to a pad. Five have one
 ring of the same width at gaps of 2 µm, 3 µm, 5 µm, 8 µm and 12 µm, and the
 sixth has four rings with ring 1 at 1.6 µm.
 
-The group has 16 structures: :ref:`NR1S2 <hvt-s-nr1s2>`, :ref:`NR1S3
+The group has 17 structures: :ref:`NR1S2 <hvt-s-nr1s2>`, :ref:`NR1S3
 <hvt-s-nr1s3>`, :ref:`NR4S <hvt-s-nr4s>`, :ref:`NR1S5 <hvt-s-nr1s5>`,
 :ref:`NR1S8 <hvt-s-nr1s8>`, :ref:`NR1S12 <hvt-s-nr1s12>`, :ref:`NR1_1p4
 <hvt-s-nr1-1p4>`, :ref:`NR1_2 <hvt-s-nr1-2>`, :ref:`NR1_3 <hvt-s-nr1-3>`,
 :ref:`NR3_1p5 <hvt-s-nr3-1p5>`, :ref:`NR3_2 <hvt-s-nr3-2>`, :ref:`NR3W1
 <hvt-s-nr3w1>`, :ref:`NR3W3 <hvt-s-nr3w3>`, :ref:`NR5_1p4 <hvt-s-nr5-1p4>`,
-:ref:`NR5_2 <hvt-s-nr5-2>`, :ref:`NR3M1 <hvt-s-nr3m1>`.
+:ref:`NR5_2 <hvt-s-nr5-2>`, :ref:`NR3M1 <hvt-s-nr3m1>`, :ref:`NR1_2L
+<hvt-s-nr1-2l>`.
 
 Mechanism
 ---------
@@ -45,8 +46,8 @@ simulation predicts.
          process, with dashed lines at the published 14 V and at 57 V and an
          open triangle where a sweep ended without breakdown. The structures
          of the group are NR1S2, NR1S3, NR4S, NR1S5, NR1S8, NR1S12, NR1_1p4,
-         NR1_2, NR1_3, NR3_1p5, NR3_2, NR3W1, NR3W3, NR5_1p4, NR5_2, NR3M1.
-         The plotted values are those of the tables in the entries.
+         NR1_2, NR1_3, NR3_1p5, NR3_2, NR3W1, NR3W3, NR5_1p4, NR5_2, NR3M1,
+         NR1_2L. The plotted values are those of the tables in the entries.
 
    Trend that the simulation predicts across the group.
 
@@ -136,8 +137,10 @@ Predicted
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. The
    well voltage at which the ring starts to follow, and the step it then
-   keeps, are compared with the predicted curve. :numref:`fig-hvt-sr-nr1s2`
-   plots the predicted rise of ring 1.
+   keeps, are compared with the predicted curve. The prediction with ring 1
+   held at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where
+   it is not yet simulated. :numref:`fig-hvt-sr-nr1s2` plots the predicted
+   rise of ring 1.
 
 Limits
    The pad, its lead and the meter's cable load the ring with capacitance
@@ -263,8 +266,9 @@ Predicted
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. A
    later onset and a larger step than :ref:`NR1S2 <hvt-s-nr1s2>`, in the
-   ratio the simulation gives. :numref:`fig-hvt-sr-nr1s3` plots the
-   predicted rise of ring 1.
+   ratio the simulation gives. The prediction with ring 1 held at 0 V, as in
+   :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not yet
+   simulated. :numref:`fig-hvt-sr-nr1s3` plots the predicted rise of ring 1.
 
 Limits
    As for :ref:`NR1S2 <hvt-s-nr1s2>`.
@@ -395,8 +399,9 @@ Predicted
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. The
    ring curve runs to a higher well voltage than in :ref:`NR1S2
-   <hvt-s-nr1s2>`. :numref:`fig-hvt-sr-nr4s` plots the predicted rise of
-   ring 1.
+   <hvt-s-nr1s2>`. The prediction with ring 1 held at 0 V, as in :ref:`P5
+   <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not yet simulated.
+   :numref:`fig-hvt-sr-nr4s` plots the predicted rise of ring 1.
 
 Limits
    Only ring 1 has a pad, so how the voltage divides among the outer rings
@@ -513,18 +518,20 @@ Compared with
    * :ref:`NT5 <hvt-s-nt5>`: an N-well ring at 5 µm in place of a P+ ring.
 
 Measurement
-   Procedures :ref:`P1 <hvt-p1>` and :ref:`P5 <hvt-p5>` apply. The well pad
-   is at 1190, 295 µm and the ring 1 pad at 1190, 445 µm. :ref:`P5 <hvt-p5>`
-   is the main procedure here: the ring pad is held at 0 V and its current
-   recorded.
+   Procedures :ref:`P1 <hvt-p1>`, :ref:`P3 <hvt-p3>` and :ref:`P5 <hvt-p5>`
+   apply. The well pad is at 1190, 295 µm and the ring 1 pad at 1190, 445
+   µm. :ref:`P5 <hvt-p5>` is the main procedure here: the ring pad is held
+   at 0 V and its current recorded. :ref:`P3 <hvt-p3>` is run as well,
+   because the floating potential costs nothing to record and is simulated.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1s5`. The
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. The
    well voltage at which ring current starts is what two wells 5 µm apart
-   can differ by. :numref:`fig-hvt-sr-nr1s5` plots the predicted rise of
-   ring 1.
+   can differ by. The prediction with ring 1 held at 0 V, as in :ref:`P5
+   <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not yet simulated.
+   :numref:`fig-hvt-sr-nr1s5` plots the predicted rise of ring 1.
 
 Limits
    Under assumption A the P-well between well and ring fails first, and the
@@ -640,17 +647,19 @@ Compared with
    * :ref:`NT10 <hvt-s-nt10>`: an N-well ring at 8 µm in place of a P+ ring at 10 µm.
 
 Measurement
-   Procedures :ref:`P1 <hvt-p1>` and :ref:`P5 <hvt-p5>` apply. The well pad
-   is at 1490, 295 µm and the ring 1 pad at 1490, 445 µm. As for :ref:`NR1S5
-   <hvt-s-nr1s5>`. Which pad the current leaves by, ring or substrate, is
-   the result.
+   Procedures :ref:`P1 <hvt-p1>`, :ref:`P3 <hvt-p3>` and :ref:`P5 <hvt-p5>`
+   apply. The well pad is at 1490, 295 µm and the ring 1 pad at 1490, 445
+   µm. As for :ref:`NR1S5 <hvt-s-nr1s5>`. Which pad the current leaves by,
+   ring or substrate, is the result.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1s8`. The
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure.
    Substrate current first: 8 µm isolates two wells up to the breakdown
-   voltage. Ring current first: it does not.
+   voltage. Ring current first: it does not. The prediction with ring 1 held
+   at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is
+   not yet simulated.
 
 Limits
    As for :ref:`NR1S5 <hvt-s-nr1s5>`.
@@ -755,16 +764,18 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: an N-well ring at 12 µm in place of nothing.
 
 Measurement
-   Procedures :ref:`P1 <hvt-p1>` and :ref:`P5 <hvt-p5>` apply. The well pad
-   is at 1790, 295 µm and the ring 1 pad at 1790, 445 µm. As for :ref:`NR1S5
-   <hvt-s-nr1s5>`.
+   Procedures :ref:`P1 <hvt-p1>`, :ref:`P3 <hvt-p3>` and :ref:`P5 <hvt-p5>`
+   apply. The well pad is at 1790, 295 µm and the ring 1 pad at 1790, 445
+   µm. As for :ref:`NR1S5 <hvt-s-nr1s5>`.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1s12`. The
    row of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. A
    breakdown voltage equal to :ref:`NT20 <hvt-s-nt20>`, with no ring
-   current: a neighbouring well 12 µm away changes nothing.
+   current: a neighbouring well 12 µm away changes nothing. The prediction
+   with ring 1 held at 0 V, as in :ref:`P5 <hvt-p5>`, is in
+   :numref:`tab-hvt-p5`, where it is not yet simulated.
 
 Limits
    If ring current still flows here, the die has no wider gap to show where
@@ -816,7 +827,7 @@ NR1_1p4
    :alt: Plan view and cross-section of NR1_1p4: an N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; one floating ring 2
-         µm wide, gap 1.4 µm. A Metal5 lead joins the well to a pad at 1190,
+         µm wide, gap 1.4 µm. A Metal5 lead joins the well to a pad at 290,
          1495 µm.
 
    NR1_1p4 in plan view and in cross-section.
@@ -847,9 +858,9 @@ NR1_1p4
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 9 from the south
+     - Column 1 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 1190, 1495 µm
+     - 290, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -869,7 +880,7 @@ Compared with
    * :ref:`NR1_2 <hvt-s-nr1-2>`: a gap of 1.4 µm in place of 2 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1495 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1495 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1-1p4`. The
@@ -928,7 +939,7 @@ NR1_2
    :alt: Plan view and cross-section of NR1_2: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; one floating ring 2 µm
-         wide, gap 2 µm. A Metal5 lead joins the well to a pad at 1490, 1495
+         wide, gap 2 µm. A Metal5 lead joins the well to a pad at 590, 1495
          µm.
 
    NR1_2 in plan view and in cross-section.
@@ -959,9 +970,9 @@ NR1_2
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 9 from the south
+     - Column 2 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 1490, 1495 µm
+     - 590, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -982,7 +993,7 @@ Compared with
    * :ref:`NR1S2 <hvt-s-nr1s2>`: no contact on the ring in place of one.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1495 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1495 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1-2`. The
@@ -1040,7 +1051,7 @@ NR1_3
    :alt: Plan view and cross-section of NR1_3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; one floating ring 2 µm
-         wide, gap 3 µm. A Metal5 lead joins the well to a pad at 1790, 1495
+         wide, gap 3 µm. A Metal5 lead joins the well to a pad at 890, 1495
          µm.
 
    NR1_3 in plan view and in cross-section.
@@ -1071,9 +1082,9 @@ NR1_3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 9 from the south
+     - Column 3 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 1790, 1495 µm
+     - 890, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1091,7 +1102,7 @@ Compared with
    * :ref:`NR1S3 <hvt-s-nr1s3>`: no contact on the ring in place of one.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1495 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1495 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr1-3`. The
@@ -1151,7 +1162,7 @@ NR3_1p5
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 30 µm outside it; three floating
          rings 2 µm wide, gaps 1.5, 2, 2.5 µm. A Metal5 lead joins the well
-         to a pad at 290, 1645 µm.
+         to a pad at 1190, 1495 µm.
 
    NR3_1p5 in plan view and in cross-section.
 
@@ -1185,9 +1196,9 @@ NR3_1p5
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 10 from the south
+     - Column 4 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 290, 1645 µm
+     - 1190, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1207,7 +1218,7 @@ Compared with
    * :ref:`NR3_2 <hvt-s-nr3-2>`: gaps from 1.5 µm in place of from 2 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1645 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1495 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr3-1p5`. The
@@ -1216,8 +1227,8 @@ Predicted
    the single rings: more rings share the voltage further.
 
 Limits
-   Its P+ ring is 30 µm from the well, so it is compared with :ref:`NT35
-   <hvt-s-nt35>` and not with :ref:`NT20 <hvt-s-nt20>` for ring distance.
+   Its P+ ring is 30 µm from the well, further than that of :ref:`NT20
+   <hvt-s-nt20>`.
 
 .. list-table:: NR3_1p5: predicted breakdown voltage by process
    :name: tab-hvt-sp-nr3-1p5
@@ -1266,7 +1277,7 @@ NR3_2
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 30 µm outside it; three floating rings 2 µm
          wide, gaps 2, 2.5, 3 µm. A Metal5 lead joins the well to a pad at
-         590, 1645 µm.
+         1490, 1495 µm.
 
    NR3_2 in plan view and in cross-section.
 
@@ -1300,9 +1311,9 @@ NR3_2
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 10 from the south
+     - Column 5 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 590, 1645 µm
+     - 1490, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1324,7 +1335,7 @@ Compared with
    * :ref:`NR3M1 <hvt-s-nr3m1>`: no plate in place of a Metal1 plate.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1645 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1495 µm.
    Swept again at 85 °C.
 
 Predicted
@@ -1419,7 +1430,7 @@ NR3W1
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 30 µm outside it; three floating rings 1 µm
          wide, gaps 2, 2.5, 3 µm. A Metal5 lead joins the well to a pad at
-         890, 1645 µm.
+         1790, 1495 µm.
 
    NR3W1 in plan view and in cross-section.
 
@@ -1453,9 +1464,9 @@ NR3W1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 10 from the south
+     - Column 6 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 890, 1645 µm
+     - 1790, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1474,7 +1485,7 @@ Compared with
    * :ref:`NR3_2 <hvt-s-nr3-2>`: rings 1 µm wide in place of 2 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1645 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1495 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr3w1`. The
@@ -1534,7 +1545,7 @@ NR3W3
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 35 µm outside it; three floating rings 3 µm
          wide, gaps 2, 2.5, 3 µm. A Metal5 lead joins the well to a pad at
-         1190, 1645 µm.
+         290, 1645 µm.
 
    NR3W3 in plan view and in cross-section.
 
@@ -1568,9 +1579,9 @@ NR3W3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 10 from the south
+     - Column 1 from the west, row 10 from the south
    * - Well pad, centre x, y
-     - 1190, 1645 µm
+     - 290, 1645 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1589,7 +1600,7 @@ Compared with
    * :ref:`NR3W1 <hvt-s-nr3w1>`: rings 3 µm wide in place of 1 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1645 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1645 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr3w3`. The
@@ -1648,7 +1659,7 @@ NR5_1p4
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 36 µm outside it; five floating rings
          2 µm wide, gaps 1.4, 1.7, 2, 2.4, 2.8 µm. A Metal5 lead joins the
-         well to a pad at 1490, 1645 µm.
+         well to a pad at 590, 1645 µm.
 
    NR5_1p4 in plan view and in cross-section.
 
@@ -1686,9 +1697,9 @@ NR5_1p4
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 10 from the south
+     - Column 2 from the west, row 10 from the south
    * - Well pad, centre x, y
-     - 1490, 1645 µm
+     - 590, 1645 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1707,7 +1718,7 @@ Compared with
    * :ref:`NR5_2 <hvt-s-nr5-2>`: gaps from 1.4 µm in place of from 2 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1645 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1645 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr5-1p4`. The
@@ -1767,7 +1778,7 @@ NR5_2
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 40 µm outside it; five floating rings 2 µm
          wide, gaps 2, 2.5, 3, 3.5, 4 µm. A Metal5 lead joins the well to a
-         pad at 1790, 1645 µm.
+         pad at 890, 1645 µm.
 
    NR5_2 in plan view and in cross-section.
 
@@ -1805,9 +1816,9 @@ NR5_2
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 10 from the south
+     - Column 3 from the west, row 10 from the south
    * - Well pad, centre x, y
-     - 1790, 1645 µm
+     - 890, 1645 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1826,7 +1837,7 @@ Compared with
    * :ref:`NR3_2 <hvt-s-nr3-2>`: five rings in place of three.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1645 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1645 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nr5-2`. The
@@ -1884,7 +1895,7 @@ NR3M1
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 30 µm outside it; three floating rings 2 µm
          wide, gaps 2, 2.5, 3 µm; Metal1 plate to 3 µm. A Metal5 lead joins
-         the well to a pad at 290, 1795 µm.
+         the well to a pad at 1190, 1645 µm.
 
    NR3M1 in plan view and in cross-section.
 
@@ -1920,9 +1931,9 @@ NR3M1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 11 from the south
+     - Column 4 from the west, row 10 from the south
    * - Well pad, centre x, y
-     - 290, 1795 µm
+     - 1190, 1645 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1942,7 +1953,7 @@ Compared with
    * :ref:`NM1_3 <hvt-s-nm1-3>`: three rings under and beyond the plate in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1795 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1645 µm.
    Three sweeps matter here: less walk-out than :ref:`NR3_2 <hvt-s-nr3-2>`
    is the plate's benefit.
 
@@ -1991,3 +2002,78 @@ Limits
      - 61.2 to 61.2
      - 42.8 to 70.4
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
+
+.. _hvt-s-nr1-2l:
+
+NR1_2L
+------
+
+.. figure:: hvt-s-NR1_2L.svg
+   :name: fig-hvt-s-nr1-2l
+   :alt: Plan view and cross-section of NR1_2L: an N-well 30 µm across
+         with corners cut 4.7 µm along each side, an N+ contact ring inside
+         its edge and a P+ ring 20 µm outside it; one floating ring 2 µm
+         wide, gap 2 µm; Metal5 lead 30 µm wide. A Metal5 lead joins the
+         well to a pad at 1490, 2095 µm.
+
+   NR1_2L in plan view and in cross-section.
+
+.. list-table:: NR1_2L: drawn parameters and position
+   :name: tab-hvt-s-nr1-2l
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Parameter
+     - Value
+   * - Well
+     - N-well
+   * - Side of the well
+     - 30 µm
+   * - Corners
+     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
+   * - Area and perimeter
+     - 856 µm² and 109.0 µm
+   * - N+ contact ring
+     - 2 µm wide, 2 µm inside the well edge
+   * - P+ ring
+     - 2 µm wide, 20 µm from the well edge
+   * - Floating ring 1
+     - 2 µm wide, after a gap of 2 µm
+   * - Fill block
+     - Whole structure
+   * - Metal5 lead
+     - 30 µm wide
+   * - Site
+     - Column 5 from the west, row 13 from the south
+   * - Well pad, centre x, y
+     - 1490, 2095 µm
+   * - Substrate
+     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
+
+Purpose
+   Shows whether the Metal5 lead changes a well that has a floating ring.
+   :numref:`fig-hvt-s-nr1-2l` shows the structure and
+   :numref:`tab-hvt-s-nr1-2l` lists what is drawn.
+
+How it works
+   The lead crosses the gap and the ring at the well's voltage. A ring takes
+   its potential from the silicon all round it, so a conductor above one
+   part of the gap could shift when that part of the ring is reached. Here
+   the lead covers the whole east side in place of 6 µm of it.
+
+Compared with
+   * :ref:`NR1_2 <hvt-s-nr1-2>`: a lead 30 µm wide in place of 6 µm.
+   * :ref:`NT20L <hvt-s-nt20l>`: one floating ring under the lead in place of none.
+
+Measurement
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 2095 µm.
+
+Predicted
+   Not yet simulated: the results file has no entry for this structure.
+   Equal to :ref:`NR1_2 <hvt-s-nr1-2>`: the lead does not disturb a ring.
+   Different: every ring structure carries that effect over 6 µm.
+
+Limits
+   The ring is one conductor, so an effect on its east side shows all round
+   and cannot be located. The simulation has no lead, so its prediction is
+   that of :ref:`NR1_2 <hvt-s-nr1-2>`.

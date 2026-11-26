@@ -7,11 +7,13 @@ A field plate is a conductor joined to the well that extends over the oxide
 beyond the well's edge. These structures measure what a plate of each layer
 and length gains.
 
-The group has 12 structures: :ref:`NP1 <hvt-s-np1>`, :ref:`NP2 <hvt-s-np2>`,
+The group has 15 structures: :ref:`NP1 <hvt-s-np1>`, :ref:`NP2 <hvt-s-np2>`,
 :ref:`NP4 <hvt-s-np4>`, :ref:`NM1_3 <hvt-s-nm1-3>`, :ref:`NM1_6
 <hvt-s-nm1-6>`, :ref:`NM1_10 <hvt-s-nm1-10>`, :ref:`NM2_6 <hvt-s-nm2-6>`,
 :ref:`NM2_12 <hvt-s-nm2-12>`, :ref:`NPM12 <hvt-s-npm12>`, :ref:`DM1_6
-<hvt-s-dm1-6>`, :ref:`DM1_10 <hvt-s-dm1-10>`, :ref:`DPM12 <hvt-s-dpm12>`.
+<hvt-s-dm1-6>`, :ref:`DM1_10 <hvt-s-dm1-10>`, :ref:`DPM12 <hvt-s-dpm12>`,
+:ref:`NM1_6b <hvt-s-nm1-6b>`, :ref:`NM1_6L <hvt-s-nm1-6l>`, :ref:`NM1_6C0
+<hvt-s-nm1-6c0>`.
 
 Mechanism
 ---------
@@ -42,8 +44,9 @@ predicts.
          plates, one curve per process, with dashed lines at the published
          14 V and at 57 V and an open triangle where a sweep ended without
          breakdown. The structures of the group are NP1, NP2, NP4, NM1_3,
-         NM1_6, NM1_10, NM2_6, NM2_12, NPM12, DM1_6, DM1_10, DPM12. The
-         plotted values are those of the tables in the entries.
+         NM1_6, NM1_10, NM2_6, NM2_12, NPM12, DM1_6, DM1_10, DPM12, NM1_6b,
+         NM1_6L, NM1_6C0. The plotted values are those of the tables in the
+         entries.
 
    Trend that the simulation predicts across the group.
 
@@ -64,7 +67,7 @@ NP1
    :alt: Plan view and cross-section of NP1: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 1 µm.
-         A Metal5 lead joins the well to a pad at 290, 1345 µm.
+         A Metal5 lead joins the well to a pad at 1190, 1195 µm.
 
    NP1 in plan view and in cross-section.
 
@@ -94,9 +97,9 @@ NP1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 8 from the south
+     - Column 4 from the west, row 7 from the south
    * - Well pad, centre x, y
-     - 290, 1345 µm
+     - 1190, 1195 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -116,7 +119,7 @@ Compared with
    * :ref:`NP2 <hvt-s-np2>`: a plate of 1 µm in place of 2 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1195 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-np1`. The row
@@ -174,7 +177,7 @@ NP2
    :alt: Plan view and cross-section of NP2: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 2 µm.
-         A Metal5 lead joins the well to a pad at 590, 1345 µm.
+         A Metal5 lead joins the well to a pad at 1490, 1195 µm.
 
    NP2 in plan view and in cross-section.
 
@@ -204,9 +207,9 @@ NP2
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 8 from the south
+     - Column 5 from the west, row 7 from the south
    * - Well pad, centre x, y
-     - 590, 1345 µm
+     - 1490, 1195 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -226,7 +229,7 @@ Compared with
    * :ref:`NPM12 <hvt-s-npm12>`: polysilicon alone in place of three stepped layers.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1195 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-np2`. The row
@@ -320,7 +323,7 @@ NP4
    :alt: Plan view and cross-section of NP4: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 4 µm.
-         A Metal5 lead joins the well to a pad at 890, 1345 µm.
+         A Metal5 lead joins the well to a pad at 1790, 1195 µm.
 
    NP4 in plan view and in cross-section.
 
@@ -350,9 +353,9 @@ NP4
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 8 from the south
+     - Column 6 from the west, row 7 from the south
    * - Well pad, centre x, y
-     - 890, 1345 µm
+     - 1790, 1195 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -373,7 +376,7 @@ Compared with
    * :ref:`NGP4 <hvt-s-ngp4>`: the plate joined to the well in place of on its own pad.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1345 µm. A
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1195 µm. A
    second sweep straight after the first shows whether the oxide survived.
 
 Predicted
@@ -432,7 +435,7 @@ NM1_3
    :alt: Plan view and cross-section of NM1_3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 3 µm. A
-         Metal5 lead joins the well to a pad at 1190, 1345 µm.
+         Metal5 lead joins the well to a pad at 290, 1345 µm.
 
    NM1_3 in plan view and in cross-section.
 
@@ -462,9 +465,9 @@ NM1_3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 8 from the south
+     - Column 1 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 1190, 1345 µm
+     - 290, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -484,7 +487,7 @@ Compared with
    * :ref:`NP2 <hvt-s-np2>`: Metal1 in place of polysilicon at a similar length.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1345 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-3`. The
@@ -541,7 +544,7 @@ NM1_6
    :alt: Plan view and cross-section of NM1_6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm. A
-         Metal5 lead joins the well to a pad at 1490, 1345 µm.
+         Metal5 lead joins the well to a pad at 590, 1345 µm.
 
    NM1_6 in plan view and in cross-section.
 
@@ -571,9 +574,9 @@ NM1_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 8 from the south
+     - Column 2 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 1490, 1345 µm
+     - 590, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -594,7 +597,7 @@ Compared with
    * :ref:`NAM1_6 <hvt-s-nam1-6>`: no NAT in place of NAT under the plate.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1345 µm.
    Swept again at 85 °C.
 
 Predicted
@@ -689,7 +692,7 @@ NM1_10
    :alt: Plan view and cross-section of NM1_10: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 10 µm. A
-         Metal5 lead joins the well to a pad at 1790, 1345 µm.
+         Metal5 lead joins the well to a pad at 890, 1345 µm.
 
    NM1_10 in plan view and in cross-section.
 
@@ -719,9 +722,9 @@ NM1_10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 8 from the south
+     - Column 3 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 1790, 1345 µm
+     - 890, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -739,7 +742,7 @@ Compared with
    * :ref:`NM1_6 <hvt-s-nm1-6>`: a plate of 10 µm in place of 6 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1345 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-10`. The
@@ -798,7 +801,7 @@ NM2_6
    :alt: Plan view and cross-section of NM2_6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal2 plate to 6 µm. A
-         Metal5 lead joins the well to a pad at 290, 1495 µm.
+         Metal5 lead joins the well to a pad at 1190, 1345 µm.
 
    NM2_6 in plan view and in cross-section.
 
@@ -828,9 +831,9 @@ NM2_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 9 from the south
+     - Column 4 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 290, 1495 µm
+     - 1190, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -849,7 +852,7 @@ Compared with
    * :ref:`NM2_12 <hvt-s-nm2-12>`: a plate of 6 µm in place of 12 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1495 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1345 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm2-6`. The
@@ -907,7 +910,7 @@ NM2_12
    :alt: Plan view and cross-section of NM2_12: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal2 plate to 12 µm. A
-         Metal5 lead joins the well to a pad at 590, 1495 µm.
+         Metal5 lead joins the well to a pad at 1490, 1345 µm.
 
    NM2_12 in plan view and in cross-section.
 
@@ -937,9 +940,9 @@ NM2_12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 9 from the south
+     - Column 5 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 590, 1495 µm
+     - 1490, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -959,7 +962,7 @@ Compared with
    * :ref:`NM1_10 <hvt-s-nm1-10>`: Metal2 in place of Metal1 at a similar length.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1495 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1345 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm2-12`. The
@@ -1017,7 +1020,7 @@ NPM12
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 5 µm;
          Metal2 plate to 9 µm; polysilicon plate to 2 µm. A Metal5 lead
-         joins the well to a pad at 890, 1495 µm.
+         joins the well to a pad at 1790, 1345 µm.
 
    NPM12 in plan view and in cross-section.
 
@@ -1051,9 +1054,9 @@ NPM12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 9 from the south
+     - Column 6 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 890, 1495 µm
+     - 1790, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1073,7 +1076,7 @@ Compared with
    * :ref:`NM1_6 <hvt-s-nm1-6>`: three stepped layers in place of Metal1 alone.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1495 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1345 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-npm12`. The
@@ -1132,7 +1135,7 @@ DM1_6
    :alt: Plan view and cross-section of DM1_6: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 6
-         µm. A Metal5 lead joins the well to a pad at 290, 1945 µm.
+         µm. A Metal5 lead joins the well to a pad at 890, 1795 µm.
 
    DM1_6 in plan view and in cross-section.
 
@@ -1162,9 +1165,9 @@ DM1_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 12 from the south
+     - Column 3 from the west, row 11 from the south
    * - Well pad, centre x, y
-     - 290, 1945 µm
+     - 890, 1795 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1186,7 +1189,7 @@ Compared with
    * :ref:`DGM1 <hvt-s-dgm1>`: the plate joined to the well in place of on its own pad.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1945 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1795 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-6`. The
@@ -1287,7 +1290,7 @@ DM1_10
    :alt: Plan view and cross-section of DM1_10: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 10
-         µm. A Metal5 lead joins the well to a pad at 590, 1945 µm.
+         µm. A Metal5 lead joins the well to a pad at 1190, 1795 µm.
 
    DM1_10 in plan view and in cross-section.
 
@@ -1317,9 +1320,9 @@ DM1_10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 12 from the south
+     - Column 4 from the west, row 11 from the south
    * - Well pad, centre x, y
-     - 590, 1945 µm
+     - 1190, 1795 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1336,7 +1339,7 @@ Compared with
    * :ref:`NM1_10 <hvt-s-nm1-10>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1945 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1795 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-10`. The
@@ -1400,7 +1403,7 @@ DPM12
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 5
          µm; Metal2 plate to 9 µm; polysilicon plate to 2 µm. A Metal5 lead
-         joins the well to a pad at 890, 1945 µm.
+         joins the well to a pad at 1490, 1795 µm.
 
    DPM12 in plan view and in cross-section.
 
@@ -1434,9 +1437,9 @@ DPM12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 12 from the south
+     - Column 5 from the west, row 11 from the south
    * - Well pad, centre x, y
-     - 890, 1945 µm
+     - 1490, 1795 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1455,7 +1458,7 @@ Compared with
    * :ref:`NPM12 <hvt-s-npm12>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1945 µm. A
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1795 µm. A
    second sweep shows whether the oxide under the polysilicon survived.
 
 Predicted
@@ -1509,3 +1512,231 @@ Limits
      - 31.3 to 31.3
      - 21.9 to 36.0
      - 1.00 of :ref:`DT20 <hvt-s-dt20>`
+
+.. _hvt-s-nm1-6b:
+
+NM1_6b
+------
+
+.. figure:: hvt-s-NM1_6b.svg
+   :name: fig-hvt-s-nm1-6b
+   :alt: Plan view and cross-section of NM1_6b: an N-well 30 µm across
+         with corners cut 4.7 µm along each side, an N+ contact ring inside
+         its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm. A
+         Metal5 lead joins the well to a pad at 590, 2095 µm.
+
+   NM1_6b in plan view and in cross-section.
+
+.. list-table:: NM1_6b: drawn parameters and position
+   :name: tab-hvt-s-nm1-6b
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Parameter
+     - Value
+   * - Well
+     - N-well
+   * - Side of the well
+     - 30 µm
+   * - Corners
+     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
+   * - Area and perimeter
+     - 856 µm² and 109.0 µm
+   * - N+ contact ring
+     - 2 µm wide, 2 µm inside the well edge
+   * - P+ ring
+     - 2 µm wide, 20 µm from the well edge
+   * - Metal1 plate
+     - From the contact ring to 6 µm outside the edge; joined to the well
+   * - Fill block
+     - Whole structure
+   * - Metal5 lead
+     - 6 µm wide
+   * - Site
+     - Column 2 from the west, row 13 from the south
+   * - Well pad, centre x, y
+     - 590, 2095 µm
+   * - Substrate
+     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
+
+Purpose
+   A second copy of the Metal1 plate of 6 µm. It is the other half of the
+   ratio that decides the deep-layer question. :numref:`fig-hvt-s-nm1-6b`
+   shows the structure and :numref:`tab-hvt-s-nm1-6b` lists what is drawn.
+
+How it works
+   The drawing is identical to :ref:`NM1_6 <hvt-s-nm1-6>`. A plate raises
+   the breakdown voltage of an edge and does nothing for a bottom. If a deep
+   P layer makes the bottom fail first, the plated wells equal the plain
+   ones; if not, they exceed them by an amount close to the agreement limit,
+   so one pair is not enough.
+
+Compared with
+   * :ref:`NM1_6 <hvt-s-nm1-6>`: nothing but the position on the die.
+   * :ref:`NT20c <hvt-s-nt20c>`: the plated half of the ratio, in place of the plain half.
+
+Measurement
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 2095 µm.
+   Swept with the same settings as :ref:`NM1_6 <hvt-s-nm1-6>` and in the
+   same session.
+
+Predicted
+   Not yet simulated: the results file has no entry for this structure. The
+   mean of :ref:`NM1_6 <hvt-s-nm1-6>` and this copy, divided by the mean of
+   the three plain wells, is compared with the predicted ratio.
+
+Limits
+   Two copies give a difference, not a distribution.
+
+.. _hvt-s-nm1-6l:
+
+NM1_6L
+------
+
+.. figure:: hvt-s-NM1_6L.svg
+   :name: fig-hvt-s-nm1-6l
+   :alt: Plan view and cross-section of NM1_6L: an N-well 30 µm across
+         with corners cut 4.7 µm along each side, an N+ contact ring inside
+         its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm;
+         Metal5 lead 30 µm wide. A Metal5 lead joins the well to a pad at
+         890, 2095 µm.
+
+   NM1_6L in plan view and in cross-section.
+
+.. list-table:: NM1_6L: drawn parameters and position
+   :name: tab-hvt-s-nm1-6l
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Parameter
+     - Value
+   * - Well
+     - N-well
+   * - Side of the well
+     - 30 µm
+   * - Corners
+     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
+   * - Area and perimeter
+     - 856 µm² and 109.0 µm
+   * - N+ contact ring
+     - 2 µm wide, 2 µm inside the well edge
+   * - P+ ring
+     - 2 µm wide, 20 µm from the well edge
+   * - Metal1 plate
+     - From the contact ring to 6 µm outside the edge; joined to the well
+   * - Fill block
+     - Whole structure
+   * - Metal5 lead
+     - 30 µm wide
+   * - Site
+     - Column 3 from the west, row 13 from the south
+   * - Well pad, centre x, y
+     - 890, 2095 µm
+   * - Substrate
+     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
+
+Purpose
+   Shows whether the Metal5 lead changes a well that has a Metal1 plate.
+   :numref:`fig-hvt-s-nm1-6l` shows the structure and
+   :numref:`tab-hvt-s-nm1-6l` lists what is drawn.
+
+How it works
+   The Metal1 plate lies between the lead and the silicon over the first 6
+   µm and screens the surface there from the lead. Beyond the plate's end,
+   where the field now peaks, a lead 30 µm wide covers the whole east side
+   in place of a strip 6 µm wide.
+
+Compared with
+   * :ref:`NM1_6 <hvt-s-nm1-6>`: a lead 30 µm wide in place of 6 µm.
+   * :ref:`NT20L <hvt-s-nt20l>`: a Metal1 plate under the lead in place of none.
+
+Measurement
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 2095 µm.
+
+Predicted
+   Not yet simulated: the results file has no entry for this structure.
+   Equal to :ref:`NM1_6 <hvt-s-nm1-6>`: the lead does not disturb the
+   plate's end. Lower: it does, on every plated structure.
+
+Limits
+   As for :ref:`NT20L <hvt-s-nt20l>`, a lead that helps is hidden by the
+   three sides it does not cover. The simulation has no lead, so its
+   prediction is that of :ref:`NM1_6 <hvt-s-nm1-6>`.
+
+.. _hvt-s-nm1-6c0:
+
+NM1_6C0
+-------
+
+.. figure:: hvt-s-NM1_6C0.svg
+   :name: fig-hvt-s-nm1-6c0
+   :alt: Plan view and cross-section of NM1_6C0: an N-well 30 µm
+         across with square corners, an N+ contact ring inside its edge and
+         a P+ ring 20 µm outside it; Metal1 plate to 6 µm. A Metal5 lead
+         joins the well to a pad at 1190, 2095 µm.
+
+   NM1_6C0 in plan view and in cross-section.
+
+.. list-table:: NM1_6C0: drawn parameters and position
+   :name: tab-hvt-s-nm1-6c0
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Parameter
+     - Value
+   * - Well
+     - N-well
+   * - Side of the well
+     - 30 µm
+   * - Corners
+     - Square; four vertices of 90°
+   * - Area and perimeter
+     - 900 µm² and 120.0 µm
+   * - N+ contact ring
+     - 2 µm wide, 2 µm inside the well edge
+   * - P+ ring
+     - 2 µm wide, 20 µm from the well edge
+   * - Metal1 plate
+     - From the contact ring to 6 µm outside the edge; joined to the well
+   * - Fill block
+     - Whole structure
+   * - Metal5 lead
+     - 6 µm wide
+   * - Site
+     - Column 4 from the west, row 13 from the south
+   * - Well pad, centre x, y
+     - 1190, 2095 µm
+   * - Substrate
+     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
+
+Purpose
+   Shows whether a field plate rescues a square corner. A product's wells
+   must have vertices, so this is the practical form of the corner question.
+   :numref:`fig-hvt-s-nm1-6c0` shows the structure and
+   :numref:`tab-hvt-s-nm1-6c0` lists what is drawn.
+
+How it works
+   The Metal1 plate follows the square outline and extends 6 µm beyond each
+   side and each 90° vertex. Over a vertex the plate spreads the depletion
+   region outwards in every direction at once, which relieves exactly the
+   crowding that makes a vertex weak.
+
+Compared with
+   * :ref:`NC0 <hvt-s-nc0>`: a Metal1 plate of 6 µm in place of none.
+   * :ref:`NM1_6 <hvt-s-nm1-6>`: four 90° vertices in place of eight of 135°.
+
+Measurement
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 2095 µm.
+   The light of the avalanche, photographed at the current limit, shows
+   whether the vertices still fail first.
+
+Predicted
+   Not yet simulated: the results file has no entry for this structure.
+   Equal to :ref:`NM1_6 <hvt-s-nm1-6>`: under a plate the vertex no longer
+   matters. Close to :ref:`NC0 <hvt-s-nc0>`: the plate does not reach the
+   vertex's weak point.
+
+Limits
+   The plate's own outline has 90° corners over the oxide, where the field
+   in the oxide is highest. The corner section of the simulation assumes an
+   arc.

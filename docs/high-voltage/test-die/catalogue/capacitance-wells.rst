@@ -72,9 +72,9 @@ OPEN
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 13 from the south
+     - Column 3 from the west, row 12 from the south
    * - Pad, centre x, y
-     - 590, 2095 µm
+     - 890, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -94,7 +94,7 @@ Compared with
 
 Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P2 <hvt-p2>` apply. The pad is at
-   590, 2095 µm. Swept to the full 150 V on every die, which no junction
+   890, 1945 µm. Swept to the full 150 V on every die, which no junction
    structure may reach.
 
 Predicted
@@ -274,8 +274,10 @@ Predicted
 
 Limits
    It is the only large deep N-well, so its edge capacitance cannot be
-   separated from that of its bottom. It has no fill block, and the N-well
-   band under its contact adds capacitance at the perimeter.
+   separated from that of its bottom. By the published model the edge is
+   about 6 % of the total, which is the size of that uncertainty. It has no
+   fill block, and the N-well band under its contact adds capacitance at the
+   perimeter.
 
 .. list-table:: CVD: capacitance expected at zero bias from the published model
    :name: tab-hvt-sp-cvd

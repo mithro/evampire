@@ -94,9 +94,6 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NT20 <hvt-s-nt20>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - The reference structure of the die
-   * - :ref:`NT35 <hvt-s-nt35>`
-     - :doc:`Plain N-wells <catalogue/plain>`
-     - Shows whether a ring distance of 20 µm is far enough
    * - :ref:`NC0 <hvt-s-nc0>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Measures what a square corner costs against a corner cut at 45°.
@@ -124,12 +121,6 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NA0p6T10 <hvt-s-na0p6t10>`
      - :doc:`NAT layer <catalogue/nat>`
      - Repeats the ring-distance check under NAT with the P+ ring at 10 µm.
-   * - :ref:`NA4 <hvt-s-na4>`
-     - :doc:`NAT layer <catalogue/nat>`
-     - The widest strip
-   * - :ref:`NA0p6T35 <hvt-s-na0p6t35>`
-     - :doc:`NAT layer <catalogue/nat>`
-     - Repeats the ring-distance check under NAT with the P+ ring at 35 µm, the widest NAT region on the die.
    * - :ref:`NA0p6C0 <hvt-s-na0p6c0>`
      - :doc:`NAT layer <catalogue/nat>`
      - Measures the cost of a square corner when NAT, not P-well, lies beside the well.
@@ -205,9 +196,6 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`DT2p6 <hvt-s-dt2p6>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with its P+ ring as close as the rules allow, 2.6 µm.
-   * - :ref:`DT10 <hvt-s-dt10>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with the P+ ring at 10 µm.
    * - :ref:`DT20 <hvt-s-dt20>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - The reference deep N-well
@@ -229,9 +217,6 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`DAo1 <hvt-s-dao1>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with NAT over its edge, so that no P-well can lie beside the junction.
-   * - :ref:`DAo1T35 <hvt-s-dao1t35>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with NAT over its edge and the P+ ring at 35 µm.
    * - :ref:`DAo1C0 <hvt-s-dao1c0>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with NAT over its edge and square corners.
@@ -250,6 +235,21 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NT20L <hvt-s-nt20l>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Shows whether the Metal5 lead changes the junction it crosses.
+   * - :ref:`NT20c <hvt-s-nt20c>`
+     - :doc:`Plain N-wells <catalogue/plain>`
+     - A third copy of the reference well.
+   * - :ref:`NM1_6b <hvt-s-nm1-6b>`
+     - :doc:`Field plates <catalogue/field-plates>`
+     - A second copy of the Metal1 plate of 6 µm.
+   * - :ref:`NM1_6L <hvt-s-nm1-6l>`
+     - :doc:`Field plates <catalogue/field-plates>`
+     - Shows whether the Metal5 lead changes a well that has a Metal1 plate.
+   * - :ref:`NM1_6C0 <hvt-s-nm1-6c0>`
+     - :doc:`Field plates <catalogue/field-plates>`
+     - Shows whether a field plate rescues a square corner.
+   * - :ref:`NR1_2L <hvt-s-nr1-2l>`
+     - :doc:`Floating rings <catalogue/floating-rings>`
+     - Shows whether the Metal5 lead changes a well that has a floating ring.
    * - :ref:`NT20V <hvt-s-nt20v>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Shows whether an N-well in the 6 V area breaks down differently from one in the 3.3 V area.

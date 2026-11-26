@@ -7,11 +7,10 @@ The deep N-well structures are a reference group. They repeat the edge
 variations of the other groups on a well that is expected to break down at
 its bottom.
 
-The group has 10 structures: :ref:`DT20b <hvt-s-dt20b>`, :ref:`DT2p6
-<hvt-s-dt2p6>`, :ref:`DT10 <hvt-s-dt10>`, :ref:`DT20 <hvt-s-dt20>`,
-:ref:`DC0 <hvt-s-dc0>`, :ref:`DW1p5 <hvt-s-dw1p5>`, :ref:`DAo1
-<hvt-s-dao1>`, :ref:`DAo1T35 <hvt-s-dao1t35>`, :ref:`DAo1C0 <hvt-s-dao1c0>`,
-:ref:`DAo1M1_6 <hvt-s-dao1m1-6>`.
+The group has 8 structures: :ref:`DT20b <hvt-s-dt20b>`, :ref:`DT2p6
+<hvt-s-dt2p6>`, :ref:`DT20 <hvt-s-dt20>`, :ref:`DC0 <hvt-s-dc0>`,
+:ref:`DW1p5 <hvt-s-dw1p5>`, :ref:`DAo1 <hvt-s-dao1>`, :ref:`DAo1C0
+<hvt-s-dao1c0>`, :ref:`DAo1M1_6 <hvt-s-dao1m1-6>`.
 
 Mechanism
 ---------
@@ -36,12 +35,12 @@ predicts.
    :name: fig-hvt-g-deep-n-well
    :alt: Graph of predicted breakdown voltage, the lower of the
          straight-edge and corner values, against the distance from the edge
-         of the deep N-well to the P+ ring, from 2.6 µm to 20 µm, one curve
-         per process, with dashed lines at the published 14 V and at 57 V
-         and an open triangle where a sweep ended without breakdown. The
-         structures of the group are DT20b, DT2p6, DT10, DT20, DC0, DW1p5,
-         DAo1, DAo1T35, DAo1C0, DAo1M1_6. The plotted values are those of
-         the tables in the entries.
+         of the deep N-well to the P+ ring, 2.6 µm and 20 µm, one curve per
+         process, with dashed lines at the published 14 V and at 57 V and an
+         open triangle where a sweep ended without breakdown. The structures
+         of the group are DT20b, DT2p6, DT20, DC0, DW1p5, DAo1, DAo1C0,
+         DAo1M1_6. The plotted values are those of the tables in the
+         entries.
 
    Trend that the simulation predicts across the group.
 
@@ -181,8 +180,8 @@ DT2p6
    :alt: Plan view and cross-section of DT2p6: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 2.6 µm outside it; nothing drawn in
-         the termination zone. A Metal5 lead joins the well to a pad at 590,
-         1795 µm.
+         the termination zone. A Metal5 lead joins the well to a pad at
+         1490, 1645 µm.
 
    DT2p6 in plan view and in cross-section.
 
@@ -210,9 +209,9 @@ DT2p6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 11 from the south
+     - Column 5 from the west, row 10 from the south
    * - Well pad, centre x, y
-     - 590, 1795 µm
+     - 1490, 1645 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -227,11 +226,11 @@ How it works
    irrelevant.
 
 Compared with
-   * :ref:`DT10 <hvt-s-dt10>`: the ring is at 2.6 µm in place of 10 µm.
+   * :ref:`DT20 <hvt-s-dt20>`: the ring is at 2.6 µm in place of 20 µm.
    * :ref:`NT1 <hvt-s-nt1>`: the nearest ring on a deep N-well in place of on an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1795 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1645 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dt2p6`. The
@@ -286,120 +285,6 @@ Limits
      - 21.9 to 36.0
      - 1.00 of :ref:`DT20 <hvt-s-dt20>`
 
-.. _hvt-s-dt10:
-
-DT10
-----
-
-.. figure:: hvt-s-DT10.svg
-   :name: fig-hvt-s-dt10
-   :alt: Plan view and cross-section of DT10: a deep N-well 30 µm
-         across with corners cut 4.7 µm along each side, an N+ contact ring
-         inside its edge and a P+ ring 10 µm outside it; nothing drawn in
-         the termination zone. A Metal5 lead joins the well to a pad at 890,
-         1795 µm.
-
-   DT10 in plan view and in cross-section.
-
-.. list-table:: DT10: drawn parameters and position
-   :name: tab-hvt-s-dt10
-   :header-rows: 1
-   :widths: 35 65
-
-   * - Parameter
-     - Value
-   * - Well
-     - Deep N-well, with an N-well band under its contact ring
-   * - Side of the well
-     - 30 µm
-   * - Corners
-     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
-   * - Area and perimeter
-     - 856 µm² and 109.0 µm
-   * - N+ contact ring
-     - 2 µm wide, 2 µm inside the well edge
-   * - P+ ring
-     - 2 µm wide, 10 µm from the well edge
-   * - Fill block
-     - Whole structure
-   * - Metal5 lead
-     - 6 µm wide
-   * - Site
-     - Column 3 from the west, row 11 from the south
-   * - Well pad, centre x, y
-     - 890, 1795 µm
-   * - Substrate
-     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
-
-Purpose
-   A deep N-well with the P+ ring at 10 µm. :numref:`fig-hvt-s-dt10` shows
-   the structure and :numref:`tab-hvt-s-dt10` lists what is drawn.
-
-How it works
-   The middle of the ring-distance series, between the closest ring the
-   rules allow and the default distance. If the edge held the voltage, the
-   three would differ as :ref:`NT1 <hvt-s-nt1>`, :ref:`NT10 <hvt-s-nt10>`
-   and :ref:`NT20 <hvt-s-nt20>` do.
-
-Compared with
-   * :ref:`DT2p6 <hvt-s-dt2p6>`: the ring is at 10 µm in place of 2.6 µm.
-   * :ref:`DT20 <hvt-s-dt20>`: the ring is at 10 µm in place of 20 µm.
-   * :ref:`NT10 <hvt-s-nt10>`: a deep N-well in place of an N-well.
-
-Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1795 µm.
-
-Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dt10`. The
-   row of each family's nominal process also gives the family's band, its
-   agreement range and the predicted ratio to the reference structure. Equal
-   to :ref:`DT20 <hvt-s-dt20>`.
-
-Limits
-   Redundant if the bottom limits.
-
-.. list-table:: DT10: predicted breakdown voltage by process
-   :name: tab-hvt-sp-dt10
-   :header-rows: 1
-   :widths: 18 16 16 17 17 16
-
-   * - Process
-     - Straight edge (V)
-     - Corner section (V)
-     - Family band (V)
-     - Agreement range (V)
-     - Predicted ratio
-   * - AL, AnL
-     - 32.4
-     - 30.0
-     - 30.0 to 30.0
-     - 21.0 to 34.5
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-   * - AD, AnD
-     - 32.4
-     - 31.0
-     - 31.0 to 31.0
-     - 21.7 to 35.6
-     - 0.99 of :ref:`DT20 <hvt-s-dt20>`
-   * - BL
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-   * - BLq
-     - 32.3
-     - 31.3
-     - –
-     - –
-     - –
-   * - BD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-
 .. _hvt-s-dt20:
 
 DT20
@@ -411,7 +296,7 @@ DT20
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; nothing drawn in
          the termination zone. A Metal5 lead joins the well to a pad at
-         1190, 1795 µm.
+         1790, 1645 µm.
 
    DT20 in plan view and in cross-section.
 
@@ -439,9 +324,9 @@ DT20
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 11 from the south
+     - Column 6 from the west, row 10 from the south
    * - Well pad, centre x, y
-     - 1190, 1795 µm
+     - 1790, 1645 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -459,10 +344,10 @@ How it works
 Compared with
    * :ref:`NT20 <hvt-s-nt20>`: a deep N-well in place of an N-well.
    * :ref:`DT20b <hvt-s-dt20b>`: nothing: a second copy.
-   * :ref:`DT10 <hvt-s-dt10>`: the ring is at 20 µm in place of 10 µm.
+   * :ref:`DT2p6 <hvt-s-dt2p6>`: the ring is at 20 µm in place of 2.6 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1795 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1645 µm.
    Swept again at 85 °C.
 
 Predicted
@@ -564,7 +449,7 @@ DC0
    :alt: Plan view and cross-section of DC0: a deep N-well 30 µm
          across with square corners, an N+ contact ring inside its edge and
          a P+ ring 20 µm outside it; nothing drawn in the termination zone.
-         A Metal5 lead joins the well to a pad at 1490, 1795 µm.
+         A Metal5 lead joins the well to a pad at 290, 1795 µm.
 
    DC0 in plan view and in cross-section.
 
@@ -592,9 +477,9 @@ DC0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 11 from the south
+     - Column 1 from the west, row 11 from the south
    * - Well pad, centre x, y
-     - 1490, 1795 µm
+     - 290, 1795 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -613,7 +498,7 @@ Compared with
    * :ref:`NC0 <hvt-s-nc0>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1795 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1795 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dc0`. The row
@@ -677,7 +562,7 @@ DW1p5
    :alt: Plan view and cross-section of DW1p5: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; drawn P-well from
-         1.5 µm. A Metal5 lead joins the well to a pad at 1790, 1795 µm.
+         1.5 µm. A Metal5 lead joins the well to a pad at 590, 1795 µm.
 
    DW1p5 in plan view and in cross-section.
 
@@ -707,9 +592,9 @@ DW1p5
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 11 from the south
+     - Column 2 from the west, row 11 from the south
    * - Well pad, centre x, y
-     - 1790, 1795 µm
+     - 590, 1795 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -728,7 +613,7 @@ Compared with
    * :ref:`NW1p5 <hvt-s-nw1p5>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1795 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1795 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dw1p5`. The
@@ -793,8 +678,8 @@ DAo1
    :alt: Plan view and cross-section of DAo1: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; NAT overlapping the
-         well edge by 1 µm. A Metal5 lead joins the well to a pad at 1190,
-         1945 µm.
+         well edge by 1 µm. A Metal5 lead joins the well to a pad at 1790,
+         1795 µm.
 
    DAo1 in plan view and in cross-section.
 
@@ -824,9 +709,9 @@ DAo1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 12 from the south
+     - Column 6 from the west, row 11 from the south
    * - Well pad, centre x, y
-     - 1190, 1945 µm
+     - 1790, 1795 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -847,7 +732,7 @@ Compared with
    * :ref:`NA0p6 <hvt-s-na0p6>`: NAT overlapping the edge in place of 0.6 µm away.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1945 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1795 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dao1`. The
@@ -939,123 +824,6 @@ Limits
      - –
      - –
 
-.. _hvt-s-dao1t35:
-
-DAo1T35
--------
-
-.. figure:: hvt-s-DAo1T35.svg
-   :name: fig-hvt-s-dao1t35
-   :alt: Plan view and cross-section of DAo1T35: a deep N-well 30 µm
-         across with corners cut 4.7 µm along each side, an N+ contact ring
-         inside its edge and a P+ ring 35 µm outside it; NAT overlapping the
-         well edge by 1 µm. A Metal5 lead joins the well to a pad at 1490,
-         1945 µm.
-
-   DAo1T35 in plan view and in cross-section.
-
-.. list-table:: DAo1T35: drawn parameters and position
-   :name: tab-hvt-s-dao1t35
-   :header-rows: 1
-   :widths: 35 65
-
-   * - Parameter
-     - Value
-   * - Well
-     - Deep N-well, with an N-well band under its contact ring
-   * - Side of the well
-     - 30 µm
-   * - Corners
-     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
-   * - Area and perimeter
-     - 856 µm² and 109.0 µm
-   * - N+ contact ring
-     - 2 µm wide, 2 µm inside the well edge
-   * - P+ ring
-     - 2 µm wide, 35 µm from the well edge
-   * - NAT layer
-     - From 1 µm inside the well edge to 0.5 µm short of the P+ ring
-   * - Fill block
-     - Whole structure
-   * - Metal5 lead
-     - 6 µm wide
-   * - Site
-     - Column 5 from the west, row 12 from the south
-   * - Well pad, centre x, y
-     - 1490, 1945 µm
-   * - Substrate
-     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
-
-Purpose
-   A deep N-well with NAT over its edge and the P+ ring at 35 µm.
-   :numref:`fig-hvt-s-dao1t35` shows the structure and
-   :numref:`tab-hvt-s-dao1t35` lists what is drawn.
-
-How it works
-   If :ref:`DAo1 <hvt-s-dao1>` holds much more than :ref:`DT20
-   <hvt-s-dt20>`, the edge is in bare substrate and its depletion region is
-   wide. This structure then shows whether a ring at 20 µm was limiting it.
-
-Compared with
-   * :ref:`DAo1 <hvt-s-dao1>`: the ring is at 35 µm in place of 20 µm.
-   * :ref:`NA0p6T35 <hvt-s-na0p6t35>`: a deep N-well with NAT over its edge in place of an N-well
-     with NAT beside it.
-
-Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1945 µm.
-
-Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dao1t35`. The
-   row of each family's nominal process also gives the family's band, its
-   agreement range and the predicted ratio to the reference structure. Equal
-   to :ref:`DAo1 <hvt-s-dao1>`.
-
-Limits
-   Useful only if :ref:`DAo1 <hvt-s-dao1>` is much above :ref:`DT20
-   <hvt-s-dt20>`.
-
-.. list-table:: DAo1T35: predicted breakdown voltage by process
-   :name: tab-hvt-sp-dao1t35
-   :header-rows: 1
-   :widths: 18 16 16 17 17 16
-
-   * - Process
-     - Straight edge (V)
-     - Corner section (V)
-     - Family band (V)
-     - Agreement range (V)
-     - Predicted ratio
-   * - AL
-     - 32.4
-     - 31.1
-     - 31.1 to 31.1
-     - 21.8 to 35.8
-     - 1.04 of :ref:`DT20 <hvt-s-dt20>`
-   * - AD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-   * - BL
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-   * - BLq
-     - 32.3
-     - 31.3
-     - –
-     - –
-     - –
-   * - BD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-
 .. _hvt-s-dao1c0:
 
 DAo1C0
@@ -1066,7 +834,7 @@ DAo1C0
    :alt: Plan view and cross-section of DAo1C0: a deep N-well 30 µm
          across with square corners, an N+ contact ring inside its edge and
          a P+ ring 20 µm outside it; NAT overlapping the well edge by 1 µm.
-         A Metal5 lead joins the well to a pad at 1790, 1945 µm.
+         A Metal5 lead joins the well to a pad at 290, 1945 µm.
 
    DAo1C0 in plan view and in cross-section.
 
@@ -1096,9 +864,9 @@ DAo1C0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 12 from the south
+     - Column 1 from the west, row 12 from the south
    * - Well pad, centre x, y
-     - 1790, 1945 µm
+     - 290, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1116,7 +884,7 @@ Compared with
    * :ref:`DC0 <hvt-s-dc0>`: NAT over the edge in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1945 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1945 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dao1c0`. The
@@ -1181,7 +949,7 @@ DAo1M1_6
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 6
          µm; NAT overlapping the well edge by 1 µm. A Metal5 lead joins the
-         well to a pad at 290, 2095 µm.
+         well to a pad at 590, 1945 µm.
 
    DAo1M1_6 in plan view and in cross-section.
 
@@ -1213,9 +981,9 @@ DAo1M1_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 13 from the south
+     - Column 2 from the west, row 12 from the south
    * - Well pad, centre x, y
-     - 290, 2095 µm
+     - 590, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1235,7 +1003,7 @@ Compared with
    * :ref:`NAM1_6 <hvt-s-nam1-6>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 2095 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1945 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dao1m1-6`.

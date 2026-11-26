@@ -7,12 +7,11 @@ The NAT layer marks where a native transistor keeps the bare substrate as
 its channel. These structures test whether it also keeps a generated P-well
 away from an N-well edge.
 
-The group has 11 structures: :ref:`NA0p6 <hvt-s-na0p6>`, :ref:`NA2
-<hvt-s-na2>`, :ref:`NA0p6T10 <hvt-s-na0p6t10>`, :ref:`NA4 <hvt-s-na4>`,
-:ref:`NA0p6T35 <hvt-s-na0p6t35>`, :ref:`NA0p6C0 <hvt-s-na0p6c0>`,
-:ref:`NAM1_3 <hvt-s-nam1-3>`, :ref:`NAM1_6 <hvt-s-nam1-6>`, :ref:`NAM1_10
-<hvt-s-nam1-10>`, :ref:`NAM2_12 <hvt-s-nam2-12>`, :ref:`NA0p6b
-<hvt-s-na0p6b>`.
+The group has 9 structures: :ref:`NA0p6 <hvt-s-na0p6>`, :ref:`NA2
+<hvt-s-na2>`, :ref:`NA0p6T10 <hvt-s-na0p6t10>`, :ref:`NA0p6C0
+<hvt-s-na0p6c0>`, :ref:`NAM1_3 <hvt-s-nam1-3>`, :ref:`NAM1_6
+<hvt-s-nam1-6>`, :ref:`NAM1_10 <hvt-s-nam1-10>`, :ref:`NAM2_12
+<hvt-s-nam2-12>`, :ref:`NA0p6b <hvt-s-na0p6b>`.
 
 Mechanism
 ---------
@@ -37,12 +36,12 @@ simulation predicts.
    :name: fig-hvt-g-nat
    :alt: Graph of predicted breakdown voltage, the lower of the
          straight-edge and corner values, against the distance at which the
-         NAT layer starts, from 0.6 µm to 4 µm, one curve per process, with
+         NAT layer starts, 0.6 µm and 2 µm, one curve per process, with
          dashed lines at the published 14 V and at 57 V and an open triangle
          where a sweep ended without breakdown. The structures of the group
-         are NA0p6, NA2, NA0p6T10, NA4, NA0p6T35, NA0p6C0, NAM1_3, NAM1_6,
-         NAM1_10, NAM2_12, NA0p6b. The plotted values are those of the
-         tables in the entries.
+         are NA0p6, NA2, NA0p6T10, NA0p6C0, NAM1_3, NAM1_6, NAM1_10,
+         NAM2_12, NA0p6b. The plotted values are those of the tables in the
+         entries.
 
    Trend that the simulation predicts across the group.
 
@@ -63,7 +62,7 @@ NA0p6
    :alt: Plan view and cross-section of NA0p6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; NAT from 0.6 µm. A Metal5
-         lead joins the well to a pad at 890, 1045 µm.
+         lead joins the well to a pad at 590, 1045 µm.
 
    NA0p6 in plan view and in cross-section.
 
@@ -93,9 +92,9 @@ NA0p6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 6 from the south
+     - Column 2 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 890, 1045 µm
+     - 590, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -116,7 +115,7 @@ Compared with
    * :ref:`NA0p6b <hvt-s-na0p6b>`: nothing: a second copy.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1045 µm.
    Swept again at 85 °C.
 
 Predicted
@@ -225,7 +224,7 @@ NA2
    :alt: Plan view and cross-section of NA2: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; NAT from 2 µm. A Metal5
-         lead joins the well to a pad at 1190, 1045 µm.
+         lead joins the well to a pad at 890, 1045 µm.
 
    NA2 in plan view and in cross-section.
 
@@ -255,9 +254,9 @@ NA2
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 6 from the south
+     - Column 3 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 1190, 1045 µm
+     - 890, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -273,10 +272,10 @@ How it works
 
 Compared with
    * :ref:`NA0p6 <hvt-s-na0p6>`: NAT starts at 2 µm in place of 0.6 µm.
-   * :ref:`NA4 <hvt-s-na4>`: NAT starts at 2 µm in place of 4 µm.
+   * :ref:`NW0 <hvt-s-nw0>`: a strip that may hold generated P-well in place of a drawn one.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-na2`. The row
@@ -287,7 +286,9 @@ Predicted
 
 Limits
    Equal to :ref:`NA0p6 <hvt-s-na0p6>` at a high value, it cannot say
-   whether the strip is empty or simply too lightly doped to matter.
+   whether the strip is empty or simply too lightly doped to matter. With
+   :ref:`NA0p6 <hvt-s-na0p6>` it gives only two widths, so the width at
+   which the foundry starts to fill a strip is bracketed, not found.
 
 .. list-table:: NA2: predicted breakdown voltage by process
    :name: tab-hvt-sp-na2
@@ -347,7 +348,7 @@ NA0p6T10
    :alt: Plan view and cross-section of NA0p6T10: an N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 10 µm outside it; NAT from 0.6 µm. A
-         Metal5 lead joins the well to a pad at 1490, 1045 µm.
+         Metal5 lead joins the well to a pad at 1190, 1045 µm.
 
    NA0p6T10 in plan view and in cross-section.
 
@@ -377,9 +378,9 @@ NA0p6T10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 6 from the south
+     - Column 4 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 1490, 1045 µm
+     - 1190, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -398,7 +399,7 @@ Compared with
    * :ref:`NT10 <hvt-s-nt10>`: NAT over the termination zone in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-na0p6t10`.
@@ -458,252 +459,6 @@ Limits
      - 42.8 to 70.4
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
-.. _hvt-s-na4:
-
-NA4
----
-
-.. figure:: hvt-s-NA4.svg
-   :name: fig-hvt-s-na4
-   :alt: Plan view and cross-section of NA4: an N-well 30 µm across
-         with corners cut 4.7 µm along each side, an N+ contact ring inside
-         its edge and a P+ ring 20 µm outside it; NAT from 4 µm. A Metal5
-         lead joins the well to a pad at 1790, 1045 µm.
-
-   NA4 in plan view and in cross-section.
-
-.. list-table:: NA4: drawn parameters and position
-   :name: tab-hvt-s-na4
-   :header-rows: 1
-   :widths: 35 65
-
-   * - Parameter
-     - Value
-   * - Well
-     - N-well
-   * - Side of the well
-     - 30 µm
-   * - Corners
-     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
-   * - Area and perimeter
-     - 856 µm² and 109.0 µm
-   * - N+ contact ring
-     - 2 µm wide, 2 µm inside the well edge
-   * - P+ ring
-     - 2 µm wide, 20 µm from the well edge
-   * - NAT layer
-     - From 4 µm outside the well edge to 0.5 µm short of the P+ ring
-   * - Fill block
-     - Whole structure
-   * - Metal5 lead
-     - 6 µm wide
-   * - Site
-     - Column 6 from the west, row 6 from the south
-   * - Well pad, centre x, y
-     - 1790, 1045 µm
-   * - Substrate
-     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
-
-Purpose
-   The widest strip: NAT starts 4 µm from the well, leaving room for a
-   full-width P-well beside the edge. :numref:`fig-hvt-s-na4` shows the
-   structure and :numref:`tab-hvt-s-na4` lists what is drawn.
-
-How it works
-   Four micrometres is several times the minimum P-well width. Any rule that
-   generates P-well outside NAT fills this strip. If the strip stays empty
-   here, it stays empty everywhere.
-
-Compared with
-   * :ref:`NA2 <hvt-s-na2>`: NAT starts at 4 µm in place of 2 µm.
-   * :ref:`NW0 <hvt-s-nw0>`: a strip that may hold generated P-well in place of a drawn one.
-
-Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1045 µm.
-
-Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-na4`. The row
-   of each family's nominal process also gives the family's band, its
-   agreement range and the predicted ratio to the reference structure. Much
-   higher than :ref:`NT20 <hvt-s-nt20>`: no P-well is generated near NAT at
-   all, whatever the strip's width.
-
-Limits
-   With :ref:`NA0p6 <hvt-s-na0p6>` and :ref:`NA2 <hvt-s-na2>` it gives only
-   three widths, so the width at which the foundry starts to fill a strip is
-   bracketed, not found.
-
-.. list-table:: NA4: predicted breakdown voltage by process
-   :name: tab-hvt-sp-na4
-   :header-rows: 1
-   :widths: 18 16 16 17 17 16
-
-   * - Process
-     - Straight edge (V)
-     - Corner section (V)
-     - Family band (V)
-     - Agreement range (V)
-     - Predicted ratio
-   * - AL, AD
-     - 17.7
-     - –
-     - 17.7 to 17.7
-     - 12.4 to 20.4
-     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
-   * - AnL
-     - 76.0
-     - 67.0
-     - 67.0 to 67.0
-     - 46.9 to 77.0
-     - 3.79 of :ref:`NT20 <hvt-s-nt20>`
-   * - AnD
-     - 62.9
-     - 61.7
-     - 61.7 to 61.7
-     - 43.2 to 71.0
-     - 3.49 of :ref:`NT20 <hvt-s-nt20>`
-   * - BL
-     - 76.0
-     - 67.0
-     - 67.0 to 70.3
-     - 46.9 to 80.8
-     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
-   * - BLq
-     - 79.9
-     - 70.3
-     - –
-     - –
-     - –
-   * - BD
-     - 62.9
-     - 61.2
-     - 61.2 to 61.2
-     - 42.8 to 70.4
-     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
-
-.. _hvt-s-na0p6t35:
-
-NA0p6T35
---------
-
-.. figure:: hvt-s-NA0p6T35.svg
-   :name: fig-hvt-s-na0p6t35
-   :alt: Plan view and cross-section of NA0p6T35: an N-well 30 µm
-         across with corners cut 4.7 µm along each side, an N+ contact ring
-         inside its edge and a P+ ring 35 µm outside it; NAT from 0.6 µm. A
-         Metal5 lead joins the well to a pad at 290, 1195 µm.
-
-   NA0p6T35 in plan view and in cross-section.
-
-.. list-table:: NA0p6T35: drawn parameters and position
-   :name: tab-hvt-s-na0p6t35
-   :header-rows: 1
-   :widths: 35 65
-
-   * - Parameter
-     - Value
-   * - Well
-     - N-well
-   * - Side of the well
-     - 30 µm
-   * - Corners
-     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
-   * - Area and perimeter
-     - 856 µm² and 109.0 µm
-   * - N+ contact ring
-     - 2 µm wide, 2 µm inside the well edge
-   * - P+ ring
-     - 2 µm wide, 35 µm from the well edge
-   * - NAT layer
-     - From 0.6 µm outside the well edge to 0.5 µm short of the P+ ring
-   * - Fill block
-     - Whole structure
-   * - Metal5 lead
-     - 6 µm wide
-   * - Site
-     - Column 1 from the west, row 7 from the south
-   * - Well pad, centre x, y
-     - 290, 1195 µm
-   * - Substrate
-     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
-
-Purpose
-   Repeats the ring-distance check under NAT with the P+ ring at 35 µm, the
-   widest NAT region on the die. :numref:`fig-hvt-s-na0p6t35` shows the
-   structure and :numref:`tab-hvt-s-na0p6t35` lists what is drawn.
-
-How it works
-   NAT is 33.9 µm wide here. If the breakdown voltage is higher than with
-   the ring at 20 µm, the depletion region under NAT reaches further than
-   under a plain well, as it would in lighter silicon.
-
-Compared with
-   * :ref:`NA0p6 <hvt-s-na0p6>`: the ring is at 35 µm in place of 20 µm.
-   * :ref:`NT35 <hvt-s-nt35>`: NAT over the termination zone in place of none.
-
-Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1195 µm.
-
-Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-na0p6t35`.
-   The row of each family's nominal process also gives the family's band,
-   its agreement range and the predicted ratio to the reference structure.
-   Equal to :ref:`NA0p6 <hvt-s-na0p6>`: the default distance is enough under
-   NAT too.
-
-Limits
-   A wide NAT region has no P+ nearby to hold the surface at the substrate's
-   potential, so charge on the oxide can act on it more than on a narrow
-   one.
-
-.. list-table:: NA0p6T35: predicted breakdown voltage by process
-   :name: tab-hvt-sp-na0p6t35
-   :header-rows: 1
-   :widths: 18 16 16 17 17 16
-
-   * - Process
-     - Straight edge (V)
-     - Corner section (V)
-     - Family band (V)
-     - Agreement range (V)
-     - Predicted ratio
-   * - AL, AD
-     - 17.7
-     - –
-     - 17.7 to 17.7
-     - 12.4 to 20.4
-     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
-   * - AnL
-     - 76.0
-     - 67.0
-     - 67.0 to 67.0
-     - 46.9 to 77.0
-     - 3.79 of :ref:`NT20 <hvt-s-nt20>`
-   * - AnD
-     - 62.9
-     - 61.7
-     - 61.7 to 61.7
-     - 43.2 to 71.0
-     - 3.49 of :ref:`NT20 <hvt-s-nt20>`
-   * - BL
-     - 76.0
-     - 67.0
-     - 67.0 to 70.3
-     - 46.9 to 80.8
-     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
-   * - BLq
-     - 79.9
-     - 70.3
-     - –
-     - –
-     - –
-   * - BD
-     - 62.9
-     - 61.2
-     - 61.2 to 61.2
-     - 42.8 to 70.4
-     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
-
 .. _hvt-s-na0p6c0:
 
 NA0p6C0
@@ -714,7 +469,7 @@ NA0p6C0
    :alt: Plan view and cross-section of NA0p6C0: an N-well 30 µm
          across with square corners, an N+ contact ring inside its edge and
          a P+ ring 20 µm outside it; NAT from 0.6 µm. A Metal5 lead joins
-         the well to a pad at 590, 1195 µm.
+         the well to a pad at 1490, 1045 µm.
 
    NA0p6C0 in plan view and in cross-section.
 
@@ -744,9 +499,9 @@ NA0p6C0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 7 from the south
+     - Column 5 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 590, 1195 µm
+     - 1490, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -765,7 +520,7 @@ Compared with
    * :ref:`NC0 <hvt-s-nc0>`: NAT over the termination zone in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-na0p6c0`. The
@@ -837,7 +592,8 @@ NAM1_3
    :alt: Plan view and cross-section of NAM1_3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 3 µm; NAT
-         from 0.6 µm. A Metal5 lead joins the well to a pad at 890, 1195 µm.
+         from 0.6 µm. A Metal5 lead joins the well to a pad at 1790, 1045
+         µm.
 
    NAM1_3 in plan view and in cross-section.
 
@@ -869,9 +625,9 @@ NAM1_3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 7 from the south
+     - Column 6 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 890, 1195 µm
+     - 1790, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -891,7 +647,7 @@ Compared with
    * :ref:`NM1_3 <hvt-s-nm1-3>`: NAT under the plate in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nam1-3`. The
@@ -961,8 +717,7 @@ NAM1_6
    :alt: Plan view and cross-section of NAM1_6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm; NAT
-         from 0.6 µm. A Metal5 lead joins the well to a pad at 1190, 1195
-         µm.
+         from 0.6 µm. A Metal5 lead joins the well to a pad at 290, 1195 µm.
 
    NAM1_6 in plan view and in cross-section.
 
@@ -994,9 +749,9 @@ NAM1_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 7 from the south
+     - Column 1 from the west, row 7 from the south
    * - Well pad, centre x, y
-     - 1190, 1195 µm
+     - 290, 1195 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1018,7 +773,7 @@ Compared with
    * :ref:`NM1_6 <hvt-s-nm1-6>`: NAT under the plate in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1195 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nam1-6`. The
@@ -1125,7 +880,7 @@ NAM1_10
    :alt: Plan view and cross-section of NAM1_10: an N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 10
-         µm; NAT from 0.6 µm. A Metal5 lead joins the well to a pad at 1490,
+         µm; NAT from 0.6 µm. A Metal5 lead joins the well to a pad at 590,
          1195 µm.
 
    NAM1_10 in plan view and in cross-section.
@@ -1158,9 +913,9 @@ NAM1_10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 7 from the south
+     - Column 2 from the west, row 7 from the south
    * - Well pad, centre x, y
-     - 1490, 1195 µm
+     - 590, 1195 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1179,7 +934,7 @@ Compared with
    * :ref:`NM1_10 <hvt-s-nm1-10>`: NAT under the plate in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1195 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nam1-10`. The
@@ -1250,7 +1005,7 @@ NAM2_12
    :alt: Plan view and cross-section of NAM2_12: an N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal2 plate to 12
-         µm; NAT from 0.6 µm. A Metal5 lead joins the well to a pad at 1790,
+         µm; NAT from 0.6 µm. A Metal5 lead joins the well to a pad at 890,
          1195 µm.
 
    NAM2_12 in plan view and in cross-section.
@@ -1283,9 +1038,9 @@ NAM2_12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 7 from the south
+     - Column 3 from the west, row 7 from the south
    * - Well pad, centre x, y
-     - 1790, 1195 µm
+     - 890, 1195 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1304,7 +1059,7 @@ Compared with
    * :ref:`NM2_12 <hvt-s-nm2-12>`: NAT under the plate in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1195 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nam2-12`. The
@@ -1375,7 +1130,7 @@ NA0p6b
    :alt: Plan view and cross-section of NA0p6b: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; NAT from 0.6 µm. A Metal5
-         lead joins the well to a pad at 1190, 2095 µm.
+         lead joins the well to a pad at 1490, 1945 µm.
 
    NA0p6b in plan view and in cross-section.
 
@@ -1405,9 +1160,9 @@ NA0p6b
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 13 from the south
+     - Column 5 from the west, row 12 from the south
    * - Well pad, centre x, y
-     - 1190, 2095 µm
+     - 1490, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1426,7 +1181,7 @@ Compared with
    * :ref:`NT20b <hvt-s-nt20b>`: the same check on a plain well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 2095 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1945 µm.
    Swept with the same settings as :ref:`NA0p6 <hvt-s-na0p6>` and in the
    same session.
 
