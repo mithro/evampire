@@ -54,6 +54,7 @@
 <text x="506" y="112" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">plate at 0 V, BD</text>
 <circle cx="107.6" cy="267.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="222.5" cy="266.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="337.5" cy="266.8" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="452.4" cy="229.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="126.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">joined, AL</text>
