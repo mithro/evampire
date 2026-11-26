@@ -1,36 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="778" viewBox="0 0 640 778" font-family="sans-serif" font-size="13">
-<rect width="640" height="778" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="806" viewBox="0 0 640 806" font-family="sans-serif" font-size="13">
+<rect width="640" height="806" fill="white"/>
 <text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Predicted breakdown: plain, drawn P-well and NAT structures</text>
-<rect x="110" y="50" width="500" height="616" rx="0" fill="none" stroke="#222222"/>
-<line x1="110.0" y1="50" x2="110.0" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="110.0" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
-<line x1="193.3" y1="50" x2="193.3" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="193.3" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">20</text>
-<line x1="276.7" y1="50" x2="276.7" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="276.7" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">40</text>
-<line x1="360.0" y1="50" x2="360.0" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="360.0" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">60</text>
-<line x1="443.3" y1="50" x2="443.3" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="443.3" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">80</text>
-<line x1="526.7" y1="50" x2="526.7" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="526.7" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">100</text>
-<line x1="610.0" y1="50" x2="610.0" y2="666" stroke="#dddddd" stroke-width="1"/>
-<text x="610.0" y="683" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">120</text>
-<text x="360.0" y="704" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">predicted breakdown voltage (V)</text>
-<text x="60" y="358.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 60 358.0)"></text>
-<line x1="168.3" y1="50" x2="168.3" y2="666" stroke="#666666" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="110" y="50" width="500" height="644" rx="0" fill="none" stroke="#222222"/>
+<line x1="110.0" y1="50" x2="110.0" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="110.0" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="193.3" y1="50" x2="193.3" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="193.3" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="276.7" y1="50" x2="276.7" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="276.7" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="360.0" y1="50" x2="360.0" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="360.0" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">60</text>
+<line x1="443.3" y1="50" x2="443.3" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="443.3" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">80</text>
+<line x1="526.7" y1="50" x2="526.7" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="526.7" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">100</text>
+<line x1="610.0" y1="50" x2="610.0" y2="694" stroke="#dddddd" stroke-width="1"/>
+<text x="610.0" y="711" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">120</text>
+<text x="360.0" y="732" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">predicted breakdown voltage (V)</text>
+<text x="60" y="372.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 60 372.0)"></text>
+<line x1="168.3" y1="50" x2="168.3" y2="694" stroke="#666666" stroke-width="1.2" stroke-dasharray="5 4"/>
 <text x="171.3" y="45" text-anchor="start" font-size="11" font-weight="normal" fill="#666666">published 14 V</text>
-<line x1="347.5" y1="50" x2="347.5" y2="666" stroke="#666666" stroke-width="1.2" stroke-dasharray="5 4"/>
+<line x1="347.5" y1="50" x2="347.5" y2="694" stroke="#666666" stroke-width="1.2" stroke-dasharray="5 4"/>
 <text x="350.5" y="45" text-anchor="start" font-size="11" font-weight="normal" fill="#666666">57 V</text>
 <text x="102" y="68.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NT1</text>
 <rect x="183.8" y="51.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="53.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="278.8" y="67.8" width="9.6" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<rect x="275.8" y="67.8" width="2.9" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="278.8" cy="70.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <rect x="281.0" y="67.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
-<rect x="291.7" y="72.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
-<circle cx="291.7" cy="74.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<rect x="291.4" y="71.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
+<rect x="279.6" y="72.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
+<circle cx="279.6" cy="74.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<rect x="281.4" y="71.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <rect x="110" y="78.0" width="500" height="28" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
 <text x="102" y="96.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NT5</text>
 <rect x="183.8" y="79.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
@@ -80,22 +80,22 @@
 <text x="102" y="236.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NW0</text>
 <rect x="183.8" y="219.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="221.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="192.1" y="235.8" width="1" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
-<circle cx="192.5" cy="238.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<rect x="190.1" y="235.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
-<rect x="192.5" y="240.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
-<circle cx="192.5" cy="242.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<rect x="190.1" y="239.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
+<rect x="184.2" y="235.8" width="1" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<circle cx="184.2" cy="238.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<rect x="181.8" y="235.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
+<rect x="184.2" y="240.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
+<circle cx="184.2" cy="242.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<rect x="181.8" y="239.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <rect x="110" y="246.0" width="500" height="28" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
 <text x="102" y="264.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NW1p5</text>
 <rect x="183.8" y="247.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="249.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="326.2" y="263.8" width="2.5" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<rect x="323.8" y="263.8" width="5.0" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="331.7" cy="266.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<rect x="323.1" y="263.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
-<rect x="325.0" y="268.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
+<rect x="320.6" y="263.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
+<rect x="322.5" y="268.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
 <circle cx="330.8" cy="270.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<rect x="321.8" y="267.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
+<rect x="319.3" y="267.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <text x="102" y="292.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NW3</text>
 <rect x="183.8" y="275.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="277.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
@@ -270,33 +270,42 @@
 <circle cx="372.1" cy="634.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <rect x="361.8" y="631.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <rect x="110" y="638.0" width="500" height="28" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
-<text x="102" y="656.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NT20V</text>
+<text x="102" y="656.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NT20c</text>
 <rect x="183.8" y="639.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="641.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<rect x="389.2" y="655.8" width="13.8" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<rect x="389.2" y="655.8" width="13.3" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="426.7" cy="658.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <rect x="386.0" y="655.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
-<rect x="365.0" y="660.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
+<rect x="369.2" y="660.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
 <circle cx="372.1" cy="662.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<rect x="361.8" y="659.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
-<rect x="20" y="715" width="22" height="6" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
-<circle cx="31.0" cy="718.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<text x="48" y="724" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AL</text>
-<rect x="120" y="715" width="22" height="6" rx="0" fill="#7b241c" stroke="none" fill-opacity="0.3"/>
-<circle cx="131.0" cy="718.0" r="3.6" fill="#7b241c" stroke="#222222" stroke-width="0.6"/>
-<text x="148" y="724" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AD</text>
-<rect x="220" y="715" width="22" height="6" rx="0" fill="#2e8b57" stroke="none" fill-opacity="0.3"/>
-<circle cx="231.0" cy="718.0" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
-<text x="248" y="724" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AnL</text>
-<rect x="320" y="715" width="22" height="6" rx="0" fill="#145a32" stroke="none" fill-opacity="0.3"/>
-<circle cx="331.0" cy="718.0" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
-<text x="348" y="724" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AnD</text>
-<rect x="420" y="715" width="22" height="6" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
-<circle cx="431.0" cy="718.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<text x="448" y="724" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">BL</text>
-<rect x="520" y="715" width="22" height="6" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
-<circle cx="531.0" cy="718.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<text x="548" y="724" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">BD</text>
-<text x="20" y="744" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Filled circle: straight edge. Open square: corner. Bar: band over the family.</text>
-<text x="20" y="762" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Open triangle: the sweep ended here without breakdown, a lower bound and not a prediction.</text>
+<rect x="366.0" y="659.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
+<text x="102" y="684.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NT20V</text>
+<rect x="183.8" y="667.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
+<circle cx="183.8" cy="669.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<rect x="389.2" y="683.8" width="13.8" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<circle cx="426.7" cy="686.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<rect x="386.0" y="683.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
+<rect x="365.0" y="688.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
+<circle cx="372.1" cy="690.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<rect x="361.8" y="687.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
+<rect x="20" y="743" width="22" height="6" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
+<circle cx="31.0" cy="746.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<text x="48" y="752" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AL</text>
+<rect x="120" y="743" width="22" height="6" rx="0" fill="#7b241c" stroke="none" fill-opacity="0.3"/>
+<circle cx="131.0" cy="746.0" r="3.6" fill="#7b241c" stroke="#222222" stroke-width="0.6"/>
+<text x="148" y="752" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AD</text>
+<rect x="220" y="743" width="22" height="6" rx="0" fill="#2e8b57" stroke="none" fill-opacity="0.3"/>
+<circle cx="231.0" cy="746.0" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
+<text x="248" y="752" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AnL</text>
+<rect x="320" y="743" width="22" height="6" rx="0" fill="#145a32" stroke="none" fill-opacity="0.3"/>
+<circle cx="331.0" cy="746.0" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
+<text x="348" y="752" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">AnD</text>
+<rect x="420" y="743" width="22" height="6" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
+<circle cx="431.0" cy="746.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<text x="448" y="752" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">BL</text>
+<rect x="520" y="743" width="22" height="6" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
+<circle cx="531.0" cy="746.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<text x="548" y="752" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">BD</text>
+<text x="20" y="772" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Filled circle: straight edge. Open square: corner. Bar: band over the family.</text>
+<text x="20" y="790" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">Open triangle: the sweep ended here without breakdown, a lower bound and not a prediction.</text>
 </svg>
