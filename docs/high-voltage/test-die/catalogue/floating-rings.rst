@@ -5,8 +5,9 @@ Floating rings
 
 Floating rings are N-well rings round the well that connect to nothing.
 These structures find the gap at which a ring starts to take voltage, and
-what more rings add. Six of them bring ring 1 out to a pad, at gaps of 1.6
-µm, 2 µm, 3 µm, 5 µm, 8 µm and 12 µm.
+what more rings add. Six of them bring ring 1 out to a pad. Five have one
+ring of the same width at gaps of 2 µm, 3 µm, 5 µm, 8 µm and 12 µm, and the
+sixth has four rings with ring 1 at 1.6 µm.
 
 The group has 16 structures: :ref:`NR1S2 <hvt-s-nr1s2>`, :ref:`NR1S3
 <hvt-s-nr1s3>`, :ref:`NR4S <hvt-s-nr4s>`, :ref:`NR1S5 <hvt-s-nr1s5>`,
@@ -40,7 +41,7 @@ simulation predicts.
    :alt: Graph of predicted breakdown voltage, the lower of the
          straight-edge and corner values, against the gap from the well to
          ring 1, from 1.4 µm to 12 µm, with separate curves for one, three
-         and five rings and for the wide contacted ring, one curve per
+         and five rings and for one ring at the wide gaps, one curve per
          process, with dashed lines at the published 14 V and at 57 V and an
          open triangle where a sweep ended without breakdown. The structures
          of the group are NR1S2, NR1S3, NR4S, NR1S5, NR1S8, NR1S12, NR1_1p4,
@@ -445,7 +446,7 @@ NR1S5
    :name: fig-hvt-s-nr1s5
    :alt: Plan view and cross-section of NR1S5: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
-         its edge and a P+ ring 25 µm outside it; one floating ring 3 µm
+         its edge and a P+ ring 25 µm outside it; one floating ring 2 µm
          wide, gap 5 µm. A Metal5 lead joins the well to a pad at 1190, 295
          µm. A Metal2 lead joins ring 1 to a second pad at 1190, 445 µm.
 
@@ -471,7 +472,7 @@ NR1S5
    * - P+ ring
      - 2 µm wide, 25 µm from the well edge
    * - Floating ring 1
-     - 3 µm wide, after a gap of 5 µm
+     - 2 µm wide, after a gap of 5 µm
    * - Fill block
      - Whole structure
    * - Metal5 lead
@@ -487,8 +488,8 @@ NR1S5
 
 Purpose
    Gives the spacing between two wells at different voltages: a contacted
-   ring 3 µm wide, 5 µm from the well. :numref:`fig-hvt-s-nr1s5` shows the
-   structure and :numref:`tab-hvt-s-nr1s5` lists what is drawn.
+   ring 5 µm from the well. :numref:`fig-hvt-s-nr1s5` shows the structure
+   and :numref:`tab-hvt-s-nr1s5` lists what is drawn.
 
 How it works
    With its pad at 0 V the ring is a neighbouring well at the substrate's
@@ -497,16 +498,15 @@ How it works
    flows from well to ring.
 
 Compared with
-   * :ref:`NR1S3 <hvt-s-nr1s3>`: a gap of 5 µm in place of 3 µm, and a ring 3 µm wide in place
-     of 2 µm.
+   * :ref:`NR1S3 <hvt-s-nr1s3>`: a gap of 5 µm in place of 3 µm.
    * :ref:`NR1S8 <hvt-s-nr1s8>`: a gap of 5 µm in place of 8 µm.
    * :ref:`NT5 <hvt-s-nt5>`: an N-well ring at 5 µm in place of a P+ ring.
 
 Measurement
-   Procedures :ref:`P1 <hvt-p1>`, :ref:`P3 <hvt-p3>` and :ref:`P5 <hvt-p5>`
-   apply. The well pad is at 1190, 295 µm and the ring 1 pad at 1190, 445
-   µm. :ref:`P5 <hvt-p5>` is the main procedure here: the ring pad is held
-   at 0 V and its current recorded.
+   Procedures :ref:`P1 <hvt-p1>` and :ref:`P5 <hvt-p5>` apply. The well pad
+   is at 1190, 295 µm and the ring 1 pad at 1190, 445 µm. :ref:`P5 <hvt-p5>`
+   is the main procedure here: the ring pad is held at 0 V and its current
+   recorded.
 
 Predicted
    Not yet simulated: the results file has no entry for this structure. The
@@ -526,7 +526,7 @@ NR1S8
    :name: fig-hvt-s-nr1s8
    :alt: Plan view and cross-section of NR1S8: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
-         its edge and a P+ ring 28 µm outside it; one floating ring 3 µm
+         its edge and a P+ ring 28 µm outside it; one floating ring 2 µm
          wide, gap 8 µm. A Metal5 lead joins the well to a pad at 1490, 295
          µm. A Metal2 lead joins ring 1 to a second pad at 1490, 445 µm.
 
@@ -552,7 +552,7 @@ NR1S8
    * - P+ ring
      - 2 µm wide, 28 µm from the well edge
    * - Floating ring 1
-     - 3 µm wide, after a gap of 8 µm
+     - 2 µm wide, after a gap of 8 µm
    * - Fill block
      - Whole structure
    * - Metal5 lead
@@ -582,10 +582,10 @@ Compared with
    * :ref:`NT10 <hvt-s-nt10>`: an N-well ring at 8 µm in place of a P+ ring at 10 µm.
 
 Measurement
-   Procedures :ref:`P1 <hvt-p1>`, :ref:`P3 <hvt-p3>` and :ref:`P5 <hvt-p5>`
-   apply. The well pad is at 1490, 295 µm and the ring 1 pad at 1490, 445
-   µm. As for :ref:`NR1S5 <hvt-s-nr1s5>`. Which pad the current leaves by,
-   ring or substrate, is the result.
+   Procedures :ref:`P1 <hvt-p1>` and :ref:`P5 <hvt-p5>` apply. The well pad
+   is at 1490, 295 µm and the ring 1 pad at 1490, 445 µm. As for :ref:`NR1S5
+   <hvt-s-nr1s5>`. Which pad the current leaves by, ring or substrate, is
+   the result.
 
 Predicted
    Not yet simulated: the results file has no entry for this structure.
@@ -604,7 +604,7 @@ NR1S12
    :name: fig-hvt-s-nr1s12
    :alt: Plan view and cross-section of NR1S12: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
-         its edge and a P+ ring 32 µm outside it; one floating ring 3 µm
+         its edge and a P+ ring 32 µm outside it; one floating ring 2 µm
          wide, gap 12 µm. A Metal5 lead joins the well to a pad at 1790, 295
          µm. A Metal2 lead joins ring 1 to a second pad at 1790, 445 µm.
 
@@ -630,7 +630,7 @@ NR1S12
    * - P+ ring
      - 2 µm wide, 32 µm from the well edge
    * - Floating ring 1
-     - 3 µm wide, after a gap of 12 µm
+     - 2 µm wide, after a gap of 12 µm
    * - Fill block
      - Whole structure
    * - Metal5 lead
@@ -659,9 +659,9 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: an N-well ring at 12 µm in place of nothing.
 
 Measurement
-   Procedures :ref:`P1 <hvt-p1>`, :ref:`P3 <hvt-p3>` and :ref:`P5 <hvt-p5>`
-   apply. The well pad is at 1790, 295 µm and the ring 1 pad at 1790, 445
-   µm. As for :ref:`NR1S5 <hvt-s-nr1s5>`.
+   Procedures :ref:`P1 <hvt-p1>` and :ref:`P5 <hvt-p5>` apply. The well pad
+   is at 1790, 295 µm and the ring 1 pad at 1790, 445 µm. As for :ref:`NR1S5
+   <hvt-s-nr1s5>`.
 
 Predicted
    Not yet simulated: the results file has no entry for this structure. A

@@ -446,13 +446,13 @@ Limits
      - 84.8
      - 84.8 to 84.8
      - 59.4 to 97.5
-     - 4.79 of :ref:`NT20 <hvt-s-nt20>`
+     - 1.27 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - AnD
      - 62.9
      - 59.6
      - 59.6 to 59.6
      - 41.7 to 68.5
-     - 3.37 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.97 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 90.2
      - 84.8

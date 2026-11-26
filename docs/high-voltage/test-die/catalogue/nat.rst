@@ -925,13 +925,13 @@ Limits
      - 83.2
      - 83.2 to 83.2
      - 58.2 to 95.7
-     - 4.70 of :ref:`NT20 <hvt-s-nt20>`
+     - 1.24 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - AnD
      - 62.9
      - 61.2
      - 61.2 to 61.2
      - 42.8 to 70.4
-     - 3.46 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.99 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 88.5
      - 83.2
@@ -1059,13 +1059,13 @@ Limits
      - 84.8
      - 84.8 to 84.8
      - 59.4 to 97.5
-     - 4.79 of :ref:`NT20 <hvt-s-nt20>`
+     - 1.27 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - AnD
      - 62.9
      - 59.6
      - 59.6 to 59.6
      - 41.7 to 68.5
-     - 3.37 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.97 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 90.2
      - 84.8
@@ -1214,13 +1214,13 @@ Limits
      - 85.2
      - 85.2 to 85.2
      - 59.6 to 98.0
-     - 4.81 of :ref:`NT20 <hvt-s-nt20>`
+     - 1.27 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - AnD
      - 62.9
      - 60.8
      - 60.8 to 60.8
      - 42.6 to 69.9
-     - 3.44 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.99 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 90.6
      - 85.2
@@ -1339,13 +1339,13 @@ Limits
      - 82.3
      - 82.3 to 82.3
      - 57.6 to 94.6
-     - 4.65 of :ref:`NT20 <hvt-s-nt20>`
+     - 1.23 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - AnD
      - 62.9
      - 60.8
      - 60.8 to 60.8
      - 42.6 to 69.9
-     - 3.44 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.99 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 87.6
      - 82.3
