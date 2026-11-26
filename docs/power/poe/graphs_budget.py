@@ -55,7 +55,8 @@ def class_methods():
     body.append(text(p.x(1.7), p.y(25.5) - 6, "Physical Layer: class 4, "
                      "25.5 W", 10))
     body.append(text(p.x(5.1), p.y(51) + 14, "Data Link Layer: raised to "
-                     "51 W, set in steps of 0.1 W", 10))
+                     "51 W,", 10))
+    body.append(text(p.x(5.1), p.y(51) + 27, "set in steps of 0.1 W", 10))
     body.append(text(p.left + p.w / 2, p.bottom + 18, "time (schematic)",
                      12, "middle"))
     body.append(text(10, p.bottom + 42, "Example: a class 6 powered device "

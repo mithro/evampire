@@ -21,7 +21,8 @@
 <text x="14.0" y="125.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 125.0)">allocation at the PD (W)</text>
 <polyline points="70.0,210.0 159.6,210.0 159.6,137.8 350.0,137.8 350.0,65.5 630.0,65.5" fill="none" stroke="#c55a11" stroke-width="2.4"/>
 <text x="165.2" y="131.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Physical Layer: class 4, 25.5 W</text>
-<text x="355.6" y="79.5" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Data Link Layer: raised to 51 W, set in steps of 0.1 W</text>
+<text x="355.6" y="79.5" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">Data Link Layer: raised to 51 W,</text>
+<text x="355.6" y="92.5" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">set in steps of 0.1 W</text>
 <text x="350.0" y="228.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">time (schematic)</text>
 <text x="10.0" y="252.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#7f7f7f">Example: a class 6 powered device given class 4 by its class events, then raised over LLDP.</text>
 </svg>
