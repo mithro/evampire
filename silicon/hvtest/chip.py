@@ -114,8 +114,8 @@ def build(sites, large=()):
         bh = junction.block_half(p)
         cx = x_next + bh
         cy = y_top + LARGE_BAND / 2
-        px = cx + bh + 30.0 + PAD / 2
-        x_next = px + PAD / 2 + 30.0
+        px = cx + bh + 20.0 + PAD / 2
+        x_next = px + PAD / 2 + 20.0
         if px + PAD / 2 > DIE_W - EDGE or bh > 125.0:
             raise ValueError(f"{name}: does not fit the large band")
         place(top, junction.build(layout, f"s_{name}", params), cx, cy)
