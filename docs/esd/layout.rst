@@ -68,6 +68,8 @@ largest part of the cell, and they are also its primary ESD protection
 
    The parts of gf180mcu_fd_io__bi_t, drawn from its layout.
 
+.. _esd-layout-pad:
+
 Pad connection
 --------------
 
@@ -121,8 +123,7 @@ the core ground VSS runs along the pad side of the drivers. It lies just
 inside the P+ ring round the whole cell, on the same net.
 
 The line A–A′ in :numref:`fig-esd-gds-nmos-driver` is the cut that the
-cross-section :numref:`fig-esd-driver-section` draws for the NMOS. It runs
-from the drain contacts at A to the P+ ring at A′.
+cross-section :numref:`fig-esd-driver-section` draws for the NMOS.
 
 No P-well shape is drawn under these transistors, nor under any ordinary
 NMOS transistor of the cell: the layout draws that layer only under the

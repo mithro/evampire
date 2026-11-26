@@ -33,8 +33,9 @@ Protection structure
 The protection of the bidirectional pad has three parts: the output
 driver, the secondary protection of the input gates and the rail clamp.
 :numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
-:numref:`fig-esd-io-gds-cell` shows where the same parts lie in the cell's
-layout, drawn from the foundry's GDS file.
+:numref:`fig-esd-io-gds-cell` shows where the output driver and the
+secondary protection lie in the cell's layout, drawn from the foundry's GDS
+file. :numref:`fig-esd-io-gds-clamp` shows the rail clamp in a supply pad.
 Every pad sits on two rings of metal that run round the chip: DVDD and
 DVSS.
 
@@ -59,8 +60,9 @@ DVSS.
    :name: fig-esd-io-gds-cell
    :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide. From the
          left: the bond pad, the NMOS output drivers, the PMOS output drivers,
-         the pre-drivers, a blue box round the secondary protection, and the
-         input buffer and logic at the right edge.
+         the pre-drivers, the output signal buffers, the pull-up and
+         pull-down resistors, a blue box round the secondary protection, and
+         the input buffer and logic at the right edge.
    :width: 100%
 
    The layout of gf180mcu_fd_io__bi_t, with the bond pad at the left as in
@@ -70,9 +72,8 @@ DVSS.
 
 Each symbol of the schematic is a group of shapes in a layout.
 :numref:`tab-esd-schematic-layout` pairs them, with the layout figure
-that shows each one. The layout figures use the schematic's colours: red
-for the PAD net and the discharge current, blue for the secondary
-protection, orange for the rail clamp.
+that shows each one. The layout figures use the schematic's colours
+(:ref:`esd-layout`).
 
 .. list-table:: Each part of the schematic and its form in the layout
    :name: tab-esd-schematic-layout
@@ -84,7 +85,7 @@ protection, orange for the rail clamp.
      - Layout figure
    * - PAD
      - The bond pad and the metal 2 bus over both output drivers
-     - :numref:`fig-esd-io-gds-cell`
+     - :numref:`fig-esd-io-gds-pad-net`
    * - Drain diode of the PMOS drivers, 480 µm
      - Six P+ drains of the PMOS output drivers, in an N-well with an N+
        ring on DVDD
@@ -92,12 +93,13 @@ protection, orange for the rail clamp.
    * - Drain diode of the NMOS drivers, 304 µm
      - Four N+ drains of the NMOS output drivers, inside a P+ ring on
        DVSS
-     - :numref:`fig-esd-io-gds-driver`
+     - :numref:`fig-esd-io-gds-paths`, :numref:`fig-esd-io-gds-driver`
    * - 110 Ω resistor
      - Four polysilicon resistors side by side
      - :numref:`fig-esd-io-gds-secondary`
    * - Two 40 µm² diodes
-     - Two P+ strips and two N+ strips, each 20 µm × 1 µm
+     - Two strips of 20 µm × 1 µm for each diode: P+ strips to DVDD, N+
+       strips from DVSS
      - :numref:`fig-esd-io-gds-secondary`
    * - Input buffer
      - The input buffer and logic at the core end of the cell
@@ -124,7 +126,8 @@ Primary protection
 The pad has no separate primary diodes. The output transistors are the
 primary protection. Their drains connect to the pad, and each drain is a
 diffusion in a well, so it forms a diode with that well
-(:numref:`fig-esd-driver-section`):
+(:numref:`fig-esd-driver-section`). :numref:`fig-esd-io-gds-pad-net` shows
+the pad's metal and every drain it connects to, in the layout:
 
 * The PMOS drains (P+ in an N-well tied to DVDD) form a diode from the pad
   to DVDD. Four transistors of 80 µm and four of 40 µm give 480 µm of
@@ -146,11 +149,25 @@ grounded-gate NMOS. Above about 10.7 V the parasitic NPN transistor inside
 each one turns on and :term:`snaps back <Snapback>` to about 6 V
 (:ref:`esd-limits`).
 
-The cross-section cuts across the gates. :numref:`fig-esd-io-gds-driver`
+The cross-section :numref:`fig-esd-driver-section` cuts across the gates.
+:numref:`fig-esd-io-gds-driver`
 shows the same NMOS transistors from above, in the layout, with the rings
 that surround them. The line A–A′ in the layout is the cut that the
 cross-section draws for the NMOS: from the drain contacts at A, across
 the blocked drain, the gate and the source, to the P+ ring at A′.
+
+.. figure:: figures/gds-pad-net.svg
+   :name: fig-esd-io-gds-pad-net
+   :alt: Layout of the pad end of the bidirectional pad with the PAD net in
+         red. The bond pad joins a metal 2 bus over both output drivers.
+         Under the bus, four NMOS drains and six PMOS drains are drawn dark
+         red, each between two gates. A metal 2 wire 2 µm wide runs on to
+         the four secondary protection resistors.
+   :width: 100%
+
+   The PAD net in the layout: the bond pad, its metal 2 bus and the ten
+   drains that are the primary protection. :ref:`esd-layout-pad`
+   describes the connection.
 
 .. figure:: figures/driver-section.svg
    :name: fig-esd-driver-section
@@ -174,7 +191,7 @@ the blocked drain, the gate and the source, to the P+ ring at A′.
    :name: fig-esd-io-gds-driver
    :alt: Enlarged layout of one corner of the NMOS output drivers. Inside an N+
          guard ring on DVDD and a P+ guard ring on DVSS lie a source strip on
-         DVSS, a gate 1.15 µm long, and a wide drain on PAD that is silicide
+         DVSS and a gate 1.15 µm long. Next is a wide drain on PAD, silicide
          blocked for 3.78 µm on each side of its row of contacts. A second gate,
          a shared source and a third gate follow. A dash-dot line A–A′ runs
          from the drain contacts across the gate and source to the P+ ring.
@@ -378,9 +395,8 @@ follows the first path along the rails to a supply pad.
    :width: 100%
 
    The diode and snapback currents of :numref:`fig-esd-paths`, drawn on the
-   layout of the output drivers. The red arrows in the NMOS drivers are
-   its NMOS drain diode, those in the PMOS drivers its PMOS drain diode,
-   and the purple arrows its dashed purple snapback path.
+   layout of the output drivers. The red arrows are the two drain diodes
+   of that figure, and the purple arrows its dashed purple snapback path.
    :ref:`esd-layout-paths` follows each one.
 
 .. figure:: figures/gds-ring.svg
