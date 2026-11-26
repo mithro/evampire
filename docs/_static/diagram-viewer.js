@@ -4,8 +4,8 @@
  *
  *   wheel or pinch       zoom about the pointer
  *   drag                 pan
- *   click the diagram    zoom in (when the whole diagram is showing)
- *   double click         back to the whole diagram
+ *   click the diagram    zoom in, when the whole diagram is showing
+ *   double click         back to the whole diagram, when zoomed in
  *   + - 0 and arrows     zoom in, zoom out, whole diagram, pan
  *   Esc or the backdrop  close
  *
@@ -34,19 +34,13 @@
   var dialog, stage, image, caption, openLink, zoomInButton, zoomOutButton,
     fitButton;
   // Size of the diagram in its own units, and the scale that fits it.
-  var natural = {w: 1, h: 1};
-  var fit = 1;
+  var natural = {w: 1, h: 1}, fit = 1;
   // Scale in screen pixels per diagram unit, and the position of the
   // diagram's top left corner within the stage.
   var view = {s: 1, x: 0, y: 0};
   var pointers = new Map();
-  var travel = 0;
-  var downTarget = null;
+  var travel = 0, downTarget = null, tapPending = false;
   var lastTap = {t: 0, x: 0, y: 0};
-
-  function clamp(value, low, high) {
-    return Math.min(high, Math.max(low, value));
-  }
 
   function atFit() {
     return view.s <= fit * 1.001;
@@ -57,7 +51,8 @@
   function clampAxis(position, size, room) {
     var low = room - MARGIN - size;
     var high = MARGIN;
-    return low > high ? (room - size) / 2 : clamp(position, low, high);
+    return low > high ? (room - size) / 2 :
+      Math.min(high, Math.max(low, position));
   }
 
   function render() {
@@ -72,17 +67,23 @@
     image.style.transform =
       "translate(" + view.x + "px, " + view.y + "px)";
     stage.classList.toggle("is-zoomed", !atFit());
-    zoomOutButton.disabled = fitButton.disabled = atFit();
-    zoomInButton.disabled = view.s >= fit * MAX_ZOOM * 0.999;
+    setDisabled(zoomOutButton, atFit());
+    setDisabled(fitButton, atFit());
+    setDisabled(zoomInButton, view.s >= fit * MAX_ZOOM * 0.999);
+  }
+
+  // A button that can do nothing is marked with aria-disabled, not the
+  // disabled attribute. Disabling the focused button would move the focus
+  // out of the viewer, and the next Tab would start from the top.
+  function setDisabled(el, disabled) {
+    el.setAttribute("aria-disabled", disabled ? "true" : "false");
   }
 
   function measureFit() {
     fit = Math.min(
       (stage.clientWidth - 2 * MARGIN) / natural.w,
       (stage.clientHeight - 2 * MARGIN) / natural.h);
-    if (!(fit > 0)) {
-      fit = 1;
-    }
+    fit = fit > 0 ? fit : 1;
   }
 
   function showWhole() {
@@ -93,15 +94,27 @@
 
   // Zoom by a factor while keeping the diagram point under (px, py) still.
   function zoomAbout(px, py, factor) {
-    var scale = clamp(view.s * factor, fit, fit * MAX_ZOOM);
+    var scale = Math.min(fit * MAX_ZOOM, Math.max(fit, view.s * factor));
     view.x = px - (px - view.x) * scale / view.s;
     view.y = py - (py - view.y) * scale / view.s;
     view.s = scale;
     render();
   }
 
-  function zoomAboutCentre(factor) {
-    zoomAbout(stage.clientWidth / 2, stage.clientHeight / 2, factor);
+  // The + and - buttons and keys zoom about the centre of the stage.
+  function zoomIn() {
+    zoomAbout(stage.clientWidth / 2, stage.clientHeight / 2, BUTTON_STEP);
+  }
+
+  function zoomOut() {
+    zoomAbout(stage.clientWidth / 2, stage.clientHeight / 2,
+      1 / BUTTON_STEP);
+  }
+
+  function pan(dx, dy) {
+    view.x += dx;
+    view.y += dy;
+    render();
   }
 
   function stagePoint(event) {
@@ -111,12 +124,8 @@
 
   function onWheel(event) {
     event.preventDefault();
-    var delta = event.deltaY;
-    if (event.deltaMode === 1) {
-      delta *= 16;  // lines to pixels
-    } else if (event.deltaMode === 2) {
-      delta *= stage.clientHeight;
-    }
+    // Firefox reports a mouse wheel in lines, not pixels.
+    var delta = event.deltaY * (event.deltaMode === 1 ? 16 : 1);
     // A pinch on a trackpad arrives as a wheel event with ctrlKey set and
     // small deltas.
     var rate = event.ctrlKey ? 0.01 : 0.0015;
@@ -131,6 +140,7 @@
     if (pointers.size === 0) {
       travel = 0;
       downTarget = event.target;
+      tapPending = false;
     }
     pointers.set(event.pointerId, stagePoint(event));
     stage.setPointerCapture(event.pointerId);
@@ -144,11 +154,9 @@
     }
     var now = stagePoint(event);
     if (pointers.size === 1) {
-      view.x += now.x - before.x;
-      view.y += now.y - before.y;
       travel += Math.abs(now.x - before.x) + Math.abs(now.y - before.y);
       pointers.set(event.pointerId, now);
-      render();
+      pan(now.x - before.x, now.y - before.y);
       return;
     }
     // Two fingers: zoom by the change in their distance, about the point
@@ -170,14 +178,19 @@
   }
 
   function onPointerUp(event) {
-    if (!pointers.delete(event.pointerId)) {
-      return;
-    }
-    if (pointers.size > 0) {
+    if (!pointers.delete(event.pointerId) || pointers.size > 0) {
       return;
     }
     stage.classList.remove("is-dragging");
-    if (event.type === "pointerup" && travel < TAP_SLOP) {
+    tapPending = event.type === "pointerup" && travel < TAP_SLOP;
+  }
+
+  // A tap is acted on at the click that follows it, not at the pointerup.
+  // Closing at the pointerup would let the browser deliver that click to
+  // whatever part of the page lies under the finger.
+  function onClick(event) {
+    if (tapPending) {
+      tapPending = false;
       onTap(stagePoint(event), downTarget);
     }
   }
@@ -202,26 +215,25 @@
     }
   }
 
+  // Keys are taken from the document before any other script sees them.
+  // The focus is not always inside the viewer, and Sphinx's own Esc
+  // handler would otherwise stop the browser from closing the dialog.
   function onKeyDown(event) {
-    if (event.ctrlKey || event.metaKey || event.altKey) {
+    if (!dialog.open || event.ctrlKey || event.metaKey || event.altKey) {
       return;
     }
     var actions = {
-      "+": function () { zoomAboutCentre(BUTTON_STEP); },
-      "=": function () { zoomAboutCentre(BUTTON_STEP); },
-      "-": function () { zoomAboutCentre(1 / BUTTON_STEP); },
-      "_": function () { zoomAboutCentre(1 / BUTTON_STEP); },
+      "+": zoomIn, "=": zoomIn, "-": zoomOut, "_": zoomOut,
       "0": showWhole,
-      // The browser closes a dialog on Esc by itself, but Chrome stops
-      // doing so once the stage has been clicked.
       "Escape": function () { dialog.close(); },
-      "ArrowLeft": function () { view.x += PAN_STEP; render(); },
-      "ArrowRight": function () { view.x -= PAN_STEP; render(); },
-      "ArrowUp": function () { view.y += PAN_STEP; render(); },
-      "ArrowDown": function () { view.y -= PAN_STEP; render(); }
+      "ArrowLeft": function () { pan(PAN_STEP, 0); },
+      "ArrowRight": function () { pan(-PAN_STEP, 0); },
+      "ArrowUp": function () { pan(0, PAN_STEP); },
+      "ArrowDown": function () { pan(0, -PAN_STEP); }
     };
     if (Object.prototype.hasOwnProperty.call(actions, event.key)) {
       event.preventDefault();
+      event.stopPropagation();
       actions[event.key]();
     }
   }
@@ -232,7 +244,11 @@
     el.textContent = text;
     el.title = label;
     el.setAttribute("aria-label", label);
-    el.addEventListener("click", action);
+    el.addEventListener("click", function () {
+      if (el.getAttribute("aria-disabled") !== "true") {
+        action();
+      }
+    });
     return el;
   }
 
@@ -246,12 +262,8 @@
     var hint = document.createElement("span");
     hint.className = "diagram-viewer-hint";
     hint.textContent = "Scroll or pinch to zoom, drag to pan";
-    zoomOutButton = button("Zoom out", "−", function () {
-      zoomAboutCentre(1 / BUTTON_STEP);
-    });
-    zoomInButton = button("Zoom in", "+", function () {
-      zoomAboutCentre(BUTTON_STEP);
-    });
+    zoomOutButton = button("Zoom out", "−", zoomOut);
+    zoomInButton = button("Zoom in", "+", zoomIn);
     fitButton = button("Show the whole diagram", "Fit", showWhole);
     openLink = document.createElement("a");
     openLink.textContent = "Open file";
@@ -283,7 +295,8 @@
     stage.addEventListener("pointermove", onPointerMove);
     stage.addEventListener("pointerup", onPointerUp);
     stage.addEventListener("pointercancel", onPointerUp);
-    dialog.addEventListener("keydown", onKeyDown);
+    stage.addEventListener("click", onClick);
+    document.addEventListener("keydown", onKeyDown, true);
     dialog.addEventListener("close", function () {
       pointers.clear();
       stage.classList.remove("is-dragging");
@@ -297,8 +310,10 @@
       }
       var wasFitted = atFit();
       measureFit();
-      view.s = wasFitted ? fit : clamp(view.s, fit, fit * MAX_ZOOM);
-      render();
+      if (wasFitted) {
+        view.s = fit;
+      }
+      zoomAbout(0, 0, 1);  // brings the scale within the new limits
     }).observe(stage);
   }
 
@@ -361,7 +376,9 @@
     if (diagram.tagName === "OBJECT") {
       // The link's name comes from its content, and an <object> has none.
       link.classList.add("diagram-zoom-object");
-      link.setAttribute("aria-label", "Enlarge diagram");
+      var name = captionOf(diagram);
+      link.setAttribute("aria-label",
+        name ? "Enlarge diagram: " + name : "Enlarge diagram");
     }
     link.addEventListener("click", function (event) {
       if (event.button !== 0 || event.ctrlKey || event.metaKey ||

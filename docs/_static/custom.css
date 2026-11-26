@@ -188,12 +188,12 @@ dialog.diagram-viewer[open] {
   cursor: pointer;
 }
 
-.diagram-viewer-bar button:hover:not(:disabled),
+.diagram-viewer-bar button:hover:not([aria-disabled="true"]),
 .diagram-viewer-bar a:hover {
   background: var(--color-background-hover);
 }
 
-.diagram-viewer-bar button:disabled {
+.diagram-viewer-bar button[aria-disabled="true"] {
   color: var(--color-foreground-muted);
   cursor: default;
 }
@@ -222,6 +222,8 @@ body dialog.diagram-viewer img.diagram-viewer-image {
   background: #ffffff;
   transform-origin: 0 0;
   cursor: zoom-in;
+  /* No image menu on a long press in Safari on a phone. */
+  -webkit-touch-callout: none;
 }
 
 .diagram-viewer-stage.is-zoomed img.diagram-viewer-image {
