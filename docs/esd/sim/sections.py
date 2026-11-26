@@ -20,6 +20,7 @@ NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
 POLY = "#c9a0dc"
+GATE = "#8e5bb5"       # polysilicon over a channel, as in the layout figures
 METAL = "#9aa5b1"
 INK = "#222222"
 HOT = "#c0392b"
@@ -75,7 +76,7 @@ def driver_section():
     b.append(text(170, top + 100, "N-well, on DVDD", size=12))
     b.append(rect(30, top, 30, 22, NPLUS))
     b.append(rect(80, top, 45, 22, PPLUS))
-    b.append(rect(130, top - 10, 30, 10, POLY))
+    b.append(rect(130, top - 10, 30, 10, GATE))
     b.append(rect(165, top, 120, 22, PPLUS))
     b.append(text(225, top + 16, "P+ drain", size=12))
     b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
@@ -84,7 +85,7 @@ def driver_section():
     b.append(text(490, top + 100, "P-well, on DVSS", size=12))
     b.append(rect(355, top, 120, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
-    b.append(rect(480, top - 10, 34, 10, POLY))
+    b.append(rect(480, top - 10, 34, 10, GATE))
     b.append(rect(519, top, 45, 22, NPLUS))
     b.append(rect(585, top, 30, 22, PPLUS))
     b += bracket(399, 480, top + 38, "blocked drain: 3.78 µm", anchor="end")
