@@ -60,14 +60,16 @@ Primary protection
 
 The pad has no separate primary diodes. The output transistors are the
 primary protection. Their drains connect to the pad, and each drain is a
-diffusion in a well, so it forms a diode with that well
+diffusion in a well or in the substrate, so it forms a diode with it
 (:numref:`fig-esd-driver-section`):
 
 * The PMOS drains (P+ in an N-well tied to DVDD) form a diode from the pad
   to DVDD. Four transistors of 80 µm and four of 40 µm give 480 µm of
   width ([ESD-BI-T-CDL]_, lines 42 to 72).
-* The NMOS drains (N+ in a P-well tied to DVSS) form a diode from DVSS to
-  the pad. Eight transistors of 38 µm give 304 µm of width (same lines).
+* The NMOS drains (N+ in the P substrate, which a P+ ring round the
+  transistors ties to DVSS) form a diode from DVSS to the pad. Eight
+  transistors of 38 µm give 304 µm of width (same lines). The layout has
+  no P-well under these transistors (:numref:`fig-esd-gds-nmos-driver`).
 
 These transistors are drawn as ESD devices. Their drains are silicide
 blocked for 3.78 µm (NMOS) and 2.78 µm (PMOS), and the NMOS gates are
@@ -88,11 +90,12 @@ each one turns on and :term:`snaps back <Snapback>` to about 6 V
    :alt: Cross-section of the two output transistors. Left, a PMOS in an
          N-well tied to DVDD: its P+ drain, connected to PAD and without
          silicide for 2.78 µm beside the gate, forms a diode from PAD to
-         DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well tied
-         to DVSS: its N+ drain, connected to PAD and without silicide for
-         3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
-         all; its gate is 1.15 µm long. A parasitic NPN transistor inside
-         the NMOS, with the drain as collector, the P-well as base and the
+         DVDD with the N-well, 480 µm in all. Right, an NMOS in the P
+         substrate, which is on DVSS: its N+ drain, connected to PAD and
+         without silicide for 3.78 µm, forms a diode from DVSS to PAD with
+         the substrate, 304 µm in all; its gate is 1.15 µm long. A parasitic
+         NPN transistor inside the NMOS, with the drain as collector, the
+         substrate as base and the
          source as emitter, triggers at 10.7 V and snaps back to about 6 V.
 
    The output transistors in cross-section, whose drains are the pad's primary
