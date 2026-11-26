@@ -27,7 +27,7 @@
 <text x="480" y="224" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">blocked drain: 3.78 µm</text>
 <text x="530" y="154" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">gate length: 1.15 µm</text>
 <text x="387" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A</text>
-<text x="626" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A′</text>
+<text x="614" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A′</text>
 <text x="455" y="134" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">cut A–A′ of the layout</text>
 <text x="45" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
 <text x="102" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
