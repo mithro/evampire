@@ -61,9 +61,8 @@ def channel_limits():
     ax.plot([(f, il(f)) for f in FREQS], stroke=BLUE)
     # Margin bars at 62.5 MHz and 100 MHz.
     for f in (62.5, 100):
-        x = ax.X(f) - (0 if f < 100 else 7)
-        fig.line(x, ax.Y(il(f)), x, ax.Y(next_loss(f)), stroke=INK,
-                 width=1.6)
+        fig.line(ax.X(f), ax.Y(il(f)), ax.X(f), ax.Y(next_loss(f)),
+                 stroke=INK, width=1.6)
     # Points from the table on the page.
     for f, v in ((10, 7.1), (62.5, 18.7), (100, 24.0)):
         fig.circle(ax.X(f), ax.Y(v), 3, fill=BLUE)
