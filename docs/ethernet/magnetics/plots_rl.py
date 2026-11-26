@@ -124,7 +124,7 @@ def psd():
 def zc():
     w, h = 640, 330
     C = 1e-9
-    a = Axes(80, 20, 520, 240, (10, 1e8), (1, 1e7), xlog=True, ylog=True)
+    a = Axes(80, 20, 520, 240, (10, 1e8), (1, 1e8), xlog=True, ylog=True)
     b = a.frame([(10, "10 Hz"), (1e3, "1 kHz"), (1e5, "100 kHz"),
                  (1e7, "10 MHz")],
                 [(1, "1"), (100, "100"), (1e4, "10 k"), (1e6, "1 M")],
