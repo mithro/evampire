@@ -93,7 +93,7 @@ def driver_section():
                   anchor="end"))
     # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
     b.append(text(387, top - 6, "A", size=13, weight="bold"))
-    b.append(text(626, top - 6, "A′", size=13, weight="bold"))
+    b.append(text(614, top - 6, "A′", size=13, weight="bold"))
     b.append(text(455, top - 36, "cut A–A′ of the layout",
                   size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):

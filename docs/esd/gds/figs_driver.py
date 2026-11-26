@@ -74,10 +74,10 @@ def _panel(window, title):
     return f
 
 
-def _inside(f, text, gx, gy, row, dx=44):
+def _inside(f, text, gx, gy, row):
     """Text inside a panel, starting at a layout point, tied to a row."""
     x, y = f.px(gx, gy)
-    f.label(text, (row, gy + 1.25), (x + dx, y), anchor="start")
+    f.label(text, (row, gy + 1.25), (x + 44, y), anchor="start")
 
 
 def _above(f, text, gx, gy):
