@@ -47,10 +47,10 @@ predicts.
 Limits of the group
 -------------------
 
-Every corner on the die is a 45° cut, so the corner sections of the
-simulation, which assume an arc, are upper bounds. The Metal5 lead crosses
-the termination zone of every member, and only :ref:`NT20L <hvt-s-nt20l>`
-varies it.
+Every corner on the die is a 45° cut, because the design rules allow no
+other angle on a well. The corner sections of the simulation assume an arc
+and are upper bounds. The Metal5 lead crosses the termination zone of every
+member, and only :ref:`NT20L <hvt-s-nt20l>` varies it.
 
 .. _hvt-s-nt1:
 
@@ -62,8 +62,8 @@ NT1
    :alt: Plan view and cross-section of NT1: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 1 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 590, 595
-         µm.
+         termination zone. A Metal5 lead joins the well to a pad at 1790,
+         595 µm.
 
    NT1 in plan view and in cross-section.
 
@@ -91,9 +91,9 @@ NT1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 3 from the south
+     - Column 6 from the west, row 3 from the south
    * - Well pad, centre x, y
-     - 590, 595 µm
+     - 1790, 595 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -113,16 +113,17 @@ Compared with
    * :ref:`NW1p5 <hvt-s-nw1p5>`: a P+ ring in place of a P-well at a similar distance.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 595 µm. The
-   knee is expected well below that of the other plain wells, so a sweep
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 595 µm.
+   The knee is expected well below that of the other plain wells, so a sweep
    that ends early is not a fault.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt1`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A value near 14 V here, with the other plain wells much higher,
-   means a nearby P+ region can produce the published value without any
-   P-well. If every plain well is near 14 V, this structure adds nothing.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt1`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   value near 14 V here, with the other plain wells much higher, means a
+   nearby P+ region can produce the published value without any P-well. If
+   every plain well is near 14 V, this structure adds nothing.
 
 Limits
    Under assumption A the P-well reaches the well edge before the P+ ring
@@ -131,33 +132,38 @@ Limits
 .. list-table:: NT1: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt1
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 43.5
      - 44.2
      - 42.8 to 43.5
-     - 36.4 to 50.0
+     - 30.0 to 50.0
+     - 0.65 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 42.8
      - 43.8
+     - –
      - –
      - –
    * - BD
      - 43.6
      - 44.3
      - 43.6 to 43.6
-     - 37.1 to 50.1
+     - 30.5 to 50.1
+     - 0.71 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt5:
 
@@ -169,8 +175,8 @@ NT5
    :alt: Plan view and cross-section of NT5: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 5 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 890, 595
-         µm.
+         termination zone. A Metal5 lead joins the well to a pad at 1490,
+         745 µm.
 
    NT5 in plan view and in cross-section.
 
@@ -198,9 +204,9 @@ NT5
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 3 from the south
+     - Column 5 from the west, row 4 from the south
    * - Well pad, centre x, y
-     - 890, 595 µm
+     - 1490, 745 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -220,14 +226,15 @@ Compared with
    * :ref:`NT10 <hvt-s-nt10>`: the ring is at 5 µm in place of 10 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 595 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 745 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt5`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A value below :ref:`NT10 <hvt-s-nt10>` means the depletion
-   region reaches 5 µm before breakdown. An equal value means the region at
-   the surface is shorter than under a flat junction.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt5`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   value below :ref:`NT10 <hvt-s-nt10>` means the depletion region reaches 5
+   µm before breakdown. An equal value means the region at the surface is
+   shorter than under a flat junction.
 
 Limits
    The simulation predicts no difference from :ref:`NT10 <hvt-s-nt10>`, so a
@@ -237,33 +244,38 @@ Limits
 .. list-table:: NT5: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt5
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.7
      - 61.7 to 61.7
-     - 52.4 to 71.0
+     - 43.2 to 71.0
+     - 1.01 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt10:
 
@@ -275,8 +287,8 @@ NT10
    :alt: Plan view and cross-section of NT10: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 10 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 1190,
-         595 µm.
+         termination zone. A Metal5 lead joins the well to a pad at 1790,
+         745 µm.
 
    NT10 in plan view and in cross-section.
 
@@ -304,9 +316,9 @@ NT10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 3 from the south
+     - Column 6 from the west, row 4 from the south
    * - Well pad, centre x, y
-     - 1190, 595 µm
+     - 1790, 745 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -325,13 +337,14 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: the ring is at 10 µm in place of 20 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 595 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 745 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt10`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NT20 <hvt-s-nt20>` and :ref:`NT35 <hvt-s-nt35>`:
-   the default ring distance of 20 µm is safely large.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt10`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NT20 <hvt-s-nt20>` and :ref:`NT35 <hvt-s-nt35>`: the default
+   ring distance of 20 µm is safely large.
 
 Limits
    None beyond those of the group.
@@ -339,33 +352,38 @@ Limits
 .. list-table:: NT10: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt10
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt20:
 
@@ -377,8 +395,8 @@ NT20
    :alt: Plan view and cross-section of NT20: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 1490,
-         595 µm.
+         termination zone. A Metal5 lead joins the well to a pad at 290, 895
+         µm.
 
    NT20 in plan view and in cross-section.
 
@@ -406,9 +424,9 @@ NT20
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 3 from the south
+     - Column 1 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1490, 595 µm
+     - 290, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -432,14 +450,17 @@ Compared with
    * :ref:`NT35 <hvt-s-nt35>`: the ring is at 20 µm in place of 35 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 595 µm. It
-   is the first structure swept on each die, and is swept again at 85 °C.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 895 µm. It
+   is the first structure swept on each die, and is swept again at 85 °C. It
+   is one of the three on which the light of the avalanche is always
+   photographed at the current limit.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Near 14 V: P-well lies against the well. Much higher: it does
-   not, and the other groups then show what each termination gains.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Near
+   14 V: P-well lies against the well. Much higher: it does not, and the
+   other groups then show what each termination gains.
 
 Limits
    A single plain well cannot tell an edge that fails from a bottom that
@@ -449,20 +470,23 @@ Limits
 .. list-table:: NT20: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt20
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.9
-     - 15.0 to 20.6
+     - 12.4 to 20.6
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
      - 17.9
+     - –
      - –
      - –
      - –
@@ -470,10 +494,12 @@ Limits
      - 76.0
      - 67.0
      - 60.2 to 79.4
-     - 51.2 to 91.3
+     - 42.1 to 91.3
+     - 1 (reference)
    * - BLhi
      - 66.7
      - 60.2
+     - –
      - –
      - –
    * - BLlo
@@ -481,9 +507,11 @@ Limits
      - 79.4
      - –
      - –
+     - –
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BLq3
@@ -491,19 +519,23 @@ Limits
      - 77.0
      - –
      - –
+     - –
    * - BD
      - 62.9
      - 61.2
      - 59.2 to 61.2
-     - 50.3 to 70.4
+     - 41.4 to 70.4
+     - 1 (reference)
    * - BDhi
      - 62.9
      - 59.2
      - –
      - –
+     - –
    * - BDlo
      - 62.5
      - 61.0
+     - –
      - –
      - –
 
@@ -517,8 +549,8 @@ NT35
    :alt: Plan view and cross-section of NT35: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 35 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 1790,
-         595 µm.
+         termination zone. A Metal5 lead joins the well to a pad at 590, 895
+         µm.
 
    NT35 in plan view and in cross-section.
 
@@ -546,9 +578,9 @@ NT35
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 3 from the south
+     - Column 2 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1790, 595 µm
+     - 590, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -567,13 +599,14 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: the ring is at 35 µm in place of 20 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 595 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 895 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt35`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NT20 <hvt-s-nt20>`: the default distance is large
-   enough. Higher: values measured at 20 µm are lower bounds.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt35`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NT20 <hvt-s-nt20>`: the default distance is large enough.
+   Higher: values measured at 20 µm are lower bounds.
 
 Limits
    No structure has a ring beyond 35 µm, so a value still rising here has no
@@ -582,33 +615,38 @@ Limits
 .. list-table:: NT35: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt35
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nc0:
 
@@ -620,7 +658,7 @@ NC0
    :alt: Plan view and cross-section of NC0: an N-well 30 µm across
          with square corners, an N+ contact ring inside its edge and a P+
          ring 20 µm outside it; nothing drawn in the termination zone. A
-         Metal5 lead joins the well to a pad at 590, 745 µm.
+         Metal5 lead joins the well to a pad at 890, 895 µm.
 
    NC0 in plan view and in cross-section.
 
@@ -648,9 +686,9 @@ NC0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 4 from the south
+     - Column 3 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 590, 745 µm
+     - 890, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -671,16 +709,16 @@ Compared with
    * :ref:`NC15 <hvt-s-nc15>`: no cut in place of the longest cut.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 745 µm.
-   Swept again at 85 °C. Under a microscope that shows the light of the
-   avalanche, the four vertices should light first.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 895 µm.
+   Swept again at 85 °C. The light of the avalanche is always photographed
+   at the current limit; the four vertices should light first.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nc0`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Below :ref:`NT20 <hvt-s-nt20>`: the vertices set the breakdown,
-   and a cut is worth having. Equal: something other than the corner limits
-   both.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nc0`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Below
+   :ref:`NT20 <hvt-s-nt20>`: the vertices set the breakdown, and a cut is
+   worth having. Equal: something other than the corner limits both.
 
 Limits
    The simulation of this corner did not reach breakdown, so its prediction
@@ -690,20 +728,23 @@ Limits
 .. list-table:: NC0: predicted breakdown voltage by process
    :name: tab-hvt-sp-nc0
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.9
-     - 15.0 to 20.6
+     - 12.4 to 20.6
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
      - 17.9
+     - –
      - –
      - –
      - –
@@ -712,9 +753,11 @@ Limits
      - > 36.3
      - –
      - –
+     - –
    * - BLhi
      - 66.7
      - > 34.5
+     - –
      - –
      - –
    * - BLlo
@@ -722,9 +765,11 @@ Limits
      - > 38.7
      - –
      - –
+     - –
    * - BLq
      - 79.9
      - > 37.7
+     - –
      - –
      - –
    * - BLq3
@@ -732,9 +777,11 @@ Limits
      - > 42.0
      - –
      - –
+     - –
    * - BD
      - 62.9
      - > 36.0
+     - –
      - –
      - –
    * - BDhi
@@ -742,9 +789,11 @@ Limits
      - > 34.7
      - –
      - –
+     - –
    * - BDlo
      - 62.5
      - > 38.6
+     - –
      - –
      - –
 
@@ -758,8 +807,8 @@ NC15
    :alt: Plan view and cross-section of NC15: an N-well 30 µm across
          with corners cut 8.8 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 890, 745
-         µm.
+         termination zone. A Metal5 lead joins the well to a pad at 1190,
+         895 µm.
 
    NC15 in plan view and in cross-section.
 
@@ -787,9 +836,9 @@ NC15
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 4 from the south
+     - Column 4 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 890, 745 µm
+     - 1190, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -809,14 +858,16 @@ Compared with
    * :ref:`NC0 <hvt-s-nc0>`: the longest cut in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 745 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 895 µm.
+   The light of the avalanche is always photographed at the current limit,
+   to see whether it sits at the eight vertices.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nc15`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NT20 <hvt-s-nt20>`: the vertex angle decides and
-   the nominal radius means little. Higher: the cut length matters as a
-   radius would.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nc15`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NT20 <hvt-s-nt20>`: the vertex angle decides and the nominal
+   radius means little. Higher: the cut length matters as a radius would.
 
 Limits
    The well cannot be rounder than this at 30 µm across, so a trend that
@@ -825,33 +876,38 @@ Limits
 .. list-table:: NC15: predicted breakdown voltage by process
    :name: tab-hvt-sp-nc15
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 70.6
      - 70.6 to 74.1
-     - 60.0 to 85.2
+     - 49.4 to 85.2
+     - 1.05 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 74.1
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 50.7 to 68.5
+     - 41.7 to 68.5
+     - 0.97 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt20b:
 
@@ -863,7 +919,7 @@ NT20b
    :alt: Plan view and cross-section of NT20b: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; nothing drawn in the
-         termination zone. A Metal5 lead joins the well to a pad at 590,
+         termination zone. A Metal5 lead joins the well to a pad at 890,
          2095 µm.
 
    NT20b in plan view and in cross-section.
@@ -892,9 +948,9 @@ NT20b
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 13 from the south
+     - Column 3 from the west, row 13 from the south
    * - Well pad, centre x, y
-     - 590, 2095 µm
+     - 890, 2095 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -912,15 +968,16 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: nothing but the position on the die.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 2095 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 2095 µm.
    Swept with the same settings as :ref:`NT20 <hvt-s-nt20>` and in the same
    session.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20b`, with
-   the band and agreement range of each family on the row of its nominal
-   process. The difference between the two copies is the smallest difference
-   between any two structures that can be called real.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20b`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
+   difference between the two copies is the smallest difference between any
+   two structures that can be called real.
 
 Limits
    One pair samples two points on the die. It cannot separate a gradient
@@ -929,33 +986,38 @@ Limits
 .. list-table:: NT20b: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt20b
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt20l:
 
@@ -1019,11 +1081,12 @@ Measurement
    Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 2095 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20l`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NT20 <hvt-s-nt20>`: leaving the lead out of the
-   simulation costs nothing. Lower: the lead harms the junction, and every
-   structure carries that harm over 6 µm.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20l`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NT20 <hvt-s-nt20>`: leaving the lead out of the simulation costs
+   nothing. Lower: the lead harms the junction, and every structure carries
+   that harm over 6 µm.
 
 Limits
    A lead that helps cannot show here, because the three sides it does not
@@ -1033,33 +1096,38 @@ Limits
 .. list-table:: NT20L: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt20l
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt20v:
 
@@ -1126,10 +1194,11 @@ Measurement
    Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 2095 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20v`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A difference of about 3 V in the direction of the models
-   confirms that the surroundings of the well differ between the two areas.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nt20v`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   difference of about 3 V in the direction of the models confirms that the
+   surroundings of the well differ between the two areas.
 
 Limits
    The layer covers the termination zone as well as the well, so a
@@ -1139,30 +1208,35 @@ Limits
 .. list-table:: NT20V: predicted breakdown voltage by process
    :name: tab-hvt-sp-nt20v
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`

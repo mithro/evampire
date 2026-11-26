@@ -7,12 +7,11 @@ A field plate is a conductor joined to the well that extends over the oxide
 beyond the well's edge. These structures measure what a plate of each layer
 and length gains.
 
-The group has 13 structures: :ref:`NP1 <hvt-s-np1>`, :ref:`NP2 <hvt-s-np2>`,
+The group has 12 structures: :ref:`NP1 <hvt-s-np1>`, :ref:`NP2 <hvt-s-np2>`,
 :ref:`NP4 <hvt-s-np4>`, :ref:`NM1_3 <hvt-s-nm1-3>`, :ref:`NM1_6
 <hvt-s-nm1-6>`, :ref:`NM1_10 <hvt-s-nm1-10>`, :ref:`NM2_6 <hvt-s-nm2-6>`,
-:ref:`NM2_12 <hvt-s-nm2-12>`, :ref:`NPM12 <hvt-s-npm12>`, :ref:`DM1_3
-<hvt-s-dm1-3>`, :ref:`DM1_6 <hvt-s-dm1-6>`, :ref:`DM1_10 <hvt-s-dm1-10>`,
-:ref:`DPM12 <hvt-s-dpm12>`.
+:ref:`NM2_12 <hvt-s-nm2-12>`, :ref:`NPM12 <hvt-s-npm12>`, :ref:`DM1_6
+<hvt-s-dm1-6>`, :ref:`DM1_10 <hvt-s-dm1-10>`, :ref:`DPM12 <hvt-s-dpm12>`.
 
 Mechanism
 ---------
@@ -43,8 +42,8 @@ predicts.
          plates, one curve per process, with dashed lines at the published
          14 V and at 57 V and an open triangle where a sweep ended without
          breakdown. The structures of the group are NP1, NP2, NP4, NM1_3,
-         NM1_6, NM1_10, NM2_6, NM2_12, NPM12, DM1_3, DM1_6, DM1_10, DPM12.
-         The plotted values are those of the tables in the entries.
+         NM1_6, NM1_10, NM2_6, NM2_12, NPM12, DM1_6, DM1_10, DPM12. The
+         plotted values are those of the tables in the entries.
 
    Trend that the simulation predicts across the group.
 
@@ -65,7 +64,7 @@ NP1
    :alt: Plan view and cross-section of NP1: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 1 µm.
-         A Metal5 lead joins the well to a pad at 1790, 1045 µm.
+         A Metal5 lead joins the well to a pad at 290, 1345 µm.
 
    NP1 in plan view and in cross-section.
 
@@ -95,9 +94,9 @@ NP1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 6 from the south
+     - Column 1 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 1790, 1045 µm
+     - 290, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -117,13 +116,13 @@ Compared with
    * :ref:`NP2 <hvt-s-np2>`: a plate of 1 µm in place of 2 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1345 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-np1`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Above :ref:`NT20 <hvt-s-nt20>`: even a short plate over thin
-   oxide helps.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-np1`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   :ref:`NT20 <hvt-s-nt20>`: even a short plate over thin oxide helps.
 
 Limits
    The plate carries the well's voltage over oxide thinner than any the
@@ -132,33 +131,38 @@ Limits
 .. list-table:: NP1: predicted breakdown voltage by process
    :name: tab-hvt-sp-np1
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.4
      - –
      - 17.4 to 17.4
-     - 14.8 to 20.0
+     - 12.2 to 20.0
+     - 0.98 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 86.8
      - 81.7
      - 81.7 to 82.1
-     - 69.4 to 94.4
+     - 57.2 to 94.4
+     - 1.22 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 87.3
      - 82.1
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 50.7 to 68.5
+     - 41.7 to 68.5
+     - 0.97 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-np2:
 
@@ -170,7 +174,7 @@ NP2
    :alt: Plan view and cross-section of NP2: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 2 µm.
-         A Metal5 lead joins the well to a pad at 290, 1195 µm.
+         A Metal5 lead joins the well to a pad at 590, 1345 µm.
 
    NP2 in plan view and in cross-section.
 
@@ -200,9 +204,9 @@ NP2
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 7 from the south
+     - Column 2 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 290, 1195 µm
+     - 590, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -222,13 +226,14 @@ Compared with
    * :ref:`NPM12 <hvt-s-npm12>`: polysilicon alone in place of three stepped layers.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1345 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-np2`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Between :ref:`NP1 <hvt-s-np1>` and :ref:`NP4 <hvt-s-np4>`: the
-   gain grows with length over this range.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-np2`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure.
+   Between :ref:`NP1 <hvt-s-np1>` and :ref:`NP4 <hvt-s-np4>`: the gain grows
+   with length over this range.
 
 Limits
    As for :ref:`NP1 <hvt-s-np1>`.
@@ -236,20 +241,23 @@ Limits
 .. list-table:: NP2: predicted breakdown voltage by process
    :name: tab-hvt-sp-np2
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.4
      - –
      - 17.4 to 17.4
-     - 14.8 to 20.0
+     - 12.2 to 20.0
+     - 0.98 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
      - failed
+     - –
      - –
      - –
      - –
@@ -257,10 +265,12 @@ Limits
      - 90.0
      - 84.8
      - 76.2 to 85.2
-     - 64.8 to 98.0
+     - 53.3 to 98.0
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLhi
      - 79.3
      - 76.2
+     - –
      - –
      - –
    * - BLlo
@@ -268,9 +278,11 @@ Limits
      - failed
      - –
      - –
+     - –
    * - BLq
      - 90.4
      - 85.2
+     - –
      - –
      - –
    * - BLq3
@@ -278,19 +290,23 @@ Limits
      - failed
      - –
      - –
+     - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BDhi
      - failed
      - failed
      - –
      - –
+     - –
    * - BDlo
      - 62.5
      - failed
+     - –
      - –
      - –
 
@@ -304,7 +320,7 @@ NP4
    :alt: Plan view and cross-section of NP4: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 4 µm.
-         A Metal5 lead joins the well to a pad at 590, 1195 µm.
+         A Metal5 lead joins the well to a pad at 890, 1345 µm.
 
    NP4 in plan view and in cross-section.
 
@@ -334,9 +350,9 @@ NP4
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 7 from the south
+     - Column 3 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 590, 1195 µm
+     - 890, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -357,13 +373,14 @@ Compared with
    * :ref:`NGP4 <hvt-s-ngp4>`: the plate joined to the well in place of on its own pad.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1195 µm. A
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1345 µm. A
    second sweep straight after the first shows whether the oxide survived.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-np4`, with
-   the band and agreement range of each family on the row of its nominal
-   process. The highest value of the polysilicon series, if the oxide holds.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-np4`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
+   highest value of the polysilicon series, if the oxide holds.
 
 Limits
    The oxide may fail before the silicon does. A sweep that cannot be
@@ -372,33 +389,38 @@ Limits
 .. list-table:: NP4: predicted breakdown voltage by process
    :name: tab-hvt-sp-np4
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.4
      - –
      - 17.4 to 17.4
-     - 14.8 to 20.0
+     - 12.2 to 20.0
+     - 0.98 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 94.4
      - 89.2
      - 89.2 to 89.5
-     - 75.8 to 102.9
+     - 62.4 to 102.9
+     - 1.33 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 94.7
      - 89.5
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 60.8
      - 60.8 to 60.8
-     - 51.7 to 69.9
+     - 42.6 to 69.9
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nm1-3:
 
@@ -410,7 +432,7 @@ NM1_3
    :alt: Plan view and cross-section of NM1_3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 3 µm. A
-         Metal5 lead joins the well to a pad at 890, 1195 µm.
+         Metal5 lead joins the well to a pad at 1190, 1345 µm.
 
    NM1_3 in plan view and in cross-section.
 
@@ -440,9 +462,9 @@ NM1_3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 3 from the west, row 7 from the south
+     - Column 4 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 890, 1195 µm
+     - 1190, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -462,12 +484,13 @@ Compared with
    * :ref:`NP2 <hvt-s-np2>`: Metal1 in place of polysilicon at a similar length.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1345 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-3`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Above :ref:`NT20 <hvt-s-nt20>`: Metal1 alone is a usable plate.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-3`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   :ref:`NT20 <hvt-s-nt20>`: Metal1 alone is a usable plate.
 
 Limits
    None beyond those of the group.
@@ -475,33 +498,38 @@ Limits
 .. list-table:: NM1_3: predicted breakdown voltage by process
    :name: tab-hvt-sp-nm1-3
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.6
      - –
      - 17.6 to 17.6
-     - 15.0 to 20.2
+     - 12.3 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 88.5
      - 83.2
      - 83.2 to 83.7
-     - 70.7 to 96.3
+     - 58.2 to 96.3
+     - 1.24 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 89.0
      - 83.7
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nm1-6:
 
@@ -513,7 +541,7 @@ NM1_6
    :alt: Plan view and cross-section of NM1_6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm. A
-         Metal5 lead joins the well to a pad at 1190, 1195 µm.
+         Metal5 lead joins the well to a pad at 1490, 1345 µm.
 
    NM1_6 in plan view and in cross-section.
 
@@ -543,9 +571,9 @@ NM1_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 7 from the south
+     - Column 5 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 1190, 1195 µm
+     - 1490, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -566,14 +594,15 @@ Compared with
    * :ref:`NAM1_6 <hvt-s-nam1-6>`: no NAT in place of NAT under the plate.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1345 µm.
    Swept again at 85 °C.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-6`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Above :ref:`NT20 <hvt-s-nt20>` by more than :ref:`NM1_3
-   <hvt-s-nm1-3>` is: length up to the depletion width is worth having.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-6`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   :ref:`NT20 <hvt-s-nt20>` by more than :ref:`NM1_3 <hvt-s-nm1-3>` is:
+   length up to the depletion width is worth having.
 
 Limits
    None beyond those of the group.
@@ -581,20 +610,23 @@ Limits
 .. list-table:: NM1_6: predicted breakdown voltage by process
    :name: tab-hvt-sp-nm1-6
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.6
      - –
      - 17.6 to 17.6
-     - 15.0 to 20.2
+     - 12.3 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
      - failed
+     - –
      - –
      - –
      - –
@@ -602,10 +634,12 @@ Limits
      - 90.2
      - 84.8
      - 75.7 to 105.8
-     - 64.3 to 121.7
+     - 53.0 to 121.7
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLhi
      - 78.8
      - 75.7
+     - –
      - –
      - –
    * - BLlo
@@ -613,9 +647,11 @@ Limits
      - 105.8
      - –
      - –
+     - –
    * - BLq
      - 90.8
      - 85.4
+     - –
      - –
      - –
    * - BLq3
@@ -623,19 +659,23 @@ Limits
      - failed
      - –
      - –
+     - –
    * - BD
      - 62.9
      - 59.6
      - 59.5 to 61.0
-     - 50.6 to 70.1
+     - 41.6 to 70.1
+     - 0.97 of :ref:`NT20 <hvt-s-nt20>`
    * - BDhi
      - 62.9
      - 59.5
      - –
      - –
+     - –
    * - BDlo
      - 62.5
      - 61.0
+     - –
      - –
      - –
 
@@ -649,7 +689,7 @@ NM1_10
    :alt: Plan view and cross-section of NM1_10: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 10 µm. A
-         Metal5 lead joins the well to a pad at 1490, 1195 µm.
+         Metal5 lead joins the well to a pad at 1790, 1345 µm.
 
    NM1_10 in plan view and in cross-section.
 
@@ -679,9 +719,9 @@ NM1_10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 7 from the south
+     - Column 6 from the west, row 8 from the south
    * - Well pad, centre x, y
-     - 1490, 1195 µm
+     - 1790, 1345 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -699,13 +739,14 @@ Compared with
    * :ref:`NM1_6 <hvt-s-nm1-6>`: a plate of 10 µm in place of 6 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1345 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-10`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NM1_6 <hvt-s-nm1-6>`: the gain has stopped, and
-   area spent on a longer plate is wasted.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-10`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NM1_6 <hvt-s-nm1-6>`: the gain has stopped, and area spent on a
+   longer plate is wasted.
 
 Limits
    The plate's end is 10 µm from the P+ ring, so a loss could come from that
@@ -714,33 +755,38 @@ Limits
 .. list-table:: NM1_10: predicted breakdown voltage by process
    :name: tab-hvt-sp-nm1-10
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.6
      - –
      - 17.6 to 17.6
-     - 15.0 to 20.2
+     - 12.3 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 90.6
      - 85.2
      - 85.2 to 85.9
-     - 72.4 to 98.8
+     - 59.6 to 98.8
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 91.3
      - 85.9
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 60.8
      - 60.8 to 60.8
-     - 51.7 to 69.9
+     - 42.6 to 69.9
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nm2-6:
 
@@ -752,7 +798,7 @@ NM2_6
    :alt: Plan view and cross-section of NM2_6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal2 plate to 6 µm. A
-         Metal5 lead joins the well to a pad at 1790, 1195 µm.
+         Metal5 lead joins the well to a pad at 290, 1495 µm.
 
    NM2_6 in plan view and in cross-section.
 
@@ -782,9 +828,9 @@ NM2_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 7 from the south
+     - Column 1 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 1790, 1195 µm
+     - 290, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -803,13 +849,13 @@ Compared with
    * :ref:`NM2_12 <hvt-s-nm2-12>`: a plate of 6 µm in place of 12 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1195 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1495 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm2-6`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Below :ref:`NM1_6 <hvt-s-nm1-6>`: at this length the thinner
-   oxide wins.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm2-6`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Below
+   :ref:`NM1_6 <hvt-s-nm1-6>`: at this length the thinner oxide wins.
 
 Limits
    The Metal2 plate needs a via from the well's Metal1, and its edge lies
@@ -818,33 +864,38 @@ Limits
 .. list-table:: NM2_6: predicted breakdown voltage by process
    :name: tab-hvt-sp-nm2-6
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.6
      - –
      - 17.6 to 17.6
-     - 15.0 to 20.2
+     - 12.3 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 87.4
      - 82.1
      - 82.1 to 82.8
-     - 69.8 to 95.2
+     - 57.5 to 95.2
+     - 1.23 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 88.1
      - 82.8
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nm2-12:
 
@@ -856,7 +907,7 @@ NM2_12
    :alt: Plan view and cross-section of NM2_12: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal2 plate to 12 µm. A
-         Metal5 lead joins the well to a pad at 290, 1345 µm.
+         Metal5 lead joins the well to a pad at 590, 1495 µm.
 
    NM2_12 in plan view and in cross-section.
 
@@ -886,9 +937,9 @@ NM2_12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 8 from the south
+     - Column 2 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 290, 1345 µm
+     - 590, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -908,13 +959,13 @@ Compared with
    * :ref:`NM1_10 <hvt-s-nm1-10>`: Metal2 in place of Metal1 at a similar length.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1495 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm2-12`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Above :ref:`NM2_6 <hvt-s-nm2-6>`: Metal2 wants more length than
-   Metal1.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm2-12`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   :ref:`NM2_6 <hvt-s-nm2-6>`: Metal2 wants more length than Metal1.
 
 Limits
    The plate's end is 8 µm from the P+ ring, the closest of any plate.
@@ -922,33 +973,38 @@ Limits
 .. list-table:: NM2_12: predicted breakdown voltage by process
    :name: tab-hvt-sp-nm2-12
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.6
      - –
      - 17.6 to 17.6
-     - 15.0 to 20.2
+     - 12.3 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 87.6
      - 82.3
      - 82.3 to 83.0
-     - 70.0 to 95.4
+     - 57.6 to 95.4
+     - 1.23 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 88.4
      - 83.0
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 60.8
      - 60.8 to 60.8
-     - 51.7 to 69.9
+     - 42.6 to 69.9
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-npm12:
 
@@ -961,7 +1017,7 @@ NPM12
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 5 µm;
          Metal2 plate to 9 µm; polysilicon plate to 2 µm. A Metal5 lead
-         joins the well to a pad at 590, 1345 µm.
+         joins the well to a pad at 890, 1495 µm.
 
    NPM12 in plan view and in cross-section.
 
@@ -995,9 +1051,9 @@ NPM12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 8 from the south
+     - Column 3 from the west, row 9 from the south
    * - Well pad, centre x, y
-     - 590, 1345 µm
+     - 890, 1495 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1017,13 +1073,14 @@ Compared with
    * :ref:`NM1_6 <hvt-s-nm1-6>`: three stepped layers in place of Metal1 alone.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1345 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1495 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-npm12`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Above every single-layer plate: stepping is worth its
-   complexity. Equal to the best single plate: it is not.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-npm12`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   every single-layer plate: stepping is worth its complexity. Equal to the
+   best single plate: it is not.
 
 Limits
    It is the only stepped plate on an N-well, so the lengths of its steps
@@ -1032,140 +1089,38 @@ Limits
 .. list-table:: NPM12: predicted breakdown voltage by process
    :name: tab-hvt-sp-npm12
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.4
      - –
      - 17.4 to 17.4
-     - 14.8 to 20.0
+     - 12.2 to 20.0
+     - 0.98 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 92.4
      - 87.1
      - 87.1 to 87.6
-     - 74.0 to 100.7
+     - 61.0 to 100.7
+     - 1.30 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 92.9
      - 87.6
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.2
      - 61.2 to 61.2
-     - 52.0 to 70.4
-
-.. _hvt-s-dm1-3:
-
-DM1_3
------
-
-.. figure:: hvt-s-DM1_3.svg
-   :name: fig-hvt-s-dm1-3
-   :alt: Plan view and cross-section of DM1_3: a deep N-well 30 µm
-         across with corners cut 4.7 µm along each side, an N+ contact ring
-         inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 3
-         µm. A Metal5 lead joins the well to a pad at 1490, 1795 µm.
-
-   DM1_3 in plan view and in cross-section.
-
-.. list-table:: DM1_3: drawn parameters and position
-   :name: tab-hvt-s-dm1-3
-   :header-rows: 1
-   :widths: 35 65
-
-   * - Parameter
-     - Value
-   * - Well
-     - Deep N-well, with an N-well band under its contact ring
-   * - Side of the well
-     - 30 µm
-   * - Corners
-     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
-   * - Area and perimeter
-     - 856 µm² and 109.0 µm
-   * - N+ contact ring
-     - 2 µm wide, 2 µm inside the well edge
-   * - P+ ring
-     - 2 µm wide, 20 µm from the well edge
-   * - Metal1 plate
-     - From the contact ring to 3 µm outside the edge; joined to the well
-   * - Fill block
-     - Whole structure
-   * - Metal5 lead
-     - 6 µm wide
-   * - Site
-     - Column 5 from the west, row 11 from the south
-   * - Well pad, centre x, y
-     - 1490, 1795 µm
-   * - Substrate
-     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
-
-Purpose
-   A deep N-well with a Metal1 plate of 3 µm. :numref:`fig-hvt-s-dm1-3`
-   shows the structure and :numref:`tab-hvt-s-dm1-3` lists what is drawn.
-
-How it works
-   A plate relieves the field at an edge. It does nothing for the flat
-   bottom, 2.5 µm down and shielded from the plate by the well itself.
-
-Compared with
-   * :ref:`DT20 <hvt-s-dt20>`: a Metal1 plate of 3 µm in place of none.
-   * :ref:`DM1_6 <hvt-s-dm1-6>`: a plate of 3 µm in place of 6 µm.
-   * :ref:`NM1_3 <hvt-s-nm1-3>`: a deep N-well in place of an N-well.
-
-Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 1795 µm.
-
-Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-3`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`DT20 <hvt-s-dt20>`: the bottom limits. Higher:
-   the edge limited :ref:`DT20 <hvt-s-dt20>` and a plate helps.
-
-Limits
-   Redundant if the bottom limits.
-
-.. list-table:: DM1_3: predicted breakdown voltage by process
-   :name: tab-hvt-sp-dm1-3
-   :header-rows: 1
-   :widths: 16 21 21 21 21
-
-   * - Process
-     - Straight edge (V)
-     - Corner section (V)
-     - Family band (V)
-     - Agreement range (V)
-   * - AL
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 26.6 to 36.0
-   * - AD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 26.6 to 36.0
-   * - BL
-     - 32.3
-     - 31.3
-     - 31.3 to 31.3
-     - 26.6 to 36.0
-   * - BLq
-     - 32.3
-     - 31.3
-     - –
-     - –
-   * - BD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 42.8 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-dm1-6:
 
@@ -1177,7 +1132,7 @@ DM1_6
    :alt: Plan view and cross-section of DM1_6: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 6
-         µm. A Metal5 lead joins the well to a pad at 1790, 1795 µm.
+         µm. A Metal5 lead joins the well to a pad at 290, 1945 µm.
 
    DM1_6 in plan view and in cross-section.
 
@@ -1207,9 +1162,9 @@ DM1_6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 11 from the south
+     - Column 1 from the west, row 12 from the south
    * - Well pad, centre x, y
-     - 1790, 1795 µm
+     - 290, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1225,20 +1180,21 @@ How it works
    whether the edge or the bottom limits.
 
 Compared with
-   * :ref:`DM1_3 <hvt-s-dm1-3>`: a plate of 6 µm in place of 3 µm.
+   * :ref:`DT20 <hvt-s-dt20>`: a Metal1 plate of 6 µm in place of none.
    * :ref:`DM1_10 <hvt-s-dm1-10>`: a plate of 6 µm in place of 10 µm.
    * :ref:`NM1_6 <hvt-s-nm1-6>`: a deep N-well in place of an N-well.
    * :ref:`DGM1 <hvt-s-dgm1>`: the plate joined to the well in place of on its own pad.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1795 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1945 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-6`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`DT20 <hvt-s-dt20>` while :ref:`NM1_6
-   <hvt-s-nm1-6>` is above :ref:`NT20 <hvt-s-nt20>`: plates work on edges,
-   and this well does not fail at its edge.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-6`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`DT20 <hvt-s-dt20>` while :ref:`NM1_6 <hvt-s-nm1-6>` is above
+   :ref:`NT20 <hvt-s-nt20>`: plates work on edges, and this well does not
+   fail at its edge.
 
 Limits
    None beyond those of the group.
@@ -1246,36 +1202,42 @@ Limits
 .. list-table:: DM1_6: predicted breakdown voltage by process
    :name: tab-hvt-sp-dm1-6
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL
+     - Predicted ratio
+   * - AL, AnL
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.04 of :ref:`DT20 <hvt-s-dt20>`
    * - ALhi
      - failed
      - failed
      - –
      - –
-   * - AD
+     - –
+   * - AD, AnD
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BL
      - 32.3
      - 30.3
      - 30.3 to 31.3
-     - 25.8 to 36.0
+     - 21.2 to 36.0
+     - 0.97 of :ref:`DT20 <hvt-s-dt20>`
    * - BLhi
      - failed
      - failed
+     - –
      - –
      - –
    * - BLlo
@@ -1283,9 +1245,11 @@ Limits
      - failed
      - –
      - –
+     - –
    * - BLq
      - 32.3
      - 31.3
+     - –
      - –
      - –
    * - BLq3
@@ -1293,19 +1257,23 @@ Limits
      - failed
      - –
      - –
+     - –
    * - BD
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BDhi
      - failed
      - failed
      - –
      - –
+     - –
    * - BDlo
      - failed
      - failed
+     - –
      - –
      - –
 
@@ -1319,7 +1287,7 @@ DM1_10
    :alt: Plan view and cross-section of DM1_10: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 10
-         µm. A Metal5 lead joins the well to a pad at 290, 1945 µm.
+         µm. A Metal5 lead joins the well to a pad at 590, 1945 µm.
 
    DM1_10 in plan view and in cross-section.
 
@@ -1349,9 +1317,9 @@ DM1_10
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 12 from the south
+     - Column 2 from the west, row 12 from the south
    * - Well pad, centre x, y
-     - 290, 1945 µm
+     - 590, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1368,12 +1336,13 @@ Compared with
    * :ref:`NM1_10 <hvt-s-nm1-10>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1945 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1945 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-10`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`DT20 <hvt-s-dt20>`.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dm1-10`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`DT20 <hvt-s-dt20>`.
 
 Limits
    Redundant if the bottom limits.
@@ -1381,38 +1350,44 @@ Limits
 .. list-table:: DM1_10: predicted breakdown voltage by process
    :name: tab-hvt-sp-dm1-10
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL
+     - Predicted ratio
+   * - AL, AnL
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
-   * - AD
+     - 21.9 to 36.0
+     - 1.04 of :ref:`DT20 <hvt-s-dt20>`
+   * - AD, AnD
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BL
      - 32.4
      - 30.3
      - 30.3 to 31.3
-     - 25.8 to 36.0
+     - 21.2 to 36.0
+     - 0.97 of :ref:`DT20 <hvt-s-dt20>`
    * - BLq
      - 32.3
      - 31.3
+     - –
      - –
      - –
    * - BD
      - 32.3
      - 29.6
      - 29.6 to 29.6
-     - 25.2 to 34.0
+     - 20.7 to 34.0
+     - 0.95 of :ref:`DT20 <hvt-s-dt20>`
 
 .. _hvt-s-dpm12:
 
@@ -1425,7 +1400,7 @@ DPM12
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 5
          µm; Metal2 plate to 9 µm; polysilicon plate to 2 µm. A Metal5 lead
-         joins the well to a pad at 590, 1945 µm.
+         joins the well to a pad at 890, 1945 µm.
 
    DPM12 in plan view and in cross-section.
 
@@ -1459,9 +1434,9 @@ DPM12
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 2 from the west, row 12 from the south
+     - Column 3 from the west, row 12 from the south
    * - Well pad, centre x, y
-     - 590, 1945 µm
+     - 890, 1945 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -1480,14 +1455,14 @@ Compared with
    * :ref:`NPM12 <hvt-s-npm12>`: a deep N-well in place of an N-well.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1945 µm. A
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1945 µm. A
    second sweep shows whether the oxide under the polysilicon survived.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dpm12`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`DT20 <hvt-s-dt20>`: no edge termination helps
-   this well.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dpm12`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`DT20 <hvt-s-dt20>`: no edge termination helps this well.
 
 Limits
    At about 30 V the oxide under the polysilicon sees under 1 MV/cm, so this
@@ -1496,35 +1471,41 @@ Limits
 .. list-table:: DPM12: predicted breakdown voltage by process
    :name: tab-hvt-sp-dpm12
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL
+     - Predicted ratio
+   * - AL, AnL
      - 32.4
      - 31.0
      - 31.0 to 31.0
-     - 26.3 to 35.6
-   * - AD
+     - 21.7 to 35.6
+     - 1.03 of :ref:`DT20 <hvt-s-dt20>`
+   * - AD, AnD
      - 32.3
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BL
      - 32.3
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BLq
      - 32.3
      - 31.3
+     - –
      - –
      - –
    * - BD
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`

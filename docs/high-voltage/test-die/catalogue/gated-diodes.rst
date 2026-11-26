@@ -46,7 +46,9 @@ Limits of the group
 
 The plate's Metal1 is 1 µm from the well's own Metal1, so the voltage
 between plate and well stays within 80 V, which is 0.8 MV/cm across that
-gap. The current step of the first part may be only tens of femtoamperes.
+gap, and within 60 V on the polysilicon plate. The current step of the first
+part may be only tens of femtoamperes. Over P-well the first part gives the
+flat-band voltage only.
 
 .. _hvt-s-ngp4:
 
@@ -58,8 +60,8 @@ NGP4
    :alt: Plan view and cross-section of NGP4: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; polysilicon plate to 4 µm
-         on its own pad. A Metal5 lead joins the well to a pad at 1190, 295
-         µm. A Metal2 lead joins the plate to a second pad at 1190, 445 µm.
+         on its own pad. A Metal5 lead joins the well to a pad at 290, 595
+         µm. A Metal2 lead joins the plate to a second pad at 290, 745 µm.
 
    NGP4 in plan view and in cross-section.
 
@@ -89,11 +91,11 @@ NGP4
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 1 from the south
+     - Column 1 from the west, row 3 from the south
    * - Well pad, centre x, y
-     - 1190, 295 µm
+     - 290, 595 µm
    * - Plate pad, centre x, y
-     - 1190, 445 µm
+     - 290, 745 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -114,17 +116,18 @@ Compared with
 
 Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
-   is at 1190, 295 µm and the plate pad at 1190, 445 µm. For :ref:`P1
+   is at 290, 595 µm and the plate pad at 290, 745 µm. For :ref:`P1
    <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
-   the voltage between well and plate stays within 80 V. The oxide under
+   the voltage between well and plate stays within 60 V. The oxide under
    this plate sees the whole voltage between plate and well, so that voltage
-   stays within 64 V here, which is 2 MV/cm across 0.32 µm.
+   stays within 60 V here, which is 1.8 MV/cm across 0.33 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-ngp4`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A threshold of a few volts: bare substrate beside the well.
-   Several times higher: P-well.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-ngp4`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   threshold of a few volts: bare substrate beside the well. Several times
+   higher: P-well.
 
 Limits
    The thin oxide limits the voltage between plate and well more than the
@@ -133,35 +136,41 @@ Limits
 .. list-table:: NGP4: predicted breakdown voltage by process
    :name: tab-hvt-sp-ngp4
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.4
      - –
      - 17.4 to 17.4
-     - 14.8 to 20.0
+     - 12.2 to 20.0
+     - 0.98 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 94.4
      - 89.2
      - 89.2 to 89.5
-     - 75.8 to 102.9
+     - 62.4 to 102.9
+     - 1.33 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 94.7
      - 89.5
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 60.8
      - 60.8 to 60.8
-     - 51.7 to 69.9
-   * - GAL and GAD
+     - 42.6 to 69.9
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
+   * - GAL
      - 19.3
+     - –
      - –
      - –
      - –
@@ -170,14 +179,17 @@ Limits
      - 53.6
      - –
      - –
+     - –
    * - GBLq
      - 56.0
      - 54.6
      - –
      - –
+     - –
    * - GBD
      - 54.5
      - 53.4
+     - –
      - –
      - –
 
@@ -191,8 +203,8 @@ NGM1
    :alt: Plan view and cross-section of NGM1: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm on
-         its own pad. A Metal5 lead joins the well to a pad at 1490, 295 µm.
-         A Metal2 lead joins the plate to a second pad at 1490, 445 µm.
+         its own pad. A Metal5 lead joins the well to a pad at 590, 595 µm.
+         A Metal2 lead joins the plate to a second pad at 590, 745 µm.
 
    NGM1 in plan view and in cross-section.
 
@@ -222,11 +234,11 @@ NGM1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 1 from the south
+     - Column 2 from the west, row 3 from the south
    * - Well pad, centre x, y
-     - 1490, 295 µm
+     - 590, 595 µm
    * - Plate pad, centre x, y
-     - 1490, 445 µm
+     - 590, 745 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -249,55 +261,62 @@ Compared with
 
 Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
-   is at 1490, 295 µm and the plate pad at 1490, 445 µm. For :ref:`P1
+   is at 590, 595 µm and the plate pad at 590, 745 µm. For :ref:`P1
    <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
    the voltage between well and plate stays within 80 V. A plate at 0 V lets
    the well reach 80 V, which covers the breakdown voltage predicted for
    that case.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-ngm1`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A threshold near the published Metal1 field threshold: bare
-   substrate. No threshold within the range: a surface as heavily doped as
-   P-well.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-ngm1`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   threshold near the published Metal1 field threshold: bare substrate. No
+   threshold within the range: a surface as heavily doped as P-well.
 
 Limits
-   Over P-well the threshold is above the plate's range, so the doping can
-   be bounded from below but not measured.
+   Over P-well the threshold is above 100 V, outside the plate's range. The
+   first part then gives the flat-band voltage only, and the doping is
+   bounded from below but not measured.
 
 .. list-table:: NGM1: predicted breakdown voltage by process
    :name: tab-hvt-sp-ngm1
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.6
      - –
      - 17.6 to 17.6
-     - 15.0 to 20.2
+     - 12.3 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 90.2
      - 84.8
      - 84.8 to 85.4
-     - 72.1 to 98.2
+     - 59.4 to 98.2
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 90.8
      - 85.4
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 50.7 to 68.5
-   * - GAL and GAD
+     - 41.7 to 68.5
+     - 0.97 of :ref:`NT20 <hvt-s-nt20>`
+   * - GAL
      - 18.0
+     - –
      - –
      - –
      - –
@@ -306,14 +325,17 @@ Limits
      - 57.4
      - –
      - –
+     - –
    * - GBLq
      - 64.1
      - 59.3
      - –
      - –
+     - –
    * - GBD
      - 59.9
      - 56.2
+     - –
      - –
      - –
 
@@ -328,8 +350,8 @@ NAGM1
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; Metal1 plate to 6 µm on
          its own pad; NAT from 0.6 µm. A Metal5 lead joins the well to a pad
-         at 1790, 295 µm. A Metal2 lead joins the plate to a second pad at
-         1790, 445 µm.
+         at 890, 595 µm. A Metal2 lead joins the plate to a second pad at
+         890, 745 µm.
 
    NAGM1 in plan view and in cross-section.
 
@@ -361,11 +383,11 @@ NAGM1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 1 from the south
+     - Column 3 from the west, row 3 from the south
    * - Well pad, centre x, y
-     - 1790, 295 µm
+     - 890, 595 µm
    * - Plate pad, centre x, y
-     - 1790, 445 µm
+     - 890, 745 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -385,17 +407,18 @@ Compared with
 
 Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
-   is at 1790, 295 µm and the plate pad at 1790, 445 µm. For :ref:`P1
+   is at 890, 595 µm and the plate pad at 890, 745 µm. For :ref:`P1
    <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
    the voltage between well and plate stays within 80 V. As for :ref:`NGM1
    <hvt-s-ngm1>`.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nagm1`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A lower threshold than :ref:`NGM1 <hvt-s-ngm1>`: NAT removes
-   P-well that is present beside a plain well. Equal thresholds: the two
-   surfaces are the same silicon.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nagm1`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   lower threshold than :ref:`NGM1 <hvt-s-ngm1>`: NAT removes P-well that is
+   present beside a plain well. Equal thresholds: the two surfaces are the
+   same silicon.
 
 Limits
    The plate also covers the strip beside the well, whose doping may differ
@@ -404,15 +427,17 @@ Limits
 .. list-table:: NAGM1: predicted breakdown voltage by process
    :name: tab-hvt-sp-nagm1
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
+     - Predicted ratio
    * - AL
      - failed
+     - –
      - –
      - –
      - –
@@ -420,29 +445,35 @@ Limits
      - 90.2
      - 84.8
      - 84.8 to 84.8
-     - 72.1 to 97.5
+     - 59.4 to 97.5
+     - 4.79 of :ref:`NT20 <hvt-s-nt20>`
    * - AnD
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 50.7 to 68.5
+     - 41.7 to 68.5
+     - 3.37 of :ref:`NT20 <hvt-s-nt20>`
    * - BL
      - 90.2
      - 84.8
      - 84.8 to 85.4
-     - 72.1 to 98.2
+     - 59.4 to 98.2
+     - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 90.8
      - 85.4
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 50.7 to 68.5
-   * - GAL and GAD
+     - 41.7 to 68.5
+     - 0.97 of :ref:`NT20 <hvt-s-nt20>`
+   * - GAL
      - 18.0
+     - –
      - –
      - –
      - –
@@ -451,9 +482,11 @@ Limits
      - 57.4
      - –
      - –
+     - –
    * - GAnD
      - 59.9
      - 56.2
+     - –
      - –
      - –
    * - GBL
@@ -461,14 +494,17 @@ Limits
      - 57.4
      - –
      - –
+     - –
    * - GBLq
      - 64.1
      - 59.3
      - –
      - –
+     - –
    * - GBD
      - 59.9
      - 56.2
+     - –
      - –
      - –
 
@@ -482,8 +518,8 @@ DGM1
    :alt: Plan view and cross-section of DGM1: a deep N-well 30 µm
          across with corners cut 4.7 µm along each side, an N+ contact ring
          inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 6
-         µm on its own pad. A Metal5 lead joins the well to a pad at 290,
-         595 µm. A Metal2 lead joins the plate to a second pad at 290, 745
+         µm on its own pad. A Metal5 lead joins the well to a pad at 1190,
+         595 µm. A Metal2 lead joins the plate to a second pad at 1190, 745
          µm.
 
    DGM1 in plan view and in cross-section.
@@ -514,11 +550,11 @@ DGM1
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 3 from the south
+     - Column 4 from the west, row 3 from the south
    * - Well pad, centre x, y
-     - 290, 595 µm
+     - 1190, 595 µm
    * - Plate pad, centre x, y
-     - 290, 745 µm
+     - 1190, 745 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -540,16 +576,17 @@ Compared with
 
 Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
-   is at 290, 595 µm and the plate pad at 290, 745 µm. For :ref:`P1
+   is at 1190, 595 µm and the plate pad at 1190, 745 µm. For :ref:`P1
    <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
    the voltage between well and plate stays within 80 V. As for :ref:`NGM1
    <hvt-s-ngm1>`.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dgm1`, with
-   the band and agreement range of each family on the row of its nominal
-   process. A breakdown voltage that does not move with the plate voltage:
-   the bottom of the well limits. One that moves: the edge does.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dgm1`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. A
+   breakdown voltage that does not move with the plate voltage: the bottom
+   of the well limits. One that moves: the edge does.
 
 Limits
    The N-well band under the contact ring lies under the inner part of the
@@ -558,41 +595,48 @@ Limits
 .. list-table:: DGM1: predicted breakdown voltage by process
    :name: tab-hvt-sp-dgm1
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL
+     - Predicted ratio
+   * - AL, AnL
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
-   * - AD
+     - 21.9 to 36.0
+     - 1.04 of :ref:`DT20 <hvt-s-dt20>`
+   * - AD, AnD
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - BL
      - 32.4
      - 30.3
      - 30.3 to 31.3
-     - 25.8 to 36.0
+     - 21.2 to 36.0
+     - 0.97 of :ref:`DT20 <hvt-s-dt20>`
    * - BLq
      - 32.3
      - 31.3
+     - –
      - –
      - –
    * - BD
      - 32.4
      - 31.3
      - 31.3 to 31.3
-     - 26.6 to 36.0
+     - 21.9 to 36.0
+     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
    * - GAL
      - 32.4
      - 31.1
+     - –
      - –
      - –
    * - GAD
@@ -600,9 +644,11 @@ Limits
      - 30.9
      - –
      - –
+     - –
    * - GBL
      - 32.4
      - 31.3
+     - –
      - –
      - –
    * - GBLq
@@ -610,8 +656,10 @@ Limits
      - 30.8
      - –
      - –
+     - –
    * - GBD
      - 32.4
      - 30.9
+     - –
      - –
      - –

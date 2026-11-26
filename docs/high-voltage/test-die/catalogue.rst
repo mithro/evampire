@@ -3,7 +3,7 @@
 Structure catalogue
 ===================
 
-Each of the 76 structures on the test die has an entry that states the one
+Each of the 73 structures on the test die has an entry that states the one
 question it answers, how it works, what it is compared with, how it is
 measured, what the simulation predicts and what it cannot show. The entries
 are grouped by what the structures vary.
@@ -34,8 +34,7 @@ are grouped by what the structures vary.
    The deep N-well structures are a reference group.
 
 :doc:`catalogue/capacitance-wells`
-   Five wells are large enough for their capacitance to be measured, and one
-   structure has a pad and a lead with no well.
+   Five wells are large enough for their capacitance to be measured
 
 Every figure, parameter, position and predicted value of an entry is
 generated from the layout's own data, so the entries follow the layout.
@@ -59,6 +58,15 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NR4S <hvt-s-nr4s>`
      - :doc:`Floating rings <catalogue/floating-rings>`
      - Measures the potential of ring 1 when three more rings stand outside it.
+   * - :ref:`NR1S5 <hvt-s-nr1s5>`
+     - :doc:`Floating rings <catalogue/floating-rings>`
+     - Gives the spacing between two wells at different voltages
+   * - :ref:`NR1S8 <hvt-s-nr1s8>`
+     - :doc:`Floating rings <catalogue/floating-rings>`
+     - The same measurement at a gap of 8 µm, wider than the depletion region of a plain well at its breakdown voltage.
+   * - :ref:`NR1S12 <hvt-s-nr1s12>`
+     - :doc:`Floating rings <catalogue/floating-rings>`
+     - The widest gap, 12 µm
    * - :ref:`NGP4 <hvt-s-ngp4>`
      - :doc:`Gated diodes <catalogue/gated-diodes>`
      - A polysilicon plate on its own pad
@@ -71,6 +79,9 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`DGM1 <hvt-s-dgm1>`
      - :doc:`Gated diodes <catalogue/gated-diodes>`
      - A Metal1 plate on its own pad beside a deep N-well
+   * - :ref:`DT20b <hvt-s-dt20b>`
+     - :doc:`Deep N-wells <catalogue/deep-n-well>`
+     - Gives the spread across the die for a deep N-well
    * - :ref:`NT1 <hvt-s-nt1>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Tests whether a P+ region 1 µm from an N-well, with no P-well, is enough to explain the published 14 V.
@@ -194,36 +205,18 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`DT2p6 <hvt-s-dt2p6>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with its P+ ring as close as the rules allow, 2.6 µm.
-   * - :ref:`DT5 <hvt-s-dt5>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with the P+ ring at 5 µm.
    * - :ref:`DT10 <hvt-s-dt10>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with the P+ ring at 10 µm.
    * - :ref:`DT20 <hvt-s-dt20>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - The reference deep N-well
-   * - :ref:`DT35 <hvt-s-dt35>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with the P+ ring at 35 µm.
    * - :ref:`DC0 <hvt-s-dc0>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with square corners.
-   * - :ref:`DC15 <hvt-s-dc15>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with the longest corner cut.
    * - :ref:`DW1p5 <hvt-s-dw1p5>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with a drawn P-well as close as the rules allow, 1.5 µm.
-   * - :ref:`DW3 <hvt-s-dw3>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with a drawn P-well from 3 µm.
-   * - :ref:`DW6 <hvt-s-dw6>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with a drawn P-well from 6 µm.
-   * - :ref:`DM1_3 <hvt-s-dm1-3>`
-     - :doc:`Field plates <catalogue/field-plates>`
-     - A deep N-well with a Metal1 plate of 3 µm.
    * - :ref:`DM1_6 <hvt-s-dm1-6>`
      - :doc:`Field plates <catalogue/field-plates>`
      - A deep N-well with a Metal1 plate of 6 µm
@@ -251,9 +244,6 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NT20b <hvt-s-nt20b>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Gives the spread across one die
-   * - :ref:`DT20b <hvt-s-dt20b>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - Gives the spread across the die for a deep N-well
    * - :ref:`NA0p6b <hvt-s-na0p6b>`
      - :doc:`NAT layer <catalogue/nat>`
      - Gives the spread across the die for a well under NAT
@@ -272,12 +262,12 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`CVN2 <hvt-s-cvn2>`
      - :doc:`Capacitance wells and open reference <catalogue/capacitance-wells>`
      - The small N-well
-   * - :ref:`CVD2 <hvt-s-cvd2>`
-     - :doc:`Capacitance wells and open reference <catalogue/capacitance-wells>`
-     - The small deep N-well
    * - :ref:`CVNA <hvt-s-cvna>`
      - :doc:`Capacitance wells and open reference <catalogue/capacitance-wells>`
      - An N-well whose capacitance can be followed beyond the plain well's breakdown.
+   * - :ref:`CVNA2 <hvt-s-cvna2>`
+     - :doc:`Capacitance wells and open reference <catalogue/capacitance-wells>`
+     - The large N-well with NAT
 
 .. toctree::
    :hidden:

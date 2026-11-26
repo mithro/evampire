@@ -56,7 +56,7 @@ NW0
    :alt: Plan view and cross-section of NW0: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 0 µm. A
-         Metal5 lead joins the well to a pad at 1190, 745 µm.
+         Metal5 lead joins the well to a pad at 1490, 895 µm.
 
    NW0 in plan view and in cross-section.
 
@@ -86,9 +86,9 @@ NW0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 4 from the south
+     - Column 5 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1190, 745 µm
+     - 1490, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -108,15 +108,16 @@ Compared with
    * :ref:`NW1p5 <hvt-s-nw1p5>`: the P-well starts at 0 µm in place of 1.5 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 745 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 895 µm.
    Swept again at 85 °C. The knee is expected early and sharp.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw0`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NT20 <hvt-s-nt20>`: the foundry already puts
-   P-well against a plain well. Far below :ref:`NT20 <hvt-s-nt20>`: it does
-   not, and this junction is what the published value describes.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw0`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NT20 <hvt-s-nt20>`: the foundry already puts P-well against a
+   plain well. Far below :ref:`NT20 <hvt-s-nt20>`: it does not, and this
+   junction is what the published value describes.
 
 Limits
    If the drawn and a generated P-well overlap, the layout cannot tell
@@ -125,33 +126,38 @@ Limits
 .. list-table:: NW0: predicted breakdown voltage by process
    :name: tab-hvt-sp-nw0
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1 (reference)
    * - BL
      - 19.8
      - 20.0
      - 19.7 to 19.8
-     - 16.7 to 22.8
+     - 13.8 to 22.8
+     - 0.30 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 19.7
      - 19.9
+     - –
      - –
      - –
    * - BD
      - 19.8
      - 20.0
      - 19.8 to 19.8
-     - 16.8 to 22.8
+     - 13.9 to 22.8
+     - 0.32 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nw1p5:
 
@@ -163,7 +169,7 @@ NW1p5
    :alt: Plan view and cross-section of NW1p5: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 1.5 µm.
-         A Metal5 lead joins the well to a pad at 1490, 745 µm.
+         A Metal5 lead joins the well to a pad at 1790, 895 µm.
 
    NW1p5 in plan view and in cross-section.
 
@@ -193,9 +199,9 @@ NW1p5
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 4 from the south
+     - Column 6 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1490, 745 µm
+     - 1790, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -217,14 +223,15 @@ Compared with
    * :ref:`NT1 <hvt-s-nt1>`: a P-well in place of a P+ ring at a similar distance.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 745 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 895 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw1p5`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Well above :ref:`NW0 <hvt-s-nw0>` and below :ref:`NT20
-   <hvt-s-nt20>`: a P-well this close costs part of the voltage, and a
-   generated P-well kept 1.5 µm away would too.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw1p5`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Well
+   above :ref:`NW0 <hvt-s-nw0>` and below :ref:`NT20 <hvt-s-nt20>`: a P-well
+   this close costs part of the voltage, and a generated P-well kept 1.5 µm
+   away would too.
 
 Limits
    The gap is set by two mask edges that are aligned separately, so its true
@@ -233,33 +240,38 @@ Limits
 .. list-table:: NW1p5: predicted breakdown voltage by process
    :name: tab-hvt-sp-nw1p5
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 53.2
      - 51.9
      - 51.9 to 52.5
-     - 44.1 to 60.4
+     - 36.3 to 60.4
+     - 0.77 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 53.5
      - 52.5
+     - –
      - –
      - –
    * - BD
      - 53.0
      - 51.6
      - 51.6 to 51.6
-     - 43.9 to 59.3
+     - 36.1 to 59.3
+     - 0.84 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nw3:
 
@@ -271,7 +283,7 @@ NW3
    :alt: Plan view and cross-section of NW3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 3 µm. A
-         Metal5 lead joins the well to a pad at 1790, 745 µm.
+         Metal5 lead joins the well to a pad at 290, 1045 µm.
 
    NW3 in plan view and in cross-section.
 
@@ -301,9 +313,9 @@ NW3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 4 from the south
+     - Column 1 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 1790, 745 µm
+     - 290, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -322,13 +334,14 @@ Compared with
    * :ref:`NW6 <hvt-s-nw6>`: the P-well starts at 3 µm in place of 6 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 745 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1045 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw3`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Close to :ref:`NT20 <hvt-s-nt20>`: a clearance of 3 µm recovers
-   most of the plain well's voltage.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw3`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Close
+   to :ref:`NT20 <hvt-s-nt20>`: a clearance of 3 µm recovers most of the
+   plain well's voltage.
 
 Limits
    Its difference from :ref:`NW6 <hvt-s-nw6>` is expected to be small, of
@@ -337,20 +350,23 @@ Limits
 .. list-table:: NW3: predicted breakdown voltage by process
    :name: tab-hvt-sp-nw3
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.9
-     - 15.0 to 20.6
+     - 12.4 to 20.6
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
      - 17.9
+     - –
      - –
      - –
      - –
@@ -358,10 +374,12 @@ Limits
      - 72.1
      - 65.2
      - 59.7 to 72.9
-     - 50.7 to 83.8
+     - 41.8 to 83.8
+     - 0.97 of :ref:`NT20 <hvt-s-nt20>`
    * - BLhi
      - 65.5
      - 59.7
+     - –
      - –
      - –
    * - BLlo
@@ -369,9 +387,11 @@ Limits
      - 72.9
      - –
      - –
+     - –
    * - BLq
      - 74.5
      - 67.5
+     - –
      - –
      - –
    * - BLq3
@@ -379,19 +399,23 @@ Limits
      - 71.6
      - –
      - –
+     - –
    * - BD
      - 62.9
      - 61.2
      - 58.8 to 61.2
-     - 50.0 to 70.4
+     - 41.2 to 70.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BDhi
      - 62.9
      - 58.8
      - –
      - –
+     - –
    * - BDlo
      - 62.5
      - 59.2
+     - –
      - –
      - –
 
@@ -405,7 +429,7 @@ NW6
    :alt: Plan view and cross-section of NW6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 6 µm. A
-         Metal5 lead joins the well to a pad at 290, 895 µm.
+         Metal5 lead joins the well to a pad at 590, 1045 µm.
 
    NW6 in plan view and in cross-section.
 
@@ -435,9 +459,9 @@ NW6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 5 from the south
+     - Column 2 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 290, 895 µm
+     - 590, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -456,15 +480,16 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: a P-well from 6 µm in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 895 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1045 µm.
 
 Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw6`, with
-   the band and agreement range of each family on the row of its nominal
-   process. Equal to :ref:`NT20 <hvt-s-nt20>`: 6 µm is a safe clearance.
-   Higher than :ref:`NT20 <hvt-s-nt20>` while :ref:`NT20 <hvt-s-nt20>` is
-   near 14 V: drawing a P-well keeps the generated one away, and a distant
-   drawn P-well is itself a remedy.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw6`. The row
+   of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Equal
+   to :ref:`NT20 <hvt-s-nt20>`: 6 µm is a safe clearance. Higher than
+   :ref:`NT20 <hvt-s-nt20>` while :ref:`NT20 <hvt-s-nt20>` is near 14 V:
+   drawing a P-well keeps the generated one away, and a distant drawn P-well
+   is itself a remedy.
 
 Limits
    No structure has a P-well further away, so a value still below :ref:`NT20
@@ -473,30 +498,35 @@ Limits
 .. list-table:: NW6: predicted breakdown voltage by process
    :name: tab-hvt-sp-nw6
    :header-rows: 1
-   :widths: 16 21 21 21 21
+   :widths: 18 16 16 17 17 16
 
    * - Process
      - Straight edge (V)
      - Corner section (V)
      - Family band (V)
      - Agreement range (V)
-   * - AL and AD
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
      - 17.7
      - –
      - 17.7 to 17.7
-     - 15.0 to 20.4
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 56.9 to 80.8
+     - 46.9 to 80.8
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.8
      - 70.3
+     - –
      - –
      - –
    * - BD
      - 62.9
      - 61.7
      - 61.7 to 61.7
-     - 52.4 to 71.0
+     - 43.2 to 71.0
+     - 1.01 of :ref:`NT20 <hvt-s-nt20>`
