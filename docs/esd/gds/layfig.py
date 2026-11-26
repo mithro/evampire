@@ -144,13 +144,15 @@ class Fig:
         self.over.extend(out)
 
     def label(self, s, target, at, anchor="middle", colour=INK, elbow=None,
-              weight="normal", lead="auto", also=()):
+              weight="normal", lead="auto", also=(), leader=None):
         """Text at pixel position `at` with a leader to a layout point.
 
         The leader leaves the text below or above it (lead="auto", for
         labels in the top and bottom margins) or at its left or right end
         (for labels in the side margins), and ends in a dot on the target.
+        `leader` gives the leader a colour other than the text's.
         """
+        text_colour, colour = colour, leader or colour
         tx, ty = self.px(*target)
         ax, ay = at
         lines = s.split("\n")
@@ -180,7 +182,17 @@ class Fig:
             self.over.append(
                 f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="3.2" fill="{colour}" '
                 'stroke="#fff" stroke-width="1"/>')
-        self.text(ax, ay, s, anchor=anchor, fill=colour, weight=weight)
+        self.text(ax, ay, s, anchor=anchor, fill=text_colour, weight=weight)
+
+    def line(self, a, b, colour=INK, width=1.0, dash=None):
+        """A thin line between two layout points, such as an extension line."""
+        (x1, y1), (x2, y2) = self.px(*a), self.px(*b)
+        seg = f'x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}"'
+        extra = f' stroke-dasharray="{dash}"' if dash else ""
+        self.over.append(f'<line {seg} stroke="#fff" '
+                         f'stroke-width="{width + 2.4}" opacity="0.85"/>')
+        self.over.append(f'<line {seg} stroke="{colour}" '
+                         f'stroke-width="{width}"{extra}/>')
 
     def dim(self, a, b, s, offset=0.0, colour=INK, side="above"):
         """A dimension line between two layout points, with its text."""
@@ -243,9 +255,9 @@ class Fig:
         self.keys += [k for k in other.keys if k not in self.keys]
         self.alpha = {**other.alpha, **self.alpha}
 
-    def title(self, s):
+    def title(self, s, up=10):
         """A panel title above the top-left corner of the layout."""
-        self.text(self.ox, self.oy - 10, s, anchor="start", weight="bold",
+        self.text(self.ox, self.oy - up, s, anchor="start", weight="bold",
                   halo=False)
 
     # -- furniture --------------------------------------------------------
@@ -298,6 +310,15 @@ class Fig:
                 out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
                            f'height="14" fill="none" stroke="{style}" '
                            f'stroke-width="2"{d}/>')
+            elif kind == "tint":   # translucent metal with a firm edge
+                fill, stroke, alpha = style
+                out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
+                           f'height="14" fill="{fill}" fill-opacity="{alpha}" '
+                           f'stroke="{stroke}" stroke-width="2"/>')
+            elif kind == "cut":
+                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 27:.1f}" '
+                           f'y2="{cy - 5}" stroke="{style}" stroke-width="2" '
+                           'stroke-dasharray="9,3,2,3"/>')
             elif kind == "crop":
                 out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 26:.1f}" '
                            f'y2="{cy - 5}" stroke="{INK}" stroke-width="1.3" '
@@ -371,10 +392,11 @@ class Fig:
             'stroke-width="1.2"/></pattern>']
         for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
-                f'<marker id="arrow-{name}" viewBox="0 0 10 10" refX="7" '
-                'refY="5" markerWidth="4.5" markerHeight="4.5" '
+                f'<marker id="arrow-{name}" viewBox="-1 -1 12 12" refX="7" '
+                'refY="5" markerWidth="5.4" markerHeight="5.4" '
                 'orient="auto"><path d="M0,0 L10,5 L0,10 z" '
-                f'fill="{colour}"/></marker>')
+                f'fill="{colour}" stroke="#ffffff" stroke-width="0.7" '
+                'stroke-linejoin="round"/></marker>')
         svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.w:.0f}" '
                f'height="{h:.0f}" viewBox="0 0 {self.w:.0f} {h:.0f}" '
                'font-family="sans-serif">',
