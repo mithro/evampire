@@ -39,12 +39,14 @@ STYLES = {
     "metal": (METAL, "#6b7684", "bond pad metal"),
     "pad": ("none", INK, "pad opening"),
     "padnet": (HOT, "#7d1f14", "PAD net, metal 2"),
+    "padtop": (HOT, "#7d1f14", "PAD net, bond pad and metal 2"),
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
-    "dvddrail": (DVDD, "#6a1c53", "DVDD, metal 5"),
-    "dvssrail": (DVSS, "#0d5045", "DVSS, metal 5"),
-    "innet": (SECONDARY, "#12305f", "protected input net"),
+    "dvddrail": (DVDD, "#6a1c53", "DVDD, metal 3 to 5"),
+    "dvssrail": (DVSS, "#0d5045", "DVSS, metal 3 to 5"),
+    "dvsslink": (DVSS, "#0d5045", "DVSS, metal 2"),
+    "innet": (SECONDARY, "#12305f", "protected net, metal 1 and 2"),
     "other": ("#c4c9cf", "#8a9199", "other diffusion"),
     "resistor": ("none", SECONDARY, "resistor body"),
     "gate": ("#8e5bb5", "#4f2a70", "gate over diffusion"),
@@ -209,22 +211,23 @@ class Fig:
         self.text(*tpos, s, anchor=anchor, fill=colour, weight="bold")
 
     def flow(self, points, colour=HOT, width=4.0, dash=None, pixels=False,
-             key="discharge current"):
+             key="discharge current", head=True):
         """An arrow along layout points: the direction of a current."""
         pts = points if pixels else [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
         mid = {HOT: "hot", CLAMP: "clamp", SECONDARY: "second",
                SNAP: "snap"}[colour]
-        if key and ("arrow", colour, key) not in self.notes:
-            self.notes.append(("arrow", colour, key))
+        kind = "dashes" if dash else "arrow"
+        if key and (kind, colour, key) not in self.notes:
+            self.notes.append((kind, colour, key))
         extra = f' stroke-dasharray="{dash}"' if dash else ""
         self.over.append(f'<polyline points="{d}" fill="none" stroke="#fff" '
                          f'stroke-width="{width + 3}" opacity="0.9" '
                          'stroke-linejoin="round"/>')
         self.over.append(
             f'<polyline points="{d}" fill="none" stroke="{colour}" '
-            f'stroke-width="{width}" stroke-linejoin="round"{extra} '
-            f'marker-end="url(#arrow-{mid})"/>')
+            f'stroke-width="{width}" stroke-linejoin="round"{extra}'
+            + (f' marker-end="url(#arrow-{mid})"/>' if head else "/>"))
 
     def box(self, window, colour=INK, dash="6,4", width=1.6):
         """Outline a region of the layout (x0, y0, x1, y1)."""
@@ -263,9 +266,9 @@ class Fig:
                    f'fill="{INK}">{label}</text>')
         return out, x1 + 8 + len(label) * FONT * 0.6
 
-    def note(self, colour, text):
-        """Explain a label colour in the legend."""
-        self.notes.append(("label", colour, text))
+    def note(self, colour, text, kind="label"):
+        """Explain a label colour or an outline in the legend."""
+        self.notes.append((kind, colour, text))
 
     def _legend(self, x, y):
         """Swatches in columns of one width, drawn as they are in the layout."""
@@ -273,7 +276,7 @@ class Fig:
         for k in STYLES:
             if k in self.keys:
                 fill, stroke, name = STYLES[k]
-                dash = "4,2" if k in ("pad", "sab") else None
+                dash = "4,2" if k == "pad" else None
                 kind = "contact" if k == "contact" else "swatch"
                 items.append((kind, (fill, stroke, dash, self.alpha[k]), name))
         items += [(kind, colour, text) for kind, colour, text in self.notes]
@@ -287,10 +290,18 @@ class Fig:
         out = []
         for i, (kind, style, name) in enumerate(items):
             cx, cy = lefts[i % per_row], y + (i // per_row) * 24
-            if kind == "crop":
+            if kind == "box":
+                out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
+                           f'height="14" fill="none" stroke="{style}" '
+                           'stroke-width="1.4" stroke-dasharray="5,4"/>')
+            elif kind == "crop":
                 out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 26:.1f}" '
-                           f'y2="{cy - 5}" stroke="{style}" stroke-width="1.2" '
+                           f'y2="{cy - 5}" stroke="{INK}" stroke-width="1.3" '
                            'stroke-dasharray="7,5"/>')
+            elif kind == "dashes":
+                out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 27:.1f}" '
+                           f'y2="{cy - 5}" stroke="{style}" stroke-width="4" '
+                           'stroke-dasharray="7,4"/>')
             elif kind == "arrow":
                 out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 18:.1f}" '
                            f'y2="{cy - 5}" stroke="{style}" stroke-width="4"/>')
@@ -303,8 +314,11 @@ class Fig:
                 fill, stroke, dash, alpha = style
                 d = f' stroke-dasharray="{dash}"' if dash else ""
                 w, h, dx = (8, 8, 9) if kind == "contact" else (26, 14, 0)
-                out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
-                           f'height="14" fill="{SUB}"/>')
+                if fill != "none":   # show a tint over what lies under it
+                    under = (NWELL if name == STYLES["dvdd"][2]
+                             and "nwell" in self.keys else SUB)
+                    out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
+                               f'height="14" fill="{under}"/>')
                 out.append(
                     f'<rect x="{cx + dx:.1f}" y="{cy - 12 + (14 - h) / 2:.1f}" '
                     f'width="{w}" height="{h}" fill="{fill}" stroke="{stroke}" '
@@ -323,8 +337,12 @@ class Fig:
         frame = []
         for (xa, ya, xb, yb), cropped in edges:
             dash = ' stroke-dasharray="7,5"' if cropped else ""
+            if cropped:   # a white edge, so the dashes show over any fill
+                frame.append(
+                    f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" '
+                    f'y2="{yb:.1f}" stroke="#ffffff" stroke-width="3.5"/>')
             frame.append(f'<line x1="{xa:.1f}" y1="{ya:.1f}" x2="{xb:.1f}" '
-                         f'y2="{yb:.1f}" stroke="{GREY}" stroke-width="1.2"'
+                         f'y2="{yb:.1f}" stroke="{INK}" stroke-width="1.3"'
                          f'{dash}/>')
         return [*self.body, *frame, *self.over]
 
