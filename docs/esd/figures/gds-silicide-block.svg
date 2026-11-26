@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="956" height="597" viewBox="0 0 956 597" font-family="sans-serif">
-<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-clamp" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e08a00"/></marker><marker id="arrow-second" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e9c"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
-<rect width="956" height="597" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="956" height="645" viewBox="0 0 956 645" font-family="sans-serif">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><marker id="arrow-hot" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><marker id="arrow-snap" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker></defs>
+<rect width="956" height="645" fill="#ffffff"/>
 <rect x="20.0" y="48.0" width="276.0" height="408.0" fill="#dbe8f5"/>
 <path d="M52.7,63.9L296.0,63.9L296.0,456.0L52.7,456.0L52.7,426.9L52.7,416.1L52.7,250.8L52.7,240.0L52.7,74.7Z" fill="#f5b46e" stroke="#a8651c" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M25.1,368.7L39.5,368.7L296.0,368.7L296.0,403.2L39.5,403.2L25.1,403.2L25.1,398.2L25.1,374.2ZM25.1,87.6L39.5,87.6L296.0,87.6L296.0,122.1L39.5,122.1L25.1,122.1L25.1,117.2L25.1,93.2ZM39.5,439.8L296.0,439.8L296.0,456.0L25.1,456.0L25.1,445.3L25.1,439.8L39.5,439.8Z" fill="#c9a0dc" stroke="#6f3f93" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -125,28 +125,28 @@
 <text x="58.0" y="532.0" font-size="14" fill="#222222">1 µm, all panels</text>
 <rect x="216.4" y="521.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="216.4" y="521.0" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
-<text x="250.4" y="533.0" font-size="14" fill="#222222">P substrate</text>
-<rect x="364.5" y="521.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="364.5" y="521.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
-<text x="398.5" y="533.0" font-size="14" fill="#222222">N-well</text>
-<rect x="567.4" y="521.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="567.4" y="521.0" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
-<text x="601.4" y="533.0" font-size="14" fill="#222222">N+ diffusion</text>
+<text x="250.4" y="533.0" font-size="14" fill="#222222">P-type silicon, no N-well</text>
+<rect x="466.4" y="521.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="466.4" y="521.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
+<text x="500.4" y="533.0" font-size="14" fill="#222222">N-well</text>
 <rect x="216.4" y="545.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="216.4" y="545.0" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
-<text x="250.4" y="557.0" font-size="14" fill="#222222">P+ diffusion</text>
-<rect x="364.5" y="545.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="364.5" y="545.0" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
-<text x="398.5" y="557.0" font-size="14" fill="#222222">polysilicon</text>
-<rect x="567.4" y="545.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="567.4" y="545.0" width="26" height="14" fill="url(#hatch)" stroke="#222222" opacity="1.0"/>
-<text x="601.4" y="557.0" font-size="14" fill="#222222">silicide block, over any layer</text>
+<rect x="216.4" y="545.0" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
+<text x="250.4" y="557.0" font-size="14" fill="#222222">N+ diffusion</text>
+<rect x="466.4" y="545.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="466.4" y="545.0" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
+<text x="500.4" y="557.0" font-size="14" fill="#222222">P+ diffusion</text>
 <rect x="216.4" y="569.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="225.4" y="572.0" width="8" height="8" fill="#333333" stroke="none" opacity="1.0"/>
-<text x="250.4" y="581.0" font-size="14" fill="#222222">contact</text>
-<rect x="364.5" y="569.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="364.5" y="569.0" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
-<text x="398.5" y="581.0" font-size="14" fill="#222222">gate over diffusion</text>
-<line x1="567.4" y1="576.0" x2="593.4" y2="576.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<text x="601.4" y="581.0" font-size="14" fill="#222222">layout continues</text>
+<rect x="216.4" y="569.0" width="26" height="14" fill="#c9a0dc" stroke="#6f3f93" opacity="1.0"/>
+<text x="250.4" y="581.0" font-size="14" fill="#222222">polysilicon</text>
+<rect x="466.4" y="569.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="466.4" y="569.0" width="26" height="14" fill="url(#hatch)" stroke="#222222" opacity="1.0"/>
+<text x="500.4" y="581.0" font-size="14" fill="#222222">silicide block, over any layer</text>
+<rect x="216.4" y="593.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="225.4" y="596.0" width="8" height="8" fill="#333333" stroke="none" opacity="1.0"/>
+<text x="250.4" y="605.0" font-size="14" fill="#222222">contact</text>
+<rect x="466.4" y="593.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="466.4" y="593.0" width="26" height="14" fill="#8e5bb5" stroke="#4f2a70" opacity="1.0"/>
+<text x="500.4" y="605.0" font-size="14" fill="#222222">gate over diffusion</text>
+<line x1="216.4" y1="624.0" x2="242.4" y2="624.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="250.4" y="629.0" font-size="14" fill="#222222">layout continues</text>
 </svg>
