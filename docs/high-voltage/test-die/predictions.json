@@ -1,35 +1,117 @@
 {
  "processes": {
-  "A": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; nominal doping",
-  "An": "As A, but no P-well in the strip between an N-well and NAT",
-  "Aq": "As A, with fixed oxide charge of 1e11 cm^-2",
-  "B": "P-well only where the layout draws it; nominal doping (substrate 3.5e15 cm^-3)",
-  "Bq": "As B, with fixed oxide charge of 1e11 cm^-2",
-  "GA": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; nominal doping; the gated plate held at 0 V",
-  "GAn": "As A, but no P-well in the strip between an N-well and NAT; the gated plate held at 0 V",
-  "GAq": "As A, with fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V",
-  "GB": "P-well only where the layout draws it; nominal doping (substrate 3.5e15 cm^-3); the gated plate held at 0 V",
-  "GBq": "As B, with fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V"
+  "AD": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)",
+  "AL": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)",
+  "AnD": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)",
+  "AnL": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)",
+  "BD": "P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3)",
+  "BL": "P-well only where the layout draws it; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3)",
+  "BLq": "P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 1e11 cm^-2",
+  "GAD": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
+  "GAL": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is drawn, including the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
+  "GAnD": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
+  "GAnL": "P-well generated as in A, but not in the strip between an N-well and NAT; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
+  "GBD": "P-well only where the layout draws it; deep P layer 4.4 um down under the whole wafer; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
+  "GBL": "P-well only where the layout draws it; deep P layer under deep N-well only; nominal doping (substrate 3.56e15 cm^-3); the gated plate held at 0 V",
+  "GBLq": "P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V"
  },
  "source": {
-  "commit": "48c2657fe82c",
+  "commit": "86b458c7b1eb",
   "records": [
    {
-    "cases": 467,
-    "commit": "48c2657fe82ca0dca87d5efa00e8a819187be2e4",
+    "cases": 544,
+    "commit": "86b458c7b1eb, b30f3b79f80e",
     "image": "ghcr.io/mithro/gf180-tcad-tcad-dev@sha256:fe34752893b8078bb9053875fd43d4b45b75ca757d75150b2dca4b9ada9c0c44",
     "not_converged": [
-     "NR3M1|Bq|edge",
-     "NR3M1|Bq|corner",
-     "NR3W1|Bq|corner",
-     "NR3W3|Bq|edge",
-     "NR3_2|Bq|edge",
-     "NR3_2|Bq|corner",
-     "NR4S|Bq|edge",
-     "NR4S|Bq|corner",
-     "NR5_1p4|Bq|edge",
-     "NR5_2|Bq|edge",
-     "NR5_2|Bq|corner"
+     "DAo1|BLq|edge",
+     "DAo1C0|BLq|edge",
+     "DAo1T35|BLq|edge",
+     "DC0|BLq|edge",
+     "DC15|BLq|edge",
+     "DC15|BLq|corner",
+     "DGM1@g0|BLq|edge",
+     "DGM1@gw|BLq|edge",
+     "DPM12|BLq|edge",
+     "DT20|BLq|edge",
+     "DT20b|BLq|edge",
+     "DT2p6|BLq|edge",
+     "DT35|BLq|edge",
+     "DT5|BLq|edge",
+     "DW1p5|BLq|edge",
+     "DW3|BLq|edge",
+     "NAGM1@gw|AL|edge",
+     "NR1S3|AL|edge",
+     "NR1S3|BL|corner",
+     "NR1S3|BLq|edge",
+     "NR1_1p4|AL|edge",
+     "NR1_2|AL|edge",
+     "NR1_2|BD|edge",
+     "NR1_2|BLq|corner",
+     "NR1_3|AL|edge",
+     "NR1_3|BL|corner",
+     "NR1_3|BLq|corner",
+     "NR3M1|AL|edge",
+     "NR3M1|BL|edge",
+     "NR3M1|BL|corner",
+     "NR3M1|BD|edge",
+     "NR3M1|BD|corner",
+     "NR3M1|BLq|edge",
+     "NR3M1|BLq|corner",
+     "NR3W1|BL|edge",
+     "NR3W1|BL|corner",
+     "NR3W1|BD|edge",
+     "NR3W1|BD|corner",
+     "NR3W1|BLq|edge",
+     "NR3W1|BLq|corner",
+     "NR3W3|AL|edge",
+     "NR3W3|BL|edge",
+     "NR3W3|BL|corner",
+     "NR3W3|BD|edge",
+     "NR3W3|BD|corner",
+     "NR3W3|BLq|edge",
+     "NR3W3|BLq|corner",
+     "NR3_1p5|AL|edge",
+     "NR3_1p5|BL|edge",
+     "NR3_1p5|BL|corner",
+     "NR3_1p5|BD|edge",
+     "NR3_1p5|BD|corner",
+     "NR3_1p5|BLq|edge",
+     "NR3_1p5|BLq|corner",
+     "NR3_2|AL|edge",
+     "NR3_2|BL|edge",
+     "NR3_2|BL|corner",
+     "NR3_2|BD|edge",
+     "NR3_2|BD|corner",
+     "NR3_2|BLq|edge",
+     "NR3_2|BLq|corner",
+     "NR4S|AL|edge",
+     "NR4S|BL|edge",
+     "NR4S|BL|corner",
+     "NR4S|BD|edge",
+     "NR4S|BD|corner",
+     "NR4S|BLq|edge",
+     "NR4S|BLq|corner",
+     "NR5_1p4|AL|edge",
+     "NR5_1p4|BL|edge",
+     "NR5_1p4|BL|corner",
+     "NR5_1p4|BD|edge",
+     "NR5_1p4|BD|corner",
+     "NR5_1p4|BLq|edge",
+     "NR5_1p4|BLq|corner",
+     "NR5_2|AL|edge",
+     "NR5_2|BL|edge",
+     "NR5_2|BL|corner",
+     "NR5_2|BD|edge",
+     "NR5_2|BD|corner",
+     "NR5_2|BLq|edge",
+     "NR5_2|BLq|corner",
+     "NT20|AL|edge",
+     "NT20L|AL|edge",
+     "NT35|AL|edge",
+     "NW0|AL|edge",
+     "NW1p5|AL|edge",
+     "NW3|AL|edge",
+     "NW6|AL|edge"
     ],
     "record": "main.json"
    }
@@ -40,1311 +122,1340 @@
  },
  "structures": {
   "DAo1": {
-   "A": {
-    "corner": 89.3,
-    "edge": 94.3,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": 89.5,
-    "edge": 94.7,
+   "AL": {
+    "corner": 31.1,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.3,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 89.5,
-    "edge": 94.7,
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": null,
     "ring_v": []
    }
   },
   "DAo1C0": {
-   "A": {
-    "corner": null,
-    "edge": 94.3,
-    "reached": {
-     "corner": 46.3
-    },
+   "AD": {
+    "corner": 33.5,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 94.7,
-    "reached": {
-     "corner": 48.6
-    },
+   "AL": {
+    "corner": 33.8,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": null,
-    "edge": 94.3,
-    "reached": {
-     "corner": 46.0
-    },
+   "BD": {
+    "corner": 33.5,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": null,
-    "edge": 94.7,
-    "reached": {
-     "corner": 49.1
-    },
+   "BL": {
+    "corner": 33.7,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 32.9,
+    "edge": null,
     "ring_v": []
    }
   },
   "DAo1M1_6": {
-   "A": {
-    "corner": 93.4,
-    "edge": 99.2,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": 93.8,
-    "edge": 99.7,
+   "AL": {
+    "corner": 30.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 93.4,
-    "edge": 99.2,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 93.8,
-    "edge": 99.7,
+   "BL": {
+    "corner": 30.3,
+    "edge": 32.3,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": 32.3,
     "ring_v": []
    }
   },
   "DAo1T35": {
-   "A": {
-    "corner": 89.3,
-    "edge": 94.3,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": 89.5,
-    "edge": 94.7,
+   "AL": {
+    "corner": 31.1,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.3,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 89.5,
-    "edge": 94.7,
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": null,
     "ring_v": []
    }
   },
   "DC0": {
-   "A": {
+   "AD": {
     "corner": null,
+    "edge": 32.4,
+    "reached": {
+     "corner": 32.4
+    },
+    "ring_v": []
+   },
+   "AL": {
+    "corner": null,
+    "edge": 32.4,
+    "reached": {
+     "corner": 32.6
+    },
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 33.5,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 33.7,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 32.9,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": null,
-    "edge": 94.3,
-    "reached": {
-     "corner": 46.0
-    },
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": null,
-    "edge": 94.7,
-    "reached": {
-     "corner": 49.1
-    },
     "ring_v": []
    }
   },
   "DC15": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AD": {
+    "corner": 30.8,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AL": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 91.2,
-    "edge": 94.3,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 91.6,
-    "edge": 94.7,
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    }
   },
   "DGM1": {
-   "A": {
-    "corner": null,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 30.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
+   "GAD": {
+    "corner": 30.9,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "GAL": {
+    "corner": 31.1,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "GBD": {
+    "corner": 30.9,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "GBL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "GBLq": {
+    "corner": 30.8,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 93.4,
-    "edge": 99.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 93.8,
-    "edge": 99.7,
-    "ring_v": []
-   },
-   "GA": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "GAq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "GB": {
-    "corner": 90.0,
-    "edge": 93.8,
-    "ring_v": []
-   },
-   "GBq": {
-    "corner": 90.0,
-    "edge": 94.2,
     "ring_v": []
    }
   },
   "DM1_10": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AL": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 93.9,
-    "edge": 99.7,
+   "BD": {
+    "corner": 29.6,
+    "edge": 32.3,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 94.3,
-    "edge": 100.2,
+   "BL": {
+    "corner": 30.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": 32.3,
     "ring_v": []
    }
   },
   "DM1_3": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AL": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 91.8,
-    "edge": 97.6,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 92.2,
-    "edge": 98.0,
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.3,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": 32.3,
     "ring_v": []
    }
   },
   "DM1_6": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AL": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 93.4,
-    "edge": 99.2,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 93.8,
-    "edge": 99.7,
-    "ring_v": []
-   }
-  },
-  "DM2_8": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "BL": {
+    "corner": 30.3,
+    "edge": 32.3,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 91.5,
-    "edge": 97.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 91.9,
-    "edge": 97.7,
+   "BLq": {
+    "corner": 31.3,
+    "edge": 32.3,
     "ring_v": []
    }
   },
   "DPM12": {
-   "A": {
-    "corner": null,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.3,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 31.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.3,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 93.0,
-    "edge": 98.8,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 93.4,
-    "edge": 99.2,
     "ring_v": []
    }
   },
   "DT10": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AD": {
+    "corner": 31.0,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
     "ring_v": []
    },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.3,
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 89.5,
-    "edge": 94.7,
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": 32.3,
     "ring_v": []
    }
   },
   "DT20": {
-   "A": {
-    "corner": null,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+    "ring_v": []
+   }
+  },
+  "DT20b": {
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.3,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 89.5,
-    "edge": 94.7,
     "ring_v": []
    }
   },
   "DT2p6": {
-   "A": {
-    "corner": null,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.3,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
     "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 88.7,
-    "edge": 92.7,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 88.7,
-    "edge": 92.8,
     "ring_v": []
    }
   },
   "DT35": {
-   "A": {
-    "corner": null,
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
     "edge": null,
+    "ring_v": []
+   }
+  },
+  "DT5": {
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": null,
+    "ring_v": []
+   }
+  },
+  "DW1p5": {
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": null,
+    "ring_v": []
+   }
+  },
+  "DW3": {
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": null,
+    "ring_v": []
+   }
+  },
+  "DW6": {
+   "AD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "AL": {
+    "corner": 30.0,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 31.3,
+    "edge": 32.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 31.3,
+    "edge": 32.3,
+    "ring_v": []
+   }
+  },
+  "NA0p6": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.7,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NA0p6C0": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": null,
+    "edge": 62.9,
     "reached": {
-     "edge": 60.0
+     "corner": 37.0
     },
     "ring_v": []
    },
-   "Aq": {
+   "AnL": {
     "corner": null,
-    "edge": null,
+    "edge": 76.0,
     "reached": {
-     "edge": 60.0
+     "corner": 36.3
     },
     "ring_v": []
    },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.3,
+   "BD": {
+    "corner": null,
+    "edge": 62.9,
+    "reached": {
+     "corner": 36.0
+    },
     "ring_v": []
    },
-   "Bq": {
+   "BL": {
+    "corner": null,
+    "edge": 76.0,
+    "reached": {
+     "corner": 36.3
+    },
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": null,
+    "edge": 79.9,
+    "reached": {
+     "corner": 37.7
+    },
+    "ring_v": []
+   }
+  },
+  "NA0p6T10": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.7,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NA0p6T35": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.7,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NA0p6b": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.7,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NA2": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.7,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NA4": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.7,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NAGM1": {
+   "AnD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 84.8,
+    "edge": 90.2,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 84.8,
+    "edge": 90.2,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.4,
+    "edge": 90.8,
+    "ring_v": []
+   },
+   "GAL": {
+    "corner": null,
+    "edge": 18.0,
+    "ring_v": []
+   },
+   "GAnD": {
+    "corner": 56.2,
+    "edge": 59.9,
+    "ring_v": []
+   },
+   "GAnL": {
+    "corner": 57.4,
+    "edge": 61.9,
+    "ring_v": []
+   },
+   "GBD": {
+    "corner": 56.2,
+    "edge": 59.9,
+    "ring_v": []
+   },
+   "GBL": {
+    "corner": 57.4,
+    "edge": 61.9,
+    "ring_v": []
+   },
+   "GBLq": {
+    "corner": 59.3,
+    "edge": 64.1,
+    "ring_v": []
+   }
+  },
+  "NAM1_10": {
+   "AL": {
+    "corner": null,
+    "edge": 17.5,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 85.2,
+    "edge": 90.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 85.2,
+    "edge": 90.6,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.9,
+    "edge": 91.3,
+    "ring_v": []
+   }
+  },
+  "NAM1_3": {
+   "AL": {
+    "corner": null,
+    "edge": 17.5,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 83.2,
+    "edge": 88.5,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 83.2,
+    "edge": 88.5,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 83.7,
+    "edge": 89.0,
+    "ring_v": []
+   }
+  },
+  "NAM1_6": {
+   "AL": {
+    "corner": null,
+    "edge": null,
+    "reached": {
+     "edge": 15.0
+    },
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 84.8,
+    "edge": 90.2,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 84.8,
+    "edge": 90.2,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.4,
+    "edge": 90.8,
+    "ring_v": []
+   }
+  },
+  "NAM2_12": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "AnD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "AnL": {
+    "corner": 82.3,
+    "edge": 87.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 82.3,
+    "edge": 87.6,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 83.0,
+    "edge": 88.4,
+    "ring_v": []
+   }
+  },
+  "NC0": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": null,
+    "edge": 62.9,
+    "reached": {
+     "corner": 36.0
+    },
+    "ring_v": []
+   },
+   "BL": {
+    "corner": null,
+    "edge": 76.0,
+    "reached": {
+     "corner": 36.3
+    },
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": null,
+    "edge": 79.9,
+    "reached": {
+     "corner": 37.7
+    },
+    "ring_v": []
+   }
+  },
+  "NC15": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 70.6,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 74.1,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NGM1": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 84.8,
+    "edge": 90.2,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.4,
+    "edge": 90.8,
+    "ring_v": []
+   },
+   "GAL": {
+    "corner": null,
+    "edge": 18.0,
+    "ring_v": []
+   },
+   "GBD": {
+    "corner": 56.2,
+    "edge": 59.9,
+    "ring_v": []
+   },
+   "GBL": {
+    "corner": 57.4,
+    "edge": 61.9,
+    "ring_v": []
+   },
+   "GBLq": {
+    "corner": 59.3,
+    "edge": 64.1,
+    "ring_v": []
+   }
+  },
+  "NGP4": {
+   "AL": {
+    "corner": null,
+    "edge": 17.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 89.2,
+    "edge": 94.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 89.5,
+    "edge": 94.7,
+    "ring_v": []
+   },
+   "GAL": {
+    "corner": null,
+    "edge": 19.3,
+    "ring_v": []
+   },
+   "GBD": {
+    "corner": 53.4,
+    "edge": 54.5,
+    "ring_v": []
+   },
+   "GBL": {
+    "corner": 53.6,
+    "edge": null,
+    "reached": {
+     "edge": 27.1
+    },
+    "ring_v": []
+   },
+   "GBLq": {
+    "corner": 54.6,
+    "edge": 56.0,
+    "ring_v": []
+   }
+  },
+  "NM1_10": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 85.2,
+    "edge": 90.6,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.9,
+    "edge": 91.3,
+    "ring_v": []
+   }
+  },
+  "NM1_3": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 83.2,
+    "edge": 88.5,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 83.7,
+    "edge": 89.0,
+    "ring_v": []
+   }
+  },
+  "NM1_6": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 84.8,
+    "edge": 90.2,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.4,
+    "edge": 90.8,
+    "ring_v": []
+   }
+  },
+  "NM2_12": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 82.3,
+    "edge": 87.6,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 83.0,
+    "edge": 88.4,
+    "ring_v": []
+   }
+  },
+  "NM2_6": {
+   "AL": {
+    "corner": null,
+    "edge": 17.6,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 82.1,
+    "edge": 87.4,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 82.8,
+    "edge": 88.1,
+    "ring_v": []
+   }
+  },
+  "NP1": {
+   "AL": {
+    "corner": null,
+    "edge": 17.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 59.6,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 81.7,
+    "edge": 86.8,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 82.1,
+    "edge": 87.3,
+    "ring_v": []
+   }
+  },
+  "NP2": {
+   "AL": {
+    "corner": null,
+    "edge": 17.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 84.8,
+    "edge": 90.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 85.2,
+    "edge": 90.4,
+    "ring_v": []
+   }
+  },
+  "NP4": {
+   "AL": {
+    "corner": null,
+    "edge": 17.4,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 60.8,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 89.2,
+    "edge": 94.4,
+    "ring_v": []
+   },
+   "BLq": {
     "corner": 89.5,
     "edge": 94.7,
     "ring_v": []
    }
   },
-  "DT5": {
-   "A": {
+  "NPM12": {
+   "AL": {
     "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+    "edge": 17.4,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
     "ring_v": []
    },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.3,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 89.5,
-    "edge": 94.6,
-    "ring_v": []
-   }
-  },
-  "DW1p5": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 75.5,
-    "edge": 71.0,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 75.0,
-    "edge": 69.4,
-    "ring_v": []
-   }
-  },
-  "DW3": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 88.5,
-    "edge": 92.3,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 88.5,
+   "BL": {
+    "corner": 87.1,
     "edge": 92.4,
     "ring_v": []
-   }
-  },
-  "DW6": {
-   "A": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": null,
-    "reached": {
-     "edge": 60.0
-    },
-    "ring_v": []
-   },
-   "B": {
-    "corner": 89.3,
-    "edge": 94.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 89.5,
-    "edge": 94.6,
-    "ring_v": []
-   }
-  },
-  "NA0p6": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NA0p6C0": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 50.4,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 50.4,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 52.4,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NA0p6T35": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NA1": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NA2": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NA4": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NAGM1": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 83.2,
-    "edge": 92.2,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 83.2,
-    "edge": 92.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 85.7,
-    "edge": 94.6,
-    "ring_v": []
-   },
-   "GA": {
-    "corner": null,
-    "edge": 18.3,
-    "ring_v": []
-   },
-   "GAn": {
-    "corner": 52.8,
-    "edge": 56.3,
-    "ring_v": []
-   },
-   "GAq": {
-    "corner": null,
-    "edge": 18.2,
-    "ring_v": []
-   },
-   "GB": {
-    "corner": 52.8,
-    "edge": 56.3,
-    "ring_v": []
-   },
-   "GBq": {
-    "corner": 54.6,
-    "edge": 58.3,
-    "ring_v": []
-   }
-  },
-  "NAM1_10": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 84.2,
-    "edge": 93.4,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 84.2,
-    "edge": 93.4,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 86.9,
-    "edge": 95.9,
-    "ring_v": []
-   }
-  },
-  "NAM1_3": {
-   "A": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 78.6,
-    "edge": 87.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 78.6,
-    "edge": 87.0,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 80.8,
-    "edge": 89.2,
-    "ring_v": []
-   }
-  },
-  "NAM1_6": {
-   "A": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 83.2,
-    "edge": 92.2,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 83.2,
-    "edge": 92.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 85.7,
-    "edge": 94.6,
-    "ring_v": []
-   }
-  },
-  "NAM2_12": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 72.3,
-    "edge": 80.8,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 72.3,
-    "edge": 80.8,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 75.3,
-    "edge": 84.1,
-    "ring_v": []
-   }
-  },
-  "NAM2_6": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "An": {
-    "corner": 71.9,
-    "edge": 80.4,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 71.9,
-    "edge": 80.4,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 74.9,
-    "edge": 83.5,
-    "ring_v": []
-   }
-  },
-  "NC0": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 50.4,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 52.4,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NC15": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 63.6,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 66.4,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NC3": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 53.8,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 56.2,
-    "edge": 70.7,
-    "ring_v": []
-   }
-  },
-  "NGM1": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 83.2,
-    "edge": 92.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 85.7,
-    "edge": 94.6,
-    "ring_v": []
-   },
-   "GA": {
-    "corner": null,
-    "edge": 18.3,
-    "ring_v": []
-   },
-   "GAq": {
-    "corner": null,
-    "edge": 18.2,
-    "ring_v": []
-   },
-   "GB": {
-    "corner": 52.8,
-    "edge": 56.3,
-    "ring_v": []
-   },
-   "GBq": {
-    "corner": 54.6,
-    "edge": 58.3,
-    "ring_v": []
-   }
-  },
-  "NGP4": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 58.3,
-    "edge": 64.3,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 61.4,
-    "edge": 68.1,
-    "ring_v": []
-   },
-   "GA": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "GAq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "GB": {
-    "corner": 58.2,
-    "edge": null,
-    "reached": {
-     "edge": 63.5
-    },
-    "ring_v": []
-   },
-   "GBq": {
-    "corner": 61.0,
-    "edge": 67.1,
-    "ring_v": []
-   }
-  },
-  "NM1_10": {
-   "A": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 84.2,
-    "edge": 93.4,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 86.9,
-    "edge": 95.9,
-    "ring_v": []
-   }
-  },
-  "NM1_3": {
-   "A": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 78.6,
-    "edge": 87.0,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 80.8,
-    "edge": 89.2,
-    "ring_v": []
-   }
-  },
-  "NM1_6": {
-   "A": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 83.2,
-    "edge": 92.2,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 85.7,
-    "edge": 94.6,
-    "ring_v": []
-   }
-  },
-  "NM2_12": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 72.3,
-    "edge": 80.8,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 75.3,
-    "edge": 84.1,
-    "ring_v": []
-   }
-  },
-  "NM2_6": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 71.9,
-    "edge": 80.4,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 74.9,
-    "edge": 83.5,
-    "ring_v": []
-   }
-  },
-  "NP1": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 69.0,
-    "edge": 76.8,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 71.5,
-    "edge": 79.4,
-    "ring_v": []
-   }
-  },
-  "NP1M1_3": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 78.6,
-    "edge": 87.3,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 81.0,
-    "edge": 89.7,
-    "ring_v": []
-   }
-  },
-  "NP2": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 65.1,
-    "edge": 72.9,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 68.6,
-    "edge": 76.8,
-    "ring_v": []
-   }
-  },
-  "NP4": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 58.3,
-    "edge": 64.3,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 61.4,
-    "edge": 68.1,
-    "ring_v": []
-   }
-  },
-  "NPM12": {
-   "A": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 72.2,
-    "edge": 81.7,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 76.7,
-    "edge": 86.4,
+   "BLq": {
+    "corner": 87.6,
+    "edge": 92.9,
     "ring_v": []
    }
   },
   "NR1S2": {
-   "A": {
+   "AL": {
     "corner": null,
-    "edge": 18.1,
+    "edge": 17.7,
     "ring_v": [
      [
       0.0,
@@ -1352,549 +1463,551 @@
      ],
      [
       1.5,
-      0.0
+      0.02
      ],
      [
       3.0,
-      0.0
+      0.03
      ],
      [
       4.5,
-      0.0
+      0.03
      ],
      [
       6.0,
-      0.0
+      0.03
      ],
      [
       7.5,
-      0.0
+      0.03
      ],
      [
       9.0,
-      0.0
+      0.03
      ],
      [
       10.5,
-      0.0
+      0.03
      ],
      [
       12.0,
-      0.0
+      0.03
      ],
      [
       13.5,
-      0.0
+      0.04
      ],
      [
       15.0,
-      0.0
+      0.04
      ],
      [
       16.5,
-      0.0
+      0.04
      ],
      [
       18.0,
-      0.0
+      0.04
      ],
      [
       19.5,
-      0.0
+      0.05
      ]
     ]
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
     "ring_v": [
      [
       0.0,
       0.0
      ],
      [
-      1.5,
-      0.0
-     ],
-     [
       3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
+      0.29
      ],
      [
       6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
+      2.59
      ],
      [
       9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
+      5.06
      ],
      [
       12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
+      7.55
      ],
      [
       15.0,
-      0.0
+      10.02
      ],
      [
       16.5,
-      0.0
+      11.26
      ],
      [
-      18.0,
-      0.0
+      18.75,
+      13.1
      ],
      [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 98.4,
-    "edge": 98.7,
-    "ring_v": [
-     [
-      0.0,
-      0.0
+      21.75,
+      15.53
      ],
      [
-      3.0,
-      0.89
-     ],
-     [
-      6.0,
-      2.85
-     ],
-     [
-      9.0,
-      4.92
-     ],
-     [
-      12.0,
-      7.05
-     ],
-     [
-      15.0,
-      9.19
-     ],
-     [
-      18.0,
-      11.34
-     ],
-     [
-      21.0,
-      13.49
-     ],
-     [
-      24.0,
-      15.64
-     ],
-     [
-      27.0,
-      17.77
-     ],
-     [
-      30.0,
-      19.9
-     ],
-     [
-      33.0,
-      22.03
-     ],
-     [
-      36.0,
-      24.15
-     ],
-     [
-      39.0,
-      26.28
-     ],
-     [
-      42.0,
-      28.39
-     ],
-     [
-      45.0,
-      30.51
-     ],
-     [
-      48.0,
-      32.62
-     ],
-     [
-      51.0,
-      34.72
-     ],
-     [
-      54.0,
-      36.82
-     ],
-     [
-      57.0,
-      38.92
-     ],
-     [
-      60.0,
-      41.0
-     ],
-     [
-      63.0,
-      43.06
-     ],
-     [
-      66.0,
-      45.12
-     ],
-     [
-      69.0,
-      47.18
-     ],
-     [
-      72.0,
-      49.24
-     ],
-     [
-      75.0,
-      51.29
-     ],
-     [
-      78.0,
-      53.33
-     ],
-     [
-      81.0,
-      55.38
-     ],
-     [
-      84.0,
-      57.42
-     ],
-     [
-      87.0,
-      59.46
-     ],
-     [
-      90.0,
-      61.48
-     ],
-     [
-      93.0,
-      63.49
-     ],
-     [
-      96.0,
-      65.5
-     ],
-     [
-      99.0,
-      67.51
-     ],
-     [
-      102.0,
-      69.51
-     ],
-     [
-      105.0,
-      71.51
-     ]
-    ]
-   },
-   "Bq": {
-    "corner": 97.2,
-    "edge": 98.5,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      2.49
-     ],
-     [
-      6.0,
-      4.68
-     ],
-     [
-      9.0,
-      6.9
-     ],
-     [
-      12.0,
-      9.11
-     ],
-     [
-      15.0,
-      11.32
-     ],
-     [
-      18.0,
-      13.53
-     ],
-     [
-      21.0,
-      15.73
-     ],
-     [
-      24.0,
+      24.75,
       17.93
      ],
      [
+      27.75,
+      20.31
+     ],
+     [
+      30.75,
+      22.66
+     ],
+     [
+      33.75,
+      24.98
+     ],
+     [
+      36.75,
+      27.28
+     ],
+     [
+      39.75,
+      29.55
+     ],
+     [
+      42.75,
+      31.79
+     ],
+     [
+      45.75,
+      34.01
+     ],
+     [
+      48.75,
+      36.2
+     ],
+     [
+      51.75,
+      38.36
+     ],
+     [
+      54.75,
+      40.51
+     ],
+     [
+      57.75,
+      42.63
+     ],
+     [
+      60.75,
+      44.72
+     ],
+     [
+      63.75,
+      46.79
+     ],
+     [
+      66.75,
+      48.83
+     ]
+    ]
+   },
+   "BL": {
+    "corner": 89.8,
+    "edge": 94.0,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.29
+     ],
+     [
+      6.0,
+      2.59
+     ],
+     [
+      9.0,
+      5.07
+     ],
+     [
+      12.0,
+      7.58
+     ],
+     [
+      15.0,
+      10.12
+     ],
+     [
+      18.0,
+      12.66
+     ],
+     [
+      21.0,
+      15.2
+     ],
+     [
+      24.0,
+      17.75
+     ],
+     [
       27.0,
-      20.12
+      20.29
      ],
      [
       30.0,
-      22.31
+      22.83
      ],
      [
       33.0,
-      24.49
+      25.37
      ],
      [
       36.0,
-      26.65
+      27.89
      ],
      [
       39.0,
-      28.8
+      30.41
      ],
      [
       42.0,
-      30.94
+      32.93
      ],
      [
       45.0,
-      33.08
+      35.43
      ],
      [
       48.0,
-      35.21
+      37.94
      ],
      [
       51.0,
-      37.34
+      40.43
      ],
      [
       54.0,
-      39.46
+      42.92
      ],
      [
       57.0,
-      41.58
+      45.41
      ],
      [
       60.0,
-      43.7
+      47.88
      ],
      [
       63.0,
-      45.81
+      50.36
      ],
      [
       66.0,
-      47.91
+      52.82
      ],
      [
       69.0,
-      50.0
+      55.28
      ],
      [
       72.0,
-      52.08
+      57.73
      ],
      [
       75.0,
-      54.15
+      60.17
      ],
      [
       78.0,
-      56.22
+      62.6
      ],
      [
       81.0,
-      58.28
+      65.02
      ],
      [
       84.0,
-      60.34
+      67.44
      ],
      [
       87.0,
-      62.41
+      69.85
      ],
      [
       90.0,
-      64.47
+      72.25
      ],
      [
       93.0,
-      66.52
+      74.63
      ],
      [
       96.0,
-      68.58
+      76.99
      ],
      [
       99.0,
-      70.62
+      79.35
+     ]
+    ]
+   },
+   "BLq": {
+    "corner": 89.6,
+    "edge": 94.8,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      3.0,
+      2.2
+     ],
+     [
+      6.0,
+      4.73
+     ],
+     [
+      9.0,
+      7.31
+     ],
+     [
+      12.0,
+      9.89
+     ],
+     [
+      15.0,
+      12.48
+     ],
+     [
+      18.0,
+      15.07
+     ],
+     [
+      21.0,
+      17.65
+     ],
+     [
+      24.0,
+      20.23
+     ],
+     [
+      27.0,
+      22.81
+     ],
+     [
+      30.0,
+      25.39
+     ],
+     [
+      33.0,
+      27.95
+     ],
+     [
+      36.0,
+      30.52
+     ],
+     [
+      39.0,
+      33.07
+     ],
+     [
+      42.0,
+      35.62
+     ],
+     [
+      45.0,
+      38.17
+     ],
+     [
+      48.0,
+      40.7
+     ],
+     [
+      51.0,
+      43.23
+     ],
+     [
+      54.0,
+      45.74
+     ],
+     [
+      57.0,
+      48.25
+     ],
+     [
+      60.0,
+      50.74
+     ],
+     [
+      63.0,
+      53.23
+     ],
+     [
+      66.0,
+      55.71
+     ],
+     [
+      69.0,
+      58.18
+     ],
+     [
+      72.0,
+      60.65
+     ],
+     [
+      75.0,
+      63.1
+     ],
+     [
+      78.0,
+      65.55
+     ],
+     [
+      81.0,
+      67.99
+     ],
+     [
+      84.0,
+      70.42
+     ],
+     [
+      87.0,
+      72.84
+     ],
+     [
+      90.0,
+      75.25
+     ],
+     [
+      93.0,
+      77.66
+     ],
+     [
+      96.0,
+      80.05
+     ],
+     [
+      99.0,
+      82.43
      ],
      [
       102.0,
-      72.64
-     ],
-     [
-      105.0,
-      74.66
+      84.8
      ]
     ]
    }
   },
   "NR1S3": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
+   "BD": {
+    "corner": 61.1,
+    "edge": 62.9,
     "ring_v": [
      [
       0.0,
       0.0
      ],
      [
-      1.5,
-      0.0
-     ],
-     [
       3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
+      0.02
      ],
      [
       6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
+      0.03
      ],
      [
       9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
+      0.07
      ],
      [
       12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
+      0.35
      ],
      [
       15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
+      1.47
      ],
      [
       18.0,
-      0.0
+      2.99
      ],
      [
-      19.5,
-      0.0
+      21.0,
+      4.64
+     ],
+     [
+      24.0,
+      6.33
+     ],
+     [
+      27.0,
+      8.05
+     ],
+     [
+      30.0,
+      9.76
+     ],
+     [
+      33.0,
+      11.46
+     ],
+     [
+      36.0,
+      13.15
+     ],
+     [
+      39.0,
+      14.83
+     ],
+     [
+      42.0,
+      16.47
+     ],
+     [
+      45.0,
+      18.09
+     ],
+     [
+      48.0,
+      19.69
+     ],
+     [
+      51.0,
+      21.27
+     ],
+     [
+      54.0,
+      22.84
+     ],
+     [
+      57.0,
+      24.4
+     ],
+     [
+      60.0,
+      25.94
+     ],
+     [
+      63.0,
+      27.47
+     ],
+     [
+      66.0,
+      28.97
      ]
     ]
    },
-   "Aq": {
+   "BL": {
     "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 77.2,
-    "edge": 89.9,
+    "edge": 96.4,
     "ring_v": [
      [
       0.0,
@@ -1906,535 +2019,376 @@
      ],
      [
       6.0,
-      0.04
+      0.03
      ],
      [
       9.0,
-      0.15
+      0.07
      ],
      [
       12.0,
-      0.59
+      0.36
      ],
      [
       15.0,
-      1.46
+      1.5
      ],
      [
       18.0,
-      2.56
+      3.07
      ],
      [
       21.0,
-      3.8
+      4.79
      ],
      [
       24.0,
-      5.12
+      6.58
      ],
      [
       27.0,
-      6.51
+      8.43
      ],
      [
       30.0,
-      7.94
-     ],
-     [
-      31.5,
-      8.66
-     ],
-     [
-      33.75,
-      9.77
-     ],
-     [
-      36.75,
-      11.26
-     ],
-     [
-      39.75,
-      12.76
-     ],
-     [
-      42.75,
-      14.28
-     ],
-     [
-      45.75,
-      15.81
-     ],
-     [
-      48.75,
-      17.35
-     ],
-     [
-      51.75,
-      18.9
-     ],
-     [
-      54.75,
-      20.46
-     ],
-     [
-      57.75,
-      22.02
-     ],
-     [
-      60.75,
-      23.6
-     ],
-     [
-      63.75,
-      25.17
-     ],
-     [
-      66.75,
-      26.73
-     ],
-     [
-      69.75,
-      28.3
-     ],
-     [
-      72.75,
-      29.87
-     ],
-     [
-      75.75,
-      31.44
-     ],
-     [
-      78.75,
-      33.02
-     ],
-     [
-      81.75,
-      34.6
-     ],
-     [
-      84.75,
-      36.18
-     ],
-     [
-      87.75,
-      37.74
-     ],
-     [
-      90.75,
-      39.3
-     ],
-     [
-      93.75,
-      40.87
-     ],
-     [
-      96.75,
-      42.44
-     ]
-    ]
-   },
-   "Bq": {
-    "corner": 83.2,
-    "edge": 95.6,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.31
-     ],
-     [
-      3.75,
-      0.57
-     ],
-     [
-      6.75,
-      1.15
-     ],
-     [
-      9.75,
-      2.05
-     ],
-     [
-      12.75,
-      3.19
-     ],
-     [
-      15.75,
-      4.46
-     ],
-     [
-      18.75,
-      5.81
-     ],
-     [
-      21.75,
-      7.22
-     ],
-     [
-      24.75,
-      8.66
-     ],
-     [
-      27.75,
-      10.15
-     ],
-     [
-      30.75,
-      11.66
-     ],
-     [
-      33.75,
-      13.19
-     ],
-     [
-      36.75,
-      14.75
-     ],
-     [
-      39.75,
-      16.31
-     ],
-     [
-      42.75,
-      17.89
-     ],
-     [
-      45.75,
-      19.47
-     ],
-     [
-      48.75,
-      21.04
-     ],
-     [
-      51.75,
-      22.63
-     ],
-     [
-      54.75,
-      24.22
-     ],
-     [
-      57.75,
-      25.82
-     ],
-     [
-      60.75,
-      27.42
-     ],
-     [
-      63.75,
-      29.02
-     ],
-     [
-      66.75,
-      30.63
-     ],
-     [
-      69.75,
-      32.24
-     ],
-     [
-      72.75,
-      33.84
-     ],
-     [
-      75.75,
-      35.44
-     ],
-     [
-      78.75,
-      37.04
-     ],
-     [
-      81.75,
-      38.63
-     ],
-     [
-      84.75,
-      40.24
-     ],
-     [
-      87.75,
-      41.84
-     ],
-     [
-      90.75,
-      43.45
-     ],
-     [
-      93.75,
-      45.05
-     ],
-     [
-      96.75,
-      46.63
-     ],
-     [
-      99.75,
-      48.22
-     ],
-     [
-      102.75,
-      49.81
-     ]
-    ]
-   }
-  },
-  "NR1_1p4": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 75.4,
-    "edge": 79.3,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      3.0
-     ],
-     [
-      6.0,
-      5.99
-     ],
-     [
-      9.0,
-      8.75
-     ],
-     [
-      12.0,
-      11.43
-     ],
-     [
-      15.0,
-      14.09
-     ],
-     [
-      18.0,
-      16.71
-     ],
-     [
-      21.0,
-      19.31
-     ],
-     [
-      24.0,
-      21.89
-     ],
-     [
-      27.0,
-      24.46
-     ],
-     [
-      30.0,
-      27.01
+      10.32
      ],
      [
       33.0,
-      29.55
+      12.23
      ],
      [
       36.0,
-      32.07
+      14.17
      ],
      [
       39.0,
-      34.58
+      16.12
      ],
      [
       42.0,
-      37.08
+      18.08
      ],
      [
       45.0,
-      39.56
+      20.05
      ],
      [
       48.0,
-      42.03
+      22.02
      ],
      [
       51.0,
-      44.47
+      24.0
      ],
      [
       54.0,
-      46.91
+      25.97
      ],
      [
       57.0,
-      49.33
+      27.96
      ],
      [
       60.0,
-      51.75
+      29.94
      ],
      [
       63.0,
-      54.16
+      31.93
      ],
      [
       66.0,
-      56.56
+      33.91
      ],
      [
       69.0,
-      58.96
+      35.9
      ],
      [
       72.0,
-      61.35
+      37.88
      ],
      [
       75.0,
-      63.73
+      39.87
      ],
      [
       78.0,
-      66.11
+      41.85
      ],
      [
       81.0,
-      68.48
+      43.84
      ],
      [
       84.0,
-      70.85
+      45.81
+     ],
+     [
+      87.0,
+      47.78
+     ],
+     [
+      90.0,
+      49.75
+     ],
+     [
+      93.0,
+      51.71
+     ],
+     [
+      96.0,
+      53.67
+     ],
+     [
+      99.0,
+      55.62
+     ],
+     [
+      102.0,
+      57.57
+     ],
+     [
+      105.0,
+      59.51
      ]
     ]
    },
-   "Bq": {
-    "corner": 76.0,
-    "edge": 80.4,
+   "BLq": {
+    "corner": 91.9,
+    "edge": null,
+    "ring_v": []
+   }
+  },
+  "NR1_1p4": {
+   "BD": {
+    "corner": 61.1,
+    "edge": 62.9,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      3.0,
+      2.83
+     ],
+     [
+      6.0,
+      5.65
+     ],
+     [
+      9.0,
+      8.51
+     ],
+     [
+      12.0,
+      11.36
+     ],
+     [
+      15.0,
+      14.2
+     ],
+     [
+      18.0,
+      17.02
+     ],
+     [
+      21.0,
+      19.82
+     ],
+     [
+      24.0,
+      22.61
+     ],
+     [
+      27.0,
+      25.38
+     ],
+     [
+      30.0,
+      28.13
+     ],
+     [
+      33.0,
+      30.85
+     ],
+     [
+      36.0,
+      33.56
+     ],
+     [
+      39.0,
+      36.24
+     ],
+     [
+      42.0,
+      38.9
+     ],
+     [
+      45.0,
+      41.53
+     ],
+     [
+      48.0,
+      44.14
+     ],
+     [
+      51.0,
+      46.73
+     ],
+     [
+      54.0,
+      49.29
+     ],
+     [
+      57.0,
+      51.82
+     ],
+     [
+      60.0,
+      54.32
+     ],
+     [
+      63.0,
+      56.79
+     ],
+     [
+      66.0,
+      59.24
+     ]
+    ]
+   },
+   "BL": {
+    "corner": 74.6,
+    "edge": 80.8,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      3.0,
+      2.83
+     ],
+     [
+      6.0,
+      5.65
+     ],
+     [
+      9.0,
+      8.52
+     ],
+     [
+      12.0,
+      11.38
+     ],
+     [
+      15.0,
+      14.25
+     ],
+     [
+      18.0,
+      17.11
+     ],
+     [
+      21.0,
+      19.96
+     ],
+     [
+      24.0,
+      22.81
+     ],
+     [
+      27.0,
+      25.66
+     ],
+     [
+      30.0,
+      28.49
+     ],
+     [
+      33.0,
+      31.32
+     ],
+     [
+      36.0,
+      34.14
+     ],
+     [
+      39.0,
+      36.96
+     ],
+     [
+      42.0,
+      39.77
+     ],
+     [
+      45.0,
+      42.57
+     ],
+     [
+      48.0,
+      45.36
+     ],
+     [
+      51.0,
+      48.15
+     ],
+     [
+      54.0,
+      50.93
+     ],
+     [
+      57.0,
+      53.7
+     ],
+     [
+      60.0,
+      56.46
+     ],
+     [
+      63.0,
+      59.22
+     ],
+     [
+      66.0,
+      61.96
+     ],
+     [
+      69.0,
+      64.7
+     ],
+     [
+      72.0,
+      67.43
+     ],
+     [
+      75.0,
+      70.15
+     ],
+     [
+      78.0,
+      72.85
+     ],
+     [
+      81.0,
+      75.55
+     ],
+     [
+      84.0,
+      78.23
+     ],
+     [
+      87.0,
+      80.89
+     ]
+    ]
+   },
+   "BLq": {
+    "corner": 76.1,
+    "edge": 82.8,
     "ring_v": [
      [
       0.0,
@@ -2462,231 +2416,116 @@
      ],
      [
       18.0,
-      17.94
+      18.0
      ],
      [
       21.0,
-      20.62
+      21.0
      ],
      [
       24.0,
-      23.27
+      23.99
      ],
      [
       27.0,
-      25.9
+      26.97
      ],
      [
       30.0,
-      28.5
+      29.87
      ],
      [
       33.0,
-      31.07
+      32.74
      ],
      [
       36.0,
-      33.63
+      35.6
      ],
      [
       39.0,
-      36.17
+      38.45
      ],
      [
       42.0,
-      38.7
+      41.29
      ],
      [
       45.0,
-      41.22
+      44.12
      ],
      [
       48.0,
-      43.73
+      46.94
      ],
      [
       51.0,
-      46.22
+      49.75
      ],
      [
       54.0,
-      48.71
+      52.55
      ],
      [
       57.0,
-      51.18
+      55.35
      ],
      [
       60.0,
-      53.63
+      58.13
      ],
      [
       63.0,
-      56.06
+      60.91
      ],
      [
       66.0,
-      58.48
+      63.68
      ],
      [
       69.0,
-      60.9
+      66.44
      ],
      [
       72.0,
-      63.32
+      69.19
      ],
      [
       75.0,
-      65.73
+      71.93
      ],
      [
       78.0,
-      68.13
+      74.66
      ],
      [
       81.0,
-      70.52
+      77.38
      ],
      [
       84.0,
-      72.91
+      80.09
      ],
      [
       87.0,
-      75.3
+      82.79
+     ],
+     [
+      90.0,
+      85.48
      ]
     ]
    }
   },
   "NR1_2": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
+   "BD": {
+    "corner": 61.2,
+    "edge": null,
+    "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 98.4,
-    "edge": 98.7,
+   "BL": {
+    "corner": 89.8,
+    "edge": 94.0,
     "ring_v": [
      [
       0.0,
@@ -2694,149 +2533,141 @@
      ],
      [
       3.0,
-      0.89
+      0.29
      ],
      [
       6.0,
-      2.85
+      2.59
      ],
      [
       9.0,
-      4.92
+      5.07
      ],
      [
       12.0,
-      7.05
+      7.58
      ],
      [
       15.0,
-      9.19
+      10.12
      ],
      [
       18.0,
-      11.34
+      12.66
      ],
      [
       21.0,
-      13.49
+      15.2
      ],
      [
       24.0,
-      15.64
+      17.75
      ],
      [
       27.0,
-      17.77
+      20.29
      ],
      [
       30.0,
-      19.9
+      22.83
      ],
      [
       33.0,
-      22.03
+      25.37
      ],
      [
       36.0,
-      24.15
+      27.89
      ],
      [
       39.0,
-      26.28
+      30.41
      ],
      [
       42.0,
-      28.39
+      32.93
      ],
      [
       45.0,
-      30.51
+      35.43
      ],
      [
       48.0,
-      32.62
+      37.94
      ],
      [
       51.0,
-      34.72
+      40.43
      ],
      [
       54.0,
-      36.82
+      42.92
      ],
      [
       57.0,
-      38.92
+      45.41
      ],
      [
       60.0,
-      41.0
+      47.88
      ],
      [
       63.0,
-      43.06
+      50.36
      ],
      [
       66.0,
-      45.12
+      52.82
      ],
      [
       69.0,
-      47.18
+      55.28
      ],
      [
       72.0,
-      49.24
+      57.73
      ],
      [
       75.0,
-      51.29
+      60.17
      ],
      [
       78.0,
-      53.33
+      62.6
      ],
      [
       81.0,
-      55.38
+      65.02
      ],
      [
       84.0,
-      57.42
+      67.44
      ],
      [
       87.0,
-      59.46
+      69.85
      ],
      [
       90.0,
-      61.48
+      72.25
      ],
      [
       93.0,
-      63.49
+      74.63
      ],
      [
       96.0,
-      65.5
+      76.99
      ],
      [
       99.0,
-      67.51
-     ],
-     [
-      102.0,
-      69.51
-     ],
-     [
-      105.0,
-      71.51
+      79.35
      ]
     ]
    },
-   "Bq": {
-    "corner": 97.2,
-    "edge": 98.5,
+   "BLq": {
+    "corner": null,
+    "edge": 94.8,
     "ring_v": [
      [
       0.0,
@@ -2844,4388 +2675,812 @@
      ],
      [
       3.0,
-      2.49
+      2.2
      ],
      [
       6.0,
-      4.68
+      4.73
      ],
      [
       9.0,
-      6.9
+      7.31
      ],
      [
       12.0,
-      9.11
+      9.89
      ],
      [
       15.0,
-      11.32
+      12.48
      ],
      [
       18.0,
-      13.53
+      15.07
      ],
      [
       21.0,
-      15.73
+      17.65
      ],
      [
       24.0,
-      17.93
+      20.23
      ],
      [
       27.0,
-      20.12
+      22.81
      ],
      [
       30.0,
-      22.31
+      25.39
      ],
      [
       33.0,
-      24.49
+      27.95
      ],
      [
       36.0,
-      26.65
+      30.52
      ],
      [
       39.0,
-      28.8
+      33.07
      ],
      [
       42.0,
-      30.94
+      35.62
      ],
      [
       45.0,
-      33.08
+      38.17
      ],
      [
       48.0,
-      35.21
+      40.7
      ],
      [
       51.0,
-      37.34
+      43.23
      ],
      [
       54.0,
-      39.46
+      45.74
      ],
      [
       57.0,
-      41.58
+      48.25
      ],
      [
       60.0,
-      43.7
+      50.74
      ],
      [
       63.0,
-      45.81
+      53.23
      ],
      [
       66.0,
-      47.91
+      55.71
      ],
      [
       69.0,
-      50.0
+      58.18
      ],
      [
       72.0,
-      52.08
+      60.65
      ],
      [
       75.0,
-      54.15
+      63.1
      ],
      [
       78.0,
-      56.22
+      65.55
      ],
      [
       81.0,
-      58.28
+      67.99
      ],
      [
       84.0,
-      60.34
+      70.42
      ],
      [
       87.0,
-      62.41
+      72.84
      ],
      [
       90.0,
-      64.47
+      75.25
      ],
      [
       93.0,
-      66.52
+      77.66
      ],
      [
       96.0,
-      68.58
+      80.05
      ],
      [
       99.0,
-      70.62
+      82.43
      ],
      [
       102.0,
-      72.64
-     ],
-     [
-      105.0,
-      74.66
+      84.8
      ]
     ]
    }
   },
   "NR1_3": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
+   "BD": {
+    "corner": 61.1,
+    "edge": 62.9,
     "ring_v": [
      [
       0.0,
       0.0
      ],
      [
-      1.5,
-      0.0
-     ],
-     [
       3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
+      0.02
      ],
      [
       6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 77.2,
-    "edge": 89.9,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
       0.03
      ],
      [
-      6.0,
-      0.04
-     ],
-     [
       9.0,
-      0.15
+      0.07
      ],
      [
       12.0,
-      0.59
+      0.35
      ],
      [
       15.0,
-      1.46
+      1.47
      ],
      [
       18.0,
-      2.56
+      2.99
      ],
      [
       21.0,
-      3.8
+      4.64
      ],
      [
       24.0,
-      5.12
+      6.33
      ],
      [
       27.0,
-      6.51
+      8.05
      ],
      [
       30.0,
-      7.94
+      9.76
      ],
      [
-      31.5,
-      8.66
+      33.0,
+      11.46
      ],
      [
-      33.75,
-      9.77
+      36.0,
+      13.15
      ],
      [
-      36.75,
-      11.26
+      39.0,
+      14.83
      ],
      [
-      39.75,
-      12.76
+      42.0,
+      16.47
      ],
      [
-      42.75,
-      14.28
+      45.0,
+      18.09
      ],
      [
-      45.75,
-      15.81
+      48.0,
+      19.69
      ],
      [
-      48.75,
-      17.35
+      51.0,
+      21.27
      ],
      [
-      51.75,
-      18.9
+      54.0,
+      22.84
      ],
      [
-      54.75,
-      20.46
+      57.0,
+      24.4
      ],
      [
-      57.75,
-      22.02
+      60.0,
+      25.94
      ],
      [
-      60.75,
-      23.6
+      63.0,
+      27.47
      ],
      [
-      63.75,
-      25.17
-     ],
-     [
-      66.75,
-      26.73
-     ],
-     [
-      69.75,
-      28.3
-     ],
-     [
-      72.75,
-      29.87
-     ],
-     [
-      75.75,
-      31.44
-     ],
-     [
-      78.75,
-      33.02
-     ],
-     [
-      81.75,
-      34.6
-     ],
-     [
-      84.75,
-      36.18
-     ],
-     [
-      87.75,
-      37.74
-     ],
-     [
-      90.75,
-      39.3
-     ],
-     [
-      93.75,
-      40.87
-     ],
-     [
-      96.75,
-      42.44
+      66.0,
+      28.97
      ]
     ]
    },
-   "Bq": {
-    "corner": 83.2,
-    "edge": 95.6,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.31
-     ],
-     [
-      3.75,
-      0.57
-     ],
-     [
-      6.75,
-      1.15
-     ],
-     [
-      9.75,
-      2.05
-     ],
-     [
-      12.75,
-      3.19
-     ],
-     [
-      15.75,
-      4.46
-     ],
-     [
-      18.75,
-      5.81
-     ],
-     [
-      21.75,
-      7.22
-     ],
-     [
-      24.75,
-      8.66
-     ],
-     [
-      27.75,
-      10.15
-     ],
-     [
-      30.75,
-      11.66
-     ],
-     [
-      33.75,
-      13.19
-     ],
-     [
-      36.75,
-      14.75
-     ],
-     [
-      39.75,
-      16.31
-     ],
-     [
-      42.75,
-      17.89
-     ],
-     [
-      45.75,
-      19.47
-     ],
-     [
-      48.75,
-      21.04
-     ],
-     [
-      51.75,
-      22.63
-     ],
-     [
-      54.75,
-      24.22
-     ],
-     [
-      57.75,
-      25.82
-     ],
-     [
-      60.75,
-      27.42
-     ],
-     [
-      63.75,
-      29.02
-     ],
-     [
-      66.75,
-      30.63
-     ],
-     [
-      69.75,
-      32.24
-     ],
-     [
-      72.75,
-      33.84
-     ],
-     [
-      75.75,
-      35.44
-     ],
-     [
-      78.75,
-      37.04
-     ],
-     [
-      81.75,
-      38.63
-     ],
-     [
-      84.75,
-      40.24
-     ],
-     [
-      87.75,
-      41.84
-     ],
-     [
-      90.75,
-      43.45
-     ],
-     [
-      93.75,
-      45.05
-     ],
-     [
-      96.75,
-      46.63
-     ],
-     [
-      99.75,
-      48.22
-     ],
-     [
-      102.75,
-      49.81
-     ]
-    ]
-   }
-  },
-  "NR3M1": {
-   "A": {
+   "BL": {
     "corner": null,
-    "edge": 17.9,
+    "edge": 96.4,
     "ring_v": [
      [
       0.0,
-      0.0
-     ],
-     [
-      1.5,
       0.0
      ],
      [
       3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.01
+      0.03
      ],
      [
       6.0,
-      0.01
-     ],
-     [
-      7.5,
-      0.01
+      0.03
      ],
      [
       9.0,
-      0.02
-     ],
-     [
-      10.5,
-      0.02
-     ],
-     [
-      12.0,
-      0.02
-     ],
-     [
-      13.5,
-      0.03
-     ],
-     [
-      15.0,
-      0.03
-     ],
-     [
-      16.5,
-      0.04
-     ],
-     [
-      18.0,
-      0.04
-     ],
-     [
-      19.5,
-      0.05
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 17.9,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.01
-     ],
-     [
-      4.5,
-      0.01
-     ],
-     [
-      6.0,
-      0.01
-     ],
-     [
-      7.5,
-      0.02
-     ],
-     [
-      9.0,
-      0.02
-     ],
-     [
-      10.5,
-      0.03
-     ],
-     [
-      12.0,
-      0.03
-     ],
-     [
-      13.5,
-      0.04
-     ],
-     [
-      15.0,
-      0.05
-     ],
-     [
-      16.5,
-      0.06
-     ],
-     [
-      18.0,
       0.07
      ],
      [
-      19.5,
-      0.08
-     ]
-    ]
-   },
-   "B": {
-    "corner": 106.8,
-    "edge": 111.3,
-    "ring_v": [
-     [
-      0.0,
-      0.0
+      12.0,
+      0.36
      ],
      [
-      0.19,
-      0.03
+      15.0,
+      1.5
      ],
      [
-      0.47,
-      0.03
+      18.0,
+      3.07
      ],
      [
-      0.89,
-      0.07
+      21.0,
+      4.79
      ],
      [
-      1.52,
-      0.26
+      24.0,
+      6.58
      ],
      [
-      2.0,
-      0.52
+      27.0,
+      8.43
      ],
      [
-      2.71,
-      0.99
-     ],
-     [
-      3.78,
-      1.74
-     ],
-     [
-      4.58,
-      2.33
-     ],
-     [
-      5.78,
-      3.23
-     ],
-     [
-      7.58,
-      4.6
-     ],
-     [
-      7.92,
-      4.86
-     ],
-     [
-      8.43,
-      5.25
-     ],
-     [
-      9.19,
-      5.84
-     ],
-     [
-      9.47,
-      6.06
-     ],
-     [
-      9.9,
-      6.39
-     ],
-     [
-      10.22,
-      6.64
-     ],
-     [
-      10.7,
-      7.02
-     ],
-     [
-      11.06,
-      7.3
-     ],
-     [
-      11.6,
-      7.72
-     ],
-     [
-      12.01,
-      8.04
-     ],
-     [
-      12.62,
-      8.52
-     ],
-     [
-      13.53,
-      9.24
-     ],
-     [
-      14.9,
+      30.0,
       10.32
      ],
      [
-      15.93,
-      11.14
+      33.0,
+      12.23
      ],
      [
-      17.47,
-      12.36
+      36.0,
+      14.17
      ],
      [
-      18.63,
-      13.28
+      39.0,
+      16.12
      ],
      [
-      20.36,
-      14.66
+      42.0,
+      18.08
      ],
      [
-      22.96,
-      16.73
+      45.0,
+      20.05
      ],
      [
-      25.96,
-      19.13
+      48.0,
+      22.02
      ],
      [
-      28.96,
-      21.53
+      51.0,
+      24.0
      ],
      [
-      29.71,
-      22.13
+      54.0,
+      25.97
      ],
      [
-      30.84,
-      23.03
+      57.0,
+      27.96
      ],
      [
-      31.68,
-      23.7
+      60.0,
+      29.94
      ],
      [
-      32.31,
-      24.21
+      63.0,
+      31.93
      ],
      [
-      33.26,
-      24.97
+      66.0,
+      33.91
      ],
      [
-      33.97,
-      25.54
+      69.0,
+      35.9
      ],
      [
-      35.04,
-      26.39
+      72.0,
+      37.88
      ],
      [
-      35.84,
-      27.03
+      75.0,
+      39.87
      ],
      [
-      36.44,
-      27.51
+      78.0,
+      41.85
      ],
      [
-      37.34,
-      28.23
+      81.0,
+      43.84
      ],
      [
-      38.02,
-      28.77
+      84.0,
+      45.81
      ],
      [
-      39.03,
-      29.57
+      87.0,
+      47.78
      ],
      [
-      39.79,
-      30.18
+      90.0,
+      49.75
      ],
      [
-      40.93,
-      31.09
+      93.0,
+      51.71
      ],
      [
-      42.64,
-      32.46
+      96.0,
+      53.67
      ],
      [
-      43.93,
-      33.49
+      99.0,
+      55.62
      ],
      [
-      45.85,
+      102.0,
+      57.57
+     ],
+     [
+      105.0,
+      59.51
+     ]
+    ]
+   },
+   "BLq": {
+    "corner": null,
+    "edge": 97.7,
+    "ring_v": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.09,
+      0.09
+     ],
+     [
+      0.23,
+      0.16
+     ],
+     [
+      0.45,
+      0.18
+     ],
+     [
+      0.76,
+      0.2
+     ],
+     [
+      1.24,
+      0.22
+     ],
+     [
+      1.95,
+      0.27
+     ],
+     [
+      3.02,
+      0.36
+     ],
+     [
+      4.62,
+      0.54
+     ],
+     [
+      7.02,
+      1.01
+     ],
+     [
+      10.02,
+      2.18
+     ],
+     [
+      13.02,
+      3.75
+     ],
+     [
+      16.02,
+      5.49
+     ],
+     [
+      19.02,
+      7.31
+     ],
+     [
+      22.02,
+      9.19
+     ],
+     [
+      25.02,
+      11.09
+     ],
+     [
+      28.02,
+      13.03
+     ],
+     [
+      31.02,
+      14.98
+     ],
+     [
+      34.02,
+      16.96
+     ],
+     [
+      37.02,
+      18.94
+     ],
+     [
+      40.02,
+      20.94
+     ],
+     [
+      43.02,
+      22.94
+     ],
+     [
+      46.02,
+      24.95
+     ],
+     [
+      49.02,
+      26.96
+     ],
+     [
+      52.02,
+      28.98
+     ],
+     [
+      55.02,
+      31.0
+     ],
+     [
+      58.02,
+      33.02
+     ],
+     [
+      61.02,
       35.03
      ],
      [
-      48.74,
-      37.34
+      64.02,
+      37.04
      ],
      [
-      51.74,
-      39.74
+      67.02,
+      39.05
      ],
      [
-      54.74,
-      42.14
+      70.02,
+      41.05
      ],
      [
-      57.74,
-      44.55
+      73.02,
+      43.05
      ],
      [
-      60.74,
-      46.96
+      76.02,
+      45.06
      ],
      [
-      63.74,
-      49.36
+      79.02,
+      47.06
      ],
      [
-      66.74,
-      51.77
+      82.02,
+      49.06
      ],
      [
-      69.74,
-      54.18
+      85.02,
+      51.05
      ],
      [
-      72.74,
-      56.59
+      88.02,
+      53.04
      ],
      [
-      75.74,
+      91.02,
+      55.03
+     ],
+     [
+      94.02,
+      57.02
+     ],
+     [
+      97.02,
       59.0
      ],
      [
-      78.74,
-      61.41
+      100.02,
+      60.97
      ],
      [
-      81.74,
-      63.82
+      103.02,
+      62.93
      ],
      [
-      84.74,
-      66.22
-     ],
-     [
-      87.74,
-      68.63
-     ],
-     [
-      90.74,
-      71.03
-     ],
-     [
-      93.74,
-      73.44
-     ],
-     [
-      96.74,
-      75.85
-     ],
-     [
-      99.74,
-      78.26
-     ],
-     [
-      102.74,
-      80.68
-     ],
-     [
-      105.74,
-      83.09
-     ],
-     [
-      108.74,
-      85.51
-     ],
-     [
-      111.74,
-      87.93
-     ],
-     [
-      114.74,
-      90.35
-     ],
-     [
-      117.74,
-      92.77
-     ],
-     [
-      120.74,
-      95.18
+      106.02,
+      64.88
      ]
     ]
    }
   },
   "NR3W1": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 97.3,
-    "edge": 104.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      0.88
-     ],
-     [
-      3.38,
-      1.1
-     ],
-     [
-      3.94,
-      1.45
-     ],
-     [
-      4.78,
-      1.98
-     ],
-     [
-      5.41,
-      2.39
-     ],
-     [
-      6.36,
-      3.01
-     ],
-     [
-      7.08,
-      3.48
-     ],
-     [
-      8.14,
-      4.19
-     ],
-     [
-      8.94,
-      4.72
-     ],
-     [
-      9.54,
-      5.13
-     ],
-     [
-      10.0,
-      5.43
-     ],
-     [
-      10.33,
-      5.65
-     ],
-     [
-      10.84,
-      5.99
-     ],
-     [
-      11.22,
-      6.25
-     ],
-     [
-      11.51,
-      6.44
-     ],
-     [
-      11.93,
-      6.73
-     ],
-     [
-      12.25,
-      6.94
-     ],
-     [
-      12.73,
-      7.27
-     ],
-     [
-      13.1,
-      7.51
-     ],
-     [
-      13.64,
-      7.88
-     ],
-     [
-      14.04,
-      8.15
-     ],
-     [
-      14.65,
-      8.56
-     ],
-     [
-      15.11,
-      8.87
-     ],
-     [
-      15.79,
-      9.33
-     ],
-     [
-      16.82,
-      10.02
-     ],
-     [
-      17.59,
-      10.54
-     ],
-     [
-      18.75,
-      11.32
-     ],
-     [
-      20.48,
-      12.49
-     ],
-     [
-      21.78,
-      13.36
-     ],
-     [
-      23.73,
-      14.66
-     ],
-     [
-      26.66,
-      16.59
-     ],
-     [
-      29.66,
-      18.56
-     ],
-     [
-      32.66,
-      20.52
-     ],
-     [
-      35.66,
-      22.48
-     ],
-     [
-      38.66,
-      24.44
-     ],
-     [
-      41.66,
-      26.39
-     ],
-     [
-      43.16,
-      27.37
-     ],
-     [
-      44.28,
-      28.1
-     ],
-     [
-      45.97,
-      29.2
-     ],
-     [
-      48.5,
-      30.84
-     ],
-     [
-      51.5,
-      32.79
-     ],
-     [
-      53.0,
-      33.75
-     ],
-     [
-      54.13,
-      34.48
-     ],
-     [
-      55.81,
-      35.56
-     ],
-     [
-      58.35,
-      37.18
-     ],
-     [
-      59.85,
-      38.14
-     ],
-     [
-      62.1,
-      39.58
-     ],
-     [
-      65.1,
-      41.49
-     ],
-     [
-      68.1,
-      43.4
-     ],
-     [
-      71.1,
-      45.31
-     ],
-     [
-      74.1,
-      47.23
-     ],
-     [
-      77.1,
-      49.14
-     ],
-     [
-      80.1,
-      51.04
-     ],
-     [
-      83.1,
-      52.93
-     ],
-     [
-      86.1,
-      54.82
-     ],
-     [
-      89.1,
-      56.7
-     ],
-     [
-      92.1,
-      58.59
-     ],
-     [
-      95.1,
-      60.48
-     ],
-     [
-      98.1,
-      62.36
-     ],
-     [
-      101.1,
-      64.25
-     ],
-     [
-      104.1,
-      66.12
-     ],
-     [
-      107.1,
-      67.97
-     ],
-     [
-      110.1,
-      69.82
-     ]
-    ]
-   },
-   "Bq": {
-    "corner": null,
-    "edge": 105.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      0.38,
-      0.37
-     ],
-     [
-      0.94,
-      0.93
-     ],
-     [
-      1.36,
-      1.3
-     ],
-     [
-      1.99,
-      1.73
-     ],
-     [
-      2.47,
-      2.06
-     ],
-     [
-      3.18,
-      2.57
-     ],
-     [
-      3.71,
-      2.94
-     ],
-     [
-      4.51,
-      3.51
-     ],
-     [
-      5.11,
-      3.94
-     ],
-     [
-      6.02,
-      4.58
-     ],
-     [
-      6.69,
-      5.07
-     ],
-     [
-      7.7,
-      5.79
-     ],
-     [
-      9.23,
-      6.87
-     ],
-     [
-      10.37,
-      7.68
-     ],
-     [
-      11.22,
-      8.28
-     ],
-     [
-      12.5,
-      9.18
-     ],
-     [
-      14.43,
-      10.53
-     ],
-     [
-      15.87,
-      11.54
-     ],
-     [
-      18.04,
-      13.04
-     ],
-     [
-      21.04,
-      15.12
-     ],
-     [
-      24.04,
-      17.18
-     ],
-     [
-      27.04,
-      19.23
-     ],
-     [
-      30.04,
-      21.27
-     ],
-     [
-      31.54,
-      22.28
-     ],
-     [
-      33.79,
-      23.79
-     ],
-     [
-      36.79,
-      25.79
-     ],
-     [
-      39.79,
-      27.78
-     ],
-     [
-      42.79,
-      29.78
-     ],
-     [
-      45.79,
-      31.77
-     ],
-     [
-      48.79,
-      33.76
-     ],
-     [
-      51.79,
-      35.75
-     ],
-     [
-      54.79,
-      37.73
-     ],
-     [
-      57.79,
-      39.72
-     ],
-     [
-      60.79,
-      41.69
-     ],
-     [
-      63.79,
-      43.66
-     ],
-     [
-      66.79,
-      45.61
-     ],
-     [
-      69.79,
-      47.56
-     ],
-     [
-      72.79,
-      49.51
-     ],
-     [
-      75.79,
-      51.45
-     ],
-     [
-      78.79,
-      53.39
-     ],
-     [
-      81.79,
-      55.34
-     ],
-     [
-      84.79,
-      57.28
-     ],
-     [
-      87.79,
-      59.22
-     ],
-     [
-      90.79,
-      61.15
-     ],
-     [
-      93.79,
-      63.06
-     ],
-     [
-      96.79,
-      64.98
-     ],
-     [
-      99.79,
-      66.89
-     ],
-     [
-      102.79,
-      68.81
-     ],
-     [
-      105.79,
-      70.72
-     ],
-     [
-      108.79,
-      72.63
-     ],
-     [
-      111.79,
-      74.53
-     ]
-    ]
-   }
-  },
-  "NR3W3": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 105.4,
-    "edge": 110.6,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      0.89
-     ],
-     [
-      6.0,
-      2.86
-     ],
-     [
-      6.75,
-      3.38
-     ],
-     [
-      7.88,
-      4.16
-     ],
-     [
-      9.56,
-      5.36
-     ],
-     [
-      10.83,
-      6.26
-     ],
-     [
-      12.73,
-      7.62
-     ],
-     [
-      14.15,
-      8.66
-     ],
-     [
-      15.22,
-      9.43
-     ],
-     [
-      16.02,
-      10.02
-     ],
-     [
-      17.22,
-      10.9
-     ],
-     [
-      19.02,
-      12.22
-     ],
-     [
-      20.37,
-      13.22
-     ],
-     [
-      21.39,
-      13.96
-     ],
-     [
-      22.91,
-      15.08
-     ],
-     [
-      25.19,
-      16.77
-     ],
-     [
-      28.19,
-      18.97
-     ],
-     [
-      31.19,
-      21.18
-     ],
-     [
-      34.19,
-      23.39
-     ],
-     [
-      35.69,
-      24.5
-     ],
-     [
-      36.81,
-      25.33
-     ],
-     [
-      38.5,
-      26.57
-     ],
-     [
-      39.13,
-      27.04
-     ],
-     [
-      40.08,
-      27.74
-     ],
-     [
-      41.51,
-      28.8
-     ],
-     [
-      43.64,
-      30.38
-     ],
-     [
-      46.64,
-      32.6
-     ],
-     [
-      48.14,
-      33.71
-     ],
-     [
-      49.27,
-      34.54
-     ],
-     [
-      50.96,
-      35.79
-     ],
-     [
-      53.49,
-      37.67
-     ],
-     [
-      56.49,
-      39.9
-     ],
-     [
-      59.49,
-      42.12
-     ],
-     [
-      60.99,
-      43.23
-     ],
-     [
-      63.24,
-      44.9
-     ],
-     [
-      66.24,
-      47.1
-     ],
-     [
-      69.24,
-      49.31
-     ],
-     [
-      72.24,
-      51.52
-     ],
-     [
-      75.24,
-      53.73
-     ],
-     [
-      78.24,
-      55.94
-     ],
-     [
-      81.24,
-      58.14
-     ],
-     [
-      82.74,
-      59.25
-     ],
-     [
-      84.99,
-      60.9
-     ],
-     [
-      87.99,
-      63.12
-     ],
-     [
-      90.99,
-      65.33
-     ],
-     [
-      93.99,
-      67.54
-     ],
-     [
-      96.99,
-      69.74
-     ],
-     [
-      99.99,
-      71.93
-     ],
-     [
-      102.99,
-      74.12
-     ],
-     [
-      105.99,
-      76.31
-     ],
-     [
-      108.99,
-      78.5
-     ],
-     [
-      111.99,
-      80.69
-     ],
-     [
-      114.99,
-      82.88
-     ],
-     [
-      117.99,
-      85.08
-     ]
-    ]
-   },
-   "Bq": {
-    "corner": 106.7,
-    "edge": null,
-    "ring_v": []
-   }
-  },
-  "NR3_1p5": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 109.0,
-    "edge": 113.4,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      2.95
-     ],
-     [
-      4.5,
-      4.29
-     ],
-     [
-      5.06,
-      4.78
-     ],
-     [
-      5.48,
-      5.15
-     ],
-     [
-      6.12,
-      5.71
-     ],
-     [
-      7.07,
-      6.54
-     ],
-     [
-      8.49,
-      7.79
-     ],
-     [
-      9.56,
-      8.72
-     ],
-     [
-      11.16,
-      10.11
-     ],
-     [
-      12.36,
-      11.15
-     ],
-     [
-      12.81,
-      11.54
-     ],
-     [
-      13.15,
-      11.83
-     ],
-     [
-      13.66,
-      12.27
-     ],
-     [
-      14.04,
-      12.59
-     ],
-     [
-      14.61,
-      13.08
-     ],
-     [
-      15.03,
-      13.45
-     ],
-     [
-      15.68,
-      14.0
-     ],
-     [
-      16.16,
-      14.41
-     ],
-     [
-      16.52,
-      14.72
-     ],
-     [
-      17.06,
-      15.18
-     ],
-     [
-      17.87,
-      15.88
-     ],
-     [
-      18.48,
-      16.4
-     ],
-     [
-      18.94,
-      16.79
-     ],
-     [
-      19.62,
-      17.37
-     ],
-     [
-      20.65,
-      18.25
-     ],
-     [
-      22.19,
-      19.56
-     ],
-     [
-      24.5,
-      21.52
-     ],
-     [
-      27.5,
-      24.06
-     ],
-     [
-      29.0,
-      25.32
-     ],
-     [
-      31.25,
-      27.22
-     ],
-     [
-      34.25,
-      29.74
-     ],
-     [
-      37.25,
-      32.25
-     ],
-     [
-      40.25,
-      34.76
-     ],
-     [
-      43.25,
-      37.25
-     ],
-     [
-      46.25,
-      39.73
-     ],
-     [
-      49.25,
-      42.2
-     ],
-     [
-      52.25,
-      44.66
-     ],
-     [
-      55.25,
-      47.12
-     ],
-     [
-      58.25,
-      49.57
-     ],
-     [
-      61.25,
-      52.02
-     ],
-     [
-      64.25,
-      54.47
-     ],
-     [
-      67.25,
-      56.92
-     ],
-     [
-      70.25,
-      59.35
-     ],
-     [
-      73.25,
-      61.79
-     ],
-     [
-      76.25,
-      64.22
-     ],
-     [
-      79.25,
-      66.65
-     ],
-     [
-      82.25,
-      69.08
-     ],
-     [
-      85.25,
-      71.5
-     ],
-     [
-      88.25,
-      73.92
-     ],
-     [
-      91.25,
-      76.32
-     ],
-     [
-      94.25,
-      78.71
-     ],
-     [
-      97.25,
-      81.11
-     ],
-     [
-      100.25,
-      83.5
-     ],
-     [
-      103.25,
-      85.89
-     ],
-     [
-      106.25,
-      88.28
-     ],
-     [
-      109.25,
-      90.67
-     ],
-     [
-      112.25,
-      93.05
-     ],
-     [
-      115.25,
-      95.44
-     ],
-     [
-      118.25,
-      97.82
-     ],
-     [
-      121.25,
-      100.2
-     ]
-    ]
-   },
-   "Bq": {
-    "corner": 110.1,
-    "edge": 114.2,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      0.38,
-      0.37
-     ],
-     [
-      0.94,
-      0.94
-     ],
-     [
-      1.78,
-      1.78
-     ],
-     [
-      2.1,
-      2.1
-     ],
-     [
-      2.57,
-      2.57
-     ],
-     [
-      2.93,
-      2.93
-     ],
-     [
-      3.46,
-      3.46
-     ],
-     [
-      4.26,
-      4.26
-     ],
-     [
-      5.46,
-      5.46
-     ],
-     [
-      7.27,
-      7.27
-     ],
-     [
-      9.97,
-      9.97
-     ],
-     [
-      10.72,
-      10.72
-     ],
-     [
-      11.84,
-      11.84
-     ],
-     [
-      13.53,
-      13.47
-     ],
-     [
-      16.06,
-      15.73
-     ],
-     [
-      19.06,
-      18.37
-     ],
-     [
-      22.06,
-      21.0
-     ],
-     [
-      25.06,
-      23.6
-     ],
-     [
-      28.06,
-      26.18
-     ],
-     [
-      31.06,
-      28.75
-     ],
-     [
-      34.06,
-      31.31
-     ],
-     [
-      37.06,
-      33.86
-     ],
-     [
-      40.06,
-      36.4
-     ],
-     [
-      43.06,
-      38.93
-     ],
-     [
-      46.06,
-      41.46
-     ],
-     [
-      49.06,
-      43.98
-     ],
-     [
-      52.06,
-      46.49
-     ],
-     [
-      55.06,
-      48.99
-     ],
-     [
-      58.06,
-      51.48
-     ],
-     [
-      61.06,
-      53.95
-     ],
-     [
-      64.06,
-      56.42
-     ],
-     [
-      67.06,
-      58.89
-     ],
-     [
-      70.06,
-      61.35
-     ],
-     [
-      73.06,
-      63.81
-     ],
-     [
-      76.06,
-      66.27
-     ],
-     [
-      79.06,
-      68.72
-     ],
-     [
-      82.06,
-      71.17
-     ],
-     [
-      85.06,
-      73.62
-     ],
-     [
-      88.06,
-      76.06
-     ],
-     [
-      91.06,
-      78.5
-     ],
-     [
-      94.06,
-      80.94
-     ],
-     [
-      97.06,
-      83.38
-     ],
-     [
-      100.06,
-      85.81
-     ],
-     [
-      103.06,
-      88.22
-     ],
-     [
-      106.06,
-      90.63
-     ],
-     [
-      109.06,
-      93.04
-     ],
-     [
-      112.06,
-      95.45
-     ],
-     [
-      115.06,
-      97.85
-     ],
-     [
-      118.06,
-      100.26
-     ],
-     [
-      121.06,
-      102.66
-     ],
-     [
-      124.06,
-      105.06
-     ]
-    ]
-   }
-  },
-  "NR3_2": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 102.9,
-    "edge": 108.6,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      0.89
-     ],
-     [
-      3.75,
-      1.36
-     ],
-     [
-      4.31,
-      1.72
-     ],
-     [
-      5.16,
-      2.28
-     ],
-     [
-      5.79,
-      2.7
-     ],
-     [
-      6.74,
-      3.35
-     ],
-     [
-      8.16,
-      4.33
-     ],
-     [
-      9.23,
-      5.08
-     ],
-     [
-      9.63,
-      5.36
-     ],
-     [
-      9.93,
-      5.57
-     ],
-     [
-      10.38,
-      5.89
-     ],
-     [
-      10.72,
-      6.13
-     ],
-     [
-      10.97,
-      6.31
-     ],
-     [
-      11.35,
-      6.58
-     ],
-     [
-      11.92,
-      6.98
-     ],
-     [
-      12.35,
-      7.28
-     ],
-     [
-      12.67,
-      7.51
-     ],
-     [
-      13.15,
-      7.86
-     ],
-     [
-      13.51,
-      8.11
-     ],
-     [
-      14.05,
-      8.5
-     ],
-     [
-      14.46,
-      8.79
-     ],
-     [
-      15.07,
-      9.23
-     ],
-     [
-      15.53,
-      9.56
-     ],
-     [
-      16.21,
-      10.05
-     ],
-     [
-      17.24,
-      10.79
-     ],
-     [
-      18.01,
-      11.35
-     ],
-     [
-      19.16,
-      12.18
-     ],
-     [
-      20.9,
-      13.44
-     ],
-     [
-      23.5,
-      15.32
-     ],
-     [
-      25.0,
-      16.4
-     ],
-     [
-      27.25,
-      18.02
-     ],
-     [
-      30.25,
-      20.17
-     ],
-     [
-      33.25,
-      22.33
-     ],
-     [
-      34.75,
-      23.41
-     ],
-     [
-      35.87,
-      24.22
-     ],
-     [
-      37.56,
-      25.43
-     ],
-     [
-      38.83,
-      26.34
-     ],
-     [
-      39.78,
-      27.02
-     ],
-     [
-      40.49,
-      27.53
-     ],
-     [
-      41.56,
-      28.3
-     ],
-     [
-      42.36,
-      28.88
-     ],
-     [
-      42.96,
-      29.31
-     ],
-     [
-      43.86,
-      29.96
-     ],
-     [
-      44.53,
-      30.44
-     ],
-     [
-      45.55,
-      31.17
-     ],
-     [
-      46.31,
-      31.72
-     ],
-     [
-      47.45,
-      32.54
-     ],
-     [
-      48.3,
-      33.15
-     ],
-     [
-      49.59,
-      34.07
-     ],
-     [
-      51.51,
-      35.46
-     ],
-     [
-      52.95,
-      36.49
-     ],
-     [
-      55.12,
-      38.05
-     ],
-     [
-      58.12,
-      40.2
-     ],
-     [
-      61.12,
-      42.34
-     ],
-     [
-      64.12,
-      44.47
-     ],
-     [
-      67.12,
-      46.6
-     ],
-     [
-      70.12,
-      48.73
-     ],
-     [
-      73.12,
-      50.86
-     ],
-     [
-      76.12,
-      52.98
-     ],
-     [
-      79.12,
-      55.11
-     ],
-     [
-      82.12,
-      57.24
-     ],
-     [
-      85.12,
-      59.36
-     ],
-     [
-      88.12,
-      61.49
-     ],
-     [
-      91.12,
-      63.61
-     ],
-     [
-      94.12,
-      65.72
-     ],
-     [
-      97.12,
-      67.82
-     ],
-     [
-      100.12,
-      69.92
-     ],
-     [
-      103.12,
-      72.02
-     ],
-     [
-      106.12,
-      74.13
-     ],
-     [
-      109.12,
-      76.23
-     ],
-     [
-      112.12,
-      78.33
-     ],
-     [
-      115.12,
-      80.43
-     ]
-    ]
-   }
-  },
-  "NR4S": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 108.0,
-    "edge": 112.6,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      3.0,
-      2.58
-     ],
-     [
-      3.19,
-      2.74
-     ],
-     [
-      3.47,
-      2.98
-     ],
-     [
-      3.68,
-      3.15
-     ],
-     [
-      4.0,
-      3.42
-     ],
-     [
-      4.23,
-      3.62
-     ],
-     [
-      4.59,
-      3.92
-     ],
-     [
-      5.12,
-      4.37
-     ],
-     [
-      5.92,
-      5.05
-     ],
-     [
-      7.13,
-      6.06
-     ],
-     [
-      8.03,
-      6.82
-     ],
-     [
-      9.38,
-      7.96
-     ],
-     [
-      10.39,
-      8.81
-     ],
-     [
-      11.91,
-      10.07
-     ],
-     [
-      13.05,
-      11.02
-     ],
-     [
-      13.48,
-      11.38
-     ],
-     [
-      13.8,
-      11.65
-     ],
-     [
-      14.28,
-      12.05
-     ],
-     [
-      14.64,
-      12.35
-     ],
-     [
-      15.18,
-      12.8
-     ],
-     [
-      15.59,
-      13.13
-     ],
-     [
-      16.2,
-      13.64
-     ],
-     [
-      16.66,
-      14.02
-     ],
-     [
-      17.0,
-      14.3
-     ],
-     [
-      17.51,
-      14.73
-     ],
-     [
-      17.9,
-      15.05
-     ],
-     [
-      18.47,
-      15.53
-     ],
-     [
-      19.34,
-      16.25
-     ],
-     [
-      19.99,
-      16.79
-     ],
-     [
-      20.97,
-      17.59
-     ],
-     [
-      22.43,
-      18.8
-     ],
-     [
-      24.62,
-      20.61
-     ],
-     [
-      26.12,
-      21.85
-     ],
-     [
-      28.37,
-      23.7
-     ],
-     [
-      29.87,
-      24.93
-     ],
-     [
-      32.12,
-      26.77
-     ],
-     [
-      35.12,
-      29.23
-     ],
-     [
-      38.12,
-      31.67
-     ],
-     [
-      41.12,
-      34.1
-     ],
-     [
-      44.12,
-      36.51
-     ],
-     [
-      45.62,
-      37.72
-     ],
-     [
-      46.75,
-      38.63
-     ],
-     [
-      47.59,
-      39.3
-     ],
-     [
-      48.86,
-      40.32
-     ],
-     [
-      49.81,
-      41.08
-     ],
-     [
-      51.23,
-      42.22
-     ],
-     [
-      53.37,
-      43.93
-     ],
-     [
-      54.12,
-      44.53
-     ],
-     [
-      55.24,
-      45.43
-     ],
-     [
-      56.09,
-      46.11
-     ],
-     [
-      57.35,
-      47.12
-     ],
-     [
-      58.3,
-      47.88
-     ],
-     [
-      59.73,
-      49.02
-     ],
-     [
-      60.79,
-      49.87
-     ],
-     [
-      62.39,
-      51.15
-     ],
-     [
-      63.6,
-      52.11
-     ],
-     [
-      65.4,
-      53.54
-     ],
-     [
-      66.75,
-      54.62
-     ],
-     [
-      68.78,
-      56.23
-     ],
-     [
-      71.78,
-      58.62
-     ],
-     [
-      74.78,
-      61.0
-     ],
-     [
-      77.78,
-      63.37
-     ],
-     [
-      80.78,
-      65.74
-     ],
-     [
-      83.78,
-      68.1
-     ],
-     [
-      86.78,
-      70.45
-     ],
-     [
-      89.78,
-      72.8
-     ],
-     [
-      92.78,
-      75.15
-     ],
-     [
-      95.78,
-      77.49
-     ],
-     [
-      98.78,
-      79.84
-     ],
-     [
-      101.78,
-      82.18
-     ],
-     [
-      104.78,
-      84.53
-     ],
-     [
-      107.78,
-      86.87
-     ],
-     [
-      109.28,
-      88.04
-     ],
-     [
-      111.53,
-      89.8
-     ],
-     [
-      114.53,
-      92.13
-     ],
-     [
-      117.53,
-      94.46
-     ],
-     [
-      120.53,
-      96.77
-     ]
-    ]
-   }
-  },
-  "NR5_1p4": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
-    "corner": 110.9,
-    "edge": 114.9,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      0.38,
-      0.37
-     ],
-     [
-      0.66,
-      0.66
-     ],
-     [
-      1.08,
-      1.08
-     ],
-     [
-      1.39,
-      1.39
-     ],
-     [
-      1.87,
-      1.87
-     ],
-     [
-      2.58,
-      2.58
-     ],
-     [
-      2.85,
-      2.85
-     ],
-     [
-      3.05,
-      3.05
-     ],
-     [
-      3.35,
-      3.35
-     ],
-     [
-      3.57,
-      3.57
-     ],
-     [
-      3.91,
-      3.91
-     ],
-     [
-      4.17,
-      4.16
-     ],
-     [
-      4.36,
-      4.35
-     ],
-     [
-      4.64,
-      4.64
-     ],
-     [
-      4.85,
-      4.85
-     ],
-     [
-      5.17,
-      5.17
-     ],
-     [
-      5.42,
-      5.41
-     ],
-     [
-      5.78,
-      5.77
-     ],
-     [
-      6.32,
-      6.29
-     ],
-     [
-      6.72,
-      6.68
-     ],
-     [
-      7.03,
-      6.97
-     ],
-     [
-      7.48,
-      7.38
-     ],
-     [
-      8.17,
-      8.01
-     ],
-     [
-      9.2,
-      8.94
-     ],
-     [
-      10.74,
-      10.33
-     ],
-     [
-      11.89,
-      11.37
-     ],
-     [
-      12.33,
-      11.76
-     ],
-     [
-      12.65,
-      12.05
-     ],
-     [
-      13.14,
-      12.49
-     ],
-     [
-      13.51,
-      12.81
-     ],
-     [
-      14.05,
-      13.3
-     ],
-     [
-      14.47,
-      13.67
-     ],
-     [
-      14.77,
-      13.95
-     ],
-     [
-      15.24,
-      14.36
-     ],
-     [
-      15.58,
-      14.67
-     ],
-     [
-      16.11,
-      15.13
-     ],
-     [
-      16.5,
-      15.48
-     ],
-     [
-      17.08,
-      15.99
-     ],
-     [
-      17.52,
-      16.38
-     ],
-     [
-      18.18,
-      16.96
-     ],
-     [
-      18.67,
-      17.4
-     ],
-     [
-      19.42,
-      18.05
-     ],
-     [
-      19.97,
-      18.54
-     ],
-     [
-      20.81,
-      19.28
-     ],
-     [
-      21.43,
-      19.83
-     ],
-     [
-      22.37,
-      20.65
-     ],
-     [
-      23.78,
-      21.88
-     ],
-     [
-      25.89,
-      23.73
-     ],
-     [
-      27.39,
-      25.03
-     ],
-     [
-      29.64,
-      26.99
-     ],
-     [
-      31.14,
-      28.29
-     ],
-     [
-      33.39,
-      30.24
-     ],
-     [
-      36.39,
-      32.83
-     ],
-     [
-      39.39,
-      35.42
-     ],
-     [
-      42.39,
-      38.0
-     ],
-     [
-      43.89,
-      39.28
-     ],
-     [
-      45.01,
-      40.25
-     ],
-     [
-      46.7,
-      41.69
-     ],
-     [
-      49.23,
-      43.85
-     ],
-     [
-      50.73,
-      45.12
-     ],
-     [
-      51.86,
-      46.08
-     ],
-     [
-      52.7,
-      46.79
-     ],
-     [
-      53.97,
-      47.86
-     ],
-     [
-      54.92,
-      48.66
-     ],
-     [
-      56.34,
-      49.86
-     ],
-     [
-      58.48,
-      51.66
-     ],
-     [
-      59.98,
-      52.92
-     ],
-     [
-      62.23,
-      54.81
-     ],
-     [
-      65.23,
-      57.33
-     ],
-     [
-      68.23,
-      59.84
-     ],
-     [
-      71.23,
-      62.35
-     ],
-     [
-      74.23,
-      64.86
-     ],
-     [
-      77.23,
-      67.37
-     ],
-     [
-      80.23,
-      69.87
-     ],
-     [
-      83.23,
-      72.37
-     ],
-     [
-      86.23,
-      74.87
-     ],
-     [
-      89.23,
-      77.36
-     ],
-     [
-      92.23,
-      79.85
-     ],
-     [
-      95.23,
-      82.33
-     ],
-     [
-      98.23,
-      84.81
-     ],
-     [
-      101.23,
-      87.28
-     ],
-     [
-      104.23,
-      89.74
-     ],
-     [
-      107.23,
-      92.19
-     ],
-     [
-      110.23,
-      94.65
-     ],
-     [
-      113.23,
-      97.11
-     ],
-     [
-      116.23,
-      99.56
-     ],
-     [
-      119.23,
-      102.02
-     ],
-     [
-      122.23,
-      104.47
-     ]
-    ]
-   },
-   "Bq": {
-    "corner": 111.9,
-    "edge": null,
-    "ring_v": []
-   }
-  },
-  "NR5_2": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": [
-     [
-      0.0,
-      0.0
-     ],
-     [
-      1.5,
-      0.0
-     ],
-     [
-      3.0,
-      0.0
-     ],
-     [
-      4.5,
-      0.0
-     ],
-     [
-      6.0,
-      0.0
-     ],
-     [
-      7.5,
-      0.0
-     ],
-     [
-      9.0,
-      0.0
-     ],
-     [
-      10.5,
-      0.0
-     ],
-     [
-      12.0,
-      0.0
-     ],
-     [
-      13.5,
-      0.0
-     ],
-     [
-      15.0,
-      0.0
-     ],
-     [
-      16.5,
-      0.0
-     ],
-     [
-      18.0,
-      0.0
-     ],
-     [
-      19.5,
-      0.0
-     ]
-    ]
-   },
-   "B": {
+   "AL": {
     "corner": null,
     "edge": null,
     "reached": {
-     "corner": 13.3,
-     "edge": 37.1
+     "edge": 0.0
     },
     "ring_v": [
      [
       0.0,
       0.0
-     ],
-     [
-      0.38,
-      0.03
-     ],
-     [
-      0.94,
-      0.05
-     ],
-     [
-      1.78,
-      0.25
-     ],
-     [
-      2.41,
-      0.55
-     ],
-     [
-      3.36,
-      1.11
-     ],
-     [
-      4.08,
-      1.56
-     ],
-     [
-      5.14,
-      2.27
-     ],
-     [
-      5.94,
-      2.81
-     ],
-     [
-      6.54,
-      3.22
-     ],
-     [
-      7.45,
-      3.84
-     ],
-     [
-      8.8,
-      4.78
-     ],
-     [
-      9.81,
-      5.49
-     ],
-     [
-      10.57,
-      6.02
-     ],
-     [
-      11.71,
-      6.83
-     ],
-     [
-      12.14,
-      7.13
-     ],
-     [
-      12.46,
-      7.36
-     ],
-     [
-      12.94,
-      7.71
-     ],
-     [
-      13.3,
-      7.96
-     ],
-     [
-      13.84,
-      8.35
-     ],
-     [
-      14.65,
-      8.93
-     ],
-     [
-      15.87,
-      9.81
-     ],
-     [
-      16.79,
-      10.47
-     ],
-     [
-      18.16,
-      11.45
-     ],
-     [
-      19.18,
-      12.2
-     ],
-     [
-      20.72,
-      13.31
-     ],
-     [
-      23.04,
-      14.98
-     ],
-     [
-      24.54,
-      16.07
-     ],
-     [
-      26.79,
-      17.68
-     ],
-     [
-      29.79,
-      19.84
-     ],
-     [
-      32.79,
-      22.0
-     ],
-     [
-      34.29,
-      23.07
-     ],
-     [
-      35.41,
-      23.88
-     ],
-     [
-      37.1,
-      25.1
      ]
     ]
    }
   },
+  "NT1": {
+   "AL": {
+    "corner": null,
+    "edge": 17.7,
+    "ring_v": []
+   },
+   "BD": {
+    "corner": 44.3,
+    "edge": 43.6,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 44.2,
+    "edge": 43.5,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 43.8,
+    "edge": 42.8,
+    "ring_v": []
+   }
+  },
   "NT10": {
-   "A": {
+   "AL": {
     "corner": null,
-    "edge": 18.1,
+    "edge": 17.7,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
     "ring_v": []
    },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
     "ring_v": []
    }
   },
   "NT20": {
-   "A": {
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NT20L": {
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NT20V": {
+   "AL": {
     "corner": null,
-    "edge": 18.1,
+    "edge": 17.7,
     "ring_v": []
    },
-   "Aq": {
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
+    "ring_v": []
+   },
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
+    "ring_v": []
+   }
+  },
+  "NT20b": {
+   "AL": {
     "corner": null,
-    "edge": 18.0,
+    "edge": 17.7,
     "ring_v": []
    },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
+    "ring_v": []
+   },
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
     "ring_v": []
    }
   },
   "NT35": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
     "ring_v": []
    },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
     "ring_v": []
    }
   },
   "NT5": {
-   "A": {
+   "AL": {
     "corner": null,
-    "edge": 18.1,
+    "edge": 17.7,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BD": {
+    "corner": 61.7,
+    "edge": 62.9,
     "ring_v": []
    },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
     "ring_v": []
    },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.9,
     "ring_v": []
    }
   },
   "NW0": {
-   "A": {
-    "corner": null,
-    "edge": 17.0,
+   "BD": {
+    "corner": 20.0,
+    "edge": 19.8,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 16.8,
+   "BL": {
+    "corner": 20.0,
+    "edge": 19.8,
     "ring_v": []
    },
-   "B": {
-    "corner": 19.7,
-    "edge": 19.5,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 19.5,
-    "edge": 19.3,
-    "ring_v": []
-   }
-  },
-  "NW0p5": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 28.2,
-    "edge": 27.9,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 28.0,
-    "edge": 27.6,
-    "ring_v": []
-   }
-  },
-  "NW10": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
-    "ring_v": []
-   },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
-    "ring_v": []
-   },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
+   "BLq": {
+    "corner": 19.9,
+    "edge": 19.7,
     "ring_v": []
    }
   },
   "NW1p5": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
+   "BD": {
+    "corner": 51.6,
+    "edge": 53.0,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BL": {
+    "corner": 51.9,
+    "edge": 53.2,
     "ring_v": []
    },
-   "B": {
-    "corner": 50.0,
-    "edge": 51.9,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 50.7,
-    "edge": 52.5,
+   "BLq": {
+    "corner": 52.5,
+    "edge": 53.5,
     "ring_v": []
    }
   },
   "NW3": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
+   "BD": {
+    "corner": 61.2,
+    "edge": 62.9,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BL": {
+    "corner": 65.2,
+    "edge": 72.1,
     "ring_v": []
    },
-   "B": {
-    "corner": 59.9,
-    "edge": 65.5,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 61.9,
-    "edge": 67.7,
+   "BLq": {
+    "corner": 67.5,
+    "edge": 74.5,
     "ring_v": []
    }
   },
   "NW6": {
-   "A": {
-    "corner": null,
-    "edge": 18.1,
+   "BD": {
+    "corner": 61.7,
+    "edge": 62.9,
     "ring_v": []
    },
-   "Aq": {
-    "corner": null,
-    "edge": 18.0,
+   "BL": {
+    "corner": 67.0,
+    "edge": 76.0,
     "ring_v": []
    },
-   "B": {
-    "corner": 60.9,
-    "edge": 67.6,
-    "ring_v": []
-   },
-   "Bq": {
-    "corner": 63.5,
-    "edge": 70.7,
+   "BLq": {
+    "corner": 70.3,
+    "edge": 79.8,
     "ring_v": []
    }
   }

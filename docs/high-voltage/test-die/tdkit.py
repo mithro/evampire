@@ -97,11 +97,17 @@ class Section:
     def box(self, a, b, top, h, fill, **kw):
         return rect(self.x(a), self.y0 + top, (b - a) * self.s, h, fill, **kw)
 
-    def silicon(self, pwell=()):
+    def silicon(self, pwell=(), deep=None):
         """Substrate, P-well spans [(a, b, label)], well, rings, trench
-        oxide and the two contact rings."""
+        oxide and the two contact rings. deep draws the deep P layer:
+        "well" under the well only, "all" under the whole section."""
         p, y0 = self.p, self.y0
         b = [rect(self.x0, y0, self.wpx, self.DEPTH, SUB)]
+        if deep:
+            wd = self.wpx if deep == "all" else self.x(0) - self.x0
+            b.append(rect(self.x0, y0 + 70, wd, 9, PWELL, stroke="none"))
+            b.append(text(self.x0 + 6, y0 + 91, "deep P layer",
+                          anchor="start", size=11))
         for a, e, label in pwell:
             b.append(self.box(a, e, 0, 36, PWELL))
             b.append(text(self.x((a + e) / 2), y0 + 30, label, size=11))

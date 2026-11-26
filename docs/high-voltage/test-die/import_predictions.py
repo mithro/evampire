@@ -17,20 +17,32 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 
-PROCESSES = {
+_PW = {
     "A": "P-well generated wherever no N-well, deep N-well (kept 1.5 um away) or NAT is "
-         "drawn, including the strip between an N-well and NAT; nominal doping",
-    "An": "As A, but no P-well in the strip between an N-well and NAT",
-    "Aq": "As A, with fixed oxide charge of 1e11 cm^-2",
-    "Alo": "As A, substrate 2e15 cm^-3",
-    "Ahi": "As A, substrate 5e15 cm^-3",
-    "B": "P-well only where the layout draws it; nominal doping (substrate 3.5e15 cm^-3)",
-    "Bq": "As B, with fixed oxide charge of 1e11 cm^-2",
-    "Bq3": "As B, with fixed oxide charge of 3e11 cm^-2",
-    "Blo": "As B, substrate 2e15 cm^-3",
-    "Bhi": "As B, substrate 5e15 cm^-3",
-    "Bdp": "As B, substrate doping rising to 4e16 cm^-3 about 5 um below the surface",
+         "drawn, including the strip between an N-well and NAT",
+    "An": "P-well generated as in A, but not in the strip between an N-well and NAT",
+    "B": "P-well only where the layout draws it",
 }
+_DEEP = {
+    "L": "deep P layer under deep N-well only",
+    "D": "deep P layer 4.4 um down under the whole wafer",
+}
+_MOD = {
+    "": "nominal doping (substrate 3.56e15 cm^-3)",
+    "q": "fixed oxide charge of 1e11 cm^-2",
+    "q3": "fixed oxide charge of 3e11 cm^-2",
+    "lo": "substrate 2e15 cm^-3",
+    "hi": "substrate 5e15 cm^-3",
+}
+
+
+def describe(proc):
+    """The description of a process name such as BL, AnD, BLq or BDhi."""
+    for pw in ("An", "A", "B"):
+        if proc.startswith(pw):
+            deep, mod = proc[len(pw)], proc[len(pw) + 1:]
+            return f"{_PW[pw]}; {_DEEP[deep]}; {_MOD[mod]}"
+    raise KeyError(proc)
 
 
 def main(paths):
@@ -38,7 +50,7 @@ def main(paths):
     for path in paths:
         rec = json.loads(pathlib.Path(path).read_text())
         cases.update(rec["cases"])
-        pins.append({"record": pathlib.Path(path).name, "commit": rec["pins"]["commit"],
+        pins.append({"record": pathlib.Path(path).name, "commit": (rec["pins"].get("commit") or ", ".join(c[:12] for c in rec["pins"]["commits"])),
                      "image": rec["pins"]["image"], "cases": len(rec["cases"]),
                      "not_converged": rec.get("not_converged", [])})
     structures, used = {}, set()
@@ -59,7 +71,7 @@ def main(paths):
     procs = {}
     for p in sorted(used):
         base = p[1:] if p.startswith("G") else p
-        procs[p] = PROCESSES[base] + ("; the gated plate held at 0 V" if p.startswith("G") else "")
+        procs[p] = describe(base) + ("; the gated plate held at 0 V" if p.startswith("G") else "")
     out = {
         "source": {
             "status": "DEVSIM 2.11.1 drift-diffusion, breakdown by the ionisation integral",

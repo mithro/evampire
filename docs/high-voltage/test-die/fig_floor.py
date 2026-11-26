@@ -53,8 +53,11 @@ def floorplan():
     for k, (x, y) in enumerate(man["sub_pads"]):
         x, y = px(x, y)
         b.append(rect(x - pad / 2, y - pad / 2, pad, pad, "#7fa7d6"))
-        b.append(text(x + pad / 2 + 3, y + 3, f"SUB{k + 1}", anchor="start",
-                      size=9))
+        if x + pad / 2 + 30 < X0 + dw * S:
+            b.append(text(x + pad / 2 + 3, y + 3, f"SUB{k + 1}",
+                          anchor="start", size=9))
+        else:
+            b.append(text(x, y - pad / 2 - 3, f"SUB{k + 1}", size=9))
     # axes ticks
     for v in range(0, int(dw) + 1, 500):
         x, y = px(v, 0)

@@ -4,7 +4,8 @@ hvt-sim-section.svg   where the two simulated sections are cut, and the
                       mesh of one.
 hvt-ionisation.svg    field, ionisation coefficients and ionisation
                       integral of a one-sided abrupt junction (computed).
-hvt-assumptions.svg   where the P-well lies under each assumption.
+hvt-assumptions.svg   where the P-well and the deep P layer lie under
+                      each assumption.
 
 figures.py calls this module; it writes no files itself.
 
@@ -123,27 +124,29 @@ def ionisation():
 
 
 def assumptions():
-    rows = [("NT20", "assumption A: generated P-well up to the well edge",
-             [(0, 25, "generated P-well")]),
-            ("NA2", "assumption A with NAT: P-well in the strip beside "
-             "the well", [(0, 2, ""), (19.5, 25, "")]),
-            ("NA2", "assumption An: as A, but no P-well in the strip",
-             [(19.5, 25, "")]),
-            ("DAo1", "assumption A: NAT overlaps the deep N-well, so no "
-             "strip exists", [(19.5, 25, "")]),
-            ("NT20", "assumption B: no P-well unless the layout draws one",
-             [])]
+    rows = [("NT20", "AL: generated P-well up to the well edge",
+             [(0, 25, "generated P-well")], None),
+            ("NA2", "AL with NAT: P-well in the strip beside the well",
+             [(0, 2, ""), (19.5, 25, "")], None),
+            ("NA2", "AnL: as AL, but no P-well in the strip",
+             [(19.5, 25, "")], None),
+            ("NT20", "BL: no P-well unless the layout draws one", [], None),
+            ("NT20", "BD: as BL, with the deep P layer under the whole "
+             "wafer", [], "all"),
+            ("DT20", "every assumption: the deep P layer under a deep "
+             "N-well", [], "well")]
     w, h = 640, 60 + 205 * len(rows)
-    b = [ARROW, text(20, 24, "Where the P-well lies under each assumption",
-                     anchor="start", weight="bold")]
-    for k, (name, caption, spans) in enumerate(rows):
+    b = [ARROW, text(20, 24, "Where the P-well and the deep P layer lie "
+                     "under each assumption", anchor="start",
+                     weight="bold")]
+    for k, (name, caption, spans, deep) in enumerate(rows):
         y0 = 110 + k * 205
         p = STRUCTS[name]
         sec = Section(p, 30, y0, 580)
         b.append(text(30, y0 - 54, f"{name}, {caption}", anchor="start"))
-        b += sec.silicon(spans) + sec.nat() + sec.metal(False)
+        b += sec.silicon(spans, deep) + sec.nat() + sec.metal(False)
     b.append(rect(30, h - 22, 16, 12, PWELL))
-    b.append(text(52, h - 11, "P-well that the foundry generates",
+    b.append(text(52, h - 11, "P-type layers that the layout does not draw",
                   anchor="start", size=12))
     return svg(w, h, b)
 

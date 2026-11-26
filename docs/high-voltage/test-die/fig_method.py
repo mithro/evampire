@@ -256,10 +256,12 @@ def order():
 def build():
     return flow("From the generator to the submitted file", [
         ("1", "chip.py", "raw.gds: structures, pads, buses; manifest.json"),
-        ("2", "Seal ring", "PDK script: ring.gds, 1936 µm × 2531 µm"),
-        ("3", "Dummy fill", "PDK script, Metal4 fill allowed under Metal5"),
-        ("4", "Precheck", "wafer.space checks for slot 0p5x0p5"),
-        ("5", "hvtest.oas", "the file to submit, top cell hvtest"),
+        ("2", "check_nets.py", "every pad reaches its own well, ring or "
+         "plate"),
+        ("3", "Seal ring", "PDK script: ring.gds, 1936 µm × 2531 µm"),
+        ("4", "Dummy fill", "PDK script, Metal4 fill allowed under Metal5"),
+        ("5", "Precheck", "wafer.space checks for slot 0p5x0p5"),
+        ("6", "hvtest.oas", "the file to submit, top cell hvtest"),
     ])
 
 

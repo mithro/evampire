@@ -1,11 +1,12 @@
 """Read predictions.json and crosscheck.json and write their tables.
 
 hvt-tab-pred-a.csv, -b.csv, -g.csv  predicted breakdown by structure, one
-                      column per process of the family, as "edge / corner".
-hvt-tab-pred-band.csv   band of each structure under each assumption.
+                      column per process, as "edge / corner".
+hvt-tab-pred-band.csv   band of each structure under each family.
 hvt-tab-pred-key.csv    a few structures that carry the main findings.
 hvt-tab-processes.csv, hvt-tab-pred-source.csv   what was simulated.
-hvt-tab-crosscheck.csv, hvt-tab-crosscheck-source.csv   second simulator.
+hvt-tab-crosscheck.csv, hvt-tab-crosscheck-ring.csv and
+hvt-tab-crosscheck-source.csv   the second simulator.
 
 predictions.json is written by import_predictions.py: {"structures":
 {NAME: {PROCESS: {"edge": volts or null, "corner": volts or null,
@@ -14,13 +15,17 @@ predictions.json is written by import_predictions.py: {"structures":
 a "reached" entry is a sweep that ended at that voltage without breakdown;
 a null without one was not simulated.
 
-Families: a process named "G..." has the gated plate held at 0 V and is in
-no band; "An..." is assumption A without the P-well strip beside NAT;
-other names belong to the family of their first letter, A or B. The band
-of a structure is the lowest to the highest value, over a family, of the
-lower of the edge and corner voltages. A process whose sweep ended on one
-shape below the breakdown of the other is left out, since its lower value
-is not known. figures.py calls this module.
+A process name is [G] + A, An or B + L or D + an optional modifier. A, An
+and B say where the P-well is; L puts the deep P layer under deep N-well
+only and D under the whole wafer; G holds the gated plate at 0 V. A family
+is the first two parts, such as BL, and its modifiers (BLq) belong to it;
+G processes are in no family. Under A no structure on an N-well is
+simulated with D, because the layer cannot matter there: the L entry is
+used for both. The band of a structure is the lowest to the highest
+value, over a family, of the lower of the edge and corner voltages. A
+process whose sweep ended on one shape below the breakdown of the other
+is left out, since its lower value is not known, and so is a process one
+of whose runs gave no result. figures.py calls this module.
 
 SPDX-License-Identifier: Apache-2.0
 """
@@ -35,20 +40,28 @@ PRED = json.loads((tdkit.HERE / "predictions.json").read_text())
 CROSS = json.loads((tdkit.HERE / "crosscheck.json").read_text())
 WIDEN = 0.15           # agreement range: the band widened by this fraction
 SHAPES = ("edge", "corner")
-KEY = [("NT20", "Plain N-well"), ("NC0", "Sharp corner"),
+ORDER = ("AL", "AD", "AnL", "AnD", "BL", "BD")
+KEY = [("NT10", "Plain N-well"), ("NT1", "P+ ring 1 µm away"),
+       ("NC15", "Largest corner cut"), ("NC0", "Sharp corner"),
        ("NW0", "Drawn P-well touching"), ("NW1p5", "Drawn P-well at 1.5 µm"),
-       ("NW6", "Drawn P-well at 6 µm"), ("NA0p6", "NAT from 0.6 µm"),
+       ("NW3", "Drawn P-well at 3 µm"), ("NA0p6", "NAT from 0.6 µm"),
        ("NP4", "Polysilicon plate, 4 µm"), ("NM1_6", "Metal1 plate, 6 µm"),
-       ("NM1_10", "Metal1 plate, 10 µm"), ("NR1_2", "One ring at 2 µm"),
-       ("NR3_2", "Three rings"), ("NR5_1p4", "Five rings"),
-       ("DT20", "Deep N-well"), ("DC0", "Deep N-well, sharp corner"),
+       ("NM2_12", "Metal2 plate, 12 µm"), ("NR1_2", "One ring at 2 µm"),
+       ("NR3_2", "Three rings"), ("DT20", "Deep N-well"),
        ("DAo1", "Deep N-well with NAT over its edge")]
 
 
+def parse(proc):
+    """(gated, P-well letters, deep-layer letter, modifier)."""
+    gated = proc.startswith("G")
+    base = proc[1:] if gated else proc
+    pw = "An" if base.startswith("An") else base[0]
+    return gated, pw, base[len(pw)], base[len(pw) + 1:]
+
+
 def family(proc):
-    if proc.startswith("G"):
-        return "G"
-    return "An" if proc.startswith("An") else proc[0]
+    gated, pw, deep, _ = parse(proc)
+    return "G" if gated else pw + deep
 
 
 def processes(fam):
@@ -56,7 +69,7 @@ def processes(fam):
 
 
 def families():
-    return [f for f in ("A", "An", "B") if processes(f)]
+    return [f for f in ORDER if processes(f)]
 
 
 def ordered():
@@ -67,50 +80,96 @@ def ordered():
     return [n for n in order if n in PRED["structures"]]
 
 
-def entry(name, proc):
+def raw(name, proc):
     return PRED["structures"].get(name, {}).get(proc) or {}
 
 
-def value(e, shape):
-    """(volts, kind): kind is "bv", "reached" (a lower bound) or None."""
+def stands_in(name, proc):
+    """The L process whose entry serves for a missing D one, or None."""
+    gated, pw, deep, mod = parse(proc)
+    if raw(name, proc) or deep != "D" or pw != "A":
+        return None
+    twin = ("G" if gated else "") + pw + "L" + mod
+    return twin if raw(name, twin) and STRUCTS[name]["kind"] == "nw" else None
+
+
+def entry(name, proc):
+    return raw(name, proc) or raw(name, stands_in(name, proc) or "")
+
+
+def lost():
+    """Cases the records list as having given no result, as (structure,
+    process, shape) in the naming of predictions.json."""
+    out = set()
+    for rec in PRED.get("source", {}).get("records", []):
+        for case in rec.get("not_converged", []):
+            st, proc, shape = case.split("|")
+            if st.endswith("@g0"):
+                st, proc = st[:-3], "G" + proc
+            elif st.endswith("@gw"):
+                st = st[:-3]
+            out.add((st, proc, shape))
+    return out
+
+
+LOST = lost()
+
+
+def value(name, proc, shape):
+    """(volts, kind): kind is "bv", "reached" (a lower bound), "failed"
+    (the run gave no result) or None (not simulated). A sweep that ended
+    below 1 V counts as failed."""
+    e = entry(name, proc)
     if e.get(shape) is not None:
         return e[shape], "bv"
-    if shape in e.get("reached", {}):
-        return e["reached"][shape], "reached"
+    at = e.get("reached", {}).get(shape)
+    if at is not None and at >= 1.0:
+        return at, "reached"
+    src = stands_in(name, proc) or proc
+    if at is not None or (name, src, shape) in LOST:
+        return None, "failed"
     return None, None
 
 
-def cell(e, shape):
-    v, kind = value(e, shape)
+def cell(name, proc, shape):
+    v, kind = value(name, proc, shape)
     if kind == "bv":
         return f"{v:.1f}"
-    return f"> {v:.1f}" if kind == "reached" else "–"
+    if kind == "reached":
+        return f"> {v:.1f}"
+    return "failed" if kind == "failed" else "–"
 
 
-def lower(e):
-    """Lower of the edge and corner breakdown voltages, or None."""
-    vals = [e[s] for s in SHAPES if e.get(s) is not None]
-    return min(vals) if vals else None
+def known(name, proc):
+    return any(value(name, proc, s)[1] for s in SHAPES)
+
+
+def pair(name, proc):
+    if not known(name, proc):
+        return "–"
+    return f"{cell(name, proc, 'edge')} / {cell(name, proc, 'corner')}"
 
 
 def band(name, fam):
     """(low, high, notes) over the family, or None if it has no value."""
     vals, notes = [], []
     for p in processes(fam):
-        e = entry(name, p)
-        if not e:
+        if not known(name, p):
             continue
-        for s in SHAPES:
-            v, kind = value(e, s)
+        got = {s: value(name, p, s) for s in SHAPES}
+        for s, (v, kind) in got.items():
             if kind == "reached":
                 notes.append(f"{p} {s} not resolved above {v:.1f} V")
+            elif kind == "failed":
+                notes.append(f"{p} {s} gave no result")
             elif kind is None:
                 notes.append(f"{p} {s} not simulated")
-        open_at = [e["reached"][s] for s in SHAPES
-                   if value(e, s)[1] == "reached"]
-        low = lower(e)
-        if low is not None and not (open_at and min(open_at) < low):
-            vals.append(low)    # an unresolved shape could not be lower
+        nums = [v for v, kind in got.values() if kind == "bv"]
+        open_at = [v for v, kind in got.values() if kind == "reached"]
+        failed = any(kind == "failed" for _, kind in got.values())
+        if nums and not failed and not (open_at
+                                        and min(open_at) < min(nums)):
+            vals.append(min(nums))  # no unresolved shape could be lower
     if not vals:
         return None, None, notes
     return min(vals), max(vals), notes
@@ -122,17 +181,17 @@ def span(lo, hi, widen=0.0):
     return f"{lo * (1 - widen):.1f} to {hi * (1 + widen):.1f}"
 
 
-def pred_table(fams):
-    procs = [p for f in fams for p in processes(f)]
+def pred_table(test):
+    procs = [p for p in PRED["processes"] if test(p)]
+    procs.sort(key=lambda p: (ORDER.index(family(p)) if family(p) in ORDER
+                              else ORDER.index(family(p[1:])), p))
     titles = {k: t for k, t, _ in tdkit.GROUPS}
     rows = [["Structure", "Group"] + [f"{p}: edge / corner (V)"
                                       for p in procs]]
     for nm in ordered():
-        if not any(entry(nm, p) for p in procs):
-            continue
-        rows.append([nm, titles[tdkit.group_of(nm, STRUCTS[nm])]] + [
-            f"{cell(entry(nm, p), 'edge')} / {cell(entry(nm, p), 'corner')}"
-            if entry(nm, p) else "–" for p in procs])
+        if any(known(nm, p) for p in procs):
+            rows.append([nm, titles[tdkit.group_of(nm, STRUCTS[nm])]]
+                        + [pair(nm, p) for p in procs])
     return tb.write(rows)
 
 
@@ -146,31 +205,28 @@ def summarise(notes):
 
 
 def band_table():
-    fams = families()
-    head = ["Structure"]
-    for f in fams:
-        head += [f"{f} band (V)", f"{f} agreement range (V)"]
-    rows = [head + ["Gaps in the simulation"]]
+    rows = [["Structure", "Family", "Band (V)", "Agreement range (V)",
+             "Gaps in the simulation"]]
     for nm in ordered():
-        row, notes = [nm], []
-        for f in fams:
-            lo, hi, n = band(nm, f)
-            row += [span(lo, hi), span(lo, hi, WIDEN)]
-            notes += n
-        rows.append(row + [summarise(notes) or "None"])
+        for f in families():
+            if stands_in(nm, f) or not any(known(nm, p)
+                                           for p in processes(f)):
+                continue
+            lo, hi, notes = band(nm, f)
+            twin = f[:-1] + "D"
+            label = f"{f} and {twin}" if stands_in(nm, twin) else f
+            rows.append([nm, label, span(lo, hi), span(lo, hi, WIDEN),
+                         summarise(notes) or "None"])
     return tb.write(rows)
 
 
 def key_table():
-    cols = [p for p in ("A", "An", "B") if p in PRED["processes"]]
+    cols = [p for p in ("AL", "AnL", "BL", "BD") if p in PRED["processes"]]
     rows = [["Structure", "Termination"] + [
         f"{p}: edge / corner (V)" for p in cols]]
     for nm, what in KEY:
         if nm in PRED["structures"]:
-            rows.append([nm, what] + [
-                f"{cell(entry(nm, p), 'edge')} / "
-                f"{cell(entry(nm, p), 'corner')}" if entry(nm, p) else "–"
-                for p in cols])
+            rows.append([nm, what] + [pair(nm, p) for p in cols])
     return tb.write(rows)
 
 
@@ -200,16 +256,24 @@ def cross_tables():
             + [c["description"]])
     src = [["Item", "Value"]] + [[k.capitalize(), str(v)]
                                  for k, v in CROSS["source"].items()]
+    rr = CROSS["ring_rise"]
+    ring = [["Well voltage (V)", "DEVSIM (V)", "Charon (V)",
+             "Difference (V)"]]
+    for v, d, c in zip(rr["well_v"], rr["devsim_v"], rr["charon_v"]):
+        ring.append([f"{v:g}", f"{d:.2f}", f"{c:.2f}", f"{c - d:+.2f}"])
     return {"hvt-tab-crosscheck.csv": tb.write(rows),
+            "hvt-tab-crosscheck-ring.csv": tb.write(ring),
             "hvt-tab-crosscheck-source.csv": tb.write(src)}
 
 
 def tables():
     proc = [["Process", "Family", "Description"]] + [
         [k, family(k), v] for k, v in PRED["processes"].items()]
-    out = {"hvt-tab-pred-a.csv": pred_table(("A", "An")),
-           "hvt-tab-pred-b.csv": pred_table(("B",)),
-           "hvt-tab-pred-g.csv": pred_table(("G",)),
+    out = {"hvt-tab-pred-a.csv": pred_table(
+               lambda p: family(p) != "G" and parse(p)[1] != "B"),
+           "hvt-tab-pred-b.csv": pred_table(
+               lambda p: family(p) != "G" and parse(p)[1] == "B"),
+           "hvt-tab-pred-g.csv": pred_table(lambda p: family(p) == "G"),
            "hvt-tab-pred-band.csv": band_table(),
            "hvt-tab-pred-key.csv": key_table(),
            "hvt-tab-processes.csv": tb.write(proc),

@@ -152,7 +152,7 @@ def surround():
     b.append(text(30, 56, "NT10 in cross-section: the P+ ring 10 µm from "
                   "the well edge", anchor="start"))
     b += sec.silicon() + sec.metal(False)
-    b += sec.dim(0, p["term"], "T = 5, 10, 20 or 35 µm")
+    b += sec.dim(0, p["term"], "T = 1, 5, 10, 20 or 35 µm")
     b.append(text(30, 318, "NC0, NT20 and NC15 in plan view, to one scale: "
                   "corner radius 0, 8 and 15 µm", anchor="start"))
     for k, name in enumerate(("NC0", "NT20", "NC15")):

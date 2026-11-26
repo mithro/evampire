@@ -1,8 +1,9 @@
 """Draw the result figures of the predictions page.
 
-hvt-pred-bv.svg     predicted breakdown of the plain, drawn P-well, NAT
-                    and deep N-well structures (groups 1 to 4).
+hvt-pred-bv.svg     predicted breakdown of the plain, drawn P-well and
+                    NAT structures (groups 1 to 3).
 hvt-pred-bv2.svg    the same for field plates, rings and gated diodes.
+hvt-pred-bv3.svg    the same for the deep N-well structures.
 hvt-pred-ring.svg   predicted rise of ring 1 against well voltage, for
                     the structures with a pad on ring 1.
 hvt-crosscheck.svg  difference between the second simulator and the first.
@@ -19,10 +20,9 @@ from fig_graphs import Axes
 from svgdraw import BLUE, DEPL, GREY, INK, line, polyline, rect, svg, text
 
 GREEN = "#2e8b57"
-COLOUR = {"A": DEPL, "An": GREEN, "B": BLUE}
-BAND = {"A": "#f1c4be", "An": "#bfe3c8", "B": "#bcd9f5"}
-FIRST = ("surround", "pwell", "nat", "dnw")
-ROW = 19
+COLOUR = {"AL": DEPL, "AD": "#7b241c", "AnL": GREEN, "AnD": "#145a32",
+          "BL": BLUE, "BD": "#1b3a6b"}
+ROW = 28
 
 
 def marker(x, y, kind, shape, col):
@@ -45,8 +45,7 @@ def chart(title, keys):
         for f in fams:
             for p in pd.processes(f):
                 for s in pd.SHAPES:
-                    v, _ = pd.value(pd.entry(nm, p), s)
-                    vmax = max(vmax, v or 0)
+                    vmax = max(vmax, pd.value(nm, p, s)[0] or 0)
     vmax = 20 * (int(vmax / 20) + 1)
     top = 50
     w, h = 640, top + ROW * len(names) + 112
@@ -68,23 +67,24 @@ def chart(title, keys):
                           stroke="none", opacity=0.04))
         b.append(text(102, y + 4, nm, anchor="end", size=11))
         for j, f in enumerate(fams):
-            yy = y + (j - (len(fams) - 1) / 2) * 5
-            lo, hi, _ = pd.band(nm, f)
+            yy = y + (j - (len(fams) - 1) / 2) * 4.2
+            e = pd.raw(nm, f)   # the nominal process is named as its family
+            lo, hi, _ = pd.band(nm, f) if e else (None, None, None)
             if lo is not None:
                 xa, xb = ax.px(lo, 0)[0], ax.px(hi, 0)[0]
-                b.append(rect(xa, yy - 2.5, max(xb - xa, 1), 5, BAND[f],
-                              stroke="none"))
-            e = pd.entry(nm, f)     # the nominal process is named as its family
+                b.append(rect(xa, yy - 2.5, max(xb - xa, 1), 5, COLOUR[f],
+                              stroke="none", opacity=0.3))
             for s in pd.SHAPES:
-                v, kind = pd.value(e, s)
-                if kind:
+                v, kind = pd.value(nm, f, s) if e else (None, None)
+                if v is not None:
                     b.append(marker(ax.px(v, 0)[0], yy, kind, s, COLOUR[f]))
     y = top + ax.h + 58
     for j, f in enumerate(fams):
-        x = 20 + j * 120
-        b.append(rect(x, y - 9, 22, 6, BAND[f], stroke="none"))
+        x = 20 + j * 100
+        b.append(rect(x, y - 9, 22, 6, COLOUR[f], stroke="none",
+                      opacity=0.3))
         b.append(marker(x + 11, y - 6, "bv", "edge", COLOUR[f]))
-        b.append(text(x + 28, y, f"process {f}", anchor="start", size=12))
+        b.append(text(x + 28, y, f, anchor="start", size=12))
     b.append(text(20, y + 20, "Filled circle: straight edge. Open square: "
                   "corner. Bar: band over the family.", anchor="start",
                   size=12))
@@ -95,8 +95,8 @@ def chart(title, keys):
 
 
 def pred_bv():
-    return chart("Predicted breakdown: plain, drawn P-well, NAT and deep "
-                 "N-well structures", FIRST)
+    return chart("Predicted breakdown: plain, drawn P-well and NAT "
+                 "structures", ("surround", "pwell", "nat"))
 
 
 def pred_bv2():
@@ -104,13 +104,17 @@ def pred_bv2():
                  "gated diodes", ("plates", "rings", "gated"))
 
 
+def pred_bv3():
+    return chart("Predicted breakdown: deep N-well structures", ("dnw",))
+
+
 def pred_ring():
     curves = []
     for nm in pd.ordered():
         if not pd.STRUCTS[nm]["sense"]:
             continue
-        for f in ("A", "B"):
-            pts = pd.entry(nm, f).get("ring_v")
+        for f in ("BL", "BD"):
+            pts = pd.raw(nm, f).get("ring_v")
             if pts:
                 curves.append((nm, f, pts))
     vmax = max([p[0] for _, _, c in curves for p in c] + [20])
@@ -130,15 +134,13 @@ def pred_ring():
             seen.append(nm)
         col = cols[seen.index(nm) % len(cols)]
         b.append(polyline([ax.px(*p) for p in pts], stroke=col,
-                          width=2.2 if f == "B" else 3.0,
-                          dash=None if f == "B" else "2 3"))
+                          width=2.2, dash=None if f == "BL" else "6 4"))
     for k, nm in enumerate(seen):
         b.append(text(ax.x0 + 10, ax.y0 + 20 + 18 * k, nm, anchor="start",
                       size=12, fill=cols[k % len(cols)]))
-    b.append(text(20, h - 34, "Solid: process B. Dotted, along the axis: "
-                  "process A, which breaks down before the ring moves.",
+    b.append(text(20, h - 34, "Solid: process BL. Dashed: process BD.",
                   anchor="start", size=12))
-    b.append(text(20, h - 16, "Dashed diagonal: ring equal to well.",
+    b.append(text(20, h - 16, "Grey diagonal: ring equal to well.",
                   anchor="start", size=12))
     if not curves:
         b.append(text(ax.x0 + ax.w / 2, ax.y0 + ax.h / 2,
@@ -150,26 +152,31 @@ def crosscheck():
     cases = pd.CROSS["cases"]
     row = 44
     w, h = 640, 70 + row * len(cases) + 80
-    ax = Axes(170, 50, 440, row * len(cases), (-1.5, 1.5), (0, 1), False,
+    diffs = [c[k] - c["devsim_v"] for c in cases
+             for k in ("charon_integral_v", "charon_current_v")
+             if c.get(k) is not None]
+    lo = min(-1.0, int(min(diffs) - 1))
+    hi = max(1.0, int(max(diffs) + 1))
+    ax = Axes(200, 50, 410, row * len(cases), (lo, hi), (0, 1), False,
               False)
     b = [text(20, 24, "Second simulator minus first, by case",
               anchor="start", weight="bold")]
-    b += ax.frame([(v, f"{v:+.1f}" if v else "0")
-                   for v in (-1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5)], [],
+    b += ax.frame([(v, f"{v:+d}" if v else "0")
+                   for v in range(int(lo), int(hi) + 1)], [],
                   "Charon minus DEVSIM (V)", "")
     x0, _ = ax.px(0, 0)
     b.append(line(x0, ax.y0, x0, ax.y0 + ax.h, stroke=INK, width=1.2))
     for k, c in enumerate(cases):
         y = ax.y0 + row * (k + 0.5)
-        b.append(text(162, y - 2, c["name"], anchor="end", size=12))
-        b.append(text(162, y + 13, f"DEVSIM {c['devsim_v']:.2f} V",
+        b.append(text(192, y - 2, c["name"], anchor="end", size=12))
+        b.append(text(192, y + 13, f"DEVSIM {c['devsim_v']:.2f} V",
                       anchor="end", size=11, fill=GREY))
         for key, col, shape in (("charon_integral_v", BLUE, "edge"),
                                 ("charon_current_v", DEPL, "corner")):
             if c.get(key) is None:
                 continue
-            d = max(min(c[key] - c["devsim_v"], 1.5), -1.5)
-            b.append(marker(ax.px(d, 0)[0], y, "bv", shape, col))
+            b.append(marker(ax.px(c[key] - c["devsim_v"], 0)[0], y, "bv",
+                            shape, col))
     y = ax.y0 + ax.h + 60
     b.append(marker(26, y - 4, "bv", "edge", BLUE))
     b.append(text(36, y, "ionisation integral on Charon's potential",
@@ -181,4 +188,5 @@ def crosscheck():
 
 
 FIGURES = {"hvt-pred-bv.svg": pred_bv, "hvt-pred-bv2.svg": pred_bv2,
+           "hvt-pred-bv3.svg": pred_bv3,
            "hvt-pred-ring.svg": pred_ring, "hvt-crosscheck.svg": crosscheck}

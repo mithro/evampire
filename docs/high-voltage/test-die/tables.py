@@ -3,6 +3,7 @@
 hvt-tab-<group>.csv   one row per structure: its drawn dimensions and the
                       centre of its pad on the die.
 hvt-tab-pads.csv      the substrate pads and the second pads.
+hvt-tab-precheck.csv  the precheck result, from silicon/hvtest/PRECHECK.txt.
 
 Dimensions come from silicon/hvtest/structures.json and positions from
 manifest.json. figures.py calls this module; it writes no files itself.
@@ -17,6 +18,7 @@ import physics
 import tdkit
 from tdkit import num
 
+PRECHECK = tdkit.HERE.parents[2] / "silicon" / "hvtest" / "PRECHECK.txt"
 WELL = {"nw": "N-well", "dnw": "Deep N-well", "open": "None"}
 LAYER = {"poly": "polysilicon", "m1": "Metal1", "m2": "Metal2"}
 
@@ -49,6 +51,18 @@ def area(p):
     return f"{a:.0f}", f"{per:.1f}"
 
 
+def note(n, p, s):
+    out = []
+    if p["lead_w"] != 6.0:
+        out.append(f"Metal5 lead {num(p['lead_w'])} µm wide")
+    if p["dualgate"]:
+        out.append("In the 6 V area")
+    if n.endswith("b"):
+        out.append(f"Second copy of {n[:-1]}")
+    return "; ".join(out) or "–"
+
+
+NOTE = ("Variant", note)
 T = ("P+ ring distance (µm)", lambda n, p, s: num(p["term"]))
 C = ("Corner radius (µm)", lambda n, p, s: num(p["corner"]))
 PAD = ("Pad centre x, y (µm)", lambda n, p, s: pad(s))
@@ -57,14 +71,15 @@ PLATES = [(f"{LAYER[k].capitalize()} plate (µm)",
            lambda n, p, s, k=k: plate(p, k)) for k in LAYER]
 
 COLUMNS = {
-    "surround": [T, C, PAD],
+    "surround": [T, C, NOTE, PAD],
     "pwell": [("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
               T, PAD],
     "nat": [("NAT start (µm)", lambda n, p, s: nat(p)), T, C,
-            PLATES[1], PLATES[2], PAD],
+            PLATES[1], PLATES[2], NOTE, PAD],
     "dnw": [T, C,
             ("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
-            ("NAT start (µm)", lambda n, p, s: nat(p)), PLATES[1], PAD],
+            ("NAT start (µm)", lambda n, p, s: nat(p)), PLATES[1], NOTE,
+            PAD],
     "plates": [KIND] + PLATES + [PAD],
     "rings": [("Rings", lambda n, p, s: str(len(p["rings"]))),
               ("Gaps, innermost first (µm)", lambda n, p, s: gaps(p)),
@@ -82,6 +97,9 @@ COLUMNS = {
                "{:.0f}, {:.0f}".format(*s["aux_pad"])), PAD],
     "large": [KIND, ("Side (µm)", lambda n, p, s: num(2 * p["half"])),
               C, T, ("NAT start (µm)", lambda n, p, s: nat(p)),
+              ("Fill block", lambda n, p, s:
+               {True: "Whole structure", False: "None",
+                "ring": "Termination zone"}[p["block"]]),
               ("Area (µm²)", lambda n, p, s: area(p)[0]),
               ("Perimeter (µm)", lambda n, p, s: area(p)[1]), PAD],
     "open": [("Contents", lambda n, p, s: "Metal5 lead and pad only"), PAD],
@@ -115,7 +133,30 @@ def tables():
                          f"{role.capitalize()} of {s['name']}",
                          "{:.0f}, {:.0f}".format(*s["aux_pad"])])
     files["hvt-tab-pads.csv"] = write(rows)
+    files["hvt-tab-precheck.csv"] = precheck()
     return files
+
+
+def precheck():
+    """The result table of the submission page, from PRECHECK.txt."""
+    rows = [["Item", "Result"]]
+    for line in PRECHECK.read_text().splitlines():
+        if line.startswith("#") or not line.strip():
+            continue
+        if line.startswith("density "):
+            name, value = line.split("\t")
+            if "MetalTop" in name:
+                continue
+            rows.append([name.replace("density ", "Density, ")
+                         .replace(" ratio", ""), f"{float(value[:-2]):.1f} %"])
+        elif line.startswith("precheck: Check for "):
+            rest = line[len("precheck: Check for "):].rstrip(".")
+            rows.append([rest.rsplit(" ", 1)[0], rest.rsplit(" ", 1)[1]
+                         .capitalize()])
+        else:
+            key, value = line.split(":", 1)
+            rows.append([key.capitalize(), value.strip()])
+    return write(rows)
 
 
 def counts():
