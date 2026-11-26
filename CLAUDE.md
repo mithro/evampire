@@ -117,7 +117,7 @@ helpers that the scripts above import, so run the script, not the helper:
 
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
 - `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
-  `pred_data.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
+  `pred_data.py`, `pred_extra.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
   every `fig_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
@@ -140,7 +140,10 @@ whenever the layout changes. `docs/high-voltage/test-die/predictions.json`
 holds the simulated breakdown voltages. It is written by
 `uv run python docs/high-voltage/test-die/import_predictions.py RECORD.json ...`
 from the records in `results/hv-junction/` of mithro/gf180-tcad; its schema
-is in the docstring of `pred_data.py`. `crosscheck.json` in the same folder
+is in the docstring of `pred_data.py`. The same script with `--p5 P5.json`
+writes `p5.json` from the runs with ring 1 held at 0 V; never pass those
+records without the option, because their case names equal the ordinary
+ones. The pages say "not yet simulated" while `p5.json` is absent. `crosscheck.json` in the same folder
 holds the second-simulator results and `model_checks.json` the values
 from the final review that no simulation record holds yet; both are edited
 by hand. Rerun `figures.py` after changing any of them.
