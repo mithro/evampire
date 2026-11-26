@@ -12,8 +12,8 @@ NGM1,"AL, AD, AnL, AnD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulat
 NGM1,BL,84.8 to 85.4,59.4 to 98.2,NT20,1.27,None
 NGM1,BD,59.6 to 59.6,41.7 to 68.5,NT20,0.97,None
 NAGM1,AL,–,–,NW0,–,AL edge gave no result; AL corner not simulated
-NAGM1,AnL,84.8 to 84.8,59.4 to 97.5,NT20,4.79,None
-NAGM1,AnD,59.6 to 59.6,41.7 to 68.5,NT20,3.37,None
+NAGM1,AnL,84.8 to 84.8,59.4 to 97.5,NA0p6,1.27,None
+NAGM1,AnD,59.6 to 59.6,41.7 to 68.5,NA0p6,0.97,None
 NAGM1,BL,84.8 to 85.4,59.4 to 98.2,NT20,1.27,None
 NAGM1,BD,59.6 to 59.6,41.7 to 68.5,NT20,0.97,None
 DGM1,"AL, AnL",31.3 to 31.3,21.9 to 36.0,DT20,1.04,None
@@ -88,23 +88,23 @@ NA0p6C0,AnD,–,–,NT20,–,AnD corner not resolved above 37.0 V
 NA0p6C0,BL,–,–,NT20,–,BL corner not resolved above 36.3 V; BLq corner not resolved above 37.7 V
 NA0p6C0,BD,–,–,NT20,–,BD corner not resolved above 36.0 V
 NAM1_3,"AL, AD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
-NAM1_3,AnL,83.2 to 83.2,58.2 to 95.7,NT20,4.70,None
-NAM1_3,AnD,61.2 to 61.2,42.8 to 70.4,NT20,3.46,None
+NAM1_3,AnL,83.2 to 83.2,58.2 to 95.7,NA0p6,1.24,None
+NAM1_3,AnD,61.2 to 61.2,42.8 to 70.4,NA0p6,0.99,None
 NAM1_3,BL,83.2 to 83.7,58.2 to 96.3,NT20,1.24,None
 NAM1_3,BD,61.2 to 61.2,42.8 to 70.4,NT20,1.00,None
 NAM1_6,"AL, AD",–,–,NW0,–,"AL edge not resolved above 15.0 V; AL, ALhi corner not simulated; ALhi edge gave no result"
-NAM1_6,AnL,84.8 to 84.8,59.4 to 97.5,NT20,4.79,None
-NAM1_6,AnD,59.6 to 59.6,41.7 to 68.5,NT20,3.37,None
+NAM1_6,AnL,84.8 to 84.8,59.4 to 97.5,NA0p6,1.27,None
+NAM1_6,AnD,59.6 to 59.6,41.7 to 68.5,NA0p6,0.97,None
 NAM1_6,BL,75.7 to 105.8,53.0 to 121.7,NT20,1.27,None
 NAM1_6,BD,59.5 to 61.0,41.6 to 70.1,NT20,0.97,None
 NAM1_10,"AL, AD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
-NAM1_10,AnL,85.2 to 85.2,59.6 to 98.0,NT20,4.81,None
-NAM1_10,AnD,60.8 to 60.8,42.6 to 69.9,NT20,3.44,None
+NAM1_10,AnL,85.2 to 85.2,59.6 to 98.0,NA0p6,1.27,None
+NAM1_10,AnD,60.8 to 60.8,42.6 to 69.9,NA0p6,0.99,None
 NAM1_10,BL,85.2 to 85.9,59.6 to 98.8,NT20,1.27,None
 NAM1_10,BD,60.8 to 60.8,42.6 to 69.9,NT20,0.99,None
 NAM2_12,"AL, AD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulated
-NAM2_12,AnL,82.3 to 82.3,57.6 to 94.6,NT20,4.65,None
-NAM2_12,AnD,60.8 to 60.8,42.6 to 69.9,NT20,3.44,None
+NAM2_12,AnL,82.3 to 82.3,57.6 to 94.6,NA0p6,1.23,None
+NAM2_12,AnD,60.8 to 60.8,42.6 to 69.9,NA0p6,0.99,None
 NAM2_12,BL,82.3 to 83.0,57.6 to 95.4,NT20,1.23,None
 NAM2_12,BD,60.8 to 60.8,42.6 to 69.9,NT20,0.99,None
 NP1,"AL, AD, AnL, AnD",17.4 to 17.4,12.2 to 20.0,NW0,0.98,AL corner not simulated

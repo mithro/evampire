@@ -1,0 +1,4 @@
+Item,Value
+Origin,the reviewer's own scripts for the final independent review
+Status,not yet in a gf180-tcad record; replace this file when the values are
+Model,"the fitted doping family of mithro/gf180-tcad, experiments/hv-junction (fit.py)"
