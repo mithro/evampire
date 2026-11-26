@@ -28,6 +28,8 @@ figures share four conventions:
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
 
+.. _esd-layout-floorplan:
+
 Bidirectional pad floorplan
 ---------------------------
 
@@ -144,6 +146,8 @@ layout figures colour every area with no N-well as P-type silicon.
    One corner of the NMOS output drivers of gf180mcu_fd_io__bi_t. Three of
    the eight gates are shown, and 24 µm of their 38 µm width.
 
+.. _esd-layout-silicide:
+
 Silicide block
 --------------
 
@@ -179,6 +183,8 @@ resistors.
 
    The silicide-blocked drains of both output drivers, beside a pre-driver
    transistor that has no silicide block.
+
+.. _esd-layout-paths:
 
 Discharge paths in the drivers
 ------------------------------
@@ -221,6 +227,8 @@ drain diode adds to the foundry's test diode (:ref:`esd-simulation`).
    The discharge currents drawn on the output drivers of
    gf180mcu_fd_io__bi_t.
 
+.. _esd-layout-secondary:
+
 Secondary protection layout
 ---------------------------
 
@@ -253,6 +261,8 @@ which is the diode's other terminal.
 
    The secondary protection of gf180mcu_fd_io__bi_t: four resistors and
    two pairs of diodes.
+
+.. _esd-layout-clamp:
 
 Rail clamp layout
 -----------------
@@ -305,6 +315,8 @@ the silicide block is for (:ref:`esd-io-cells`).
 
    One corner of the clamp transistor of gf180mcu_fd_io__dvdd. Sixteen of
    its 80 fingers are shown, and 9 µm of their 50 µm width.
+
+.. _esd-layout-ring:
 
 Path across the ring
 --------------------
