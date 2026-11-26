@@ -26,6 +26,7 @@ Parameters (micrometres), with defaults in DEFAULTS:
              the well, making a gated diode; the plates then start 1 um inside the well edge
   lead_w     width of the Metal5 lead where it crosses the termination (6 by default; a
              wide lead is the control for the lead's own effect on the junction)
+  dualgate   True puts the structure in the 6 V (thick gate oxide) area
   block      False leaves out the fill blocks (for wells too large for one NDMY shape);
              "ring" blocks fill only over the termination zone
 
@@ -42,7 +43,7 @@ import layers as L
 DEFAULTS = {
     "kind": "nw", "half": 15.0, "corner": 3.0, "inset": 2.0, "ncomp_w": 2.0, "term": 20.0,
     "rings": [], "plates": {}, "pwell_gap": None, "nat_gap": None, "sense": False,
-    "gate": False, "block": True, "lead_w": 6.0,
+    "gate": False, "block": True, "lead_w": 6.0, "dualgate": False,
 }  # fmt: skip
 
 CUT, CUT_PITCH = 0.22, 0.50  # contact size and pitch (0.28 space, as arrays need)
@@ -186,6 +187,8 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
         add(L.METAL2, kdb.Region(kdb.Box(nb.left, nb.bottom, nb.right, geom.nm(bh))))
 
     # keep dummy fill out of the whole structure
+    if p["dualgate"]:
+        add(L.DUALGATE, geom.box(-bh, -bh, bh, bh))
     if p["block"]:
         blk = geom.box(-bh, -bh, bh, bh)
         if p["block"] == "ring":

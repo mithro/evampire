@@ -4,6 +4,7 @@ COMP = (22, 0)
 DNWELL = (12, 0)
 NWELL = (21, 0)
 LVPWELL = (204, 0)
+DUALGATE = (55, 0)  # the 5 V / 6 V thick gate oxide area
 POLY2 = (30, 0)
 NPLUS = (32, 0)
 PPLUS = (31, 0)

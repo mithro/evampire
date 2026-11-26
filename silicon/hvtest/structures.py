@@ -11,6 +11,7 @@ micrometres (a "p" stands for the decimal point). Unless a name says otherwise t
   R   floating rings (number, then first gap)
   G   gated diode: the plate has its own pad      S  ring 1 has its own pad
   b   second copy                                  L  wide Metal5 lead
+  V   in the 6 V (Dualgate) area
 
 The P+ ring of a ring structure is at least 15 um beyond its last ring, so that the rings
 and not the P+ ring limit it.
@@ -40,17 +41,17 @@ TWO_PAD = [
 
 ONE_PAD = [
     # what surrounds a plain N-well: distance to the P+ ring, and the corner
-    ("NT5", s(term=5.0)), ("NT10", s(term=10.0)), ("NT20", s()), ("NT35", s(term=35.0)),
+    ("NT1", s(term=1.0)), ("NT5", s(term=5.0)), ("NT10", s(term=10.0)), ("NT20", s()), ("NT35", s(term=35.0)),
     ("NC0", s(corner=0.0)), ("NC15", s(corner=15.0)),
     # a drawn P-well at a set distance
     ("NW0", s(pwell_gap=0.0)), ("NW1p5", s(pwell_gap=1.5)),
-    ("NW3", s(pwell_gap=3.0)), ("NW6", s(pwell_gap=6.0)), ("NW10", s(pwell_gap=10.0)),
+    ("NW3", s(pwell_gap=3.0)), ("NW6", s(pwell_gap=6.0)),
     # NAT keeps the generated P-well away
     ("NA0p6", s(nat_gap=0.6)), ("NA2", s(nat_gap=2.0)), ("NA0p6T10", s(nat_gap=0.6, term=10.0)),
     ("NA4", s(nat_gap=4.0)),
     ("NA0p6T35", s(nat_gap=0.6, term=35.0)), ("NA0p6C0", s(nat_gap=0.6, corner=0.0)),
     ("NAM1_3", s(nat_gap=0.6, plates={"m1": 3.0})), ("NAM1_6", s(nat_gap=0.6, plates={"m1": 6.0})),
-    ("NAM1_10", s(nat_gap=0.6, plates={"m1": 10.0})), ("NAM2_6", s(nat_gap=0.6, plates={"m2": 6.0})),
+    ("NAM1_10", s(nat_gap=0.6, plates={"m1": 10.0})),
     ("NAM2_12", s(nat_gap=0.6, plates={"m2": 12.0})),
     # field plates on a plain N-well
     ("NP1", s(plates={"poly": 1.0})), ("NP2", s(plates={"poly": 2.0})), ("NP4", s(plates={"poly": 4.0})),
@@ -83,6 +84,9 @@ ONE_PAD = [
     # is 30 um wide, to show what the lead itself does to the junction it crosses
     ("OPEN", s(kind="open")), ("NT20b", s()), ("DT20b", s(kind="dnw")),
     ("NA0p6b", s(nat_gap=0.6)), ("NT20L", s(lead_w=30.0)),
+    # the plain well in the 6 V area: the PDK models give the N-well 11 V there and 14 V
+    # in the 3.3 V area with the same capacitance
+    ("NT20V", s(dualgate=True)),
 ]
 
 SITES = TWO_PAD + ONE_PAD
