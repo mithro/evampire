@@ -23,6 +23,7 @@ import fig_entry
 import fig_group
 import physics as ph
 import pred_data as pd
+import pred_extra as px
 import tdkit
 from tdkit import num
 
@@ -166,8 +167,8 @@ def procedures(name):
         return ["P1", "P2"]
     if p["half"] >= 50:
         return ["P1", "P2"]
-    if p["sense"]:   # a ring beyond 3 um is reached too late for P3
-        return ["P1", "P3", "P5"] if p["rings"][0][0] <= 3 else ["P1", "P5"]
+    if p["sense"]:
+        return ["P1", "P3", "P5"]
     return ["P1", "P4"] if p["gate"] else ["P1"]
 
 
@@ -263,6 +264,11 @@ def entry(name, files):
                  "35 65")]
     text, tab = predicted(name)
     ring = fig_entry.ring(name) if STRUCTS[name]["sense"] else None
+    if STRUCTS[name]["sense"]:
+        text += (" The prediction with ring 1 held at 0 V, as in {P5}, is "
+                 "in :numref:`tab-hvt-p5`"
+                 + ("." if name in px.P5 else
+                    ", where it is not yet simulated."))
     if ring:
         files[f"catalogue/hvt-s-{name}-ring.svg"] = ring
         text += (f" :numref:`fig-hvt-sr-{s}` plots the predicted rise of "

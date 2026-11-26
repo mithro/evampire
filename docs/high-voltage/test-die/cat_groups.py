@@ -30,7 +30,9 @@ GROUPS = {
                "rules allow no other angle on a well. The corner sections "
                "of the simulation assume an arc and are upper bounds. The "
                "Metal5 lead crosses the termination zone of every member, "
-               "and only {NT20L} varies it."),
+               "and only {NT20L} varies it. The copies and the lead "
+               "control have the simulated section of {NT20}, because a "
+               "two-dimensional section cannot contain the lead."),
     "pwell": dict(
         file="p-well", title="Drawn P-well",
         what="A drawn P-well stands in for the P-well that the foundry may "

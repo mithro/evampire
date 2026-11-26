@@ -50,8 +50,8 @@ E["NT10"] = dict(
     c=[("NT5", "the ring is at 10 µm in place of 5 µm"),
        ("NT20", "the ring is at 10 µm in place of 20 µm")],
     m="",
-    r="Equal to {NT20} and {NT35}: the default ring distance of 20 µm is "
-      "safely large.",
+    r="Equal to {NT20}: the breakdown voltage stopped rising before "
+      "10 µm, and the default ring distance of 20 µm is safely large.",
     l="None beyond those of the group.")
 E["NT20"] = dict(
     p="The reference structure of the die: a plain N-well with the "
@@ -64,7 +64,8 @@ E["NT20"] = dict(
     c=[("NT20b", "nothing: a second copy elsewhere on the die"),
        ("NT20L", "the Metal5 lead is 6 µm wide in place of 30 µm"),
        ("NT20V", "the 3.3 V area in place of the 6 V area"),
-       ("NT35", "the ring is at 20 µm in place of 35 µm")],
+       ("NT20c", "nothing: a third copy"),
+       ("NT10", "the ring is at 20 µm in place of 10 µm")],
     m="It is the first structure swept on each die, and is swept again at "
       "85 °C. It is one of the three on which the light of the avalanche "
       "is always photographed at the current limit.",
@@ -73,19 +74,6 @@ E["NT20"] = dict(
     l="A single plain well cannot tell an edge that fails from a bottom "
       "that fails; the plates and rings do that, and the capacitance of "
       "{CVNA} shows the deep layer directly.")
-E["NT35"] = dict(
-    p="Shows whether a ring distance of 20 µm is far enough: the end of "
-      "the ring-distance series.",
-    w="If the well holds more with the ring at 35 µm than at 20 µm, the "
-      "depletion region was still reaching the ring at 20 µm. Every "
-      "structure with the default ring distance would then be limited by "
-      "its ring and not by its own termination.",
-    c=[("NT20", "the ring is at 35 µm in place of 20 µm")],
-    m="",
-    r="Equal to {NT20}: the default distance is large enough. Higher: "
-      "values measured at 20 µm are lower bounds.",
-    l="No structure has a ring beyond 35 µm, so a value still rising "
-      "here has no end point on the die.")
 E["NC0"] = dict(
     p="Measures what a square corner costs against a corner cut at 45°.",
     w="At a vertex the depletion region wraps round a point, so field "
@@ -94,14 +82,17 @@ E["NC0"] = dict(
       "sharpest the layout can draw. Diffusion of the implant rounds it "
       "to a radius of about the well's lateral spread.",
     c=[("NT20", "four 90° vertices in place of eight of 135°"),
-       ("NC15", "no cut in place of the longest cut")],
+       ("NC15", "no cut in place of the longest cut"),
+       ("NM1_6C0", "no plate in place of a Metal1 plate")],
     m="Swept again at 85 °C. The light of the avalanche is always "
       "photographed at the current limit; the four vertices should light "
       "first.",
     r="Below {NT20}: the vertices set the breakdown, and a cut is worth "
       "having. Equal: something other than the corner limits both.",
-    l="The simulation of this corner did not reach breakdown, so its "
-      "prediction is only a lower bound. Under assumption A the surface "
+    l="The simulation of this corner did not reach breakdown. The table "
+      "gives a lower bound, and a straight-line extrapolation of the "
+      "unfinished sweep ends below 57 V "
+      "(:numref:`tab-hvt-mc-corner`). Under assumption A the surface "
       "junction fails first and hides the corner.")
 E["NC15"] = dict(
     p="Tells whether the length of the corner cut matters once the vertex "
@@ -128,8 +119,7 @@ E["NT20b"] = dict(
     m="Swept with the same settings as {NT20} and in the same session.",
     r="The difference between the two copies is the smallest difference "
       "between any two structures that can be called real.",
-    l="One pair samples two points on the die. It cannot separate a "
-      "gradient from random variation.")
+    l="Two copies sample two points on the die; {NT20c} adds a third.")
 E["NT20L"] = dict(
     p="Shows whether the Metal5 lead changes the junction it crosses.",
     w="The lead is at the well's voltage, 5.76 µm above the silicon, and "
@@ -219,3 +209,20 @@ E["NW6"] = dict(
       "one away, and a distant drawn P-well is itself a remedy.",
     l="No structure has a P-well further away, so a value still below "
       "{NT20} has no end point.")
+E["NT20c"] = dict(
+    p="A third copy of the reference well. The plain well is one half of "
+      "the ratio that decides whether a deep P layer lies under N-wells.",
+    w="The drawing is identical to {NT20}. Whether a plate raises the "
+      "breakdown voltage is read from the plated wells divided by the "
+      "plain ones. Three plain wells give a mean, and a spread to set "
+      "against a predicted difference that is not much larger than the "
+      "agreement limit.",
+    c=[("NT20", "nothing but the position on the die"),
+       ("NT20b", "nothing but the position on the die"),
+       ("NM1_6b", "the plain half of the ratio, in place of the plated "
+                  "half")],
+    m="Swept with the same settings as {NT20} and in the same session.",
+    r="The mean of the three plain wells is the denominator of the "
+      "plate ratio.",
+    l="Three points on one die still cannot separate a gradient from "
+      "random variation.")

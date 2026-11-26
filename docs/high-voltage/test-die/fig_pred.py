@@ -7,6 +7,8 @@ hvt-pred-bv3.svg    the same for the deep N-well structures.
 hvt-pred-ring.svg   predicted rise of ring 1 against well voltage, for
                     the structures with a pad on ring 1.
 hvt-crosscheck.svg  difference between the second simulator and the first.
+hvt-p5.svg          predicted punch-through voltage to a grounded ring
+                    against the gap, from p5.json when it exists.
 
 All values come from predictions.json and crosscheck.json through
 pred_data.py. figures.py calls this module; it writes no files itself.
@@ -15,6 +17,7 @@ SPDX-License-Identifier: Apache-2.0
 """
 
 import pred_data as pd
+import pred_extra as px
 import tdkit
 from fig_graphs import Axes
 from svgdraw import BLUE, DEPL, GREY, INK, line, polyline, rect, svg, text
@@ -187,6 +190,49 @@ def crosscheck():
     return svg(w, h, b)
 
 
-FIGURES = {"hvt-pred-bv.svg": pred_bv, "hvt-pred-bv2.svg": pred_bv2,
+def p5():
+    """Punch-through voltage to a grounded ring against the gap."""
+    names = [n for n in px.sense() if len(pd.STRUCTS[n]["rings"]) == 1]
+    gaps = [pd.STRUCTS[n]["rings"][0][0] for n in names]
+    vals = [e["punch_through_v"] for n in names
+            for e in px.P5.get(n, {}).values() if e["punch_through_v"]]
+    vmax = 20 * (int(max(vals + [40]) / 20) + 1)
+    w, h = 640, 400
+    ax = Axes(80, 44, 440, 270, (0, max(gaps) + 1), (0, vmax), False, False)
+    b = [text(20, 24, "Predicted punch-through to a grounded ring against "
+              "the gap", anchor="start", weight="bold")]
+    b += ax.frame([(g, f"{g:g}") for g in gaps],
+                  [(v, str(v)) for v in range(0, int(vmax) + 1, 20)],
+                  "gap from the well edge to ring 1 (µm)",
+                  "well voltage at 1 nA of ring current (V)")
+    seen = 0
+    for proc in px.P5_PROCS:
+        pts = [(g, px.P5.get(n, {}).get(proc)) for g, n in zip(gaps, names)]
+        got = [(g, e["punch_through_v"]) for g, e in pts
+               if e and e["punch_through_v"] is not None]
+        low = [(g, e["reached_v"]) for g, e in pts
+               if e and e["punch_through_v"] is None]
+        if not got and not low:
+            continue
+        col = COLOUR[proc]
+        if len(got) > 1:
+            b.append(polyline([ax.px(*q) for q in got], stroke=col,
+                              width=1.6))
+        b += [marker(*ax.px(*q), "bv", "edge", col) for q in got]
+        b += [marker(*ax.px(*q), "reached", "edge", col) for q in low]
+        y = ax.y0 + 14 + 18 * seen
+        b.append(marker(ax.x0 + ax.w + 16, y - 4, "bv", "edge", col))
+        b.append(text(ax.x0 + ax.w + 26, y, proc, anchor="start", size=11))
+        seen += 1
+    if not seen:
+        b.append(text(ax.x0 + ax.w / 2, ax.y0 + ax.h / 2,
+                      "not yet simulated", size=13))
+    b.append(text(20, h - 12, "Open triangle: the ring current did not "
+                  "reach 1 nA by the end of the sweep.", anchor="start",
+                  size=11))
+    return svg(w, h, b)
+
+
+FIGURES = {"hvt-p5.svg": p5, "hvt-pred-bv.svg": pred_bv, "hvt-pred-bv2.svg": pred_bv2,
            "hvt-pred-bv3.svg": pred_bv3,
            "hvt-pred-ring.svg": pred_ring, "hvt-crosscheck.svg": crosscheck}

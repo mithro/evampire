@@ -152,7 +152,7 @@ def surround():
     b.append(text(30, 56, "NT10 in cross-section: the P+ ring 10 µm from "
                   "the well edge", anchor="start"))
     b += sec.silicon() + sec.metal(False)
-    b += sec.dim(0, p["term"], "T = 1, 5, 10, 20 or 35 µm")
+    b += sec.dim(0, p["term"], "T = 1, 5, 10 or 20 µm")
     b.append(text(30, 318, "NC0, NT20 and NC15 in plan view, to one scale: "
                   "corner radius 0, 8 and 15 µm", anchor="start"))
     for k, name in enumerate(("NC0", "NT20", "NC15")):
@@ -191,8 +191,8 @@ def dnw():
     far = STRUCTS["DW1p5"]["term"] + 3.0  # P+ ring plus 1 um, as drawn
     return panels(
         "A deep N-well in place of the N-well",
-        [("DT10", "P+ ring 10 µm from the edge of the deep N-well", [],
-          [(0, 10, "T = 2.6, 10 or 20 µm")], False),
+        [("DT20", "P+ ring 20 µm from the edge of the deep N-well", [],
+          [(0, 20, "T = 2.6 or 20 µm")], False),
          ("DW1p5", "a drawn P-well that starts 1.5 µm out",
           [(1.5, far, "drawn P-well")], [(0, 1.5, "1.5")], False),
          ("DAo1", "the NAT layer overlaps the edge of the deep N-well by "

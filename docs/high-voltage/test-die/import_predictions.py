@@ -9,11 +9,31 @@ Later records override earlier ones case by case. In predictions.json a gated st
 @gw cases are filed under the process itself and its @g0 cases under "G" + process.
 A case that reached the end of its sweep or stopped converging without breakdown has a
 null voltage and its last converged voltage under "reached".
+
+    uv run python docs/high-voltage/test-die/import_predictions.py --p5 P5.json [P5.json ...]
+
+writes p5.json instead and leaves predictions.json alone. The P5 records
+(results/hv-junction/p5.json of mithro/gf180-tcad) hold the same case names with ring 1 held
+at 0 V, so they must never be merged with the ordinary records; the option keeps them
+apart. For each structure and process p5.json stores the well voltage at which the current
+into the grounded ring reaches the criterion of procedure P5, 1 nA, and the breakdown
+voltage of that case. The record gives the well current per centimetre of edge, so
+
+    current = |i_well| (A/cm) x perimeter of ring 1 (cm)
+
+with the perimeter taken along the middle of ring 1: the outline of the well moved out by
+the gap plus half the ring's width (for NR1S5: 15 + 5 + 1 = 21 um half-side with a 14 um
+corner radius, 150.6 um, so 1 nA is 6.6e-8 A/cm). The voltage is interpolated on the
+logarithm of the current between the two bias points either side of the criterion; it is
+null, with the last voltage under "reached", if the current never gets there.
 """
 
 import json
+import math
 import pathlib
 import sys
+
+import physics
 
 HERE = pathlib.Path(__file__).resolve().parent
 
@@ -87,5 +107,57 @@ def main(paths):
     print(f"{len(cases)} cases, {len(structures)} structures, processes {sorted(used)}")
 
 
+P5_CRITERION = 1e-9  # A, the ring current that defines punch-through in procedure P5
+
+
+def ring_perimeter_cm(p):
+    """Perimeter along the middle of ring 1, in cm."""
+    gap, width = p["rings"][0]
+    d = gap + width / 2
+    return physics.octagon(p["half"] + d, p["corner"] + d)[1] * 1e-4
+
+
+def crossing(volts, amps, level):
+    """Voltage at which amps first reaches level, by log interpolation, or None."""
+    for k, a in enumerate(amps):
+        if a >= level:
+            if k == 0 or amps[k - 1] <= 0:
+                return volts[k]
+            f = (math.log(level) - math.log(amps[k - 1])) / (math.log(a) - math.log(amps[k - 1]))
+            return volts[k - 1] + f * (volts[k] - volts[k - 1])
+    return None
+
+
+def main_p5(paths):
+    structs = json.loads((HERE.parents[2] / "silicon" / "hvtest" / "structures.json").read_text())
+    cases, pins = {}, []
+    for path in paths:
+        rec = json.loads(pathlib.Path(path).read_text())
+        cases.update(rec["cases"])
+        pins.append({"record": pathlib.Path(path).name, "commit": (rec["pins"].get("commit") or ", ".join(c[:12] for c in rec["pins"]["commits"])),
+                     "cases": len(rec["cases"])})
+    out = {}
+    for name, c in sorted(cases.items()):
+        st, proc, shape = name.split("|")
+        if shape != "edge" or st not in structs or not structs[st]["rings"]:
+            continue
+        per = ring_perimeter_cm(structs[st])
+        amps = [abs(i) * per for i in c["i_well"]]
+        v = crossing(c["v"], amps, P5_CRITERION)
+        out.setdefault(st, {})[proc] = {
+            "punch_through_v": None if v is None else round(v, 1),
+            "reached_v": round(max(c["v"]), 1),
+            "breakdown_v": None if c["bv_v"] is None else round(c["bv_v"], 1),
+            "perimeter_um": round(per * 1e4, 1),
+        }
+    doc = {"source": {"criterion": "ring current of 1 nA, as in procedure P5", "records": pins},
+           "structures": out}
+    (HERE / "p5.json").write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n")
+    print(f"{len(cases)} cases, {len(out)} structures with ring 1 at 0 V")
+
+
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    if sys.argv[1:2] == ["--p5"]:
+        main_p5(sys.argv[2:])
+    else:
+        main(sys.argv[1:])

@@ -87,7 +87,7 @@ def fams(pts, wanted=("AL", "AnL", "AnD", "BL", "BD")):
 
 
 def surround():
-    pts = [(1, "NT1"), (5, "NT5"), (10, "NT10"), (20, "NT20"), (35, "NT35")]
+    pts = [(1, "NT1"), (5, "NT5"), (10, "NT10"), (20, "NT20")]
     return trend("Plain N-wells: breakdown against the distance to the P+ "
                  "ring", "distance from the well edge to the P+ ring (µm)",
                  [(x, str(x)) for x, _ in pts], fams(pts, ("AL", "BL", "BD")),
@@ -104,7 +104,7 @@ def pwell():
 
 
 def nat():
-    pts = [(0.6, "NA0p6"), (2, "NA2"), (4, "NA4")]
+    pts = [(0.6, "NA0p6"), (2, "NA2")]
     return trend("NAT beside an N-well: breakdown against where NAT starts",
                  "distance from the well edge to the NAT layer (µm)",
                  [(x, f"{x:g}") for x, _ in pts], fams(pts))
@@ -158,7 +158,7 @@ def gated():
 
 
 def dnw():
-    pts = [(2.6, "DT2p6"), (10, "DT10"), (20, "DT20")]
+    pts = [(2.6, "DT2p6"), (20, "DT20")]
     return trend("Deep N-wells: breakdown against the distance to the P+ "
                  "ring", "distance from the well edge to the P+ ring (µm)",
                  [(x, f"{x:g}") for x, _ in pts],
@@ -203,11 +203,11 @@ _END = (", one curve per process, with dashed lines at the published 14 V "
         "breakdown")
 ALT = {
     "surround": _BV + "the distance from the well edge to the P+ ring, "
-                "from 1 µm to 35 µm" + _END,
+                "from 1 µm to 20 µm" + _END,
     "pwell": _BV + "the distance at which the drawn P-well starts, from "
              "0 µm to 6 µm" + _END,
-    "nat": _BV + "the distance at which the NAT layer starts, from 0.6 µm "
-           "to 4 µm" + _END,
+    "nat": _BV + "the distance at which the NAT layer starts, 0.6 µm and "
+           "2 µm" + _END,
     "plates": _BV + "plate length from 1 µm to 12 µm, with separate curves "
               "for polysilicon, Metal1 and Metal2 plates" + _END,
     "rings": _BV + "the gap from the well to ring 1, from 1.4 µm to 12 µm, "
@@ -216,7 +216,7 @@ ALT = {
     "gated": _BV + "the four gated diodes, with the plate joined to the "
              "well and with the plate at 0 V" + _END,
     "dnw": _BV + "the distance from the edge of the deep N-well to the P+ "
-           "ring, from 2.6 µm to 20 µm" + _END,
+           "ring, 2.6 µm and 20 µm" + _END,
     "large": "the capacitance of the 200 µm and the 100 µm N-well against "
              "reverse voltage from 0 V to 10 V, computed from the "
              "published junction model, falling from 6.4 pF to 2.5 pF and "

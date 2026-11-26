@@ -31,27 +31,15 @@ E["NA2"] = dict(
       "foundry generates P-well wherever NAT is absent, this strip "
       "receives it, and the junction to it fails as in {NW0}.",
     c=[("NA0p6", "NAT starts at 2 µm in place of 0.6 µm"),
-       ("NA4", "NAT starts at 2 µm in place of 4 µm")],
+       ("NW0", "a strip that may hold generated P-well in place of a "
+               "drawn one")],
     m="",
     r="Near 14 V while {NA0p6} is much higher: the foundry fills a wide "
       "strip and drops a narrow one.",
     l="Equal to {NA0p6} at a high value, it cannot say whether the strip "
-      "is empty or simply too lightly doped to matter.")
-E["NA4"] = dict(
-    p="The widest strip: NAT starts 4 µm from the well, leaving room for "
-      "a full-width P-well beside the edge.",
-    w="Four micrometres is several times the minimum P-well width. Any "
-      "rule that generates P-well outside NAT fills this strip. If the "
-      "strip stays empty here, it stays empty everywhere.",
-    c=[("NA2", "NAT starts at 4 µm in place of 2 µm"),
-       ("NW0", "a strip that may hold generated P-well in place of a "
-               "drawn one")],
-    m="",
-    r="Much higher than {NT20}: no P-well is generated near NAT at all, "
-      "whatever the strip's width.",
-    l="With {NA0p6} and {NA2} it gives only three widths, so the width "
-      "at which the foundry starts to fill a strip is bracketed, not "
-      "found.")
+      "is empty or simply too lightly doped to matter. With {NA0p6} it "
+      "gives only two widths, so the width at which the foundry starts "
+      "to fill a strip is bracketed, not found.")
 E["NA0p6T10"] = dict(
     p="Repeats the ring-distance check under NAT with the P+ ring at "
       "10 µm.",
@@ -65,19 +53,6 @@ E["NA0p6T10"] = dict(
     r="Equal to {NA0p6}: a NAT region 9 µm wide is enough.",
     l="It tests the ring distance only if NAT clears the edge. "
       "Otherwise it repeats {NT10}.")
-E["NA0p6T35"] = dict(
-    p="Repeats the ring-distance check under NAT with the P+ ring at "
-      "35 µm, the widest NAT region on the die.",
-    w="NAT is 33.9 µm wide here. If the breakdown voltage is higher than "
-      "with the ring at 20 µm, the depletion region under NAT reaches "
-      "further than under a plain well, as it would in lighter silicon.",
-    c=[("NA0p6", "the ring is at 35 µm in place of 20 µm"),
-       ("NT35", "NAT over the termination zone in place of none")],
-    m="",
-    r="Equal to {NA0p6}: the default distance is enough under NAT too.",
-    l="A wide NAT region has no P+ nearby to hold the surface at the "
-      "substrate's potential, so charge on the oxide can act on it more "
-      "than on a narrow one.")
 E["NA0p6C0"] = dict(
     p="Measures the cost of a square corner when NAT, not P-well, lies "
       "beside the well.",
@@ -280,3 +255,51 @@ E["NPM12"] = dict(
       "complexity. Equal to the best single plate: it is not.",
     l="It is the only stepped plate on an N-well, so the lengths of its "
       "steps are not varied.")
+E["NM1_6b"] = dict(
+    p="A second copy of the Metal1 plate of 6 µm. It is the other half "
+      "of the ratio that decides the deep-layer question.",
+    w="The drawing is identical to {NM1_6}. A plate raises the breakdown "
+      "voltage of an edge and does nothing for a bottom. If a deep P "
+      "layer makes the bottom fail first, the plated wells equal the "
+      "plain ones; if not, they exceed them by an amount close to the "
+      "agreement limit, so one pair is not enough.",
+    c=[("NM1_6", "nothing but the position on the die"),
+       ("NT20c", "the plated half of the ratio, in place of the plain "
+                 "half")],
+    m="Swept with the same settings as {NM1_6} and in the same session.",
+    r="The mean of {NM1_6} and this copy, divided by the mean of the "
+      "three plain wells, is compared with the predicted ratio.",
+    l="Two copies give a difference, not a distribution.")
+E["NM1_6L"] = dict(
+    p="Shows whether the Metal5 lead changes a well that has a Metal1 "
+      "plate.",
+    w="The Metal1 plate lies between the lead and the silicon over the "
+      "first 6 µm and screens the surface there from the lead. Beyond the "
+      "plate's end, where the field now peaks, a lead 30 µm wide covers "
+      "the whole east side in place of a strip 6 µm wide.",
+    c=[("NM1_6", "a lead 30 µm wide in place of 6 µm"),
+       ("NT20L", "a Metal1 plate under the lead in place of none")],
+    m="",
+    r="Equal to {NM1_6}: the lead does not disturb the plate's end. "
+      "Lower: it does, on every plated structure.",
+    l="As for {NT20L}, a lead that helps is hidden by the three sides it "
+      "does not cover. The simulation has no lead, so its prediction is "
+      "that of {NM1_6}.")
+E["NM1_6C0"] = dict(
+    p="Shows whether a field plate rescues a square corner. A product's "
+      "wells must have vertices, so this is the practical form of the "
+      "corner question.",
+    w="The Metal1 plate follows the square outline and extends 6 µm "
+      "beyond each side and each 90° vertex. Over a vertex the plate "
+      "spreads the depletion region outwards in every direction at "
+      "once, which relieves exactly the crowding that makes a vertex "
+      "weak.",
+    c=[("NC0", "a Metal1 plate of 6 µm in place of none"),
+       ("NM1_6", "four 90° vertices in place of eight of 135°")],
+    m="The light of the avalanche, photographed at the current limit, "
+      "shows whether the vertices still fail first.",
+    r="Equal to {NM1_6}: under a plate the vertex no longer matters. "
+      "Close to {NC0}: the plate does not reach the vertex's weak point.",
+    l="The plate's own outline has 90° corners over the oxide, where "
+      "the field in the oxide is highest. The corner section of the "
+      "simulation assumes an arc.")

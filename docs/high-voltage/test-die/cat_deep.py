@@ -17,7 +17,7 @@ E["DT20"] = dict(
       "heavily doped junction it has, and fails first.",
     c=[("NT20", "a deep N-well in place of an N-well"),
        ("DT20b", "nothing: a second copy"),
-       ("DT10", "the ring is at 20 µm in place of 10 µm")],
+       ("DT2p6", "the ring is at 20 µm in place of 2.6 µm")],
     m="Swept again at 85 °C.",
     r="Near the published 30 V: the deep-layer picture holds. Far "
       "above it: the model value does not describe this well.",
@@ -29,7 +29,7 @@ E["DT2p6"] = dict(
     w="At 2.6 µm the ring would cut the edge's depletion region short "
       "if the edge held the voltage. If the bottom fails first, the "
       "ring's distance is irrelevant.",
-    c=[("DT10", "the ring is at 2.6 µm in place of 10 µm"),
+    c=[("DT20", "the ring is at 2.6 µm in place of 20 µm"),
        ("NT1", "the nearest ring on a deep N-well in place of on an "
                "N-well")],
     m="",
@@ -37,17 +37,6 @@ E["DT2p6"] = dict(
       "least with the ring this close.",
     l="Under assumption A a generated P-well would start 1.5 µm out, "
       "inside the ring, and would act before the ring.")
-E["DT10"] = dict(
-    p="A deep N-well with the P+ ring at 10 µm.",
-    w="The middle of the ring-distance series, between the closest ring "
-      "the rules allow and the default distance. If the edge held the "
-      "voltage, the three would differ as {NT1}, {NT10} and {NT20} do.",
-    c=[("DT2p6", "the ring is at 10 µm in place of 2.6 µm"),
-       ("DT20", "the ring is at 10 µm in place of 20 µm"),
-       ("NT10", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}.",
-    l="Redundant if the bottom limits.")
 E["DC0"] = dict(
     p="A deep N-well with square corners.",
     w="A deep implant spreads sideways more than a shallow one, so its "
@@ -127,17 +116,6 @@ E["DAo1"] = dict(
       "NAT removes it.",
     l="Whether the foundry accepts NAT here with no transistor is not "
       "known, although the rule check passes it.")
-E["DAo1T35"] = dict(
-    p="A deep N-well with NAT over its edge and the P+ ring at 35 µm.",
-    w="If {DAo1} holds much more than {DT20}, the edge is in bare "
-      "substrate and its depletion region is wide. This structure then "
-      "shows whether a ring at 20 µm was limiting it.",
-    c=[("DAo1", "the ring is at 35 µm in place of 20 µm"),
-       ("NA0p6T35", "a deep N-well with NAT over its edge in place of "
-                    "an N-well with NAT beside it")],
-    m="",
-    r="Equal to {DAo1}.",
-    l="Useful only if {DAo1} is much above {DT20}.")
 E["DAo1C0"] = dict(
     p="A deep N-well with NAT over its edge and square corners.",
     w="If NAT frees the edge, the corners become the weak points, as on "
@@ -263,9 +241,10 @@ E["CVD"] = dict(
     r="A capacitance that falls as slowly as the published model's "
       "confirms a heavily doped layer under the deep N-well.",
     l="It is the only large deep N-well, so its edge capacitance cannot "
-      "be separated from that of its bottom. It has no fill block, and "
-      "the N-well band under its contact adds capacitance at the "
-      "perimeter.")
+      "be separated from that of its bottom. By the published model the "
+      "edge is about 6 % of the total, which is the size of that "
+      "uncertainty. It has no fill block, and the N-well band under its "
+      "contact adds capacitance at the perimeter.")
 E["OPEN"] = dict(
     p="The part of every reading that is not the junction: a pad and "
       "a lead with no well.",

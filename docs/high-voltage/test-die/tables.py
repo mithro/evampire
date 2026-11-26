@@ -4,6 +4,8 @@ hvt-tab-<group>.csv   one row per structure: its drawn dimensions and the
                       centre of its pad on the die.
 hvt-tab-pads.csv      the substrate pads and the second pads.
 hvt-tab-precheck.csv  the precheck result, from silicon/hvtest/PRECHECK.txt.
+hvt-precheck-note.inc one sentence on the rerun on the committed file,
+                      from the same record.
 
 Dimensions come from silicon/hvtest/structures.json and positions from
 manifest.json. figures.py calls this module; it writes no files itself.
@@ -19,6 +21,7 @@ import tdkit
 from tdkit import num
 
 PRECHECK = tdkit.HERE.parents[2] / "silicon" / "hvtest" / "PRECHECK.txt"
+STRUCT_NAMES = set(tdkit.load()[0])
 WELL = {"nw": "N-well", "dnw": "Deep N-well", "open": "None"}
 LAYER = {"poly": "polysilicon", "m1": "Metal1", "m2": "Metal2"}
 
@@ -57,8 +60,9 @@ def note(n, p, s):
         out.append(f"Metal5 lead {num(p['lead_w'])} µm wide")
     if p["dualgate"]:
         out.append("In the 6 V area")
-    if n.endswith("b"):
-        out.append(f"Second copy of {n[:-1]}")
+    if n[-1] in "bc" and n[:-1] in STRUCT_NAMES:
+        out.append(f"{'Second' if n[-1] == 'b' else 'Third'} copy of "
+                   f"{n[:-1]}")
     return "; ".join(out) or "–"
 
 
@@ -80,11 +84,11 @@ COLUMNS = {
             ("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
             ("NAT start (µm)", lambda n, p, s: nat(p)), PLATES[1], NOTE,
             PAD],
-    "plates": [KIND] + PLATES + [PAD],
+    "plates": [KIND] + PLATES + [C, NOTE, PAD],
     "rings": [("Rings", lambda n, p, s: str(len(p["rings"]))),
               ("Gaps, innermost first (µm)", lambda n, p, s: gaps(p)),
               ("Ring width (µm)", lambda n, p, s: num(p["rings"][0][1])),
-              T, PLATES[1],
+              T, PLATES[1], NOTE,
               ("Ring 1 pad x, y (µm)", lambda n, p, s:
                "{:.0f}, {:.0f}".format(*s["aux_pad"]) if p["sense"]
                else "–"), PAD],
@@ -135,7 +139,26 @@ def tables():
                          "{:.0f}, {:.0f}".format(*s["aux_pad"])])
     files["hvt-tab-pads.csv"] = write(rows)
     files["hvt-tab-precheck.csv"] = precheck()
+    files["hvt-precheck-note.inc"] = precheck_note()
     return files
+
+
+def precheck_note():
+    """One sentence on whether the precheck was rerun on the committed
+    file, from the line PRECHECK.txt has for it (or has not)."""
+    key = "precheck rerun on the committed hvtest.oas itself:"
+    for line in PRECHECK.read_text().splitlines():
+        if line.startswith(key):
+            result = line[len(key):].strip()
+            if result.startswith("exit 0"):
+                when = result[len("exit 0"):].strip(" ()")
+                return ("The precheck was also run on the committed file "
+                        "itself" + (f", on {when}," if when else "")
+                        + " and passed.\n")
+            return ("The precheck was also run on the committed file "
+                    f"itself and did not pass: {result}.\n")
+    return ("The precheck has not yet been run again on the committed file "
+            "itself.\n")
 
 
 def precheck():

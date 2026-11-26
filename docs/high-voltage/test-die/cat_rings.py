@@ -57,8 +57,8 @@ E["NR3_1p5"] = dict(
        ("NR3_2", "gaps from 1.5 µm in place of from 2 µm")],
     m="",
     r="Above the single rings: more rings share the voltage further.",
-    l="Its P+ ring is 30 µm from the well, so it is compared with "
-      "{NT35} and not with {NT20} for ring distance.")
+    l="Its P+ ring is 30 µm from the well, further than that of "
+      "{NT20}.")
 E["NR3_2"] = dict(
     p="Three rings with gaps of 2 µm, 2.5 µm and 3 µm: the reference "
       "for the multi-ring structures.",
@@ -195,7 +195,8 @@ E["NR1S5"] = dict(
        ("NR1S8", "a gap of 5 µm in place of 8 µm"),
        ("NT5", "an N-well ring at 5 µm in place of a P+ ring")],
     m="{P5} is the main procedure here: the ring pad is held at 0 V and "
-      "its current recorded.",
+      "its current recorded. {P3} is run as well, because the floating "
+      "potential costs nothing to record and is simulated.",
     r="The well voltage at which ring current starts is what two wells "
       "5 µm apart can differ by.",
     l="Under assumption A the P-well between well and ring fails first, "
@@ -229,25 +230,45 @@ E["NR1S12"] = dict(
     l="If ring current still flows here, the die has no wider gap to "
       "show where it stops.")
 
+E["NR1_2L"] = dict(
+    p="Shows whether the Metal5 lead changes a well that has a floating "
+      "ring.",
+    w="The lead crosses the gap and the ring at the well's voltage. A "
+      "ring takes its potential from the silicon all round it, so a "
+      "conductor above one part of the gap could shift when that part "
+      "of the ring is reached. Here the lead covers the whole east side "
+      "in place of 6 µm of it.",
+    c=[("NR1_2", "a lead 30 µm wide in place of 6 µm"),
+       ("NT20L", "one floating ring under the lead in place of none")],
+    m="",
+    r="Equal to {NR1_2}: the lead does not disturb a ring. Different: "
+      "every ring structure carries that effect over 6 µm.",
+    l="The ring is one conductor, so an effect on its east side shows "
+      "all round and cannot be located. The simulation has no lead, so "
+      "its prediction is that of {NR1_2}.")
+
 # ---- gated diodes ----------------------------------------------------------
 E["NGP4"] = dict(
     p="A polysilicon plate on its own pad: the most sensitive probe of "
       "the surface beside a plain N-well.",
     w="The plate lies on 0.32 µm of trench oxide, from 1 µm inside the "
-      "well edge to 4 µm outside it. Over oxide that thin, even a "
-      "heavily doped surface inverts within the plate's range, so the "
-      "threshold can be read whether P-well or substrate lies beneath.",
+      "well edge to 4 µm outside it. Over oxide that thin, bare "
+      "substrate inverts at a few volts. P-well at 4 × 10\\ :sup:`17` "
+      "cm\\ :sup:`-3` inverts at about 31 V with the well at 0 V and "
+      "about 58 V with it at 2 V, by the threshold equation of the "
+      "method.",
     c=[("NP4", "the plate on its own pad in place of joined to the "
                "well"),
        ("NGM1", "polysilicon over 0.32 µm in place of Metal1 over "
                 "1.18 µm")],
-    m="The oxide under this plate sees the whole voltage between plate "
-      "and well, so that voltage stays within 60 V here, which is "
-      "1.8 MV/cm across 0.33 µm.",
-    r="A threshold of a few volts: bare substrate beside the well. "
-      "Several times higher: P-well.",
-    l="The thin oxide limits the voltage between plate and well more "
-      "than the Metal1 gap does.")
+    m="The plate is swept to +60 V with the well at 0 V and at 2 V, so "
+      "that a threshold over P-well falls inside the sweep. The oxide "
+      "under the plate sees the whole voltage between plate and well, "
+      "which stays within 60 V: 1.8 MV/cm across 0.33 µm.",
+    r="A threshold of a few volts: bare substrate beside the well. A "
+      "threshold near 30 V with the well at 0 V: P-well.",
+    l="The threshold over P-well lies close to the 60 V limit once the "
+      "well is at 2 V, so the second point may be out of reach.")
 E["NGM1"] = dict(
     p="A Metal1 plate on its own pad beside a plain N-well: {NM1_6} "
       "with the plate under separate control.",
