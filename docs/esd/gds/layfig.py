@@ -290,10 +290,11 @@ class Fig:
         out = []
         for i, (kind, style, name) in enumerate(items):
             cx, cy = lefts[i % per_row], y + (i // per_row) * 24
-            if kind == "box":
+            if kind in ("box", "outline"):
+                d = ' stroke-dasharray="5,4"' if kind == "box" else ""
                 out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
                            f'height="14" fill="none" stroke="{style}" '
-                           'stroke-width="1.4" stroke-dasharray="5,4"/>')
+                           f'stroke-width="2"{d}/>')
             elif kind == "crop":
                 out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 26:.1f}" '
                            f'y2="{cy - 5}" stroke="{INK}" stroke-width="1.3" '

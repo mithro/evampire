@@ -70,10 +70,10 @@ def _panel(window, title):
     return f
 
 
-def _inside(f, text, gx, gy):
-    """Text inside a panel, starting at a layout point."""
+def _inside(f, text, gx, gy, row):
+    """Text inside a panel, starting at a layout point, tied to a row."""
     x, y = f.px(gx, gy)
-    f.text(x, y, text, anchor="start")
+    f.label(text, (row, gy + 1.25), (x + 44, y), anchor="start")
 
 
 def silicide_block():
@@ -82,14 +82,14 @@ def silicide_block():
     a.dim((15.67, 82.9), (19.45, 82.9), "blocked drain: 3.78 µm")
     a.dim((20.11, 82.9), (23.89, 82.9), "blocked drain: 3.78 µm")
     a.dim((14.52, 76.2), (15.67, 76.2), "gate length: 1.15 µm", side="below")
-    _inside(a, "drain contacts", 20.75, 75.0)
-    _inside(a, "source contacts, not blocked", 13.62, 75.9)
+    _inside(a, "drain contacts", 20.95, 75.0, 19.78)
+    _inside(a, "source contacts, not blocked", 13.62, 76.3, 14.12)
     b = _panel((10.2, 144.9, 23.8, 154.1), "(b) PMOS output driver, blocked")
     b.dim((12.295, 153.2), (15.075, 153.2), "blocked drain: 2.78 µm")
     b.dim((15.735, 153.2), (18.515, 153.2), "blocked drain: 2.78 µm")
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
-    _inside(b, "drain contacts", 16.4, 145.3)
-    _inside(b, "source contacts, not blocked", 10.72, 146.2)
+    _inside(b, "drain contacts", 16.58, 145.3, 15.405)
+    _inside(b, "source contacts, not blocked", 10.72, 146.6, 11.22)
     c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, not blocked")
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
     c.dim((27.87, 214.4), (28.39, 214.4), "0.52 µm between gates",

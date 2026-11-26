@@ -13,7 +13,7 @@ from layfig import CLAMP, DVDD, DVSS, HOT, INK, Fig
 
 CELL = "dvdd"
 PITCH = 75.0   # width of a pad cell: the next cell along the ring
-INVERTERS = (16.8, 196.6, 58.6, 213.4)
+INVERTERS = (15.8, 195.4, 59.6, 214.6)
 
 
 def clamp():
@@ -27,6 +27,8 @@ def clamp():
     x, y = f.px(37.5, 32)
     f.text(x, y - 4, "Bond pad", weight="bold")
     f.text(x, y + 14, "DVDD")
+    f.box(INVERTERS, colour=CLAMP, dash="5,4", width=2.0)
+    f.note(CLAMP, "the inverters", kind="box")
     top = f.oy - 34
     f.label("Clamp transistor: 4 blocks of 20\nfingers, each finger 50 µm wide",
             (37.5, 116), (f.px(0, 131)[0], top), colour=CLAMP, weight="bold")
@@ -39,8 +41,8 @@ def clamp():
     bot = f.oy + f.dh + 30
     f.label("Guard rings round the\nclamp transistor", (67.6, 110),
             (f.px(0, 122)[0], bot), also=[(65.4, 134)])
-    f.label("3 inverters", (55, 209.3), (f.px(0, 205)[0], bot), colour=CLAMP,
-            weight="bold", also=[(44, 200.8)])
+    f.label("3 inverters", (59.6, 205), (f.px(0, 205)[0], bot), colour=CLAMP,
+            weight="bold")
     f.label("P+ ties to\nthe substrate", (67, 250), (f.px(0, 250)[0], bot))
     f.label("4 diodes from\nDVSS to DVDD", (56, 305.7),
             (f.px(0, 305.7)[0], bot))
@@ -112,12 +114,14 @@ def ring():
     # Metal 2 joins the DVSS stripes to the DVSS bond pad.
     link = gdskit.net("dvss", "DVSS")["metal2"].intersection(
         box(0, 60, 75, 76))
-    f.geom(translate(link, xoff=PITCH), "dvsslink", opacity=0.4)
+    f.geom(translate(link, xoff=PITCH), "dvsslink", opacity=0.8)
     pad = gdskit.net("bi_t", "PAD")
     top_metal = pad["metal5"].union(pad["metal2"].intersection(
         box(0, 0, 75, 201))).buffer(1.5).buffer(-1.5)
     f.geom(top_metal, "padtop", opacity=0.7)
     f.geom(pad["comp"], "paddrain")
+    f.outline(translate(fet.buffer(0.3).buffer(-0.3), xoff=PITCH), CLAMP,
+              width=3.0)
     x0, y0 = f.px(PITCH, 0)
     x1, _ = f.px(PITCH, 222)
     f.over.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" '
@@ -127,20 +131,20 @@ def ring():
         x, y = f.px(gx, 32)
         f.text(x, y - 4, f"{name} bond pad", weight="bold")
         f.text(x, y + 14, kind)
-    x, y = f.px(8, 95)
+    x, y = f.px(66.5, 95)
     f.text(x, y + 5, "NMOS drains")
-    x, y = f.px(8, 166)
+    x, y = f.px(69.5, 166)
     f.text(x, y + 5, "PMOS drains")
     x, y = f.px(PITCH, 0)
     f.text(x + 6, y - 6, "cell boundary", anchor="start")
     # The current: along the pad's metal, down the DVDD rail, through the
     # clamp transistor under the stripes, and along DVSS to its pad.
-    y_rail, y_out = 181.5, 100.0
+    y_rail, y_out = 181.5, 70.0
     f.flow([(37.5, 64), (37.5, y_rail), (PITCH + 37.5, y_rail)], width=5.0,
            head=False)
     f.flow([(PITCH + 37.5, y_rail), (PITCH + 37.5, y_out)], width=5.0,
            dash="9,6", head=False, key="current under the stripes")
-    f.flow([(PITCH + 37.5, y_out), (PITCH + 37.5, 60)], width=5.0)
+    f.flow([(PITCH + 37.5, y_out), (PITCH + 37.5, 56)], width=5.0)
     top = f.oy - 38
     f.label("1  Positive pulse: from the bond pad\nalong metal 2 to the "
             "PMOS drains", (37.5, 118), (f.px(0, 84)[0], top), colour=HOT,
@@ -149,7 +153,7 @@ def ring():
             "stripes over it", (37.5, y_rail), (f.px(0, 190)[0], top),
             colour=HOT, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("5  DVSS stripes, then metal 2,\nto the DVSS bond pad", (PITCH + 37.5, 82),
+    f.label("5  DVSS stripes, then metal 2,\nto the DVSS bond pad", (PITCH + 37.5, 66),
             (f.px(0, 56)[0], bot), colour=HOT, weight="bold")
     f.label("4  Clamp transistor (4 blocks), under the stripes:\ndrains "
             "on DVDD, sources on DVSS", (PITCH + 37.5, 140),

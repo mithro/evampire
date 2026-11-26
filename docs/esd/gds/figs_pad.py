@@ -42,8 +42,8 @@ def cell():
             colour=HOT, weight="bold")
     f.label("PMOS output\ndrivers", (30, 166), (f.px(0, 166)[0], top),
             colour=HOT, weight="bold")
-    f.label("Pre-drivers", (2.0, 222), (f.px(0, 222)[0], top + 17))
-    f.label("Output signal\nbuffers", (3.6, 254), (f.px(0, 250)[0], top))
+    f.label("Pre-\ndrivers", (2.0, 222), (f.px(0, 216)[0], top))
+    f.label("Output signal\nbuffers", (3.6, 256), (f.px(0, 256)[0], top))
     f.label("Pull-up and pull-\ndown resistors", (3.8, 290),
             (f.px(0, 302)[0], top))
     bot = f.oy + f.dh + 30
@@ -53,8 +53,8 @@ def cell():
             (f.px(0, 280)[0], bot), colour=SECONDARY, weight="bold")
     f.label("Input buffer\nand logic", (71.8, 335), (f.px(0, 335)[0], bot))
     f.note(HOT, "primary protection")
-    f.note(SECONDARY, "secondary protection")
-    f.note(GREY, "block of the cell", kind="box")
+    f.note(SECONDARY, "secondary protection", kind="box")
+    f.note(GREY, "other block of the cell", kind="box")
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f
@@ -84,11 +84,13 @@ def pad_net():
     f.label("Metal 2 wire, 2 µm wide", (37.5, 232), (f.px(0, 232)[0], top + 17),
             colour=HOT, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("Gate", (59.68, 104), (f.px(0, 104)[0], bot))
+    f.label("Gate, a polysilicon strip", (59.68, 104), (f.px(0, 98)[0], bot))
     f.label("Metal 2 joining the drains\nof both drivers", (62, 126),
             (f.px(0, 150)[0], bot), colour=HOT, weight="bold")
     f.label("4 secondary protection\nresistors", (43.4, 272.1),
             (f.px(0, 258)[0], bot), colour=SECONDARY, weight="bold")
+    f.note(HOT, "on the PAD net")
+    f.note(SECONDARY, "secondary protection")
     return f
 
 
@@ -162,8 +164,8 @@ def secondary():
     f.geom(metal, "innet", opacity=0.3)
     f.outline(metal, "#12305f", width=2.0)
     # Outline the diode strips, which the metal covers.
-    f.outline(inn["comp"].intersection(lay["pplus"]), "#1d3f73", width=2.4)
-    f.outline(inn["comp"].intersection(lay["nplus"]), "#8a4d0f", width=2.4)
+    f.outline(inn["comp"].intersection(lay["pplus"]), DVDD, width=2.6)
+    f.outline(inn["comp"].intersection(lay["nplus"]), DVSS, width=2.6)
     y = f.px(37.5, 0)[1] + 5
     f.label("PAD, on a metal 2\nwire from the\ndrivers", (37.5, 265.4),
             (f.ox - 12, y - 17), anchor="end", colour=HOT, weight="bold",
@@ -181,10 +183,13 @@ def secondary():
     bot = f.oy + f.dh + 30
     f.label("2 P+ diodes, 20 µm × 1 µm each, in an\nN-well tied to DVDD "
             "by the N+ ring", (46.5, 283.2), (f.px(0, 278)[0], bot),
-            colour=DVDD, weight="bold", also=[(48.9, 285.5)])
+            colour=DVDD, weight="bold", also=[(46.5, 287.87)])
     f.label("2 N+ diodes, 20 µm × 1 µm each, in substrate\ntied to DVSS "
             "by the P+ ring", (46.5, 304.05), (f.px(0, 304)[0], bot),
-            colour=DVSS, weight="bold", also=[(48.9, 301.5)])
+            colour=DVSS, weight="bold", also=[(46.5, 299.38)])
+    f.note("#12305f", "edge of the protected net's metal", kind="outline")
+    f.note(DVDD, "P+ diode strip, under the metal", kind="outline")
+    f.note(DVSS, "N+ diode strip, under the metal", kind="outline")
     return f
 
 

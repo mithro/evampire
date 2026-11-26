@@ -258,7 +258,7 @@ four diodes from DVSS to DVDD and four capacitors between the rails.
 The clamp transistor has no silicide block
 (:numref:`fig-esd-gds-clamp-fingers`). Its drains and sources are strips
 0.52 µm wide between gates 0.7 µm long, each with one row of contacts
-directly beside the gates. The drains connect to DVDD and the sources to
+0.15 µm from the gates on either side. The drains connect to DVDD and the sources to
 DVSS, alternately. One bar of polysilicon joins the 20 gates of a block.
 
 The difference from the output drivers follows from how each conducts.
@@ -276,7 +276,7 @@ the silicide block is for (:ref:`esd-io-cells`).
          contacts, 0.52 µm wide and separated by gates 0.7 µm long. A
          polysilicon bar along
          the top joins the 20 gates of a block, and a P+ guard ring on DVSS
-         runs round the outside. Contacts stand right beside each gate,
+         runs round the outside. Contacts stand 0.15 µm from each gate,
          with no silicide block.
    :width: 100%
 
@@ -286,10 +286,11 @@ the silicide block is for (:ref:`esd-io-cells`).
 Path across the ring
 --------------------
 
-Metal 5 crosses every pad cell in stripes, in the direction of the cell's
-75 µm width. Each stripe is in the same place in every cell, so the
-stripes of neighbouring cells join into rails that run round the chip.
-Most of them are DVDD or DVSS (:numref:`fig-esd-gds-ring`).
+Metal 3, metal 4 and metal 5 cross every pad cell in stripes, one above
+another, in the direction of the cell's 75 µm width. Each stripe is in the
+same place in every cell, so the stripes of neighbouring cells join into
+rails that run round the chip. Most of them are DVDD or DVSS
+(:numref:`fig-esd-gds-ring`).
 
 A positive discharge from PAD to DVSS uses those rails
 (:numref:`tab-esd-paths`). :numref:`fig-esd-gds-ring` follows it through a
@@ -301,7 +302,7 @@ bidirectional pad and the DVSS supply pad beside it ([ESD-DVSS-GDS]_):
 #. Along the DVDD rail into the supply pad.
 #. Through the clamp transistor, whose drains connect to the DVDD stripes
    and whose sources connect to the DVSS stripes.
-#. Along the DVSS stripes to the DVSS bond pad.
+#. Along the DVSS stripes, and then metal 2, to the DVSS bond pad.
 
 The supply pad need not be the neighbouring cell. Each cell between the
 two adds 75 µm of rail to the path, and that rail's resistance adds to
@@ -310,15 +311,16 @@ the voltage at the pad (:doc:`results-hbm`).
 .. figure:: figures/gds-ring.svg
    :name: fig-esd-gds-ring
    :alt: The pad ends of a bidirectional pad cell, above, and a DVSS supply
-         pad cell, below, side by side as on the pad ring. Metal 5 stripes
-         cross both cells, some DVDD in magenta and some DVSS in green,
+         pad cell, below, side by side as on the pad ring. Stripes of metal
+         3 to 5 cross both cells, some DVDD in magenta and some DVSS in green,
          each continuing from one cell into the other. One red arrow marks
          the current. Step 1, from the PAD bond pad along metal 2 to the
          PMOS drains. Step 2, through the PMOS drain diode onto the DVDD
          stripes above. Step 3, along the DVDD rail into the supply pad.
-         Step 4, through the clamp transistor, four orange blocks, from the
-         DVDD stripes to the DVSS stripes. Step 5, along the DVSS stripes to
-         the DVSS bond pad.
+         Step 4, drawn dashed, through the clamp transistor, four orange
+         blocks under the stripes, with drains on DVDD and sources on DVSS.
+         Step 5, along the DVSS stripes and then metal 2 to the DVSS bond
+         pad.
    :width: 100%
 
    A positive discharge from PAD to DVSS, through gf180mcu_fd_io__bi_t and
