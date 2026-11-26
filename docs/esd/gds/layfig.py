@@ -285,7 +285,8 @@ class Fig:
                 kind = "contact" if k == "contact" else "swatch"
                 items.append((kind, (fill, stroke, dash, self.alpha[k]), name))
         items += [(kind, colour, text) for kind, colour, text in self.notes]
-        widths = [26 + 6 + len(name) * FONT * 0.56 + 22 for _, _, name in items]
+        widths = [(0 if kind == "plain" else 32) + len(name) * FONT * 0.56 + 22
+                  for kind, _, name in items]
         # As many columns as fit, each as wide as its widest entry.
         for per_row in range(len(items), 0, -1):
             cols = [max(widths[i::per_row]) for i in range(per_row)]
@@ -295,6 +296,10 @@ class Fig:
         out = []
         for i, (kind, style, name) in enumerate(items):
             cx, cy = lefts[i % per_row], y + (i // per_row) * 24
+            if kind == "plain":   # a remark, with no swatch
+                out.append(f'<text x="{cx:.1f}" y="{cy}" font-size="{FONT}" '
+                           f'fill="{INK}">{name}</text>')
+                continue
             if kind in ("box", "outline"):
                 d = ' stroke-dasharray="5,4"' if kind == "box" else ""
                 out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '

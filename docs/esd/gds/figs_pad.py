@@ -144,8 +144,9 @@ def paths():
     f.label("P+ guard ring,\non DVSS", (64.3, 80), (f.ox, bot), anchor="start",
             colour=DVSS, weight="bold")
     f.label("Positive pulse above 10.7 V:\nsnapback from each NMOS drain\n"
-            "to the sources beside it, on DVSS", (52.0, 85),
-            (f.px(0, 110)[0], bot), colour=SNAPBACK, weight="bold")
+            "to the sources beside it, on DVSS", (59.0, 95),
+            (f.px(0, 110)[0], bot), colour=SNAPBACK, weight="bold",
+            elbow=(f.px(0, 95)[0], f.oy + f.dh + 12))
     f.label("N-well, seen between the\ndrains and its guard ring", (65.2, 150),
             (f.px(0, 166)[0], bot))
     f.label("N+ guard ring,\non DVDD", (67.3, 188), (f.ox + f.dw, bot),
@@ -193,6 +194,8 @@ def secondary():
             colour=SECONDARY, weight="bold", also=[(46.5, 299.38)])
     f.note("#12305f", "metal edge, with openings", kind="outline")
     f.note(INK, "diode strip, under metal", kind="outline")
+    f.note(INK, "metal is translucent: layers under it look darker",
+           kind="plain")
     f.note(HOT, "on the PAD net")
     f.note(SECONDARY, "on the protected net")
 
