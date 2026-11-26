@@ -131,7 +131,8 @@ radius leaves eight vertices of 135° whose spacing grows with the radius.
 The die tests the vertex angle and the cut length, not a smooth radius.
 
 A rounder well cannot be drawn. The foundry's rule check accepts only
-edges at multiples of 45° on the well, active and implant layers
+edges at multiples of 45° on the well, active and implant layers. The
+check is in the file ``klayout/drc/rule_decks/geom.rb`` of the rule decks
 [HV-GF180-PV]_. No smoother corner can serve as a reference in this
 process, and a high-voltage island in a product would have the same 135°
 vertices. The die therefore measures the corner that a product would
@@ -435,8 +436,9 @@ N-well between the well and the P+ ring (:numref:`fig-hvt-rings`,
 to 3 µm, which finds the gap at which the ring starts to take voltage.
 Others have three and five rings with gaps that widen outwards, rings
 1 µm and 3 µm wide, and three rings under a Metal1 plate. Six structures
-bring ring 1 out to a second pad. Three of them have a single ring 3 µm
-wide at 5 µm, 8 µm and 12 µm. Held at 0 V through its pad, such a ring is
+bring ring 1 out to a second pad. Five of them have a single ring of the
+same width, at 2 µm, 3 µm, 5 µm, 8 µm and 12 µm. Held at 0 V through its
+pad, such a ring is
 a neighbouring well, and the three give the spacing that a well at the
 working voltage needs from a well at another voltage. The P+ ring is
 at least 15 µm beyond the last ring, so that the rings and not the P+ ring

@@ -260,9 +260,8 @@ voltage is too low, for a well that faces only the light substrate.
    * - Capacitance, N-well to substrate
      - 1.4914 × 10\ :sup:`-4` F/m² at zero bias, grading 0.305
      - [HV-GF180-MODELS]_
-     - With the deep P layer under the N-well: 0.96 to 1.03 of the model
-       from 0 V to 10 V. Without it: 1.00 at 0 V, 0.90 at 5 V and 0.83 at
-       10 V
+     - Within 4 % from 0 V to 10 V with the deep P layer under the
+       N-well, and not without it (:numref:`tab-hvt-mc-cap`)
    * - Sheet resistance of the N-well
      - 800 Ω, 1000 Ω and 1200 Ω per square
      - [HV-GF180-EP-5-1]_
@@ -316,9 +315,26 @@ N-well only. Under D it lies under the whole wafer, N-wells included.
 Within this model D is the better supported. The profiles were fitted
 with the layer present, and the N-well's simulated capacitance then stays
 within 4 % of the published model from 0 V to 10 V. Without the layer
-under the N-well it falls too fast, to 0.83 of the model at 10 V
-(:numref:`tab-hvt-anchors`). Any substrate whose doping rises with depth
-would have the same effect, so the evidence is for heavier doping under
+under the N-well it falls too fast, and the gap widens with voltage
+(:numref:`tab-hvt-mc-cap`). These values, and those of the next two
+tables, come from the final review and are not yet in a simulation record
+(:numref:`tab-hvt-mc-source`).
+
+.. csv-table:: Simulated N-well capacitance as a fraction of the
+               published model, with and without the deep P layer under
+               the N-well
+   :name: tab-hvt-mc-cap
+   :file: hvt-tab-mc-cap.csv
+   :header-rows: 1
+
+.. csv-table:: Origin of the values taken from the final review
+   :name: tab-hvt-mc-source
+   :file: hvt-tab-mc-source.csv
+   :header-rows: 1
+   :widths: 20 80
+
+Capacitance alone does not prove a layer. Any substrate whose doping
+rises with depth would have the same effect, so the evidence is for heavier doping under
 the N-well and not for one particular layer. The capacitance wells measure
 it (:ref:`hv-test-method`).
 
@@ -326,28 +342,16 @@ Under D a plain N-well cannot hold more than its flat bottom does
 (:numref:`tab-hvt-pred-key`). How firm that ceiling is depends on the
 depth of the layer (:numref:`tab-hvt-cap-sens`). The N-well capacitance
 fixes the depth to about a quarter of a micrometre, but only if the
-published model is itself right to a few per cent. The ceiling is
-therefore about 55 V to 75 V, before the 10 % to 25 % by which the
+published model is itself right to a few per cent. The last row of the
+table gives the range that follows, before the 10 % to 25 % by which the
 simulation runs high.
 
-.. list-table:: Simulated ceiling of a plain N-well under D against the
+.. csv-table:: Simulated ceiling of a plain N-well under D against the
                depth of the deep P layer
    :name: tab-hvt-cap-sens
+   :file: hvt-tab-mc-ceiling.csv
    :header-rows: 1
    :widths: 60 40
-
-   * - Change to the assumed profile
-     - Breakdown of the flat bottom (V)
-   * - Shape of the layer changed, deep N-well fixed
-     - 58 to 64
-   * - Layer and deep N-well both 1.0 µm shallower
-     - 41
-   * - Both 0.25 µm shallower
-     - 58
-   * - Both 0.25 µm deeper
-     - 69
-   * - Both 1.0 µm deeper
-     - 84
 
 A process name joins the two: BL is assumption B with the layer under
 deep N-well only. A further letter marks a member of the family, such as
@@ -456,7 +460,10 @@ is the band widened by 30 % downwards and 15 % upwards, lopsided because
 the simulation runs high. The table also names each structure's reference
 and gives the predicted ratio of the two breakdown voltages, which is the
 main comparison of :ref:`hv-test-method`. A ratio is formed from the
-nominal process of the family. The last column lists what the simulation
+nominal process of the family. The reference is NT20, NW0 under
+assumption A, and DT20 for a deep N-well. Under An the plates over NAT
+take NA0p6 instead: NT20 has no NAT and is limited by P-well under An, so
+it is not the plain well that those plates improve on. The last column lists what the simulation
 left open.
 
 .. csv-table:: Band and agreement range of each prediction
@@ -529,12 +536,17 @@ Only under BL do the terminations differ, in ways the die can test:
 
 Sharp corners are the exception to these results. Their sections, at a
 radius of 1 µm, stopped converging before breakdown, and the tables give
-them as lower bounds. They do not show that a sharp corner is safe. For
-NC0 under BL the ionisation integral had reached 0.694 at 36 V and was
-rising by 0.035 per volt. Extended in a straight line, that reaches 1 near
-46 V, below 57 V. This is an extrapolation of a sweep that did not
-converge, not a result. The same pattern holds under BD and BLq, and for
-NA0p6C0.
+them as lower bounds. They do not show that a sharp corner is safe. When
+the sweep of NC0 stopped, its ionisation integral was still rising
+steadily. Extended in a straight line, it reaches 1 below 57 V
+(:numref:`tab-hvt-mc-corner`). This is an extrapolation of a sweep that
+did not converge, not a result.
+
+.. csv-table:: Extrapolation of the unconverged sharp-corner section
+   :name: tab-hvt-mc-corner
+   :file: hvt-tab-mc-corner.csv
+   :header-rows: 1
+   :widths: 55 45
 
 Other cases have no result. The structures with three or more rings are
 not finished, and several runs failed outright

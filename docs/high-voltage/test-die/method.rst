@@ -313,8 +313,9 @@ of CVN2, so the two together also show what the NAT layer changes.
 The sweep also shows whether a heavily doped P layer lies a few
 micrometres under the N-well. Such a layer stops the depletion region from
 spreading, so the capacitance falls more slowly with voltage than over
-light substrate alone. In the simulation the two cases already differ by
-7 % at 5 V and by 24 % at 10 V. CVN and CVN2 therefore answer the question
+light substrate alone. In the simulation the two cases already differ
+measurably at 5 V and by about a quarter at 10 V
+(:numref:`tab-hvt-mc-cap`). CVN and CVN2 therefore answer the question
 below 10 V, even if P-well surrounds them and they break down early.
 CVNA and CVNA2 extend the sweep to higher voltages if NAT clears their
 edges, where the capacitance stops falling altogether once the depletion
@@ -708,8 +709,7 @@ large wells answers it in every case.
      - Not possible
    * - Capacitance of CVN and CVN2 from 0 V to 10 V
      - Falls as over light substrate
-     - Falls more slowly: 7 % higher at 5 V and 24 % higher at 10 V in
-       the simulation
+     - Falls more slowly, by the amounts of :numref:`tab-hvt-mc-cap`
    * - Capacitance of CVNA and CVNA2 beyond about 15 V
      - Keeps falling
      - Stops falling at the depth of the layer
@@ -733,7 +733,9 @@ two ways (:numref:`tab-hvt-pred-band`).
 The first and main comparison is a ratio. The measured breakdown voltage
 of a structure is divided by that of its reference structure on the same
 die: NT20 for an N-well whose edge is clear of P-well, NW0 for an N-well
-limited by P-well, and DT20 for a deep N-well. The same ratio is formed
+limited by P-well, and DT20 for a deep N-well. If NAT is what clears the
+edge, the plates over NAT are divided by NA0p6, the plain well under NAT,
+because NT20 is then limited by P-well. The same ratio is formed
 from the predictions. The structure agrees when the two ratios are within
 15 % of each other. A ratio cancels most of the error of the ionisation
 coefficients, which raises or lowers every prediction together.
