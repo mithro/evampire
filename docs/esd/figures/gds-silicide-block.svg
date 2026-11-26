@@ -22,14 +22,14 @@
 <line x1="264.0" y1="122.1" x2="274.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
 <line x1="264.0" y1="235.5" x2="274.0" y2="235.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="264.0" y1="235.5" x2="274.0" y2="235.5" stroke="#222222" stroke-width="1.5"/>
-<text x="261.0" y="183.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 3.78 µm</text>
+<text x="261.0" y="183.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 3.78 µm</text>
 <line x1="269.0" y1="255.3" x2="269.0" y2="368.7" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="269.0" y1="255.3" x2="269.0" y2="368.7" stroke="#222222" stroke-width="1.5"/>
 <line x1="264.0" y1="255.3" x2="274.0" y2="255.3" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="264.0" y1="255.3" x2="274.0" y2="255.3" stroke="#222222" stroke-width="1.5"/>
 <line x1="264.0" y1="368.7" x2="274.0" y2="368.7" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="264.0" y1="368.7" x2="274.0" y2="368.7" stroke="#222222" stroke-width="1.5"/>
-<text x="261.0" y="317.0" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 3.78 µm</text>
+<text x="261.0" y="317.0" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 3.78 µm</text>
 <line x1="68.0" y1="87.6" x2="68.0" y2="122.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="68.0" y1="87.6" x2="68.0" y2="122.1" stroke="#222222" stroke-width="1.5"/>
 <line x1="63.0" y1="87.6" x2="73.0" y2="87.6" stroke="#fff" stroke-width="4" opacity="0.85"/>
@@ -68,14 +68,14 @@
 <line x1="264.0" y1="110.9" x2="274.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
 <line x1="264.0" y1="194.2" x2="274.0" y2="194.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="264.0" y1="194.2" x2="274.0" y2="194.2" stroke="#222222" stroke-width="1.5"/>
-<text x="261.0" y="157.6" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 2.78 µm</text>
+<text x="261.0" y="157.6" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 2.78 µm</text>
 <line x1="269.0" y1="214.1" x2="269.0" y2="297.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="269.0" y1="214.1" x2="269.0" y2="297.5" stroke="#222222" stroke-width="1.5"/>
 <line x1="264.0" y1="214.1" x2="274.0" y2="214.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="264.0" y1="214.1" x2="274.0" y2="214.1" stroke="#222222" stroke-width="1.5"/>
 <line x1="264.0" y1="297.5" x2="274.0" y2="297.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="264.0" y1="297.5" x2="274.0" y2="297.5" stroke="#222222" stroke-width="1.5"/>
-<text x="261.0" y="260.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">silicide-blocked drain: 2.78 µm</text>
+<text x="261.0" y="260.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 2.78 µm</text>
 <line x1="68.0" y1="89.9" x2="68.0" y2="110.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
 <line x1="68.0" y1="89.9" x2="68.0" y2="110.9" stroke="#222222" stroke-width="1.5"/>
 <line x1="63.0" y1="89.9" x2="73.0" y2="89.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
@@ -119,7 +119,7 @@
 <polyline points="158.0,471.0 158.0,420.0" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="158.0" cy="420.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="158.0" y="486.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Contacts beside every gate, on strips</text>
-<text x="158.0" y="502.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">0.52 µm wide, all of it silicided</text>
+<text x="158.0" y="502.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">0.52 µm wide, all silicided</text>
 </g>
 <rect x="20.0" y="524.0" width="30.0" height="6" fill="#222222"/>
 <text x="58.0" y="532.0" font-size="14" fill="#222222">1 µm, all panels</text>
