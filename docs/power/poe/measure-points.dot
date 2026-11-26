@@ -17,7 +17,7 @@ digraph measure_points {
 
     bus [pos="3.6,2.0!", label="Internal power bus", width=4.8, height=0.4,
          fillcolor="#dbe8f5", style="filled,bold"];
-    mb  [pos="6.6,2.0!", label="V, I, limit", width=0.9, height=0.4];
+    mb  [pos="6.85,2.0!", label="V, I, limit", width=0.9, height=0.4];
     pa  [pos="1.2,3.7!", label="Ethernet A", fillcolor="#ffffff", width=1.0, height=0.4];
     pb  [pos="3.6,3.7!", label="Ethernet B", fillcolor="#ffffff", width=1.0, height=0.4];
     u1  [pos="6.0,3.7!", label="USB-C ports", fillcolor="#ffffff", width=1.0, height=0.4];
@@ -30,6 +30,7 @@ digraph measure_points {
     pa -> ma [dir=both, penwidth=2.2]; ma -> bus [dir=both, penwidth=2.2];
     pb -> mb2 [dir=both, penwidth=2.2]; mb2 -> bus [dir=both, penwidth=2.2];
     u1 -> mu [dir=both, penwidth=2.2]; mu -> bus [dir=both, penwidth=2.2];
+    bus -> mb [dir=both, penwidth=2.2];
     mb -> sw [style=dashed, dir=both];
     bus -> sw [style=invis];
     n [pos="3.6,1.35!", shape=plaintext, style="", width=4.6, height=0.3,
