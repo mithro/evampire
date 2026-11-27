@@ -6,8 +6,9 @@ Drawn P-well
 A drawn P-well stands in for the P-well that the foundry may generate, at a
 distance that the layout sets.
 
-The group has 4 structures: :ref:`NW0 <hvt-s-nw0>`, :ref:`NW1p5
-<hvt-s-nw1p5>`, :ref:`NW3 <hvt-s-nw3>`, :ref:`NW6 <hvt-s-nw6>`.
+The group has 5 structures: :ref:`NW0b <hvt-s-nw0b>`, :ref:`NW0
+<hvt-s-nw0>`, :ref:`NW1p5 <hvt-s-nw1p5>`, :ref:`NW3 <hvt-s-nw3>`, :ref:`NW6
+<hvt-s-nw6>`.
 
 Mechanism
 ---------
@@ -34,7 +35,7 @@ the breakdown voltage rises with the distance and reaches the :ref:`NT20
          drawn P-well starts, from 0 µm to 6 µm, one curve per process, with
          dashed lines at the published 14 V and at 57 V and an open triangle
          where a sweep ended without breakdown. The structures of the group
-         are NW0, NW1p5, NW3, NW6. The plotted values are those of the
+         are NW0b, NW0, NW1p5, NW3, NW6. The plotted values are those of the
          tables in the entries.
 
    Trend that the simulation predicts across the group.
@@ -42,9 +43,85 @@ the breakdown voltage rises with the distance and reaches the :ref:`NT20
 Limits of the group
 -------------------
 
-Under assumption A the group shows nothing beyond :ref:`NT20 <hvt-s-nt20>`.
-The doping of the drawn P-well is not published, so the distance at which it
-stops mattering is known only from the simulation's assumed profile.
+Under assumption A the group shows nothing beyond :ref:`NT20 <hvt-s-nt20>`,
+and :ref:`NW0 <hvt-s-nw0>` with its copy :ref:`NW0b <hvt-s-nw0b>` becomes
+the reference that every N-well is divided by. The doping of the drawn
+P-well is not published, so the distance at which it stops mattering is
+known only from the simulation's assumed profile.
+
+.. _hvt-s-nw0b:
+
+NW0b
+----
+
+.. figure:: hvt-s-NW0b.svg
+   :name: fig-hvt-s-nw0b
+   :alt: Plan view and cross-section of NW0b: an N-well 30 µm across
+         with corners cut 4.7 µm along each side, an N+ contact ring inside
+         its edge and a P+ ring 20 µm outside it; drawn P-well from 0 µm. A
+         Metal5 lead joins the well to a pad at 890, 895 µm.
+
+   NW0b in plan view and in cross-section.
+
+.. list-table:: NW0b: drawn parameters and position
+   :name: tab-hvt-s-nw0b
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Parameter
+     - Value
+   * - Well
+     - N-well
+   * - Side of the well
+     - 30 µm
+   * - Corners
+     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
+   * - Area and perimeter
+     - 856 µm² and 109.0 µm
+   * - N+ contact ring
+     - 2 µm wide, 2 µm inside the well edge
+   * - P+ ring
+     - 2 µm wide, 20 µm from the well edge
+   * - Drawn P-well
+     - From 0 µm outside the well edge to 1 µm beyond the P+ ring
+   * - Fill block
+     - Whole structure
+   * - Metal5 lead
+     - 6 µm wide
+   * - Site
+     - Column 3 from the west, row 5 from the south
+   * - Well pad, centre x, y
+     - 890, 895 µm
+   * - Substrate
+     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
+
+Purpose
+   A second copy of :ref:`NW0 <hvt-s-nw0>`, the reference of the ratios when
+   P-well lies against every N-well. :numref:`fig-hvt-s-nw0b` shows the
+   structure and :numref:`tab-hvt-s-nw0b` lists what is drawn.
+
+How it works
+   The drawing is identical to :ref:`NW0 <hvt-s-nw0>`. Under assumption A
+   every N-well structure is divided by the mean of :ref:`NW0 <hvt-s-nw0>`
+   and this copy, so the reference carries the spread of two sites, not one.
+
+Compared with
+   * :ref:`NW0 <hvt-s-nw0>`: nothing but the position on the die.
+   * :ref:`NT20b <hvt-s-nt20b>`: the same check on a plain well.
+
+Measurement
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 895 µm.
+   Swept with the same settings as :ref:`NW0 <hvt-s-nw0>` and in the same
+   session.
+
+Predicted
+   Not yet simulated: the results file has no entry for this structure. The
+   mean of :ref:`NW0 <hvt-s-nw0>` and this copy is the reference under A.
+   Under B it is not a reference: :ref:`NW0 <hvt-s-nw0>` then lies in the
+   other regime from the wells it would divide.
+
+Limits
+   Two copies give a difference, not a distribution.
 
 .. _hvt-s-nw0:
 
@@ -56,7 +133,7 @@ NW0
    :alt: Plan view and cross-section of NW0: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 0 µm. A
-         Metal5 lead joins the well to a pad at 1190, 895 µm.
+         Metal5 lead joins the well to a pad at 1790, 895 µm.
 
    NW0 in plan view and in cross-section.
 
@@ -86,9 +163,9 @@ NW0
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 4 from the west, row 5 from the south
+     - Column 6 from the west, row 5 from the south
    * - Well pad, centre x, y
-     - 1190, 895 µm
+     - 1790, 895 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -106,9 +183,10 @@ How it works
 Compared with
    * :ref:`NT20 <hvt-s-nt20>`: a drawn P-well against the edge in place of none.
    * :ref:`NW1p5 <hvt-s-nw1p5>`: the P-well starts at 0 µm in place of 1.5 µm.
+   * :ref:`NW0b <hvt-s-nw0b>`: nothing: a second copy.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1190, 895 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 895 µm.
    Swept again at 85 °C. The knee is expected early and sharp.
 
 Predicted
@@ -145,7 +223,7 @@ Limits
      - 18.0
      - 17.7 to 17.8
      - 12.4 to 20.5
-     - 0.27 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.27, across regimes: not a test of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 17.7
      - 17.9
@@ -157,7 +235,7 @@ Limits
      - 18.0
      - 17.8 to 17.8
      - 12.5 to 20.5
-     - 0.29 of :ref:`NT20 <hvt-s-nt20>`
+     - 0.29, across regimes: not a test of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nw1p5:
 
@@ -169,7 +247,7 @@ NW1p5
    :alt: Plan view and cross-section of NW1p5: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 1.5 µm.
-         A Metal5 lead joins the well to a pad at 1490, 895 µm.
+         A Metal5 lead joins the well to a pad at 290, 1045 µm.
 
    NW1p5 in plan view and in cross-section.
 
@@ -199,9 +277,9 @@ NW1p5
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 5 from the west, row 5 from the south
+     - Column 1 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 1490, 895 µm
+     - 290, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -223,7 +301,7 @@ Compared with
    * :ref:`NT1 <hvt-s-nt1>`: a P-well in place of a P+ ring at a similar distance.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1490, 895 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw1p5`. The
@@ -258,7 +336,7 @@ Limits
      - 52.4
      - 51.3
      - 51.3 to 51.9
-     - 35.9 to 59.7
+     - 43.6 to 64.9
      - 0.77 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 52.6
@@ -270,7 +348,7 @@ Limits
      - 52.3
      - 51.0
      - 51.0 to 51.0
-     - 35.7 to 58.6
+     - 43.4 to 63.8
      - 0.83 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nw3:
@@ -283,7 +361,7 @@ NW3
    :alt: Plan view and cross-section of NW3: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 3 µm. A
-         Metal5 lead joins the well to a pad at 1790, 895 µm.
+         Metal5 lead joins the well to a pad at 590, 1045 µm.
 
    NW3 in plan view and in cross-section.
 
@@ -313,9 +391,9 @@ NW3
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 6 from the west, row 5 from the south
+     - Column 2 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 1790, 895 µm
+     - 590, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -334,7 +412,7 @@ Compared with
    * :ref:`NW6 <hvt-s-nw6>`: the P-well starts at 3 µm in place of 6 µm.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 895 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 590, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw3`. The row
@@ -374,7 +452,7 @@ Limits
      - 72.1
      - 65.2
      - 59.7 to 72.9
-     - 41.8 to 83.8
+     - 50.7 to 91.1
      - 0.97 of :ref:`NT20 <hvt-s-nt20>`
    * - BLhi
      - 65.5
@@ -404,7 +482,7 @@ Limits
      - 62.9
      - 61.2
      - 58.8 to 61.2
-     - 41.2 to 70.4
+     - 50.0 to 76.5
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BDhi
      - 62.9
@@ -429,7 +507,7 @@ NW6
    :alt: Plan view and cross-section of NW6: an N-well 30 µm across
          with corners cut 4.7 µm along each side, an N+ contact ring inside
          its edge and a P+ ring 20 µm outside it; drawn P-well from 6 µm. A
-         Metal5 lead joins the well to a pad at 290, 1045 µm.
+         Metal5 lead joins the well to a pad at 890, 1045 µm.
 
    NW6 in plan view and in cross-section.
 
@@ -459,9 +537,9 @@ NW6
    * - Metal5 lead
      - 6 µm wide
    * - Site
-     - Column 1 from the west, row 6 from the south
+     - Column 3 from the west, row 6 from the south
    * - Well pad, centre x, y
-     - 290, 1045 µm
+     - 890, 1045 µm
    * - Substrate
      - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
 
@@ -480,7 +558,7 @@ Compared with
    * :ref:`NT20 <hvt-s-nt20>`: a P-well from 6 µm in place of none.
 
 Measurement
-   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1045 µm.
+   Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 890, 1045 µm.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw6`. The row
@@ -516,7 +594,7 @@ Limits
      - 76.0
      - 67.0
      - 67.0 to 70.3
-     - 46.9 to 80.8
+     - 56.9 to 87.9
      - 1.00 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.8
@@ -528,5 +606,5 @@ Limits
      - 62.9
      - 61.7
      - 61.7 to 61.7
-     - 43.2 to 71.0
+     - 52.4 to 77.1
      - 1.01 of :ref:`NT20 <hvt-s-nt20>`

@@ -7,8 +7,8 @@ A gated diode has a plate over the well edge that is not joined to the well
 and has its own pad. The plate's voltage sets the state of the silicon
 surface while the junction is measured.
 
-The group has 4 structures: :ref:`NGP4 <hvt-s-ngp4>`, :ref:`NGM1
-<hvt-s-ngm1>`, :ref:`NAGM1 <hvt-s-nagm1>`, :ref:`DGM1 <hvt-s-dgm1>`.
+The group has 3 structures: :ref:`NGP4 <hvt-s-ngp4>`, :ref:`NGM1
+<hvt-s-ngm1>`, :ref:`NAGM1 <hvt-s-nagm1>`.
 
 Mechanism
 ---------
@@ -32,23 +32,25 @@ predicts.
 .. figure:: hvt-g-gated.svg
    :name: fig-hvt-g-gated-diodes
    :alt: Graph of predicted breakdown voltage, the lower of the
-         straight-edge and corner values, against the four gated diodes,
+         straight-edge and corner values, against the three gated diodes,
          with the plate joined to the well and with the plate at 0 V, one
          curve per process, with dashed lines at the published 14 V and at
          57 V and an open triangle where a sweep ended without breakdown.
-         The structures of the group are NGP4, NGM1, NAGM1, DGM1. The
-         plotted values are those of the tables in the entries.
+         The structures of the group are NGP4, NGM1, NAGM1. The plotted
+         values are those of the tables in the entries.
 
    Trend that the simulation predicts across the group.
 
 Limits of the group
 -------------------
 
-The plate's Metal1 is 1 µm from the well's own Metal1, so the voltage
-between plate and well stays within 80 V, which is 0.8 MV/cm across that
-gap, and within 60 V on the polysilicon plate. The current step of the first
-part may be only tens of femtoamperes. Over P-well the first part gives the
-flat-band voltage only.
+The plate starts 0.5 µm inside the well edge. Its Metal1 is 1.2 µm from the
+Metal1 of the well's via stack and 1.5 µm from the well's Metal1 ring, so
+the voltage between plate and well stays within 80 V, which is 0.67 MV/cm
+across the narrower gap. On the polysilicon plate it stays within 60 V, 1.92
+MV/cm across the 0.312 µm of oxide that the extraction capacitance gives.
+The current step of the first part may be only tens of femtoamperes. Over
+P-well the first part gives the flat-band voltage only.
 
 .. _hvt-s-ngp4:
 
@@ -85,7 +87,7 @@ NGP4
    * - P+ ring
      - 2 µm wide, 20 µm from the well edge
    * - Polysilicon plate
-     - From 1 µm inside the well edge to 4 µm outside the edge; on its own pad
+     - From 0.5 µm inside the well edge to 4 µm outside the edge; on its own pad
    * - Fill block
      - Whole structure
    * - Metal5 lead
@@ -105,10 +107,10 @@ Purpose
    structure and :numref:`tab-hvt-s-ngp4` lists what is drawn.
 
 How it works
-   The plate lies on 0.32 µm of trench oxide, from 1 µm inside the well edge
-   to 4 µm outside it. Over oxide that thin, bare substrate inverts at a few
-   volts. P-well at 4 × 10\ :sup:`17` cm\ :sup:`-3` inverts at about 31 V
-   with the well at 0 V and about 58 V with it at 2 V, by the threshold
+   The plate lies on 0.32 µm of trench oxide, from 0.5 µm inside the well
+   edge to 4 µm outside it. Over oxide that thin, bare substrate inverts at
+   a few volts. P-well at 4 × 10\ :sup:`17` cm\ :sup:`-3` inverts at about
+   31 V with the well at 0 V and about 58 V with it at 2 V, by the threshold
    equation of the method.
 
 Compared with
@@ -119,11 +121,15 @@ Measurement
    Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
    is at 290, 595 µm and the plate pad at 290, 745 µm. For :ref:`P1
    <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
-   the voltage between well and plate stays within 60 V. The plate is swept
-   to +60 V with the well at 0 V and at 2 V, so that a threshold over P-well
-   falls inside the sweep. The oxide under the plate sees the whole voltage
-   between plate and well, which stays within 60 V: 1.8 MV/cm across 0.33
-   µm.
+   the voltage between well and plate stays within 60 V. On each die
+   :ref:`P1 <hvt-p1>` on this structure comes after every other breakdown
+   sweep, because the oxide under its polysilicon plate may fail first. A
+   failure that looks like a hard short is recorded apart from avalanche.
+   The plate is swept to +60 V with the well at 0 V and at 2 V, so that a
+   threshold over P-well falls inside the sweep. The oxide under the plate
+   sees the whole voltage between plate and well, which stays within 60 V:
+   1.92 MV/cm across the 0.312 µm that the oxide's extraction capacitance
+   gives.
 
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-ngp4`. The
@@ -157,7 +163,7 @@ Limits
      - 94.4
      - 89.2
      - 89.2 to 89.5
-     - 62.4 to 102.9
+     - 75.8 to 111.9
      - 1.33 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 94.7
@@ -169,7 +175,7 @@ Limits
      - 62.9
      - 60.8
      - 60.8 to 60.8
-     - 42.6 to 69.9
+     - 51.7 to 76.0
      - 0.99 of :ref:`NT20 <hvt-s-nt20>`
    * - GAL
      - 19.3
@@ -231,7 +237,7 @@ NGM1
    * - P+ ring
      - 2 µm wide, 20 µm from the well edge
    * - Metal1 plate
-     - From 1 µm inside the well edge to 6 µm outside the edge; on its own pad
+     - From 0.5 µm inside the well edge to 6 µm outside the edge; on its own pad
    * - Fill block
      - Whole structure
    * - Metal5 lead
@@ -303,7 +309,7 @@ Limits
      - 90.2
      - 84.8
      - 84.8 to 85.4
-     - 59.4 to 98.2
+     - 72.1 to 106.8
      - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 90.8
@@ -315,7 +321,7 @@ Limits
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 41.7 to 68.5
+     - 50.7 to 74.5
      - 0.97 of :ref:`NT20 <hvt-s-nt20>`
    * - GAL
      - 18.0
@@ -378,7 +384,7 @@ NAGM1
    * - P+ ring
      - 2 µm wide, 20 µm from the well edge
    * - Metal1 plate
-     - From 1 µm inside the well edge to 6 µm outside the edge; on its own pad
+     - From 0.5 µm inside the well edge to 6 µm outside the edge; on its own pad
    * - NAT layer
      - From 0.6 µm outside the well edge to 0.5 µm short of the P+ ring
    * - Fill block
@@ -448,19 +454,19 @@ Limits
      - 90.2
      - 84.8
      - 84.8 to 84.8
-     - 59.4 to 97.5
+     - 72.1 to 106.0
      - 1.27 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - AnD
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 41.7 to 68.5
+     - 50.7 to 74.5
      - 0.97 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 90.2
      - 84.8
      - 84.8 to 85.4
-     - 59.4 to 98.2
+     - 72.1 to 106.8
      - 1.27 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 90.8
@@ -472,7 +478,7 @@ Limits
      - 62.9
      - 59.6
      - 59.6 to 59.6
-     - 41.7 to 68.5
+     - 50.7 to 74.5
      - 0.97 of :ref:`NT20 <hvt-s-nt20>`
    * - GAL
      - 18.0
@@ -507,162 +513,6 @@ Limits
    * - GBD
      - 59.9
      - 56.2
-     - –
-     - –
-     - –
-
-.. _hvt-s-dgm1:
-
-DGM1
-----
-
-.. figure:: hvt-s-DGM1.svg
-   :name: fig-hvt-s-dgm1
-   :alt: Plan view and cross-section of DGM1: a deep N-well 30 µm
-         across with corners cut 4.7 µm along each side, an N+ contact ring
-         inside its edge and a P+ ring 20 µm outside it; Metal1 plate to 6
-         µm on its own pad. A Metal5 lead joins the well to a pad at 1190,
-         595 µm. A Metal2 lead joins the plate to a second pad at 1190, 745
-         µm.
-
-   DGM1 in plan view and in cross-section.
-
-.. list-table:: DGM1: drawn parameters and position
-   :name: tab-hvt-s-dgm1
-   :header-rows: 1
-   :widths: 35 65
-
-   * - Parameter
-     - Value
-   * - Well
-     - Deep N-well, with an N-well band under its contact ring
-   * - Side of the well
-     - 30 µm
-   * - Corners
-     - Cut of 4.7 µm along each side, for a nominal radius of 8 µm; eight vertices of 135°
-   * - Area and perimeter
-     - 856 µm² and 109.0 µm
-   * - N+ contact ring
-     - 2 µm wide, 2 µm inside the well edge
-   * - P+ ring
-     - 2 µm wide, 20 µm from the well edge
-   * - Metal1 plate
-     - From 1 µm inside the well edge to 6 µm outside the edge; on its own pad
-   * - Fill block
-     - Whole structure
-   * - Metal5 lead
-     - 6 µm wide
-   * - Site
-     - Column 4 from the west, row 3 from the south
-   * - Well pad, centre x, y
-     - 1190, 595 µm
-   * - Plate pad, centre x, y
-     - 1190, 745 µm
-   * - Substrate
-     - Any of the seven SUB pads (:numref:`tab-hvt-pads`)
-
-Purpose
-   A Metal1 plate on its own pad beside a deep N-well: reads the surface
-   there, and checks that the plate does not change the breakdown.
-   :numref:`fig-hvt-s-dgm1` shows the structure and :numref:`tab-hvt-s-dgm1`
-   lists what is drawn.
-
-How it works
-   If the deep N-well breaks down at its bottom, the plate's voltage alters
-   the surface without altering the breakdown voltage. The threshold still
-   reports the doping beside the well, where a generated P-well would start
-   1.5 µm out.
-
-Compared with
-   * :ref:`NGM1 <hvt-s-ngm1>`: a deep N-well in place of an N-well.
-   * :ref:`DM1_6 <hvt-s-dm1-6>`: the plate on its own pad in place of joined to the well.
-
-Measurement
-   Procedures :ref:`P1 <hvt-p1>` and :ref:`P4 <hvt-p4>` apply. The well pad
-   is at 1190, 595 µm and the plate pad at 1190, 745 µm. For :ref:`P1
-   <hvt-p1>` the two pads are shorted at the probes. In :ref:`P4 <hvt-p4>`
-   the voltage between well and plate stays within 80 V. As for :ref:`NGM1
-   <hvt-s-ngm1>`.
-
-Predicted
-   The simulated breakdown voltages are in :numref:`tab-hvt-sp-dgm1`. The
-   row of each family's nominal process also gives the family's band, its
-   agreement range and the predicted ratio to the reference structure. A
-   breakdown voltage that does not move with the plate voltage: the bottom
-   of the well limits. One that moves: the edge does.
-
-Limits
-   The N-well band under the contact ring lies under the inner part of the
-   plate, so the surface there is not deep N-well.
-
-.. list-table:: DGM1: predicted breakdown voltage by process
-   :name: tab-hvt-sp-dgm1
-   :header-rows: 1
-   :widths: 18 16 16 17 17 16
-
-   * - Process
-     - Straight edge (V)
-     - Corner section (V)
-     - Family band (V)
-     - Agreement range (V)
-     - Predicted ratio
-   * - AL, AnL
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.04 of :ref:`DT20 <hvt-s-dt20>`
-   * - AD, AnD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-   * - BL
-     - 32.4
-     - 30.3
-     - 30.3 to 31.3
-     - 21.2 to 36.0
-     - 0.97 of :ref:`DT20 <hvt-s-dt20>`
-   * - BLq
-     - 32.3
-     - 31.3
-     - –
-     - –
-     - –
-   * - BD
-     - 32.4
-     - 31.3
-     - 31.3 to 31.3
-     - 21.9 to 36.0
-     - 1.00 of :ref:`DT20 <hvt-s-dt20>`
-   * - GAL
-     - 32.4
-     - 31.1
-     - –
-     - –
-     - –
-   * - GAD
-     - 32.4
-     - 30.9
-     - –
-     - –
-     - –
-   * - GBL
-     - 32.4
-     - 31.3
-     - –
-     - –
-     - –
-   * - GBLq
-     - 32.3
-     - 30.8
-     - –
-     - –
-     - –
-   * - GBD
-     - 32.4
-     - 30.9
      - –
      - –
      - –

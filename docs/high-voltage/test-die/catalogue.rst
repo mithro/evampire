@@ -3,7 +3,7 @@
 Structure catalogue
 ===================
 
-Each of the 73 structures on the test die has an entry that states the one
+Each of the 72 structures on the test die has an entry that states the one
 question it answers, how it works, what it is compared with, how it is
 measured, what the simulation predicts and what it cannot show. The entries
 are grouped by what the structures vary.
@@ -76,9 +76,12 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NAGM1 <hvt-s-nagm1>`
      - :doc:`Gated diodes <catalogue/gated-diodes>`
      - A Metal1 plate on its own pad over NAT
-   * - :ref:`DGM1 <hvt-s-dgm1>`
-     - :doc:`Gated diodes <catalogue/gated-diodes>`
-     - A Metal1 plate on its own pad beside a deep N-well
+   * - :ref:`NAR1S3 <hvt-s-nar1s3>`
+     - :doc:`NAT layer <catalogue/nat>`
+     - A contacted ring under NAT 3 µm from the well
+   * - :ref:`NAR1S8 <hvt-s-nar1s8>`
+     - :doc:`NAT layer <catalogue/nat>`
+     - A contacted ring under NAT 8 µm from the well
    * - :ref:`DT20b <hvt-s-dt20b>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - Gives the spread across the die for a deep N-well
@@ -88,12 +91,12 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NT5 <hvt-s-nt5>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Finds whether a P+ ring 5 µm away already limits the well.
-   * - :ref:`NT10 <hvt-s-nt10>`
-     - :doc:`Plain N-wells <catalogue/plain>`
-     - Shows whether the breakdown voltage has stopped rising by a ring distance of 10 µm.
    * - :ref:`NT20 <hvt-s-nt20>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - The reference structure of the die
+   * - :ref:`NW0b <hvt-s-nw0b>`
+     - :doc:`Drawn P-well <catalogue/p-well>`
+     - A second copy of :ref:`NW0 <hvt-s-nw0>`, the reference of the ratios when P-well lies against every N-well.
    * - :ref:`NC0 <hvt-s-nc0>`
      - :doc:`Plain N-wells <catalogue/plain>`
      - Measures what a square corner costs against a corner cut at 45°.
@@ -115,9 +118,9 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`NA0p6 <hvt-s-na0p6>`
      - :doc:`NAT layer <catalogue/nat>`
      - The main test of the NAT layer
-   * - :ref:`NA2 <hvt-s-na2>`
-     - :doc:`NAT layer <catalogue/nat>`
-     - Tests a strip of 2 µm between the well and NAT, wide enough for the foundry to fill with P-well.
+   * - :ref:`NC0b <hvt-s-nc0b>`
+     - :doc:`Plain N-wells <catalogue/plain>`
+     - A second copy of the square-cornered well :ref:`NC0 <hvt-s-nc0>`, for the spread of a breakdown set at a vertex.
    * - :ref:`NA0p6T10 <hvt-s-na0p6t10>`
      - :doc:`NAT layer <catalogue/nat>`
      - Repeats the ring-distance check under NAT with the P+ ring at 10 µm.
@@ -202,24 +205,18 @@ generated from the layout's own data, so the entries follow the layout.
    * - :ref:`DC0 <hvt-s-dc0>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with square corners.
-   * - :ref:`DW1p5 <hvt-s-dw1p5>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with a drawn P-well as close as the rules allow, 1.5 µm.
    * - :ref:`DM1_6 <hvt-s-dm1-6>`
      - :doc:`Field plates <catalogue/field-plates>`
      - A deep N-well with a Metal1 plate of 6 µm
-   * - :ref:`DM1_10 <hvt-s-dm1-10>`
-     - :doc:`Field plates <catalogue/field-plates>`
-     - A deep N-well with a Metal1 plate of 10 µm.
-   * - :ref:`DPM12 <hvt-s-dpm12>`
-     - :doc:`Field plates <catalogue/field-plates>`
-     - A deep N-well with the stepped plate of three layers.
    * - :ref:`DAo1 <hvt-s-dao1>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with NAT over its edge, so that no P-well can lie beside the junction.
-   * - :ref:`DAo1C0 <hvt-s-dao1c0>`
-     - :doc:`Deep N-wells <catalogue/deep-n-well>`
-     - A deep N-well with NAT over its edge and square corners.
+   * - :ref:`NAR1_2 <hvt-s-nar1-2>`
+     - :doc:`NAT layer <catalogue/nat>`
+     - One floating ring under NAT
+   * - :ref:`NAR3_2 <hvt-s-nar3-2>`
+     - :doc:`NAT layer <catalogue/nat>`
+     - Three floating rings under NAT, at gaps of 2 µm, 2.5 µm and 3 µm
    * - :ref:`DAo1M1_6 <hvt-s-dao1m1-6>`
      - :doc:`Deep N-wells <catalogue/deep-n-well>`
      - A deep N-well with NAT over its edge and a Metal1 plate of 6 µm

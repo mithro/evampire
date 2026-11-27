@@ -1,5 +1,5 @@
 Structure,Termination,AL: edge / corner (V),AnL: edge / corner (V),BL: edge / corner (V),BD: edge / corner (V)
-NT10,Plain N-well,17.7 / –,17.7 / –,76.0 / 67.0,62.9 / 61.2
+NT20,Plain N-well,17.7 / –,17.7 / –,76.0 / 67.0,62.9 / 61.2
 NT1,P+ ring 1 µm away,17.7 / –,17.7 / –,40.5 / 41.8,40.7 / 41.9
 NC15,Largest corner cut,17.7 / –,17.7 / –,76.0 / 70.6,62.9 / 59.6
 NC0,Sharp corner,17.7 / –,17.7 / –,76.0 / 46.1,62.9 / 46.0

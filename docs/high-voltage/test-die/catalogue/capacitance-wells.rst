@@ -452,7 +452,7 @@ Measurement
    is at 1276, 2320 µm. :ref:`P1 <hvt-p1>` is run on one die only, to find
    the breakdown voltage that limits the bias of :ref:`P2 <hvt-p2>` on the
    others. The bias follows the well's own breakdown voltage from :ref:`P1
-   <hvt-p1>`, and may exceed the range of the meter's internal bias.
+   <hvt-p1>`, and may need the external bias source of 60 V.
 
 Predicted
    No breakdown voltage is simulated for this structure. The published
