@@ -39,18 +39,25 @@ STRUCTS, MAN = tdkit.load()
 PRED = json.loads((tdkit.HERE / "predictions.json").read_text())
 CROSS = json.loads((tdkit.HERE / "crosscheck.json").read_text())
 
-WIDEN = (0.30, 0.15)   # agreement range: the band widened down and up
+# Agreement range: each end of the band is widened down and up by the rule
+# for its own value. The ionisation model reads high where a heavily doped
+# surface limits (below REGIME volts) and low where the lightly doped
+# substrate does (model_checks.json, "one_sided"). The widths are choices.
+REGIME = 30.0
+WIDEN_LOW = (0.30, 0.15)    # predicted value below REGIME
+WIDEN_HIGH = (0.15, 0.25)   # predicted value of REGIME or above
 RATIO = 0.15           # agreement of a ratio to the reference structure
 SHAPES = ("edge", "corner")
 ORDER = ("AL", "AD", "AnL", "AnD", "BL", "BD")
-KEY = [("NT10", "Plain N-well"), ("NT1", "P+ ring 1 µm away"),
+KEY = [("NT20", "Plain N-well"), ("NT1", "P+ ring 1 µm away"),
        ("NC15", "Largest corner cut"), ("NC0", "Sharp corner"),
        ("NM1_6C0", "Sharp corner under a Metal1 plate, 6 µm"),
        ("NW0", "Drawn P-well touching"), ("NW1p5", "Drawn P-well at 1.5 µm"),
        ("NW3", "Drawn P-well at 3 µm"), ("NA0p6", "NAT from 0.6 µm"),
        ("NP4", "Polysilicon plate, 4 µm"), ("NM1_6", "Metal1 plate, 6 µm"),
        ("NM2_12", "Metal2 plate, 12 µm"), ("NR1_2", "One ring at 2 µm"),
-       ("NR3_2", "Three rings"), ("DT20", "Deep N-well"),
+       ("NR3_2", "Three rings"), ("NAR1_2", "One ring under NAT"),
+       ("NAR3_2", "Three rings under NAT"), ("DT20", "Deep N-well"),
        ("DAo1", "Deep N-well with NAT over its edge")]
 
 
@@ -118,14 +125,18 @@ def served(name, fam):
 
 
 def reference(name, fam):
-    """The structure whose breakdown a ratio is taken against."""
+    """The structure whose breakdown a ratio is taken against: DT20 for a
+    deep N-well; under A, NW0 (measured as the mean of NW0 and NW0b); under
+    An, NA0p6 for every other structure under NAT, since NT20 is limited
+    by P-well there and NA0p6 is not; NT20 otherwise."""
     p = STRUCTS[name]
     if p["kind"] == "dnw":
         return "DT20"
     if parse(fam)[1] == "A":
         return "NW0"
-    if parse(fam)[1] == "An" and p["nat_gap"] is not None and p["plates"]:
-        return "NA0p6"   # NT20 is limited by P-well under An; NA0p6 is not
+    if parse(fam)[1] == "An" and p["nat_gap"] is not None \
+            and name not in ("NA0p6", "NA0p6b"):
+        return "NA0p6"
     return "NT20"
 
 
@@ -141,7 +152,11 @@ def ratio(name, fam):
     if ref == name:
         return ref, "1 (reference)"
     a, b = nominal(name, fam), nominal(ref, fam)
-    return ref, f"{a / b:.2f}" if a and b else "–"
+    if not (a and b):
+        return ref, "–"
+    if (a < REGIME) != (b < REGIME):    # one limited by a heavy surface
+        return ref, f"{a / b:.2f}, across regimes: not a test"
+    return ref, f"{a / b:.2f}"
 
 
 def entry(name, proc):
@@ -230,10 +245,18 @@ def band_of(procs, name):
     return min(vals), max(vals), notes
 
 
-def span(lo, hi, widen=(0.0, 0.0)):
+def widen(v):
+    """(down, up) fractions of the agreement range at a predicted value."""
+    return WIDEN_LOW if v < REGIME else WIDEN_HIGH
+
+
+def span(lo, hi, wide=False):
+    """A band as text; wide=True widens it into the agreement range."""
     if lo is None:
         return "–"
-    return f"{lo * (1 - widen[0]):.1f} to {hi * (1 + widen[1]):.1f}"
+    if wide:
+        lo, hi = lo * (1 - widen(lo)[0]), hi * (1 + widen(hi)[1])
+    return f"{lo:.1f} to {hi:.1f}"
 
 
 def pred_table(test):
@@ -269,7 +292,7 @@ def band_table():
                 continue
             lo, hi, notes = band(nm, f)
             rows.append([nm, ", ".join(served(nm, f)), span(lo, hi),
-                         span(lo, hi, WIDEN), *ratio(nm, f),
+                         span(lo, hi, True), *ratio(nm, f),
                          summarise(notes) or "None"])
     return tb.write(rows)
 

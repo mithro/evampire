@@ -192,9 +192,9 @@ def crosscheck():
 
 def p5():
     """Punch-through voltage to a grounded ring against the gap."""
-    names = [n for n in px.sense() if len(pd.STRUCTS[n]["rings"]) == 1]
-    gaps = [pd.STRUCTS[n]["rings"][0][0] for n in names]
-    vals = [e["punch_through_v"] for n in names
+    one = [n for n in px.sense() if len(pd.STRUCTS[n]["rings"]) == 1]
+    gaps = sorted({pd.STRUCTS[n]["rings"][0][0] for n in one})
+    vals = [e["punch_through_v"] for n in one
             for e in px.P5.get(n, {}).values() if e["punch_through_v"]]
     vmax = 20 * (int(max(vals + [40]) / 20) + 1)
     w, h = 640, 400
@@ -206,8 +206,13 @@ def p5():
                   "gap from the well edge to ring 1 (µm)",
                   "well voltage at 1 nA of ring current (V)")
     seen = 0
-    for proc in px.P5_PROCS:
-        pts = [(g, px.P5.get(n, {}).get(proc)) for g, n in zip(gaps, names)]
+    plain = [n for n in one if pd.STRUCTS[n]["nat_gap"] is None]
+    nat = [n for n in one if pd.STRUCTS[n]["nat_gap"] is not None]
+    series = [(proc, plain, None, proc) for proc in px.P5_PROCS] + [
+        (proc, nat, "5 4", f"{proc}, under NAT") for proc in px.P5_PROCS]
+    for proc, names, dash, label in series:
+        pts = [(pd.STRUCTS[n]["rings"][0][0], px.P5.get(n, {}).get(proc))
+               for n in names]
         got = [(g, e["punch_through_v"]) for g, e in pts
                if e and e["punch_through_v"] is not None]
         low = [(g, e["reached_v"]) for g, e in pts
@@ -217,16 +222,19 @@ def p5():
         col = COLOUR[proc]
         if len(got) > 1:
             b.append(polyline([ax.px(*q) for q in got], stroke=col,
-                              width=1.6))
+                              width=1.6, dash=dash))
         b += [marker(*ax.px(*q), "bv", "edge", col) for q in got]
         b += [marker(*ax.px(*q), "reached", "edge", col) for q in low]
         y = ax.y0 + 14 + 18 * seen
         b.append(marker(ax.x0 + ax.w + 16, y - 4, "bv", "edge", col))
-        b.append(text(ax.x0 + ax.w + 26, y, proc, anchor="start", size=11))
+        b.append(text(ax.x0 + ax.w + 26, y, label, anchor="start",
+                      size=11))
         seen += 1
     if not seen:
         b.append(text(ax.x0 + ax.w / 2, ax.y0 + ax.h / 2,
                       "not yet simulated", size=13))
+    b.append(text(20, h - 28, "Dashed: NAR1S3 and NAR1S8, the contacted "
+                  "rings under NAT.", anchor="start", size=11))
     b.append(text(20, h - 12, "Open triangle: the ring current did not "
                   "reach 1 nA by the end of the sweep.", anchor="start",
                   size=11))

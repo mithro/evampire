@@ -72,8 +72,8 @@ def p1():
                   "steps", "measure current, limit 10 µA"]),
         ("sub", ["SMU channel B, substrate pads", "force 0 V",
                  "measure current"])],
-        "Dark, shielded probe station; chuck at 0 V; 25 °C, and 85 °C on "
-        "a subset.")
+        "Dark, shielded probe station; chuck at 0 V through channel B; "
+        "25 °C, and 85 °C on a subset.")
 
 
 def p2():
@@ -82,7 +82,7 @@ def p2():
         ("well", ["LCR meter, low terminal", "on the well pad: senses",
                   "the current, 100 kHz and 1 MHz"]),
         ("sub", ["LCR meter, high terminal", "on the substrate pads and",
-                 "the chuck; DC bias to −40 V"])],
+                 "the chuck; DC bias to −60 V"])],
         "The chuck is joined to the high terminal or left floating, never "
         "grounded; repeat on OPEN and subtract.")
 
@@ -244,11 +244,13 @@ def order():
         ("3", "Decision table", "select the process assumption"),
         ("4", "P2 on the large wells", "doping profile; bias kept below "
          "their breakdown"),
-        ("5", "P1 on groups 5 and 6", "field plates and floating rings"),
+        ("5", "P1 on groups 5 and 6", "plates and rings; not polysilicon"),
         ("6", "P3 and P5", "ring potential and punch-through"),
         ("7", "P4", "gated diodes"),
         ("8", "P1 at 85 °C", "a subset, to separate the mechanisms"),
-        ("9", "Comparison", "each structure against its prediction"),
+        ("9", "P1 on polysilicon plates", "NP1, NP2, NP4, NPM12, NGP4: "
+         "oxide may fail"),
+        ("10", "Comparison", "each structure against its prediction"),
     ]
     return flow("Order of work on each die", steps)
 

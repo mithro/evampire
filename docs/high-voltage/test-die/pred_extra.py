@@ -3,9 +3,15 @@
 hvt-tab-p5.csv        punch-through to a grounded ring, from p5.json if
                       import_predictions.py --p5 has written it; "not yet
                       simulated" otherwise.
-hvt-tab-mc-cap.csv, -corner.csv, -ceiling.csv, -source.csv   the values
-                      of model_checks.json, which is edited by hand: the
-                      numbers of the final review that no record holds.
+hvt-tab-mc-cap.csv, -corner.csv, -ceiling.csv, -source.csv,
+-onesided.csv, -radius.csv   the values of model_checks.json, which is
+                      edited by hand: the numbers of the reviews that no
+                      record holds. Its key "corner_radius" is written once
+                      the radius sensitivity runs end, as {"note": text,
+                      "cases": [{"structure": NAME, "process": PROCESS,
+                      "radius_um": number, "volts": number or null}]};
+                      while it is absent the table reads "not yet
+                      simulated".
 
 figures.py calls this module; it writes no files itself.
 
@@ -89,7 +95,40 @@ def check_tables():
             "hvt-tab-mc-source.csv": tb.write(src)}
 
 
+RADII = (0.5, 1.0, 2.0, 4.0)   # radii of the sensitivity run
+
+
+def onesided_table():
+    rows = [["Doping of the light side (cm⁻³)", "Ionisation integral (V)",
+             "Closed form (V)", "Integral over closed form"]]
+    for r in CHECKS["one_sided"]["rows"]:
+        m, e = r["doping_cm3"].split("e")
+        power = f"10\\ :sup:`{e}`"
+        rows.append([f"{m} × {power}" if m != "1" else power,
+                     f"{r['integral_v']:g}", f"{r['closed_form_v']:g}",
+                     f"{r['difference_percent']:+d} %"])
+    return tb.write(rows)
+
+
+def radius_table():
+    rows = [["Corner radius of the section (µm)", "Section and process",
+             "Corner breakdown (V)"]]
+    cases = CHECKS.get("corner_radius", {}).get("cases")
+    if not cases:
+        return tb.write(rows + [[f"{r:g}", "–", "not yet simulated"]
+                                for r in RADII])
+    for c in sorted(cases, key=lambda c: (c["structure"], c["process"],
+                                          c["radius_um"])):
+        v = c.get("volts")
+        rows.append([f"{c['radius_um']:g}",
+                     f"{c['structure']} under {c['process']}",
+                     "no result" if v is None else f"{v:.1f}"])
+    return tb.write(rows)
+
+
 def tables():
     out = check_tables()
+    out["hvt-tab-mc-onesided.csv"] = onesided_table()
+    out["hvt-tab-mc-radius.csv"] = radius_table()
     out["hvt-tab-p5.csv"] = p5_table()
     return out

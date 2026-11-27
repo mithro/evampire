@@ -35,7 +35,8 @@ import tables
 # Structures that the pages name on purpose although they are no longer on
 # the die: the record of what the reviews removed.
 REMOVED = {"DT5", "DT35", "DC15", "DW3", "DW6", "DM1_3", "CVD2", "NT35",
-           "NA4", "NA0p6T35", "DT10", "DAo1T35"}
+           "NA4", "NA0p6T35", "DT10", "DAo1T35", "DGM1", "DW1p5", "DM1_10",
+           "DPM12", "DAo1C0", "NT10", "NA2"}
 NAME = re.compile(r"\b(?:[ND][A-Za-z]{1,3}\d[A-Za-z0-9_]*|CV[NDA]+2?|OPEN)\b")
 PAGES = ("structures.rst", "method.rst", "predictions.rst", "submission.rst",
          "../test-die.rst", "cat_plain.py", "cat_nat.py", "cat_rings.py",

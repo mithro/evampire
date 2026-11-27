@@ -79,7 +79,11 @@ COLUMNS = {
     "pwell": [("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
               T, PAD],
     "nat": [("NAT start (µm)", lambda n, p, s: nat(p)), T, C,
-            PLATES[1], PLATES[2], NOTE, PAD],
+            PLATES[1], PLATES[2],
+            ("Ring gaps, innermost first (µm)", lambda n, p, s: gaps(p)),
+            NOTE, ("Ring 1 pad x, y (µm)", lambda n, p, s:
+                   "{:.0f}, {:.0f}".format(*s["aux_pad"]) if p["sense"]
+                   else "–"), PAD],
     "dnw": [T, C,
             ("P-well start (µm)", lambda n, p, s: opt(p["pwell_gap"])),
             ("NAT start (µm)", lambda n, p, s: nat(p)), PLATES[1], NOTE,
@@ -167,8 +171,8 @@ def precheck():
     for line in PRECHECK.read_text().splitlines():
         if line.startswith("#") or not line.strip():
             continue
-        if line.startswith("density "):
-            name, value = line.split("\t")
+        if line.startswith("density ") and "\t" in line:
+            name, value = line.split("\t", 1)
             if "MetalTop" in name:
                 continue
             rows.append([name.replace("density ", "Density, ")
@@ -177,9 +181,11 @@ def precheck():
             rest = line[len("precheck: Check for "):].rstrip(".")
             rows.append([rest.rsplit(" ", 1)[0], rest.rsplit(" ", 1)[1]
                          .capitalize()])
-        else:
+        elif ":" in line:
             key, value = line.split(":", 1)
             rows.append([key.capitalize(), value.strip()])
+        else:                       # a line of another form: shown as it is
+            rows.append([line.strip(), "–"])
     return write(rows)
 
 

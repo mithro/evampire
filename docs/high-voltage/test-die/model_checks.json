@@ -69,5 +69,35 @@
   "extrapolated_volts": 46,
   "same_pattern": "BD, BLq, and NA0p6C0",
   "note": "estimate made from a double-precision sweep that stalled; the converged 128-bit result is read from predictions.json for comparison"
+ },
+ "one_sided": {
+  "note": "one-sided abrupt junctions: breakdown by the ionisation integral with the van Overstraeten-de Man coefficients of the simulation, against the Sze-Gibbons closed form 60 V x (N / 1e16 cm^-3)^-0.75",
+  "source": "the fourth independent review's own script; not yet in a gf180-tcad record",
+  "rows": [
+   {
+    "doping_cm3": "1e17",
+    "integral_v": 14.7,
+    "closed_form_v": 10.7,
+    "difference_percent": 37
+   },
+   {
+    "doping_cm3": "1e16",
+    "integral_v": 55.2,
+    "closed_form_v": 60.0,
+    "difference_percent": -8
+   },
+   {
+    "doping_cm3": "3.56e15",
+    "integral_v": 109.0,
+    "closed_form_v": 130.0,
+    "difference_percent": -16
+   },
+   {
+    "doping_cm3": "1e15",
+    "integral_v": 265.0,
+    "closed_form_v": 337.0,
+    "difference_percent": -21
+   }
+  ]
  }
 }

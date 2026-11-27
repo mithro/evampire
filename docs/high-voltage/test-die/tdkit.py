@@ -38,7 +38,8 @@ GROUPS = [
     ("plates", "Field plates",
      lambda n, p: bool(p["plates"]) and not p["gate"] and p["half"] < 50
      and not p["rings"] and p["nat_gap"] is None),
-    ("rings", "Floating rings", lambda n, p: bool(p["rings"])),
+    ("rings", "Floating rings",
+     lambda n, p: bool(p["rings"]) and p["nat_gap"] is None),
     ("gated", "Gated diodes", lambda n, p: p["gate"]),
     ("large", "Large wells", lambda n, p: p["half"] >= 50),
     ("open", "Open reference", lambda n, p: p["kind"] == "open"),
@@ -58,6 +59,21 @@ def load():
             raise SystemExit(f"{name}: manifest.json and structures.json "
                              "differ: regenerate both")
     return structs, man
+
+
+def nat_spans(p):
+    """The NAT layer as spans [(a, b)] of distance from the well edge: from
+    nat_gap to 0.5 um short of the P+ ring, cut 0.6 um clear of each ring
+    (junction.py)."""
+    if p["nat_gap"] is None:
+        return []
+    spans, a, d = [], p["nat_gap"], 0.0
+    for gap, width in p["rings"]:
+        d += gap
+        spans.append((a, d - 0.6))
+        a = d + width + 0.6
+        d += width
+    return spans + [(a, p["term"] - 0.5)]
 
 
 def group_of(name, p):
@@ -149,14 +165,14 @@ class Section:
         return b
 
     def nat(self):
-        p = self.p
-        if p["nat_gap"] is None:
-            return []
-        a, e = p["nat_gap"], p["term"] - 0.5
-        return [rect(self.x(a), self.y0 - 4, (e - a) * self.s, 50, "none",
-                     stroke=NAT, dash="5 3"),
-                text(self.x((a + e) / 2), self.y0 + 64, "NAT layer",
-                     size=11, fill=NAT)]
+        spans = nat_spans(self.p)
+        b = [rect(self.x(a), self.y0 - 4, (e - a) * self.s, 50, "none",
+                  stroke=NAT, dash="5 3") for a, e in spans]
+        if spans:
+            a, e = max(spans, key=lambda s: s[1] - s[0])
+            b.append(text(self.x((a + e) / 2), self.y0 + 64, "NAT layer",
+                          size=11, fill=NAT))
+        return b
 
     def metal(self, lead=True):
         """Contacts, plates and (optionally) the Metal5 lead."""
@@ -167,7 +183,7 @@ class Section:
         xc = self.x(-ins - w / 2)
         b.append(rect(xc - 2, y0 - 28, 4, 28, METAL, stroke="none"))
         m1_out = -ins
-        g0 = -1.0
+        g0 = -0.5    # a gated plate starts 0.5 um inside the well edge
         if "poly" in plates:
             a = g0 if gate else -ins + 0.4
             b.append(self.box(a, plates["poly"], -7, 7, POLY))
@@ -256,7 +272,7 @@ def plan(p, cx, cy, s, well_fill=NWELL):
     for layer, length in p["plates"].items():
         b.append(shape(length, "none", stroke=POLY if layer == "poly"
                        else GREY, dash="5 3", width=1.6))
-    if p["nat_gap"] is not None:
-        b.append(shape(term - 0.5, "none", stroke=NAT, dash="5 3"))
-        b.append(shape(p["nat_gap"], "none", stroke=NAT, dash="5 3"))
+    for a, e in nat_spans(p):
+        b.append(shape(e, "none", stroke=NAT, dash="5 3"))
+        b.append(shape(a, "none", stroke=NAT, dash="5 3"))
     return b

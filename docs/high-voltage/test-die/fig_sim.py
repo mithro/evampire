@@ -126,9 +126,9 @@ def ionisation():
 def assumptions():
     rows = [("NT20", "AL: generated P-well up to the well edge",
              [(0, 25, "generated P-well")], None),
-            ("NA2", "AL with NAT: P-well in the strip beside the well",
-             [(0, 2, ""), (19.5, 25, "")], None),
-            ("NA2", "AnL: as AL, but no P-well in the strip",
+            ("NA0p6", "AL with NAT: P-well in the strip beside the well",
+             [(0, 0.6, ""), (19.5, 25, "")], None),
+            ("NA0p6", "AnL: as AL, but no P-well in the strip",
              [(19.5, 25, "")], None),
             ("NT20", "BL: no P-well unless the layout draws one", [], None),
             ("NT20", "BD: as BL, with the deep P layer under the whole "

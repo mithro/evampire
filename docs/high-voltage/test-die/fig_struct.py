@@ -145,14 +145,14 @@ def panels(title, rows, height=250, top=118, legend=()):
 
 def surround():
     w, h = 640, 600
-    p = STRUCTS["NT10"]
+    p = STRUCTS["NT5"]
     b = [ARROW, text(20, 24, "Distance to the P+ ring (T) and corner radius "
                      "(C)", anchor="start", weight="bold")]
-    sec = Section(p, 30, 150, 580, right=25.0)
-    b.append(text(30, 56, "NT10 in cross-section: the P+ ring 10 µm from "
+    sec = Section(p, 30, 150, 580, right=12.0)
+    b.append(text(30, 56, "NT5 in cross-section: the P+ ring 5 µm from "
                   "the well edge", anchor="start"))
     b += sec.silicon() + sec.metal(False)
-    b += sec.dim(0, p["term"], "T = 1, 5, 10 or 20 µm")
+    b += sec.dim(0, p["term"], "T = 1, 5 or 20 µm")
     b.append(text(30, 318, "NC0, NT20 and NC15 in plan view, to one scale: "
                   "corner radius 0, 8 and 15 µm", anchor="start"))
     for k, name in enumerate(("NC0", "NT20", "NC15")):
@@ -180,21 +180,18 @@ def pwell():
 def nat():
     return panels(
         "The NAT layer, which marks silicon that receives no P-well",
-        [("NA2", "NAT starts 2 µm from the well edge", [],
-          [(0, 2, "A = 2")], False),
+        [("NAR3_2", "NAT from 0.6 µm, cut 0.6 µm clear of three rings",
+          [], [(0, 2, "gap 2")], False),
          ("NAM1_6", "NAT from 0.6 µm, under a Metal1 field plate 6 µm long",
           [], [(0, 6, "plate, 6 µm")], False)],
         height=225, top=78)
 
 
 def dnw():
-    far = STRUCTS["DW1p5"]["term"] + 3.0  # P+ ring plus 1 um, as drawn
     return panels(
         "A deep N-well in place of the N-well",
         [("DT20", "P+ ring 20 µm from the edge of the deep N-well", [],
           [(0, 20, "T = 2.6 or 20 µm")], False),
-         ("DW1p5", "a drawn P-well that starts 1.5 µm out",
-          [(1.5, far, "drawn P-well")], [(0, 1.5, "1.5")], False),
          ("DAo1", "the NAT layer overlaps the edge of the deep N-well by "
           "1 µm", [], [(-1, 0, "1")], False)],
         height=215, top=70)

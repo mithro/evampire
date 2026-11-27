@@ -125,7 +125,7 @@ def param_rows(name):
                          f"{num(width)} µm wide, after a gap of "
                          f"{num(gap)} µm"])
         for layer, length in p["plates"].items():
-            start = ("1 µm inside the well edge" if p["gate"] else
+            start = ("0.5 µm inside the well edge" if p["gate"] else
                      "the contact ring")
             rows.append([f"{fig_entry.LAYER[layer].capitalize()} plate",
                          f"From {start} to {num(length)} µm outside the "
@@ -139,7 +139,9 @@ def param_rows(name):
             a = (f"{num(p['nat_gap'])} µm outside" if p["nat_gap"] > 0
                  else f"{num(-p['nat_gap'])} µm inside")
             rows.append(["NAT layer", f"From {a} the well edge to 0.5 µm "
-                         f"short of the P+ ring"])
+                         f"short of the P+ ring" + (
+                             ", cut into strips that keep 0.6 µm clear of "
+                             "each ring" if p["rings"] else "")])
         if p["dualgate"]:
             rows.append(["Area", "6 V: the thick-oxide layer covers the "
                          "structure"])
@@ -191,6 +193,11 @@ def measurement(name):
         s += (f"For {{P1}} the two pads are shorted at the probes. In "
               f"{{P4}} the voltage between well and plate stays within "
               f"{limit} V. ")
+    if "poly" in p["plates"]:
+        s += ("On each die {P1} on this structure comes after every other "
+              "breakdown sweep, because the oxide under its polysilicon "
+              "plate may fail first. A failure that looks like a hard "
+              "short is recorded apart from avalanche. ")
     if p["half"] >= 50 and p["kind"] != "open":
         s += ("{P1} is run on one die only, to find the breakdown voltage "
               "that limits the bias of {P2} on the others. ")
@@ -235,7 +242,7 @@ def predicted(name):
         ref, rat = pd.ratio(name, q) if q == fam else ("–", "–")
         rows.append([label, pd.cell(name, q, "edge"),
                      pd.cell(name, q, "corner"), pd.span(lo, hi),
-                     pd.span(lo, hi, pd.WIDEN),
+                     pd.span(lo, hi, True),
                      rat if rat == "–" or ref == name else
                      f"{rat} of {{{ref}}}"])
     rows = [[link(str(c), name) for c in r] for r in rows]

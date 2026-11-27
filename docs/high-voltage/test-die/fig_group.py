@@ -87,7 +87,7 @@ def fams(pts, wanted=("AL", "AnL", "AnD", "BL", "BD")):
 
 
 def surround():
-    pts = [(1, "NT1"), (5, "NT5"), (10, "NT10"), (20, "NT20")]
+    pts = [(1, "NT1"), (5, "NT5"), (20, "NT20")]
     return trend("Plain N-wells: breakdown against the distance to the P+ "
                  "ring", "distance from the well edge to the P+ ring (µm)",
                  [(x, str(x)) for x, _ in pts], fams(pts, ("AL", "BL", "BD")),
@@ -104,10 +104,13 @@ def pwell():
 
 
 def nat():
-    pts = [(0.6, "NA0p6"), (2, "NA2")]
-    return trend("NAT beside an N-well: breakdown against where NAT starts",
-                 "distance from the well edge to the NAT layer (µm)",
-                 [(x, f"{x:g}") for x, _ in pts], fams(pts))
+    names = ["NA0p6", "NA0p6T10", "NA0p6C0", "NAR1_2", "NAR3_2", "NAR1S3",
+             "NAR1S8"]
+    pts = list(enumerate(names))
+    return trend("NAT beside an N-well: plain, with rings and with a "
+                 "contacted ring", "structure", [(k, n) for k, n in pts],
+                 fams(pts), "The Metal1 plates under NAT are in the tables "
+                 "of the entries.")
 
 
 def plates():
@@ -144,7 +147,7 @@ def rings():
 
 
 def gated():
-    names = ["NGP4", "NGM1", "NAGM1", "DGM1"]
+    names = ["NGP4", "NGM1", "NAGM1"]
     pts = list(enumerate(names))
     curves = []
     for base, dark in (("BL", "#7f8c8d"), ("BD", "#34495e"),
@@ -203,17 +206,17 @@ _END = (", one curve per process, with dashed lines at the published 14 V "
         "breakdown")
 ALT = {
     "surround": _BV + "the distance from the well edge to the P+ ring, "
-                "from 1 µm to 20 µm" + _END,
+                "1 µm, 5 µm and 20 µm" + _END,
     "pwell": _BV + "the distance at which the drawn P-well starts, from "
              "0 µm to 6 µm" + _END,
-    "nat": _BV + "the distance at which the NAT layer starts, 0.6 µm and "
-           "2 µm" + _END,
+    "nat": _BV + "seven structures under NAT: NA0p6, NA0p6T10, NA0p6C0, "
+           "NAR1_2, NAR3_2, NAR1S3 and NAR1S8" + _END,
     "plates": _BV + "plate length from 1 µm to 12 µm, with separate curves "
               "for polysilicon, Metal1 and Metal2 plates" + _END,
     "rings": _BV + "the gap from the well to ring 1, from 1.4 µm to 12 µm, "
              "with separate curves for one, three and five rings and for "
              "one ring at the wide gaps" + _END,
-    "gated": _BV + "the four gated diodes, with the plate joined to the "
+    "gated": _BV + "the three gated diodes, with the plate joined to the "
              "well and with the plate at 0 V" + _END,
     "dnw": _BV + "the distance from the edge of the deep N-well to the P+ "
            "ring, 2.6 µm and 20 µm" + _END,
