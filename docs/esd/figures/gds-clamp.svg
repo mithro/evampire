@@ -23,6 +23,8 @@
 <rect x="604.6" y="135.7" width="160.6" height="145.8" fill="none" stroke="#e08a00" stroke-width="3.0"/>
 <rect x="769.2" y="115.5" width="55.4" height="184.9" fill="#e08a00" fill-opacity="0.3" stroke="#ffffff" stroke-width="5.5"/>
 <rect x="769.2" y="115.5" width="55.4" height="184.9" fill="none" stroke="#e08a00" stroke-width="3.0"/>
+<rect x="829.5" y="139.2" width="69.7" height="136.1" fill="#e08a00" fill-opacity="0.3" stroke="#ffffff" stroke-width="5.5"/>
+<rect x="829.5" y="139.2" width="69.7" height="136.1" fill="none" stroke="#e08a00" stroke-width="3.0"/>
 <polyline points="373.7,93.6 373.7,130.3" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="373.7,93.6 373.7,130.3" fill="none" stroke="#e08a00" stroke-width="1.3"/>
 <circle cx="373.7" cy="130.3" r="3.2" fill="#e08a00" stroke="#fff" stroke-width="1"/>
@@ -46,11 +48,11 @@
 <text x="808.4" y="55.0" text-anchor="middle" font-size="14" fill="#e08a00" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">360 kΩ:</text>
 <text x="808.4" y="71.8" text-anchor="middle" font-size="14" fill="#e08a00" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">12 of 30 kΩ</text>
 <text x="808.4" y="88.6" text-anchor="middle" font-size="14" fill="#e08a00" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">in series</text>
-<polyline points="830.0,323.5 845.4,257.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="830.0,323.5 845.4,257.2" fill="none" stroke="#666666" stroke-width="1.3"/>
-<circle cx="845.4" cy="257.2" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
-<text x="830.0" y="338.5" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">4 diodes from</text>
-<text x="830.0" y="355.3" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">DVSS to DVDD</text>
+<polyline points="765.2,323.5 862.4,275.3" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="765.2,323.5 862.4,275.3" fill="none" stroke="#e08a00" stroke-width="1.3"/>
+<circle cx="862.4" cy="275.3" r="3.2" fill="#e08a00" stroke="#fff" stroke-width="1"/>
+<text x="765.2" y="338.5" text-anchor="middle" font-size="14" fill="#e08a00" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">160 µm² diode from DVSS</text>
+<text x="765.2" y="355.3" text-anchor="middle" font-size="14" fill="#e08a00" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">to DVDD: 4 of 40 µm²</text>
 <polyline points="932.1,323.5 932.1,278.8" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="932.1,323.5 932.1,278.8" fill="none" stroke="#666666" stroke-width="1.3"/>
 <circle cx="932.1" cy="278.8" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
@@ -76,9 +78,9 @@
 <rect x="229.0" y="445.5" width="26" height="14" fill="#b9b9b9" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
 <text x="263.0" y="457.5" font-size="14" fill="#222222">layout layers, in grey</text>
 <rect x="650.8" y="445.5" width="26" height="14" fill="#e08a00" fill-opacity="0.3" stroke="#e08a00" stroke-width="2"/>
-<text x="684.8" y="457.5" font-size="14" fill="#222222">rail clamp</text>
+<text x="684.8" y="457.5" font-size="14" fill="#222222">rail clamp and rail diode</text>
 <text x="229.0" y="481.5" font-size="14" font-weight="bold" fill="#666666">Abc</text>
 <text x="263.0" y="481.5" font-size="14" fill="#222222">not in the schematic</text>
-<text x="650.8" y="481.5" font-size="14" fill="#222222">the DVSS pad holds the same rail clamp</text>
+<text x="650.8" y="481.5" font-size="14" fill="#222222">the DVSS pad holds the same clamp and diode</text>
 <text x="229.0" y="505.5" font-size="14" fill="#222222">DVDD and DVSS rings: metal over the cell, not drawn</text>
 </svg>
