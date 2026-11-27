@@ -45,7 +45,7 @@ def rails(d, x0, x1):
 
 def main():
     with schemdraw.Drawing(show=False) as d:
-        rails(d, 1.5, 30.0)
+        rails(d, 1.5, 31.0)
 
         # Bond pad.
         corners = [(0, MID - 0.6), (1.2, MID - 0.6), (1.2, MID + 0.6),
@@ -101,19 +101,19 @@ def main():
         d += elm.Line().at(inv.out).to((22.0, MID)).color(CLAMP)
         fet = d.add(elm.NFet().anchor("gate").at((22.0, MID)).reverse()
                     .color(CLAMP))
-        d += elm.Line().at(fet.drain).to((fet.drain[0], TOP))
-        d += elm.Line().at(fet.source).to((fet.source[0], BOT))
+        d += elm.Line().at(fet.drain).to((fet.drain[0], TOP)).color(CLAMP)
+        d += elm.Line().at(fet.source).to((fet.source[0], BOT)).color(CLAMP)
         d += elm.Label().at((fet.drain[0] + 0.4, MID + 0.9)).label(
             "clamp NMOS\n4000 µm", halign="left", color=CLAMP)
         d += elm.Dot().at((fet.drain[0], TOP))
         d += elm.Dot().at((fet.source[0], BOT))
 
         # Rail diode, four parts, in each DVDD and DVSS pad cell.
-        d += (elm.Diode().up().at((27.0, BOT)).to((27.0, TOP))
+        d += (elm.Diode().up().at((28.0, BOT)).to((28.0, TOP))
               .color(CLAMP).label("160 µm²\n(4 × 40 µm²)", loc="bottom",
                                    ofst=0.2))
-        d += elm.Dot().at((27.0, TOP))
-        d += elm.Dot().at((27.0, BOT))
+        d += elm.Dot().at((28.0, TOP))
+        d += elm.Dot().at((28.0, BOT))
 
         # Group labels.
         d += elm.Label().at((3.5, TOP + 1.0)).label("primary",
