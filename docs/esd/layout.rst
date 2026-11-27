@@ -63,7 +63,9 @@ largest part of the cell, and they are also its primary ESD protection
 
 .. figure:: figures/gds-cell.svg
    :name: fig-esd-gds-cell
-   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide, with
+   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide. An
+         orange note says the rail clamp and rail diode are not in this
+         cell, only in the supply pads. The layout is drawn with
          its layers in grey. From the left: the bond pad, labelled PAD. Two
          red blocks, labelled drain diode of NMOS drivers 304 µm and drain
          diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,

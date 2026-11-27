@@ -42,7 +42,9 @@ DVSS.
 .. figure:: figures/io-cell.svg
    :name: fig-esd-io-cell
    :alt: Schematic between a DVDD rail at the top and a DVSS rail at the
-         bottom. On the left, the PAD connects to a diode up to DVDD,
+         bottom, in two dashed boxes: the parts inside gf180mcu_fd_io__bi_t
+         on the left, and the parts inside the supply pads on the right.
+         On the left, the PAD connects to a diode up to DVDD,
          labelled drain diode of PMOS drivers 480 µm, and a diode up from
          DVSS, labelled drain diode of NMOS drivers 304 µm. A 110 ohm
          resistor, four 440 ohm resistors in parallel, leads to an inner
@@ -59,7 +61,9 @@ DVSS.
 
 .. figure:: figures/gds-cell.svg
    :name: fig-esd-io-gds-cell
-   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide, with
+   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide. An
+         orange note says the rail clamp and rail diode are not in this
+         cell, only in the supply pads. The layout is drawn with
          its layers in grey. From the left: the bond pad, labelled PAD. Two
          red blocks, labelled drain diode of NMOS drivers 304 µm and drain
          diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,
