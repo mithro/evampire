@@ -45,5 +45,6 @@
 <path d="M482.2,14.8 L490.2,18.8 L482.2,22.8 Z" fill="white" stroke="#1b3a6b" stroke-width="1.3"/>
 <circle cx="536.0" cy="90.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <text x="546" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BD</text>
+<text x="20" y="372" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Dashed: NAR1S3 and NAR1S8, the contacted rings under NAT.</text>
 <text x="20" y="388" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Open triangle: the ring current did not reach 1 nA by the end of the sweep.</text>
 </svg>
