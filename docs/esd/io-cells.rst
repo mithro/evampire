@@ -58,22 +58,25 @@ DVSS.
 
 .. figure:: figures/gds-cell.svg
    :name: fig-esd-io-gds-cell
-   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide. From the
-         left: the bond pad, the NMOS output drivers, the PMOS output drivers,
-         the pre-drivers, the output signal buffers, the pull-up and
-         pull-down resistors, a blue box round the secondary protection, and
-         the input buffer and logic at the right edge.
+   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide, with
+         its layers in grey. From the left: the bond pad, labelled PAD. Two
+         red blocks, labelled drain diode of NMOS drivers 304 µm and drain
+         diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,
+         output signal buffers and pull-up and pull-down resistors, which
+         the schematic leaves out. A blue block whose parts are labelled
+         110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
+         block labelled input buffer.
    :width: 100%
 
-   The layout of gf180mcu_fd_io__bi_t, with the bond pad at the left as in
-   :numref:`fig-esd-io-cell`. Red and blue mark the primary and the
-   secondary protection in both. :ref:`esd-layout-floorplan` describes
-   each part.
+   The parts of :numref:`fig-esd-io-cell` in the layout of
+   gf180mcu_fd_io__bi_t, each in the schematic's colour and under the
+   schematic's label. The layers are grey, and grey lettering names what
+   the schematic leaves out. :ref:`esd-layout-floorplan` describes each
+   part.
 
 Each symbol of the schematic is a group of shapes in a layout.
 :numref:`tab-esd-schematic-layout` pairs them, with the layout figure
-that shows each one. The layout figures use the schematic's colours
-(:ref:`esd-layout`).
+that shows each one.
 
 .. list-table:: Each part of the schematic and its form in the layout
    :name: tab-esd-schematic-layout
@@ -267,14 +270,16 @@ pad.
 
 .. figure:: figures/gds-clamp.svg
    :name: fig-esd-io-gds-clamp
-   :alt: Layout of the DVDD supply pad, 350 µm long. From the left: the DVDD
-         bond pad, the clamp transistor as four blocks of 20 fingers, three
-         inverters, eight timer capacitors, twelve timer resistors, four diodes
-         from DVSS to DVDD and four supply capacitors at the right edge.
+   :alt: Layout of the DVDD supply pad, 350 µm long, with its layers in
+         grey. From the left: the DVDD bond pad, then four orange blocks
+         labelled clamp NMOS 4000 µm, three inverters, MOS capacitor and
+         360 kΩ. In grey lettering, four diodes from DVSS to DVDD and four
+         supply capacitors, which the schematic leaves out.
    :width: 100%
 
-   The rail clamp in the layout of gf180mcu_fd_io__dvdd, in the orange of
-   the rail clamp in :numref:`fig-esd-io-cell`. :ref:`esd-layout-clamp`
+   The rail clamp of :numref:`fig-esd-io-cell` in the layout of
+   gf180mcu_fd_io__dvdd, in the schematic's orange and under the
+   schematic's labels. The layers are grey. :ref:`esd-layout-clamp`
    describes the clamp transistor's fingers.
 
 The clamp needs no supply. The discharge itself raises DVDD, which powers

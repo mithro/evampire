@@ -16,7 +16,11 @@ figures share four conventions:
 * The bond pad is at the left and the chip's core at the right, as in the
   schematic :numref:`fig-esd-io-cell`. This turns the foundry's drawing a
   quarter turn clockwise.
-* Each layer has the same colour in every figure, and the silicon layers
+* The two figures of a whole cell, :numref:`fig-esd-gds-cell` and
+  :numref:`fig-esd-gds-clamp`, draw the layers in grey. Their colours mark
+  the parts of the schematic, and grey lettering names what the schematic
+  leaves out.
+* In the other figures each layer has one colour, and the silicon layers
   have the colours of the cross-section :numref:`fig-esd-driver-section`.
   A figure about one net draws the other layers paler, or leaves them out.
   The cross-section's P-well has no colour here, because no P-well is
@@ -56,14 +60,14 @@ largest part of the cell, and they are also its primary ESD protection
 
 .. figure:: figures/gds-cell.svg
    :name: fig-esd-gds-cell
-   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide, showing
-         N-well, N+ diffusion, P+ diffusion and polysilicon. From the left:
-         the bond pad with a 60 µm by 60 µm opening. The NMOS output drivers
-         inside guard rings. The PMOS output drivers in an N-well, each
-         driver inside guard rings. The pre-drivers. The output signal
-         buffers. The pull-up and pull-down resistors. A blue box round the
-         secondary protection, resistors and diodes. The input buffer and
-         logic at the right edge.
+   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide, with
+         its layers in grey. From the left: the bond pad, labelled PAD. Two
+         red blocks, labelled drain diode of NMOS drivers 304 µm and drain
+         diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,
+         output signal buffers and pull-up and pull-down resistors, which
+         the schematic leaves out. A blue block whose parts are labelled
+         110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
+         block labelled input buffer.
    :width: 100%
 
    The parts of gf180mcu_fd_io__bi_t, drawn from its layout.
@@ -284,12 +288,11 @@ four diodes from DVSS to DVDD and four capacitors between the rails.
 
 .. figure:: figures/gds-clamp.svg
    :name: fig-esd-gds-clamp
-   :alt: Layout of the DVDD supply pad, 350 µm long. From the left: the DVDD
-         bond pad. The clamp transistor as four blocks of 20 fingers of 50 µm
-         inside guard rings. Three inverters. Eight timer capacitors of 10 µm
-         by 25 µm. Twelve timer resistors of 30 kilohms. Four diodes from
-         DVSS to DVDD. Four supply capacitors at the right edge. Bars of P+
-         diffusion tie the substrate.
+   :alt: Layout of the DVDD supply pad, 350 µm long, with its layers in
+         grey. From the left: the DVDD bond pad, then four orange blocks
+         labelled clamp NMOS 4000 µm, three inverters, MOS capacitor and
+         360 kΩ. In grey lettering, four diodes from DVSS to DVDD and four
+         supply capacitors, which the schematic leaves out.
    :width: 100%
 
    The parts of gf180mcu_fd_io__dvdd, drawn from its layout.
