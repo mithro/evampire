@@ -111,8 +111,9 @@ def cc_thresholds():
                          "end"))
         body.append(text(x + w / 2 + 4, p.y(sum(ra) / 2) + 4, "Ra", 10))
         body.append(text(x + w / 2 + 4, p.y(sum(rd) / 2) + 4, "Rd", 10))
-        body.append(text(x + w / 2 + 4, p.y((vopen + 2.6) / 2) + 4, "open",
-                         10))
+        # Beside the open range, clear of the 2.0 V and 2.5 V grid lines.
+        vlab = 2.56 if vopen > 2.3 else 2.25
+        body.append(text(x + w / 2 + 4, p.y(vlab) + 4, "open", 10))
 
     # Legend.
     ly = p.bottom + 26
