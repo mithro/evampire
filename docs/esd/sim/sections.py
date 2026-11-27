@@ -85,8 +85,12 @@ def driver_section():
     b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
     b.append(text(200, top - 10, "silicide block", size=11))
     # NMOS in a P-well tied to DVSS.
-    b.append(rect(340, top, 300, 110, PWELL))
-    b.append(text(490, top + 100, "P-well, on DVSS", size=12))
+    # The layout draws no P-well under these transistors, so it has the
+    # substrate's colour here, as in the layout figures, and a dashed edge.
+    b.append(rect(340, top, 300, 110, SUB, dash="5,3"))
+    b.append(text(490, top + 88, "P-well, on DVSS:", size=12))
+    b.append(text(490, top + 103, "generated, not drawn in the layout",
+                  size=11))
     b.append(rect(355, top, 120, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
     b.append(rect(480, top - 10, 34, 10, GATE))
@@ -131,7 +135,9 @@ def driver_section():
     b.append(rect(538, 106, 65, 6, METAL))
     b.append(text(570, 98, "DVSS", size=13, weight="bold"))
     b.append(text(145, top - 20, "gate", size=11))
-    b.append(text(186, top - 40, "PMOS: layout panel (b)", size=11))
+    b.append(text(186, top - 40, "PMOS: cut B–B′, panel (b)", size=11))
+    b.append(text(251, top - 6, "B", size=13, weight="bold"))
+    b.append(text(26, top - 6, "B′", size=13, weight="bold"))
     # Diodes the drains form with their wells.
     b += diode(225, top + 66, False, "", "start")
     b.append(text(170, top + 128, "P+ drain to N-well: diode from PAD",
