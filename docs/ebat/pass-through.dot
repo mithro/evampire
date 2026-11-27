@@ -44,9 +44,9 @@ digraph pass_through {
           fillcolor="#dbe8f5"];
 
     // Data, including LLDP frames, passes from cable to cable.
-    up    -> mag_a [dir=both, label="cable"];
+    up    -> mag_a [dir=both, label="cable\n\n"];
     mag_a -> mag_b [dir=both, label="data pairs,\nLLDP included"];
-    mag_b -> down  [dir=both, label="cable"];
+    mag_b -> down  [dir=both, label="cable\n\n"];
 
     // Power through the cable-side centre taps.
     mag_a -> pd    [penwidth=2.5, label="centre taps"];

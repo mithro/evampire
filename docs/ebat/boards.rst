@@ -62,8 +62,8 @@ transceiver and keep the direct voltage away from it, while the power
 enters and leaves at the :term:`centre taps <centre tap>`
 (:doc:`../ethernet/magnetics/poe`). A board with no data path has no
 transceiver to protect. The two wires of each pair can be joined and taken
-to the polarity bridges of the powered-device front end
-(:numref:`fig-poe-bridges`), or to the power sourcing switch, as
+to the polarity bridges (:numref:`fig-poe-bridges`), which feed the
+powered-device front end, or to the power sourcing switch, as
 :numref:`fig-ebat-pair-joins` shows for port A.
 
 .. graphviz:: pair-joins.dot
@@ -201,8 +201,9 @@ carried in other kinds of frame passes through in the same way as LLDP.
 Open questions
 --------------
 
-* Whether the two wires of each pair are joined directly on a board with no
-  data path.
+* How a board with no data path connects each pair: with the two wires
+  joined directly, joined through a part on each wire, or through standard
+  magnetics using only their centre taps.
 * Whether ebat boards pass Ethernet data through, and if so how they deal
   with the LLDP frames that pass between the far ends. Offering only
   classes 1 to 3 on port B does not remove the problem, because LLDP is

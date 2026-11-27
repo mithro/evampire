@@ -33,26 +33,26 @@ At class 3 a powered device may draw 13 W at its input
 the full power of class 1 to 3 from Physical Layer classification alone
 (:numref:`tab-poe-class-outcome`).
 
-The power that remains for the outputs is worked out as on evampire, from
-the class power, the converter efficiency and the board's own power
-(:doc:`../power/usb-pd/power-translation`). With evampire's illustrative
-values, which include the transceivers in the board's own power, the class
-3 rows give:
+The power that remains for the outputs is 13 W times the converter
+efficiency, less the board's own power, worked out as on evampire
+(:doc:`../power/usb-pd/power-translation`, :doc:`../power/poe/translation`).
+The class 3 rows of evampire's examples give it for illustrative values:
 
-* Ethernet in, USB out: a Port Present PDP of 8 W
+* Ethernet in, USB out: a Port Present PDP of 8 W, with an efficiency of
+  0.900 and 3.10 W of board power
   (:numref:`tab-usbpd-translation-examples`);
-* Ethernet in, Ethernet out: class 2 on port B
-  (:numref:`tab-poe-pass-through`).
+* Ethernet in, Ethernet out: class 2 on port B, with an efficiency of 0.85,
+  while the board uses no more than 4.3 W (:numref:`tab-poe-pass-through`).
 
-An ebat board has no transceivers, so its own power leaves out their
-share, and the power for its outputs is higher by the same amount. Both
-the board's own power and the transceivers' share are unknown, so the
-power that remains is between the values above and 13 W times the
-converter efficiency.
+An ebat board has no transceivers, so its own power has no transceiver
+share. Its value is unknown, as on evampire, and the power for the outputs
+follows from it as in these examples.
 
 USB in, Ethernet out does not involve port A, so it is the same as on
-evampire (:numref:`tab-poe-usb-in`). Port B can offer up to class 8 from a
-USB contract of 100 W or more.
+evampire (:numref:`tab-poe-usb-in`). From a USB contract of 100 W, port B
+can offer up to class 8 while the board uses no more than 4 W, and only as
+Type 4 power sourcing equipment with 4-pair power
+(:doc:`../power/poe/translation`).
 
 Alternatives for more power
 ---------------------------
@@ -89,11 +89,11 @@ Allocation changes on port B
 ----------------------------
 
 On a board that does not pass Ethernet data through, port B has no LLDP
-exchange with its powered device (:ref:`req-ebat-no-lldp`). A powered
-device without LLDP receives the full power of its assigned class, as from
-evampire (:ref:`req-poe-classification`). It keeps that class, including
-after demotion (:ref:`poe-demotion`), because nothing can ask for more.
-On a board with data pass-through, LLDP frames pass between the far ends
+exchange with its powered device (:ref:`req-ebat-no-lldp`). Without that
+exchange, the powered device receives the full power of its assigned
+class, as from evampire (:ref:`req-poe-classification`). Its class changes
+only when port B removes the power and classifies it again, including
+after demotion (:ref:`poe-demotion`). On a board with data pass-through, LLDP frames pass between the far ends
 and can change the allocation (:ref:`ebat-pass-through-lldp`).
 
 To change port B's allocation, the software removes the power, runs

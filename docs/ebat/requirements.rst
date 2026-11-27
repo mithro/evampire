@@ -23,8 +23,9 @@ No Ethernet data path
 * Of :ref:`req-cable`, only the electrical isolation and the path for
   Power over Ethernet current apply. The parts that serve the data do not
   (:ref:`ebat-boards-no-magnetics`, :ref:`ebat-boards-isolation`).
-* Of :ref:`req-processor`, the item on the transceiver configuration
-  interface does not apply, because ebat has no :term:`MDIO` interface
+* Of :ref:`req-processor`, the items on network traffic and on the
+  transceiver configuration interface do not apply, because ebat carries
+  no network traffic and has no :term:`MDIO` interface
   (:ref:`ebat-left-out`).
 * A board can pass Ethernet data between two RJ45 sockets, on wiring
   that does not pass through ebat. :ref:`ebat-pass-through` describes such
@@ -35,8 +36,8 @@ No Ethernet data path
 Unchanged power requirements
 ----------------------------
 
-ebat's power side is evampire's. These requirements apply to ebat as
-written, except where :ref:`req-ebat-no-lldp` states otherwise:
+ebat's power circuits are evampire's. These requirements apply to ebat
+as written, except where :ref:`req-ebat-no-lldp` states otherwise:
 
 * :ref:`req-power-bridging`: the ports, the operating modes, the power
   budget, the translation between the standards and the sharing between
@@ -45,15 +46,14 @@ written, except where :ref:`req-ebat-no-lldp` states otherwise:
 * :ref:`req-poe-classification`, in its Physical Layer part;
 * :ref:`req-converters`;
 * :ref:`req-usb-serial`;
-* :ref:`req-processor`, except its item on the transceiver configuration
-  interface;
+* :ref:`req-processor`, except the items that :ref:`req-ebat-no-data`
+  names;
 * :ref:`req-process`.
 
 Each Ethernet port takes the power role that evampire's board
-configurations give it (:numref:`tab-power-board-configs`). In the first
-version, port A receives power and port B supplies it. In the full design,
-either port takes either role, and each statement about port A or port B
-on ebat applies to whichever port has that role.
+configurations give it (:numref:`tab-power-board-configs`). Port A stands
+for the port that receives power and port B for the port that supplies
+it, whichever port takes each role.
 
 The rows of :numref:`tab-power-board-configs` on the transceivers and the
 connection to the cable do not apply. A board fits only the ports it needs,
@@ -90,6 +90,5 @@ Open questions
 * The questions that evampire leaves open on its power side apply to ebat
   in the same way (:ref:`requirements-open-questions`).
 * Which class the start-up sequencer requests, which evampire leaves open
-  (:doc:`../power/poe/startup`), on ebat chooses between classes 1, 2 and
-  3.
+  (:doc:`../power/poe/startup`). On ebat it is class 1, 2 or 3.
 * The questions on boards built around ebat are listed on :doc:`boards`.

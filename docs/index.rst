@@ -157,7 +157,7 @@ The chip
    The blocks inside evampire and how frames move between them.
 :doc:`ebat/index`
    ebat, evampire with the Ethernet data functions removed, keeping the
-   same Power over Ethernet and USB Type-C functions.
+   same Power over Ethernet and USB Type-C circuits.
 
 .. toctree::
    :maxdepth: 2

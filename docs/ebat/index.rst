@@ -4,16 +4,17 @@ ebat
 ====
 
 ebat is evampire with the Ethernet data functions removed. It keeps
-evampire's Power over Ethernet and USB Type-C circuits and software, and
-drops the transceivers, the forwarding between ports and the network
-traffic, with their cost and complexity. ebat is its own die, but not a
-separate design: its power side is evampire's, and any change to
+evampire's Power over Ethernet and USB Type-C circuits and their software,
+except the power negotiation over LLDP. It drops the transceivers, the
+forwarding between ports and the network traffic, with their cost and
+complexity. ebat is its own die, but not a
+separate design: its power circuits are evampire's, and any change to
 evampire's power side applies to ebat. Like evampire, it is in design and
 no silicon exists.
 
-Everything ebat keeps is described once, on evampire's pages. ebat's
-requirements, architecture and boards state only what removing the data
-functions changes, and link to evampire's pages for the rest.
+The power negotiation over LLDP goes with the data functions, because LLDP
+needs Ethernet frames. The rest of ebat's power side is specified on
+evampire's pages.
 
 Functions kept and dropped
 --------------------------
@@ -36,7 +37,10 @@ has each one.
    * - :ref:`Ethernet transceivers or RGMII interfaces <req-transceivers>`
      - Yes
      - No
-   * - :ref:`Frames to and from the processor <req-processor-delivery>`
+   * - :ref:`Frames to the processor <req-processor-delivery>`
+     - Yes
+     - No
+   * - :ref:`Frames from the processor <req-processor-transmit>`
      - Yes
      - No
    * - :ref:`Transceiver configuration interface <arch-config-interface>`
@@ -48,9 +52,9 @@ has each one.
    * - :ref:`Data Link Layer classification over LLDP <req-poe-classification>`
      - Yes
      - No
-   * - Highest class allowed when receiving Power over Ethernet
-     - 8
-     - 3
+   * - Highest class requested when receiving Power over Ethernet
+     - Up to 8
+     - Up to 3
    * - Highest class offered when supplying Power over Ethernet
      - 8
      - 8
@@ -70,11 +74,10 @@ has each one.
      - Yes
      - Yes, the same
 
-Power negotiation over LLDP needs Ethernet frames, so it goes with the data
-functions. That makes the two changes on the power side in
-:numref:`tab-ebat-compare`: the highest class when receiving power, and how
-the allocation changes when supplying it (:ref:`req-ebat-no-lldp`).
-:doc:`power-without-lldp` explains both.
+Without LLDP, ebat's power side behaves differently from evampire's in two
+ways, shown in :numref:`tab-ebat-compare`: the highest class it requests
+when receiving power, and how the allocation changes when it supplies power
+(:ref:`req-ebat-no-lldp`). :doc:`power-without-lldp` explains both.
 
 The pages
 ---------

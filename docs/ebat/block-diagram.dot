@@ -1,7 +1,9 @@
 // ebat block diagram.
 // Bold arrows: power negotiation signals between the chip and the board
 // (detection, classification, configuration channel, USB data). Dashed
-// arrows: control and measurements.
+// arrows: control and measurements. The green dashed bus carries the
+// voltage and current of each power port to power monitoring and limiting,
+// and the limit back to each port.
 // Fill colours: white with a dashed outline, parts outside the chip; yellow,
 // Power over Ethernet circuits; blue, USB Type-C circuits; green, power
 // monitoring and converter control; orange, the processor.
@@ -80,4 +82,26 @@ digraph ebat {
     cpu  -> ctrl [style=dashed];
     conv -> mon  [style=dashed, label="measurements    "];
     ctrl -> conv [style=dashed, label="    switching"];
+
+    // Measurement and limiting of every power port: a tap above each
+    // off-chip block joins a bus that runs left and down the margin to
+    // power monitoring and limiting.
+    node [shape=point, width=0.01, height=0.01, fixedsize=true, label=""];
+    edge [style=dashed, dir=none, color="#2e7d32"];
+    tap_a [pos="1.0,8.025!"];
+    tap_u [pos="4.0,8.025!"];
+    tap_b [pos="7.0,8.025!"];
+    bus_a [pos="1.0,8.35!"];
+    bus_u [pos="4.0,8.35!"];
+    bus_b [pos="7.0,8.35!"];
+    bus_l [pos="-0.35,8.35!"];
+    bus_d [pos="-0.35,2.7!"];
+    tap_a -> bus_a;
+    tap_u -> bus_u;
+    tap_b -> bus_b;
+    bus_b -> bus_u;
+    bus_u -> bus_a [label="voltage, current and limit of each port"];
+    bus_a -> bus_l;
+    bus_l -> bus_d;
+    bus_d -> mon [dir=forward];
 }

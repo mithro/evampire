@@ -12,13 +12,16 @@ Blocks kept from evampire
 :numref:`fig-ebat-block-diagram` shows the blocks inside ebat. The
 connectors and per-port circuits run along the top, the processor sits in
 the middle, and the power monitoring and converter control connect it to
-the converters' power stages below.
+the converters' power stages below. Power monitoring and limiting measures
+the voltage and current of every power port and sets each port's limit, as
+:ref:`req-power-control` requires.
 
 .. graphviz:: block-diagram.dot
    :name: fig-ebat-block-diagram
    :caption: Blocks inside ebat, where bold arrows carry signals between the
-             chip and the board and dashed arrows carry control and
-             measurements.
+             chip and the board, dashed arrows carry control and
+             measurements, and the green dashed bus carries the voltage,
+             current and limit of each power port.
    :alt: Block diagram. Outside the chip, port A with its RJ45 socket and
          powered-device front end connects to the start-up sequencer and
          class signature block. The USB Type-C connector and power path
@@ -29,8 +32,11 @@ the converters' power stages below.
          memory, which connects to power monitoring and limiting and to
          converter control. Converter control drives the power stages of
          the voltage converters, drawn outside the chip as in evampire's
-         first version, and power monitoring reads them. One USB Type-C
-         connector is drawn, as in the first version.
+         first version, and power monitoring reads them. A green dashed bus
+         joins port A, the USB Type-C power path and port B, runs down the
+         left margin and enters power monitoring and limiting, labelled
+         voltage, current and limit of each port. One USB Type-C connector
+         is drawn, as in the first version.
    :align: center
 
 The fill colour of each block shows its group. White blocks with a dashed
@@ -107,7 +113,7 @@ local oscillator trimmed against the 1 ms start-of-frame tokens from the
 host, and a dedicated crystal.
 
 The processor handles no frames. Its work is the power negotiation on each
-port, the power budget and the USB serial port, as on evampire. Its timing
+port, the power budget and the USB serial port. Its timing
 for USB Power Delivery messages (:doc:`../power/usb-pd/software`), and the
 way the serial port shares it with them
 (:doc:`../usb-serial/usb-pd-roles`), are as on evampire.
@@ -118,7 +124,7 @@ Pin savings
 Compared with a first-version evampire, ebat needs 27 fewer pins: those of
 the two RGMII ports, the management interface and the 125 MHz reference
 clock (:numref:`tab-rgmii-pins`). Compared with a full-design evampire,
-ebat has none of the integrated transceivers' cable pins. The power-side pins are the same as on
-evampire: the detection and classification connections of each Ethernet
+ebat has none of the integrated transceivers' cable pins. The power-side
+pins are the same as on evampire: the detection and classification connections of each Ethernet
 port, the configuration channel and D+ and D− wires of each USB Type-C
 port, and the converter control and measurement connections.

@@ -26,7 +26,7 @@ match, and it can send frames of its own.
 The same documentation describes
 [ebat](https://evampire.readthedocs.io/en/latest/ebat/index.html):
 evampire with the Ethernet data functions removed, keeping the same Power
-over Ethernet and USB Type-C functions.
+over Ethernet and USB Type-C circuits.
 
 The [block diagram in the evampire documentation](https://evampire.readthedocs.io/en/latest/architecture/index.html#fig-block-diagram)
 shows the blocks inside the chip.

@@ -339,12 +339,12 @@ Glossary
 
    Single-signature powered device
       A powered device that presents one detection signature and one class
-      signature for both pair sets together (:clause:`145.3.5`, see
+      signature for both pair sets together (:clause:`145.3.5`,
+      :clause:`145.3.6.1`, :clause:`Table 145-26 <145>`, see
       :doc:`power/poe/power-sourcing`).
 
    Midspan PSE
    Midspan
-   Injector
       Power sourcing equipment placed in the cable between an Ethernet
       switch and the device it powers, which IEEE 802.3 calls a Midspan PSE.
       It passes the data through and adds power to the pairs
@@ -352,8 +352,10 @@ Glossary
 
    ebat
       evampire with the Ethernet data functions removed, on its own die.
-      Its Power over Ethernet and USB Type-C functions are evampire's,
-      unchanged (see :doc:`ebat/index`).
+      Its Power over Ethernet and USB Type-C circuits are evampire's.
+      Without LLDP, it requests at most class 3 when it receives Power over
+      Ethernet, and changes the allocation of a powered device it supplies
+      only by classifying it again (see :doc:`ebat/index`).
 
    Return loss
       How much weaker, in decibels, a reflection is than the signal that
