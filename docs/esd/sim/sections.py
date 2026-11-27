@@ -19,7 +19,7 @@ PWELL = "#b9cfe8"
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
-GATE = "#8e5bb5"       # polysilicon over a channel, as in the layout figures
+GATE = "#7d8a2e"       # polysilicon over a channel, as in the layout figures
 METAL = "#9aa5b1"
 INK = "#222222"
 HOT = "#c0392b"
@@ -66,7 +66,11 @@ def driver_section():
     w, h = 660, 400
     b = ['<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
          'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
-         f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker></defs>']
+         f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker>'
+         '<pattern id="hatch" width="4" height="4" '
+         'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+         f'<line x1="0" y1="0" x2="0" y2="4" stroke="{INK}" '
+         'stroke-width="1"/></pattern></defs>']
     top = 170
     b.append(rect(10, top, 640, 200, SUB))
     b.append(text(20, 362, "P substrate", size=13, anchor="start"))
@@ -79,6 +83,7 @@ def driver_section():
     b.append(rect(165, top, 120, 22, PPLUS))
     b.append(text(225, top + 16, "P+ drain", size=12))
     b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
+    b.append(text(200, top - 10, "silicide block", size=11))
     # NMOS in a P-well tied to DVSS.
     b.append(rect(340, top, 300, 110, PWELL))
     b.append(text(490, top + 100, "P-well, on DVSS", size=12))
@@ -88,15 +93,28 @@ def driver_section():
     b.append(rect(519, top, 45, 22, NPLUS))
     b.append(rect(585, top, 30, 22, PPLUS))
     b += bracket(399, 480, top + 38, "blocked drain: 3.78 µm", anchor="end")
-    b.append(text(530, top - 16, "gate length: 1.15 µm", size=11,
+    b.append(text(440, top - 10, "silicide block", size=11))
+    b.append(text(530, top - 36, "gate length: 1.15 µm", size=11,
                   anchor="end"))
     # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
     b.append(text(387, top - 6, "A", size=13, weight="bold"))
     b.append(text(614, top - 6, "A′", size=13, weight="bold"))
-    b.append(text(455, top - 36, "cut A–A′ of the layout",
+    b.append(text(455, top - 54, "NMOS: cut A–A′ of the layout",
                   size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):
         b.append(text(x, top + 16, s, size=11))
+    # Under each, the name the layout figures give it.
+    for x, s in ((50, "guard ring"), (104, "source"), (553, "source"),
+                 (606, "guard ring")):
+        b.append(text(x, top + 35, s, size=11))
+    # The silicide block, hatched as in the layout figures.
+    # It also covers the gate, as the layout draws it.
+    for x, bw in ((160, 76), (399, 81)):
+        b.append(rect(x, top - 5, bw, 5, "url(#hatch)"))
+    for x, bw in ((130, 30), (480, 34)):
+        b.append(rect(x, top - 15, bw, 5, "url(#hatch)"))
+    b.append(text(640, 392, "not to scale", size=11, anchor="end"))
+    b.append(text(497, top - 20, "gate", size=11))
     # Wiring: PAD to both drains, DVDD and DVSS to sources and taps.
     for x in (270, 370):
         b.append(rect(x - 4, 60, 8, top - 60, METAL))
@@ -112,7 +130,8 @@ def driver_section():
         b.append(rect(x - 3, 110, 6, top - 110, METAL))
     b.append(rect(538, 106, 65, 6, METAL))
     b.append(text(570, 98, "DVSS", size=13, weight="bold"))
-    b.append(text(145, top - 16, "gate", size=11))
+    b.append(text(145, top - 20, "gate", size=11))
+    b.append(text(186, top - 40, "PMOS: layout panel (b)", size=11))
     # Diodes the drains form with their wells.
     b += diode(225, top + 66, False, "", "start")
     b.append(text(170, top + 128, "P+ drain to N-well: diode from PAD",
