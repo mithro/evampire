@@ -31,29 +31,29 @@
 <circle cx="452.4" cy="85.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="54.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="58" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">joined, BL</text>
-<circle cx="107.6" cy="169.3" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
-<circle cx="280.0" cy="159.0" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
-<circle cx="452.4" cy="159.0" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
+<circle cx="107.6" cy="178.2" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
+<circle cx="280.0" cy="159.6" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="159.6" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="72.0" r="3.6" fill="#7f8c8d" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="76" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">plate at 0 V, BL</text>
-<circle cx="107.6" cy="149.8" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<circle cx="280.0" cy="153.1" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<circle cx="452.4" cy="153.1" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="107.6" cy="151.2" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="280.0" cy="151.7" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="151.7" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="90.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">joined, BD</text>
-<circle cx="107.6" cy="169.8" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
-<circle cx="280.0" cy="162.3" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
-<circle cx="452.4" cy="162.3" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
+<circle cx="107.6" cy="179.0" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
+<circle cx="280.0" cy="162.8" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="162.8" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="108.0" r="3.6" fill="#34495e" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="112" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">plate at 0 V, BD</text>
-<circle cx="107.6" cy="267.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<circle cx="280.0" cy="266.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="107.6" cy="267.3" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="280.0" cy="266.8" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="452.4" cy="266.8" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="126.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">joined, AL</text>
-<circle cx="107.6" cy="261.9" r="3.6" fill="#d98880" stroke="#222222" stroke-width="0.6"/>
+<circle cx="107.6" cy="262.2" r="3.6" fill="#d98880" stroke="#222222" stroke-width="0.6"/>
 <circle cx="280.0" cy="265.4" r="3.6" fill="#d98880" stroke="#222222" stroke-width="0.6"/>
-<circle cx="452.4" cy="265.4" r="3.6" fill="#d98880" stroke="#222222" stroke-width="0.6"/>
+<circle cx="452.4" cy="265.7" r="3.6" fill="#d98880" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="144.0" r="3.6" fill="#d98880" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="148" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">plate at 0 V, AL</text>
 <text x="20" y="372" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Each point: the lower of the straight-edge and corner values. Open triangle: a lower bound.</text>
