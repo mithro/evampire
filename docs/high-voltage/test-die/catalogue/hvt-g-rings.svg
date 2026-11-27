@@ -43,8 +43,9 @@
 <circle cx="127.1" cy="86.3" r="3.6" fill="#16a085" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="72.0" r="3.6" fill="#16a085" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="76" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">three rings, BL</text>
+<polyline points="107.6,68.3 127.1,86.3" stroke="#8e44ad" stroke-width="1.6" fill="none"/>
 <circle cx="107.6" cy="68.3" r="3.6" fill="#8e44ad" stroke="#222222" stroke-width="0.6"/>
-<path d="M123.1,223.6 L131.1,227.6 L123.1,231.6 Z" fill="white" stroke="#8e44ad" stroke-width="1.3"/>
+<circle cx="127.1" cy="86.3" r="3.6" fill="#8e44ad" stroke="#222222" stroke-width="0.6"/>
 <circle cx="496.0" cy="90.0" r="3.6" fill="#8e44ad" stroke="#222222" stroke-width="0.6"/>
 <text x="506" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">five rings, BL</text>
 <polyline points="224.7,163.0 322.3,163.2 452.4,163.2" stroke="#d35400" stroke-width="1.6" fill="none"/>
@@ -68,7 +69,8 @@
 <text x="506" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">all, BD</text>
 <polyline points="107.6,265.0 127.1,274.2 127.1,274.2 127.1,274.2 159.6,274.2 224.7,274.2 322.3,274.2 452.4,274.2" stroke="#c0392b" stroke-width="1.6" fill="none"/>
 <circle cx="107.6" cy="265.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
-<path d="M103.6,265.9 L111.6,269.9 L103.6,273.9 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M103.6,282.5 L111.6,286.5 L103.6,290.5 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M106.8,272.4 L114.8,276.4 L106.8,280.4 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <circle cx="127.1" cy="274.2" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
