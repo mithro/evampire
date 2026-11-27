@@ -20,41 +20,61 @@ INPUT = (3.5, 311.6, 71.8, 341.8)        # rest of comp018green_inpath_cms_smt
 PULLS = (3.8, 266.7, 18.8, 309.5)        # comp018green_in_pupd resistors
 
 
+NDRIVERS = (2.0, 69.0, 73.0, 124.8)      # NMOS output drivers and rings
+PDRIVERS = (2.0, 125.2, 73.0, 208.0)     # PMOS output drivers and rings
+
+
 def cell():
-    """The whole cell: where each part of the protection sits."""
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=90, right=75, bottom=172)
+    """The whole cell, with the parts of the schematic in its colours.
+
+    The layers are grey, so red, blue and black mean here only what they
+    mean in the schematic of schematic.py, and each label is the
+    schematic's own. What the schematic leaves out is named in grey.
+    """
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=90, right=75, bottom=190)
     lay = gdskit.load(CELL)
-    f.silicon()
+    f.grey_silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
-           opacity=0.55)
+           opacity=0.55, key=False)
     f.layer("pad", width=1.6, dash="5,3")
     x, y = f.px(37.5, 32)
-    f.text(x, y - 16, "Bond pad", weight="bold")
-    f.text(x, y + 2, "60 µm × 60 µm")
-    f.text(x, y + 19, "opening")
-    for region in (PREDRIVERS, BUFFERS, INPUT):
+    f.text(x, y - 10, "PAD", weight="bold", size=18)
+    f.text(x, y + 10, "bond pad, 60 µm ×")
+    f.text(x, y + 27, "60 µm opening")
+    for region in (PREDRIVERS, BUFFERS, PULLS):
         f.box(region, colour=GREY, dash="5,4", width=1.4)
-    f.box(SECOND, colour=SECONDARY, width=2.2)
-    f.box(PULLS, colour=GREY, dash="5,4", width=1.4)
+    for region in (NDRIVERS, PDRIVERS):
+        f.region(region, HOT)
+    f.region(SECOND, SECONDARY)
+    f.region(INPUT, INK, opacity=0.12)
     top = f.oy - 46
-    # The schematic of schematic.py names these two by their drain diodes.
-    f.label("NMOS output drivers:\ndrain diode from\nDVSS, 304 µm",
-            (30, 95), (f.px(0, 95)[0], top - 17), colour=HOT, weight="bold")
-    f.label("PMOS output drivers:\ndrain diode to\nDVDD, 480 µm",
-            (30, 166), (f.px(0, 166)[0], top - 17), colour=HOT, weight="bold")
-    f.label("Pre-\ndrivers", (2.0, 222), (f.px(0, 216)[0], top))
-    f.label("Output signal\nbuffers", (3.6, 256), (f.px(0, 256)[0], top))
-    f.label("Pull-up and pull-\ndown resistors", (3.8, 290),
-            (f.px(0, 302)[0], top))
+    f.label("drain diode of\nNMOS drivers\n304 µm", (2.0, 97),
+            (f.px(0, 97)[0], top - 17), colour=HOT, weight="bold")
+    f.label("drain diode of\nPMOS drivers\n480 µm", (2.0, 166),
+            (f.px(0, 166)[0], top - 17), colour=HOT, weight="bold")
+    f.label("pre-\ndrivers", (2.0, 222), (f.px(0, 222)[0], top),
+            colour=GREY)
+    f.label("output signal\nbuffers", (3.6, 255), (f.px(0, 255)[0], top),
+            colour=GREY)
+    f.label("pull-up and\npull-down\nresistors", (3.8, 288),
+            (f.px(0, 288)[0], top - 17), colour=GREY)
+    f.label("input\nbuffer", (3.5, 327), (f.px(0, 327)[0], top),
+            weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("Guard rings round each driver", (70.2, 96),
-            (f.px(0, 126)[0], bot), also=[(70.5, 160)])
-    f.label("Secondary protection:\n110 Ω resistor and diodes", (52.7, 280),
-            (f.px(0, 280)[0], bot), colour=SECONDARY, weight="bold")
-    f.label("Input buffer\nand logic", (71.8, 330), (f.px(0, 335)[0], bot))
-    f.note(HOT, "primary protection, on the PAD net")
-    f.note(SECONDARY, "secondary protection", kind="box")
-    f.note(GREY, "other part of the cell", kind="box")
+    f.label("110 Ω\n(4 × 440 Ω)", (36.0, 272.1), (f.px(0, 246)[0], bot),
+            colour=SECONDARY, weight="bold")
+    f.label("40 µm² diode\nto DVDD", (49.0, 285.5), (f.px(0, 291)[0], bot),
+            colour=SECONDARY, weight="bold")
+    f.label("40 µm² diode\nfrom DVSS", (49.0, 301.7), (f.px(0, 338)[0], bot),
+            colour=SECONDARY, weight="bold")
+    f.note((HOT, HOT, 0.3), "primary", kind="tint")
+    f.note((SECONDARY, SECONDARY, 0.3), "secondary", kind="tint")
+    f.note((INK, INK, 0.12), "input buffer", kind="tint")
+    f.note(GREY, "not in the schematic")
+    f.note(INK, "rail clamp: in the supply pads, not here",
+           kind="plain")
+    f.note(INK, "DVDD and DVSS rings: metal over the cell, not drawn",
+           kind="plain")
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f

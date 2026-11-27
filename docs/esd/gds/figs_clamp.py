@@ -9,48 +9,52 @@ from shapely.affinity import translate
 from shapely.geometry import box
 
 import gdskit
-from layfig import CLAMP, DVDD, DVSS, HOT, INK, Fig
+from layfig import CLAMP, DVDD, DVSS, GREY, HOT, INK, Fig
 
 CELL = "dvdd"
 PITCH = 75.0   # width of a pad cell: the next cell along the ring
 INVERTERS = (15.8, 195.4, 59.6, 214.6)
 
 
+FET = (9.0, 71.0, 66.0, 193.0)        # the clamp transistor's four blocks
+CAPS = (11.0, 216.5, 65.0, 276.0)     # eight timer capacitors
+RES = (3.5, 277.5, 72.0, 298.0)       # twelve timer resistors
+
+
 def clamp():
-    """The whole DVDD pad: the rail clamp and its timer."""
+    """The whole DVDD pad, with the schematic's rail clamp in its orange.
+
+    As in figs_pad.cell: grey layers, the schematic's own labels, and what
+    the schematic leaves out named in grey.
+    """
     f = Fig(CELL, (0, 0, 75, 350), 2.7, top=80, right=75, bottom=184)
     lay = gdskit.load(CELL)
-    f.silicon()
+    f.grey_silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
-           opacity=0.55)
+           opacity=0.55, key=False)
     f.layer("pad", width=1.6, dash="5,3")
     x, y = f.px(37.5, 32)
-    f.text(x, y - 4, "Bond pad", weight="bold")
-    f.text(x, y + 14, "DVDD")
-    f.box(INVERTERS, colour=CLAMP, dash="5,4", width=2.0)
-    f.note(CLAMP, "the inverters", kind="box")
+    f.text(x, y - 6, "DVDD", weight="bold", size=18)
+    f.text(x, y + 14, "bond pad")
+    for region in (FET, INVERTERS, CAPS, RES):
+        f.region(region, CLAMP)
     top = f.oy - 34
-    # Each label gives the total that the schematic of schematic.py names.
-    f.label("Clamp NMOS transistor: 4\nblocks of 20 fingers, each\n"
-            "50 µm wide, 4000 µm in all",
-            (37.5, 116), (f.px(0, 131)[0], top - 17), colour=CLAMP,
-            weight="bold")
-    f.label("MOS capacitor of the\ntimer: 8 of 10 µm ×\n25 µm in parallel",
-            (19, 231), (f.px(0, 226)[0], top - 17), colour=CLAMP,
-            weight="bold")
-    f.label("Timer resistor:\n12 of 30 kΩ in\nseries, 360 kΩ", (37.5, 287.8),
-            (f.px(0, 288)[0], top - 17), colour=CLAMP, weight="bold")
-    f.label("4 supply\ncapacitors", (10, 337.8), (f.ox + f.dw, top),
-            anchor="end")
+    f.label("clamp NMOS 4000 µm:\n4 blocks of 20 fingers,\n"
+            "each 50 µm wide", (9.0, 131), (f.px(0, 131)[0], top - 17),
+            colour=CLAMP, weight="bold")
+    f.label("three\ninverters", (15.8, 205), (f.px(0, 203)[0], top),
+            colour=CLAMP, weight="bold")
+    f.label("MOS capacitor:\n8 of 10 µm ×\n25 µm", (11.0, 246),
+            (f.px(0, 246)[0], top - 17), colour=CLAMP, weight="bold")
+    f.label("360 kΩ:\n12 of 30 kΩ\nin series", (3.5, 288),
+            (f.px(0, 292)[0], top - 17), colour=CLAMP, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("Guard rings round the\nclamp transistor", (67.6, 110),
-            (f.px(0, 122)[0], bot), also=[(65.4, 134)])
-    f.label("3 inverters", (59.6, 205), (f.px(0, 205)[0], bot), colour=CLAMP,
-            weight="bold")
-    f.label("P+ ties to\nthe substrate", (67, 250), (f.px(0, 250)[0], bot))
     f.label("4 diodes from\nDVSS to DVDD", (56, 305.7),
-            (f.px(0, 305.7)[0], bot))
-    f.note(CLAMP, "part of the rail clamp")
+            (f.px(0, 300)[0], bot), colour=GREY)
+    f.label("4 supply\ncapacitors", (64, 337.8), (f.px(0, 337.8)[0], bot),
+            colour=GREY)
+    f.note((CLAMP, CLAMP, 0.3), "rail clamp", kind="tint")
+    f.note(GREY, "not in the schematic")
     f.dim((75, 0), (75, 350), "350 µm", offset=92, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f

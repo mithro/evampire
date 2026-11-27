@@ -52,6 +52,9 @@ STYLES = {
     "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
 }
 FONT = 14
+# Layers of a figure drawn without colour, from the wells up.
+GREYS = (("nwell", "#e6e6e6"), ("pdiff", "#cdcdcd"), ("ndiff", "#b9b9b9"),
+         ("poly", "#989898"), ("gate", "#787878"))
 
 
 def derived(cell, name):
@@ -122,6 +125,36 @@ class Fig:
             self.layer(name, **kw)
         lay = gdskit.load(self.cell)
         self.geom(lay["poly"].intersection(lay["comp"]), "gate", **kw)
+
+    def grey_silicon(self):
+        """The device layers in greys.
+
+        For a figure that pairs with the schematic: colour is then free to
+        mark the schematic's parts, and no layer shares a part's colour.
+        """
+        self.wells = False
+        self.body[0] = self.body[0].replace(SUB, "#f5f5f5")
+        lay = gdskit.load(self.cell)
+        for name, fill in GREYS:
+            geom = (lay["poly"].intersection(lay["comp"]) if name == "gate"
+                    else derived(self.cell, name))
+            d = self._path(gdskit.clip(geom, self.win))
+            self.body.append(f'<path d="{d}" fill="{fill}" stroke="#808080" '
+                             'stroke-width="0.5" fill-rule="evenodd"/>')
+        self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey",
+                  kind="tint")
+
+    def region(self, window, colour, opacity=0.3, width=3.0):
+        """Fill and outline a block of the layout in a schematic colour."""
+        (xa, ya), (xb, yb) = self.px(window[0], window[1]), self.px(
+            window[2], window[3])
+        at = (f'x="{min(xa, xb):.1f}" y="{min(ya, yb):.1f}" '
+              f'width="{abs(xb - xa):.1f}" height="{abs(yb - ya):.1f}"')
+        self.over.append(f'<rect {at} fill="{colour}" '
+                         f'fill-opacity="{opacity}" stroke="#ffffff" '
+                         f'stroke-width="{width + 2.5}"/>')
+        self.over.append(f'<rect {at} fill="none" stroke="{colour}" '
+                         f'stroke-width="{width}"/>')
 
     def outline(self, geom, colour, width=2.0, dash=None):
         d = self._path(gdskit.clip(geom, self.win))
