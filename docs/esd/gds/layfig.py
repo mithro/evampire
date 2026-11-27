@@ -143,6 +143,9 @@ class Fig:
         self.body[0] = self.body[0].replace(SUB, PAPER)
         lay = gdskit.load(self.cell)
         for name, fill in GREYS:
+            if named and name == "ndiff":
+                # Dotted, so that N+ and P+ differ by more than a shade.
+                fill = "url(#dots)"
             geom = (lay["poly"].intersection(lay["comp"]) if name == "gate"
                     else derived(self.cell, name))
             d = self._path(gdskit.clip(geom, self.win))
@@ -350,7 +353,11 @@ class Fig:
             '<pattern id="hatch" width="6" height="6" '
             'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
-            'stroke-width="1.2"/></pattern>']
+            'stroke-width="1.2"/></pattern>',
+            '<pattern id="dots" width="5" height="5" '
+            'patternUnits="userSpaceOnUse"><rect width="5" height="5" '
+            'fill="#c4c4c4"/><circle cx="2.5" cy="2.5" r="1.1" '
+            'fill="#4a4a4a"/></pattern>']
         for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
                 f'<marker id="arrow-{name}" viewBox="-1 -1 12 12" refX="7" '
