@@ -15,8 +15,9 @@
 <line x1="236" y1="204" x2="236" y2="212" stroke="#222222" stroke-width="1"/>
 <text x="198.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">blocked drain: 2.78 µm</text>
 <text x="200" y="160" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">silicide block</text>
-<rect x="340" y="170" width="300" height="110" fill="#b9cfe8" stroke="#222222"/>
-<text x="490" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P-well, on DVSS</text>
+<rect x="340" y="170" width="300" height="110" fill="#dbe8f5" stroke="#222222" stroke-dasharray="5,3"/>
+<text x="490" y="258" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P-well, on DVSS:</text>
+<text x="490" y="273" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">generated, not drawn in the layout</text>
 <rect x="355" y="170" width="120" height="22" fill="#f5b46e" stroke="#222222"/>
 <text x="415" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N+ drain</text>
 <rect x="480" y="160" width="34" height="10" fill="#7d8a2e" stroke="#222222"/>
@@ -60,7 +61,9 @@
 <rect x="538" y="106" width="65" height="6" fill="#9aa5b1" stroke="#222222"/>
 <text x="570" y="98" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">DVSS</text>
 <text x="145" y="150" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">gate</text>
-<text x="186" y="130" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">PMOS: layout panel (b)</text>
+<text x="186" y="130" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">PMOS: cut B–B′, panel (b)</text>
+<text x="251" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">B</text>
+<text x="26" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">B′</text>
 <polygon points="217,229 233,229 225,243" fill="#c0392b" stroke="#c0392b"/>
 <line x1="217" y1="243" x2="233" y2="243" stroke="#c0392b" stroke-width="2.5"/>
 <text x="237" y="241" text-anchor="start" font-size="12" fill="#c0392b" font-weight="normal"></text>
