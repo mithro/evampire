@@ -8,7 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 from shapely.geometry import box
 
 import gdskit
-from layfig import DVDD, DVSS, GREY, HOT, INK, SECONDARY, SNAP, Fig
+from layfig import CLAMP, DVDD, DVSS, GREY, HOT, INK, SECONDARY, SNAP, Fig
 
 CELL = "bi_t"
 # Blocks of the cell, as (x0, y0, x1, y1) in GDS micrometres, from the
@@ -75,11 +75,13 @@ def cell():
     f.note((SECONDARY, SECONDARY, 0.3), "secondary", kind="tint")
     f.note((INK, INK, 0.12), "input buffer", kind="tint")
     f.note(GREY, "not in the schematic")
-    f.note(INK, "rail clamp: in the supply pads, not here",
-           kind="plain")
     f.note(INK, "DVDD and DVSS rings: metal over the cell, not drawn",
            kind="plain")
     f.title("gf180mcu_fd_io__bi_t, the bidirectional pad", up=98)
+    # In the schematic's orange, where the reader looks for the orange parts.
+    f.text(f.ox + f.dw, f.oy - 98, "rail clamp and rail diode: not in this "
+           "cell, only in the supply pads", anchor="end", fill=CLAMP,
+           weight="bold", halo=False)
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f
