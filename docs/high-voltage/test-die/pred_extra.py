@@ -51,6 +51,13 @@ def p5_table():
     return tb.write(rows)
 
 
+def corner_now(name, proc):
+    """The converged corner value from predictions.json, as text."""
+    import pred_data
+    v, kind = pred_data.value(name, proc, "corner")
+    return f"{v:.1f} V" if kind == "bv" else "not in the results file"
+
+
 def check_tables():
     """The tables of model_checks.json: values from the final review that
     no simulation record holds yet."""
@@ -65,12 +72,13 @@ def check_tables():
     corner = [["Item", "Value"],
               ["Section", f"{cor['structure']} under {cor['process']}, "
                f"corner radius {cor['radius_um']:g} µm"],
-              ["Last converged voltage", f"{cor['last_volts']} V"],
+              ["Last point of the stalled sweep", f"{cor['last_volts']} V"],
               ["Ionisation integral there", f"{cor['integral']}"],
               ["Rise of the integral", f"{cor['slope_per_volt']} per volt"],
               ["Integral reaches 1, by straight-line extrapolation",
                f"about {cor['extrapolated_volts']} V"],
-              ["Same pattern", cor["same_pattern"]]]
+              ["Converged result of the same section, 128-bit arithmetic",
+               corner_now(cor["structure"], cor["process"])]]
     ceiling = [["Change to the assumed profile",
                 "Breakdown of the flat bottom (V)"]] + CHECKS["ceiling"]["rows"]
     src = [["Item", "Value"]] + [[k.capitalize(), v]

@@ -1508,11 +1508,11 @@ Limits
      - Agreement range (V)
      - Predicted ratio
    * - AL, AD, AnL, AnD
-     - failed
+     - 17.7
      - –
-     - –
-     - –
-     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 100.6
      - 95.3
@@ -1740,8 +1740,8 @@ Limits
      - Family band (V)
      - Agreement range (V)
      - Predicted ratio
-   * - AL
-     - failed
+   * - AL, AD, AnL, AnD
+     - > 19.6
      - –
      - –
      - –
@@ -1871,7 +1871,7 @@ Limits
      - –
    * - BLq
      - failed
-     - failed
+     - 102.6
      - –
      - –
      - –
@@ -1977,11 +1977,11 @@ Limits
      - Agreement range (V)
      - Predicted ratio
    * - AL, AD, AnL, AnD
-     - failed
+     - 17.5
      - –
-     - –
-     - –
-     - –
+     - 17.5 to 17.5
+     - 12.2 to 20.1
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 107.2
      - 103.4

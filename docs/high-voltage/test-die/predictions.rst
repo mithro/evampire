@@ -392,7 +392,10 @@ Each cell holds the straight-edge and the corner value. A value written
 breakdown, at its limit or because the solver stopped converging, so the
 structure holds at least that much in the simulation. "Failed" marks a run
 that gave no result, and a dash a case that was not simulated. Structures
-that are absent from a table have no result yet.
+that are absent from a table have no result yet. The failed cases under AL
+are three-ring structures, where the solver gives up at 0 V with P-well
+between the rings; their counterparts that did run all give the value of
+the plain well under AL.
 
 .. csv-table:: Source of the predictions
    :name: tab-hvt-pred-source
@@ -564,15 +567,24 @@ Only under BL do the terminations differ, in ways the die can test:
 * Oxide charge of 10\ :sup:`11` cm\ :sup:`-2` moves the results by a few
   volts at most.
 
-Sharp corners are the exception to these results. Their sections, at a
-radius of 1 µm, stopped converging before breakdown, and the tables give
-them as lower bounds. They do not show that a sharp corner is safe. When
-the sweep of NC0 stopped, its ionisation integral was still rising
-steadily. Extended in a straight line, it reaches 1 below 57 V
-(:numref:`tab-hvt-mc-corner`). This is an extrapolation of a sweep that
-did not converge, not a result.
+Sharp corners are the exception to these results
+(:numref:`tab-hvt-pred-key`). The section of a square corner, at a radius
+of 1 µm, breaks down below 57 V under BL, far below the straight edge of
+the same well. A Metal1 plate lifts the square corner above 57 V, but
+leaves it well short of the same plate on a cut corner. A well that must
+hold the working voltage therefore needs cut corners and a plate, not one
+of the two. The deep N-well is indifferent to its corner, as to everything
+else at its edge.
 
-.. csv-table:: Extrapolation of the unconverged sharp-corner section
+These sections needed 128-bit arithmetic to reach breakdown. In double
+precision they stalled part of the way, and the breakdown voltage was
+first estimated by extending the ionisation integral in a straight line.
+The later result agrees with that estimate (:numref:`tab-hvt-mc-corner`).
+The members of the doping family other than the nominal ones still show
+the stalled sweeps, as lower bounds.
+
+.. csv-table:: Earlier extrapolation of the sharp-corner section against
+               the converged result
    :name: tab-hvt-mc-corner
    :file: hvt-tab-mc-corner.csv
    :header-rows: 1
@@ -667,8 +679,11 @@ silicon. These limits bound what it can say:
 * The profiles are assumed. They reproduce the published capacitances and
   the deep N-well's breakdown, and nothing measures them directly.
 * The sections are two-dimensional, and a corner is a smooth arc. The die
-  has vertices, which no section represents. The design rules allow only
-  45° edges on a well, so a product would have the same vertices.
+  has vertices, which no section represents. An arc of 1 µm radius in
+  cylindrical coordinates stands in for a 90° vertex, and the 135° vertices
+  of every other structure are not simulated at all. The design rules
+  allow only 45° edges on a well, so a product would have the same
+  vertices.
 * A floating ring is simulated with the ionisation path ending at the
   ring.
 * The Metal5 lead and the leads to second pads are left out. They cross the
@@ -692,7 +707,8 @@ Open questions
 * Is the deep N-well N-type up to the surface? The model assumes a buried
   layer.
 * What does a vertex of 90° or 135° hold against the smooth arc of a
-  corner section? The sharp-corner sections did not converge either.
+  corner section? The section of 1 µm radius is a stand-in for the first,
+  and nothing represents the second.
 * Why does the simulated N-well to P-well junction break down about 25 %
   above the published typical value, and does the same error apply to the
   other structures?

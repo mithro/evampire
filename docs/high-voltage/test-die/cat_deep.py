@@ -46,7 +46,8 @@ E["DC0"] = dict(
     c=[("DT20", "four 90° vertices in place of eight of 135°"),
        ("NC0", "a deep N-well in place of an N-well")],
     m="",
-    r="Equal to {DT20}: corners do not matter for this well.",
+    r="Equal to {DT20}: corners do not matter for this well, which is "
+      "what the simulated square corner gives.",
     l="The N-well band under the contact follows the square outline "
       "2 µm inside the edge, and has sharp corners of its own.")
 E["DW1p5"] = dict(

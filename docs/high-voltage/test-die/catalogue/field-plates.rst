@@ -1809,10 +1809,11 @@ Measurement
 Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-nm1-6c0`. The
    row of each family's nominal process also gives the family's band, its
-   agreement range and the predicted ratio to the reference structure. Equal
-   to :ref:`NM1_6 <hvt-s-nm1-6>`: under a plate the vertex no longer
-   matters. Close to :ref:`NC0 <hvt-s-nc0>`: the plate does not reach the
-   vertex's weak point.
+   agreement range and the predicted ratio to the reference structure. The
+   simulation puts it between the two: the plate lifts the square corner
+   above the 57 V working voltage, but not to the value of the plate on a
+   cut corner. If the measurement agrees, a product's wells need cut corners
+   and plates together.
 
 Limits
    The plate's own outline has 90° corners over the oxide, where the field

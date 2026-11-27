@@ -45,6 +45,7 @@ SHAPES = ("edge", "corner")
 ORDER = ("AL", "AD", "AnL", "AnD", "BL", "BD")
 KEY = [("NT10", "Plain N-well"), ("NT1", "P+ ring 1 µm away"),
        ("NC15", "Largest corner cut"), ("NC0", "Sharp corner"),
+       ("NM1_6C0", "Sharp corner under a Metal1 plate, 6 µm"),
        ("NW0", "Drawn P-well touching"), ("NW1p5", "Drawn P-well at 1.5 µm"),
        ("NW3", "Drawn P-well at 3 µm"), ("NA0p6", "NAT from 0.6 µm"),
        ("NP4", "Polysilicon plate, 4 µm"), ("NM1_6", "Metal1 plate, 6 µm"),

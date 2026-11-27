@@ -799,7 +799,9 @@ structures, and some not at all (:numref:`tab-hvt-tell`).
    * - Whether a plate rescues a 90° vertex
      - Yes
      - NM1_6C0 against NC0 and against NM1_6, with the photographs of the
-       avalanche light
+       avalanche light. The simulation predicts a partial rescue: above
+       the square corner alone, below the plate on a cut corner
+       (:numref:`tab-hvt-pred-key`)
    * - Deep P layer under N-wells or not, when P-well lies against every
        N-well
      - By capacitance only

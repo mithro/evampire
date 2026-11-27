@@ -616,10 +616,9 @@ Predicted
    worth having. Equal: something other than the corner limits both.
 
 Limits
-   The simulation of this corner did not reach breakdown. The table gives a
-   lower bound, and a straight-line extrapolation of the unfinished sweep
-   ends below 57 V (:numref:`tab-hvt-mc-corner`). Under assumption A the
-   surface junction fails first and hides the corner.
+   The simulated corner is an arc of 1 µm radius standing in for the vertex;
+   under BL it breaks down below the 57 V working voltage. Under assumption
+   A the surface junction fails first and hides the corner.
 
 .. list-table:: NC0: predicted breakdown voltage by process
    :name: tab-hvt-sp-nc0
@@ -646,10 +645,10 @@ Limits
      - –
    * - BL
      - 76.0
-     - > 36.3
-     - –
-     - –
-     - –
+     - 46.1
+     - 46.1 to 48.0
+     - 32.3 to 55.2
+     - 0.69 of :ref:`NT20 <hvt-s-nt20>`
    * - BLhi
      - 66.7
      - > 34.5
@@ -664,7 +663,7 @@ Limits
      - –
    * - BLq
      - 79.9
-     - > 37.7
+     - 48.0
      - –
      - –
      - –
@@ -676,10 +675,10 @@ Limits
      - –
    * - BD
      - 62.9
-     - > 36.0
-     - –
-     - –
-     - –
+     - 46.0
+     - 46.0 to 46.0
+     - 32.2 to 52.9
+     - 0.75 of :ref:`NT20 <hvt-s-nt20>`
    * - BDhi
      - 62.9
      - > 34.7

@@ -89,11 +89,10 @@ E["NC0"] = dict(
       "first.",
     r="Below {NT20}: the vertices set the breakdown, and a cut is worth "
       "having. Equal: something other than the corner limits both.",
-    l="The simulation of this corner did not reach breakdown. The table "
-      "gives a lower bound, and a straight-line extrapolation of the "
-      "unfinished sweep ends below 57 V "
-      "(:numref:`tab-hvt-mc-corner`). Under assumption A the surface "
-      "junction fails first and hides the corner.")
+    l="The simulated corner is an arc of 1 µm radius standing in for the "
+      "vertex; under BL it breaks down below the 57 V working voltage. "
+      "Under assumption A the surface junction fails first and hides the "
+      "corner.")
 E["NC15"] = dict(
     p="Tells whether the length of the corner cut matters once the vertex "
       "is 135°.",

@@ -531,8 +531,8 @@ Predicted
    substrate does.
 
 Limits
-   The simulation of this corner did not reach breakdown, so only a lower
-   bound is predicted.
+   The simulated corner is an arc of 1 µm radius standing in for the vertex,
+   as for :ref:`NC0 <hvt-s-nc0>`.
 
 .. list-table:: NA0p6C0: predicted breakdown voltage by process
    :name: tab-hvt-sp-na0p6c0
@@ -553,34 +553,34 @@ Limits
      - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - AnL
      - 76.0
-     - > 36.3
-     - –
-     - –
-     - –
+     - 46.1
+     - 46.1 to 46.1
+     - 32.3 to 53.0
+     - 2.60 of :ref:`NT20 <hvt-s-nt20>`
    * - AnD
      - 62.9
-     - > 37.0
-     - –
-     - –
-     - –
+     - 46.0
+     - 46.0 to 46.0
+     - 32.2 to 52.9
+     - 2.60 of :ref:`NT20 <hvt-s-nt20>`
    * - BL
      - 76.0
-     - > 36.3
-     - –
-     - –
-     - –
+     - 46.1
+     - 46.1 to 48.0
+     - 32.3 to 55.2
+     - 0.69 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - 79.9
-     - > 37.7
+     - 48.0
      - –
      - –
      - –
    * - BD
      - 62.9
-     - > 36.0
-     - –
-     - –
-     - –
+     - 46.0
+     - 46.0 to 46.0
+     - 32.2 to 52.9
+     - 0.75 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nam1-3:
 
@@ -798,11 +798,11 @@ Limits
      - Agreement range (V)
      - Predicted ratio
    * - AL, AD
-     - > 15.0
+     - 17.5
      - –
-     - 17.6 to 17.6
-     - 12.3 to 20.2
-     - –
+     - 17.5 to 17.6
+     - 12.2 to 20.2
+     - 0.99 of :ref:`NW0 <hvt-s-nw0>`
    * - ALhi
      - 17.6
      - –

@@ -504,7 +504,8 @@ Predicted
    The simulated breakdown voltages are in :numref:`tab-hvt-sp-dc0`. The row
    of each family's nominal process also gives the family's band, its
    agreement range and the predicted ratio to the reference structure. Equal
-   to :ref:`DT20 <hvt-s-dt20>`: corners do not matter for this well.
+   to :ref:`DT20 <hvt-s-dt20>`: corners do not matter for this well, which
+   is what the simulated square corner gives.
 
 Limits
    The N-well band under the contact follows the square outline 2 µm inside
@@ -523,19 +524,19 @@ Limits
      - Predicted ratio
    * - AL, AnL
      - 32.4
-     - > 32.6
+     - 35.4
      - 32.4 to 32.4
      - 22.7 to 37.3
      - 1.08 of :ref:`DT20 <hvt-s-dt20>`
    * - AD, AnD
      - 32.4
-     - > 32.4
+     - 35.0
      - 32.4 to 32.4
      - 22.7 to 37.3
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`
    * - BL
      - 32.4
-     - 33.7
+     - 33.8
      - 32.3 to 32.4
      - 22.6 to 37.3
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`
@@ -547,7 +548,7 @@ Limits
      - –
    * - BD
      - 32.4
-     - 33.5
+     - 33.6
      - 32.4 to 32.4
      - 22.7 to 37.3
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`
@@ -915,13 +916,13 @@ Limits
      - 1.08 of :ref:`DT20 <hvt-s-dt20>`
    * - AD
      - 32.4
-     - 33.5
+     - 33.6
      - 32.4 to 32.4
      - 22.7 to 37.3
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`
    * - BL
      - 32.4
-     - 33.7
+     - 33.8
      - 32.3 to 32.4
      - 22.6 to 37.3
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`
@@ -933,7 +934,7 @@ Limits
      - –
    * - BD
      - 32.4
-     - 33.5
+     - 33.6
      - 32.4 to 32.4
      - 22.7 to 37.3
      - 1.04 of :ref:`DT20 <hvt-s-dt20>`

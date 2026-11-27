@@ -64,8 +64,8 @@ E["NA0p6C0"] = dict(
     m="",
     r="Below {NA0p6} by the same amount as {NC0} is below {NT20}: the "
       "silicon under NAT behaves as bare substrate does.",
-    l="The simulation of this corner did not reach breakdown, so only a "
-      "lower bound is predicted.")
+    l="The simulated corner is an arc of 1 µm radius standing in for the "
+      "vertex, as for {NC0}.")
 E["NAM1_3"] = dict(
     p="The shortest Metal1 plate over NAT: 3 µm beyond the edge.",
     w="The plate crosses the 0.6 µm strip and 2.4 µm of NAT. It widens "
@@ -298,8 +298,10 @@ E["NM1_6C0"] = dict(
        ("NM1_6", "four 90° vertices in place of eight of 135°")],
     m="The light of the avalanche, photographed at the current limit, "
       "shows whether the vertices still fail first.",
-    r="Equal to {NM1_6}: under a plate the vertex no longer matters. "
-      "Close to {NC0}: the plate does not reach the vertex's weak point.",
+    r="The simulation puts it between the two: the plate lifts the "
+      "square corner above the 57 V working voltage, but not to the "
+      "value of the plate on a cut corner. If the measurement agrees, a "
+      "product's wells need cut corners and plates together.",
     l="The plate's own outline has 90° corners over the oxide, where "
       "the field in the oxide is highest. The corner section of the "
       "simulation assumes an arc.")

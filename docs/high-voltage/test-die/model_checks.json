@@ -7,19 +7,56 @@
  "capacitance": {
   "note": "N-well capacitance per area, simulated over published model",
   "with_layer": "0.96 to 1.03 over the whole range",
-  "volts": [0, 1, 2, 3, 5, 7, 10],
-  "without_layer": [1.00, 1.01, 0.98, 0.95, 0.90, 0.87, 0.83],
-  "difference_percent": {"5": 7, "10": 24}
+  "volts": [
+   0,
+   1,
+   2,
+   3,
+   5,
+   7,
+   10
+  ],
+  "without_layer": [
+   1.0,
+   1.01,
+   0.98,
+   0.95,
+   0.9,
+   0.87,
+   0.83
+  ],
+  "difference_percent": {
+   "5": 7,
+   "10": 24
+  }
  },
  "ceiling": {
   "note": "breakdown of the flat bottom of a plain N-well under D",
   "rows": [
-   ["Shape of the layer changed, deep N-well fixed", "58 to 64"],
-   ["Layer and deep N-well both 1.0 µm shallower", "41"],
-   ["Both 0.25 µm shallower", "58"],
-   ["Both 0.25 µm deeper", "69"],
-   ["Both 1.0 µm deeper", "84"],
-   ["Range if the published capacitance is right to a few per cent", "55 to 75"]
+   [
+    "Shape of the layer changed, deep N-well fixed",
+    "58 to 64"
+   ],
+   [
+    "Layer and deep N-well both 1.0 µm shallower",
+    "41"
+   ],
+   [
+    "Both 0.25 µm shallower",
+    "58"
+   ],
+   [
+    "Both 0.25 µm deeper",
+    "69"
+   ],
+   [
+    "Both 1.0 µm deeper",
+    "84"
+   ],
+   [
+    "Range if the published capacitance is right to a few per cent",
+    "55 to 75"
+   ]
   ]
  },
  "corner": {
@@ -30,6 +67,7 @@
   "integral": 0.694,
   "slope_per_volt": 0.035,
   "extrapolated_volts": 46,
-  "same_pattern": "BD, BLq, and NA0p6C0"
+  "same_pattern": "BD, BLq, and NA0p6C0",
+  "note": "estimate made from a double-precision sweep that stalled; the converged 128-bit result is read from predictions.json for comparison"
  }
 }

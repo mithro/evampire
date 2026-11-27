@@ -2,7 +2,8 @@ Structure,Termination,AL: edge / corner (V),AnL: edge / corner (V),BL: edge / co
 NT10,Plain N-well,17.7 / –,17.7 / –,76.0 / 67.0,62.9 / 61.2
 NT1,P+ ring 1 µm away,17.7 / –,17.7 / –,40.5 / 41.8,40.7 / 41.9
 NC15,Largest corner cut,17.7 / –,17.7 / –,76.0 / 70.6,62.9 / 59.6
-NC0,Sharp corner,17.7 / –,17.7 / –,76.0 / > 36.3,62.9 / > 36.0
+NC0,Sharp corner,17.7 / –,17.7 / –,76.0 / 46.1,62.9 / 46.0
+NM1_6C0,"Sharp corner under a Metal1 plate, 6 µm",17.5 / –,17.5 / –,90.2 / 63.6,62.9 / 63.3
 NW0,Drawn P-well touching,17.7 / –,17.7 / –,17.8 / 18.0,17.8 / 18.0
 NW1p5,Drawn P-well at 1.5 µm,17.7 / –,17.7 / –,52.4 / 51.3,52.3 / 51.0
 NW3,Drawn P-well at 3 µm,17.7 / –,17.7 / –,72.1 / 65.2,62.9 / 61.2
