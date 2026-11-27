@@ -1522,16 +1522,16 @@ Limits
      - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - AnL
      - failed
-     - failed
+     - 101.2
      - –
      - –
      - –
    * - AnD
-     - failed
-     - failed
-     - –
-     - –
-     - –
+     - 62.9
+     - 60.1
+     - 60.1 to 60.1
+     - 51.1 to 75.1
+     - 0.97 of :ref:`NA0p6 <hvt-s-na0p6>`
    * - BL
      - 105.7
      - 101.2
