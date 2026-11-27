@@ -134,8 +134,8 @@ def driver_section():
         b.append(rect(x - 3, 110, 6, top - 110, METAL))
     b.append(rect(538, 106, 65, 6, METAL))
     b.append(text(570, 98, "DVSS", size=13, weight="bold"))
-    b.append(text(145, top - 20, "gate", size=11))
-    b.append(text(186, top - 40, "PMOS: cut B–B′, panel (b)", size=11))
+    b.append(text(153, top - 22, "gate, 0.7 µm", size=11))
+    b.append(text(186, top - 46, "PMOS: cut B–B′, panel (b)", size=11))
     b.append(text(251, top - 6, "B", size=13, weight="bold"))
     b.append(text(26, top - 6, "B′", size=13, weight="bold"))
     # Diodes the drains form with their wells.
