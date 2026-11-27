@@ -5,7 +5,7 @@ Helper for figures.py: run that script, not this module.
 SPDX-License-Identifier: Apache-2.0
 """
 
-from layfig import FONT, GREY, INK, NWELL, STYLES, SUB
+from layfig import FONT, GREY, INK, NWELL, PAPER, STYLES, SUB
 
 
 def scalebar(fig, y):
@@ -85,7 +85,8 @@ def legend(fig, x, y):
             w, h, dx = (8, 8, 9) if kind == "contact" else (26, 14, 0)
             if fill != "none":   # show a tint over what lies under it
                 under = (NWELL if name == STYLES["dvdd"][2]
-                         and "nwell" in fig.keys else SUB)
+                         and "nwell" in fig.keys
+                         else SUB if fig.wells else PAPER)
                 out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
                            f'height="14" fill="{under}"/>')
             out.append(

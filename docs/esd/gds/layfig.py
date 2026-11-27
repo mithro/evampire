@@ -15,7 +15,7 @@ SUB = "#dbe8f5"        # P-type silicon: every area with no N-well drawn
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
-POLY = "#c9a0dc"
+POLY = "#c9cf96"         # olive, so that purple is snapback only
 METAL = "#9aa5b1"
 INK = "#222222"
 GREY = "#666666"
@@ -32,7 +32,7 @@ STYLES = {
     "nwell": (NWELL, "#c98f4f", "N-well"),
     "ndiff": (NPLUS, "#a8651c", "N+ diffusion"),
     "pdiff": (PPLUS, "#3d6294", "P+ diffusion"),
-    "poly": (POLY, "#6f3f93", "polysilicon"),
+    "poly": (POLY, "#5c6620", "polysilicon"),
     "sab": ("url(#hatch)", INK, "silicide block, over any layer"),
     "contact": ("#333333", "none", "contact"),
     "metal": (METAL, "#6b7684", "bond pad metal"),
@@ -46,15 +46,20 @@ STYLES = {
     "dvssrail": ("#a3d2ca", "#0d5045", "DVSS, metal 3 to 5"),
     "dvsslink": ("#6fb3a8", "#0d5045", "DVSS pad, metal 2"),
     "innet": (SECONDARY, "#12305f", "protected net, metal 1 and 2"),
-    "other": ("#c4c9cf", "#8a9199", "other diffusion"),
+    "other": ("#b3b9c0", "#8a9199", "other diffusion"),
     "resistor": ("none", SECONDARY, "resistor body"),
-    "gate": ("#8e5bb5", "#4f2a70", "gate over diffusion"),
+    "gate": ("#7d8a2e", "#444d14", "gate"),
+    # Figures that pair with the schematic: its wires are black.
+    "padwire": ("#444444", INK, "PAD net, metal 2"),
+    "primdrain": (HOT, "#7d1f14", "primary: drain on the PAD net"),
+    "secpart": (SECONDARY, "#12305f", "secondary: resistor, diode strip"),
     "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
 }
 FONT = 14
 # Layers of a figure drawn without colour, from the wells up.
-GREYS = (("nwell", "#e6e6e6"), ("pdiff", "#cdcdcd"), ("ndiff", "#b9b9b9"),
-         ("poly", "#989898"), ("gate", "#787878"))
+GREYS = (("nwell", "#ededed"), ("pdiff", "#d2d2d2"), ("ndiff", "#a4a4a4"),
+         ("poly", "#7c7c7c"), ("gate", "#5c5c5c"))
+PAPER = "#fafafa"      # behind the layers of a grey figure
 
 
 def derived(cell, name):
@@ -81,6 +86,7 @@ class Fig:
         self.body, self.over, self.keys, self.panels = [], [], [], []
         self.alpha, self.notes = {}, []
         self.wells = True   # False for a figure that draws no silicon
+        self.grey_names = ("nwell", "pdiff", "ndiff", "poly", "gate")
         self.body.append(
             f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" width="{self.dw:.1f}" '
             f'height="{self.dh:.1f}" fill="{SUB}"/>')
@@ -126,14 +132,15 @@ class Fig:
         lay = gdskit.load(self.cell)
         self.geom(lay["poly"].intersection(lay["comp"]), "gate", **kw)
 
-    def grey_silicon(self):
+    def grey_silicon(self, named=False):
         """The device layers in greys.
 
         For a figure that pairs with the schematic: colour is then free to
         mark the schematic's parts, and no layer shares a part's colour.
+        With `named`, the legend lists each layer's grey.
         """
         self.wells = False
-        self.body[0] = self.body[0].replace(SUB, "#f5f5f5")
+        self.body[0] = self.body[0].replace(SUB, PAPER)
         lay = gdskit.load(self.cell)
         for name, fill in GREYS:
             geom = (lay["poly"].intersection(lay["comp"]) if name == "gate"
@@ -141,8 +148,12 @@ class Fig:
             d = self._path(gdskit.clip(geom, self.win))
             self.body.append(f'<path d="{d}" fill="{fill}" stroke="#808080" '
                              'stroke-width="0.5" fill-rule="evenodd"/>')
-        self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey",
-                  kind="tint")
+            if named and d and name in self.grey_names:
+                self.note((fill, "#808080", 1.0),
+                          STYLES[name][2] + ", in grey", kind="tint")
+        if not named:
+            self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey",
+                      kind="tint")
 
     def region(self, window, colour, opacity=0.3, width=3.0):
         """Fill and outline a block of the layout in a schematic colour."""
