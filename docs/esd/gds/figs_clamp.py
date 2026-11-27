@@ -50,9 +50,9 @@ def clamp():
     f.label("360 kΩ:\n12 of 30 kΩ\nin series", (3.5, 288),
             (f.px(0, 292)[0], top - 17), colour=CLAMP, weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("160 µm² diode from DVSS\nto DVDD: 4 of 40 µm²", (62.7, 312),
-            (f.px(0, 276)[0], bot), colour=CLAMP, weight="bold")
-    f.label("4 supply\ncapacitors", (64, 337.8), (f.px(0, 337.8)[0], bot),
+    f.label("160 µm² diode\nfrom DVSS to DVDD:\n4 of 40 µm²", (62.7, 306),
+            (f.px(0, 300)[0], bot), colour=CLAMP, weight="bold")
+    f.label("4 supply\ncapacitors", (64, 337.8), (f.px(0, 347)[0], bot),
             colour=GREY)
     f.note((CLAMP, CLAMP, 0.3), "rail clamp and rail diode", kind="tint")
     f.note(GREY, "not in the schematic")
@@ -139,8 +139,8 @@ def ring():
     # Five metal 2 strips join the clamp's drains to the DVDD stripes.
     feed = gdskit.net("dvss", "DVDD")["metal2"].intersection(
         box(0, 60, 75, 200))
-    f.outline(translate(feed, xoff=PITCH), "#a02c7d", width=1.6)
-    f.note("#a02c7d", "DVDD metal 2, under the stripes", kind="outline")
+    f.outline(translate(feed, xoff=PITCH), "#6a1c53", width=1.6)
+    f.note("#6a1c53", "DVDD metal 2, under the stripes", kind="outline")
     pad = gdskit.net("bi_t", "PAD")
     f.geom(pad["metal5"].buffer(1.5).buffer(-1.5), "padtop", opacity=0.6)
     bus = pad["metal2"].intersection(box(0, 60, 75, 201)).buffer(
@@ -155,6 +155,7 @@ def ring():
               width=3.0)
     f.note(CLAMP, "rail clamp's NMOS, under the metal", kind="outline")
     f.note(INK, "the output NMOS's snapback path is not drawn", kind="plain")
+    f.note(INK, "the other three discharges are not drawn", kind="plain")
     f.title("Positive, PAD to DVSS: the main path, across two cells", up=84)
     x0, y0 = f.px(PITCH, 0)
     x1, _ = f.px(PITCH, 222)
@@ -166,7 +167,7 @@ def ring():
         f.text(x, y - 4, f"{name} bond pad", weight="bold")
         f.text(x, y + 14, kind)
     x, y = f.px(66.5, 95)
-    f.text(x, y + 5, "NMOS drains, idle")
+    f.text(x, y + 5, "NMOS drains, idle here")
     x, y = f.px(69.5, 166)
     f.text(x, y + 5, "PMOS drains")
     x, y = f.px(PITCH, 0)
@@ -196,7 +197,7 @@ def ring():
     f.label("5  DVSS metal 2 over the rail\nclamp, back to the DVSS bond pad",
             (bus, 66), (f.px(0, 40)[0], bot), colour=HOT, leader=INK,
             weight="bold")
-    f.label("4  Rail clamp: down a DVDD metal 2 strip, then across\nthe "
+    f.label("4  Rail clamp: along a DVDD metal 2 strip, then across\nthe "
             "NMOS of each block to the DVSS metal 2", (strip + 3.5, 146),
             (f.px(0, 150)[0], bot), colour=HOT, leader=INK, weight="bold")
     x, y = f.px(PITCH + 5, y_rail)
