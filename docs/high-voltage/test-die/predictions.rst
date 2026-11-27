@@ -580,8 +580,6 @@ These sections needed 128-bit arithmetic to reach breakdown. In double
 precision they stalled part of the way, and the breakdown voltage was
 first estimated by extending the ionisation integral in a straight line.
 The later result agrees with that estimate (:numref:`tab-hvt-mc-corner`).
-The members of the doping family other than the nominal ones still show
-the stalled sweeps, as lower bounds.
 
 .. csv-table:: Earlier extrapolation of the sharp-corner section against
                the converged result

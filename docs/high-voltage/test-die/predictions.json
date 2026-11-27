@@ -22,7 +22,7 @@
   "GBLq": "P-well only where the layout draws it; deep P layer under deep N-well only; fixed oxide charge of 1e11 cm^-2; the gated plate held at 0 V"
  },
  "source": {
-  "commit": "31d1842c0942, 37fa71eff4e3, 4c8062b2f45e, 53386a8dba79, 597d7c069240, 5e624bfb7803, 86b458c7b1eb",
+  "commit": "31d1842c0942, 37fa71eff4e3, 4c8062b2f45e, 53386a8dba79, 597d7c069240, 5e624bfb7803, 86b458c7b1eb, fd092ff880ff",
   "records": [
    {
     "cases": 554,
@@ -178,6 +178,13 @@
     "image": "ghcr.io/mithro/gf180-tcad-tcad-dev@sha256:fe34752893b8078bb9053875fd43d4b45b75ca757d75150b2dca4b9ada9c0c44",
     "not_converged": [],
     "record": "family.json"
+   },
+   {
+    "cases": 5,
+    "commit": "fd092ff880fffb09c4781149e8e008239f747069",
+    "image": "ghcr.io/mithro/gf180-tcad-tcad-dev@sha256:fe34752893b8078bb9053875fd43d4b45b75ca757d75150b2dca4b9ada9c0c44",
+    "not_converged": [],
+    "record": "family3.json"
    }
   ],
   "repository": "mithro/gf180-tcad, experiments/hv-junction",
@@ -1331,19 +1338,13 @@
     "ring_v": []
    },
    "BDhi": {
-    "corner": null,
+    "corner": 44.1,
     "edge": 62.9,
-    "reached": {
-     "corner": 34.7
-    },
     "ring_v": []
    },
    "BDlo": {
-    "corner": null,
+    "corner": 49.3,
     "edge": 62.5,
-    "reached": {
-     "corner": 38.6
-    },
     "ring_v": []
    },
    "BL": {
@@ -1352,19 +1353,13 @@
     "ring_v": []
    },
    "BLhi": {
-    "corner": null,
+    "corner": 44.1,
     "edge": 66.7,
-    "reached": {
-     "corner": 34.5
-    },
     "ring_v": []
    },
    "BLlo": {
-    "corner": null,
+    "corner": 49.4,
     "edge": 94.4,
-    "reached": {
-     "corner": 38.7
-    },
     "ring_v": []
    },
    "BLq": {
@@ -1373,11 +1368,8 @@
     "ring_v": []
    },
    "BLq3": {
-    "corner": null,
+    "corner": 52.1,
     "edge": 86.2,
-    "reached": {
-     "corner": 42.0
-    },
     "ring_v": []
    }
   },
