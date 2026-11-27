@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="956" height="627" viewBox="0 0 956 627" font-family="sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1043" height="699" viewBox="0 0 1043 699" font-family="sans-serif">
 <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#c4c4c4"/><circle cx="2.5" cy="2.5" r="1.1" fill="#4a4a4a"/></pattern><marker id="arrow-hot" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker><marker id="arrow-snap" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker></defs>
-<rect width="956" height="627" fill="#ffffff"/>
+<rect width="1043" height="699" fill="#ffffff"/>
 <rect x="20.0" y="78.0" width="276.0" height="408.0" fill="#dbe8f5"/>
 <path d="M52.7,93.9L296.0,93.9L296.0,486.0L52.7,486.0L52.7,456.9L52.7,446.1L52.7,280.8L52.7,270.0L52.7,104.7Z" fill="#f5b46e" stroke="#a8651c" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M25.1,398.7L39.5,398.7L296.0,398.7L296.0,433.2L39.5,433.2L25.1,433.2L25.1,428.2L25.1,404.2ZM25.1,117.6L39.5,117.6L296.0,117.6L296.0,152.1L39.5,152.1L25.1,152.1L25.1,147.2L25.1,123.2ZM39.5,469.8L296.0,469.8L296.0,486.0L25.1,486.0L25.1,475.3L25.1,469.8L39.5,469.8Z" fill="#c9cf96" stroke="#5c6620" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -46,53 +46,61 @@
 <circle cx="164.0" cy="102.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="164.0" y="64.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Source contacts on DVSS, outside the block</text>
 <g transform="translate(320.0,0)">
-<rect x="20.0" y="78.0" width="276.0" height="408.0" fill="#dbe8f5"/>
-<path d="M20.0,78.0L296.0,78.0L296.0,486.0L20.0,486.0Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M55.1,96.2L296.0,96.2L296.0,486.0L55.1,486.0L55.1,408.5L55.1,372.1L55.1,361.4L55.1,361.4L55.1,325.1L55.1,239.6L55.1,228.8L55.1,143.3L55.1,107.0Z" fill="#7fa7d6" stroke="#3d6294" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M29.3,380.4L41.9,380.4L41.9,382.8L41.9,385.0L296.0,385.0L296.0,406.1L41.9,406.1L41.9,409.5L41.9,412.0L29.3,412.0L29.3,409.5L29.3,382.8ZM29.3,322.5L41.9,322.5L41.9,324.9L41.9,327.5L296.0,327.5L296.0,348.5L41.9,348.5L41.9,351.6L41.9,354.2L29.3,354.2L29.3,351.6L29.3,324.9ZM29.3,114.6L41.9,114.6L41.9,117.0L41.9,119.9L296.0,119.9L296.0,140.9L41.9,140.9L41.9,143.7L41.9,146.2L29.3,146.2L29.3,143.7L29.3,117.0Z" fill="#c9cf96" stroke="#5c6620" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M55.1,385.0L296.0,385.0L296.0,406.1L55.1,406.1ZM55.1,327.5L296.0,327.5L296.0,348.5L55.1,348.5ZM55.1,119.9L296.0,119.9L296.0,140.9L55.1,140.9Z" fill="#7d8a2e" stroke="#444d14" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M32.3,399.9L38.9,399.9L38.9,406.5L32.3,406.5ZM32.3,385.8L38.9,385.8L38.9,392.4L32.3,392.4ZM284.4,363.5L291.0,363.5L291.0,370.0L284.4,370.0ZM269.3,363.5L275.9,363.5L275.9,370.0L269.3,370.0ZM254.2,363.5L260.8,363.5L260.8,370.0L254.2,370.0ZM239.0,363.5L245.6,363.5L245.6,370.0L239.0,370.0ZM223.8,363.5L230.4,363.5L230.4,370.0L223.8,370.0ZM208.7,363.5L215.3,363.5L215.3,370.0L208.7,370.0ZM193.5,363.5L200.1,363.5L200.1,370.0L193.5,370.0ZM178.4,363.5L185.0,363.5L185.0,370.0L178.4,370.0ZM163.3,363.5L169.9,363.5L169.9,370.0L163.3,370.0ZM148.1,363.5L154.7,363.5L154.7,370.0L148.1,370.0ZM132.9,363.5L139.5,363.5L139.5,370.0L132.9,370.0ZM117.8,363.5L124.4,363.5L124.4,370.0L117.8,370.0ZM102.6,363.5L109.2,363.5L109.2,370.0L102.6,370.0ZM87.5,363.5L94.1,363.5L94.1,370.0L87.5,370.0ZM72.4,363.5L79.0,363.5L79.0,370.0L72.4,370.0ZM57.2,363.5L63.8,363.5L63.8,370.0L57.2,370.0ZM32.3,342.0L38.9,342.0L38.9,348.6L32.3,348.6ZM32.3,327.9L38.9,327.9L38.9,334.5L32.3,334.5ZM284.4,230.9L291.0,230.9L291.0,237.5L284.4,237.5ZM269.3,230.9L275.9,230.9L275.9,237.5L269.3,237.5ZM254.2,230.9L260.8,230.9L260.8,237.5L254.2,237.5ZM239.0,230.9L245.6,230.9L245.6,237.5L239.0,237.5ZM223.8,230.9L230.4,230.9L230.4,237.5L223.8,237.5ZM208.7,230.9L215.3,230.9L215.3,237.5L208.7,237.5ZM193.5,230.9L200.1,230.9L200.1,237.5L193.5,237.5ZM178.4,230.9L185.0,230.9L185.0,237.5L178.4,237.5ZM163.3,230.9L169.9,230.9L169.9,237.5L163.3,237.5ZM148.1,230.9L154.7,230.9L154.7,237.5L148.1,237.5ZM132.9,230.9L139.5,230.9L139.5,237.5L132.9,237.5ZM117.8,230.9L124.4,230.9L124.4,237.5L117.8,237.5ZM102.6,230.9L109.2,230.9L109.2,237.5L102.6,237.5ZM87.5,230.9L94.1,230.9L94.1,237.5L87.5,237.5ZM72.4,230.9L79.0,230.9L79.0,237.5L72.4,237.5ZM57.2,230.9L63.8,230.9L63.8,237.5L57.2,237.5ZM32.3,134.1L38.9,134.1L38.9,140.7L32.3,140.7ZM32.3,120.0L38.9,120.0L38.9,126.6L32.3,126.6ZM284.4,98.3L291.0,98.3L291.0,104.9L284.4,104.9ZM269.3,98.3L275.9,98.3L275.9,104.9L269.3,104.9ZM254.2,98.3L260.8,98.3L260.8,104.9L254.2,104.9ZM239.0,98.3L245.6,98.3L245.6,104.9L239.0,104.9ZM223.8,98.3L230.4,98.3L230.4,104.9L223.8,104.9ZM208.7,98.3L215.3,98.3L215.3,104.9L208.7,104.9ZM193.5,98.3L200.1,98.3L200.1,104.9L193.5,104.9ZM178.4,98.3L185.0,98.3L185.0,104.9L178.4,104.9ZM163.3,98.3L169.9,98.3L169.9,104.9L163.3,104.9ZM148.1,98.3L154.7,98.3L154.7,104.9L148.1,104.9ZM132.9,98.3L139.5,98.3L139.5,104.9L132.9,104.9ZM117.8,98.3L124.4,98.3L124.4,104.9L117.8,104.9ZM102.6,98.3L109.2,98.3L109.2,104.9L102.6,104.9ZM87.5,98.3L94.1,98.3L94.1,104.9L87.5,104.9ZM72.4,98.3L79.0,98.3L79.0,104.9L72.4,104.9ZM57.2,98.3L63.8,98.3L63.8,104.9L57.2,104.9Z" fill="#333333" stroke="none" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
-<path d="M48.5,376.6L296.0,376.6L296.0,486.0L48.5,486.0ZM48.5,244.1L296.0,244.1L296.0,356.9L48.5,356.9ZM48.5,111.5L296.0,111.5L296.0,224.3L48.5,224.3Z" fill="url(#hatch)" stroke="#222222" stroke-width="1.0" fill-rule="evenodd" opacity="1.0"/>
+<rect x="20.0" y="78.0" width="363.0" height="408.0" fill="#dbe8f5"/>
+<path d="M20.0,78.0L383.0,78.0L383.0,486.0L20.0,486.0Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
+<path d="M55.1,204.2L383.0,204.2L383.0,486.0L55.1,486.0L55.1,480.1L55.1,469.4L55.1,469.4L55.1,433.1L55.1,347.6L55.1,336.8L55.1,251.3L55.1,215.0Z" fill="#7fa7d6" stroke="#3d6294" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
+<path d="M20.0,88.7L383.0,88.7L383.0,144.2L20.0,144.2Z" fill="#f5b46e" stroke="#a8651c" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
+<path d="M29.3,430.5L41.9,430.5L41.9,432.9L41.9,435.5L383.0,435.5L383.0,456.5L41.9,456.4L41.9,459.6L41.9,462.2L29.3,462.2L29.3,459.6L29.3,432.9ZM29.3,222.6L41.9,222.6L41.9,225.0L41.9,227.9L383.0,227.9L383.0,248.9L41.9,248.9L41.9,251.7L41.9,254.2L29.3,254.2L29.3,251.7L29.3,225.0Z" fill="#c9cf96" stroke="#5c6620" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
+<path d="M55.1,435.5L383.0,435.5L383.0,456.5L55.1,456.4ZM55.1,227.9L383.0,227.9L383.0,248.9L55.1,248.9Z" fill="#7d8a2e" stroke="#444d14" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
+<path d="M375.3,471.4L381.9,471.4L381.9,478.0L375.3,478.0ZM360.2,471.4L366.8,471.4L366.8,478.0L360.2,478.0ZM345.1,471.4L351.7,471.4L351.7,478.0L345.1,478.0ZM329.9,471.4L336.5,471.4L336.5,478.0L329.9,478.0ZM314.7,471.4L321.3,471.4L321.3,478.0L314.7,478.0ZM299.6,471.4L306.2,471.4L306.2,478.0L299.6,478.0ZM284.4,471.4L291.0,471.4L291.0,478.0L284.4,478.0ZM269.3,471.4L275.9,471.4L275.9,478.0L269.3,478.0ZM254.2,471.4L260.8,471.4L260.8,478.0L254.2,478.0ZM239.0,471.4L245.6,471.4L245.6,478.0L239.0,478.0ZM223.8,471.4L230.4,471.4L230.4,478.0L223.8,478.0ZM208.7,471.4L215.3,471.4L215.3,478.0L208.7,478.0ZM193.5,471.4L200.1,471.4L200.1,478.0L193.5,478.0ZM178.4,471.4L185.0,471.4L185.0,478.0L178.4,478.0ZM163.3,471.4L169.9,471.4L169.9,478.0L163.3,478.0ZM148.1,471.4L154.7,471.4L154.7,478.0L148.1,478.0ZM132.9,471.4L139.5,471.4L139.5,478.0L132.9,478.0ZM117.8,471.4L124.4,471.4L124.4,478.0L117.8,478.0ZM102.6,471.4L109.2,471.4L109.2,478.0L102.6,478.0ZM87.5,471.4L94.1,471.4L94.1,478.0L87.5,478.0ZM72.4,471.4L79.0,471.4L79.0,478.0L72.4,478.0ZM57.2,471.4L63.8,471.4L63.8,478.0L57.2,478.0ZM32.3,450.0L38.9,450.0L38.9,456.6L32.3,456.6ZM32.3,435.9L38.9,435.9L38.9,442.5L32.3,442.5ZM375.3,338.9L381.9,338.9L381.9,345.5L375.3,345.5ZM360.2,338.9L366.8,338.9L366.8,345.5L360.2,345.5ZM345.1,338.9L351.7,338.9L351.7,345.5L345.1,345.5ZM329.9,338.9L336.5,338.9L336.5,345.5L329.9,345.5ZM314.7,338.9L321.3,338.9L321.3,345.5L314.7,345.5ZM299.6,338.9L306.2,338.9L306.2,345.5L299.6,345.5ZM284.4,338.9L291.0,338.9L291.0,345.5L284.4,345.5ZM269.3,338.9L275.9,338.9L275.9,345.5L269.3,345.5ZM254.2,338.9L260.8,338.9L260.8,345.5L254.2,345.5ZM239.0,338.9L245.6,338.9L245.6,345.5L239.0,345.5ZM223.8,338.9L230.4,338.9L230.4,345.5L223.8,345.5ZM208.7,338.9L215.3,338.9L215.3,345.5L208.7,345.5ZM193.5,338.9L200.1,338.9L200.1,345.5L193.5,345.5ZM178.4,338.9L185.0,338.9L185.0,345.5L178.4,345.5ZM163.3,338.9L169.9,338.9L169.9,345.5L163.3,345.5ZM148.1,338.9L154.7,338.9L154.7,345.5L148.1,345.5ZM132.9,338.9L139.5,338.9L139.5,345.5L132.9,345.5ZM117.8,338.9L124.4,338.9L124.4,345.5L117.8,345.5ZM102.6,338.9L109.2,338.9L109.2,345.5L102.6,345.5ZM87.5,338.9L94.1,338.9L94.1,345.5L87.5,345.5ZM72.4,338.9L79.0,338.9L79.0,345.5L72.4,345.5ZM57.2,338.9L63.8,338.9L63.8,345.5L57.2,345.5ZM32.3,242.1L38.9,242.1L38.9,248.7L32.3,248.7ZM32.3,228.0L38.9,228.0L38.9,234.6L32.3,234.6ZM375.3,206.2L381.9,206.2L381.9,212.9L375.3,212.9ZM360.2,206.2L366.8,206.2L366.8,212.9L360.2,212.9ZM345.1,206.2L351.7,206.2L351.7,212.9L345.1,212.9ZM329.9,206.2L336.5,206.2L336.5,212.9L329.9,212.9ZM314.7,206.2L321.3,206.2L321.3,212.9L314.7,212.9ZM299.6,206.2L306.2,206.2L306.2,212.9L299.6,212.9ZM284.4,206.2L291.0,206.2L291.0,212.9L284.4,212.9ZM269.3,206.2L275.9,206.2L275.9,212.9L269.3,212.9ZM254.2,206.2L260.8,206.2L260.8,212.9L254.2,212.9ZM239.0,206.2L245.6,206.2L245.6,212.9L239.0,212.9ZM223.8,206.2L230.4,206.2L230.4,212.9L223.8,212.9ZM208.7,206.2L215.3,206.2L215.3,212.9L208.7,212.9ZM193.5,206.2L200.1,206.2L200.1,212.9L193.5,212.9ZM178.4,206.2L185.0,206.2L185.0,212.9L178.4,212.9ZM163.3,206.2L169.9,206.2L169.9,212.9L163.3,212.9ZM148.1,206.2L154.7,206.2L154.7,212.9L148.1,212.9ZM132.9,206.2L139.5,206.2L139.5,212.9L132.9,212.9ZM117.8,206.2L124.4,206.2L124.4,212.9L117.8,212.9ZM102.6,206.2L109.2,206.2L109.2,212.9L102.6,212.9ZM87.5,206.2L94.1,206.2L94.1,212.9L87.5,212.9ZM72.4,206.2L79.0,206.2L79.0,212.9L72.4,212.9ZM57.2,206.2L63.8,206.2L63.8,212.9L57.2,212.9ZM370.2,129.6L376.8,129.6L376.8,136.2L370.2,136.2ZM355.2,129.6L361.8,129.6L361.8,136.2L355.2,136.2ZM340.2,129.6L346.8,129.6L346.8,136.2L340.2,136.2ZM325.2,129.6L331.8,129.6L331.8,136.2L325.2,136.2ZM310.2,129.6L316.8,129.6L316.8,136.2L310.2,136.2ZM295.2,129.6L301.8,129.6L301.8,136.2L295.2,136.2ZM280.2,129.6L286.8,129.6L286.8,136.2L280.2,136.2ZM265.2,129.6L271.8,129.6L271.8,136.2L265.2,136.2ZM250.2,129.6L256.8,129.6L256.8,136.2L250.2,136.2ZM235.2,129.6L241.8,129.6L241.8,136.2L235.2,136.2ZM220.2,129.6L226.8,129.6L226.8,136.2L220.2,136.2ZM205.2,129.6L211.8,129.6L211.8,136.2L205.2,136.2ZM190.2,129.6L196.8,129.6L196.8,136.2L190.2,136.2ZM175.2,129.6L181.8,129.6L181.8,136.2L175.2,136.2ZM160.2,129.6L166.8,129.6L166.8,136.2L160.2,136.2ZM145.2,129.6L151.8,129.6L151.8,136.2L145.2,136.2ZM130.2,129.6L136.8,129.6L136.8,136.2L130.2,136.2ZM115.2,129.6L121.8,129.6L121.8,136.2L115.2,136.2ZM100.2,129.6L106.8,129.6L106.8,136.2L100.2,136.2ZM85.2,129.6L91.8,129.6L91.8,136.2L85.2,136.2ZM70.2,129.6L76.8,129.6L76.8,136.2L70.2,136.2ZM55.2,129.6L61.8,129.6L61.8,136.2L55.2,136.2ZM40.2,129.6L46.8,129.6L46.8,136.2L40.2,136.2ZM25.2,129.6L31.8,129.6L31.8,136.2L25.2,136.2ZM370.2,114.6L376.8,114.6L376.8,121.2L370.2,121.2ZM355.2,114.6L361.8,114.6L361.8,121.2L355.2,121.2ZM340.2,114.6L346.8,114.6L346.8,121.2L340.2,121.2ZM325.2,114.6L331.8,114.6L331.8,121.2L325.2,121.2ZM310.2,114.6L316.8,114.6L316.8,121.2L310.2,121.2ZM295.2,114.6L301.8,114.6L301.8,121.2L295.2,121.2ZM280.2,114.6L286.8,114.6L286.8,121.2L280.2,121.2ZM265.2,114.6L271.8,114.6L271.8,121.2L265.2,121.2ZM250.2,114.6L256.8,114.6L256.8,121.2L250.2,121.2ZM235.2,114.6L241.8,114.6L241.8,121.2L235.2,121.2ZM220.2,114.6L226.8,114.6L226.8,121.2L220.2,121.2ZM205.2,114.6L211.8,114.6L211.8,121.2L205.2,121.2ZM190.2,114.6L196.8,114.6L196.8,121.2L190.2,121.2ZM175.2,114.6L181.8,114.6L181.8,121.2L175.2,121.2ZM160.2,114.6L166.8,114.6L166.8,121.2L160.2,121.2ZM145.2,114.6L151.8,114.6L151.8,121.2L145.2,121.2ZM130.2,114.6L136.8,114.6L136.8,121.2L130.2,121.2ZM115.2,114.6L121.8,114.6L121.8,121.2L115.2,121.2ZM100.2,114.6L106.8,114.6L106.8,121.2L100.2,121.2ZM85.2,114.6L91.8,114.6L91.8,121.2L85.2,121.2ZM70.2,114.6L76.8,114.6L76.8,121.2L70.2,121.2ZM55.2,114.6L61.8,114.6L61.8,121.2L55.2,121.2ZM40.2,114.6L46.8,114.6L46.8,121.2L40.2,121.2ZM25.2,114.6L31.8,114.6L31.8,121.2L25.2,121.2ZM370.2,99.6L376.8,99.6L376.8,106.2L370.2,106.2ZM355.2,99.6L361.8,99.6L361.8,106.2L355.2,106.2ZM340.2,99.6L346.8,99.6L346.8,106.2L340.2,106.2ZM325.2,99.6L331.8,99.6L331.8,106.2L325.2,106.2ZM310.2,99.6L316.8,99.6L316.8,106.2L310.2,106.2ZM295.2,99.6L301.8,99.6L301.8,106.2L295.2,106.2ZM280.2,99.6L286.8,99.6L286.8,106.2L280.2,106.2ZM265.2,99.6L271.8,99.6L271.8,106.2L265.2,106.2ZM250.2,99.6L256.8,99.6L256.8,106.2L250.2,106.2ZM235.2,99.6L241.8,99.6L241.8,106.2L235.2,106.2ZM220.2,99.6L226.8,99.6L226.8,106.2L220.2,106.2ZM205.2,99.6L211.8,99.6L211.8,106.2L205.2,106.2ZM190.2,99.6L196.8,99.6L196.8,106.2L190.2,106.2ZM175.2,99.6L181.8,99.6L181.8,106.2L175.2,106.2ZM160.2,99.6L166.8,99.6L166.8,106.2L160.2,106.2ZM145.2,99.6L151.8,99.6L151.8,106.2L145.2,106.2ZM130.2,99.6L136.8,99.6L136.8,106.2L130.2,106.2ZM115.2,99.6L121.8,99.6L121.8,106.2L115.2,106.2ZM100.2,99.6L106.8,99.6L106.8,106.2L100.2,106.2ZM85.2,99.6L91.8,99.6L91.8,106.2L85.2,106.2ZM70.2,99.6L76.8,99.6L76.8,106.2L70.2,106.2ZM55.2,99.6L61.8,99.6L61.8,106.2L55.2,106.2ZM40.2,99.6L46.8,99.6L46.8,106.2L40.2,106.2ZM25.2,99.6L31.8,99.6L31.8,106.2L25.2,106.2Z" fill="#333333" stroke="none" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
+<path d="M48.5,484.6L383.0,484.6L383.0,486.0L48.5,486.0ZM48.5,352.1L383.0,352.1L383.0,464.9L48.5,464.9ZM48.5,219.5L383.0,219.5L383.0,332.3L48.5,332.3Z" fill="url(#hatch)" stroke="#222222" stroke-width="1.0" fill-rule="evenodd" opacity="1.0"/>
 <line x1="20.0" y1="78.0" x2="20.0" y2="486.0" stroke="#ffffff" stroke-width="3.5"/>
 <line x1="20.0" y1="78.0" x2="20.0" y2="486.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<line x1="296.0" y1="78.0" x2="296.0" y2="486.0" stroke="#ffffff" stroke-width="3.5"/>
-<line x1="296.0" y1="78.0" x2="296.0" y2="486.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<line x1="20.0" y1="78.0" x2="296.0" y2="78.0" stroke="#ffffff" stroke-width="3.5"/>
-<line x1="20.0" y1="78.0" x2="296.0" y2="78.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<line x1="20.0" y1="486.0" x2="296.0" y2="486.0" stroke="#ffffff" stroke-width="3.5"/>
-<line x1="20.0" y1="486.0" x2="296.0" y2="486.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="383.0" y1="78.0" x2="383.0" y2="486.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="383.0" y1="78.0" x2="383.0" y2="486.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="78.0" x2="383.0" y2="78.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="78.0" x2="383.0" y2="78.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<line x1="20.0" y1="486.0" x2="383.0" y2="486.0" stroke="#ffffff" stroke-width="3.5"/>
+<line x1="20.0" y1="486.0" x2="383.0" y2="486.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
 <text x="20.0" y="34.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(b) PMOS output driver, blocked</text>
-<line x1="269.0" y1="140.9" x2="269.0" y2="224.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="269.0" y1="140.9" x2="269.0" y2="224.2" stroke="#222222" stroke-width="1.5"/>
-<line x1="264.0" y1="140.9" x2="274.0" y2="140.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="264.0" y1="140.9" x2="274.0" y2="140.9" stroke="#222222" stroke-width="1.5"/>
-<line x1="264.0" y1="224.2" x2="274.0" y2="224.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="264.0" y1="224.2" x2="274.0" y2="224.2" stroke="#222222" stroke-width="1.5"/>
-<text x="261.0" y="187.6" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 2.78 µm</text>
-<line x1="269.0" y1="244.1" x2="269.0" y2="327.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="269.0" y1="244.1" x2="269.0" y2="327.5" stroke="#222222" stroke-width="1.5"/>
-<line x1="264.0" y1="244.1" x2="274.0" y2="244.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="264.0" y1="244.1" x2="274.0" y2="244.1" stroke="#222222" stroke-width="1.5"/>
-<line x1="264.0" y1="327.5" x2="274.0" y2="327.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="264.0" y1="327.5" x2="274.0" y2="327.5" stroke="#222222" stroke-width="1.5"/>
-<text x="261.0" y="290.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 2.78 µm</text>
-<line x1="68.0" y1="119.9" x2="68.0" y2="140.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="68.0" y1="119.9" x2="68.0" y2="140.9" stroke="#222222" stroke-width="1.5"/>
-<line x1="63.0" y1="119.9" x2="73.0" y2="119.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="63.0" y1="119.9" x2="73.0" y2="119.9" stroke="#222222" stroke-width="1.5"/>
-<line x1="63.0" y1="140.9" x2="73.0" y2="140.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="63.0" y1="140.9" x2="73.0" y2="140.9" stroke="#222222" stroke-width="1.5"/>
-<text x="76.0" y="135.4" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 0.7 µm</text>
-<polyline points="76.0,219.5 69.5,234.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="76.0,219.5 69.5,234.2" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="69.5" cy="234.2" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="76.0" y="214.5" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Drain contacts, on PAD</text>
-<polyline points="164.0,69.0 164.0,105.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="164.0,69.0 164.0,105.0" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="164.0" cy="105.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<line x1="269.0" y1="248.9" x2="269.0" y2="332.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="269.0" y1="248.9" x2="269.0" y2="332.2" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="248.9" x2="274.0" y2="248.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="248.9" x2="274.0" y2="248.9" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="332.2" x2="274.0" y2="332.2" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="332.2" x2="274.0" y2="332.2" stroke="#222222" stroke-width="1.5"/>
+<text x="261.0" y="295.6" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 2.78 µm</text>
+<line x1="269.0" y1="352.1" x2="269.0" y2="435.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="269.0" y1="352.1" x2="269.0" y2="435.5" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="352.1" x2="274.0" y2="352.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="352.1" x2="274.0" y2="352.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="264.0" y1="435.5" x2="274.0" y2="435.5" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="264.0" y1="435.5" x2="274.0" y2="435.5" stroke="#222222" stroke-width="1.5"/>
+<text x="261.0" y="398.8" text-anchor="end" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">blocked drain: 2.78 µm</text>
+<line x1="68.0" y1="227.9" x2="68.0" y2="248.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="68.0" y1="227.9" x2="68.0" y2="248.9" stroke="#222222" stroke-width="1.5"/>
+<line x1="63.0" y1="227.9" x2="73.0" y2="227.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="63.0" y1="227.9" x2="73.0" y2="227.9" stroke="#222222" stroke-width="1.5"/>
+<line x1="63.0" y1="248.9" x2="73.0" y2="248.9" stroke="#fff" stroke-width="4" opacity="0.85"/>
+<line x1="63.0" y1="248.9" x2="73.0" y2="248.9" stroke="#222222" stroke-width="1.5"/>
+<text x="76.0" y="243.4" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 0.7 µm</text>
+<polyline points="76.0,327.5 69.5,342.1" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="76.0,327.5 69.5,342.1" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="69.5" cy="342.1" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="76.0" y="322.5" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Drain contacts, on PAD</text>
+<polyline points="164.0,69.0 164.0,213.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="164.0,69.0 164.0,213.0" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="164.0" cy="213.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="164.0" y="64.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Source contacts on DVDD, outside the block</text>
+<text x="158.0" y="122.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">N+ guard ring, on DVDD</text>
+<line x1="329.0" y1="342.1" x2="329.0" y2="117.0" stroke="#fff" stroke-width="4.4" opacity="0.85"/>
+<line x1="329.0" y1="342.1" x2="329.0" y2="117.0" stroke="#222222" stroke-width="2.0" stroke-dasharray="9,3,2,3"/>
+<text x="329.0" y="358.1" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">B</text>
+<text x="329.0" y="111.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">B′</text>
+<polyline points="359.0,279.0 359.0,135.0" fill="none" stroke="#fff" stroke-width="7.0" opacity="0.9" stroke-linejoin="round"/>
+<polyline points="359.0,279.0 359.0,135.0" fill="none" stroke="#c0392b" stroke-width="4.0" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
 </g>
-<g transform="translate(640.0,0)">
+<g transform="translate(727.0,0)">
 <rect x="20.0" y="78.0" width="276.0" height="408.0" fill="#dbe8f5"/>
 <path d="M20.0,78.0L296.0,78.0L296.0,486.0L20.0,486.0Z" fill="#fbd9b5" stroke="#c98f4f" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M42.8,98.7L296.0,98.7L296.0,255.9L42.8,255.9L42.8,245.1L42.8,219.3L42.8,208.5L42.8,182.7L42.8,171.9L42.8,146.1L42.8,135.3L42.8,109.5ZM42.8,406.5L296.0,406.5L296.0,486.0L42.8,486.0L42.8,479.7L42.8,478.5L42.8,477.3L42.8,453.9L42.8,443.1L42.8,417.3ZM42.8,270.9L296.0,270.9L296.0,391.5L42.8,391.5L42.8,380.7L42.8,354.9L42.8,344.1L42.8,318.3L42.8,307.5L42.8,281.7Z" fill="#7fa7d6" stroke="#3d6294" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -126,27 +134,32 @@
 <rect x="216.4" y="551.0" width="26" height="14" fill="#dbe8f5"/>
 <rect x="216.4" y="551.0" width="26" height="14" fill="#dbe8f5" stroke="#666666" opacity="1.0"/>
 <text x="250.4" y="563.0" font-size="14" fill="#222222">P-type silicon, no N-well</text>
-<rect x="466.4" y="551.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="466.4" y="551.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
-<text x="500.4" y="563.0" font-size="14" fill="#222222">N-well</text>
-<rect x="606.6" y="551.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="606.6" y="551.0" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
-<text x="640.6" y="563.0" font-size="14" fill="#222222">N+ diffusion</text>
+<rect x="521.3" y="551.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="521.3" y="551.0" width="26" height="14" fill="#fbd9b5" stroke="#c98f4f" opacity="1.0"/>
+<text x="555.3" y="563.0" font-size="14" fill="#222222">N-well</text>
 <rect x="216.4" y="575.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="216.4" y="575.0" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
-<text x="250.4" y="587.0" font-size="14" fill="#222222">P+ diffusion</text>
-<rect x="466.4" y="575.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="466.4" y="575.0" width="26" height="14" fill="#c9cf96" stroke="#5c6620" opacity="1.0"/>
-<text x="500.4" y="587.0" font-size="14" fill="#222222">polysilicon</text>
-<rect x="606.6" y="575.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="606.6" y="575.0" width="26" height="14" fill="url(#hatch)" stroke="#222222" opacity="1.0"/>
-<text x="640.6" y="587.0" font-size="14" fill="#222222">silicide block, over any layer</text>
+<rect x="216.4" y="575.0" width="26" height="14" fill="#f5b46e" stroke="#a8651c" opacity="1.0"/>
+<text x="250.4" y="587.0" font-size="14" fill="#222222">N+ diffusion</text>
+<rect x="521.3" y="575.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="521.3" y="575.0" width="26" height="14" fill="#7fa7d6" stroke="#3d6294" opacity="1.0"/>
+<text x="555.3" y="587.0" font-size="14" fill="#222222">P+ diffusion</text>
 <rect x="216.4" y="599.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="225.4" y="602.0" width="8" height="8" fill="#333333" stroke="none" opacity="1.0"/>
-<text x="250.4" y="611.0" font-size="14" fill="#222222">contact</text>
-<rect x="466.4" y="599.0" width="26" height="14" fill="#dbe8f5"/>
-<rect x="466.4" y="599.0" width="26" height="14" fill="#7d8a2e" stroke="#444d14" opacity="1.0"/>
-<text x="500.4" y="611.0" font-size="14" fill="#222222">gate</text>
-<line x1="606.6" y1="606.0" x2="632.6" y2="606.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<text x="640.6" y="611.0" font-size="14" fill="#222222">layout continues</text>
+<rect x="216.4" y="599.0" width="26" height="14" fill="#c9cf96" stroke="#5c6620" opacity="1.0"/>
+<text x="250.4" y="611.0" font-size="14" fill="#222222">polysilicon</text>
+<rect x="521.3" y="599.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="521.3" y="599.0" width="26" height="14" fill="url(#hatch)" stroke="#222222" opacity="1.0"/>
+<text x="555.3" y="611.0" font-size="14" fill="#222222">silicide block, over any layer</text>
+<rect x="216.4" y="623.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="225.4" y="626.0" width="8" height="8" fill="#333333" stroke="none" opacity="1.0"/>
+<text x="250.4" y="635.0" font-size="14" fill="#222222">contact</text>
+<rect x="521.3" y="623.0" width="26" height="14" fill="#dbe8f5"/>
+<rect x="521.3" y="623.0" width="26" height="14" fill="#7d8a2e" stroke="#444d14" opacity="1.0"/>
+<text x="555.3" y="635.0" font-size="14" fill="#222222">gate</text>
+<line x1="216.4" y1="654.0" x2="234.4" y2="654.0" stroke="#c0392b" stroke-width="4"/>
+<path d="M232.4,648.0 L243.4,654.0 L232.4,660.0 z" fill="#c0392b"/>
+<text x="250.4" y="659.0" font-size="14" fill="#222222">drain diode: P+ drain to N+ ring</text>
+<line x1="521.3" y1="654.0" x2="548.3" y2="654.0" stroke="#222222" stroke-width="2" stroke-dasharray="9,3,2,3"/>
+<text x="555.3" y="659.0" font-size="14" fill="#222222">B–B′: the PMOS cut of the cross-section</text>
+<line x1="216.4" y1="678.0" x2="242.4" y2="678.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="250.4" y="683.0" font-size="14" fill="#222222">layout continues</text>
 </svg>
