@@ -92,7 +92,9 @@ def pad_net():
     # Grey layers: red is then the schematic's primary protection only.
     f.grey_silicon()
     f.geom(net["comp"], "primdrain")
-    f.geom(net["metal2"], "padwire", opacity=0.3)
+    f.geom(net["metal2"], "padwire", opacity=0.3, key=False)
+    f.note(("#444444", INK, 0.3), "PAD net, metal 2, outlined in black",
+           kind="tint")
     # A firm edge, so the wire can be followed across the cell.
     f.outline(net["metal2"].intersection(box(0, 66, 75, 285)), INK, width=1.1)
     f.region(SECOND_PARTS[0], SECONDARY, width=2.2)
@@ -119,6 +121,8 @@ def pad_net():
            kind="plain")
     f.note(INK, "PMOS drains: diodes to the N-well on DVDD", kind="plain")
     f.note(INK, "DVDD and DVSS rings: not drawn", kind="plain")
+    f.note(INK, "40 µm² diodes, input buffer: further right", kind="plain")
+    f.note(INK, "rail clamp: in the supply pads, not here", kind="plain")
     f.title("gf180mcu_fd_io__bi_t: the PAD net", up=84)
     return f
 
@@ -148,7 +152,7 @@ def _drivers(window, title):
 def paths():
     """The discharge currents on the drivers, one panel per polarity."""
     diode = "current through a drain diode"
-    a = _drivers((0, 64, 75, 128), "(a) Negative discharges")
+    a = _drivers((0, 64, 75, 128), "(a) Negative, PAD to DVSS\nand PAD to DVDD")
     # From the P+ ring into the N+ drains.
     for gx, ring in ((19.78, 11.0), (55.0, 64.0)):
         a.flow([(ring, 101), (gx, 101)], key=diode)
@@ -167,7 +171,7 @@ def paths():
     a.label("outer N+ guard\nring, on DVDD", (70.5, 110),
             (a.px(0, 112)[0], bot), colour=DVDD, weight="bold")
 
-    b = _drivers((0, 64, 75, 206), "(b) Positive discharges")
+    b = _drivers((0, 64, 75, 206), "(b) Positive, PAD to DVSS and PAD to DVDD")
     # P+ drains into the N-well and out through its N+ ring.
     for gx, ring in ((15.4, 8.6), (59.6, 66.4)):
         b.flow([(gx, 166), (ring, 166)], key=diode)
@@ -215,10 +219,11 @@ def secondary():
     pad, inn = gdskit.net(CELL, "PAD"), gdskit.net(CELL, "IN")
     # Blue is the schematic's three parts; its wires are black, so the
     # metal is too. The parts are drawn over the metal that covers them.
-    f.geom(pad["metal2"], "padwire", opacity=0.3)
+    f.geom(pad["metal2"], "padwire", opacity=0.3, key=False)
+    f.note(("#444444", INK, 0.3), "PAD net, metal 2", kind="tint")
     f.outline(pad["metal2"], INK, width=1.1)
     metal = inn["metal2"].union(inn["metal1"])
-    f.geom(metal, "padwire", opacity=0.14, key=False)
+    f.geom(metal, "padwire", opacity=0.22, key=False)
     f.outline(metal, INK, width=1.0)
     bodies = lay["poly"].intersection(lay["resistor"]).intersection(
         box(*SECOND))
@@ -237,12 +242,10 @@ def secondary():
             "and 2.8 µm long under the\nsilicide block",
             (32.85, 272.1), (f.ox + 60, top - 34), colour=SECONDARY,
             weight="bold")
-    f.label("N+ guard ring,\non DVDD", (26.05, 283), (f.px(0, 283)[0], top),
-            colour=GREY)
+    f.label("N+ guard ring,\non DVDD", (26.05, 283), (f.px(0, 283)[0], top))
     f.label("also to the pull\nresistors", (22.3, 292.9),
             (f.px(0, 292.9)[0], top), colour=GREY)
-    f.label("P+ guard ring,\non DVSS", (26.05, 302), (f.px(0, 302)[0], top),
-            colour=GREY)
+    f.label("P+ guard ring,\non DVSS", (26.05, 302), (f.px(0, 302)[0], top))
     bot = f.oy + f.dh + 30
     f.label("40 µm² diode to DVDD: 2 P+ strips of\n20 µm × 1 µm in an N-well held on\n"
             "DVDD by the N+ guard ring round them", (46.5, 283.2), (f.px(0, 278)[0], bot),
@@ -250,11 +253,13 @@ def secondary():
     f.label("40 µm² diode from DVSS: 2 N+ strips of\n20 µm × 1 µm in substrate held on\n"
             "DVSS by the P+ guard ring round them", (46.5, 304.05), (f.px(0, 304)[0], bot),
             colour=SECONDARY, weight="bold", also=[(46.5, 299.38)])
-    f.note(("#444444", INK, 0.14),
-           "wire after the 110 Ω, with openings", kind="tint")
+    f.note(("#444444", INK, 0.22),
+           "wire after the 110 Ω: metal, with openings", kind="tint")
     f.note(INK, "the diode strips lie under the metal", kind="plain")
     f.note(GREY, "not in the schematic")
     f.note(INK, "DVDD and DVSS rings: not drawn", kind="plain")
+    f.note(INK, "primary: to the left, not here", kind="plain")
+    f.note(INK, "rail clamp: in the supply pads", kind="plain")
     f.title("gf180mcu_fd_io__bi_t: the secondary protection", up=108)
     return f
 
