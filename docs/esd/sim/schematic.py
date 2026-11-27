@@ -45,7 +45,7 @@ def rails(d, x0, x1):
 
 def main():
     with schemdraw.Drawing(show=False) as d:
-        rails(d, 1.5, 25.5)
+        rails(d, 1.5, 30.0)
 
         # Bond pad.
         corners = [(0, MID - 0.6), (1.2, MID - 0.6), (1.2, MID + 0.6),
@@ -108,13 +108,21 @@ def main():
         d += elm.Dot().at((fet.drain[0], TOP))
         d += elm.Dot().at((fet.source[0], BOT))
 
+        # Rail diode, four parts, in each DVDD and DVSS pad cell.
+        d += (elm.Diode().up().at((27.0, BOT)).to((27.0, TOP))
+              .color(CLAMP).label("160 µm²\n(4 × 40 µm²)", loc="bottom",
+                                   ofst=0.2))
+        d += elm.Dot().at((27.0, TOP))
+        d += elm.Dot().at((27.0, BOT))
+
         # Group labels.
         d += elm.Label().at((3.5, TOP + 1.0)).label("primary",
                                                       color=PRIMARY)
         d += elm.Label().at((10.5, TOP + 1.0)).label("secondary",
                                                        color=SECONDARY)
-        d += elm.Label().at((20.0, TOP + 1.0)).label(
-            "rail clamp (in the DVDD and DVSS pads)", color=CLAMP)
+        d += elm.Label().at((22.0, TOP + 1.0)).label(
+            "rail clamp and rail diode (in the DVDD and DVSS pads)",
+            color=CLAMP)
         d += elm.Label().at((8.0, TOP + 1.9)).label(
             "inside gf180mcu_fd_io__bi_t")
 
