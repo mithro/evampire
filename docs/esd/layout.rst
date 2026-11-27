@@ -65,7 +65,7 @@ largest part of the cell, and they are also its primary ESD protection
          red blocks, labelled drain diode of NMOS drivers 304 µm and drain
          diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,
          output signal buffers and pull-up and pull-down resistors, which
-         the schematic leaves out. A blue block whose parts are labelled
+         the schematic leaves out. Three blue blocks labelled
          110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
          block labelled input buffer.
    :width: 100%
