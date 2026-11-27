@@ -141,7 +141,10 @@ def ring():
         1.5).buffer(-1.5)
     f.outline(bus, "#7d1f14", width=1.6)
     f.note("#7d1f14", "PAD net's metal 2, under the stripes", kind="outline")
-    f.geom(pad["comp"], "paddrain")
+    # The NMOS drains carry none of this current, so they are grey.
+    f.geom(pad["comp"].intersection(box(0, 120, 75, 222)), "paddrain")
+    f.geom(pad["comp"].intersection(box(0, 0, 75, 120)), "other",
+           key=False)
     f.outline(translate(fet.buffer(0.3).buffer(-0.3), xoff=PITCH), CLAMP,
               width=3.0)
     f.note(CLAMP, "rail clamp's NMOS, under the metal", kind="outline")
@@ -157,7 +160,7 @@ def ring():
         f.text(x, y - 4, f"{name} bond pad", weight="bold")
         f.text(x, y + 14, kind)
     x, y = f.px(66.5, 95)
-    f.text(x, y + 5, "NMOS drains")
+    f.text(x, y + 5, "NMOS drains, idle")
     x, y = f.px(69.5, 166)
     f.text(x, y + 5, "PMOS drains")
     x, y = f.px(PITCH, 0)
