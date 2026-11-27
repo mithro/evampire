@@ -41,20 +41,23 @@ TWO_PAD = [
     ("NGP4", s(plates={"poly": 4.0}, gate=True)),
     ("NGM1", s(plates={"m1": 6.0}, gate=True)),
     ("NAGM1", s(plates={"m1": 6.0}, gate=True, nat_gap=0.6)),
-    ("DGM1", s(kind="dnw", plates={"m1": 6.0}, gate=True)),
+    # a contacted ring under NAT: the spacing to a neighbouring well where no P-well lies
+    # between the two
+    ("NAR1S3", s(rings=rings(3.0), sense=True, nat_gap=0.6)),
+    ("NAR1S8", s(rings=rings(8.0), term=28.0, sense=True, nat_gap=0.6)),
 ]
 
 ONE_PAD = [
     # the second copy of the deep N-well reference, at the other end of the die from the first
     ("DT20b", s(kind="dnw")),
     # what surrounds a plain N-well: distance to the P+ ring, and the corner
-    ("NT1", s(term=1.0)), ("NT5", s(term=5.0)), ("NT10", s(term=10.0)), ("NT20", s()),
+    ("NT1", s(term=1.0)), ("NT5", s(term=5.0)), ("NT20", s()), ("NW0b", s(pwell_gap=0.0)),
     ("NC0", s(corner=0.0)), ("NC15", s(corner=15.0)),
     # a drawn P-well at a set distance
     ("NW0", s(pwell_gap=0.0)), ("NW1p5", s(pwell_gap=1.5)),
     ("NW3", s(pwell_gap=3.0)), ("NW6", s(pwell_gap=6.0)),
     # NAT keeps the generated P-well away
-    ("NA0p6", s(nat_gap=0.6)), ("NA2", s(nat_gap=2.0)), ("NA0p6T10", s(nat_gap=0.6, term=10.0)),
+    ("NA0p6", s(nat_gap=0.6)), ("NC0b", s(corner=0.0)), ("NA0p6T10", s(nat_gap=0.6, term=10.0)),
 
     ("NA0p6C0", s(nat_gap=0.6, corner=0.0)),
     ("NAM1_3", s(nat_gap=0.6, plates={"m1": 3.0})), ("NAM1_6", s(nat_gap=0.6, plates={"m1": 6.0})),
@@ -77,13 +80,12 @@ ONE_PAD = [
     ("DT2p6", s(kind="dnw", term=2.6)),
     ("DT20", s(kind="dnw")),
     ("DC0", s(kind="dnw", corner=0.0)),
-    ("DW1p5", s(kind="dnw", pwell_gap=1.5)),
     ("DM1_6", s(kind="dnw", plates={"m1": 6.0})),
-    ("DM1_10", s(kind="dnw", plates={"m1": 10.0})),
-    ("DPM12", s(kind="dnw", plates={"poly": 2.0, "m1": 5.0, "m2": 9.0})),
     # deep N-well with NAT overlapping its edge: no P-well can lie beside the junction
     ("DAo1", s(kind="dnw", nat_gap=-1.0)),
-    ("DAo1C0", s(kind="dnw", nat_gap=-1.0, corner=0.0)),
+    # floating rings under NAT: what rings do where no P-well lies between them
+    ("NAR1_2", s(rings=rings(2.0), nat_gap=0.6)),
+    ("NAR3_2", s(rings=rings(2.0, 2.5, 3.0), term=30.0, nat_gap=0.6)),
     ("DAo1M1_6", s(kind="dnw", nat_gap=-1.0, plates={"m1": 6.0})),
     # references: a pad and lead with no junction; second copies of three structures, placed
     # far from the first, for the spread across the die; and a plain well whose Metal5 lead

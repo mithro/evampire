@@ -23,7 +23,7 @@ Parameters (micrometres), with defaults in DEFAULTS:
              edge the NAT layer may overlap)
   sense      True adds a contact and a Metal2 lead (to the north) on the first ring
   gate       True ties the plates to their own Metal2 lead (to the north) instead of to
-             the well, making a gated diode; the plates then start 1 um inside the well edge
+             the well, making a gated diode; the plates then start 0.5 um inside the well edge
   lead_w     width of the Metal5 lead where it crosses the termination (6 by default; a
              wide lead is the control for the lead's own effect on the junction)
   dualgate   True puts the structure in the 6 V (thick gate oxide) area
@@ -105,7 +105,9 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
     bh = block_half(p)
     north = None  # Metal1 patch that the north Metal2 lead lands on
     if p["gate"]:
-        g0 = -1.0  # plates start here, clear of the well's Metal1 at -inset
+        # plates start here: 1.2 um clear of the via stack's Metal1 and 1.5 um clear of the
+        # well's Metal1 ring, so that 80 V between plate and well is under 0.7 MV/cm
+        g0 = -0.5
         if "poly" in plates:
             add(L.POLY2, annulus(p, g0, plates["poly"]))
             patch = geom.box(-1.2, half + g0 + 0.1, 1.2, half + g0 + 1.3)
@@ -159,7 +161,15 @@ def build(layout: kdb.Layout, name: str, params: dict) -> kdb.Cell:
     if p["pwell_gap"] is not None:
         add(L.LVPWELL, annulus(p, p["pwell_gap"], term + w + 1.0))
     if p["nat_gap"] is not None:
-        add(L.NAT, annulus(p, p["nat_gap"], term - 0.5))
+        nat = annulus(p, p["nat_gap"], term - 0.5)
+        # rings under NAT: the layer keeps 0.5 um from every N-well (rule NAT.3; 0.6 drawn), so it
+        # is cut into strips between the rings
+        d = 0.0
+        for gap, width in p["rings"]:
+            d += gap
+            nat -= annulus(p, d - 0.6, d + width + 0.6)
+            d += width
+        add(L.NAT, nat)
 
     # the well's via stack and Metal5 lead to the east
     sx = half - inset - w / 2  # centre of the N+ ring on the east side
