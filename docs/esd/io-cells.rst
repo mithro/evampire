@@ -33,9 +33,10 @@ Protection structure
 The protection of the bidirectional pad has three parts: the output
 driver, the secondary protection of the input gates and the rail clamp.
 :numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
-:numref:`fig-esd-io-gds-cell` shows where the output driver and the
-secondary protection lie in the cell's layout, drawn from the foundry's GDS
-file. :numref:`fig-esd-io-gds-clamp` shows the rail clamp in a supply pad.
+:numref:`fig-esd-io-gds-cell` shows the same parts in the layouts of both
+cells, drawn from the foundry's GDS files: the output driver and the
+secondary protection in the bidirectional pad, and the rail clamp in a
+supply pad.
 Every pad sits on two rings of metal that run round the chip: DVDD and
 DVSS.
 
@@ -59,24 +60,26 @@ DVSS.
    The ESD protection of gf180mcu_fd_io__bi_t, and the rail clamp and
    rail diode in each DVDD and DVSS pad.
 
-.. figure:: figures/gds-cell.svg
+.. figure:: figures/gds-cells.svg
    :name: fig-esd-io-gds-cell
-   :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide. An
-         orange note says the rail clamp and rail diode are not in this
-         cell, only in the supply pads. The layout is drawn with
-         its layers in grey. From the left: the bond pad, labelled PAD. Two
+   :alt: Two layouts, each 350 µm long and 75 µm wide, with their layers
+         in grey. Above, the bidirectional pad. From the left: the bond pad, labelled PAD. Two
          red blocks, labelled drain diode of NMOS drivers 304 µm and drain
          diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,
          output signal buffers and pull-up and pull-down resistors, which
          the schematic leaves out. Three blue blocks labelled
          110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
-         block labelled input buffer.
+         block labelled input buffer. Below, the DVDD supply pad. From the
+         left: the DVDD bond pad, then orange blocks labelled clamp NMOS
+         4000 µm, three inverters, MOS capacitor, 360 kΩ and 160 µm² diode
+         from DVSS to DVDD. In grey lettering, four supply capacitors.
    :width: 100%
 
-   The parts of :numref:`fig-esd-io-cell` in the layout of
-   gf180mcu_fd_io__bi_t, each in the schematic's colour and under the
-   schematic's label. The layers are grey, and grey lettering names what
-   the schematic leaves out. :ref:`esd-layout-floorplan` describes each
+   The parts of :numref:`fig-esd-io-cell` in the layouts of
+   gf180mcu_fd_io__bi_t, above, and gf180mcu_fd_io__dvdd, below, each in
+   the schematic's colour and under the schematic's label. The layers are
+   grey, and grey lettering names what the schematic leaves out.
+   :ref:`esd-layout-floorplan` and :ref:`esd-layout-clamp` describe each
    part.
 
 Each symbol of the schematic is a group of shapes in a layout.
@@ -114,19 +117,19 @@ that shows each one.
      - :numref:`fig-esd-io-gds-cell`
    * - 360 kΩ resistor
      - Twelve timer resistors of 30 kΩ
-     - :numref:`fig-esd-io-gds-clamp`
+     - :numref:`fig-esd-io-gds-cell`
    * - MOS capacitor
      - Eight timer capacitors of 10 µm × 25 µm
-     - :numref:`fig-esd-io-gds-clamp`
+     - :numref:`fig-esd-io-gds-cell`
    * - Three inverters
      - The three inverters between the clamp transistor and the timer
-     - :numref:`fig-esd-io-gds-clamp`
+     - :numref:`fig-esd-io-gds-cell`
    * - Clamp NMOS, 4000 µm
      - Four blocks of 20 fingers, each finger 50 µm wide
-     - :numref:`fig-esd-io-gds-clamp`
+     - :numref:`fig-esd-io-gds-cell`
    * - Rail diode, 160 µm²
      - Four N+ strips of 40 µm × 1 µm, behind the timer resistors
-     - :numref:`fig-esd-io-gds-clamp`
+     - :numref:`fig-esd-io-gds-cell`
    * - DVDD ring and DVSS ring
      - Stripes of metal 3 to metal 5 that cross every pad cell
      - :numref:`fig-esd-io-gds-ring`
@@ -289,23 +292,8 @@ Each supply pad also holds a diode from DVSS to DVDD, in four parts of
 40 µm², 160 µm² in all ([ESD-DVDD-CDL]_, line 50). It conducts when DVSS
 rises above DVDD.
 
-:numref:`fig-esd-io-gds-clamp` shows these parts in the layout of the DVDD
+:numref:`fig-esd-io-gds-cell` shows these parts in the layout of the DVDD
 pad.
-
-.. figure:: figures/gds-clamp.svg
-   :name: fig-esd-io-gds-clamp
-   :alt: Layout of the DVDD supply pad, 350 µm long, with its layers in
-         grey. From the left: the DVDD bond pad, then four orange blocks
-         labelled clamp NMOS 4000 µm, three inverters, MOS capacitor and
-         360 kΩ, and a fifth labelled 160 µm² diode from DVSS to DVDD. In
-         grey lettering, four supply capacitors, which the schematic
-         leaves out.
-   :width: 100%
-
-   The rail clamp and rail diode of :numref:`fig-esd-io-cell` in the layout of
-   gf180mcu_fd_io__dvdd, in the schematic's orange and under the
-   schematic's labels. The layers are grey. :ref:`esd-layout-clamp`
-   describes the clamp transistor's fingers.
 
 The clamp needs no supply. The discharge itself raises DVDD, which powers
 the inverters. The timer's time constant decides which events turn it on:
