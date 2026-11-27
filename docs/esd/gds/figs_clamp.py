@@ -27,7 +27,7 @@ def clamp():
     As in figs_pad.cell: grey layers, the schematic's own labels, and what
     the schematic leaves out named in grey.
     """
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=80, right=75, bottom=184)
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=106, right=75, bottom=184)
     lay = gdskit.load(CELL)
     f.grey_silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
@@ -55,6 +55,10 @@ def clamp():
             colour=GREY)
     f.note((CLAMP, CLAMP, 0.3), "rail clamp", kind="tint")
     f.note(GREY, "not in the schematic")
+    f.note(INK, "the DVSS pad holds the same rail clamp", kind="plain")
+    f.note(INK, "DVDD and DVSS rings: metal over the cell, not drawn",
+           kind="plain")
+    f.title("gf180mcu_fd_io__dvdd, the DVDD supply pad", up=88)
     f.dim((75, 0), (75, 350), "350 µm", offset=92, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f

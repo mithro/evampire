@@ -20,6 +20,9 @@ INPUT = (3.5, 311.6, 71.8, 341.8)        # rest of comp018green_inpath_cms_smt
 PULLS = (3.8, 266.7, 18.8, 309.5)        # comp018green_in_pupd resistors
 
 
+# The resistors and the two diode blocks inside SECOND.
+SECOND_PARTS = ((21.7, 266.7, 52.7, 277.5), (21.7, 277.9, 52.7, 293.2),
+                (21.7, 293.6, 52.7, 309.9))
 NDRIVERS = (2.0, 69.0, 73.0, 124.8)      # NMOS output drivers and rings
 PDRIVERS = (2.0, 125.2, 73.0, 208.0)     # PMOS output drivers and rings
 
@@ -31,7 +34,7 @@ def cell():
     mean in the schematic of schematic.py, and each label is the
     schematic's own. What the schematic leaves out is named in grey.
     """
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=90, right=75, bottom=190)
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=116, right=75, bottom=190)
     lay = gdskit.load(CELL)
     f.grey_silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
@@ -45,7 +48,8 @@ def cell():
         f.box(region, colour=GREY, dash="5,4", width=1.4)
     for region in (NDRIVERS, PDRIVERS):
         f.region(region, HOT)
-    f.region(SECOND, SECONDARY)
+    for part in SECOND_PARTS:
+        f.region(part, SECONDARY, width=2.2)
     f.region(INPUT, INK, opacity=0.12)
     top = f.oy - 46
     f.label("drain diode of\nNMOS drivers\n304 µm", (2.0, 97),
@@ -61,20 +65,21 @@ def cell():
     f.label("input\nbuffer", (3.5, 327), (f.px(0, 327)[0], top),
             weight="bold")
     bot = f.oy + f.dh + 30
-    f.label("110 Ω\n(4 × 440 Ω)", (36.0, 272.1), (f.px(0, 246)[0], bot),
-            colour=SECONDARY, weight="bold")
-    f.label("40 µm² diode\nto DVDD", (49.0, 285.5), (f.px(0, 291)[0], bot),
-            colour=SECONDARY, weight="bold")
-    f.label("40 µm² diode\nfrom DVSS", (49.0, 301.7), (f.px(0, 338)[0], bot),
-            colour=SECONDARY, weight="bold")
+    # Each leader drops straight out of the cell before it turns.
+    for text, gy, at in (("110 Ω\n(4 × 440 Ω)", 272.1, 246),
+                         ("40 µm² diode\nto DVDD", 285.5, 291),
+                         ("40 µm² diode\nfrom DVSS", 301.7, 338)):
+        f.label(text, (52.7, gy), (f.px(0, at)[0], bot), colour=SECONDARY,
+                weight="bold", elbow=f.px(76.5, gy))
     f.note((HOT, HOT, 0.3), "primary", kind="tint")
     f.note((SECONDARY, SECONDARY, 0.3), "secondary", kind="tint")
     f.note((INK, INK, 0.12), "input buffer", kind="tint")
-    f.note(GREY, "not in the schematic")
+    f.note(GREY, "not in the schematic", kind="box")
     f.note(INK, "rail clamp: in the supply pads, not here",
            kind="plain")
     f.note(INK, "DVDD and DVSS rings: metal over the cell, not drawn",
            kind="plain")
+    f.title("gf180mcu_fd_io__bi_t, the bidirectional pad", up=98)
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f
