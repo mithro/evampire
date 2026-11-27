@@ -63,10 +63,12 @@
 <text x="102" y="180.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NC0</text>
 <rect x="183.8" y="163.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="165.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<rect x="302.1" y="179.8" width="7.9" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="426.7" cy="182.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<path d="M257.2,178.3 L265.2,182.3 L257.2,186.3 Z" fill="white" stroke="#2e86de" stroke-width="1.3"/>
+<rect x="298.9" y="179.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
+<rect x="301.7" y="184.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
 <circle cx="372.1" cy="186.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<path d="M256.0,182.5 L264.0,186.5 L256.0,190.5 Z" fill="white" stroke="#1b3a6b" stroke-width="1.3"/>
+<rect x="298.5" y="183.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <rect x="110" y="190.0" width="500" height="28" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
 <text x="102" y="208.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NC15</text>
 <rect x="183.8" y="191.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
@@ -165,14 +167,18 @@
 <text x="102" y="432.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NA0p6C0</text>
 <rect x="183.8" y="415.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="183.8" cy="417.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<rect x="302.1" y="423.4" width="1" height="5" rx="0" fill="#2e8b57" stroke="none" fill-opacity="0.3"/>
 <circle cx="426.7" cy="425.9" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
-<path d="M257.2,421.9 L265.2,425.9 L257.2,429.9 Z" fill="white" stroke="#2e8b57" stroke-width="1.3"/>
+<rect x="298.9" y="422.7" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e8b57"/>
+<rect x="301.7" y="427.6" width="1" height="5" rx="0" fill="#145a32" stroke="none" fill-opacity="0.3"/>
 <circle cx="372.1" cy="430.1" r="3.6" fill="#145a32" stroke="#222222" stroke-width="0.6"/>
-<path d="M260.2,426.1 L268.2,430.1 L260.2,434.1 Z" fill="white" stroke="#145a32" stroke-width="1.3"/>
+<rect x="298.5" y="426.9" width="6.4" height="6.4" rx="0" fill="white" stroke="#145a32"/>
+<rect x="302.1" y="431.8" width="7.9" height="5" rx="0" fill="#2e86de" stroke="none" fill-opacity="0.3"/>
 <circle cx="426.7" cy="434.3" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
-<path d="M257.2,430.3 L265.2,434.3 L257.2,438.3 Z" fill="white" stroke="#2e86de" stroke-width="1.3"/>
+<rect x="298.9" y="431.1" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e86de"/>
+<rect x="301.7" y="436.0" width="1" height="5" rx="0" fill="#1b3a6b" stroke="none" fill-opacity="0.3"/>
 <circle cx="372.1" cy="438.5" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
-<path d="M256.0,434.5 L264.0,438.5 L256.0,442.5 Z" fill="white" stroke="#1b3a6b" stroke-width="1.3"/>
+<rect x="298.5" y="435.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <text x="102" y="460.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NAM1_3</text>
 <rect x="182.9" y="443.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
 <circle cx="182.9" cy="445.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
@@ -190,8 +196,8 @@
 <rect x="361.8" y="463.3" width="6.4" height="6.4" rx="0" fill="white" stroke="#1b3a6b"/>
 <rect x="110" y="470.0" width="500" height="28" rx="0" fill="#000000" stroke="none" fill-opacity="0.04"/>
 <text x="102" y="488.0" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">NAM1_6</text>
-<rect x="183.3" y="471.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
-<path d="M168.5,469.5 L176.5,473.5 L168.5,477.5 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<rect x="182.9" y="471.0" width="1" height="5" rx="0" fill="#c0392b" stroke="none" fill-opacity="0.3"/>
+<circle cx="182.9" cy="473.5" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
 <rect x="463.3" y="479.4" width="1" height="5" rx="0" fill="#2e8b57" stroke="none" fill-opacity="0.3"/>
 <circle cx="485.8" cy="481.9" r="3.6" fill="#2e8b57" stroke="#222222" stroke-width="0.6"/>
 <rect x="460.1" y="478.7" width="6.4" height="6.4" rx="0" fill="white" stroke="#2e8b57"/>
