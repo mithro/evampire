@@ -37,7 +37,7 @@ kinds of board. The operating modes are described on :ref:`power-modes`.
      - Yes
      - 1
      - USB in, Ethernet out
-   * - Ethernet pass-through
+   * - Ethernet in, Ethernet out
      - Yes
      - Yes
      - 0
@@ -48,7 +48,7 @@ kinds of board. The operating modes are described on :ref:`power-modes`.
      - 1 or 2
      - All three
 
-A USB-powered :term:`midspan` sits in the cable between an Ethernet switch
+A USB-powered :term:`Midspan PSE <midspan PSE>` sits in the cable between an Ethernet switch
 and the powered device, and needs a data path past ebat
 (:ref:`ebat-pass-through`), because ebat does not carry the data itself.
 
@@ -81,7 +81,9 @@ The power limits do not change. The front end still shows a detection
 signature within the resistance, capacitance and inductance limits of
 :numref:`tbl-magnetics-poe-numbers`. Joining the two wires of a pair puts
 a short circuit across that pair for any data that a switch at the far end
-sends.
+sends. The far end's transceiver withstands a short between any two wires
+indefinitely (:clause:`40.8.3.4`), so the short stops its data without
+damaging it.
 
 Whether the wires are joined directly, or through a part on each
 wire that keeps the pair's impedance high at data frequencies, is an open
@@ -98,8 +100,10 @@ IEEE 802.3 requires isolation between the cable conductors and every
 accessible conductor, such as a USB Type-C connector (:clause:`145.4.1`).
 :doc:`../power/poe/isolation` gives the test voltages, the two isolation
 environments and the three routes to a barrier, and all of it applies to
-ebat. Without a data path, only the power and ebat's control and status
-signals cross the barrier.
+ebat. With the barrier between ebat and the cable, only the power and
+ebat's control and status signals cross it. With the barrier at the USB
+Type-C connectors, the USB power and the CC, D+ and D− signals cross it
+instead.
 
 .. _ebat-pass-through:
 
@@ -107,13 +111,13 @@ Data pass-through
 -----------------
 
 A board can pass Ethernet data between two RJ45 sockets while ebat handles
-only the power. :numref:`fig-ebat-pass-through` shows an Ethernet
-pass-through board of this kind: power arrives on port A and leaves on port
-B, and the data pairs run from one socket to the other.
+only the power. :numref:`fig-ebat-pass-through` shows such a board with
+both Ethernet ports: power arrives on port A and leaves on port B, and the
+data pairs run from one socket to the other.
 
 .. graphviz:: pass-through.dot
    :name: fig-ebat-pass-through
-   :caption: An Ethernet pass-through board on which the data, including
+   :caption: A board with data pass-through, on which the data, including
              LLDP frames, passes between the two cables without reaching
              ebat.
    :alt: Block diagram. Upstream power sourcing equipment connects by
@@ -146,7 +150,7 @@ A USB-powered midspan has the same data path, with an unpowered RJ45
 socket for the switch in place of port A. IEEE 802.3 defines which
 Ethernet speeds a midspan must pass (:clause:`145.2.3`), and sets limits on
 the insertion loss, crosstalk and return loss that it adds to the data path
-(:clause:`145.4.9`). The pass-through board of
+(:clause:`145.4.9.1`). The pass-through board of
 :numref:`fig-ebat-pass-through` sits in the middle of the link in the same
 way, so the same limits are the reference for its data path.
 
@@ -185,12 +189,11 @@ frames do not pass through ebat, so ebat cannot prevent the second case.
    :caption: The cycle on a pass-through board when port B has demoted the
              downstream powered device and the device agrees a higher
              value over LLDP with the upstream equipment.
-   :alt: Cycle of four steps. Port B detects and classifies the
-         downstream powered device and assigns a class below the requested
-         one. The device agrees a higher value over LLDP with the upstream
+   :alt: Cycle of four steps. Port B classifies the downstream powered
+         device and assigns a class below the requested one. The device agrees a higher value over LLDP with the upstream
          equipment, past ebat. The device draws more than port B allows.
          Port B's current and power limit switches the port off. The cycle
-         returns to detection and classification.
+         returns, through detection again, to classification.
    :align: center
 
 In a USB-powered midspan, the data side connects to a switch instead of

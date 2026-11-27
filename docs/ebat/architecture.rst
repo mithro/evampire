@@ -46,7 +46,8 @@ and converter control, and the orange block the processor.
 
 :numref:`fig-ebat-block-diagram` draws the first-version arrangement: the
 converters' power stages outside the chip and one USB Type-C port. In the
-full design the power stages move onto the chip and there are two USB
+full design the power stages move onto the chip, except possibly some
+high-voltage switches, and there are two USB
 Type-C ports, as in evampire's board configurations
 (:numref:`tab-power-board-configs`).
 
@@ -103,8 +104,9 @@ ebat does not have these blocks of evampire (:doc:`../architecture/index`):
 * the transceiver configuration interface.
 
 Without the transceiver configuration interface, ebat has no
-:term:`MDIO` interface. The 125 MHz reference clock drives only these
-blocks (:ref:`arch-clock`), so ebat does not need it.
+:term:`MDIO` interface. The 125 MHz reference clock drives these blocks
+(:ref:`arch-clock`) and is one candidate source for the USB serial port's
+bit clock, so ebat does not need it.
 
 Of the three sources for the USB serial port's bit clock
 (:doc:`../usb-serial/timing`), ebat does not have the first, a clock

@@ -23,15 +23,15 @@ A powered device that requests class 4 or higher must implement Data Link
 Layer classification, and one that requests class 1 to 3 need not
 (:numref:`tab-poe-class-methods`; :clause:`145.3.6`, :clause:`33.3.5`).
 ebat's port A, the same circuit as evampire's, therefore requests class 1,
-2 or 3. Which of the three is open (:ref:`ebat-requirements-open-questions`).
+2 or 3.
 
 Power at class 3
 ----------------
 
 At class 3 a powered device may draw 13 W at its input
-(:numref:`tab-poe-classes`). Every type of power sourcing equipment gives
-the full power of class 1 to 3 from Physical Layer classification alone
-(:numref:`tab-poe-class-outcome`).
+(:numref:`tab-poe-classes`). Every type of power sourcing equipment that
+has the power to give gives the full power of class 1 to 3 from Physical
+Layer classification alone (:numref:`tab-poe-class-outcome`).
 
 The power that remains for the outputs is 13 W times the converter
 efficiency, less the board's own power, worked out as on evampire
@@ -43,16 +43,19 @@ The class 3 rows of evampire's examples give it for illustrative values:
   (:numref:`tab-usbpd-translation-examples`);
 * Ethernet in, Ethernet out: class 2 on port B, with an efficiency of 0.85,
   while the board uses no more than 4.3 W (:numref:`tab-poe-pass-through`).
+  Port B can then power only a device that requests class 1 or 2, because
+  even one class event assigns class 3 to a device that requests class 3
+  or higher (:clause:`Table 145-11 <145>`, :numref:`tab-poe-events`). Port
+  B refuses power to such a device, unless the device supports Autoclass
+  (:ref:`ebat-port-b-allocation`).
 
 An ebat board has no transceivers, so its own power has no transceiver
 share. Its value is unknown, as on evampire, and the power for the outputs
 follows from it as in these examples.
 
 USB in, Ethernet out does not involve port A, so it is the same as on
-evampire (:numref:`tab-poe-usb-in`). From a USB contract of 100 W, port B
-can offer up to class 8 while the board uses no more than 4 W, and only as
-Type 4 power sourcing equipment with 4-pair power
-(:doc:`../power/poe/translation`).
+evampire (:numref:`tab-poe-usb-in`), with the same conditions on the
+board's own power, the efficiency and the type of port B.
 
 Alternatives for more power
 ---------------------------
@@ -65,7 +68,7 @@ Request class 4 or higher without LLDP
    This does not meet :clause:`145.3.6`, which uses "shall".
 Present two signatures
    A :term:`dual-signature powered device` presents class signatures on
-   each pair set separately (:clause:`145.3.6.1`), and LLDP stays optional
+   each pair set separately (:clause:`145.3.5`, :clause:`145.3.6.1`), and LLDP stays optional
    while it requests class 3 or lower on both
    (:clause:`Table 145-19 <145>`). It draws up to 13 W on each pair set
    (:clause:`Table 145-27 <145>`), 26 W from power sourcing equipment that
@@ -100,14 +103,19 @@ To change port B's allocation, the software removes the power, runs
 detection again and classifies the powered device with a different number
 of class events (:doc:`../power/poe/sharing`). The powered device is
 unpowered while this happens. :numref:`fig-ebat-reclassify` shows the
-order. Fewer class events give a lower class, and the class can rise again
-only up to the one the device requests (:ref:`poe-demotion`).
+order. The device gets the lower of its requested class and the class
+that the number of class events allows, 3, 4, 6 or 8
+(:numref:`tab-poe-events`, :ref:`poe-demotion`). Classifying again
+therefore moves a device that requests class 4 to 8 between class 3 and
+its requested class, and cannot lower a device that requests class 1
+to 3. To give such a device less than its class power, port B uses
+Autoclass, if the device supports it, or refuses power.
 
 .. graphviz:: reclassify.dot
    :name: fig-ebat-reclassify
    :caption: Changing the allocation of the powered device on port B
              without LLDP, by removing the power and classifying again;
-             schematic and not to scale.
+             schematic.
    :alt: Five steps from left to right. The powered device is powered at
          its assigned class. The software removes the power, and the
          powered device turns off. Port B runs detection again. Port B
@@ -121,3 +129,9 @@ only up to the one the device requests (:ref:`poe-demotion`).
 and needs no LLDP (:clause:`145.2.8.2`). If the powered device supports
 it, ebat can use it to allocate less than the full class power
 (:doc:`../power/poe/translation`).
+
+Open questions
+--------------
+
+* Which class, 1, 2 or 3, port A's start-up sequencer requests. evampire
+  leaves the class it requests open (:doc:`../power/poe/startup`).

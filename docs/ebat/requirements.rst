@@ -89,6 +89,5 @@ Open questions
 
 * The questions that evampire leaves open on its power side apply to ebat
   in the same way (:ref:`requirements-open-questions`).
-* Which class the start-up sequencer requests, which evampire leaves open
-  (:doc:`../power/poe/startup`). On ebat it is class 1, 2 or 3.
+* The class that port A requests is listed on :doc:`power-without-lldp`.
 * The questions on boards built around ebat are listed on :doc:`boards`.

@@ -103,5 +103,5 @@ digraph ebat {
     bus_u -> bus_a [label="voltage, current and limit of each port"];
     bus_a -> bus_l;
     bus_l -> bus_d;
-    bus_d -> mon [dir=forward];
+    bus_d -> mon [dir=both];
 }
