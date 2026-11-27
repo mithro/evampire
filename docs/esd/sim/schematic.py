@@ -43,9 +43,18 @@ def rails(d, x0, x1):
                                                 halign="left")
 
 
+def cell_box(d, x0, x1, name):
+    """A dashed boundary round the parts that one pad cell holds."""
+    y0, y1 = BOT - 0.9, TOP + 1.6
+    corners = [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
+    for a, b in zip(corners, corners[1:]):
+        d += elm.Line().at(a).to(b).linestyle("--").color("#666666").linewidth(1.2)
+    d += elm.Label().at(((x0 + x1) / 2, y1 + 0.5)).label("inside " + name)
+
+
 def main():
     with schemdraw.Drawing(show=False) as d:
-        rails(d, 1.5, 31.0)
+        rails(d, 1.5, 31.6)
 
         # Bond pad.
         corners = [(0, MID - 0.6), (1.2, MID - 0.6), (1.2, MID + 0.6),
@@ -86,16 +95,16 @@ def main():
               .label("input\nbuffer", loc="bottom", ofst=0.4))
 
         # Rail clamp, in each DVDD and DVSS pad cell.
-        d += elm.Line().at((17.0, TOP)).to((17.0, TOP - 0.5))
-        d += (elm.Resistor().down().at((17.0, TOP - 0.5)).to((17.0, MID))
+        d += elm.Line().at((18.0, TOP)).to((18.0, TOP - 0.5))
+        d += (elm.Resistor().down().at((18.0, TOP - 0.5)).to((18.0, MID))
               .color(CLAMP).label("360 kΩ", loc="top"))
-        d += elm.Dot().at((17.0, MID))
-        d += (elm.Capacitor().down().at((17.0, MID)).to((17.0, BOT))
+        d += elm.Dot().at((18.0, MID))
+        d += (elm.Capacitor().down().at((18.0, MID)).to((18.0, BOT))
               .color(CLAMP).label("MOS\ncapacitor", loc="top"))
-        d += elm.Dot().at((17.0, TOP))
-        d += elm.Dot().at((17.0, BOT))
-        d += elm.Line().at((17.0, MID)).to((18.0, MID)).color(CLAMP)
-        inv = d.add(logic.Not().right().at((18.0, MID)).anchor("in1")
+        d += elm.Dot().at((18.0, TOP))
+        d += elm.Dot().at((18.0, BOT))
+        d += elm.Line().at((18.0, MID)).to((19.0, MID)).color(CLAMP)
+        inv = d.add(logic.Not().right().at((19.0, MID)).anchor("in1")
                     .color(CLAMP)
                     .label("three\ninverters", loc="bottom", ofst=0.4))
         d += elm.Line().at(inv.out).to((22.0, MID)).color(CLAMP)
@@ -121,10 +130,11 @@ def main():
         d += elm.Label().at((10.5, TOP + 1.0)).label("secondary",
                                                        color=SECONDARY)
         d += elm.Label().at((22.0, TOP + 1.0)).label(
-            "rail clamp and rail diode (in the DVDD and DVSS pads)",
-            color=CLAMP)
-        d += elm.Label().at((8.0, TOP + 1.9)).label(
-            "inside gf180mcu_fd_io__bi_t")
+            "rail clamp and rail diode", color=CLAMP)
+        # The rings run through every cell; each box is one cell's parts.
+        cell_box(d, -0.5, 14.3, "gf180mcu_fd_io__bi_t")
+        cell_box(d, 14.6, 31.0,
+                 "gf180mcu_fd_io__dvdd and gf180mcu_fd_io__dvss")
 
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "io-cell.svg"))
