@@ -27,8 +27,11 @@ NDRIVERS = (2.0, 69.0, 73.0, 124.8)      # NMOS output drivers and rings
 PDRIVERS = (2.0, 125.2, 73.0, 208.0)     # PMOS output drivers and rings
 
 
-def cell():
+def cell(alone=True):
     """The whole cell, with the parts of the schematic in its colours.
+
+    `alone` adds a note that the rail clamp is in another cell, for the
+    figure that does not show the supply pad under this one.
 
     The layers are grey, so red, blue and black mean here only what they
     mean in the schematic of schematic.py, and each label is the
@@ -78,10 +81,11 @@ def cell():
     f.note(INK, "DVDD and DVSS rings: metal over the cell, not drawn",
            kind="plain")
     f.title("gf180mcu_fd_io__bi_t, the bidirectional pad", up=98)
-    # In the schematic's orange, where the reader looks for the orange parts.
-    f.text(f.ox + f.dw, f.oy - 98, "rail clamp and rail diode: not in this "
-           "cell, only in the supply pads", anchor="end", fill=CLAMP,
-           weight="bold", halo=False)
+    if alone:
+        # In the schematic's orange, where the reader looks for those parts.
+        f.text(f.ox + f.dw, f.oy - 98, "rail clamp and rail diode: not in "
+               "this cell, only in the supply pads", anchor="end",
+               fill=CLAMP, weight="bold", halo=False)
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f

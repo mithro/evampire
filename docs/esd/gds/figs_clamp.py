@@ -8,6 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 from shapely.affinity import translate
 from shapely.geometry import box
 
+import figs_pad
 import gdskit
 from layfig import CLAMP, DVDD, DVSS, GREY, HOT, INK, Fig
 
@@ -62,6 +63,13 @@ def clamp():
     f.title("gf180mcu_fd_io__dvdd, the DVDD supply pad", up=88)
     f.dim((75, 0), (75, 350), "350 µm", offset=92, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
+    return f
+
+
+def cells():
+    """Both cells of the schematic: the bidirectional pad over a supply pad."""
+    f = figs_pad.cell(alone=False)
+    f.stack(clamp())
     return f
 
 
@@ -207,5 +215,6 @@ def ring():
     return f
 
 
-FIGURES = {"gds-clamp": clamp, "gds-clamp-fingers": clamp_fingers,
+FIGURES = {"gds-clamp": clamp, "gds-cells": cells,
+           "gds-clamp-fingers": clamp_fingers,
            "gds-ring": ring}
