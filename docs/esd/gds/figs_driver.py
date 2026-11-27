@@ -105,7 +105,7 @@ def silicide_block():
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
     _inside(b, "Drain contacts, on PAD", 14.75, 145.3, 15.405)
     _above(b, "Source contacts on DVDD, outside the block", 11.1, 149.7)
-    c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, not blocked")
+    c = _panel((20.3, 212.9, 33.9, 222.1), "(c) For comparison: a pre-driver")
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
     bot = c.oy + c.dh + 30
     c.label("Contacts beside every gate, between gates\n0.52 µm apart, all silicided", (32.7, 217.5),
