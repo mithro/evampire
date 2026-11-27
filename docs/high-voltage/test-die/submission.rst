@@ -267,30 +267,43 @@ done.
 A fourth review, by a reader with no prior involvement, verified the
 connections on the committed file with its own extraction, found no
 blocker and advised taping out the layout as it is. It also gave its
-confidence (:numref:`tab-hvt-confidence-4`). Those estimates were made
-before the changes in the rows marked "Fourth", and are that reviewer's
-alone.
+confidence twice: as it found the die, and after the changes in the rows
+marked "Fourth", when it checked the final file again and advised taping
+out as it is (:numref:`tab-hvt-confidence-4`). The estimates are that
+reviewer's alone.
 
-.. list-table:: Confidence stated by the fourth review, before its
-                changes
+.. list-table:: Confidence stated by the fourth review, before and after
+                its changes
    :name: tab-hvt-confidence-4
    :header-rows: 1
-   :widths: 70 30
+   :widths: 60 20 20
 
    * - Statement
-     - Estimate
+     - As found
+     - After the changes
    * - The layout passes the wafer.space precheck
      - 95 %
+     - 96 %
    * - The breakdown measurements work as intended
      - 85 %
+     - 86 %
    * - The results are comparable with the simulation as patterns
      - 85 %
+     - 87 %
    * - The results are comparable as ratios, within 15 %
      - 60 %
+     - 65 %
    * - Absolute values fall within the agreement range
      - 40 %
+     - 50 %
    * - The variants suffice, a valid negative result included
      - 70 %
+     - 82 %
+
+At the second check the reviewer attributed what remains of the two lowest
+figures to things only silicon can settle: the doping profiles, the depth
+of the deep layer, the vertices and the foundry's handling of NAT with no
+transistor.
 
 The reviewer named what limits each low figure. The absolute values are
 held down by the unmeasured doping profiles and the error of the
