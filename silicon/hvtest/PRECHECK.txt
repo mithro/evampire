@@ -1,20 +1,19 @@
 # Result of silicon/hvtest/flow.py on the layout of this commit's generator
 date: 2026-11-27
-precheck image: ghcr.io/wafer-space/gf180mcu-precheck:latest (1.7.3, PDK open_pdks d658698)
-sha256 hvtest.oas: 158138b014ce03d2f9c22608049f246016bcf8dd62bb16d7a4543e2f6045e61f
-connections (check_nets.py): 73 sites checked, 0 problem(s)
-density COMP ratio	29.276810355313128 %
-density Poly2 ratio	17.24456721263767 %
-density Metal1 ratio	35.885222169682706 %
-density Metal2 ratio	32.762259678335745 %
-density Metal3 ratio	34.03884232214752 %
-density Metal4 ratio	34.350596406215814 %
-density Metal5 ratio	37.33596451521791 %
-density MetalTop ratio	37.33596451521791 %
+precheck image: ghcr.io/wafer-space/gf180mcu-precheck@sha256:f6c0cb88efce8769ec87de5a2035ada731fd8fffb1b3e5e1968078f6dd191c2f (1.7.3, PDK open_pdks d658698)
+sha256 hvtest.oas: d7fbb157df1c8acf08732d575d34b508a9035b83311dc587303fb33aaffb91e3
+connections (check_nets.py): 72 sites checked, 0 problem(s)
+density COMP ratio	29.22932455628716 %
+density Poly2 ratio	17.26675992078393 %
+density Metal1 ratio	35.74328690457337 %
+density Metal2 ratio	32.67833638400364 %
+density Metal3 ratio	33.97119437977345 %
+density Metal4 ratio	34.2973973962534 %
+density Metal5 ratio	37.32069469262957 %
+density MetalTop ratio	37.32069469262957 %
 precheck: Check for KLayout density errors clear.
 precheck: Check for KLayout zero area polygons count clear.
 precheck: Check for KLayout antenna errors clear.
 precheck: Check for Magic DRC errors clear.
 precheck: Check for KLayout DRC errors clear.
 precheck exit: 0
-precheck rerun on the committed hvtest.oas itself: exit 0 (2026-11-27)

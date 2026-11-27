@@ -350,22 +350,25 @@
    "aux_role": "gate"
   },
   {
-   "name": "DGM1",
+   "name": "NAR1S3",
    "params": {
-    "kind": "dnw",
+    "kind": "nw",
     "half": 15.0,
     "corner": 8.0,
     "inset": 2.0,
     "ncomp_w": 2.0,
     "term": 20.0,
-    "rings": [],
-    "plates": {
-     "m1": 6.0
-    },
+    "rings": [
+     [
+      3.0,
+      2.0
+     ]
+    ],
+    "plates": {},
     "pwell_gap": null,
-    "nat_gap": null,
-    "sense": false,
-    "gate": true,
+    "nat_gap": 0.6,
+    "sense": true,
+    "gate": false,
     "block": true,
     "lead_w": 6.0,
     "dualgate": false
@@ -382,7 +385,45 @@
     1190.0,
     745.0
    ],
-   "aux_role": "gate"
+   "aux_role": "ring1"
+  },
+  {
+   "name": "NAR1S8",
+   "params": {
+    "kind": "nw",
+    "half": 15.0,
+    "corner": 8.0,
+    "inset": 2.0,
+    "ncomp_w": 2.0,
+    "term": 28.0,
+    "rings": [
+     [
+      8.0,
+      2.0
+     ]
+    ],
+    "plates": {},
+    "pwell_gap": null,
+    "nat_gap": 0.6,
+    "sense": true,
+    "gate": false,
+    "block": true,
+    "lead_w": 6.0,
+    "dualgate": false
+   },
+   "pad": [
+    1490.0,
+    595.0
+   ],
+   "centre": [
+    1332.0,
+    595.0
+   ],
+   "aux_pad": [
+    1490.0,
+    745.0
+   ],
+   "aux_role": "ring1"
   },
   {
    "name": "DT20b",
@@ -404,11 +445,11 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
+    1790.0,
     595.0
    ],
    "centre": [
-    1332.0,
+    1632.0,
     595.0
    ]
   },
@@ -433,11 +474,11 @@
    },
    "pad": [
     1790.0,
-    595.0
+    745.0
    ],
    "centre": [
     1632.0,
-    595.0
+    745.0
    ]
   },
   {
@@ -460,40 +501,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    745.0
+    290.0,
+    895.0
    ],
    "centre": [
-    1332.0,
-    745.0
-   ]
-  },
-  {
-   "name": "NT10",
-   "params": {
-    "kind": "nw",
-    "half": 15.0,
-    "corner": 8.0,
-    "inset": 2.0,
-    "ncomp_w": 2.0,
-    "term": 10.0,
-    "rings": [],
-    "plates": {},
-    "pwell_gap": null,
-    "nat_gap": null,
-    "sense": false,
-    "gate": false,
-    "block": true,
-    "lead_w": 6.0,
-    "dualgate": false
-   },
-   "pad": [
-    1790.0,
-    745.0
-   ],
-   "centre": [
-    1632.0,
-    745.0
+    132.0,
+    895.0
    ]
   },
   {
@@ -516,11 +529,39 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    590.0,
     895.0
    ],
    "centre": [
-    132.0,
+    432.0,
+    895.0
+   ]
+  },
+  {
+   "name": "NW0b",
+   "params": {
+    "kind": "nw",
+    "half": 15.0,
+    "corner": 8.0,
+    "inset": 2.0,
+    "ncomp_w": 2.0,
+    "term": 20.0,
+    "rings": [],
+    "plates": {},
+    "pwell_gap": 0.0,
+    "nat_gap": null,
+    "sense": false,
+    "gate": false,
+    "block": true,
+    "lead_w": 6.0,
+    "dualgate": false
+   },
+   "pad": [
+    890.0,
+    895.0
+   ],
+   "centre": [
+    732.0,
     895.0
    ]
   },
@@ -544,11 +585,11 @@
     "dualgate": false
    },
    "pad": [
-    590.0,
+    1190.0,
     895.0
    ],
    "centre": [
-    432.0,
+    1032.0,
     895.0
    ]
   },
@@ -572,11 +613,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
+    1490.0,
     895.0
    ],
    "centre": [
-    732.0,
+    1332.0,
     895.0
    ]
   },
@@ -600,11 +641,11 @@
     "dualgate": false
    },
    "pad": [
-    1190.0,
+    1790.0,
     895.0
    ],
    "centre": [
-    1032.0,
+    1632.0,
     895.0
    ]
   },
@@ -628,12 +669,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    895.0
+    290.0,
+    1045.0
    ],
    "centre": [
-    1332.0,
-    895.0
+    132.0,
+    1045.0
    ]
   },
   {
@@ -656,12 +697,12 @@
     "dualgate": false
    },
    "pad": [
-    1790.0,
-    895.0
+    590.0,
+    1045.0
    ],
    "centre": [
-    1632.0,
-    895.0
+    432.0,
+    1045.0
    ]
   },
   {
@@ -684,11 +725,11 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    890.0,
     1045.0
    ],
    "centre": [
-    132.0,
+    732.0,
     1045.0
    ]
   },
@@ -712,27 +753,27 @@
     "dualgate": false
    },
    "pad": [
-    590.0,
+    1190.0,
     1045.0
    ],
    "centre": [
-    432.0,
+    1032.0,
     1045.0
    ]
   },
   {
-   "name": "NA2",
+   "name": "NC0b",
    "params": {
     "kind": "nw",
     "half": 15.0,
-    "corner": 8.0,
+    "corner": 0.0,
     "inset": 2.0,
     "ncomp_w": 2.0,
     "term": 20.0,
     "rings": [],
     "plates": {},
     "pwell_gap": null,
-    "nat_gap": 2.0,
+    "nat_gap": null,
     "sense": false,
     "gate": false,
     "block": true,
@@ -740,11 +781,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
+    1490.0,
     1045.0
    ],
    "centre": [
-    732.0,
+    1332.0,
     1045.0
    ]
   },
@@ -768,11 +809,11 @@
     "dualgate": false
    },
    "pad": [
-    1190.0,
+    1790.0,
     1045.0
    ],
    "centre": [
-    1032.0,
+    1632.0,
     1045.0
    ]
   },
@@ -796,12 +837,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    1045.0
+    290.0,
+    1195.0
    ],
    "centre": [
-    1332.0,
-    1045.0
+    132.0,
+    1195.0
    ]
   },
   {
@@ -826,12 +867,12 @@
     "dualgate": false
    },
    "pad": [
-    1790.0,
-    1045.0
+    590.0,
+    1195.0
    ],
    "centre": [
-    1632.0,
-    1045.0
+    432.0,
+    1195.0
    ]
   },
   {
@@ -856,11 +897,11 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    890.0,
     1195.0
    ],
    "centre": [
-    132.0,
+    732.0,
     1195.0
    ]
   },
@@ -886,11 +927,11 @@
     "dualgate": false
    },
    "pad": [
-    590.0,
+    1190.0,
     1195.0
    ],
    "centre": [
-    432.0,
+    1032.0,
     1195.0
    ]
   },
@@ -916,11 +957,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
+    1490.0,
     1195.0
    ],
    "centre": [
-    732.0,
+    1332.0,
     1195.0
    ]
   },
@@ -946,11 +987,11 @@
     "dualgate": false
    },
    "pad": [
-    1190.0,
+    1790.0,
     1195.0
    ],
    "centre": [
-    1032.0,
+    1632.0,
     1195.0
    ]
   },
@@ -976,12 +1017,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    1195.0
+    290.0,
+    1345.0
    ],
    "centre": [
-    1332.0,
-    1195.0
+    132.0,
+    1345.0
    ]
   },
   {
@@ -1006,12 +1047,12 @@
     "dualgate": false
    },
    "pad": [
-    1790.0,
-    1195.0
+    590.0,
+    1345.0
    ],
    "centre": [
-    1632.0,
-    1195.0
+    432.0,
+    1345.0
    ]
   },
   {
@@ -1036,11 +1077,11 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    890.0,
     1345.0
    ],
    "centre": [
-    132.0,
+    732.0,
     1345.0
    ]
   },
@@ -1066,11 +1107,11 @@
     "dualgate": false
    },
    "pad": [
-    590.0,
+    1190.0,
     1345.0
    ],
    "centre": [
-    432.0,
+    1032.0,
     1345.0
    ]
   },
@@ -1096,11 +1137,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
+    1490.0,
     1345.0
    ],
    "centre": [
-    732.0,
+    1332.0,
     1345.0
    ]
   },
@@ -1126,11 +1167,11 @@
     "dualgate": false
    },
    "pad": [
-    1190.0,
+    1790.0,
     1345.0
    ],
    "centre": [
-    1032.0,
+    1632.0,
     1345.0
    ]
   },
@@ -1156,12 +1197,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    1345.0
+    290.0,
+    1495.0
    ],
    "centre": [
-    1332.0,
-    1345.0
+    132.0,
+    1495.0
    ]
   },
   {
@@ -1188,12 +1229,12 @@
     "dualgate": false
    },
    "pad": [
-    1790.0,
-    1345.0
+    590.0,
+    1495.0
    ],
    "centre": [
-    1632.0,
-    1345.0
+    432.0,
+    1495.0
    ]
   },
   {
@@ -1221,11 +1262,11 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    890.0,
     1495.0
    ],
    "centre": [
-    132.0,
+    732.0,
     1495.0
    ]
   },
@@ -1254,11 +1295,11 @@
     "dualgate": false
    },
    "pad": [
-    590.0,
+    1190.0,
     1495.0
    ],
    "centre": [
-    432.0,
+    1032.0,
     1495.0
    ]
   },
@@ -1287,11 +1328,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
+    1490.0,
     1495.0
    ],
    "centre": [
-    732.0,
+    1332.0,
     1495.0
    ]
   },
@@ -1328,11 +1369,11 @@
     "dualgate": false
    },
    "pad": [
-    1190.0,
+    1790.0,
     1495.0
    ],
    "centre": [
-    1032.0,
+    1632.0,
     1495.0
    ]
   },
@@ -1369,12 +1410,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    1495.0
+    290.0,
+    1645.0
    ],
    "centre": [
-    1332.0,
-    1495.0
+    132.0,
+    1645.0
    ]
   },
   {
@@ -1410,12 +1451,12 @@
     "dualgate": false
    },
    "pad": [
-    1790.0,
-    1495.0
+    590.0,
+    1645.0
    ],
    "centre": [
-    1632.0,
-    1495.0
+    432.0,
+    1645.0
    ]
   },
   {
@@ -1451,11 +1492,11 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    890.0,
     1645.0
    ],
    "centre": [
-    132.0,
+    732.0,
     1645.0
    ]
   },
@@ -1500,11 +1541,11 @@
     "dualgate": false
    },
    "pad": [
-    590.0,
+    1190.0,
     1645.0
    ],
    "centre": [
-    432.0,
+    1032.0,
     1645.0
    ]
   },
@@ -1549,11 +1590,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
+    1490.0,
     1645.0
    ],
    "centre": [
-    732.0,
+    1332.0,
     1645.0
    ]
   },
@@ -1592,11 +1633,11 @@
     "dualgate": false
    },
    "pad": [
-    1190.0,
+    1790.0,
     1645.0
    ],
    "centre": [
-    1032.0,
+    1632.0,
     1645.0
    ]
   },
@@ -1620,12 +1661,12 @@
     "dualgate": false
    },
    "pad": [
-    1490.0,
-    1645.0
+    290.0,
+    1795.0
    ],
    "centre": [
-    1332.0,
-    1645.0
+    132.0,
+    1795.0
    ]
   },
   {
@@ -1648,12 +1689,12 @@
     "dualgate": false
    },
    "pad": [
-    1790.0,
-    1645.0
+    590.0,
+    1795.0
    ],
    "centre": [
-    1632.0,
-    1645.0
+    432.0,
+    1795.0
    ]
   },
   {
@@ -1676,39 +1717,11 @@
     "dualgate": false
    },
    "pad": [
-    290.0,
+    890.0,
     1795.0
    ],
    "centre": [
-    132.0,
-    1795.0
-   ]
-  },
-  {
-   "name": "DW1p5",
-   "params": {
-    "kind": "dnw",
-    "half": 15.0,
-    "corner": 8.0,
-    "inset": 2.0,
-    "ncomp_w": 2.0,
-    "term": 20.0,
-    "rings": [],
-    "plates": {},
-    "pwell_gap": 1.5,
-    "nat_gap": null,
-    "sense": false,
-    "gate": false,
-    "block": true,
-    "lead_w": 6.0,
-    "dualgate": false
-   },
-   "pad": [
-    590.0,
-    1795.0
-   ],
-   "centre": [
-    432.0,
+    732.0,
     1795.0
    ]
   },
@@ -1734,73 +1747,11 @@
     "dualgate": false
    },
    "pad": [
-    890.0,
-    1795.0
-   ],
-   "centre": [
-    732.0,
-    1795.0
-   ]
-  },
-  {
-   "name": "DM1_10",
-   "params": {
-    "kind": "dnw",
-    "half": 15.0,
-    "corner": 8.0,
-    "inset": 2.0,
-    "ncomp_w": 2.0,
-    "term": 20.0,
-    "rings": [],
-    "plates": {
-     "m1": 10.0
-    },
-    "pwell_gap": null,
-    "nat_gap": null,
-    "sense": false,
-    "gate": false,
-    "block": true,
-    "lead_w": 6.0,
-    "dualgate": false
-   },
-   "pad": [
     1190.0,
     1795.0
    ],
    "centre": [
     1032.0,
-    1795.0
-   ]
-  },
-  {
-   "name": "DPM12",
-   "params": {
-    "kind": "dnw",
-    "half": 15.0,
-    "corner": 8.0,
-    "inset": 2.0,
-    "ncomp_w": 2.0,
-    "term": 20.0,
-    "rings": [],
-    "plates": {
-     "poly": 2.0,
-     "m1": 5.0,
-     "m2": 9.0
-    },
-    "pwell_gap": null,
-    "nat_gap": null,
-    "sense": false,
-    "gate": false,
-    "block": true,
-    "lead_w": 6.0,
-    "dualgate": false
-   },
-   "pad": [
-    1490.0,
-    1795.0
-   ],
-   "centre": [
-    1332.0,
     1795.0
    ]
   },
@@ -1824,6 +1775,39 @@
     "dualgate": false
    },
    "pad": [
+    1490.0,
+    1795.0
+   ],
+   "centre": [
+    1332.0,
+    1795.0
+   ]
+  },
+  {
+   "name": "NAR1_2",
+   "params": {
+    "kind": "nw",
+    "half": 15.0,
+    "corner": 8.0,
+    "inset": 2.0,
+    "ncomp_w": 2.0,
+    "term": 20.0,
+    "rings": [
+     [
+      2.0,
+      2.0
+     ]
+    ],
+    "plates": {},
+    "pwell_gap": null,
+    "nat_gap": 0.6,
+    "sense": false,
+    "gate": false,
+    "block": true,
+    "lead_w": 6.0,
+    "dualgate": false
+   },
+   "pad": [
     1790.0,
     1795.0
    ],
@@ -1833,18 +1817,31 @@
    ]
   },
   {
-   "name": "DAo1C0",
+   "name": "NAR3_2",
    "params": {
-    "kind": "dnw",
+    "kind": "nw",
     "half": 15.0,
-    "corner": 0.0,
+    "corner": 8.0,
     "inset": 2.0,
     "ncomp_w": 2.0,
-    "term": 20.0,
-    "rings": [],
+    "term": 30.0,
+    "rings": [
+     [
+      2.0,
+      2.0
+     ],
+     [
+      2.5,
+      2.0
+     ],
+     [
+      3.0,
+      2.0
+     ]
+    ],
     "plates": {},
     "pwell_gap": null,
-    "nat_gap": -1.0,
+    "nat_gap": 0.6,
     "sense": false,
     "gate": false,
     "block": true,
