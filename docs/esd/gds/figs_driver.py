@@ -5,7 +5,7 @@ Helper for figures.py: run that script, not this module.
 SPDX-License-Identifier: Apache-2.0
 """
 
-from layfig import DVSS, GREY, HOT, INK, SNAP, Fig
+from layfig import DVSS, GREY, INK, SNAP, Fig
 
 CELL = "bi_t"
 
@@ -37,7 +37,7 @@ def nmos_driver():
         (14.12, "Source, on DVSS", DVSS),
         (15.1, "Gate of the first finger", INK),
         (17.6, "Drain under the silicide block", INK),
-        (19.78, "Drain contacts, on the PAD net", HOT),
+        (19.78, "Drain contacts, on the PAD net", INK),
         (21.9, "Drain, second finger's side", GREY),
         (24.47, "Gate of the second finger", GREY),
         (25.65, "Source shared by two fingers, on DVSS", GREY),
@@ -47,7 +47,7 @@ def nmos_driver():
         y = f.px(gx, 0)[1]
         f.label(text, (gx, 99.2), (x, y + 5), anchor="start", colour=colour,
                 lead="left",
-                weight="bold" if colour in (DVSS, HOT) else "normal")
+                weight="bold" if colour == DVSS or "PAD" in text else "normal")
     f.dim((15.67, 82.5), (19.45, 82.5), "blocked drain: 3.78 µm",
           side="below")
     f.dim((14.52, 78.4), (15.67, 78.4), "gate length: 1.15 µm", side="below")
@@ -69,7 +69,6 @@ def nmos_driver():
     f.note(INK, "A–A′: the cut of the cross-section", kind="cut")
     f.note(DVSS, "on DVSS")
     f.note(GREY, "beyond the cut: not in the cross-section")
-    f.note(HOT, "on the PAD net")
     return f
 
 
@@ -105,8 +104,8 @@ def silicide_block():
     b.dim((15.735, 153.2), (18.515, 153.2), "blocked drain: 2.78 µm")
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
     _inside(b, "Drain contacts, on PAD", 14.75, 145.3, 15.405)
-    _above(b, "Source contacts on DVDD, outside the block", 11.1, 149.7)
-    x, y = b.px(7.9, 149.5)
+    _above(b, "Source contacts on DVDD, outside the block", 11.1, 152.4)
+    x, y = b.px(7.9, 148.0)
     b.text(x, y + 5, "N+ guard ring, on DVDD")
     # The cut that the cross-section draws for the PMOS, and its diode.
     b.line((15.405, 155.2), (7.9, 155.2), width=2.0, dash="9,3,2,3")
