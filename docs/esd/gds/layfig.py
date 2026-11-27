@@ -299,9 +299,22 @@ class Fig:
     def attach(self, other, gap=24):
         """Put another figure of the same scale to the right as a panel."""
         assert other.s == self.s, "panels share one scale bar"
-        self.panels.append((other, self.w - 20 + gap))
+        self.panels.append((other, self.w - 20 + gap, 0))
         self.w += gap + other.w - 20
         self.h = max(self.h, other.h)
+        self.keys += [k for k in other.keys if k not in self.keys]
+        self.alpha = {**other.alpha, **self.alpha}
+
+    def stack(self, other, overlap=80):
+        """Put another figure of the same scale under this one.
+
+        `overlap` is the room this figure kept for its own legend, which
+        the pair now shares below both.
+        """
+        assert other.s == self.s, "panels share one scale bar"
+        dy = self.h - overlap
+        self.panels.append((other, 0, dy))
+        self.w, self.h = max(self.w, other.w), dy + other.h
         self.keys += [k for k in other.keys if k not in self.keys]
         self.alpha = {**other.alpha, **self.alpha}
 
@@ -339,9 +352,9 @@ class Fig:
         import laykey   # here, because laykey imports this module's palette
         base = self.h - 44
         bar, x = laykey.scalebar(self, base)
-        for other, _ in self.panels:
+        for other, _, _ in self.panels:
             self.notes += [n for n in other.notes if n not in self.notes]
-        drawn = self._content() + [line for other, _ in self.panels
+        drawn = self._content() + [line for other, _, _ in self.panels
                                    for line in other._content()]
         crop = ("crop", GREY, "layout continues")
         if (crop not in self.notes
@@ -371,8 +384,8 @@ class Fig:
                "<defs>" + "".join(defs) + "</defs>",
                f'<rect width="{self.w:.0f}" height="{h:.0f}" fill="#ffffff"/>',
                *self._content()]
-        for other, dx in self.panels:
-            svg += [f'<g transform="translate({dx:.1f},0)">',
+        for other, dx, dy in self.panels:
+            svg += [f'<g transform="translate({dx:.1f},{dy:.1f})">',
                     *other._content(), "</g>"]
         svg += [*bar, *legend, "</svg>"]
         path.write_text("\n".join(svg) + "\n")
