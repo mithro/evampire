@@ -33,7 +33,7 @@
 <text x="500.0" y="104.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">current held within</text>
 <text x="500.0" y="118.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">± 150 mA (iPpsCLNew),</text>
 <text x="500.0" y="132.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">voltage falls</text>
-<text x="80.0" y="197.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">vPpsShutdown, 85–95 % of 5 V: Hard Reset allowed below</text>
+<text x="264.0" y="200.0" font-family="Helvetica, Arial, sans-serif" font-size="13.8" text-anchor="start" font-weight="normal" fill="#000000">vPpsShutdown, 85–95 % of 5 V: Hard Reset allowed below</text>
 <line x1="60.0" y1="300.0" x2="60.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>
 <text x="60.0" y="318.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="middle" font-weight="normal" fill="#000000">0</text>
 <line x1="160.0" y1="300.0" x2="160.0" y2="305.0" stroke="#000000" stroke-width="1.0"/>

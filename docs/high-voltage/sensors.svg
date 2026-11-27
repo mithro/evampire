@@ -9,9 +9,9 @@
 <line x1="60" y1="170" x2="80" y2="170" stroke="#222222" stroke-width="2"/>
 <line x1="64" y1="174" x2="76" y2="174" stroke="#222222" stroke-width="1.5"/>
 <line x1="68" y1="178" x2="72" y2="178" stroke="#222222" stroke-width="1.5"/>
-<text x="170" y="90" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">a DC reading,</text>
-<text x="170" y="106" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">but it draws current:</text>
-<text x="170" y="122" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">57 µW at 1 µA</text>
+<text x="158" y="90" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">a DC reading,</text>
+<text x="158" y="106" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">but it draws current:</text>
+<text x="158" y="122" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">57 µW at 1 µA</text>
 <text x="480" y="26" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Capacitor divider</text>
 <circle cx="390" cy="50" r="4" fill="#222222"/>
 <text x="380" y="54" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">57 V node</text>
@@ -30,9 +30,9 @@
 <rect x="440" y="102" width="26" height="16" rx="0" fill="#c9a0dc" stroke="#222222"/>
 <text x="396" y="100" text-anchor="start" font-size="10" font-weight="normal" fill="#c0392b">floating node</text>
 <text x="453" y="132" text-anchor="middle" font-size="10" font-weight="normal" fill="#222222">gate</text>
-<text x="490" y="90" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">no current, but no DC:</text>
-<text x="490" y="106" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">the middle node's charge</text>
-<text x="490" y="122" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">leaks and starts unknown</text>
+<text x="478" y="90" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">no current, but no DC:</text>
+<text x="478" y="106" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">the middle node's charge</text>
+<text x="478" y="122" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">leaks and starts unknown</text>
 <text x="160" y="221" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Junction-device stack</text>
 <circle cx="70" cy="245" r="4" fill="#222222"/>
 <text x="60" y="249" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">57 V node</text>
@@ -48,9 +48,9 @@
 <line x1="60" y1="367" x2="80" y2="367" stroke="#222222" stroke-width="2"/>
 <line x1="64" y1="371" x2="76" y2="371" stroke="#222222" stroke-width="1.5"/>
 <line x1="68" y1="375" x2="72" y2="375" stroke="#222222" stroke-width="1.5"/>
-<text x="170" y="285" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">every node also faces</text>
-<text x="170" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">the substrate: the</text>
-<text x="170" y="317" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">substrate limit</text>
+<text x="158" y="285" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">every node also faces</text>
+<text x="158" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">the substrate: the</text>
+<text x="158" y="317" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">substrate limit</text>
 <text x="480" y="221" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">Metal-gate transistor</text>
 <circle cx="390" cy="245" r="4" fill="#222222"/>
 <text x="380" y="249" text-anchor="end" font-size="11" font-weight="normal" fill="#222222">57 V node</text>
@@ -61,9 +61,9 @@
 <text x="390" y="307" text-anchor="middle" font-size="10" font-weight="normal" fill="#222222">insulator</text>
 <text x="390" y="347" text-anchor="middle" font-size="10" font-weight="normal" fill="#222222">source, drain</text>
 <text x="390" y="361" text-anchor="middle" font-size="10" font-weight="normal" fill="#222222">at low voltage</text>
-<text x="490" y="285" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">a DC reading with</text>
-<text x="490" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">no current from the node;</text>
-<text x="490" y="317" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">its threshold is measured</text>
+<text x="478" y="285" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">a DC reading with</text>
+<text x="478" y="301" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">no current from the node;</text>
+<text x="478" y="317" text-anchor="start" font-size="12" font-weight="normal" fill="#222222">its threshold is measured</text>
 <line x1="320" y1="10" x2="320" y2="390" stroke="#dddddd" stroke-width="1"/>
 <line x1="10" y1="205" x2="630" y2="205" stroke="#dddddd" stroke-width="1"/>
 </svg>

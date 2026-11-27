@@ -31,8 +31,8 @@ digraph start_path {
 
     // Edge labels.
     node  [shape=plaintext, style="", fontsize=10, width=1.0, height=0.3];
-    l_sup [pos="3.7,1.35!", width=0.6, label="supply"];
-    l_g   [pos="5.7,1.35!", width=0.6, label="gate"];
+    l_sup [pos="3.72,1.6!", width=0.6, label="supply"];
+    l_g   [pos="5.78,1.6!", width=0.6, label="gate"];
     l_off [pos="4.1,1.95!", width=1.6, label="source off at\n8.65 V to 9.3 V"];
     l_tk  [pos="4.75,0.12!", width=2.0, label="takes over after start-up"];
 

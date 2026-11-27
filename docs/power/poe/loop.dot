@@ -25,7 +25,9 @@ digraph cable_loop {
     qo [pos="4.95,2.0!", shape=point, width=0.01];
     qr [pos="4.95,0.6!", shape=point, width=0.01];
 
-    po -> out [label="I = 1.73 A", arrowhead=none];
+    po -> out [arrowhead=none];
+    i [pos="2.075,2.14!", shape=plaintext, style="", width=0.8, height=0.2,
+       fontsize=10, label="I = 1.73 A"];
     out -> qo;
     qr -> ret [arrowhead=none];
     ret -> pr;

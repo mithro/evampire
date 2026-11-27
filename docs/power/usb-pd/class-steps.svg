@@ -30,7 +30,7 @@
 <text x="14.0" y="150.0" font-family="Helvetica, Arial, sans-serif" font-size="16.2" text-anchor="middle" font-weight="normal" fill="#000000" transform="rotate(-90 14.0 150.0)">highest class</text>
 <text x="52.0" y="284.0" font-family="Helvetica, Arial, sans-serif" font-size="15.0" text-anchor="end" font-weight="normal" fill="#000000">none</text>
 <polyline points="60.0,280.0 83.6,280.0 83.6,249.8 99.5,249.8 99.5,219.5 142.6,219.5 142.6,189.3 237.0,189.3 237.0,159.1 325.5,159.1 325.5,128.8 414.0,128.8 414.0,98.6 502.5,98.6 502.5,68.4 591.0,68.4 591.0,38.1 650.0,38.1" fill="none" stroke="#548235" stroke-width="2.2"/>
-<text x="86.6" y="244.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">4 W</text>
+<text x="86.6" y="263.8" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">4 W</text>
 <text x="102.5" y="214.5" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">6.7 W</text>
 <text x="145.6" y="184.3" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">14 W</text>
 <text x="240.0" y="154.1" font-family="Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="start" font-weight="normal" fill="#000000">30 W</text>

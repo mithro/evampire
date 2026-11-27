@@ -33,7 +33,7 @@ graph isolation_routes {
     h2 [pos="0.95,2.45!", shape=plaintext, style="", width=2.0, height=0.2,
         fontsize=11, label="2. Second cable-side die"];
     r2 [pos="0.6,1.9!", label="RJ45", width=0.7, fillcolor="#ffffff"];
-    f2 [pos="2.0,1.9!", label="Second die:\npowered-device or\nsourcing blocks", fillcolor="#fbe5d6", height=0.7];
+    f2 [pos="2.0,1.9!", label="Second die:\npowered-device\nor sourcing\nblocks", fillcolor="#fbe5d6", height=0.8];
     i2 [pos="3.6,1.9!", label="Isolated links\nand converter", fillcolor="#fff2cc",
         width=1.5];
     e2 [pos="5.4,1.9!", label="evampire", fillcolor="#dbe8f5"];

@@ -47,7 +47,7 @@ def channel_limits():
     fig = Fig(480, 700)
     fig.text(10, 14, "(a) Wanted signal and near-end crosstalk", size=14,
              anchor="start", weight="bold")
-    ax = Axes(fig, 62, 32, 462, 352, (1, 100), (0, 70), xlog=True)
+    ax = Axes(fig, 62, 32, 462, 352, (1, 120), (0, 70), xlog=True)
     # Near-end crosstalk margin: the gap between the NEXT and IL curves.
     top = ax.pts([(f, next_loss(f)) for f in FREQS])
     bot = ax.pts([(f, il(f)) for f in reversed(FREQS)])
@@ -61,9 +61,8 @@ def channel_limits():
     ax.plot([(f, il(f)) for f in FREQS], stroke=BLUE)
     # Margin bars at 62.5 MHz and 100 MHz.
     for f in (62.5, 100):
-        x = ax.X(f) - (0 if f < 100 else 7)
-        fig.line(x, ax.Y(il(f)), x, ax.Y(next_loss(f)), stroke=INK,
-                 width=1.6)
+        fig.line(ax.X(f), ax.Y(il(f)), ax.X(f), ax.Y(next_loss(f)),
+                 stroke=INK, width=1.6)
     # Points from the table on the page.
     for f, v in ((10, 7.1), (62.5, 18.7), (100, 24.0)):
         fig.circle(ax.X(f), ax.Y(v), 3, fill=BLUE)
@@ -80,7 +79,7 @@ def channel_limits():
     # (b) ELFEXT, already relative to the received signal.
     fig.text(10, 420, "(b) Far-end crosstalk against the received signal",
              size=14, anchor="start", weight="bold")
-    bx = Axes(fig, 62, 438, 462, 638, (1, 100), (0, 70), xlog=True)
+    bx = Axes(fig, 62, 438, 462, 638, (1, 120), (0, 70), xlog=True)
     bx.frame([1, 2, 5, 10, 31.25, 62.5, 100], range(0, 71, 10),
              "Frequency (MHz, log scale)", "ELFEXT loss (dB)",
              xfmt=lambda v: f"{v:g}")

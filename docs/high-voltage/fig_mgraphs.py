@@ -141,7 +141,9 @@ def metal_stack():
                     "equivalent oxide thickness (µm)")
     for c, (name, ts) in enumerate((("over field oxide", T_FOX),
                                     ("over active", T_ACT))):
-        xa, _ = ax.px(c + 0.2, 0)
+        # The columns start far enough right for the layer names to clear
+        # the axis.
+        xa, _ = ax.px(c + 0.3, 0)
         xb, _ = ax.px(c + 0.8, 0)
         _, ytop = ax.px(0, 6.3)
         body.append(rect(xa, ytop, xb - xa, ax.y0 + ax.h - ytop, OXIDE))

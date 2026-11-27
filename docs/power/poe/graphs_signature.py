@@ -193,11 +193,13 @@ def class_bands():
 def thresholds():
     p = Plot(40, 40, 600, 150, (0, 60), (0, 3))
     body = []
-    for a, b in ((2.81, 6.9), (10.1, 14.5), (20.5, 30)):
-        body.append(rect(p.x(a), p.y(3), p.x(b) - p.x(a), p.y(0) - p.y(3),
-                         "#f2f2f2", GREY, 0.8, "3,2"))
-        body.append(text(p.x((a + b) / 2), p.y(3) - 6, "gap", 10, "middle",
-                         fill=GREY))
+    # The first gap lies between reset and mark only: the detection range
+    # of the upper row runs across it, so its box starts below that row.
+    for a, b, top in ((2.81, 6.9, 1.9), (10.1, 14.5, 3), (20.5, 30, 3)):
+        body.append(rect(p.x(a), p.y(top), p.x(b) - p.x(a),
+                         p.y(0) - p.y(top), "#f2f2f2", GREY, 0.8, "3,2"))
+        body.append(text(p.x((a + b) / 2), p.y(top) - 6, "gap", 10,
+                         "middle", fill=GREY))
     body.append(text(p.right, p.top - 22, "ranges at the powered device",
                      11, "end", "bold"))
     rows = [(2.5, "detection", 2.7, 10.1, EVP), (2.5, "class", 14.5, 20.5,
@@ -217,9 +219,9 @@ def thresholds():
         body.append(line(p.x(fall), yt - 2, p.x(fall), yt + 14, INK, 2.0,
                          "3,2"))
         body.append(text(p.x(rise), yt - 18, f"{rise:g}↑", 10, "middle"))
-        body.append(text(p.x(fall), yt + 26, f"{fall:.1f}↓", 10, "middle"))
+        body.append(text(p.x(fall) - 4, yt + 26, f"{fall:.1f}↓", 10))
     body.append(line(p.x(3.9), yt - 2, p.x(3.9), yt + 14, INK, 2.0, "3,2"))
-    body.append(text(p.x(3.9), yt + 26, "3.9↓", 10, "middle"))
+    body.append(text(p.x(3.9) - 4, yt + 26, "3.9↓", 10))
     body += p.xticks([0, 10, 20, 30, 40, 50, 60],
                      "voltage at the powered device input (V)", grid=False)
     body.append(text(p.left, p.bottom + 58, "↑ rising threshold (solid); "

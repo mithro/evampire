@@ -37,7 +37,7 @@ digraph helpers {
     le [pos="1.7,3.03!", label="edges"];
     lt [pos="3.75,3.03!", label="timestamps"];
     lm [pos="4.7,2.08!", label="messages"];
-    lo [pos="5.6,1.6!", label="edge times"];
+    lo [pos="5.3,1.78!", label="edge times"];
     lp [pos="5.75,0.5!", label="prepared message", width=1.2];
 
     cmp -> cap;

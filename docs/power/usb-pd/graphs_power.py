@@ -180,7 +180,7 @@ def pps_limit():
     body.append(text(p.x(i_op + 0.2), p.y(7.5) + 28, "± 150 mA (iPpsCLNew),",
                      11))
     body.append(text(p.x(i_op + 0.2), p.y(7.5) + 42, "voltage falls", 11))
-    body.append(text(p.x(0.1), p.y(4.25) + 16, "vPpsShutdown, 85–95 % of "
+    body.append(text(p.x(1.0) + 4, p.y(4.25) + 19, "vPpsShutdown, 85–95 % of "
                      "5 V: Hard Reset allowed below", 11))
     body += p.xticks([0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0], "VBUS current (A)",
                      grid=False)
@@ -290,7 +290,9 @@ def class_steps():
     body.append(text(p.left - 8, p.y(0) + 4, "none", 12, "end"))
     body.append(polyline(p.pts(pts), SNK_INK, 2.2))
     for w, c in steps:
-        body.append(text(p.x(w) + 3, p.y(c) - 5, f"{w:g} W", 10))
+        # The 4 W tread is narrower than its label, which goes under it.
+        dy = 14 if w == 4 else -5
+        body.append(text(p.x(w) + 3, p.y(c) + dy, f"{w:g} W", 10))
     for w, c in ((21.2, 3), (50.9, 5), (86.9, 7)):
         body.append(f'<circle cx="{p.x(w):.1f}" cy="{p.y(c):.1f}" r="4" '
                     f'fill="{SRC_INK}"/>')

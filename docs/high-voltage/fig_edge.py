@@ -62,29 +62,42 @@ def solve():
 
 
 def contour(phi, level):
-    """Marching squares: line segments, in pixels, where phi = level."""
-    segs = []
-
-    def px(i, j):
-        return X0 + i * CELL, Y0 + j * CELL
+    """Marching squares: the lines, in pixels, where phi = level. The
+    segments are chained into continuous lines so that a dash pattern runs
+    along each line and does not restart in every cell."""
+    point = {}     # grid edge the line crosses -> pixel position
+    links = {}     # grid edge -> the edges its segments lead to
 
     for i in range(NX - 1):
         for j in range(NY - 1):
             corners = [(i, j), (i + 1, j), (i + 1, j + 1), (i, j + 1)]
             vals = [phi[a][b] for a, b in corners]
-            pts = []
+            edges = []
             for k in range(4):
                 (a1, b1), (a2, b2) = corners[k], corners[(k + 1) % 4]
                 v1, v2 = vals[k], vals[(k + 1) % 4]
                 if (v1 - level) * (v2 - level) < 0:
                     t = (level - v1) / (v2 - v1)
-                    pts.append(px(a1 + t * (a2 - a1), b1 + t * (b2 - b1)))
-            if len(pts) == 2:
-                segs.append(pts)
-            elif len(pts) == 4:
-                segs += [pts[:2], pts[2:]]
-    return "".join(f"M{a[0]:.1f},{a[1]:.1f}L{b[0]:.1f},{b[1]:.1f}"
-                   for a, b in segs)
+                    edge = frozenset((corners[k], corners[(k + 1) % 4]))
+                    point[edge] = (X0 + (a1 + t * (a2 - a1)) * CELL,
+                                   Y0 + (b1 + t * (b2 - b1)) * CELL)
+                    edges.append(edge)
+            for a, b in zip(edges[::2], edges[1::2]):
+                links.setdefault(a, []).append(b)
+                links.setdefault(b, []).append(a)
+
+    d, seen = "", set()
+    # Open lines from their ends first, then any closed loops.
+    starts = [e for e in links if len(links[e]) == 1] + list(links)
+    for edge in starts:
+        chain = []
+        while edge is not None and edge not in seen:
+            seen.add(edge)
+            chain.append(point[edge])
+            edge = next((n for n in links[edge] if n not in seen), None)
+        if len(chain) > 1:
+            d += "M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in chain)
+    return d
 
 
 def section(phi):

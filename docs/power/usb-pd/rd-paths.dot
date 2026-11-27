@@ -38,7 +38,9 @@ digraph rd_paths {
           height=0.95, fontsize=9,
           label="off once powered: gate\nat 0 V for a standard NMOS;\na native one needs its gate\nbelow its source or a\nseries switch. Off, the pin\npresents at least 126 kΩ"];
 
-    rp -> cc [arrowhead=normal, dir=forward, label="  I_Rp"];
+    rp -> cc [arrowhead=normal, dir=forward];
+    li [pos="2.42,3.5!", shape=plaintext, style="", width=0.4, height=0.2,
+        fontsize=9, label="I_Rp"];
     cc -> j;
     j -> rd; rd -> sw; sw -> g1;
     j -> mn; mn -> rs; rs -> g2;

@@ -100,7 +100,8 @@ def bode():
           f'fill="{ORANGE}"/>')
     s.text(am.X(fc) - 8, am.Y(0) + 14, "crossover: gain = 1 (0 dB)", size=12,
            anchor="end", fill=ORANGE)
-    x = ap.X(fc) - 10
+    # On the crossover itself, where the phase curve is at -125 degrees.
+    x = ap.X(fc)
     s.line(x, ap.Y(-180), x, ap.Y(-125), arrow="both", width=1.2)
     s.text(x - 6, ap.Y(-158), "phase margin 55°", size=12, anchor="end")
     s.text((am.X(12.5e3) + am.X(50e3)) / 2, am.y0 + 12, "fsw/20 to fsw/5",
@@ -260,7 +261,7 @@ def regions():
     s.poly(a.P([(1.02, 1 - 1 / 1.02)] + [(m / 100, 1 - 100 / m)
                                        for m in range(105, 141, 5)]),
            stroke=ORANGE)
-    s.text(a.X(0.45), a.Y(0.62), "buck region:\nDbuck = M (S4 on)", size=12,
+    s.text(a.X(0.33), a.Y(0.66), "buck region:\nDbuck = M (S4 on)", size=12,
            fill=BLUE)
     s.text(a.X(1.22), a.Y(0.45), "boost region:\nDboost = 1 − 1/M\n(S1 on)",
            size=12, fill=ORANGE)
