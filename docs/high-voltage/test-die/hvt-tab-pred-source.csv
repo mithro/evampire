@@ -1,5 +1,5 @@
 Item,Value
-Commit,"31d1842c0942, 37fa71eff4e3, 4c8062b2f45e, 53386a8dba79, 597d7c069240, 5e624bfb7803, 86b458c7b1eb, a44971fc57c3, fd092ff880ff"
+Commit,"31d1842c0942, 336aff416dd0, 37fa71eff4e3, 4c8062b2f45e, 53386a8dba79, 597d7c069240, 5e624bfb7803, 86b458c7b1eb, a44971fc57c3, fd092ff880ff"
 Repository,"mithro/gf180-tcad, experiments/hv-junction"
 Simulator,DEVSIM 2.11.1 (gf180-tcad dev image)
 Status,"DEVSIM 2.11.1 drift-diffusion, breakdown by the ionisation integral"
@@ -12,5 +12,6 @@ Record mem.json,"6 cases, commit 597d7c069240; 2 cases gave no result: NR5_1p4 B
 Record gaps.json,"6 cases, commit 4c8062b2f45e; 2 cases gave no result: NR5_1p4 BLq edge, NR5_2 BLq edge"
 Record sharp.json,"21 cases, commit 53386a8dba79; 0 cases gave no result"
 Record rest5.json,"108 cases, commit a44971fc57c3; 0 cases gave no result"
+Record ring128.json,"3 cases, commit 336aff416dd0; 3 cases gave no result: NR5_1p4 BLq corner, NR5_1p4 BLq edge, NR5_2 BLq edge"
 Record family.json,"124 cases, commit 37fa71eff4e3; 0 cases gave no result"
 Record family3.json,"5 cases, commit fd092ff880ff; 0 cases gave no result"

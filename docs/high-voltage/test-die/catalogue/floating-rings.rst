@@ -1246,7 +1246,7 @@ Limits
      - Agreement range (V)
      - Predicted ratio
    * - AL, AD, AnL, AnD
-     - failed
+     - > 16.7
      - –
      - –
      - –
@@ -1748,7 +1748,7 @@ Limits
      - Agreement range (V)
      - Predicted ratio
    * - AL, AD, AnL, AnD
-     - > 19.6
+     - > 12.2
      - –
      - –
      - –
@@ -1872,10 +1872,10 @@ Limits
      - 1.00 of :ref:`NW0 <hvt-s-nw0>`
    * - BL
      - 105.7
-     - > 38.4
-     - –
-     - –
-     - –
+     - 101.2
+     - 101.2 to 101.2
+     - 86.0 to 126.5
+     - 1.51 of :ref:`NT20 <hvt-s-nt20>`
    * - BLq
      - failed
      - 102.6
