@@ -124,7 +124,7 @@ def psd():
 def zc():
     w, h = 640, 330
     C = 1e-9
-    a = Axes(80, 20, 520, 240, (10, 1e8), (1, 1e8), xlog=True, ylog=True)
+    a = Axes(80, 20, 520, 240, (10, 1e8), (0.1, 1e8), xlog=True, ylog=True)
     b = a.frame([(10, "10 Hz"), (1e3, "1 kHz"), (1e5, "100 kHz"),
                  (1e7, "10 MHz")],
                 [(1, "1"), (100, "100"), (1e4, "10 k"), (1e6, "1 M")],
@@ -132,7 +132,7 @@ def zc():
     f = logspace(10, 1e8)
     b.append(poly(a.pts(f, lambda v: 1 / (2 * math.pi * v * C)), BLUE, 2.2))
     for v, lab, dx, dy in ((50, "3.2 MΩ at 50 Hz: nearly open", 10, -2),
-                           (30e6, "5.3 Ω at 30 MHz", -10, 20)):
+                           (30e6, "5.3 Ω at 30 MHz", -10, 34)):
         z = 1 / (2 * math.pi * v * C)
         b.append(dot(a.x(v), a.y(z), RED))
         b.append(text(a.x(v) + dx, a.y(z) + dy, lab,
