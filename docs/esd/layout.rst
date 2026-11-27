@@ -23,8 +23,9 @@ figures share five conventions:
   and grey lettering names what the schematic leaves out.
 * In the other figures each layer has one colour, and the silicon layers
   have the colours of the cross-section :numref:`fig-esd-driver-section`.
-  The cross-section's P-well has no colour here, because no P-well is
-  drawn under the transistors (:ref:`esd-layout-driver-parts`).
+  The cross-section gives its P-well the substrate's colour and a dashed
+  edge, because no P-well is drawn under the transistors
+  (:ref:`esd-layout-driver-parts`).
 * Red marks the primary protection, the PAD net and the discharge current,
   blue the secondary
   protection and orange the rail clamp, as in the schematic. A purple
@@ -190,7 +191,9 @@ resistors.
          µm, a row of drain contacts, and another 3.78 µm of blocked drain
          before the next gate. (b) A PMOS output driver: a gate 0.7 µm long
          and a P+ drain blocked for 2.78 µm on each side of its contacts. In
-         both, the source contacts stand outside the block. (c) A PMOS pre-
+         both, the source contacts stand outside the block. In (b) a
+         dash-dot line B–B′ runs from the drain contacts to the N+ guard
+         ring on DVDD, beside a red arrow for the drain diode. (c) A PMOS pre-
          driver with no silicide block, where a row of contacts stands beside
          every gate.
    :width: 100%
@@ -296,8 +299,9 @@ four diodes from DVSS to DVDD and four capacitors between the rails.
    :alt: Layout of the DVDD supply pad, 350 µm long, with its layers in
          grey. From the left: the DVDD bond pad, then four orange blocks
          labelled clamp NMOS 4000 µm, three inverters, MOS capacitor and
-         360 kΩ. In grey lettering, four diodes from DVSS to DVDD and four
-         supply capacitors, which the schematic leaves out.
+         360 kΩ, and a fifth labelled 160 µm² diode from DVSS to DVDD. In
+         grey lettering, four supply capacitors, which the schematic
+         leaves out.
    :width: 100%
 
    The parts of gf180mcu_fd_io__dvdd, drawn from its layout.
@@ -357,9 +361,10 @@ bidirectional pad and the DVSS supply pad beside it ([ESD-DVSS-GDS]_):
 #. Through the PMOS drain diode into the N-well, whose N+ ring connects to
    the DVDD stripes above it.
 #. Along the DVDD rail into the supply pad.
-#. Through the clamp transistor. Its drains connect to the DVDD stripes.
-   Its sources connect to six metal 2 buses that run from the DVSS bond
-   pad over the four blocks.
+#. Through the clamp transistor. Five metal 2 strips run under the DVDD
+   stripes and over all four blocks, and connect the drains to DVDD. The
+   sources connect to the six metal 2 buses between and beside those
+   strips, which run from the DVSS bond pad.
 #. Along those metal 2 buses to the DVSS bond pad. The DVSS stripes
    connect to the same buses, in parallel with this path.
 
@@ -377,8 +382,8 @@ the voltage at the pad (:doc:`results-hbm`).
          arrowheads marks the current. Step 1, from the PAD bond pad along
          metal 2 to the PMOS drains. Step 2, through the PMOS drain diode onto the DVDD stripes
          above. Step 3, along the DVDD rail into the supply pad. Step 4,
-         through the rail clamp's NMOS, four orange blocks in parallel, from
-         the DVDD stripes to metal 2 of the DVSS pad. Step 5, along the
+         down a DVDD metal 2 strip and across the rail clamp's NMOS in
+         each of four orange blocks to metal 2 of the DVSS pad. Step 5, along the
          metal 2 buses that run over the clamp, back to the DVSS bond pad.
    :width: 100%
 

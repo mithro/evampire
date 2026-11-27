@@ -50,11 +50,12 @@ DVSS.
          the input buffer. On the right, a rail clamp: a 360 kilohm
          resistor from DVDD and a MOS capacitor to DVSS meet at a node that
          drives three inverters, which drive the gate of a 4000 µm NMOS
-         transistor connected between DVDD and DVSS.
+         transistor connected between DVDD and DVSS. Beside it, a diode of
+         160 square micrometres, in four parts, points from DVSS to DVDD.
    :width: 100%
 
-   The ESD protection of gf180mcu_fd_io__bi_t, and the rail clamp in each
-   DVDD and DVSS pad.
+   The ESD protection of gf180mcu_fd_io__bi_t, and the rail clamp and
+   rail diode in each DVDD and DVSS pad.
 
 .. figure:: figures/gds-cell.svg
    :name: fig-esd-io-gds-cell
@@ -118,6 +119,9 @@ that shows each one.
      - :numref:`fig-esd-io-gds-clamp`
    * - Clamp NMOS, 4000 µm
      - Four blocks of 20 fingers, each finger 50 µm wide
+     - :numref:`fig-esd-io-gds-clamp`
+   * - Rail diode, 160 µm²
+     - Four N+ strips of 40 µm × 1 µm, behind the timer resistors
      - :numref:`fig-esd-io-gds-clamp`
    * - DVDD ring and DVSS ring
      - Stripes of metal 3 to metal 5 that cross every pad cell
@@ -184,7 +188,8 @@ source, to the P+ ring at A′.
          DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well on
          DVSS: its N+ drain, connected to PAD and silicide blocked for
          3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
-         all; its gate is 1.15 µm long. A hatched bar over each blocked
+         all; its gate is 1.15 µm long. The P-well has a dashed edge,
+         because the layout does not draw it. A hatched bar over each blocked
          drain is the silicide block, and each transistor's source and
          guard ring are named. The letters A, at the NMOS drain,
          and A′, at the P+ contact, mark the cut A–A′ of the layout. A
@@ -194,8 +199,8 @@ source, to the P+ ring at A′.
 
    The output transistors in cross-section, whose drains are the pad's primary
    protection, schematic and not to scale. A and A′ are the ends of the cut
-   marked in :numref:`fig-esd-io-gds-driver`, and the PMOS is panel (b) of
-   :numref:`fig-esd-io-gds-silicide`. :numref:`fig-esd-io-gds-paths` draws
+   marked in :numref:`fig-esd-io-gds-driver`, and B and B′ those of the
+   cut in panel (b) of :numref:`fig-esd-io-gds-silicide`. :numref:`fig-esd-io-gds-paths` draws
    the diode and snapback currents on both drivers.
 
 .. figure:: figures/gds-nmos-driver.svg
@@ -219,9 +224,11 @@ source, to the P+ ring at A′.
    :name: fig-esd-io-gds-silicide
    :alt: Three layouts at the same scale. (a) An NMOS output driver, its drain
          silicide blocked for 3.78 µm on each side of the drain contacts. (b) A
-         PMOS output driver, its drain blocked for 2.78 µm on each side. (c) A
-         pre-driver with no silicide block, where contacts stand beside every
-         gate.
+         PMOS output driver, its drain blocked for 2.78 µm on each side,
+         with its N+ guard ring on DVDD. A dash-dot line B–B′ runs from
+         the drain contacts across the gate and source to that ring, and
+         a red arrow marks the drain diode. (c) A pre-driver with no
+         silicide block, where contacts stand beside every gate.
    :width: 100%
 
    The blocked drains of :numref:`fig-esd-driver-section` in the layout,
@@ -274,6 +281,10 @@ rail clamp ([ESD-DVDD-CDL]_):
 #. The transistor turns on and conducts the discharge current from DVDD to
    DVSS at a few volts.
 
+Each supply pad also holds a diode from DVSS to DVDD, in four parts of
+40 µm², 160 µm² in all ([ESD-DVDD-CDL]_, line 50). It conducts when DVSS
+rises above DVDD.
+
 :numref:`fig-esd-io-gds-clamp` shows these parts in the layout of the DVDD
 pad.
 
@@ -282,11 +293,12 @@ pad.
    :alt: Layout of the DVDD supply pad, 350 µm long, with its layers in
          grey. From the left: the DVDD bond pad, then four orange blocks
          labelled clamp NMOS 4000 µm, three inverters, MOS capacitor and
-         360 kΩ. In grey lettering, four diodes from DVSS to DVDD and four
-         supply capacitors, which the schematic leaves out.
+         360 kΩ, and a fifth labelled 160 µm² diode from DVSS to DVDD. In
+         grey lettering, four supply capacitors, which the schematic
+         leaves out.
    :width: 100%
 
-   The rail clamp of :numref:`fig-esd-io-cell` in the layout of
+   The rail clamp and rail diode of :numref:`fig-esd-io-cell` in the layout of
    gf180mcu_fd_io__dvdd, in the schematic's orange and under the
    schematic's labels. The layers are grey. :ref:`esd-layout-clamp`
    describes the clamp transistor's fingers.
