@@ -1,4 +1,4 @@
-"""Catalogue texts: the NAT layer and field plates.
+"""Catalogue texts: the NAT layer, rings under NAT and field plates.
 
 catalogue.py joins these modules; its docstring describes the fields.
 
@@ -16,30 +16,17 @@ E["NA0p6"] = dict(
       "a strip 0.6 µm wide. That strip is at the foundry's minimum P-well "
       "width, so the generated mask may leave it out.",
     c=[("NT20", "NAT over the termination zone in place of none"),
-       ("NA2", "NAT starts at 0.6 µm in place of 2 µm"),
+       ("NAR1_2", "no ring in place of one floating ring under NAT"),
        ("NA0p6b", "nothing: a second copy")],
     m="Swept again at 85 °C.",
-    r="Much higher than {NT20}: NAT clears the edge, and the Metal1 "
-      "plates under NAT show what can be built on it. Equal to {NT20}: "
-      "either the strip is filled or NAT blocks nothing.",
+    r="Much higher than {NT20} while {NT20} is near 14 V: NAT clears the "
+      "edge (assumption An), and the plates and rings under NAT show what "
+      "can be built on it. Equal to {NT20} at a low value: either the "
+      "strip is filled or NAT blocks nothing (A). Equal to {NT20} at a "
+      "high value: no P-well is generated anywhere (B), so NAT has "
+      "nothing to block, which the simulation gives as well.",
     l="A strip always remains, so the structure never has NAT against "
       "the junction.")
-E["NA2"] = dict(
-    p="Tests a strip of 2 µm between the well and NAT, wide enough for "
-      "the foundry to fill with P-well.",
-    w="A strip of 2 µm is well above the minimum P-well width. If the "
-      "foundry generates P-well wherever NAT is absent, this strip "
-      "receives it, and the junction to it fails as in {NW0}.",
-    c=[("NA0p6", "NAT starts at 2 µm in place of 0.6 µm"),
-       ("NW0", "a strip that may hold generated P-well in place of a "
-               "drawn one")],
-    m="",
-    r="Near 14 V while {NA0p6} is much higher: the foundry fills a wide "
-      "strip and drops a narrow one.",
-    l="Equal to {NA0p6} at a high value, it cannot say whether the strip "
-      "is empty or simply too lightly doped to matter. With {NA0p6} it "
-      "gives only two widths, so the width at which the foundry starts "
-      "to fill a strip is bracketed, not found.")
 E["NA0p6T10"] = dict(
     p="Repeats the ring-distance check under NAT with the P+ ring at "
       "10 µm.",
@@ -48,11 +35,12 @@ E["NA0p6T10"] = dict(
       "that width and the P+ ring is the first heavily doped region it "
       "can meet.",
     c=[("NA0p6", "the ring is at 10 µm in place of 20 µm"),
-       ("NT10", "NAT over the termination zone in place of none")],
+       ("NT5", "NAT and a ring at 10 µm in place of no NAT and a ring "
+               "at 5 µm")],
     m="",
     r="Equal to {NA0p6}: a NAT region 9 µm wide is enough.",
     l="It tests the ring distance only if NAT clears the edge. "
-      "Otherwise it repeats {NT10}.")
+      "Otherwise P-well limits it as it limits {NT20}.")
 E["NA0p6C0"] = dict(
     p="Measures the cost of a square corner when NAT, not P-well, lies "
       "beside the well.",
@@ -64,8 +52,9 @@ E["NA0p6C0"] = dict(
     m="",
     r="Below {NA0p6} by the same amount as {NC0} is below {NT20}: the "
       "silicon under NAT behaves as bare substrate does.",
-    l="The simulated corner is an arc of 1 µm radius standing in for the "
-      "vertex, as for {NC0}.")
+    l="The corner section is a cylinder of 1 µm radius, as for {NC0}, "
+      "so the corner prediction is probably pessimistic: the measured "
+      "value may be higher.")
 E["NAM1_3"] = dict(
     p="The shortest Metal1 plate over NAT: 3 µm beyond the edge.",
     w="The plate crosses the 0.6 µm strip and 2.4 µm of NAT. It widens "
@@ -134,6 +123,76 @@ E["NA0p6b"] = dict(
       "0.6 µm strip, whose width is set by two masks.",
     l="One pair, as for the plain well.")
 
+# ---- rings under NAT -------------------------------------------------------
+# NAT keeps 0.6 um from the well and from each side of every ring, so the
+# layer is cut into strips. Under A those strips hold P-well and the
+# structures are limited by it; under An and B they are bare substrate.
+E["NAR1_2"] = dict(
+    p="One floating ring under NAT: what a ring gains where no P-well "
+      "lies between it and the well.",
+    w="The ring is 2 µm wide at a gap of 2 µm. NAT is cut into strips "
+      "that keep 0.6 µm from the well and from each side of the ring, as "
+      "rule NAT.3 requires. If NAT clears the P-well and the strips stay "
+      "empty, the ring sits in bare substrate and acts as in {NR1_2} "
+      "under assumption B.",
+    c=[("NR1_2", "NAT round the ring in place of none"),
+       ("NA0p6", "one floating ring in place of none"),
+       ("NAR3_2", "one ring in place of three")],
+    m="",
+    r="Above {NA0p6} by the predicted ratio: a ring works under NAT, "
+      "and the die's route to the working voltage can use rings. Equal to "
+      "{NA0p6} and {NT20} at a low value: P-well fills the strips.",
+    l="Three uncovered strips lie beside the ring and the well, each "
+      "0.6 µm wide. A narrow strip may hold P-well even where NAT clears "
+      "the wide parts, and the structure cannot tell which strip failed.")
+E["NAR3_2"] = dict(
+    p="Three floating rings under NAT, at gaps of 2 µm, 2.5 µm and 3 µm: "
+      "the multi-ring termination where no P-well lies between the rings.",
+    w="The rings repeat those of {NR3_2}, with the P+ ring 30 µm out. NAT "
+      "covers the gaps and the zone beyond the last ring, in strips that "
+      "keep 0.6 µm from every ring. With the strips empty, each ring "
+      "picks up from the one inside it in bare substrate.",
+    c=[("NR3_2", "NAT round the rings in place of none"),
+       ("NAR1_2", "three rings in place of one")],
+    m="",
+    r="Above {NAR1_2}: rings 2 and 3 take a share under NAT as they do "
+      "in bare substrate.",
+    l="Seven uncovered strips lie beside the rings and the well. The "
+      "multi-ring simulations take hours each, so this prediction may "
+      "come late or not converge.")
+E["NAR1S3"] = dict(
+    p="A contacted ring under NAT 3 µm from the well: the spacing between "
+      "two wells where no P-well lies between them.",
+    w="It is {NR1S3} with NAT over the gap and the termination zone, cut "
+      "0.6 µm clear of the ring and the well. If NAT clears the P-well, "
+      "the depletion region crosses the gap in bare substrate, and with "
+      "the ring pad at 0 V the ring is a neighbouring well.",
+    c=[("NR1S3", "NAT over the gap in place of none"),
+       ("NAR1S8", "a gap of 3 µm in place of 8 µm"),
+       ("NAR1_2", "a contact on the ring, at 3 µm in place of 2 µm")],
+    m="As for {NR1S3}.",
+    r="Under An the punch-through and the ring's rise follow {NR1S3} "
+      "under B. Under A both are limited by P-well in the strips, as for "
+      "{NR1S3}.",
+    l="As for {NR1S2}. The strips beside the ring are only 0.6 µm wide, "
+      "so a P-well that fills them would cut the gap short.")
+E["NAR1S8"] = dict(
+    p="A contacted ring under NAT 8 µm from the well: whether that spacing "
+      "isolates two wells where NAT clears the P-well.",
+    w="It is {NR1S8} with NAT over the gap. If the well breaks down before "
+      "its depletion region has crossed 8 µm of bare substrate, no "
+      "current reaches the ring, and the substrate current rises "
+      "instead.",
+    c=[("NR1S8", "NAT over the gap in place of none"),
+       ("NAR1S3", "a gap of 8 µm in place of 3 µm")],
+    m="As for {NR1S5}. Which pad the current leaves by, ring or "
+      "substrate, is the result.",
+    r="Substrate current first: 8 µm isolates two wells under NAT up to "
+      "the breakdown voltage. Ring current first: it does not.",
+    l="As for {NAR1S3}. No contacted ring under NAT lies between 3 µm "
+      "and 8 µm, so a spacing that fails at 3 µm and holds at 8 µm is "
+      "bracketed, not found.")
+
 # ---- field plates ----------------------------------------------------------
 E["NP1"] = dict(
     p="The shortest polysilicon plate: 1 µm beyond the well edge.",
@@ -165,7 +224,8 @@ E["NP4"] = dict(
     w="The plate depletes nearly the whole width that the region would "
       "reach unaided. At its end, the silicon is near the substrate's "
       "potential while the plate is at the well's, so almost the full "
-      "voltage stands across 0.32 µm of oxide: about 2.8 MV/cm at 90 V.",
+      "voltage stands across the oxide, 0.31 µm thick by its extraction "
+      "capacitance: about 2.9 MV/cm at 90 V.",
     c=[("NP2", "a plate of 4 µm in place of 2 µm"),
        ("NM1_6", "polysilicon over 0.32 µm in place of Metal1 over "
                  "1.18 µm"),
@@ -303,5 +363,6 @@ E["NM1_6C0"] = dict(
       "value of the plate on a cut corner. If the measurement agrees, a "
       "product's wells need cut corners and plates together.",
     l="The plate's own outline has 90° corners over the oxide, where "
-      "the field in the oxide is highest. The corner section of the "
-      "simulation assumes an arc.")
+      "the field in the oxide is highest. The corner section is a "
+      "cylinder of 1 µm radius, as for {NC0}, so the corner prediction "
+      "is probably pessimistic: the measured value may be higher.")

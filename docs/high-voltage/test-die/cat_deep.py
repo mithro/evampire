@@ -20,7 +20,10 @@ E["DT20"] = dict(
        ("DT2p6", "the ring is at 20 µm in place of 2.6 µm")],
     m="Swept again at 85 °C.",
     r="Near the published 30 V: the deep-layer picture holds. Far "
-      "above it: the model value does not describe this well.",
+      "above it: the model value does not describe this well. Its "
+      "prediction is a fit, not a test: the deep N-well profile was "
+      "fitted to the published 30.48 V with the same ionisation "
+      "integral.",
     l="A breakdown at the bottom cannot be told from one at the edge "
       "by this structure alone; the rest of the group does that.")
 E["DT2p6"] = dict(
@@ -49,20 +52,10 @@ E["DC0"] = dict(
     r="Equal to {DT20}: corners do not matter for this well, which is "
       "what the simulated square corner gives.",
     l="The N-well band under the contact follows the square outline "
-      "2 µm inside the edge, and has sharp corners of its own.")
-E["DW1p5"] = dict(
-    p="A deep N-well with a drawn P-well as close as the rules allow, "
-      "1.5 µm.",
-    w="This is the surrounding that assumption A gives every deep "
-      "N-well without anyone drawing it. If the edge held the voltage, "
-      "a P-well this close would cost part of it, as on {NW1p5}.",
-    c=[("DT20", "a drawn P-well from 1.5 µm in place of none"),
-       ("NW1p5", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}: either the bottom limits, or the foundry "
-      "already generates this P-well round {DT20}.",
-    l="Those two readings cannot be separated here; {DAo1} separates "
-      "them.")
+      "2 µm inside the edge, and has sharp corners of its own. The "
+      "corner section is a cylinder of 1 µm radius, as for {NC0}, so an "
+      "edge-limited corner would read pessimistic; a bottom-limited well "
+      "is indifferent to it.")
 E["DM1_6"] = dict(
     p="A deep N-well with a Metal1 plate of 6 µm: the deep-well "
       "counterpart of the plate that gains most among Metal1 plates on "
@@ -71,36 +64,12 @@ E["DM1_6"] = dict(
       "should. The comparison with {NM1_6} is the clearest single test "
       "of whether the edge or the bottom limits.",
     c=[("DT20", "a Metal1 plate of 6 µm in place of none"),
-       ("DM1_10", "a plate of 6 µm in place of 10 µm"),
        ("NM1_6", "a deep N-well in place of an N-well"),
-       ("DGM1", "the plate joined to the well in place of on its own "
-                "pad")],
+       ("DAo1M1_6", "no NAT in place of NAT over the edge")],
     m="",
     r="Equal to {DT20} while {NM1_6} is above {NT20}: plates work on "
       "edges, and this well does not fail at its edge.",
     l="None beyond those of the group.")
-E["DM1_10"] = dict(
-    p="A deep N-well with a Metal1 plate of 10 µm.",
-    w="The long end of the plate series on a deep N-well, for the case "
-      "that the shorter plates show an effect that has not yet stopped "
-      "growing.",
-    c=[("DM1_6", "a plate of 10 µm in place of 6 µm"),
-       ("NM1_10", "a deep N-well in place of an N-well")],
-    m="",
-    r="Equal to {DT20}.",
-    l="Redundant if the bottom limits.")
-E["DPM12"] = dict(
-    p="A deep N-well with the stepped plate of three layers.",
-    w="The strongest edge termination on the die applied to a deep "
-      "N-well. Its polysilicon step lies over the N-well band of the "
-      "contact and the first 2 µm outside the edge.",
-    c=[("DT20", "a stepped plate in place of none"),
-       ("NPM12", "a deep N-well in place of an N-well")],
-    m="A second sweep shows whether the oxide under the polysilicon "
-      "survived.",
-    r="Equal to {DT20}: no edge termination helps this well.",
-    l="At about 30 V the oxide under the polysilicon sees under "
-      "1 MV/cm, so this structure does not test the oxide.")
 E["DAo1"] = dict(
     p="A deep N-well with NAT over its edge, so that no P-well can lie "
       "beside the junction.",
@@ -109,7 +78,7 @@ E["DAo1"] = dict(
       "edge limited a deep N-well because of nearby P-well, removing "
       "the P-well would raise the breakdown voltage.",
     c=[("DT20", "NAT over the edge in place of none"),
-       ("DW1p5", "no P-well possible in place of a drawn one at 1.5 µm"),
+       ("DAo1M1_6", "no plate in place of a Metal1 plate of 6 µm"),
        ("NA0p6", "NAT overlapping the edge in place of 0.6 µm away")],
     m="",
     r="Equal to {DT20}: the bottom limits, with or without P-well at "
@@ -117,16 +86,6 @@ E["DAo1"] = dict(
       "NAT removes it.",
     l="Whether the foundry accepts NAT here with no transistor is not "
       "known, although the rule check passes it.")
-E["DAo1C0"] = dict(
-    p="A deep N-well with NAT over its edge and square corners.",
-    w="If NAT frees the edge, the corners become the weak points, as on "
-      "an N-well in bare substrate. This structure measures them at "
-      "their sharpest.",
-    c=[("DAo1", "four 90° vertices in place of eight of 135°"),
-       ("DC0", "NAT over the edge in place of none")],
-    m="",
-    r="Equal to {DAo1}.",
-    l="Useful only if {DAo1} is much above {DT20}.")
 E["DAo1M1_6"] = dict(
     p="A deep N-well with NAT over its edge and a Metal1 plate of 6 µm: "
       "every edge remedy the die has, on one well.",
@@ -204,7 +163,7 @@ E["CVNA"] = dict(
        ("CVN2", "NAT and a ring at 20 µm in place of neither"),
        ("NA0p6", "a well 100 µm across in place of 30 µm")],
     m="The bias follows the well's own breakdown voltage from {P1}, "
-      "and may exceed the range of the meter's internal bias.",
+      "and may need the external bias source of 60 V.",
     r="Capacitance that flattens beyond about 15 V: a deep P layer "
       "under N-wells, assumption D. Capacitance that keeps falling: "
       "none within the depth reached.",

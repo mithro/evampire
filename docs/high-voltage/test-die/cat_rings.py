@@ -29,7 +29,8 @@ E["NR1_2"] = dict(
       "outer edge becomes the place that breaks down.",
     c=[("NR1_1p4", "a gap of 2 µm in place of 1.4 µm"),
        ("NR1_3", "a gap of 2 µm in place of 3 µm"),
-       ("NR1S2", "no contact on the ring in place of one")],
+       ("NR1S2", "no contact on the ring in place of one"),
+       ("NAR1_2", "no NAT round the ring in place of NAT")],
     m="",
     r="Well above {NT20}: one ring is a real termination.",
     l="The ring's potential is not measured here; {NR1S2} does that.")
@@ -69,7 +70,8 @@ E["NR3_2"] = dict(
        ("NR3_1p5", "gaps from 2 µm in place of from 1.5 µm"),
        ("NR3W1", "rings 2 µm wide in place of 1 µm"),
        ("NR3W3", "rings 2 µm wide in place of 3 µm"),
-       ("NR3M1", "no plate in place of a Metal1 plate")],
+       ("NR3M1", "no plate in place of a Metal1 plate"),
+       ("NAR3_2", "no NAT round the rings in place of NAT")],
     m="Swept again at 85 °C.",
     r="Above {NR1_2}: rings 2 and 3 take a share.",
     l="As for {NR3_1p5}.")
@@ -165,7 +167,8 @@ E["NR1S3"] = dict(
       "3 µm apart.",
     c=[("NR1S2", "a gap of 3 µm in place of 2 µm"),
        ("NR1S5", "a gap of 3 µm in place of 5 µm"),
-       ("NR1_3", "a contact and lead on the ring in place of none")],
+       ("NR1_3", "a contact and lead on the ring in place of none"),
+       ("NAR1S3", "no NAT over the gap in place of NAT")],
     m="As for {NR1S2}.",
     r="A later onset and a larger step than {NR1S2}, in the ratio the "
       "simulation gives.",
@@ -200,7 +203,9 @@ E["NR1S5"] = dict(
     r="The well voltage at which ring current starts is what two wells "
       "5 µm apart can differ by.",
     l="Under assumption A the P-well between well and ring fails first, "
-      "and the structure shows only that.")
+      "and the structure shows only that. Under An it does too, because "
+      "the gap has no NAT; {NAR1S3} and {NAR1S8} measure the spacing "
+      "under NAT.")
 E["NR1S8"] = dict(
     p="The same measurement at a gap of 8 µm, wider than the depletion "
       "region of a plain well at its breakdown voltage.",
@@ -210,7 +215,7 @@ E["NR1S8"] = dict(
       "well itself can hold.",
     c=[("NR1S5", "a gap of 8 µm in place of 5 µm"),
        ("NR1S12", "a gap of 8 µm in place of 12 µm"),
-       ("NT10", "an N-well ring at 8 µm in place of a P+ ring at 10 µm")],
+       ("NAR1S8", "no NAT over the gap in place of NAT")],
     m="As for {NR1S5}. Which pad the current leaves by, ring or "
       "substrate, is the result.",
     r="Substrate current first: 8 µm isolates two wells up to the "
@@ -251,8 +256,8 @@ E["NR1_2L"] = dict(
 E["NGP4"] = dict(
     p="A polysilicon plate on its own pad: the most sensitive probe of "
       "the surface beside a plain N-well.",
-    w="The plate lies on 0.32 µm of trench oxide, from 1 µm inside the "
-      "well edge to 4 µm outside it. Over oxide that thin, bare "
+    w="The plate lies on 0.32 µm of trench oxide, from 0.5 µm inside "
+      "the well edge to 4 µm outside it. Over oxide that thin, bare "
       "substrate inverts at a few volts. P-well at 4 × 10\\ :sup:`17` "
       "cm\\ :sup:`-3` inverts at about 31 V with the well at 0 V and "
       "about 58 V with it at 2 V, by the threshold equation of the "
@@ -264,7 +269,8 @@ E["NGP4"] = dict(
     m="The plate is swept to +60 V with the well at 0 V and at 2 V, so "
       "that a threshold over P-well falls inside the sweep. The oxide "
       "under the plate sees the whole voltage between plate and well, "
-      "which stays within 60 V: 1.8 MV/cm across 0.33 µm.",
+      "which stays within 60 V: 1.92 MV/cm across the 0.312 µm that "
+      "the oxide's extraction capacitance gives.",
     r="A threshold of a few volts: bare substrate beside the well. A "
       "threshold near 30 V with the well at 0 V: P-well.",
     l="The threshold over P-well lies close to the 60 V limit once the "
@@ -305,19 +311,3 @@ E["NAGM1"] = dict(
       "are the same silicon.",
     l="The plate also covers the strip beside the well, whose doping "
       "may differ from that under NAT; the reading mixes the two.")
-E["DGM1"] = dict(
-    p="A Metal1 plate on its own pad beside a deep N-well: reads the "
-      "surface there, and checks that the plate does not change the "
-      "breakdown.",
-    w="If the deep N-well breaks down at its bottom, the plate's "
-      "voltage alters the surface without altering the breakdown "
-      "voltage. The threshold still reports the doping beside the well, "
-      "where a generated P-well would start 1.5 µm out.",
-    c=[("NGM1", "a deep N-well in place of an N-well"),
-       ("DM1_6", "the plate on its own pad in place of joined to the "
-                 "well")],
-    m="As for {NGM1}.",
-    r="A breakdown voltage that does not move with the plate voltage: "
-      "the bottom of the well limits. One that moves: the edge does.",
-    l="The N-well band under the contact ring lies under the inner part "
-      "of the plate, so the surface there is not deep N-well.")
