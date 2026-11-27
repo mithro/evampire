@@ -28,8 +28,13 @@ turned about the centre of the corner's arc, which crowds the field as a
 smooth corner does (:ref:`hv-junctions`). A sharp drawn corner is given a
 radius of 1 µm, since the implant spreads sideways. The predicted breakdown
 voltage of the structure is the lower of the two results. The wells on the
-die have vertices and not smooth arcs (:ref:`hv-test-structures`), so a
-corner result is an upper bound for the die.
+die have vertices and not smooth arcs (:ref:`hv-test-structures`), and the
+corner result errs in a direction that depends on the corner. For a cut
+corner the 135° vertices are not modelled, so the result is optimistic.
+For a square corner the depletion region at breakdown, 4 µm to 6 µm, is
+far wider than the radius of 1 µm, so the section models a thin post
+whose field converges from all round. A 90° vertex is a wedge, so that
+result is probably pessimistic.
 
 .. figure:: hvt-sim-section.svg
    :name: fig-hvt-sim-section
@@ -343,8 +348,8 @@ Under D a plain N-well cannot hold more than its flat bottom does
 depth of the layer (:numref:`tab-hvt-cap-sens`). The N-well capacitance
 fixes the depth to about a quarter of a micrometre, but only if the
 published model is itself right to a few per cent. The last row of the
-table gives the range that follows, before the 10 % to 25 % by which the
-simulation runs high.
+table gives the range that follows, before the error of the ionisation
+model (`Limits of the predictions`_).
 
 .. csv-table:: Simulated ceiling of a plain N-well under D against the
                depth of the deep P layer
@@ -364,10 +369,11 @@ stands for AD as well.
 .. figure:: hvt-assumptions.svg
    :name: fig-hvt-assumptions
    :alt: Six cross-sections. NT20 under AL: a generated P-well covers the
-         surface from the N-well edge outwards, past the P+ ring. NA2
-         under AL: P-well lies in the 2 µm strip between the well and the
-         NAT layer and around the P+ ring, with bare substrate under the
-         NAT layer. NA2 under AnL: the same without P-well in the strip.
+         surface from the N-well edge outwards, past the P+ ring. NA0p6
+         under AL: P-well lies in the 0.6 µm strip between the well and
+         the NAT layer and around the P+ ring, with bare substrate under
+         the NAT layer. NA0p6 under AnL: the same without P-well in the
+         strip.
          NT20 under BL: no P-well, and bare substrate from the well edge
          to the P+ ring. NT20 under BD: the same, with a deep P layer
          across the whole section below the well. DT20 under every
@@ -459,15 +465,20 @@ of its edge and corner values. The band runs from the lowest to the
 highest of those. The G processes are in no band. A process is left out
 when one of its runs failed, or ended below the breakdown voltage of the
 other shape, because its lower value is then unknown. The agreement range
-is the band widened by 30 % downwards and 15 % upwards, lopsided because
-the simulation runs high. The table also names each structure's reference
-and gives the predicted ratio of the two breakdown voltages, which is the
-main comparison of :ref:`hv-test-method`. A ratio is formed from the
-nominal process of the family. The reference is NT20, NW0 under
-assumption A, and DT20 for a deep N-well. Under An the plates over NAT
-take NA0p6 instead: NT20 has no NAT and is limited by P-well under An, so
-it is not the plain well that those plates improve on. The last column lists what the simulation
-left open.
+is the band widened by a rule that follows the direction of the model's
+error. The lower end moves down and the upper end up, each by the rule for
+its own value. Below 30 V, where a heavily doped surface limits and the
+model reads high, the widening is 30 % down and 15 % up. At 30 V and
+above, where the light substrate limits and the model may read low, it is
+15 % down and 25 % up. The rule is a choice.
+
+The table also names each structure's reference and gives the predicted
+ratio of the two breakdown voltages, which is the main comparison of
+:ref:`hv-test-method`, where :numref:`tab-hvt-refs` lists the references.
+A ratio is formed from the nominal process of the family. A ratio between
+a structure below 30 V and a reference above it, or the reverse, crosses
+the two regimes of the model's error and is marked as not a test. The
+last column lists what the simulation left open.
 
 .. csv-table:: Band and agreement range of each prediction
    :name: tab-hvt-pred-band
@@ -548,7 +559,10 @@ below both:
   partly built in: the simulated deep N-well is a buried layer with
   almost no donors at the surface. If the real well is N-type up to the
   surface, its published breakdown could be set at the edge, and the
-  structures with a close ring, a P-well or NAT would show it.
+  structures with a close ring or NAT would show it. The value of DT20 is
+  a fit, not a prediction: the deep N-well profile was fitted to the
+  published 30.48 V with the same ionisation integral. The group tests
+  only that nothing drawn at the edge changes the result.
 
 Only under BL do the terminations differ, in ways the die can test:
 
@@ -573,13 +587,18 @@ of 1 µm, breaks down below 57 V under BL, far below the straight edge of
 the same well. A Metal1 plate lifts the square corner above 57 V, but
 leaves it well short of the same plate on a cut corner. A well that must
 hold the working voltage therefore needs cut corners and a plate, not one
-of the two. The deep N-well is indifferent to its corner, as to everything
-else at its edge.
+of the two. Both square-corner predictions are probably pessimistic
+(`Simulated cross-sections`_), so the measured square corners may hold
+more, with or without the plate. The deep N-well is indifferent to its
+corner, as to everything else at its edge.
 
 These sections needed 128-bit arithmetic to reach breakdown. In double
 precision they stalled part of the way, and the breakdown voltage was
 first estimated by extending the ionisation integral in a straight line.
 The later result agrees with that estimate (:numref:`tab-hvt-mc-corner`).
+How much the square-corner result depends on the assumed radius of 1 µm
+is the subject of a run at radii of 0.5 µm to 4 µm
+(:numref:`tab-hvt-mc-radius`).
 
 .. csv-table:: Earlier extrapolation of the sharp-corner section against
                the converged result
@@ -587,6 +606,13 @@ The later result agrees with that estimate (:numref:`tab-hvt-mc-corner`).
    :file: hvt-tab-mc-corner.csv
    :header-rows: 1
    :widths: 55 45
+
+.. csv-table:: Breakdown of the square-corner section against its assumed
+               radius
+   :name: tab-hvt-mc-radius
+   :file: hvt-tab-mc-radius.csv
+   :header-rows: 1
+   :widths: 30 40 30
 
 A few cases have no result: their runs failed or stopped short of breakdown,
 and the tables mark them (:numref:`tab-hvt-pred-source`). The structures
@@ -600,20 +626,29 @@ Second simulator
 
 A second simulator, Charon, repeats eleven cases on the identical mesh and
 doping [HV-GF180-TCAD]_: two one-dimensional diodes, a bare N-well edge,
-and eight sections of the die. It differs from the first in the ways that
-matter for a cross-check (:numref:`tab-hvt-crosscheck-source`). Its
-equations include the generation of carriers by impact ionisation, so its
-current itself runs away at breakdown, and it discretises the equations
-differently. The six die sections use the doping family from before the
-fit to the deep N-well, so their voltages are not the present
-predictions. The comparison is between the two methods.
+and eight sections of the die. It shares the mesh, the doping and the
+ionisation coefficients with the first, so it checks the solver and the
+breakdown criterion, not the physical model. An error in the profiles or
+the coefficients is common to both and does not show.
+
+It differs from the first in the ways that matter for that check
+(:numref:`tab-hvt-crosscheck-source`). Its equations include the
+generation of carriers by impact ionisation, so its current itself runs
+away at breakdown, and it discretises the equations differently. Only two
+of the eleven cases use the present doping family. The other die
+sections use the family from before the fit to the deep N-well, so their
+voltages are not the present predictions.
 
 Each case has three values (:numref:`tab-hvt-crosscheck`,
 :numref:`fig-hvt-crosscheck`): the ionisation integral on the first
 simulator's potential, the same integral on Charon's potential, and the
 voltage at which Charon's own avalanche current runs away. The two
 integrals test whether the simulators agree on the field. The current
-tests the integral as a criterion.
+tests the integral as a criterion. In six of the eleven cases, about
+half, the current value is the last bias at which Charon converged with
+the avalanche under way, not a point where the current was seen to run
+away, so it bounds the criterion rather than locating it
+(:numref:`tab-hvt-crosscheck`).
 
 .. csv-table:: Set-up of the second simulator
    :name: tab-hvt-crosscheck-source
@@ -668,20 +703,24 @@ Limits of the predictions
 A prediction is a statement about an assumed process, not about the
 silicon. These limits bound what it can say:
 
-* The absolute voltages may be 10 % to 25 % high. The ionisation
-  coefficients give 14.9 V for a one-sided junction doped at
-  10\ :sup:`17` cm\ :sup:`-3`, and the simulated N-well to P-well
-  junction is 25 % above the published typical value.
+* The error of the ionisation model changes sign with doping
+  (:numref:`tab-hvt-mc-onesided`). With the same coefficients and the
+  same integral, a one-sided junction reads above the closed form of Sze
+  and Gibbons when heavily doped and below it when lightly doped
+  [HV-SZE-NG]_. Predictions limited by a heavily doped surface, the class
+  near 18 V, therefore read high, as the simulated N-well to P-well
+  junction does against the published 14 V. Predictions limited by the
+  light substrate, the class above 30 V, may read low by 10 % to 20 %.
 * The ionisation integral changes slowly near 1. A 5 % error in the
   integral moves the breakdown voltage by about 4.5 %.
 * The profiles are assumed. They reproduce the published capacitances and
   the deep N-well's breakdown, and nothing measures them directly.
 * The sections are two-dimensional, and a corner is a smooth arc. The die
-  has vertices, which no section represents. An arc of 1 µm radius in
-  cylindrical coordinates stands in for a 90° vertex, and the 135° vertices
-  of every other structure are not simulated at all. The design rules
-  allow only 45° edges on a well, so a product would have the same
-  vertices.
+  has vertices, which no section represents. A cylinder of 1 µm radius
+  stands in for a 90° vertex and is probably pessimistic, and the 135°
+  vertices of every other structure are not simulated at all, which makes
+  their predictions optimistic. The design rules allow only 45° edges on a
+  well, so a product would have the same vertices.
 * A floating ring is simulated with the ionisation path ending at the
   ring.
 * The Metal5 lead and the leads to second pads are left out. They cross the
@@ -696,6 +735,17 @@ silicon. These limits bound what it can say:
   integral. The measurement's criterion is a current of 1 µA. The two
   coincide for a sharp knee and differ where leakage comes first.
 
+.. csv-table:: Breakdown of one-sided abrupt junctions by the ionisation
+               integral of the simulation against the closed form
+               60 V × (N / 10\ :sup:`16` cm\ :sup:`-3`)\ :sup:`-0.75`
+   :name: tab-hvt-mc-onesided
+   :file: hvt-tab-mc-onesided.csv
+   :header-rows: 1
+
+The integral uses the coefficients of `Ionisation integral`_. The values
+come from a script that the fourth independent review wrote for itself
+(:ref:`hv-test-submission`), and no simulation record holds them yet.
+
 Open questions
 --------------
 
@@ -705,11 +755,12 @@ Open questions
 * Is the deep N-well N-type up to the surface? The model assumes a buried
   layer.
 * What does a vertex of 90° or 135° hold against the smooth arc of a
-  corner section? The section of 1 µm radius is a stand-in for the first,
-  and nothing represents the second.
-* Why does the simulated N-well to P-well junction break down about 25 %
-  above the published typical value, and does the same error apply to the
-  other structures?
+  corner section? The section of 1 µm radius is a probably pessimistic
+  stand-in for the first, and nothing represents the second. The radius
+  run of :numref:`tab-hvt-mc-radius` bounds the first.
+* How large is the model's error in each regime on this process? The
+  one-sided junctions of :numref:`tab-hvt-mc-onesided` give its sign and
+  size against a closed form, not against silicon.
 * Why is Charon's peak field lower on the die sections, and does the
   cross-check hold for a polysilicon plate?
 * What oxide charge fits the published field thresholds, and does the same

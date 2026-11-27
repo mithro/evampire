@@ -67,6 +67,10 @@ file. The table is drawn from the record of that run,
    :header-rows: 1
    :widths: 45 55
 
+The Magic step of the precheck also reports 29,168 warnings about
+duplicate instances of fill cells. They are benign: they do not block the
+precheck, and the Magic DRC check in :numref:`tab-hvt-precheck` is clear.
+
 Passing these checks means the foundry can make the die. It says nothing
 about any structure holding its voltage, since no rule is written for more
 than 6 V.
@@ -86,10 +90,10 @@ positions, which this die does not have.
 Independent reviews
 -------------------
 
-Three reviews by readers who had not worked on the die were made before
-submission: one of the layout, one of the physics, and a final one of the
-layout and the method together. Each changed the die
-(:numref:`tab-hvt-reviews`).
+Four reviews by readers who had not worked on the die were made before
+submission: one of the layout, one of the physics, a final one of the
+layout and the method together, and a fourth, fresh review with no prior
+involvement. Each changed the die (:numref:`tab-hvt-reviews`).
 
 .. list-table:: Findings of the reviews and what changed
    :name: tab-hvt-reviews
@@ -118,8 +122,8 @@ layout and the method together. Each changed the die
        larger labels; a seventh substrate pad
    * - Layout
      - The corner "radius" is one 45° cut, not an arc
-     - Stated on :ref:`hv-test-structures`; corner predictions treated as
-       upper bounds
+     - Stated on :ref:`hv-test-structures`; the corner predictions given
+       a direction for each kind of corner
    * - Physics
      - The polysilicon plate was not joined to the oxide under it in the
        simulation, so every polysilicon result was wrong
@@ -172,6 +176,45 @@ layout and the method together. Each changed the die
      - No smoother corner existed as a reference
      - None possible: the rules allow only 45° edges on a well. The
        avalanche light is photographed on three structures instead
+   * - Fourth
+     - If NAT is what clears the well edge, every ring and ring-sense
+       structure was still limited by P-well, so rings and the spacing to
+       a neighbouring well were unmeasured where they matter
+     - NAR1_2, NAR3_2, NAR1S3 and NAR1S8 added under NAT; DGM1, DW1p5,
+       DM1_10, DPM12, DAo1C0, NT10 and NA2 removed to make room
+   * - Fourth
+     - NW0, the reference under assumption A, and NC0, the square corner,
+       had one copy each
+     - NW0b and NC0b added
+   * - Fourth
+     - The Metal1 of a gated plate lay 0.7 µm from the via stack's
+       Metal1: 1.14 MV/cm at 80 V
+     - Plates start 0.5 µm inside the well edge, 1.2 µm clear: 0.67 MV/cm
+   * - Fourth
+     - The error of the ionisation model changes sign with doping, so a
+       range widened mostly downwards fits only the heavily doped class
+     - One-sided junctions tabulated (:numref:`tab-hvt-mc-onesided`);
+       agreement range widened by regime
+   * - Fourth
+     - Ratios against NW0 under B cross the two regimes of the model
+     - References chosen by assumption (:numref:`tab-hvt-refs`); a ratio
+       across regimes marked as not a test
+   * - Fourth
+     - The square-corner section is a thin post, probably pessimistic,
+       while the 135° vertices are not modelled at all
+     - The direction stated for each kind of corner; a radius sweep added
+       (:numref:`tab-hvt-mc-radius`)
+   * - Fourth
+     - The oxide under a polysilicon plate tied to the well may see up to
+       3 MV/cm; the capacitance bias of 40 V was too low for the wells
+       under NAT; the chuck was a second substrate path
+     - Polysilicon plates swept last on each die; a 60 V bias source; the
+       chuck returned through the substrate channel (:ref:`hv-test-method`)
+   * - Fourth
+     - Some readings in the catalogue did not match the simulation; the
+       deep N-well reference is a fit; the second simulator checks the
+       solver, not the model; NT20V has no copy
+     - Each stated where it applies
 
 The final review also put numbers on its confidence three times: for the
 die and method as it found them, after the corrections of the rows marked
@@ -210,16 +253,52 @@ independently and had nothing further to add to the die.
      - 60 %
      - 68 %
 
-What holds the last figure down is the physics, not the die: if the P-well
-is generated everywhere, or the deep P layer lies under the whole wafer,
-the result is that a plain junction does not reach the working voltage,
-which the die is built to show.
+The final review's last figure is held down by the physics, not the die.
+If the P-well is generated everywhere, or the deep P layer lies under the
+whole wafer, the result is that a plain junction does not reach the
+working voltage, which the die is built to show.
 
 The review named four missing items behind the figure it first gave: a
 smoother corner, wider gaps to a contacted well, a 200 µm well under NAT,
 and finished predictions for the multi-ring structures. The second and
 third are now on the die, the first cannot be drawn, and the fourth is
 done.
+
+A fourth review, by a reader with no prior involvement, verified the
+connections on the committed file with its own extraction, found no
+blocker and advised taping out the layout as it is. It also gave its
+confidence (:numref:`tab-hvt-confidence-4`). Those estimates were made
+before the changes in the rows marked "Fourth", and are that reviewer's
+alone.
+
+.. list-table:: Confidence stated by the fourth review, before its
+                changes
+   :name: tab-hvt-confidence-4
+   :header-rows: 1
+   :widths: 70 30
+
+   * - Statement
+     - Estimate
+   * - The layout passes the wafer.space precheck
+     - 95 %
+   * - The breakdown measurements work as intended
+     - 85 %
+   * - The results are comparable with the simulation as patterns
+     - 85 %
+   * - The results are comparable as ratios, within 15 %
+     - 60 %
+   * - Absolute values fall within the agreement range
+     - 40 %
+   * - The variants suffice, a valid negative result included
+     - 70 %
+
+The reviewer named what limits each low figure. The absolute values are
+held down by the unmeasured doping profiles and the error of the
+ionisation coefficients, which cannot be fixed before tape-out. They were
+also held down by the one-sided agreement range and the unstated
+direction of the corner predictions, which are now fixed. The variants
+were held down by the missing ring and spacing structures under NAT and
+the single copies of NW0 and NC0, which are now on the die.
 
 The reviews left four things open. No simulation represents a vertex in
 three dimensions. The effect of the Metal5 lead is bounded by three
