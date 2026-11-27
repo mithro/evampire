@@ -75,8 +75,8 @@
 <text x="155.0" y="260.0" font-size="13" text-anchor="middle" font-weight="bold" fill="#222222" dominant-baseline="middle">(c) discontinuous, diode as S2</text>
 <line x1="65.0" y1="383.5" x2="265.0" y2="383.5" stroke="#222222" stroke-width="1.2"/>
 <polyline points="65.0,383.5 81.3,363.7 130.3,383.5 165.0,383.5 181.3,363.7 230.3,383.5 265.0,383.5" fill="none" stroke="#1f4e79" stroke-width="2.0" stroke-linejoin="round"/>
-<line x1="65.0" y1="377.0" x2="265.0" y2="377.0" stroke="#777777" stroke-width="1" stroke-dasharray="5 4"/>
 <rect x="130.3" y="369.6" width="34.7" height="13.8" rx="0" fill="#e2f0d9" stroke="none" stroke-width="1.0"/>
+<line x1="65.0" y1="377.0" x2="265.0" y2="377.0" stroke="#777777" stroke-width="1" stroke-dasharray="5 4"/>
 <text x="147.6" y="353.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">iL = 0,</text>
 <text x="147.6" y="366.3" font-size="11" text-anchor="middle" font-weight="normal" fill="#38761d" dominant-baseline="middle">vL = 0</text>
 <line x1="345.0" y1="275.0" x2="345.0" y2="415.0" stroke="#e4e4e4" stroke-width="1"/>
