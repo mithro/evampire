@@ -72,7 +72,7 @@ def main():
         d += elm.Line().at((3.5, MID)).to((5.5, MID))
         d += (elm.Resistor().right().at((5.5, MID)).to((8.5, MID))
               .color(SECONDARY)
-              .label("110 Ω\n(4 × 440 Ω)", loc="top", ofst=0.3))
+              .label("110 Ω: 4 of\n440 Ω in parallel", loc="top", ofst=0.3))
         d += elm.Line().at((8.5, MID)).to((10.5, MID))
         d += elm.Dot().at((10.5, MID))
         d += (elm.Diode().up().at((10.5, MID)).to((10.5, TOP))
