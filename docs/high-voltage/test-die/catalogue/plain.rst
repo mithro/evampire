@@ -775,7 +775,9 @@ Measurement
    session.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure. The
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nc0b`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
    mean of :ref:`NC0 <hvt-s-nc0>` and this copy is the square-corner value.
    A spread larger than that of :ref:`NT20 <hvt-s-nt20>` and :ref:`NT20b
    <hvt-s-nt20b>` points to the vertices.
@@ -783,6 +785,42 @@ Predicted
 Limits
    As for :ref:`NC0 <hvt-s-nc0>`: the corner prediction is probably
    pessimistic. Two copies give a difference, not a distribution.
+
+.. list-table:: NC0b: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nc0b
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - BL
+     - 76.0
+     - 46.1
+     - 46.1 to 48.0
+     - 39.2 to 60.0
+     - 0.69 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 79.8
+     - 48.0
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 46.0
+     - 46.0 to 46.0
+     - 39.1 to 57.5
+     - 0.75 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nt20b:
 

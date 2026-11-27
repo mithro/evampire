@@ -135,16 +135,75 @@ Measurement
    µm. As for :ref:`NR1S3 <hvt-s-nr1s3>`.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
-   Under An the punch-through and the ring's rise follow :ref:`NR1S3
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nar1s3`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Under
+   An the punch-through and the ring's rise follow :ref:`NR1S3
    <hvt-s-nr1s3>` under B. Under A both are limited by P-well in the strips,
    as for :ref:`NR1S3 <hvt-s-nr1s3>`. The prediction with ring 1 held at 0
-   V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`, where it is not
-   yet simulated.
+   V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`.
+   :numref:`fig-hvt-sr-nar1s3` plots the predicted rise of ring 1.
 
 Limits
    As for :ref:`NR1S2 <hvt-s-nr1s2>`. The strips beside the ring are only
    0.6 µm wide, so a P-well that fills them would cut the gap short.
+
+.. list-table:: NAR1S3: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nar1s3
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - AnL
+     - 96.4
+     - 90.4
+     - 90.4 to 90.4
+     - 76.8 to 113.0
+     - 1.35 of :ref:`NA0p6 <hvt-s-na0p6>`
+   * - AnD
+     - 62.9
+     - 61.1
+     - 61.1 to 61.1
+     - 51.9 to 76.4
+     - 0.99 of :ref:`NA0p6 <hvt-s-na0p6>`
+   * - BL
+     - 96.4
+     - 90.3
+     - 90.3 to 91.8
+     - 76.8 to 114.8
+     - 1.35 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 97.6
+     - 91.8
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 60.7
+     - 60.7 to 60.7
+     - 51.6 to 75.9
+     - 0.99 of :ref:`NT20 <hvt-s-nt20>`
+
+.. figure:: hvt-s-NAR1S3-ring.svg
+   :name: fig-hvt-sr-nar1s3
+   :alt: Graph of the predicted rise of ring 1 of NAR1S3 against well
+         voltage, one curve per process that has a result, with a diagonal
+         marking ring voltage equal to well voltage. Each curve leaves zero
+         after a few volts and then rises below the diagonal.
+
+   Predicted rise of ring 1 of NAR1S3.
 
 .. _hvt-s-nar1s8:
 
@@ -221,16 +280,65 @@ Measurement
    ring or substrate, is the result.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nar1s8`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure.
    Substrate current first: 8 µm isolates two wells under NAT up to the
    breakdown voltage. Ring current first: it does not. The prediction with
-   ring 1 held at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`,
-   where it is not yet simulated.
+   ring 1 held at 0 V, as in :ref:`P5 <hvt-p5>`, is in :numref:`tab-hvt-p5`.
 
 Limits
    As for :ref:`NAR1S3 <hvt-s-nar1s3>`. No contacted ring under NAT lies
    between 3 µm and 8 µm, so a spacing that fails at 3 µm and holds at 8 µm
    is bracketed, not found.
+
+.. list-table:: NAR1S8: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nar1s8
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - AnL
+     - 76.0
+     - 67.0
+     - 67.0 to 67.0
+     - 56.9 to 83.8
+     - 1.00 of :ref:`NA0p6 <hvt-s-na0p6>`
+   * - AnD
+     - 62.9
+     - 62.2
+     - 62.2 to 62.2
+     - 52.9 to 77.8
+     - 1.01 of :ref:`NA0p6 <hvt-s-na0p6>`
+   * - BL
+     - 76.0
+     - 67.0
+     - 67.0 to 70.3
+     - 56.9 to 87.9
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 79.8
+     - 70.3
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 62.2
+     - 62.2 to 62.2
+     - 52.9 to 77.8
+     - 1.02 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-na0p6:
 
@@ -1250,16 +1358,66 @@ Measurement
    Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 1790, 1795 µm.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
-   Above :ref:`NA0p6 <hvt-s-na0p6>` by the predicted ratio: a ring works
-   under NAT, and the die's route to the working voltage can use rings.
-   Equal to :ref:`NA0p6 <hvt-s-na0p6>` and :ref:`NT20 <hvt-s-nt20>` at a low
-   value: P-well fills the strips.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nar1-2`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   :ref:`NA0p6 <hvt-s-na0p6>` by the predicted ratio: a ring works under
+   NAT, and the die's route to the working voltage can use rings. Equal to
+   :ref:`NA0p6 <hvt-s-na0p6>` and :ref:`NT20 <hvt-s-nt20>` at a low value:
+   P-well fills the strips.
 
 Limits
    Three uncovered strips lie beside the ring and the well, each 0.6 µm
    wide. A narrow strip may hold P-well even where NAT clears the wide
    parts, and the structure cannot tell which strip failed.
+
+.. list-table:: NAR1_2: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nar1-2
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - AnL
+     - 94.0
+     - 89.8
+     - 89.8 to 89.8
+     - 76.3 to 112.2
+     - 1.34 of :ref:`NA0p6 <hvt-s-na0p6>`
+   * - AnD
+     - 62.9
+     - 61.2
+     - 61.2 to 61.2
+     - 52.0 to 76.5
+     - 0.99 of :ref:`NA0p6 <hvt-s-na0p6>`
+   * - BL
+     - 94.0
+     - 89.8
+     - 89.6 to 89.8
+     - 76.2 to 112.2
+     - 1.34 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 94.8
+     - 89.6
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 61.2
+     - 61.2 to 61.2
+     - 52.0 to 76.5
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nar3-2:
 
@@ -1334,14 +1492,64 @@ Measurement
    Procedure :ref:`P1 <hvt-p1>` applies. The well pad is at 290, 1945 µm.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure.
-   Above :ref:`NAR1_2 <hvt-s-nar1-2>`: rings 2 and 3 take a share under NAT
-   as they do in bare substrate.
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nar3-2`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. Above
+   :ref:`NAR1_2 <hvt-s-nar1-2>`: rings 2 and 3 take a share under NAT as
+   they do in bare substrate.
 
 Limits
    Seven uncovered strips lie beside the rings and the well. The multi-ring
    simulations take hours each, so this prediction may come late or not
    converge.
+
+.. list-table:: NAR3_2: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nar3-2
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - AnL
+     - failed
+     - failed
+     - –
+     - –
+     - –
+   * - AnD
+     - failed
+     - failed
+     - –
+     - –
+     - –
+   * - BL
+     - 105.7
+     - 101.2
+     - 101.2 to 101.2
+     - 86.0 to 126.5
+     - 1.51 of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - failed
+     - failed
+     - –
+     - –
+     - –
+   * - BD
+     - 62.9
+     - 61.1
+     - 61.1 to 61.1
+     - 51.9 to 76.4
+     - 1.00 of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-na0p6b:
 

@@ -115,13 +115,51 @@ Measurement
    session.
 
 Predicted
-   Not yet simulated: the results file has no entry for this structure. The
+   The simulated breakdown voltages are in :numref:`tab-hvt-sp-nw0b`. The
+   row of each family's nominal process also gives the family's band, its
+   agreement range and the predicted ratio to the reference structure. The
    mean of :ref:`NW0 <hvt-s-nw0>` and this copy is the reference under A.
    Under B it is not a reference: :ref:`NW0 <hvt-s-nw0>` then lies in the
    other regime from the wells it would divide.
 
 Limits
    Two copies give a difference, not a distribution.
+
+.. list-table:: NW0b: predicted breakdown voltage by process
+   :name: tab-hvt-sp-nw0b
+   :header-rows: 1
+   :widths: 18 16 16 17 17 16
+
+   * - Process
+     - Straight edge (V)
+     - Corner section (V)
+     - Family band (V)
+     - Agreement range (V)
+     - Predicted ratio
+   * - AL, AD, AnL, AnD
+     - 17.7
+     - –
+     - 17.7 to 17.7
+     - 12.4 to 20.4
+     - 1.00 of :ref:`NW0 <hvt-s-nw0>`
+   * - BL
+     - 17.8
+     - 18.0
+     - 17.7 to 17.8
+     - 12.4 to 20.5
+     - 0.27, across regimes: not a test of :ref:`NT20 <hvt-s-nt20>`
+   * - BLq
+     - 17.7
+     - 17.9
+     - –
+     - –
+     - –
+   * - BD
+     - 17.8
+     - 18.0
+     - 17.8 to 17.8
+     - 12.5 to 20.5
+     - 0.29, across regimes: not a test of :ref:`NT20 <hvt-s-nt20>`
 
 .. _hvt-s-nw0:
 

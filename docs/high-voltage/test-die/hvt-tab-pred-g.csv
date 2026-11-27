@@ -1,4 +1,4 @@
 Structure,Group,GAL: edge / corner (V),GAD: edge / corner (V),GAnL: edge / corner (V),GAnD: edge / corner (V),GBL: edge / corner (V),GBLq: edge / corner (V),GBD: edge / corner (V)
-NGP4,Gated diodes,19.3 / –,19.3 / –,19.3 / –,19.3 / –,54.9 / 53.6,56.0 / 54.6,54.5 / 53.4
-NGM1,Gated diodes,18.0 / –,18.0 / –,18.0 / –,18.0 / –,61.9 / 57.4,64.1 / 59.3,59.9 / 56.2
-NAGM1,Gated diodes,18.0 / –,18.0 / –,61.9 / 57.4,59.9 / 56.2,61.9 / 57.4,64.1 / 59.3,59.9 / 56.2
+NGP4,Gated diodes,19.2 / –,19.2 / –,19.2 / –,19.2 / –,51.8 / 50.3,52.9 / 51.4,51.3 / 50.0
+NGM1,Gated diodes,18.0 / –,18.0 / –,18.0 / –,18.0 / –,61.7 / 57.2,64.0 / 59.1,59.7 / 56.0
+NAGM1,Gated diodes,17.9 / –,17.9 / –,61.7 / 57.2,59.7 / 56.0,61.7 / 57.2,64.0 / 59.1,59.7 / 56.0

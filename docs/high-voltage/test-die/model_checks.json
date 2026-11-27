@@ -38,19 +38,19 @@
     "58 to 64"
    ],
    [
-    "Layer and deep N-well both 1.0 µm shallower",
+    "Layer and deep N-well both 1.0 \u00b5m shallower",
     "41"
    ],
    [
-    "Both 0.25 µm shallower",
+    "Both 0.25 \u00b5m shallower",
     "58"
    ],
    [
-    "Both 0.25 µm deeper",
+    "Both 0.25 \u00b5m deeper",
     "69"
    ],
    [
-    "Both 1.0 µm deeper",
+    "Both 1.0 \u00b5m deeper",
     "84"
    ],
    [
@@ -97,6 +97,71 @@
     "integral_v": 265.0,
     "closed_form_v": 337.0,
     "difference_percent": -21
+   }
+  ]
+ },
+ "corner_radius": {
+  "note": "Cylindrical sections of the plain N-well at several radii, 128-bit; the 8 um row is the corner section of NT20. gf180-tcad record radius.json (0.5 to 4 um) and the main records (8 um).",
+  "cases": [
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 0.5,
+    "volts": 45.4
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 1.0,
+    "volts": 46.0
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 2.0,
+    "volts": 53.4
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 4.0,
+    "volts": 59.8
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 8.0,
+    "volts": 61.2
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 0.5,
+    "volts": 45.4
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 1.0,
+    "volts": 46.1
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 2.0,
+    "volts": 53.7
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 4.0,
+    "volts": 61.1
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 8.0,
+    "volts": 67.0
    }
   ]
  }
