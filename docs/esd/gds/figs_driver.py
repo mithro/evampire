@@ -75,6 +75,7 @@ def nmos_driver():
 
 def _panel(window, title):
     f = Fig(CELL, window, 30, left=20, top=78, right=20, bottom=112)
+    f.wide = window
     devices(f)
     f.title(title, up=44)
     return f
@@ -99,12 +100,22 @@ def silicide_block():
     a.dim((14.52, 76.2), (15.67, 76.2), "gate length: 1.15 µm", side="below")
     _inside(a, "Drain contacts, on PAD", 20.95, 75.0, 19.78)
     _above(a, "Source contacts on DVSS, outside the block", 14.0, 79.4)
-    b = _panel((10.2, 144.9, 23.8, 154.1), "(b) PMOS output driver, blocked")
+    b = _panel((6.6, 144.9, 20.2, 157.0), "(b) PMOS output driver, blocked")
     b.dim((12.295, 153.2), (15.075, 153.2), "blocked drain: 2.78 µm")
     b.dim((15.735, 153.2), (18.515, 153.2), "blocked drain: 2.78 µm")
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
     _inside(b, "Drain contacts, on PAD", 14.75, 145.3, 15.405)
     _above(b, "Source contacts on DVDD, outside the block", 11.1, 149.7)
+    x, y = b.px(7.9, 149.5)
+    b.text(x, y + 5, "N+ guard ring, on DVDD")
+    # The cut that the cross-section draws for the PMOS, and its diode.
+    b.line((15.405, 155.2), (7.9, 155.2), width=2.0, dash="9,3,2,3")
+    for gx, name, dy in ((15.405, "B", 16), (7.9, "B′", -6)):
+        x, y = b.px(gx, 155.2)
+        b.text(x, y + dy, name, weight="bold")
+    b.flow([(13.3, 156.2), (8.5, 156.2)],
+           key="drain diode: P+ drain to N+ ring")
+    b.note(INK, "B–B′: the PMOS cut of the cross-section", kind="cut")
     c = _panel((20.3, 212.9, 33.9, 222.1), "(c) For comparison: a pre-driver")
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
     bot = c.oy + c.dh + 30
