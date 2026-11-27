@@ -41,7 +41,7 @@
 <text x="604" y="528" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">P substrate</text>
 <rect x="100.5" y="412" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
 <rect x="84.4" y="404" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
-<rect x="138.8" y="404" width="126.9" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
+<rect x="147.8" y="404" width="117.8" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
 <rect x="535.5" y="412" width="4" height="28" rx="0" fill="#9aa5b1" stroke="none"/>
 <rect x="519.4" y="404" width="36.2" height="8" rx="0" fill="#9aa5b1" stroke="#222222"/>
 <text x="537.5" y="398" text-anchor="middle" font-size="12" font-weight="bold" fill="#222222">0 V</text>
