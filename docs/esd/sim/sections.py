@@ -190,7 +190,7 @@ def driver_section():
     # gate, with its lead down into the P-well.
     b.append(line(bx - 13, by, bx + 13, by, stroke=SNAP, width=3))
     b.append(line(bx, by, bx, by + 13, stroke=SNAP, width=2))
-    b.append(line(bx - 6, by, 470, top + 24, stroke=SNAP, width=2))
+    b.append(line(bx - 6, by, 476, top + 24, stroke=SNAP, width=2))
     b.append(line(bx + 6, by, 530, top + 24, stroke=SNAP, width=2,
                   arrow=True))
     b.append(text(640, top + 172, "parasitic NPN (drain, P-well, source): "
