@@ -48,8 +48,7 @@ STYLES = {
                "DVDD metal 2: 5 strips, under the stripes"),
     "dvssm2": ("#cfe8e3", "#0d5045", "DVSS pad's metal 2, under the stripes"),
     "padm2": ("#f4d3cd", "#7d1f14", "PAD net's metal 2, under the stripes"),
-    "idle": ("#a0a0a0", "#555555", "drain of the output NMOS, on PAD: no "
-             "current on the main path"),
+    "dvsspad": ("#a3d2ca", "#0d5045", "DVSS bond pad"),
     "other": ("#b3b9c0", "#8a9199", "other diffusion"),
     "gate": ("#7d8a2e", "#444d14", "gate"),
     # Figures that pair with the schematic: its wires are black, so metal
@@ -98,10 +97,10 @@ class Fig:
         x0, y0, _, _ = self.win
         return (self.ox + (gy - y0) * self.s, self.oy + (gx - x0) * self.s)
 
-    def _path(self, geom, holes=True):
+    def _path(self, geom):
         d = []
         for poly in gdskit.parts(geom.normalize()):
-            for ring in [poly.exterior, *(poly.interiors if holes else ())]:
+            for ring in [poly.exterior, *poly.interiors]:
                 pts = [self.px(x, y) for x, y in ring.coords[:-1]]
                 d.append("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
                          + "Z")
@@ -166,9 +165,9 @@ class Fig:
         self.over.append(f'<rect {at} fill="none" stroke="{colour}" '
                          f'stroke-width="{width}"/>')
 
-    def outline(self, geom, colour, width=2.0, holes=True):
-        """The edge of a geometry; without `holes`, only its outer edge."""
-        d = self._path(gdskit.clip(geom, self.win), holes)
+    def outline(self, geom, colour, width=2.0):
+        """Every edge of a geometry, over the layout."""
+        d = self._path(gdskit.clip(geom, self.win))
         if d:
             self.over.append(f'<path d="{d}" fill="none" stroke="{colour}" '
                              f'stroke-width="{width}"/>')
@@ -363,12 +362,13 @@ class Fig:
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
             'stroke-width="1.2"/></pattern>'
             ]
-        for name, line, ink, w in (("wire", "M0,2.5 H5", INK, 0.9),
-                                   ("wire2", "M2.5,0 V5", INK, 0.9),
-                                   ("rule-dvdd", "M2.5,0 V5", DVDD, 1.3),
-                                   ("rule-dvss", "M2.5,0 V5", DVSS, 1.3)):
+        rules = (("wire", "M0,1.7 H3.4", INK, 0.9, 3.4),
+                 ("wire2", "M1.7,0 V3.4", INK, 0.9, 3.4),
+                 ("rule-dvdd", "M2.5,0 V5", DVDD, 1.3, 5),
+                 ("rule-dvss", "M2.5,0 V5", DVSS, 1.3, 5))
+        for name, line, ink, w, p in rules:
             defs.append(
-                f'<pattern id="{name}" width="5" height="5" '
+                f'<pattern id="{name}" width="{p}" height="{p}" '
                 f'patternUnits="userSpaceOnUse"><path d="{line}" '
                 f'stroke="{ink}" stroke-width="{w}"/></pattern>')
         for name, colour in (("hot", HOT), ("snap", SNAP)):
