@@ -54,8 +54,8 @@ STYLES = {
 }
 FONT = 14
 # Layers of a figure drawn without colour, from the wells up.
-GREYS = (("nwell", "#e2e2e2"), ("pdiff", "#c6c6c6"), ("ndiff", "#a4a4a4"),
-         ("poly", "#7c7c7c"), ("gate", "#5c5c5c"))
+GREYS = (("nwell", "#e6e6e6"), ("pdiff", "#c4c4c4"), ("ndiff", "#8e8e8e"),
+         ("poly", "#666666"), ("gate", "#444444"))
 PAPER = "#fafafa"      # behind the layers of a grey figure
 
 
@@ -133,25 +133,28 @@ class Fig:
 
         For a figure that pairs with the schematic: colour is then free to
         mark the schematic's parts, and no layer shares a part's colour.
-        With `named`, the legend lists each layer's grey.
+        With `named`, the legend lists each layer's grey and the N-well
+        has a dashed edge.
         """
         self.wells = False
         self.body[0] = self.body[0].replace(SUB, PAPER)
         lay = gdskit.load(self.cell)
         for name, fill in GREYS:
-            if named and name == "ndiff":
-                # Dotted, so that N+ and P+ differ by more than a shade.
-                fill = "url(#dots)"
             geom = (lay["poly"].intersection(lay["comp"]) if name == "gate"
                     else derived(self.cell, name))
             d = self._path(gdskit.clip(geom, self.win))
             if not d:
                 continue
-            self.body.append(f'<path d="{d}" fill="{fill}" stroke="#808080" '
-                             'stroke-width="0.5" fill-rule="evenodd"/>')
+            # A named N-well has a dashed edge: its grey is near the paper's.
+            edge = ((INK, 1.1, ' stroke-dasharray="4,2"', "4,2")
+                    if named and name == "nwell"
+                    else ("#808080", 0.5, "", None))
+            self.body.append(f'<path d="{d}" fill="{fill}" stroke="{edge[0]}" '
+                             f'stroke-width="{edge[1]}" fill-rule="evenodd"'
+                             f'{edge[2]}/>')
             if named:
-                self.note((fill, "#808080", 1.0),
-                          STYLES[name][2] + ", in grey", kind="tint")
+                self.notes.append(("swatch", (fill, edge[0], edge[3], 1.0),
+                                   STYLES[name][2] + ", in grey"))
         if not named:
             self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey; "
                       "those with no label are not in the schematic",
@@ -366,11 +369,8 @@ class Fig:
             '<pattern id="hatch" width="6" height="6" '
             'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
-            'stroke-width="1.2"/></pattern>',
-            '<pattern id="dots" width="5" height="5" '
-            'patternUnits="userSpaceOnUse"><rect width="5" height="5" '
-            'fill="#c4c4c4"/><circle cx="2.5" cy="2.5" r="1.1" '
-            'fill="#4a4a4a"/></pattern>']
+            'stroke-width="1.2"/></pattern>'
+            ]
         for name, line in (("wire", "M0,2.5 H5"), ("wire2", "M2.5,0 V5")):
             defs.append(
                 f'<pattern id="{name}" width="5" height="5" '
