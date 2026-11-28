@@ -1,8 +1,9 @@
 // The five ways a power sourcing equipment port changes the power of a
-// powered device: the way, what it changes, and whether the device stays
-// powered. One box per way, stacked so that the figure stays narrow enough
-// to read on a phone. Plain labels keep the three lines of each box
-// centred. The fill colour repeats the last line.
+// powered device: the way, what it changes, whether the device stays
+// powered, and whether it needs LLDP. One box per way, stacked so that the
+// figure stays narrow enough to read on a phone. Plain labels keep the
+// lines of each box centred. The fill colour repeats whether the device
+// stays powered.
 //
 // Fill colours: stays powered #e2f0d9, one pair set unpowered #fff2cc,
 // power removed #fbe5d6.
@@ -13,16 +14,16 @@ digraph allocation_ways {
     graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
            fontname="Helvetica"];
     node  [shape=box, style="rounded,filled", fontname="Helvetica",
-           fontsize=11, width=3.6, height=0.75, fixedsize=true];
+           fontsize=11, width=3.6, height=0.85, fixedsize=true];
 
     lldp    [pos="0,0!", fillcolor="#e2f0d9",
-             label="By LLDP\nallocation, in 0.1 W steps\nstays powered"];
-    reclass [pos="0,-0.95!", fillcolor="#fbe5d6",
-             label="By classifying again\nclass, if requested class is 4 or higher\npower removed"];
-    auto    [pos="0,-1.9!", fillcolor="#fbe5d6",
-             label="By Autoclass\nallocation, to measured draw\nat power-up; power removed if powered"];
-    pair    [pos="0,-2.85!", fillcolor="#fff2cc",
-             label="By powering one pair set\none pair set's power\nother pair set stays powered"];
-    refuse  [pos="0,-3.8!", fillcolor="#fbe5d6",
-             label="By refusing power\nno power\npower removed"];
+             label="By LLDP\nallocation, in 0.1 W steps\nstays powered; needs LLDP"];
+    reclass [pos="0,-1.05!", fillcolor="#fbe5d6",
+             label="By classifying again\nclass, if requested class is 4 or higher\npower removed; no LLDP"];
+    auto    [pos="0,-2.1!", fillcolor="#fbe5d6",
+             label="By Autoclass\nallocation, to measured draw + margin\nat power-up: power removed; no LLDP\nor on request over LLDP: stays powered"];
+    pair    [pos="0,-3.15!", fillcolor="#fff2cc",
+             label="By powering one pair set\none pair set's power\nother pair set stays powered; no LLDP"];
+    refuse  [pos="0,-4.2!", fillcolor="#fbe5d6",
+             label="By refusing power\nno power\npower removed; no LLDP"];
 }
