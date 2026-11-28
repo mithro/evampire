@@ -85,7 +85,7 @@
 <text x="263.0" y="505.5" font-size="14" fill="#222222">bond pad</text>
 <text x="229.0" y="529.5" font-size="14" font-weight="bold" fill="#666666">Abc</text>
 <text x="263.0" y="529.5" font-size="14" fill="#222222">not in the schematic</text>
-<text x="229.0" y="553.5" font-size="14" fill="#222222">each supply pad holds one such clamp and diode: those of the DVSS pad are the same</text>
+<text x="229.0" y="553.5" font-size="14" fill="#222222">each supply pad holds one such clamp and diode: the DVSS pad's netlist is the same</text>
 <text x="229.0" y="577.5" font-size="14" fill="#222222">PAD, primary, secondary, input buffer: in the bidirectional pad</text>
 <text x="229.0" y="601.5" font-size="14" fill="#222222">DVDD and DVSS rings: stripes of metal 3 to 5 across the cell, beyond the bond pad; not drawn</text>
 </svg>
