@@ -76,8 +76,7 @@ the power that results:
   Layer classification alone, up to class 8, and does not answer LLDP power
   requests.
 * Port B changes the allocation of the powered device it supplies only in
-  ways that need no LLDP: classifying the device again, Autoclass,
-  powering one pair set of a dual-signature device, or refusing power. The
+  the ways of :ref:`poe-allocation-changes` that need no LLDP. The
   sharing between output ports in :ref:`req-power-bridging` moves power to
   or from port B only in these ways (:ref:`ebat-port-b-allocation`).
 * With data pass-through on the board, LLDP frames pass between the far

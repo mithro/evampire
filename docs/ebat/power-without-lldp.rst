@@ -44,11 +44,8 @@ The class 3 rows of evampire's examples give it for illustrative values:
   (:numref:`tab-usbpd-translation-examples`);
 * Ethernet in, Ethernet out: class 2 on port B, with an efficiency of 0.85,
   while the board uses no more than 4.3 W (:numref:`tab-poe-pass-through`).
-  Port B can then power only a device that requests class 1 or 2, because
-  one class event assigns class 3 to a device that requests class 3 or
-  higher (:numref:`tab-poe-events`, :clause:`Table 145-11 <145>`). Port B
-  refuses power to such a device, unless the device is single-signature
-  and supports Autoclass (:ref:`ebat-port-b-allocation`).
+  Port B can then power only a device that requests class 1 or 2, and
+  refuses any other (:ref:`poe-demotion`, :ref:`poe-pse-classification`).
 
 An ebat board has no transceivers, so its own power has no transceiver
 share. Its value is unknown, as on evampire, and the power for the outputs
@@ -97,17 +94,14 @@ exchange with its powered device (:ref:`req-ebat-no-lldp`). Without that
 exchange, the powered device receives the full power of its assigned
 class, as from evampire (:ref:`req-poe-classification`). Port B changes
 its allocation only in the ways of :ref:`poe-allocation-changes` that need
-no LLDP: classifying again, Autoclass, powering one pair set of a
-dual-signature device, and refusing power. On a board with data
-pass-through, LLDP frames pass between the far ends and can change the
+no LLDP. On a board with data pass-through, LLDP frames pass between the far ends and can change the
 allocation (:ref:`ebat-pass-through-lldp`).
 
 To classify again, the software removes the power, runs detection again
 and classifies the powered device with a different number of class
 events. The powered device is unpowered while this happens.
 :numref:`fig-ebat-reclassify` shows the order. This changes the class only
-of a device that requests class 4 or higher (:ref:`poe-demotion`). Port B
-lowers a device that requests class 1 to 3 only by the other ways.
+of a device that requests class 4 or higher (:ref:`poe-demotion`).
 
 .. graphviz:: reclassify.dot
    :name: fig-ebat-reclassify
@@ -123,10 +117,10 @@ lowers a device that requests class 1 to 3 only by the other ways.
          powered device has no power.
    :align: center
 
-:ref:`Autoclass <poe-autoclass>` is part of Physical Layer classification,
-needs no LLDP and is defined only for single-signature powered devices
-(:clause:`145.2.8.2`). If such a device supports it, port B can use it to
-allocate less than the full class power (:doc:`../power/poe/translation`).
+:ref:`Autoclass <poe-autoclass>` is part of Physical Layer classification
+and needs no LLDP (:clause:`145.2.8.2`). If a single-signature powered
+device supports it, port B can use it to allocate less than the full class
+power (:doc:`../power/poe/translation`).
 
 Open questions
 --------------

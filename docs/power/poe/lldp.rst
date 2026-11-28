@@ -63,10 +63,9 @@ Devices that support LLDP
 :numref:`tab-poe-class-methods` lists which devices must support the
 exchange: every Type 2 powered device, and every powered device that
 requests class 4 or higher. A powered device that does not support it
-requests class 3 or lower, so classifying it again cannot give it less
-than the power of its requested class (:ref:`poe-demotion`). The other
-ways to lower its allocation without LLDP are listed with
-:ref:`the allocation changes <poe-allocation-changes>`.
+requests class 3 or lower, which classifying again cannot lower
+(:ref:`poe-demotion`). :ref:`poe-allocation-changes` lists the other ways
+to change its allocation.
 
 The allocated value sets the assigned class (:clause:`Table 145-12 <145>`),
 as in :numref:`tab-poe-dll-class`.
