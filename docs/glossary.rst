@@ -330,6 +330,33 @@ Glossary
       The Power over Ethernet standard abbreviates it as PD (see
       :ref:`the power roles <power-roles>`).
 
+   Dual-signature powered device
+      A powered device that presents its own detection signature and class
+      signature on each pair set, so that power sourcing equipment detects,
+      classifies and powers each pair set separately (:clause:`145.3.5`,
+      :clause:`145.3.6.1`, :clause:`Table 145-27 <145>`, see
+      :doc:`power/poe/power-sourcing`).
+
+   Single-signature powered device
+      A powered device that presents one detection signature and one class
+      signature for both pair sets together (:clause:`145.3.5`,
+      :clause:`145.3.6.1`, :clause:`Table 145-26 <145>`, see
+      :doc:`power/poe/power-sourcing`).
+
+   Midspan PSE
+   Midspan
+      Power sourcing equipment placed in the cable between an Ethernet
+      switch and the device it powers, which IEEE 802.3 calls a Midspan PSE.
+      It passes the data through and adds power to the pairs
+      (:clause:`145.2.3`, :clause:`145.4.9`, see :ref:`ebat-pass-through`).
+
+   ebat
+      evampire with the Ethernet data functions removed, on its own die.
+      Its Power over Ethernet and USB Type-C circuits are evampire's.
+      Without LLDP, it requests at most class 3 when it receives Power over
+      Ethernet, and changes the allocation of a powered device it supplies
+      only by classifying it again (see :doc:`ebat/index`).
+
    Return loss
       How much weaker, in decibels, a reflection is than the signal that
       caused it. A port matched to the cable has a high return loss. IEEE

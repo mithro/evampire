@@ -1,0 +1,48 @@
+// Port A on a board built around ebat with no data path: the two wires of
+// each pair are joined, directly or through a part on each wire, and taken
+// to the polarity bridges of the powered-device front end.
+//
+// Fill colours: socket and pairs #ffffff, bridges and front end #fff2cc,
+// ebat #dbe8f5.
+//
+// Positions in inches:
+//   row 1 (y=3.0)  the four pairs of the RJ45 socket
+//   row 2 (y=1.7)  bridges A and B
+//   row 3 (y=0.5)  powered-device front end and ebat
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph pair_joins {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fillcolor="#ffffff",
+           fontname="Helvetica", fontsize=11, width=1.2, height=0.65,
+           fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.8, penwidth=2];
+
+    socket [label="", pos="2.7,3.3!", width=5.8, height=1.5,
+            style="rounded,dashed", color="#888888", fillcolor="none"];
+    socket_label [shape=plaintext, style="", width=5.6, height=0.35,
+            pos="2.7,3.75!", fontsize=10, fontcolor="#555555",
+            label="Port A: RJ45 socket; the two wires of each pair joined,\ndirectly or through a part on each wire"];
+
+    p12 [pos="0.6,3.0!", label="Pins 1, 2"];
+    p36 [pos="2.0,3.0!", label="Pins 3, 6"];
+    p45 [pos="3.4,3.0!", label="Pins 4, 5"];
+    p78 [pos="4.8,3.0!", label="Pins 7, 8"];
+
+    br_a [pos="1.3,1.7!", label="Bridge A\n(Mode A)", fillcolor="#fff2cc"];
+    br_b [pos="4.1,1.7!", label="Bridge B\n(Mode B)", fillcolor="#fff2cc"];
+
+    fe   [pos="1.3,0.5!", label="Powered-device\nfront end", width=1.6,
+          fillcolor="#fff2cc"];
+    ebat [pos="4.1,0.5!", label="ebat", width=1.2, fillcolor="#dbe8f5"];
+
+    p12 -> br_a;
+    p36 -> br_a;
+    p45 -> br_b;
+    p78 -> br_b;
+    br_a -> fe [label="   VDD, VSS"];
+    br_b -> fe [label="VDD, VSS"];
+    ebat -> fe [style=dashed, penwidth=1, dir=both, label="class,\nstatus"];
+}

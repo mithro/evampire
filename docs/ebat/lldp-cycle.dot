@@ -1,0 +1,29 @@
+// The cycle on an ebat pass-through board when port B has demoted the
+// downstream powered device, and the device agrees a higher value over
+// LLDP with the upstream equipment past ebat. Four steps in a loop.
+//
+// Fill colours: steps on port B #fff2cc, steps outside ebat #fbe5d6.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph lldp_cycle {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=2.1, height=0.75, fixedsize=true];
+    edge  [fontname="Helvetica", fontsize=10, arrowsize=0.8];
+
+    classify [pos="0.0,2.0!", label="Port B classifies,\nassigns less than\nthe requested class",
+              fillcolor="#fff2cc"];
+    agree    [pos="3.2,2.0!", label="Device agrees a higher\nvalue over LLDP with\nthe upstream equipment",
+              fillcolor="#fbe5d6"];
+    draw     [pos="3.2,0.5!", label="Device draws more\nthan port B allows",
+              fillcolor="#fbe5d6"];
+    off      [pos="0.0,0.5!", label="Port B's limit\nswitches the port off",
+              fillcolor="#fff2cc"];
+
+    classify -> agree;
+    agree    -> draw;
+    draw     -> off;
+    off      -> classify [label="detect\nagain "];
+}

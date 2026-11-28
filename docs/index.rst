@@ -155,6 +155,9 @@ The chip
    Every requirement the design meets, and the questions still open.
 :doc:`architecture/index`
    The blocks inside evampire and how frames move between them.
+:doc:`ebat/index`
+   ebat, evampire with the Ethernet data functions removed, keeping the
+   same Power over Ethernet and USB Type-C circuits.
 
 .. toctree::
    :maxdepth: 2
@@ -164,6 +167,7 @@ The chip
    Home <self>
    requirements
    architecture/index
+   ebat/index
 
 Data interfaces
 ---------------
