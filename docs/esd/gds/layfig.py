@@ -41,8 +41,15 @@ STYLES = {
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
-    "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD stripes, metal 3 to 5"),
-    "dvssrail": ("#a3d2ca", "#0d5045", "DVSS stripes, metal 3 to 5"),
+    # Stripes are ruled in their net's colour, over the metal 2 they cover.
+    "dvddrail": ("url(#rule-dvdd)", "#6a1c53", "DVDD stripes, metal 3 to 5"),
+    "dvssrail": ("url(#rule-dvss)", "#0d5045", "DVSS stripes, metal 3 to 5"),
+    "dvddm2": ("#eebbdd", "#a02c7d",
+               "DVDD metal 2: 5 strips, under the stripes"),
+    "dvssm2": ("#cfe8e3", "#0d5045", "DVSS pad's metal 2, under the stripes"),
+    "padm2": ("#f4d3cd", "#7d1f14", "PAD net's metal 2, under the stripes"),
+    "idle": ("#a0a0a0", "#555555", "drain of the output NMOS, on PAD: no "
+             "current on the main path"),
     "other": ("#b3b9c0", "#8a9199", "other diffusion"),
     "gate": ("#7d8a2e", "#444d14", "gate"),
     # Figures that pair with the schematic: its wires are black, so metal
@@ -50,7 +57,6 @@ STYLES = {
     "padwire": ("url(#wire)", INK, "PAD net, metal 2"),
     "nextwire": ("url(#wire2)", INK, "protected net"),
     "primdrain": (HOT, "#7d1f14", "primary: drain on the PAD net"),
-    "secpart": (SECONDARY, "#12305f", "secondary: resistor, diode strip"),
 }
 FONT = 14
 # Layers of a figure drawn without colour, from the wells up.
@@ -92,10 +98,10 @@ class Fig:
         x0, y0, _, _ = self.win
         return (self.ox + (gy - y0) * self.s, self.oy + (gx - x0) * self.s)
 
-    def _path(self, geom):
+    def _path(self, geom, holes=True):
         d = []
         for poly in gdskit.parts(geom.normalize()):
-            for ring in [poly.exterior, *poly.interiors]:
+            for ring in [poly.exterior, *(poly.interiors if holes else ())]:
                 pts = [self.px(x, y) for x, y in ring.coords[:-1]]
                 d.append("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
                          + "Z")
@@ -128,13 +134,11 @@ class Fig:
         lay = gdskit.load(self.cell)
         self.geom(lay["poly"].intersection(lay["comp"]), "gate")
 
-    def grey_silicon(self, named=False):
+    def grey_silicon(self):
         """The device layers in greys.
 
         For a figure that pairs with the schematic: colour is then free to
         mark the schematic's parts, and no layer shares a part's colour.
-        With `named`, the legend lists each layer's grey and the N-well
-        has a dashed edge.
         """
         self.wells = False
         self.body[0] = self.body[0].replace(SUB, PAPER)
@@ -145,20 +149,10 @@ class Fig:
             d = self._path(gdskit.clip(geom, self.win))
             if not d:
                 continue
-            # A named N-well has a dashed edge: its grey is near the paper's.
-            edge = ((INK, 1.1, ' stroke-dasharray="4,2"', "4,2")
-                    if named and name == "nwell"
-                    else ("#808080", 0.5, "", None))
-            self.body.append(f'<path d="{d}" fill="{fill}" stroke="{edge[0]}" '
-                             f'stroke-width="{edge[1]}" fill-rule="evenodd"'
-                             f'{edge[2]}/>')
-            if named:
-                self.notes.append(("swatch", (fill, edge[0], edge[3], 1.0),
-                                   STYLES[name][2] + ", in grey"))
-        if not named:
-            self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey; "
-                      "those with no label are not in the schematic",
-                      kind="tint")
+            self.body.append(f'<path d="{d}" fill="{fill}" stroke="#808080" '
+                             'stroke-width="0.5" fill-rule="evenodd"/>')
+        self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey",
+                  kind="tint")
 
     def region(self, window, colour, opacity=0.3, width=3.0):
         """Fill and outline a block of the layout in a schematic colour."""
@@ -172,14 +166,12 @@ class Fig:
         self.over.append(f'<rect {at} fill="none" stroke="{colour}" '
                          f'stroke-width="{width}"/>')
 
-    def outline(self, geom, colour, width=2.0, tint=0.0):
-        """The edge of a geometry, with a tint on the side that is inside."""
-        d = self._path(gdskit.clip(geom, self.win))
+    def outline(self, geom, colour, width=2.0, holes=True):
+        """The edge of a geometry; without `holes`, only its outer edge."""
+        d = self._path(gdskit.clip(geom, self.win), holes)
         if d:
-            self.over.append(
-                f'<path d="{d}" fill="{colour}" fill-opacity="{tint}" '
-                f'fill-rule="evenodd" stroke="{colour}" '
-                f'stroke-width="{width}"/>')
+            self.over.append(f'<path d="{d}" fill="none" stroke="{colour}" '
+                             f'stroke-width="{width}"/>')
 
     # -- annotation -------------------------------------------------------
     def text(self, x, y, s, anchor="middle", size=FONT, fill=INK,
@@ -371,11 +363,14 @@ class Fig:
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
             'stroke-width="1.2"/></pattern>'
             ]
-        for name, line in (("wire", "M0,2.5 H5"), ("wire2", "M2.5,0 V5")):
+        for name, line, ink, w in (("wire", "M0,2.5 H5", INK, 0.9),
+                                   ("wire2", "M2.5,0 V5", INK, 0.9),
+                                   ("rule-dvdd", "M2.5,0 V5", DVDD, 1.3),
+                                   ("rule-dvss", "M2.5,0 V5", DVSS, 1.3)):
             defs.append(
                 f'<pattern id="{name}" width="5" height="5" '
                 f'patternUnits="userSpaceOnUse"><path d="{line}" '
-                f'stroke="{INK}" stroke-width="0.9"/></pattern>')
+                f'stroke="{ink}" stroke-width="{w}"/></pattern>')
         for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
                 f'<marker id="arrow-{name}" viewBox="-1 -1 12 12" refX="7" '
