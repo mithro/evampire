@@ -114,10 +114,14 @@ sweep stops at the current limit as usual, and a failure that looks like a
 hard short is recorded apart from avalanche.
 
 The breakdown voltage is the well voltage at which the well current first
-reaches 1 µA, interpolated between steps. The voltage at 100 nA is
-recorded too. A junction in :term:`avalanche breakdown` passes both levels
-within a volt or two of each other. A wider spacing means the current rose
-gradually, which is leakage and not avalanche (:numref:`fig-hvt-iv`).
+reaches 1 µA. It is interpolated between the two steps either side,
+linearly in voltage against the logarithm of the current. The voltage at
+100 nA is found in the same way and recorded too. A junction in
+:term:`avalanche breakdown` passes both levels within a volt or two of each
+other. A spacing of more than 2 V means the current rose gradually, which
+is leakage and not avalanche (:numref:`fig-hvt-iv`). A sweep that is
+already at 1 µA at its first step above 0 V is recorded as a short or a
+leak, and one that reaches 150 V below 1 µA as no breakdown below 150 V.
 
 .. figure:: hvt-iv.svg
    :name: fig-hvt-iv
@@ -666,14 +670,19 @@ whether a heavily doped P layer lies a few micrometres under the N-wells
 Three terms have fixed meanings. "Near 14 V" is a breakdown voltage
 between 8 V and 25 V, around the published 10 V minimum and 14 V typical
 [HV-GF180-EP-5]_. "Much higher" is above 40 V. Two values are "the same"
-when they differ by less than 15 % or 3 V, whichever is larger. These
-limits are choices. The copies NT20b, NT20c, NW0b, NC0b, NM1_6b, NA0p6b
+when they differ by less than 15 % of the lower one or 3 V, whichever is
+larger. These limits are choices. The copies NT20b, NT20c, NW0b, NC0b, NM1_6b, NA0p6b
 and DT20b
 show whether the spread across a die fits inside them. The same limits apply to the
 ratios of the next section.
 
 The pattern across groups 1 to 3 answers the first question
-(:numref:`tab-hvt-decision`).
+(:numref:`tab-hvt-decision`). Each structure's value is its median over
+the dies. Group 1 is NT1, NT5, and the mean of NT20, NT20b and NT20c,
+which is also the group 1 value that other groups are compared with.
+Group 2 is NW0, as the mean of NW0 and NW0b, then NW1p5, NW3 and NW6.
+Group 3 is the mean of NA0p6 and NA0p6b. The last row of the table is
+checked first and, if it matches, decides.
 
 .. list-table:: Measured patterns and the surface P-well each selects
    :name: tab-hvt-decision
@@ -704,8 +713,7 @@ The pattern across groups 1 to 3 answers the first question
      - Any
      - Drawing any P-well stops the generation in that structure. A
        distant drawn P-well is then itself a way to clear the edge
-   * - No knee, or a value still rising between ring distances of 10 µm
-       and 20 µm
+   * - No knee on most dies, or NA0p6 higher than NA0p6T10
      - Any
      - Any
      - Not avalanche, or the P+ ring is reached first: see
@@ -720,8 +728,13 @@ value near 14 V there would disagree with the model as well.
 
 The second question is answered by breakdown voltages only if some N-well
 edge is clear of P-well, under An or B (:numref:`tab-hvt-deep`). Under A
-every N-well breaks down at its surface first. The capacitance of the
-large wells answers it in every case.
+every N-well breaks down at its surface first. Under An the plate on a
+plain N-well is limited by P-well, so the plate under NAT, NAM1_6, takes
+its place in the first row. The capacitance of the large wells answers the
+question in every case. Of the breakdown measurements, the first and third
+rows decide: one structure above the range of its D prediction selects L,
+and otherwise the ratio of the first row selects the answer it agrees
+with, within 15 %.
 
 .. list-table:: Measurements that show a deep P layer under the N-wells
    :name: tab-hvt-deep
@@ -731,8 +744,9 @@ large wells answers it in every case.
    * - Measurement
      - Layer under deep N-well only (L)
      - Layer under the whole wafer (D)
-   * - Mean of NM1_6 and NM1_6b divided by the mean of NT20, NT20b and
-       NT20c
+   * - Under B, the mean of NM1_6 and NM1_6b divided by the mean of NT20,
+       NT20b and NT20c. Under An, NAM1_6 divided by the mean of NA0p6 and
+       NA0p6b
      - Above 1 by the predicted ratio (:numref:`tab-hvt-pred-band`)
      - 1: the plate adds nothing
    * - Breakdown of the other N-wells with plates or rings, against the
@@ -769,9 +783,11 @@ two ways (:numref:`tab-hvt-pred-band`).
 
 The first and main comparison is a ratio. The measured breakdown voltage
 of a structure is divided by that of its reference structure on the same
-die, chosen by the selected assumption (:numref:`tab-hvt-refs`). The same
-ratio is formed from the predictions, and the structure agrees when the
-two ratios are within 15 % of each other. A ratio cancels most of the
+die, chosen by the selected assumption (:numref:`tab-hvt-refs`). The
+measured ratio is the median of these ratios over the dies that have both
+structures. The same ratio is formed from the predictions, and the
+structure agrees when the measured ratio lies between 0.85 and 1.15 times
+the predicted one. A ratio cancels most of the
 error of the ionisation coefficients, as long as both structures lie in
 the same regime.
 
@@ -813,7 +829,9 @@ and above it is 15 % down and 25 % up. The rule and its widths are
 choices, set by the direction of the model's error in each regime.
 
 The measured value used is the median over the dies, from the first
-sweep, at 1 µA. A structure outside its range is reported with the
+sweep at 25 °C, at 1 µA. A short is left out. A die without breakdown
+counts at the highest voltage it reached, and the median is then a lower
+bound if half the dies or more had none. A structure outside its range is reported with the
 direction and size of the difference. Differences in one direction across
 a group point to a wrong profile or oxide charge, which the capacitance
 and gated-diode results then correct. A difference on one structure alone
@@ -832,6 +850,62 @@ value above it is expected. :numref:`tab-hvt-mc-radius` gives the
 sensitivity of the square-corner section to its radius. The C series,
 with the photographs of the avalanche light, shows how large each
 difference is.
+
+.. _hvt-analysis:
+
+Analysis script
+---------------
+
+The script ``docs/high-voltage/test-die/analyse.py`` performs the
+reduction and the comparison from the records of :numref:`tab-hvt-record`
+(:numref:`fig-hvt-analysis`). It reads every CSV file under the folder it
+is given and writes a report in Markdown:
+
+.. code-block:: sh
+
+   uv run python docs/high-voltage/test-die/analyse.py MEASUREMENTS --out report.md
+
+.. figure:: hvt-analysis.svg
+   :name: fig-hvt-analysis
+   :alt: Flow of six steps. 1, the sweep records, one CSV file per sweep.
+         2, the breakdown voltage of each die, from the first sweep at
+         25 °C, at 1 µA and at 100 nA. 3, the median over the dies, with
+         the spread, shorts left out. 4, the decision: A, An or B, and L or
+         D, or undecided. 5, the comparison: the ratio to the reference
+         structure and the agreement range. 6, the report, with the
+         verdicts, the P3 and P5 results and the inconclusive items.
+
+   Steps of the analysis script from the records to the report.
+
+The report opens with the decision of :numref:`tab-hvt-decision` and
+:numref:`tab-hvt-deep`, or the reason it is undecided, and the values
+behind it. One row per structure then gives the median, the number of
+dies, the spread, the reference, the measured and predicted ratios with
+their verdict, and the agreement range with the absolute verdict. The
+punch-through voltages of P3 and P5 follow beside their predictions,
+since no agreement rule is set for them. The report ends with the
+inconclusive items of :numref:`tab-hvt-inconclusive` that the records show,
+and with any file it could not use.
+
+The script takes the reference structures, the predicted ratios, the
+bands and the agreement ranges from the code that writes the tables of
+:ref:`hv-test-predictions`, so the two cannot differ. ``--family`` compares
+under a family named by hand, for instance when the decision is
+undecided. It reads P2 records and the plate sweeps of P4, and checks
+them, but does not reduce them. Its exit status is 0 whatever the
+comparison shows, and 2 when a record cannot be read, with the file and
+row named.
+
+``--example DIR`` writes a synthetic set of records under BL, so that the
+script can be tried without silicon. Those files are not measurements:
+each is an ideal diode at the predicted voltage with a spread of 3 %
+between dies. ``test_analyse.py`` runs the script on such sets under five
+families and checks that it recovers each one:
+
+.. code-block:: sh
+
+   uv run python docs/high-voltage/test-die/analyse.py --example DIR
+   uv run --with pytest pytest docs/high-voltage/test-die/test_analyse.py
 
 Distinguishable outcomes
 ------------------------
@@ -904,8 +978,18 @@ reel on which the bare dies arrive [HV-WS-SITE]_. Dies from one position
 may be neighbours on the wafer, and would understate the spread.
 
 Each bias point is one row of a CSV file with the columns of
-:numref:`tab-hvt-record`. One file holds one sweep. A separate file per
-session records the instruments, their settings and the probe positions.
+:numref:`tab-hvt-record`, in the order measured. One file holds one sweep
+and is named ``DIE.STRUCTURE.PROCEDURE.SWEEP.csv``, for example
+``R03.NT20.P1.1.csv``, with the values of its own columns. A die
+identifier holds letters, digits and hyphens only. A separate file per
+session records the instruments, their settings, the probe positions and
+the position of each die on the reel.
+
+Every file has all the columns, with a header row. Values are in the
+units the names give. A cell that does not apply is left empty. A current
+is positive when it flows from the instrument into the pad. The
+comparison uses magnitudes, so an instrument with the opposite convention
+gives the same result.
 
 .. list-table:: Columns of a measurement record
    :name: tab-hvt-record
@@ -915,17 +999,21 @@ session records the instruments, their settings and the probe positions.
    * - Column
      - Content
    * - ``die``
-     - Identifier of the die, and its position on the reel
+     - Identifier of the die
    * - ``structure``
      - Name of the structure, as on the die
    * - ``procedure``
      - P1 to P5
    * - ``sweep``
-     - Index of the sweep on that structure, from 1, and its direction
+     - Index of the sweep of that procedure on that structure and die,
+       from 1, in the order made at every temperature
+   * - ``direction``
+     - ``up`` or ``down``
    * - ``temperature_c``
      - Chuck temperature
    * - ``v_well_v``, ``i_well_a``
-     - Voltage and current at the well pad
+     - Voltage of the well pad against the substrate pads, and the current
+       at the well pad. In P2 the voltage is the reverse bias
    * - ``i_sub_a``
      - Current at the substrate pads
    * - ``v_aux_v``, ``i_aux_a``
@@ -934,6 +1022,13 @@ session records the instruments, their settings and the probe positions.
      - Capacitance, dissipation factor and frequency, for P2
    * - ``time_s``
      - Time since the start of the sweep
+
+A procedure needs some cells in every row: P1 the well voltage and
+current; P2 the bias, capacitance, dissipation factor and frequency; P3
+also the ring voltage; P4 also the plate voltage and current; P5 the
+well, substrate and ring currents. The first sweep at 25 °C is the lowest
+index whose temperature lies between 20 °C and 30 °C, and the third is the
+third such sweep. A sweep between 80 °C and 90 °C counts as one at 85 °C.
 
 Safety
 ------
@@ -969,10 +1064,10 @@ check for each (:numref:`tab-hvt-inconclusive`).
        ten times the OPEN current at that voltage
    * - Depletion region reaches the P+ ring
      - Breakdown voltage still rising between ring distances of 10 µm and
-       20 µm
-     - The T series. The value at 20 µm is then a lower bound for the
-       other structures, which share that distance. No plain well has a
-       ring further away
+       20 µm: NA0p6 holds more than NA0p6T10. The plain wells have no ring
+       at 10 µm
+     - The value at 20 µm is then a lower bound for the other structures,
+       which share that distance. No plain well has a ring further away
    * - Charge trapped in the oxide
      - Walk-out between the first and third sweep
      - Both values reported. The first sweep on a fresh die is the one
