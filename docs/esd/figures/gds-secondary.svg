@@ -2,8 +2,8 @@
 <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#c4c4c4"/><circle cx="2.5" cy="2.5" r="1.1" fill="#4a4a4a"/></pattern><pattern id="wire" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0,2.5 H5" stroke="#222222" stroke-width="0.9"/></pattern><pattern id="wire2" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#222222" stroke-width="0.9"/></pattern><marker id="arrow-hot" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker><marker id="arrow-snap" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker></defs>
 <rect width="1031" height="1045" fill="#ffffff"/>
 <rect x="178.0" y="126.0" width="658.0" height="448.0" fill="#fafafa"/>
-<path d="M585.1,137.8L624.0,137.8L813.0,137.8L813.0,562.2L713.2,562.2L713.2,571.2L713.2,574.0L629.5,574.0L629.5,571.2L629.5,562.2L585.1,562.2ZM624.0,176.7L624.0,523.3L774.1,523.3L774.1,176.7ZM398.2,175.3L546.8,175.3L546.8,524.7L398.2,524.7ZM208.9,137.8L359.9,137.8L359.9,562.2L208.9,562.2Z" fill="#ededed" stroke="#808080" stroke-width="0.5" fill-rule="evenodd"/>
-<path d="M630.5,181.2L643.3,181.2L754.9,181.2L767.6,181.2L767.6,182.4L767.6,198.2L767.6,517.7L767.6,518.8L754.9,518.8L643.3,518.8L630.5,518.8L630.5,517.7L630.5,198.2L630.5,182.4ZM713.0,198.2L713.0,202.1L713.0,497.9L713.0,501.8L750.5,501.8L750.5,497.9L750.5,202.1L750.5,198.2ZM647.6,198.2L647.6,202.1L647.6,497.9L647.6,501.8L685.2,501.8L685.2,497.9L685.2,202.1L685.2,198.2ZM364.3,175.4L391.6,175.4L391.6,524.7L391.6,529.1L553.3,529.1L553.3,524.7L553.3,175.4L580.6,175.4L580.6,524.7L580.6,529.1L580.6,556.4L364.3,556.4L364.3,529.1L364.3,524.7ZM364.3,143.6L580.6,143.6L580.6,170.9L580.6,175.3L553.3,175.3L553.3,170.9L391.6,170.9L391.6,175.3L364.3,175.3L364.3,170.9ZM498.2,210.0L512.2,210.0L512.2,490.0L498.2,490.0ZM432.8,210.0L446.8,210.0L446.8,490.0L432.8,490.0Z" fill="#d2d2d2" stroke="#808080" stroke-width="0.5" fill-rule="evenodd"/>
+<path d="M585.1,137.8L624.0,137.8L813.0,137.8L813.0,562.2L713.2,562.2L713.2,571.2L713.2,574.0L629.5,574.0L629.5,571.2L629.5,562.2L585.1,562.2ZM624.0,176.7L624.0,523.3L774.1,523.3L774.1,176.7ZM398.2,175.3L546.8,175.3L546.8,524.7L398.2,524.7ZM208.9,137.8L359.9,137.8L359.9,562.2L208.9,562.2Z" fill="#e2e2e2" stroke="#808080" stroke-width="0.5" fill-rule="evenodd"/>
+<path d="M630.5,181.2L643.3,181.2L754.9,181.2L767.6,181.2L767.6,182.4L767.6,198.2L767.6,517.7L767.6,518.8L754.9,518.8L643.3,518.8L630.5,518.8L630.5,517.7L630.5,198.2L630.5,182.4ZM713.0,198.2L713.0,202.1L713.0,497.9L713.0,501.8L750.5,501.8L750.5,497.9L750.5,202.1L750.5,198.2ZM647.6,198.2L647.6,202.1L647.6,497.9L647.6,501.8L685.2,501.8L685.2,497.9L685.2,202.1L685.2,198.2ZM364.3,175.4L391.6,175.4L391.6,524.7L391.6,529.1L553.3,529.1L553.3,524.7L553.3,175.4L580.6,175.4L580.6,524.7L580.6,529.1L580.6,556.4L364.3,556.4L364.3,529.1L364.3,524.7ZM364.3,143.6L580.6,143.6L580.6,170.9L580.6,175.3L553.3,175.3L553.3,170.9L391.6,170.9L391.6,175.3L364.3,175.3L364.3,170.9ZM498.2,210.0L512.2,210.0L512.2,490.0L498.2,490.0ZM432.8,210.0L446.8,210.0L446.8,490.0L432.8,490.0Z" fill="#c6c6c6" stroke="#808080" stroke-width="0.5" fill-rule="evenodd"/>
 <path d="M404.0,181.2L416.7,181.2L528.3,181.2L541.0,181.2L541.0,182.4L541.0,198.2L541.0,517.7L541.0,518.8L528.3,518.8L416.7,518.8L404.0,518.8L404.0,517.7L404.0,198.2L404.0,182.4ZM486.4,198.2L486.4,202.1L486.4,497.9L486.4,501.8L523.9,501.8L523.9,497.9L523.9,202.1L523.9,198.2ZM421.0,198.2L421.0,202.1L421.0,497.9L421.0,501.8L458.6,501.8L458.6,497.9L458.6,202.1L458.6,198.2ZM590.9,175.4L618.2,175.4L618.2,524.7L618.2,529.1L779.9,529.1L779.9,524.7L779.9,175.4L807.2,175.4L807.2,524.7L807.2,529.1L807.2,556.4L590.9,556.4L590.9,529.1L590.9,524.7ZM214.8,175.4L242.0,175.4L242.0,524.7L242.0,529.1L326.8,529.1L326.8,524.7L326.8,175.4L354.0,175.4L354.0,524.7L354.0,529.1L354.0,556.4L214.8,556.4L214.8,529.1L214.8,524.7ZM590.9,143.6L807.2,143.6L807.2,170.9L807.2,175.3L779.9,175.3L779.9,170.9L618.2,170.9L618.2,175.3L590.9,175.3L590.9,170.9ZM214.8,143.6L354.0,143.6L354.0,170.9L354.0,175.3L326.8,175.3L326.8,170.9L242.0,170.9L242.0,175.3L214.8,175.3L214.8,170.9ZM724.8,210.0L738.8,210.0L738.8,490.0L724.8,490.0ZM659.4,210.0L673.4,210.0L673.4,490.0L659.4,490.0Z" fill="url(#dots)" stroke="#808080" stroke-width="0.5" fill-rule="evenodd"/>
 <path d="M257.7,397.6L311.1,397.6L311.1,432.6L257.7,432.6ZM257.7,354.2L311.1,354.2L311.1,389.2L257.7,389.2ZM257.7,310.8L311.1,310.8L311.1,345.8L257.7,345.8ZM257.7,267.4L311.1,267.4L311.1,302.4L257.7,302.4Z" fill="#7c7c7c" stroke="#808080" stroke-width="0.5" fill-rule="evenodd"/>
 <path d="M250.0,267.2L262.6,267.2L262.6,432.7L250.0,432.7L250.0,364.0L178.0,364.0L178.0,336.0L250.0,336.0Z" fill="url(#wire)" stroke="#222222" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -67,15 +67,15 @@
 <text x="166.0" y="205.0" text-anchor="end" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">N+ ring in an N-well,</text>
 <text x="166.0" y="221.8" text-anchor="end" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">on DVDD, round the</text>
 <text x="166.0" y="238.6" text-anchor="end" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">resistors</text>
-<polyline points="172.0,482.9 375.4,483.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="172.0,482.9 375.4,483.0" fill="none" stroke="#666666" stroke-width="1.3"/>
-<circle cx="375.4" cy="483.0" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
+<polyline points="172.0,482.9 383.8,537.6" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="172.0,482.9 383.8,537.6" fill="none" stroke="#666666" stroke-width="1.3"/>
+<circle cx="383.8" cy="537.6" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
 <text x="166.0" y="471.0" text-anchor="end" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">outer P+ ring, on</text>
 <text x="166.0" y="487.8" text-anchor="end" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">DVSS, round the</text>
 <text x="166.0" y="504.6" text-anchor="end" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">diode to DVDD</text>
-<polyline points="842.0,483.3 789.8,483.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="842.0,483.3 789.8,483.0" fill="none" stroke="#666666" stroke-width="1.3"/>
-<circle cx="789.8" cy="483.0" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
+<polyline points="842.0,483.3 784.2,537.6" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="842.0,483.3 784.2,537.6" fill="none" stroke="#666666" stroke-width="1.3"/>
+<circle cx="784.2" cy="537.6" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
 <text x="848.0" y="463.0" text-anchor="start" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">outer N+ ring in</text>
 <text x="848.0" y="479.8" text-anchor="start" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">an N-well, on DVDD,</text>
 <text x="848.0" y="496.6" text-anchor="start" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">round the diode</text>
@@ -94,7 +94,7 @@
 <line x1="731.0" y1="589.0" x2="666.3" y2="476.0" stroke="#1f4e9c" stroke-width="1.3"/>
 <circle cx="666.3" cy="476.0" r="3.2" fill="#1f4e9c" stroke="#fff" stroke-width="1"/>
 <text x="731.0" y="604.0" text-anchor="middle" font-size="14" fill="#1f4e9c" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">40 µm² diode from DVSS: 2 N+ strips of</text>
-<text x="731.0" y="620.8" text-anchor="middle" font-size="14" fill="#1f4e9c" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">20 µm × 1 µm in substrate held on</text>
+<text x="731.0" y="620.8" text-anchor="middle" font-size="14" fill="#1f4e9c" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">20 µm × 1 µm in P-type silicon held on</text>
 <text x="731.0" y="637.6" text-anchor="middle" font-size="14" fill="#1f4e9c" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">DVSS by the P+ guard ring round them</text>
 <text x="178.0" y="18.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">gf180mcu_fd_io__bi_t: the secondary protection</text>
 <rect x="178.0" y="660.0" width="70.0" height="6" fill="#222222"/>
@@ -105,21 +105,21 @@
 <rect x="313.6" y="681.0" width="26" height="14" fill="#fafafa"/>
 <rect x="313.6" y="681.0" width="26" height="14" fill="#1f4e9c" stroke="#12305f" opacity="0.85"/>
 <text x="347.6" y="693.0" font-size="14" fill="#222222">secondary: resistor, diode strip</text>
-<rect x="313.6" y="705.0" width="26" height="14" fill="#ededed" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
+<rect x="313.6" y="705.0" width="26" height="14" fill="#e2e2e2" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
 <text x="347.6" y="717.0" font-size="14" fill="#222222">N-well, in grey</text>
-<rect x="313.6" y="729.0" width="26" height="14" fill="#d2d2d2" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
+<rect x="313.6" y="729.0" width="26" height="14" fill="#c6c6c6" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
 <text x="347.6" y="741.0" font-size="14" fill="#222222">P+ diffusion, in grey</text>
 <rect x="313.6" y="753.0" width="26" height="14" fill="url(#dots)" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
 <text x="347.6" y="765.0" font-size="14" fill="#222222">N+ diffusion, in grey</text>
 <rect x="313.6" y="777.0" width="26" height="14" fill="#7c7c7c" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
-<text x="347.6" y="789.0" font-size="14" fill="#222222">polysilicon, in grey</text>
+<text x="347.6" y="789.0" font-size="14" fill="#222222">polysilicon, in grey: the resistors' ends</text>
 <rect x="313.6" y="801.0" width="26" height="14" fill="url(#wire)" fill-opacity="1.0" stroke="#222222" stroke-width="2"/>
 <text x="347.6" y="813.0" font-size="14" fill="#222222">PAD net, metal 2</text>
 <rect x="313.6" y="825.0" width="26" height="14" fill="url(#wire2)" fill-opacity="1.0" stroke="#222222" stroke-width="2"/>
-<text x="347.6" y="837.0" font-size="14" fill="#222222">wire after the 110 Ω: metal 1 and 2, with openings</text>
+<text x="347.6" y="837.0" font-size="14" fill="#222222">protected net, after the 110 Ω: metal 1 and 2, with openings</text>
 <rect x="313.6" y="849.0" width="26" height="14" fill="#fafafa" fill-opacity="1.0" stroke="#808080" stroke-width="2"/>
-<text x="347.6" y="861.0" font-size="14" fill="#222222">P substrate, no well</text>
-<text x="313.6" y="885.0" font-size="14" fill="#222222">the diode strips lie under the metal</text>
+<text x="347.6" y="861.0" font-size="14" fill="#222222">P-type silicon, no N-well</text>
+<text x="313.6" y="885.0" font-size="14" fill="#222222">the blue strips are drawn over the metal that covers them</text>
 <text x="313.6" y="909.0" font-size="14" fill="#222222">contacts and vias: not drawn</text>
 <text x="313.6" y="933.0" font-size="14" font-weight="bold" fill="#666666">Abc</text>
 <text x="347.6" y="933.0" font-size="14" fill="#222222">not in the schematic</text>
