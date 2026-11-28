@@ -1,0 +1,35 @@
+// The five ways a power sourcing equipment port changes the power of a
+// powered device: what each changes, whether it removes the power, and
+// whether it needs LLDP. One box per way, stacked so that the figure stays
+// narrow enough to read on a phone, with a colour key at the top.
+//
+// Fill colours: stays powered #e2f0d9, one pair set unpowered #fff2cc,
+// power removed #fbe5d6.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph allocation_ways {
+    graph [layout=neato, splines=false, overlap=true, outputorder=nodesfirst,
+           fontname="Helvetica"];
+    node  [shape=box, style="rounded,filled", fontname="Helvetica",
+           fontsize=11, width=3.6, height=0.75, fixedsize=true];
+
+    // Colour key.
+    key_on   [pos="-1.2,0.9!", width=1.1, height=0.4, fontsize=9,
+              label="stays powered", fillcolor="#e2f0d9"];
+    key_half [pos="0.0,0.9!", width=1.1, height=0.4, fontsize=9,
+              label="one pair set\nunpowered", fillcolor="#fff2cc"];
+    key_off  [pos="1.2,0.9!", width=1.1, height=0.4, fontsize=9,
+              label="power removed", fillcolor="#fbe5d6"];
+
+    lldp [pos="0,0!", fillcolor="#e2f0d9",
+          label=<<b>By LLDP</b><br/>changes the allocation in 0.1 W steps<br/><font point-size="10">needs LLDP</font>>];
+    reclass [pos="0,-0.95!", fillcolor="#fbe5d6",
+          label=<<b>By classifying again</b><br/>changes the class, only for class 4 or higher<br/><font point-size="10">no LLDP</font>>];
+    auto [pos="0,-1.9!", fillcolor="#fbe5d6",
+          label=<<b>By Autoclass</b><br/>lowers the allocation to the measured draw<br/><font point-size="10">at the next power-up; no LLDP; single-signature</font>>];
+    pair [pos="0,-2.85!", fillcolor="#fff2cc",
+          label=<<b>By powering one pair set</b><br/>removes one pair set's class power<br/><font point-size="10">no LLDP; dual-signature</font>>];
+    refuse [pos="0,-3.8!", fillcolor="#fbe5d6",
+          label=<<b>By refusing power</b><br/>no power<br/><font point-size="10">no LLDP</font>>];
+}
