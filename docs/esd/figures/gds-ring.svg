@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1056" height="1040" viewBox="0 0 1056 1040" font-family="sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1056" height="1108" viewBox="0 0 1056 1108" font-family="sans-serif">
 <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#c4c4c4"/><circle cx="2.5" cy="2.5" r="1.1" fill="#4a4a4a"/></pattern><pattern id="wire" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0,2.5 H5" stroke="#222222" stroke-width="0.9"/></pattern><pattern id="wire2" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#222222" stroke-width="0.9"/></pattern><marker id="arrow-hot" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker><marker id="arrow-snap" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker></defs>
-<rect width="1056" height="1040" fill="#ffffff"/>
+<rect width="1056" height="1108" fill="#ffffff"/>
 <rect x="20.0" y="104.0" width="821.4" height="555.0" fill="#dbe8f5"/>
 <path d="M515.9,104.0L571.2,104.0L571.3,104.0L571.3,104.0L571.8,104.2L572.3,104.3L572.9,104.3L573.4,104.3L574.0,104.3L574.5,104.2L575.0,104.0L575.0,104.0L575.1,104.0L630.4,104.0L630.5,104.0L630.5,104.0L631.0,104.2L631.5,104.3L632.1,104.3L632.6,104.3L633.2,104.3L633.7,104.2L634.2,104.0L634.2,104.0L634.3,104.0L689.6,104.0L689.7,104.0L689.7,104.0L690.2,104.2L690.7,104.3L691.3,104.3L691.8,104.3L692.4,104.3L692.9,104.2L693.4,104.0L693.4,104.0L693.5,104.0L748.8,104.0L748.9,104.0L748.9,104.1L748.9,381.4L748.9,381.5L748.8,381.5L693.5,381.5L693.4,381.5L693.4,381.5L692.9,381.3L692.4,381.2L691.8,381.2L691.3,381.2L690.7,381.2L690.2,381.3L689.7,381.5L689.7,381.5L689.6,381.5L634.3,381.5L634.2,381.5L634.2,381.5L633.7,381.3L633.2,381.2L632.6,381.2L632.1,381.2L631.5,381.2L631.0,381.3L630.5,381.5L630.5,381.5L630.4,381.5L575.1,381.5L575.0,381.5L575.0,381.5L574.5,381.3L574.0,381.2L573.4,381.2L572.9,381.2L572.3,381.2L571.8,381.3L571.3,381.5L571.3,381.5L571.2,381.5L515.9,381.5L515.8,381.5L515.8,381.4L515.8,104.1L515.8,104.0ZM782.3,104.0L808.0,104.0L808.1,104.0L808.1,104.0L808.6,104.2L809.1,104.3L809.7,104.3L810.2,104.3L810.8,104.3L811.3,104.2L811.8,104.0L811.8,104.0L811.9,104.0L841.4,104.0L841.4,381.5L811.9,381.5L811.8,381.5L811.8,381.5L811.3,381.3L810.8,381.2L810.2,381.2L809.7,381.2L809.1,381.2L808.6,381.3L808.1,381.5L808.1,381.5L808.0,381.5L782.3,381.5L782.2,381.5L782.2,381.4L782.2,104.1L782.2,104.0ZM456.7,104.0L482.4,104.0L482.5,104.0L482.5,104.1L482.5,381.4L482.5,381.5L482.4,381.5L456.7,381.5L456.6,381.5L456.6,381.4L456.6,104.1L456.6,104.0Z" fill="#dfa8cc" stroke="#6a1c53" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M752.7,104.0L778.4,104.0L778.5,104.0L778.5,104.1L778.5,105.3L778.5,106.0L778.6,106.2L778.6,106.2L778.6,106.5L778.6,106.6L778.6,110.4L778.6,110.5L778.6,110.8L778.6,110.8L778.5,111.0L778.5,111.7L778.5,114.2L778.5,114.9L778.6,115.1L778.6,115.1L778.6,115.4L778.6,115.5L778.6,119.3L778.6,119.4L778.6,119.7L778.6,119.7L778.5,119.9L778.5,120.6L778.5,135.1L778.5,135.8L778.6,136.0L778.6,136.0L778.6,136.3L778.6,136.4L778.6,142.8L778.6,143.0L778.6,143.2L778.6,143.2L778.5,143.5L778.5,144.1L778.5,341.0L778.5,341.7L778.6,341.9L778.6,341.9L778.6,342.2L778.6,342.3L778.6,348.7L778.6,348.8L778.6,349.1L778.6,349.1L778.5,349.3L778.5,350.0L778.5,381.4L778.5,381.5L778.4,381.5L752.7,381.5L752.6,381.5L752.6,381.4L752.6,104.1L752.6,104.0ZM279.1,104.0L334.4,104.0L334.5,104.0L334.5,104.0L335.0,104.2L335.5,104.3L336.1,104.3L336.6,104.3L337.2,104.3L337.7,104.2L338.2,104.0L338.2,104.0L338.3,104.0L393.6,104.0L393.7,104.0L393.7,104.0L394.2,104.2L394.7,104.3L395.3,104.3L395.8,104.3L396.4,104.3L396.9,104.2L397.4,104.0L397.4,104.0L397.5,104.0L452.8,104.0L452.9,104.0L452.9,104.1L452.9,381.4L452.9,381.5L452.8,381.5L397.5,381.5L397.4,381.5L397.4,381.5L396.9,381.3L396.4,381.2L395.8,381.2L395.3,381.2L394.7,381.2L394.2,381.3L393.7,381.5L393.7,381.5L393.6,381.5L338.3,381.5L338.2,381.5L338.2,381.5L337.7,381.3L337.2,381.2L336.6,381.2L336.1,381.2L335.5,381.2L335.0,381.3L334.5,381.5L334.5,381.5L334.4,381.5L279.1,381.5L279.0,381.5L279.0,381.4L279.0,104.1L279.0,104.0ZM486.3,104.0L512.0,104.0L512.1,104.0L512.1,104.1L512.1,364.9L512.1,365.6L512.2,366.0L512.2,366.1L512.2,366.3L512.2,370.0L512.2,370.2L512.2,370.3L512.1,370.7L512.1,371.4L512.1,381.4L512.1,381.5L512.0,381.5L486.3,381.5L486.2,381.5L486.2,381.4L486.2,104.1L486.2,104.0Z" fill="#a3d2ca" stroke="#0d5045" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -24,19 +24,22 @@
 <text x="138.4" y="256.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">bidirectional pad cell</text>
 <text x="138.4" y="516.2" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">DVSS bond pad</text>
 <text x="138.4" y="534.2" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">DVSS supply pad cell</text>
+<polyline points="371.5,340.1 371.5,307.5" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="371.5,340.1 371.5,307.5" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="371.5" cy="307.5" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="371.5" y="355.1" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drains of the output NMOS: no current on the main path</text>
 <text x="634.2" y="366.2" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">PMOS drains</text>
 <text x="26.0" y="375.5" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">boundary between the two cells</text>
 <polyline points="227.2,264.2 691.6,264.2 691.6,520.2 338.2,520.2" fill="none" stroke="#fff" stroke-width="8.0" opacity="0.9" stroke-linejoin="round"/>
 <polyline points="227.2,264.2 691.6,264.2 691.6,520.2 338.2,520.2" fill="none" stroke="#c0392b" stroke-width="5.0" stroke-linejoin="round"/>
-<polyline points="671.2,517.7 671.2,544.3" fill="none" stroke="#fff" stroke-width="6.0" opacity="0.9" stroke-linejoin="round"/>
-<polyline points="671.2,517.7 671.2,544.3" fill="none" stroke="#c0392b" stroke-width="3.0" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
-<polyline points="560.2,517.7 560.2,544.3" fill="none" stroke="#fff" stroke-width="6.0" opacity="0.9" stroke-linejoin="round"/>
-<polyline points="560.2,517.7 560.2,544.3" fill="none" stroke="#c0392b" stroke-width="3.0" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
-<polyline points="449.2,517.7 449.2,544.3" fill="none" stroke="#fff" stroke-width="6.0" opacity="0.9" stroke-linejoin="round"/>
-<polyline points="449.2,517.7 449.2,544.3" fill="none" stroke="#c0392b" stroke-width="3.0" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
-<polyline points="338.2,517.7 338.2,544.3" fill="none" stroke="#fff" stroke-width="6.0" opacity="0.9" stroke-linejoin="round"/>
-<polyline points="338.2,517.7 338.2,544.3" fill="none" stroke="#c0392b" stroke-width="3.0" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
+<polyline points="671.2,517.7 671.2,544.3" fill="none" stroke="#fff" stroke-width="7.2" opacity="0.9" stroke-linejoin="round"/>
+<polyline points="671.2,517.7 671.2,544.3" fill="none" stroke="#c0392b" stroke-width="4.2" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
+<polyline points="560.2,517.7 560.2,544.3" fill="none" stroke="#fff" stroke-width="7.2" opacity="0.9" stroke-linejoin="round"/>
+<polyline points="560.2,517.7 560.2,544.3" fill="none" stroke="#c0392b" stroke-width="4.2" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
+<polyline points="449.2,517.7 449.2,544.3" fill="none" stroke="#fff" stroke-width="7.2" opacity="0.9" stroke-linejoin="round"/>
+<polyline points="449.2,517.7 449.2,544.3" fill="none" stroke="#c0392b" stroke-width="4.2" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
+<polyline points="338.2,517.7 338.2,544.3" fill="none" stroke="#fff" stroke-width="7.2" opacity="0.9" stroke-linejoin="round"/>
+<polyline points="338.2,517.7 338.2,544.3" fill="none" stroke="#c0392b" stroke-width="4.2" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
 <polyline points="671.2,545.4 227.2,545.4" fill="none" stroke="#fff" stroke-width="8.0" opacity="0.9" stroke-linejoin="round"/>
 <polyline points="671.2,545.4 227.2,545.4" fill="none" stroke="#c0392b" stroke-width="5.0" stroke-linejoin="round" marker-end="url(#arrow-hot)"/>
 <polyline points="227.2,264.2 515.1,264.2" fill="none" stroke="#fff" stroke-width="8.0" opacity="0.9" stroke-linejoin="round"/>
@@ -53,49 +56,50 @@
 <circle cx="691.6" cy="264.2" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="723.0" y="66.0" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">2  PMOS drain: P+ drain to N-well,</text>
 <text x="723.0" y="82.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">then to the DVDD stripes, metal 3 to 5</text>
-<polyline points="168.0,674.0 264.2,545.4" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="168.0,674.0 264.2,545.4" fill="none" stroke="#222222" stroke-width="1.3"/>
+<polyline points="168.0,720.0 264.2,545.4" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="168.0,720.0 264.2,545.4" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="264.2" cy="545.4" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="168.0" y="689.0" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">5  DVSS metal 2 over the rail</text>
-<text x="168.0" y="705.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">clamp, back to the DVSS bond pad</text>
-<polyline points="575.0,674.0 560.2,533.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="575.0,674.0 560.2,533.2" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="560.2" cy="533.2" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="168.0" y="735.0" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">5  DVSS metal 2 over the rail</text>
+<text x="168.0" y="751.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">clamp, back to the DVSS bond pad</text>
+<polyline points="575.0,674.0 504.7,520.2" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="575.0,674.0 504.7,520.2" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="504.7" cy="520.2" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="575.0" y="689.0" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">4  Rail clamp: along a DVDD metal 2 strip (one of five is</text>
-<text x="575.0" y="705.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drawn), then across the NMOS of each block to the DVSS metal 2</text>
+<text x="575.0" y="705.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drawn), then across the NMOS of each orange block to the DVSS metal 2</text>
 <polyline points="849.4,411.9 691.6,400.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="849.4,411.9 691.6,400.0" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="691.6" cy="400.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="855.4" y="400.0" text-anchor="start" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">3  Along the DVDD rail</text>
+<text x="855.4" y="400.0" text-anchor="start" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">3  Along the DVDD stripes</text>
 <text x="855.4" y="416.8" text-anchor="start" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">into the DVSS supply</text>
 <text x="855.4" y="433.6" text-anchor="start" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">pad cell</text>
-<rect x="20.0" y="751.0" width="74.0" height="6" fill="#222222"/>
-<text x="102.0" y="759.0" font-size="14" fill="#222222">20 µm</text>
-<rect x="168.0" y="748.0" width="26" height="14" fill="#fafafa"/>
-<rect x="168.0" y="748.0" width="26" height="14" fill="#c0392b" stroke="#7d1f14" opacity="0.6"/>
-<text x="202.0" y="760.0" font-size="14" fill="#222222">PAD net, bond pad</text>
-<rect x="168.0" y="772.0" width="26" height="14" fill="#fafafa"/>
-<rect x="168.0" y="772.0" width="26" height="14" fill="#7d1f14" stroke="#4a0f08" opacity="1.0"/>
-<text x="202.0" y="784.0" font-size="14" fill="#222222">drain on the PAD net</text>
-<rect x="168.0" y="796.0" width="26" height="14" fill="#fafafa"/>
-<rect x="168.0" y="796.0" width="26" height="14" fill="#dfa8cc" stroke="#6a1c53" opacity="1.0"/>
-<text x="202.0" y="808.0" font-size="14" fill="#222222">DVDD, metal 3 to 5</text>
-<rect x="168.0" y="820.0" width="26" height="14" fill="#fafafa"/>
-<rect x="168.0" y="820.0" width="26" height="14" fill="#a3d2ca" stroke="#0d5045" opacity="1.0"/>
-<text x="202.0" y="832.0" font-size="14" fill="#222222">DVSS, metal 3 to 5</text>
-<rect x="168.0" y="844.0" width="26" height="14" fill="#0d5045" fill-opacity="0.28" stroke="#0d5045" stroke-width="2"/>
-<text x="202.0" y="856.0" font-size="14" fill="#222222">DVSS pad's metal 2, under the stripes</text>
-<rect x="168.0" y="868.0" width="26" height="14" fill="#a02c7d" fill-opacity="0.45" stroke="#a02c7d" stroke-width="2"/>
-<text x="202.0" y="880.0" font-size="14" fill="#222222">DVDD metal 2: 5 strips, under the stripes</text>
-<rect x="168.0" y="892.0" width="26" height="14" fill="#7d1f14" fill-opacity="0.28" stroke="#7d1f14" stroke-width="2"/>
-<text x="202.0" y="904.0" font-size="14" fill="#222222">PAD net's metal 2, under the stripes</text>
-<rect x="168.0" y="916.0" width="26" height="14" fill="none" stroke="#e08a00" stroke-width="2"/>
-<text x="202.0" y="928.0" font-size="14" fill="#222222">rail clamp's NMOS, under the metal</text>
-<text x="168.0" y="952.0" font-size="14" fill="#222222">the dashed purple second path, the output NMOS's snapback: not drawn</text>
-<text x="168.0" y="976.0" font-size="14" fill="#222222">the diagram's other three panels: not drawn</text>
-<line x1="168.0" y1="995.0" x2="186.0" y2="995.0" stroke="#c0392b" stroke-width="4"/>
-<path d="M184.0,989.0 L195.0,995.0 L184.0,1001.0 z" fill="#c0392b"/>
-<text x="202.0" y="1000.0" font-size="14" fill="#222222">discharge current</text>
-<line x1="168.0" y1="1019.0" x2="194.0" y2="1019.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<text x="202.0" y="1024.0" font-size="14" fill="#222222">layout continues</text>
+<rect x="20.0" y="795.0" width="74.0" height="6" fill="#222222"/>
+<text x="102.0" y="803.0" font-size="14" fill="#222222">20 µm</text>
+<rect x="168.0" y="792.0" width="26" height="14" fill="#fafafa"/>
+<rect x="168.0" y="792.0" width="26" height="14" fill="#c0392b" stroke="#7d1f14" opacity="0.6"/>
+<text x="202.0" y="804.0" font-size="14" fill="#222222">PAD net, bond pad</text>
+<rect x="168.0" y="816.0" width="26" height="14" fill="#fafafa"/>
+<rect x="168.0" y="816.0" width="26" height="14" fill="#7d1f14" stroke="#4a0f08" opacity="1.0"/>
+<text x="202.0" y="828.0" font-size="14" fill="#222222">drain on the PAD net</text>
+<rect x="168.0" y="840.0" width="26" height="14" fill="#fafafa"/>
+<rect x="168.0" y="840.0" width="26" height="14" fill="#dfa8cc" stroke="#6a1c53" opacity="1.0"/>
+<text x="202.0" y="852.0" font-size="14" fill="#222222">DVDD stripes, metal 3 to 5</text>
+<rect x="168.0" y="864.0" width="26" height="14" fill="#fafafa"/>
+<rect x="168.0" y="864.0" width="26" height="14" fill="#a3d2ca" stroke="#0d5045" opacity="1.0"/>
+<text x="202.0" y="876.0" font-size="14" fill="#222222">DVSS stripes, metal 3 to 5</text>
+<rect x="168.0" y="888.0" width="26" height="14" fill="#0d5045" fill-opacity="0.28" stroke="#0d5045" stroke-width="2"/>
+<text x="202.0" y="900.0" font-size="14" fill="#222222">DVSS pad's metal 2, under the stripes</text>
+<rect x="168.0" y="912.0" width="26" height="14" fill="#a02c7d" fill-opacity="0.45" stroke="#a02c7d" stroke-width="2"/>
+<text x="202.0" y="924.0" font-size="14" fill="#222222">DVDD metal 2: 5 strips, under the stripes</text>
+<rect x="168.0" y="936.0" width="26" height="14" fill="#7d1f14" fill-opacity="0.28" stroke="#7d1f14" stroke-width="2"/>
+<text x="202.0" y="948.0" font-size="14" fill="#222222">PAD net's metal 2, under the stripes</text>
+<rect x="168.0" y="960.0" width="26" height="14" fill="none" stroke="#e08a00" stroke-width="2"/>
+<text x="202.0" y="972.0" font-size="14" fill="#222222">rail clamp's NMOS, under the metal</text>
+<text x="168.0" y="996.0" font-size="14" fill="#222222">the second path, the output NMOS's snapback: not drawn</text>
+<text x="168.0" y="1020.0" font-size="14" fill="#222222">the other three discharges of the paths diagram: not drawn</text>
+<text x="168.0" y="1044.0" font-size="14" fill="#222222">metal 2 is tinted, so colours blend where it lies under a stripe</text>
+<line x1="168.0" y1="1063.0" x2="186.0" y2="1063.0" stroke="#c0392b" stroke-width="4"/>
+<path d="M184.0,1057.0 L195.0,1063.0 L184.0,1069.0 z" fill="#c0392b"/>
+<text x="202.0" y="1068.0" font-size="14" fill="#222222">discharge current</text>
+<line x1="168.0" y1="1087.0" x2="194.0" y2="1087.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="202.0" y="1092.0" font-size="14" fill="#222222">layout continues</text>
 </svg>
