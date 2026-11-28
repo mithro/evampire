@@ -14,6 +14,9 @@ breakdown()   P1, and the second part of P4: the well voltage at which the
 ring_onset()  P3: the well voltage at which the ring reaches 1 V, and the
               step held by the gap at the highest well voltage.
 punch()       P5: the well voltage at which the ring current reaches 1 nA.
+balance()     P1 and P5: how far the current returned by the substrate (and
+              the ring) differs from the well current, above 100 nA.
+gated_levels() P4, first part: the flat-band voltage and field threshold.
 
 analyse.py calls this module. Standard library only.
 
@@ -46,6 +49,9 @@ WALKOUT = 0.5          # V: one step; a larger move from sweep 1 to 3
 OPEN_FACTOR = 10       # a reading counts if ten times the OPEN current
 RING_LEVEL = 1.0       # V: P3, the ring has started to follow
 P5_LEVEL = 1e-9        # A: P5, punch-through
+BALANCE = 0.10         # well and returned currents differ by more: flagged
+BALANCE_FROM = 1e-7    # A: the balance is checked from this well current
+STEP_MIN = 2.0         # P4: a current step smaller than this is not seen
 ROOM = (20.0, 30.0)    # degrees C counted as 25 C
 HOT = (80.0, 90.0)     # degrees C counted as 85 C
 
@@ -217,6 +223,49 @@ def punch(sw):
     pt = crossing(v, sw.amps("i_aux_a"), P5_LEVEL)
     ring, sub = sw.amps("i_aux_a")[-1], sw.amps("i_sub_a")[-1]
     return pt, max(v), "punch-through" if ring >= sub else "avalanche"
+
+
+def balance(sw):
+    """Largest |1 - returned / well| over the rows whose well current is
+    at least BALANCE_FROM, where `returned` is the substrate current (and,
+    in P5, the ring current too); None if not recorded or never reached."""
+    worst = None
+    for r in sw.rows:
+        well = abs(r["i_well_a"] or 0)
+        if well < BALANCE_FROM or r["i_sub_a"] is None:
+            continue
+        back = abs(r["i_sub_a"])
+        if sw.procedure == "P5":
+            back += abs(r["i_aux_a"] or 0)
+        d = abs(1 - back / well)
+        worst = d if worst is None else max(worst, d)
+    return worst
+
+
+def gated_levels(sw):
+    """(flat-band volts or None, threshold volts or None) of a P4 plate
+    sweep: where the well current first rises above the geometric mean of
+    its accumulation level and its peak, and where it then falls below the
+    geometric mean of the peak and its inversion level. Each level is the
+    median of a tenth of the points, at the start and at the end; a step
+    smaller than STEP_MIN times is not resolved."""
+    pts = sorted(zip(sw.col("v_aux_v"), sw.amps("i_well_a")))
+    vs, a = [p[0] for p in pts], [p[1] for p in pts]
+    n = max(3, len(a) // 10)
+    run = [sorted(a[max(0, k - 2):k + 3])[len(a[max(0, k - 2):k + 3]) // 2]
+           for k in range(len(a))]
+    acc, inv = sorted(a[:n])[n // 2], sorted(a[-n:])[n // 2]
+    peak = max(run)
+    if acc <= 0 or peak < STEP_MIN * acc:
+        return None, None
+    k_pk = run.index(peak)
+    up = math.sqrt(acc * peak)
+    vfb = next(vs[k] for k in range(len(a)) if run[k] >= up)
+    if inv <= 0 or peak < STEP_MIN * inv:
+        return vfb, None
+    down = math.sqrt(peak * inv)
+    vt = next((vs[k] for k in range(k_pk, len(a)) if run[k] <= down), None)
+    return vfb, vt
 
 
 def gated_part(sw):
