@@ -193,9 +193,9 @@ def rows():
     (dio,) = [line for line in lines if line.startswith("D")]
     parts = gdskit.parts(lay["comp"].intersection(lay["diode"]))
     (area,) = {round(p.area, 4) for p in parts}
-    add("Diode from DVSS to DVDD", "Count", "", value(dio, "m"), len(parts))
-    add("Diode from DVSS to DVDD", "Area of each", "µm²", value(dio, "AREA") * UM * UM,
-        area)
+    name = "Diode from DVSS to DVDD"
+    add(name, "Count", "", value(dio, "m"), len(parts))
+    add(name, "Area of each", "µm²", value(dio, "AREA") * UM * UM, area)
     return out
 
 
