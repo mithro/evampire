@@ -58,9 +58,9 @@ has each one.
    * - Highest class offered when supplying Power over Ethernet
      - 8
      - 8
-   * - Changing the allocation of a powered device it supplies
-     - Over LLDP, or by classifying again
-     - Only by classifying again
+   * - :ref:`Changing the allocation of a powered device it supplies <poe-allocation-changes>`
+     - Over LLDP, or in the ways that need no LLDP
+     - Only in the ways that need no LLDP
    * - :ref:`USB Type-C dual-role ports with USB Power Delivery <usbpd-two-ports>`
      - Yes
      - Yes, the same

@@ -75,10 +75,11 @@ the power that results:
 * As :term:`power sourcing equipment`, port B assigns a class by Physical
   Layer classification alone, up to class 8, and does not answer LLDP power
   requests.
-* Port B changes the allocation of the powered device it supplies only by
-  removing the power and classifying the device again. The sharing between
-  output ports in :ref:`req-power-bridging` moves power to or from port B
-  only in this way (:ref:`ebat-port-b-allocation`).
+* Port B changes the allocation of the powered device it supplies only in
+  ways that need no LLDP: classifying the device again, Autoclass,
+  powering one pair set of a dual-signature device, or refusing power. The
+  sharing between output ports in :ref:`req-power-bridging` moves power to
+  or from port B only in these ways (:ref:`ebat-port-b-allocation`).
 * With data pass-through on the board, LLDP frames pass between the far
   ends (:ref:`ebat-pass-through-lldp`).
 
