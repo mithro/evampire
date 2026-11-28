@@ -321,11 +321,12 @@ Within this model D is the better supported. The profiles were fitted
 with the layer present, and the N-well's simulated capacitance then stays
 within 4 % of the published model from 0 V to 10 V. Without the layer
 under the N-well it falls too fast, and the gap widens with voltage
-(:numref:`tab-hvt-mc-cap`). These values, and the ceilings of
-:numref:`tab-hvt-cap-sens`, are estimates from a script of the final
-review that no committed record holds. :numref:`tab-hvt-mc-source` gives
-the origin of every value taken from the reviews, with the record where
-one exists.
+(:numref:`tab-hvt-mc-cap`). These values come from the record
+capacitance.json of gf180-tcad, in the depletion approximation on the
+fitted profiles. The ceilings of :numref:`tab-hvt-cap-sens` are estimates
+from a script of the final review that no committed record holds.
+:numref:`tab-hvt-mc-source` gives the origin of every value taken from
+the reviews, with the record where one exists.
 
 .. csv-table:: Simulated N-well capacitance as a fraction of the
                published model, with and without the deep P layer under

@@ -212,7 +212,7 @@ gives for the same well on another die. Under assumption An that is about
 edge on a small well (:numref:`tab-hvt-pred-a`). The bias then comes
 from an external source of 60 V where the meter's own range is lower. The
 sweep reaches at least 10 V on CVN and CVN2 where that limit allows,
-because the layer test below needs 7 V or more. The capacitance is read at
+because the layer test below needs 5 V or more, and is firm from 7 V. The capacitance is read at
 100 kHz and at 1 MHz. The two readings agree, and the dissipation factor
 is below 0.1, when the series resistance of the well and substrate is
 negligible.
@@ -377,12 +377,13 @@ pair: CVN with CVN2, and CVNA2 with CVNA.
    process has the doping of the silicon, and the report gives the
    factor.
 
-The same reduction applied to the published model and to the simulated
-curve under L gives :math:`3.8` to :math:`5.1 \times 10^{15}` and
-:math:`2.9 \times 10^{15}` cm\ :sup:`-3` between 2 V and 5 V
-(:download:`calc.py <calc.py>`, section 5). Both lie inside the range, so
-the substrate doping alone does not answer the question of the deep
-layer.
+The same reduction applied to the published model, and to the simulated
+curves under L and under D, gives :math:`3.8` to
+:math:`5.1 \times 10^{15}`, :math:`2.9` to :math:`3.0 \times 10^{15}`
+and :math:`3.2` to :math:`4.5 \times 10^{15}` cm\ :sup:`-3` between 2 V
+and 5 V (:download:`calc.py <calc.py>`, section 5). All lie inside the
+range, so the substrate doping alone does not answer the question of the
+deep layer.
 
 The sweep also shows whether a heavily doped P layer lies a few
 micrometres under the N-well. Such a layer stops the depletion region from
@@ -425,28 +426,36 @@ cancels:
      - Reverse bias
      - V
 
-Under L the simulation gives :math:`s(10\ \text{V}) = 0.83 / 1.00 =
-0.830`. Under D it gives at least :math:`0.96 / 1.03 = 0.932`, the worst
-case of the 4 % at both ends. The threshold lies half-way:
+Both simulated curves come from the record capacitance.json of
+gf180-tcad (:numref:`tab-hvt-mc-source`). Divided by their values at
+0 V, 1.0043 under both, they give :math:`s(10\ \text{V}) = 0.8301 /
+1.0043 = 0.827` under L and :math:`1.0278 / 1.0043 = 1.023` under D. The
+threshold lies half-way:
 
 .. math::
 
-   s_\text{t}(10\ \text{V}) = \frac{0.830 + 0.932}{2} = 0.881
+   s_\text{t}(10\ \text{V}) = \frac{0.827 + 1.023}{2} = 0.925
 
 A pair whose :math:`s` is at or above the threshold selects D, and one
-below it selects L (:numref:`tab-hvt-layer-rule`). The test uses the
-highest of 10 V and 7 V that the sweep reached. At 5 V the L value, 0.900,
-lies only 0.032 below the D range. An error of 2.5 % in the reading, the
-OPEN subtraction or the separation of the area moves :math:`s` by up to
-0.05, so 5 V gives no call. When CVN and CVN2 and
-CVNA2 and CVNA both give a call and the two differ, the result is
-undecided.
+below it selects L (:numref:`tab-hvt-layer-rule`). An error of 2.5 % in
+the reading, the OPEN subtraction or the separation of the area moves
+:math:`s` by up to 0.05. A bias gives a call only where the two values
+lie at least 0.05 apart. The test uses the highest such bias that the
+sweep reached.
+
+That is 10 V, 7 V or 5 V, where the two lie 0.197, 0.119 and 0.061 apart.
+At 3 V they lie 0.012 apart, so 3 V gives no call. At 5 V each value lies
+only 0.030 from the threshold, less than the error, so a call at 5 V is
+the weakest and stands only when the sweep stops below 7 V. When CVN and
+CVN2 and CVNA2 and CVNA both give a call and the two differ, the result
+is undecided.
 
 The same 0.05 bounds each call. L holds from 0.05 below its simulated
-value up to the threshold, and D from the threshold up to 0.05 above the
-highest D value, :math:`1.03 / 0.96 = 1.073`. At 10 V that is 0.780 to
-0.881 for L and 0.881 to 1.123 for D (:download:`calc.py <calc.py>`,
-section 5). A pair outside both selects neither. Its capacitance then
+value up to the threshold, and D from the threshold up to 0.05 above its
+simulated value. At 10 V that is 0.777 to 0.925 for L and 0.925 to 1.073
+for D (:download:`calc.py <calc.py>`, section 5). The record holds one
+depth of the deep P layer, so the D side carries no allowance for that
+depth. A pair outside both selects neither. Its capacitance then
 falls in a way that no simulated profile gives, such as that of an abrupt
 junction, 0.673 at 10 V, and the deep layer rests on the breakdown ratios
 alone.
@@ -458,24 +467,29 @@ alone.
 
    * - Bias (V)
      - :math:`s` under L
-     - Lowest :math:`s` under D
+     - :math:`s` under D
      - Threshold
      - Neither below or above
-   * - 5
-     - 0.900
-     - 0.932
+   * - 3
+     - 0.946
+     - 0.958
      - None: too close
      - –
+   * - 5
+     - 0.900
+     - 0.961
+     - 0.930
+     - 0.850 or 1.011
    * - 7
-     - 0.870
-     - 0.932
-     - 0.901
-     - 0.820 or 1.123
+     - 0.866
+     - 0.985
+     - 0.925
+     - 0.816 or 1.035
    * - 10
-     - 0.830
-     - 0.932
-     - 0.881
-     - 0.780 or 1.123
+     - 0.827
+     - 1.023
+     - 0.925
+     - 0.777 or 1.073
 
 CVN and CVN2 therefore answer the question by 10 V, even if P-well
 surrounds them and they break down early. CVNA and CVNA2 extend the
@@ -716,16 +730,15 @@ substrate. At :math:`2 \times 10^{15}` cm\ :sup:`-3`:
 The doping :math:`f` comes from P2: the substrate doping it measures,
 divided by the doping that the same reduction finds on the simulated
 curve of the selected deep layer. That is
-:math:`2.85 \times 10^{15}` cm\ :sup:`-3` under L and
-:math:`3.03 \times 10^{15}` under D, against the
+:math:`2.82 \times 10^{15}` cm\ :sup:`-3` under L and
+:math:`2.87 \times 10^{15}` under D, against the
 :math:`3.56 \times 10^{15}` simulated. Dividing cancels the error of the
 reduction, which reads low where the depletion region spreads into the
 graded N-well.
 
-The simulated curve under L is known at 0 V, 1 V, 2 V, 3 V, 5 V, 7 V and
-10 V only (:numref:`tab-hvt-mc-cap`), and is taken as linear between
-them. Under D it is known only to lie within 4 % of the published model,
-so the model itself serves. When P2 gives no doping, the band runs over
+The simulated curves are known at 0 V, 1 V, 2 V, 3 V, 5 V, 7 V and 10 V
+only (:numref:`tab-hvt-mc-cap`), and are taken as linear between them.
+When P2 gives no doping, the band runs over
 the simulated range, :math:`f` from 0.562 to 1.404. The last column of
 :numref:`tab-hvt-pt-range` gives that range for P5. A prediction of no
 punch-through is a bound and is moved in the same way.
@@ -1137,11 +1150,12 @@ breakdown ratios give no answer, the capacitance call stands alone.
        prediction (:numref:`tab-hvt-pred-band`) by more than 15 %
      - Possible
      - Not possible
-   * - Ratio :math:`s` of CVN and CVN2, and of CVNA2 and CVNA, at 7 V or
-       10 V
-     - Below the threshold of :numref:`tab-hvt-layer-rule`, down to
-       0.05 below the L value
-     - At or above it, up to 1.123; outside both, neither
+   * - Ratio :math:`s` of CVN and CVN2, and of CVNA2 and CVNA, at 5 V,
+       7 V or 10 V
+     - Below the threshold of :numref:`tab-hvt-layer-rule`, down to 0.05
+       below the L value
+     - At or above it, up to 0.05 above the D value; outside both,
+       neither
    * - Profile of CVNA and CVNA2 beyond 10 V
      - Reported only: no simulated capacitance
      - Reported only: no simulated capacitance
@@ -1358,8 +1372,8 @@ the file and row named.
 script can be tried without silicon. Those files are not measurements.
 Each breakdown sweep is an ideal diode at the predicted voltage with a
 spread of 3 % between dies. The area capacitance is the published model
-times the simulated ratio of :numref:`tab-hvt-mc-cap`, linear between its
-biases, under L, and the model itself under D.
+times the simulated ratio of :numref:`tab-hvt-mc-cap` under the family's
+deep layer, linear between its biases.
 
 ``test_analyse.py`` runs the script on such sets under five families,
 also with every prediction scaled by 0.7 and by 1.5. It checks that the
@@ -1417,7 +1431,8 @@ structures, and some not at all (:numref:`tab-hvt-tell`).
    * - Deep P layer under N-wells or not, when P-well lies against every
        N-well
      - By capacitance only
-     - CVN and CVN2 at 7 V or 10 V (:numref:`tab-hvt-layer-rule`). No
+     - CVN and CVN2 at 7 V or 10 V, or less firmly at 5 V
+       (:numref:`tab-hvt-layer-rule`). No
        breakdown voltage differs
    * - Under A: P-well in the strip beside NAT, or NAT that blocks
        nothing
@@ -1584,6 +1599,10 @@ Open questions
 * Does the deep P layer, if it exists, lie where the capacitance test
   expects it? No simulated capacitance extends beyond 10 V, so the deeper
   profile of CVNA and CVNA2 has no prediction to meet.
+* How far does the D curve move with the depth of the deep P layer? The
+  ceilings of :numref:`tab-hvt-cap-sens` show that depth to be uncertain,
+  but the capacitance record holds one depth only, so the D side of the
+  test carries no allowance for it beyond the 0.05 of the reading.
 * Under A, does P-well fill the strip beside NAT, or does NAT not block
   it? No structure on the die separates the two.
 * What breakdown voltage does a large well have? It bounds the bias, and
