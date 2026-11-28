@@ -6,7 +6,7 @@
 // stays powered.
 //
 // Fill colours: stays powered #e2f0d9, one pair set unpowered #fff2cc,
-// power removed #fbe5d6.
+// power removed #fbe5d6, depends on the route (Autoclass) #e4dcef.
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -20,7 +20,7 @@ digraph allocation_ways {
              label="By LLDP\nallocation, in 0.1 W steps\nstays powered; needs LLDP"];
     reclass [pos="0,-1.05!", fillcolor="#fbe5d6",
              label="By classifying again\nclass, if requested class is 4 or higher\npower removed; no LLDP"];
-    auto    [pos="0,-2.1!", fillcolor="#fbe5d6",
+    auto    [pos="0,-2.1!", fillcolor="#e4dcef",
              label="By Autoclass\nallocation, to measured draw + margin\nat power-up: power removed; no LLDP\nor on request over LLDP: stays powered"];
     pair    [pos="0,-3.15!", fillcolor="#fff2cc",
              label="By powering one pair set\none pair set's power\nother pair set stays powered; no LLDP"];

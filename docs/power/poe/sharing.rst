@@ -82,8 +82,8 @@ By Autoclass
    a single-signature device that supports
    :ref:`Autoclass <poe-autoclass>`. Without LLDP it acts only at
    power-up, so a device that is already powered loses power first, as
-   when classifying again. Whether port B supports Autoclass is an open
-   question (:doc:`power-sourcing`).
+   when classifying again. Port B can do this if it supports Autoclass
+   (:doc:`power-sourcing`).
 By powering one pair set
    Removes the class power of one pair set of a
    :term:`dual-signature powered device`, which the port classifies and
@@ -100,13 +100,15 @@ By refusing power
    :name: fig-poe-allocation-ways
    :caption: The five ways a power sourcing equipment port changes the
              power of a powered device, what each changes, whether the
-             device stays powered, and whether the way needs LLDP.
+             device stays powered, and whether the way needs LLDP. Green:
+             stays powered; yellow: one pair set unpowered; orange: power
+             removed; purple: depends on the route.
    :alt: Five boxes stacked from top to bottom, each giving the way, what
          it changes, whether the device stays powered and whether LLDP is
          needed. By LLDP, green: the allocation, in 0.1 W steps; stays
          powered; needs LLDP. By classifying again, orange: the class, if
          the requested class is 4 or higher; power removed; no LLDP. By
-         Autoclass, orange: the allocation, to the measured draw plus a
+         Autoclass, purple: the allocation, to the measured draw plus a
          margin; at power-up the power is removed and no LLDP is needed,
          or on request over LLDP the device stays powered. By powering one
          pair set, yellow: one pair set's power; the other pair set stays
@@ -114,12 +116,11 @@ By refusing power
          removed; no LLDP.
    :align: center
 
-A dual-signature device need not work on one pair set. Only a
-single-signature device that requests class 4 or less must work on any
-valid arrangement of pairs, and other devices may need 4-pair power to
-work at their nominal power level (:clause:`145.3.2`). evampire's port B
-can power one pair set of a dual-signature device only if it can power
-both pair sets and supports dual-signature devices, which are open
+A dual-signature device may need both pair sets to work at its nominal
+power level, since only a single-signature device that requests class 4
+or less must work on any valid arrangement of pairs (:clause:`145.3.2`).
+evampire's port B can use this way to lower an allocation only if it can
+power both pair sets and supports dual-signature devices, which are open
 questions (:doc:`basics`, :doc:`power-sourcing`).
 
 Power sourcing equipment may also base its allocation on more than the
