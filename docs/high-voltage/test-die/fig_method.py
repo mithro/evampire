@@ -8,6 +8,7 @@ hvt-gated-iv.svg   well current against plate voltage.
 hvt-order.svg      the order of work.
 hvt-build.svg      the steps from the layout generator to the submission.
 hvt-analysis.svg   the steps of analyse.py from the records to the report.
+hvt-reproduce.svg  the scripts that rebuild each result, with their checks.
 
 The curves are schematic: they show the shapes that the procedures look
 for, not predictions. figures.py calls this module; it writes no files
@@ -280,6 +281,18 @@ def analysis():
     ])
 
 
+def reproduce():
+    return flow("What rebuilds what, and the check of each step", [
+        ("1", "chip.py, export.py", "layout, manifest.json, structures.json"),
+        ("2", "flow.py", "precheck passes; checksum in PRECHECK.txt"),
+        ("3", "gf180-tcad records", "results/hv-junction/*.json"),
+        ("4", "verify.py", "a rerun matches the records"),
+        ("5", "import_predictions.py", "predictions.json, p5.json unchanged"),
+        ("6", "figures.py", "tables and figures unchanged"),
+        ("7", "analyse.py", "measurements against predictions.json"),
+    ])
+
+
 def flow(title, steps):
     w, h = 640, 60 + 46 * len(steps)
     b = [ARROW, text(20, 24, title, anchor="start", weight="bold")]
@@ -299,4 +312,4 @@ FIGURES = {"hvt-conn-p1.svg": p1, "hvt-conn-p2.svg": p2,
            "hvt-conn-p5.svg": p5, "hvt-iv.svg": iv,
            "hvt-ring-follow.svg": ring_follow, "hvt-gated-iv.svg": gated_iv,
            "hvt-order.svg": order, "hvt-build.svg": build,
-           "hvt-analysis.svg": analysis}
+           "hvt-analysis.svg": analysis, "hvt-reproduce.svg": reproduce}
