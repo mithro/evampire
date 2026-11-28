@@ -33,6 +33,7 @@ MID = 4.5    # pad level
 PRIMARY = "#c0392b"
 SECONDARY = "#1f4e9c"
 CLAMP = "#e08a00"
+RC = 19.6     # the clamp timer's column
 
 
 def rails(d, x0, x1):
@@ -56,7 +57,7 @@ def cell_box(d, x0, x1, name):
 
 def main():
     with schemdraw.Drawing(show=False) as d:
-        rails(d, 1.5, 33.6)
+        rails(d, 1.5, 35.4)
 
         # Bond pad.
         corners = [(0, MID - 0.6), (1.2, MID - 0.6), (1.2, MID + 0.6),
@@ -68,14 +69,16 @@ def main():
         d += elm.Dot().at((3.5, MID))
 
         # Primary protection: the output drivers' drain diodes.
-        d += elm.Line().at((3.5, MID)).to((3.5, MID + 0.8))
+        d += elm.Line().at((3.5, MID)).to((3.5, MID + 0.8)).color(PRIMARY)
         d += (elm.Diode().up().at((3.5, MID + 0.8)).to((3.5, TOP))
-              .color(PRIMARY).label("drain diode of\nPMOS drivers\n480 µm wide",
-                                     loc="bottom", ofst=0.25))
-        d += elm.Line().at((3.5, MID)).to((3.5, MID - 0.8))
+              .color(PRIMARY)
+              .label("drain diode of\nPMOS drivers\n480 µm wide",
+                     loc="bottom", ofst=0.25))
+        d += elm.Line().at((3.5, MID)).to((3.5, MID - 0.8)).color(PRIMARY)
         d += (elm.Diode().up().at((3.5, BOT)).to((3.5, MID - 0.8))
-              .color(PRIMARY).label("drain diode of\nNMOS drivers\n304 µm wide",
-                                     loc="bottom", ofst=0.25))
+              .color(PRIMARY)
+              .label("drain diode of\nNMOS drivers\n304 µm wide",
+                     loc="bottom", ofst=0.25))
         d += elm.Dot().at((3.5, TOP))
         d += elm.Dot().at((3.5, BOT))
 
@@ -93,49 +96,49 @@ def main():
         d += elm.Dot().at((10.5, TOP))
         d += elm.Dot().at((10.5, BOT))
         d += elm.Line().at((10.5, MID)).to((12.5, MID))
-        d += (logic.Not().right().at((12.5, MID)).anchor("in1")
+        d += (logic.Buf().right().at((12.5, MID)).anchor("in1")
               .label("input\nbuffer", loc="bottom", ofst=0.4))
 
         # Rail clamp, in each DVDD and DVSS pad cell.
-        d += elm.Line().at((18.0, TOP)).to((18.0, TOP - 0.5))
-        d += (elm.Resistor().down().at((18.0, TOP - 0.5)).to((18.0, MID))
+        d += elm.Line().at((RC, TOP)).to((RC, TOP - 0.5)).color(CLAMP)
+        d += (elm.Resistor().down().at((RC, TOP - 0.5)).to((RC, MID))
               .color(CLAMP).label("360 kΩ", loc="top"))
-        d += elm.Dot().at((18.0, MID))
-        d += (elm.Capacitor().down().at((18.0, MID)).to((18.0, BOT))
+        d += elm.Dot().at((RC, MID))
+        d += (elm.Capacitor().down().at((RC, MID)).to((RC, BOT))
               .color(CLAMP).label("MOS\ncapacitor", loc="top"))
-        d += elm.Dot().at((18.0, TOP))
-        d += elm.Dot().at((18.0, BOT))
-        d += elm.Line().at((18.0, MID)).to((19.0, MID)).color(CLAMP)
-        inv = d.add(logic.Not().right().at((19.0, MID)).anchor("in1")
+        d += elm.Dot().at((RC, TOP))
+        d += elm.Dot().at((RC, BOT))
+        d += elm.Line().at((RC, MID)).to((RC + 1.0, MID)).color(CLAMP)
+        inv = d.add(logic.Not().right().at((RC + 1.0, MID)).anchor("in1")
                     .color(CLAMP)
                     .label("three\ninverters", loc="bottom", ofst=0.4))
-        d += elm.Line().at(inv.out).to((22.0, MID)).color(CLAMP)
-        fet = d.add(elm.NFet().anchor("gate").at((22.0, MID)).reverse()
+        d += elm.Line().at(inv.out).to((RC + 4.0, MID)).color(CLAMP)
+        fet = d.add(elm.NFet().anchor("gate").at((RC + 4.0, MID)).reverse()
                     .color(CLAMP))
         d += elm.Line().at(fet.drain).to((fet.drain[0], TOP)).color(CLAMP)
         d += elm.Line().at(fet.source).to((fet.source[0], BOT)).color(CLAMP)
         d += elm.Label().at((fet.drain[0] + 0.4, MID + 0.9)).label(
-            "clamp NMOS\n4000 µm", halign="left", color=CLAMP)
+            "clamp NMOS\n4000 µm wide", halign="left", color=CLAMP)
         d += elm.Dot().at((fet.drain[0], TOP))
         d += elm.Dot().at((fet.source[0], BOT))
 
         # Rail diode, four parts, in each DVDD and DVSS pad cell.
-        d += (elm.Diode().up().at((28.0, BOT)).to((28.0, TOP))
+        d += (elm.Diode().up().at((RC + 10.4, BOT)).to((RC + 10.4, TOP))
               .color(CLAMP).label("160 µm²:\n4 of 40 µm²", loc="bottom",
                                    ofst=0.2))
-        d += elm.Dot().at((28.0, TOP))
-        d += elm.Dot().at((28.0, BOT))
+        d += elm.Dot().at((RC + 10.4, TOP))
+        d += elm.Dot().at((RC + 10.4, BOT))
 
         # Group labels.
         d += elm.Label().at((3.5, TOP + 1.0)).label("primary",
                                                       color=PRIMARY)
         d += elm.Label().at((10.5, TOP + 1.0)).label("secondary",
                                                        color=SECONDARY)
-        d += elm.Label().at((22.0, TOP + 1.0)).label(
+        d += elm.Label().at((RC + 4.5, TOP + 1.0)).label(
             "rail clamp and rail diode", color=CLAMP)
         # The rings run through every cell; each box is one cell's parts.
         cell_box(d, -0.5, 15.2, "gf180mcu_fd_io__bi_t")
-        cell_box(d, 15.6, 33.0,
+        cell_box(d, 15.6, 34.8,
                  "gf180mcu_fd_io__dvdd and gf180mcu_fd_io__dvss")
 
         OUT.mkdir(exist_ok=True)
