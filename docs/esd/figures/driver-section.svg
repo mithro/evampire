@@ -2,88 +2,87 @@
 <rect width="660" height="400" fill="white"/>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad"/></marker><marker id="arrow-hot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#222222" stroke-width="1"/></pattern></defs>
 <rect x="10" y="170" width="640" height="200" fill="#dbe8f5" stroke="#222222"/>
-<text x="20" y="362" text-anchor="start" font-size="13" fill="#222222" font-weight="normal">P substrate</text>
-<rect x="20" y="170" width="300" height="110" fill="#fbd9b5" stroke="#222222"/>
-<text x="170" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N-well, on DVDD</text>
-<rect x="30" y="170" width="30" height="22" fill="#f5b46e" stroke="#222222"/>
-<rect x="80" y="170" width="50" height="22" fill="#7fa7d6" stroke="#222222"/>
-<rect x="130" y="160" width="30" height="10" fill="#7d8a2e" stroke="#222222"/>
-<rect x="160" y="170" width="125" height="22" fill="#7fa7d6" stroke="#222222"/>
-<text x="225" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P+ drain</text>
-<line x1="160" y1="208" x2="236" y2="208" stroke="#222222" stroke-width="1"/>
-<line x1="160" y1="204" x2="160" y2="212" stroke="#222222" stroke-width="1"/>
-<line x1="236" y1="204" x2="236" y2="212" stroke="#222222" stroke-width="1"/>
-<text x="198.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">blocked drain: 2.78 µm</text>
-<text x="200" y="160" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">silicide block</text>
-<rect x="340" y="170" width="300" height="110" fill="#dbe8f5" stroke="#222222" stroke-dasharray="5,3"/>
-<text x="490" y="272" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P-well, on DVSS: no P-well shape in the layout</text>
-<rect x="355" y="170" width="125" height="22" fill="#f5b46e" stroke="#222222"/>
-<text x="415" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N+ drain</text>
-<rect x="480" y="160" width="34" height="10" fill="#7d8a2e" stroke="#222222"/>
-<rect x="514" y="170" width="50" height="22" fill="#f5b46e" stroke="#222222"/>
-<rect x="585" y="170" width="30" height="22" fill="#7fa7d6" stroke="#222222"/>
-<line x1="399" y1="208" x2="480" y2="208" stroke="#222222" stroke-width="1"/>
-<line x1="399" y1="204" x2="399" y2="212" stroke="#222222" stroke-width="1"/>
-<line x1="480" y1="204" x2="480" y2="212" stroke="#222222" stroke-width="1"/>
-<text x="480" y="224" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">blocked drain:</text>
-<text x="480" y="237" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">3.78 µm</text>
-<text x="440" y="160" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">silicide block</text>
-<text x="530" y="134" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">gate length: 1.15 µm</text>
-<text x="387" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A</text>
-<text x="614" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A′</text>
-<text x="456" y="116" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">NMOS: cut A–A′, corner view</text>
-<text x="45" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
-<text x="102" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
-<text x="541" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
-<text x="600" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
-<text x="50" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">guard ring</text>
-<text x="104" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">source</text>
-<text x="553" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">source</text>
-<text x="606" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">guard ring</text>
-<rect x="160" y="165" width="76" height="5" fill="url(#hatch)" stroke="#222222"/>
-<rect x="399" y="165" width="81" height="5" fill="url(#hatch)" stroke="#222222"/>
-<rect x="125" y="155" width="35" height="5" fill="url(#hatch)" stroke="#222222"/>
-<rect x="480" y="155" width="39" height="5" fill="url(#hatch)" stroke="#222222"/>
-<rect x="125" y="165" width="5" height="5" fill="url(#hatch)" stroke="#222222"/>
-<rect x="514" y="165" width="5" height="5" fill="url(#hatch)" stroke="#222222"/>
-<text x="640" y="392" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">not to scale</text>
-<text x="20" y="392" text-anchor="start" font-size="11" fill="#222222" font-weight="normal">grey bars: metal, which the layouts of these two cuts do not draw</text>
-<rect x="266" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
-<rect x="366" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
-<rect x="266" y="56" width="112" height="8" fill="#9aa5b1" stroke="#222222"/>
-<rect x="290" y="24" width="64" height="26" fill="#ffffff" stroke="#222222"/>
-<text x="322" y="42" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">PAD</text>
-<line x1="322" y1="50" x2="322" y2="56" stroke="#222222" stroke-width="3"/>
-<rect x="42" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
-<rect x="99" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
-<rect x="42" y="106" width="63" height="6" fill="#9aa5b1" stroke="#222222"/>
-<text x="74" y="98" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">DVDD</text>
-<rect x="538" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
-<rect x="597" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
-<rect x="538" y="106" width="65" height="6" fill="#9aa5b1" stroke="#222222"/>
-<text x="570" y="98" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">DVSS</text>
-<text x="112" y="146" text-anchor="start" font-size="11" fill="#222222" font-weight="normal">gate length: 0.7 µm</text>
-<text x="186" y="124" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">PMOS: cut B–B′, layout (b)</text>
-<text x="251" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">B</text>
-<text x="26" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">B′</text>
-<line x1="270" y1="177" x2="270" y2="207" stroke="#c0392b" stroke-width="2"/>
-<polygon points="262,185 278,185 270,199" fill="#c0392b" stroke="#c0392b"/>
-<line x1="262" y1="199" x2="278" y2="199" stroke="#c0392b" stroke-width="2.5"/>
-<text x="170" y="298" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">P+ drain to N-well: diode from PAD</text>
-<text x="170" y="314" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">to DVDD, 480 µm of gate in all</text>
-<line x1="370" y1="177" x2="370" y2="207" stroke="#c0392b" stroke-width="2"/>
-<polygon points="362,199 378,199 370,185" fill="#c0392b" stroke="#c0392b"/>
-<line x1="362" y1="185" x2="378" y2="185" stroke="#c0392b" stroke-width="2.5"/>
-<polyline points="270,207 270,242 160,242" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3" marker-end="url(#arrow-hot)"/>
-<polyline points="160,242 50,242 50,211" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3"/>
-<polyline points="606,211 606,252 488,252" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3" marker-end="url(#arrow-hot)"/>
-<polyline points="488,252 370,252 370,207" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3"/>
-<text x="450" y="298" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">P-well to N+ drain: diode from DVSS</text>
-<text x="450" y="314" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">to PAD, 304 µm of gate in all</text>
-<line x1="497" y1="210" x2="497" y2="234" stroke="#8e44ad" stroke-width="3"/>
-<line x1="497" y1="217" x2="470" y2="194" stroke="#8e44ad" stroke-width="2"/>
-<line x1="497" y1="227" x2="530" y2="194" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow)"/>
-<line x1="497" y1="222" x2="487" y2="222" stroke="#8e44ad" stroke-width="2"/>
-<text x="640" y="342" text-anchor="end" font-size="12" fill="#8e44ad" font-weight="normal">parasitic NPN (drain, P-well, source): triggers at 10.7 V,</text>
-<text x="640" y="358" text-anchor="end" font-size="12" fill="#8e44ad" font-weight="normal">snaps back to about 6 V</text>
+<text x="640" y="362" text-anchor="end" font-size="13" fill="#222222" font-weight="normal">P substrate</text>
+<rect x="340" y="170" width="300" height="110" fill="#fbd9b5" stroke="#222222"/>
+<text x="490" y="270" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N-well, on DVDD</text>
+<rect x="600" y="170" width="30" height="22" fill="#f5b46e" stroke="#222222"/>
+<rect x="530" y="170" width="50" height="22" fill="#7fa7d6" stroke="#222222"/>
+<rect x="500" y="160" width="30" height="10" fill="#7d8a2e" stroke="#222222"/>
+<rect x="375" y="170" width="125" height="22" fill="#7fa7d6" stroke="#222222"/>
+<text x="435" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">P+ drain</text>
+<line x1="500" y1="208" x2="424" y2="208" stroke="#222222" stroke-width="1"/>
+<line x1="500" y1="204" x2="500" y2="212" stroke="#222222" stroke-width="1"/>
+<line x1="424" y1="204" x2="424" y2="212" stroke="#222222" stroke-width="1"/>
+<text x="462.0" y="224" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">blocked drain: 2.78 µm</text>
+<text x="460" y="160" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">silicide block</text>
+<rect x="20" y="170" width="300" height="110" fill="#dbe8f5" stroke="#222222" stroke-dasharray="5,3"/>
+<text x="170" y="272" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P-well, on DVSS: no P-well shape in the layout</text>
+<rect x="180" y="170" width="125" height="22" fill="#f5b46e" stroke="#222222"/>
+<text x="245" y="186" text-anchor="middle" font-size="12" fill="#222222" font-weight="normal">N+ drain</text>
+<rect x="146" y="160" width="34" height="10" fill="#7d8a2e" stroke="#222222"/>
+<rect x="96" y="170" width="50" height="22" fill="#f5b46e" stroke="#222222"/>
+<rect x="45" y="170" width="30" height="22" fill="#7fa7d6" stroke="#222222"/>
+<line x1="261" y1="208" x2="180" y2="208" stroke="#222222" stroke-width="1"/>
+<line x1="261" y1="204" x2="261" y2="212" stroke="#222222" stroke-width="1"/>
+<line x1="180" y1="204" x2="180" y2="212" stroke="#222222" stroke-width="1"/>
+<text x="180" y="224" text-anchor="start" font-size="11" fill="#222222" font-weight="normal">blocked drain:</text>
+<text x="180" y="237" text-anchor="start" font-size="11" fill="#222222" font-weight="normal">3.78 µm</text>
+<text x="220" y="160" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">silicide block</text>
+<text x="130" y="134" text-anchor="start" font-size="11" fill="#222222" font-weight="normal">gate length: 1.15 µm</text>
+<text x="273" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A</text>
+<text x="46" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">A′</text>
+<text x="204" y="116" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">NMOS: cut A–A′, corner view</text>
+<text x="615" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
+<text x="558" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
+<text x="119" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">N+</text>
+<text x="60" y="186" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">P+</text>
+<text x="610" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">guard ring</text>
+<text x="556" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">source</text>
+<text x="107" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">source</text>
+<text x="54" y="205" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">guard ring</text>
+<rect x="424" y="165" width="76" height="5" fill="url(#hatch)" stroke="#222222"/>
+<rect x="180" y="165" width="81" height="5" fill="url(#hatch)" stroke="#222222"/>
+<rect x="500" y="155" width="35" height="5" fill="url(#hatch)" stroke="#222222"/>
+<rect x="141" y="155" width="39" height="5" fill="url(#hatch)" stroke="#222222"/>
+<rect x="530" y="165" width="5" height="5" fill="url(#hatch)" stroke="#222222"/>
+<rect x="141" y="165" width="5" height="5" fill="url(#hatch)" stroke="#222222"/>
+<text x="20" y="392" text-anchor="start" font-size="11" fill="#222222" font-weight="normal">not to scale</text>
+<text x="640" y="392" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">grey bars: metal, which the layouts of these two cuts do not draw</text>
+<rect x="386" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
+<rect x="286" y="60" width="8" height="110" fill="#9aa5b1" stroke="#222222"/>
+<rect x="282" y="56" width="112" height="8" fill="#9aa5b1" stroke="#222222"/>
+<rect x="306" y="24" width="64" height="26" fill="#ffffff" stroke="#222222"/>
+<text x="338" y="42" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">PAD</text>
+<line x1="338" y1="50" x2="338" y2="56" stroke="#222222" stroke-width="3"/>
+<rect x="612" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
+<rect x="555" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
+<rect x="555" y="106" width="63" height="6" fill="#9aa5b1" stroke="#222222"/>
+<text x="586" y="98" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">DVDD</text>
+<rect x="116" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
+<rect x="57" y="110" width="6" height="60" fill="#9aa5b1" stroke="#222222"/>
+<rect x="57" y="106" width="65" height="6" fill="#9aa5b1" stroke="#222222"/>
+<text x="90" y="98" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">DVSS</text>
+<text x="548" y="146" text-anchor="end" font-size="11" fill="#222222" font-weight="normal">gate length: 0.7 µm</text>
+<text x="474" y="124" text-anchor="middle" font-size="11" fill="#222222" font-weight="normal">PMOS: cut B–B′, layout (b)</text>
+<text x="409" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">B</text>
+<text x="634" y="164" text-anchor="middle" font-size="13" fill="#222222" font-weight="bold">B′</text>
+<line x1="390" y1="177" x2="390" y2="207" stroke="#c0392b" stroke-width="2"/>
+<polygon points="382,185 398,185 390,199" fill="#c0392b" stroke="#c0392b"/>
+<line x1="398" y1="199" x2="382" y2="199" stroke="#c0392b" stroke-width="2.5"/>
+<text x="490" y="298" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">P+ drain to N-well: diode from PAD</text>
+<text x="490" y="314" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">to DVDD, 480 µm of gate in all</text>
+<line x1="290" y1="177" x2="290" y2="207" stroke="#c0392b" stroke-width="2"/>
+<polygon points="282,199 298,199 290,185" fill="#c0392b" stroke="#c0392b"/>
+<line x1="298" y1="185" x2="282" y2="185" stroke="#c0392b" stroke-width="2.5"/>
+<polyline points="390,207 390,242 500,242" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3" marker-end="url(#arrow-hot)"/>
+<polyline points="500,242 610,242 610,211" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3"/>
+<polyline points="54,211 54,252 172,252" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3" marker-end="url(#arrow-hot)"/>
+<polyline points="172,252 290,252 290,207" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-dasharray="5,3"/>
+<text x="210" y="298" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">P-well to N+ drain: diode from DVSS</text>
+<text x="210" y="314" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">to PAD, 304 µm of gate in all</text>
+<line x1="163" y1="210" x2="163" y2="234" stroke="#8e44ad" stroke-width="3"/>
+<line x1="163" y1="217" x2="190" y2="194" stroke="#8e44ad" stroke-width="2"/>
+<line x1="163" y1="227" x2="130" y2="194" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="20" y="342" text-anchor="start" font-size="12" fill="#8e44ad" font-weight="normal">parasitic NPN (drain, P-well, source): triggers at 10.7 V,</text>
+<text x="20" y="358" text-anchor="start" font-size="12" fill="#8e44ad" font-weight="normal">snaps back to about 6 V</text>
 </svg>
