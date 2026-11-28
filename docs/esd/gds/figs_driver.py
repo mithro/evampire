@@ -107,9 +107,12 @@ def silicide_block():
     b.dim((15.735, 153.2), (18.515, 153.2), "blocked drain: 2.78 µm")
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
     _inside(b, "Drain contacts, on PAD", 14.75, 145.3, 15.405)
-    _above(b, "Source contacts on DVDD, outside the block", 11.1, 152.4)
-    x, y = b.px(9.9, 148.3)
-    b.label("N+ guard ring, on DVDD", (7.6, 148.3), (x, y + 5))
+    # The ring is named from above; the source row from the gap beside
+    # it, so that no leader crosses the ring.
+    _above(b, "N+ guard ring, on DVDD", 7.6, 150.5)
+    x, y = b.px(9.9, 145.3)
+    b.label("Source contacts, on DVDD", (11.1, 148.0),
+            (x, y + 5), anchor="start")
     # The cut that the cross-section draws for the PMOS, and its diode.
     b.line((15.405, 155.2), (7.9, 155.2), width=2.0, dash="9,3,2,3")
     for gx, name, dy in ((15.405, "B", 16), (7.9, "B′", -6)):
@@ -122,10 +125,13 @@ def silicide_block():
     b.note(INK, "(b): 12 such gates of 40 µm, 480 µm of gate", kind="plain")
     b.note(INK, "B–B′: the PMOS cut of the cross-section", kind="cut")
     c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, to compare")
-    c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
+    c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm",
+          side="below", colour=GREY)
     bot = c.oy + c.dh + 30
     c.label("Contacts beside every gate, in the 0.52 µm\nbetween two "
-            "gates, all silicided", (32.7, 217.5), (c.px(0, 217.5)[0], bot))
+            "gates, all silicided", (32.7, 217.5), (c.px(0, 217.5)[0], bot),
+            colour=GREY)
+    c.note(GREY, "(c): not in the cross-section")
     a.attach(b)
     a.attach(c)
     return a
