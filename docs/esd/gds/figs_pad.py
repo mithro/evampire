@@ -36,7 +36,7 @@ def cell(alone=True):
     mean in the schematic of schematic.py, and each label is the
     schematic's own. What the schematic leaves out is named in grey.
     """
-    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=132, right=75, bottom=250)
+    f = Fig(CELL, (0, 0, 75, 350), 2.7, top=132, right=75, bottom=284)
     lay = gdskit.load(CELL)
     f.grey_silicon()
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
@@ -74,7 +74,7 @@ def cell(alone=True):
             ("110 Ω: 4 of\n440 Ω in parallel", 272.1, 228, 0),
             ("40 µm² diode to\nDVDD: 2 strips of\n20 µm × 1 µm", 285.5, 286,
              0),
-            ("40 µm² diode from\nDVSS: 2 strips of\n20 µm × 1 µm", 301.7, 334,
+            ("40 µm² diode from\nDVSS: 2 strips of\n20 µm × 1 µm", 301.7, 338,
              70)):
         f.label(text, (52.7, gy), (f.px(0, at)[0], bot + drop),
                 colour=SECONDARY, weight="bold", elbow=f.px(76.5, gy))
@@ -91,7 +91,7 @@ def cell(alone=True):
         f.text(f.ox + f.dw, f.oy - 114, "rail clamp and its diode: not in "
                "this cell, only in the supply pads", anchor="end",
                fill=CLAMP, weight="bold", halo=False)
-    f.dim((75, 0), (75, 350), "350 µm", offset=138, side="below")
+    f.dim((75, 0), (75, 350), "350 µm", offset=172, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
     return f
 
@@ -132,7 +132,7 @@ def pad_net():
             "each between\n2 gates of 40 µm", (15.4, 166),
             (f.px(0, 166)[0], top), colour=HOT, weight="bold")
     f.label("metal 2 wire,\n2 µm wide, on\nto the secondary\nprotection",
-            (37.5, 209.4), (f.px(0, 222)[0], top), weight="bold")
+            (37.5, 209.4), (f.px(0, 218.5)[0], top), weight="bold")
     f.label("pull-up and\npull-down\nresistors", (3.8, 272.1),
             (f.ox + f.dw, top + 17), anchor="end", colour=GREY,
             elbow=(f.px(0, 272.1)[0], f.oy - 12))
@@ -148,7 +148,7 @@ def pad_net():
     f.label("output signal\nbuffers", (70.4, 250), (f.px(0, 250)[0], bot),
             colour=GREY)
     f.label("110 Ω of the secondary\nprotection", (52.7, 272.1),
-            (f.px(0, 259)[0], bot + 46), colour=GREY,
+            (f.px(0, 254)[0], bot + 46), colour=GREY,
             elbow=(f.px(0, 272.1)[0], f.oy + f.dh + 8))
     f.note(GREY, "not in the schematic's primary protection")
     f.note(INK, "NMOS drains: diodes from the P-type silicon, on DVSS "
@@ -291,8 +291,8 @@ def secondary():
             weight="bold")
     f.label("N+ guard ring,\non DVDD: the diode's\nDVDD end", (26.05, 283),
             (f.px(0, 282.6)[0], top - 17))
-    f.label("also to pull-up,\npull-down resistors", (22.3, 292.9),
-            (f.px(0, 292.9)[0], top), colour=GREY)
+    f.label("also to\npull-up, pull-down\nresistors", (22.3, 292.9),
+            (f.px(0, 292.9)[0], top - 17), colour=GREY)
     f.label("P+ guard ring,\non DVSS: the diode's\nDVSS end", (26.05, 302),
             (f.px(0, 303)[0], top - 17))
     # The rings that the schematic has no symbol for, in grey. Their
