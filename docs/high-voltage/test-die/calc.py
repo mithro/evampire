@@ -128,11 +128,10 @@ def agreement_rules():
     import rules
     for v in (5, 7, 10):
         r = rules.layer_rule(v)
-        lv = rules.CAP_L[v] / rules.CAP_L[0]
-        print(f"  P2 at {v:2d} V: L {lv:.3f}, D from "
-              f"{rules.CAP_D[0] / rules.CAP_D[1]:.3f} to "
-              f"{rules.CAP_D[1] / rules.CAP_D[0]:.3f}: "
-              + ("no call" if r is None else f"threshold {r[2]:.3f}"))
+        lv, dv = (c[v] / c[0] for c in (rules.CAP_L, rules.CAP_D))
+        print(f"  P2 at {v:2d} V: L {lv:.4f}, D {dv:.4f}, separation "
+              f"{dv - lv:.4f}: "
+              + ("no call" if r is None else f"threshold {r[2]:.4f}"))
     c0 = ph.NW_CA * 1e-4
     print(f"  published model at 0 V: doping from the slope of 1/C2 "
           f"{ph.NW_VBI * c0 ** 2 / (ph.Q * ph.EPS * ph.NW_M):.2e} cm^-3")
@@ -141,15 +140,18 @@ def agreement_rules():
     vs = [0.25 * k for k in range(41)]
     ca = [ph.c_junction(ph.NW_CA * 1e-4, ph.NW_VBI, ph.NW_M, v) for v in vs]
     lcap = [c * rules.CAP_L[v] for v, c in zip(vs, ca) if v in rules.CAP_L]
-    for name, cs, xs in (("model (D)", ca, vs),
+    dcap = [c * rules.CAP_D[v] for v, c in zip(vs, ca) if v in rules.CAP_D]
+    for name, cs, xs in (("model", ca, vs),
                          ("model times the L ratios", lcap,
-                          sorted(rules.CAP_L))):
+                          sorted(rules.CAP_L)),
+                         ("model times the D ratios", dcap,
+                          sorted(rules.CAP_D))):
         n = [2 / (ph.Q * ph.EPS * (1 / c2 ** 2 - 1 / c1 ** 2) / (v2 - v1))
              for (v1, c1), (v2, c2) in zip(zip(xs, cs), zip(xs[1:], cs[1:]))
              if v1 >= 2 and v2 <= 5]
         print(f"  doping from 1/C2 between 2 V and 5 V, {name}: "
               f"{min(n):.2e} to {max(n):.2e} cm^-3")
-    for v in (7, 10):
+    for v in (5, 7, 10):
         lo, thr, hi = rules.layer_window(v)
         print(f"  P2 at {v:2d} V: L from {lo:.3f} to {thr:.3f}, D from "
               f"{thr:.3f} to {hi:.3f}, neither outside")

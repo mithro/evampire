@@ -7,9 +7,9 @@ from the slope of 1/C^2. The substrate doping and the layer call follow
 the rules of rules.py. CVD has no partner and is reported alone.
 
 sim_ratio() is the simulated area capacitance over the published model,
-linear between the biases model_checks.json gives (0 V to 10 V) and
-nothing outside them; under D it is 1, the middle of the documented
-range. reference_doping() is the doping the same reduction finds on that
+under L or D, linear between the biases model_checks.json gives (0 V to
+10 V, from the record capacitance.json) and nothing outside them.
+reference_doping() is the doping the same reduction finds on that
 curve, against which a measured doping is read.
 
 analyse.py calls reduce(), synth.py sim_ratio(). Standard library only.
@@ -75,11 +75,9 @@ def model(v):
 def sim_ratio(deep, v):
     """Simulated area capacitance over the published model at bias v under
     deep layer "L" or "D"; None outside the documented biases."""
-    pts = sorted(rules.CAP_L.items())
+    pts = sorted((rules.CAP_D if deep == "D" else rules.CAP_L).items())
     if not pts[0][0] <= v <= pts[-1][0]:
         return None
-    if deep == "D":
-        return 1.0
     return at(pts, v)
 
 

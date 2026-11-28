@@ -141,7 +141,7 @@ def test_scaled_decision(tmp_path, hyp, factor):
     assert r.families == [hyp]
 
 
-@pytest.mark.parametrize("hyp,call,s", [("BL", "L", 0.830), ("BD", "D", 1.0)])
+@pytest.mark.parametrize("hyp,call,s", [("BL", "L", 0.827), ("BD", "D", 1.023)])
 def test_capacitance(tmp_path, hyp, call, s):
     """P2 on the simulated curves: s at 10 V as simulated, the right call
     from both pairs, and the doping that the same reduction finds on the
@@ -180,7 +180,7 @@ def test_capacitance_neither(tmp_path):
     """A ratio that fits neither simulated curve is called neither, and
     the deep layer then rests on the breakdown ratios alone."""
     lo, thr, hi = rules.layer_window(10)
-    assert (round(lo, 3), round(thr, 3), round(hi, 3)) == (0.78, 0.881, 1.123)
+    assert (round(lo, 3), round(thr, 3), round(hi, 3)) == (0.777, 0.925, 1.073)
     assert [rules.layer_call(x, 10) for x in (0.70, 0.83, 0.95, 1.2)] == [
         "neither", "L", "D", "neither"]
     synth.make(tmp_path / "m", "BL", dies=2, extra=True)
@@ -202,10 +202,15 @@ def test_capacitance_neither(tmp_path):
 
 
 def test_layer_rule():
-    assert rules.layer_rule(5) is None          # L and D too close
+    """Thresholds half-way between the recorded curves, normalised to 0 V;
+    5 V is the lowest bias whose two values lie 0.05 apart."""
+    assert rules.layer_rule(3) is None          # L and D too close
     lo, d, thr = rules.layer_rule(10)
     assert lo < thr < d and rules.layer_bias(12) == 10
-    assert rules.layer_bias(8) == 7 and rules.layer_bias(6) is None
+    assert [round(rules.layer_rule(v)[2], 3) for v in (5, 7, 10)] == [
+        0.93, 0.925, 0.925]
+    assert rules.layer_bias(8) == 7 and rules.layer_bias(6) == 5
+    assert rules.layer_bias(4) is None
 
 
 def test_ring_and_punch_through(tmp_path):
@@ -385,6 +390,11 @@ def test_model_check_records():
         if c["radius_um"] < 8:
             case = f"NC0r{c['radius_um']:.1f}|{c['process']}|corner"
             assert round(radius[case]["bv_v"], 1) == c["volts"], case
+    cap = json.loads((rec / "capacitance.json").read_text())
+    mc = px.CHECKS["capacitance"]
+    assert mc["volts"] == cap["bias_v"]
+    assert mc["without_layer"] == cap["L"]["over_model"]
+    assert mc["with_layer"] == cap["D"]["over_model"]
     main = json.loads((rec / "main.json").read_text())["cases"]
     assert round(main["NC0|BL|corner"]["reached_v"], 1) == \
         px.CHECKS["corner"]["last_volts"]

@@ -29,12 +29,12 @@ import pred_data as pd
 import pred_extra as px
 import tables as tb
 
-# P2. The simulated N-well capacitance over the published model: under L
-# a list against bias, under D a range over the whole sweep.
+# P2. The simulated N-well capacitance over the published model against
+# bias, under L and under D (gf180-tcad record capacitance.json).
 CAP = px.CHECKS["capacitance"]
 CAP_L = dict(zip(CAP["volts"], CAP["without_layer"]))
-CAP_D = tuple(float(x) for x in re.findall(r"\d+\.\d+", CAP["with_layer"]))
-CAP_SEPARATION = 0.05  # least gap between the L value and the D range
+CAP_D = dict(zip(CAP["volts"], CAP["with_layer"]))
+CAP_SEPARATION = 0.05  # least gap between the L and D values of s
 CAP_TOL = 0.05         # error of s: 2.5 % in reading, OPEN or area
 SUB_FROM = 1.0         # V: profile windows centred below this are left out
 WINDOW = 1.0           # V: width of the least-squares window of 1/C^2
@@ -83,16 +83,15 @@ def doping_rule(n):
 
 
 def layer_rule(v):
-    """(L value, lower end of D, threshold) of the capacitance at bias v
-    over that at 0 V, each divided by the published model, or None where
-    the two are not separated by CAP_SEPARATION."""
-    if v not in CAP_L:
+    """(s under L, s under D, threshold half-way) at bias v: the simulated
+    capacitance over the published model, divided by the same at 0 V; None
+    where the two are not separated by CAP_SEPARATION."""
+    if v not in CAP_L or v == 0:
         return None
-    l_norm = CAP_L[v] / CAP_L[0]
-    d_low = CAP_D[0] / CAP_D[1]
-    if d_low - l_norm < CAP_SEPARATION:
+    l_norm, d_norm = CAP_L[v] / CAP_L[0], CAP_D[v] / CAP_D[0]
+    if d_norm - l_norm < CAP_SEPARATION:
         return None
-    return l_norm, d_low, (l_norm + d_low) / 2
+    return l_norm, d_norm, (l_norm + d_norm) / 2
 
 
 def layer_bias(top):
@@ -103,9 +102,9 @@ def layer_bias(top):
 
 def layer_window(v):
     """(lowest s of L, threshold, highest s of D) at bias v: each simulated
-    value widened by CAP_TOL; the D range runs up to 1.03 / 0.96."""
-    l_norm, _, thr = layer_rule(v)
-    return l_norm - CAP_TOL, thr, CAP_D[1] / CAP_D[0] + CAP_TOL
+    value widened by CAP_TOL."""
+    l_norm, d_norm, thr = layer_rule(v)
+    return l_norm - CAP_TOL, thr, d_norm + CAP_TOL
 
 
 def layer_call(s, v):
