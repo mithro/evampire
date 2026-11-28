@@ -321,9 +321,11 @@ Within this model D is the better supported. The profiles were fitted
 with the layer present, and the N-well's simulated capacitance then stays
 within 4 % of the published model from 0 V to 10 V. Without the layer
 under the N-well it falls too fast, and the gap widens with voltage
-(:numref:`tab-hvt-mc-cap`). These values, and those of the next two
-tables, come from the final review and are not yet in a simulation record
-(:numref:`tab-hvt-mc-source`).
+(:numref:`tab-hvt-mc-cap`). These values, and the ceilings of
+:numref:`tab-hvt-cap-sens`, are estimates from a script of the final
+review that no committed record holds. :numref:`tab-hvt-mc-source` gives
+the origin of every value taken from the reviews, with the record where
+one exists.
 
 .. csv-table:: Simulated N-well capacitance as a fraction of the
                published model, with and without the deep P layer under
@@ -596,6 +598,9 @@ These sections needed 128-bit arithmetic to reach breakdown. In double
 precision they stalled part of the way, and the breakdown voltage was
 first estimated by extending the ionisation integral in a straight line.
 The later result agrees with that estimate (:numref:`tab-hvt-mc-corner`).
+The last point of the stalled sweep is in the main record of gf180-tcad.
+The integral there and its extrapolation are the review's estimate, and
+no record holds them.
 How much the square-corner result depends on the assumed radius of 1 µm
 is the subject of a run at radii of 0.5 µm to 4 µm
 (:numref:`tab-hvt-mc-radius`).
@@ -742,9 +747,14 @@ silicon. These limits bound what it can say:
    :file: hvt-tab-mc-onesided.csv
    :header-rows: 1
 
-The integral uses the coefficients of `Ionisation integral`_. The values
-come from a script that the fourth independent review wrote for itself
-(:ref:`hv-test-submission`), and no simulation record holds them yet.
+The integral uses the coefficients of `Ionisation integral`_. At
+:math:`10^{15}`, :math:`10^{16}` and :math:`10^{17}` cm\ :sup:`-3` it is
+the one-dimensional diode of the record diodes.json of gf180-tcad, with an
+N side of :math:`10^{19}` cm\ :sup:`-3`. The fourth independent review's
+own script gave values within 0.2 V of these
+(:ref:`hv-test-submission`). The value at
+:math:`3.56 \times 10^{15}` cm\ :sup:`-3` is that script's estimate, and
+no committed record holds it.
 
 Open questions
 --------------
