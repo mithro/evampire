@@ -442,27 +442,40 @@ OPEN subtraction or the separation of the area moves :math:`s` by up to
 CVNA2 and CVNA both give a call and the two differ, the result is
 undecided.
 
+The same 0.05 bounds each call. L holds from 0.05 below its simulated
+value up to the threshold, and D from the threshold up to 0.05 above the
+highest D value, :math:`1.03 / 0.96 = 1.073`. At 10 V that is 0.780 to
+0.881 for L and 0.881 to 1.123 for D (:download:`calc.py <calc.py>`,
+section 5). A pair outside both selects neither. Its capacitance then
+falls in a way that no simulated profile gives, such as that of an abrupt
+junction, 0.673 at 10 V, and the deep layer rests on the breakdown ratios
+alone.
+
 .. list-table:: Thresholds of the capacitance test for the deep P layer
    :name: tab-hvt-layer-rule
    :header-rows: 1
-   :widths: 20 20 30 30
+   :widths: 16 16 20 20 28
 
    * - Bias (V)
      - :math:`s` under L
      - Lowest :math:`s` under D
      - Threshold
+     - Neither below or above
    * - 5
      - 0.900
      - 0.932
      - None: too close
+     - –
    * - 7
      - 0.870
      - 0.932
      - 0.901
+     - 0.820 or 1.123
    * - 10
      - 0.830
      - 0.932
      - 0.881
+     - 0.780 or 1.123
 
 CVN and CVN2 therefore answer the question by 10 V, even if P-well
 surrounds them and they break down early. CVNA and CVNA2 extend the
@@ -582,22 +595,30 @@ under An, and under A only gaps of 1.6 µm or less punch through before
 breakdown, so each family uses the fit of B with its own deep layer.
 
 A measured punch-through voltage agrees when its equivalent gap lies
-within 0.3 µm of the predicted band. The band runs over the processes of
-the family that predictions.json holds, so it includes oxide charge and
-substrate doping where they were simulated. The 0.3 µm is one lateral
-spread of the N-well's deep part, 0.29 µm in :numref:`tab-hvt-profiles`,
-which no published value fixes. As a worked example, P5 on NR1S2 under BL
-predicts 3.8 V:
+within 0.6 µm of the predicted band. The band runs over the processes of
+the family on the nominal substrate, so it includes oxide charge where it
+was simulated, and is then moved to the substrate doping of the dies
+(`Substrate doping of the gap`_). The gap has two N-well edges, the
+well's and the ring's. Each has a lateral spread of 0.29 µm
+(:numref:`tab-hvt-profiles`) that no published value fixes.
+
+Both edges come from one implant and one anneal, so an error in the
+spread moves both alike, and the gap by twice the error. Independent
+errors would add to :math:`0.29 \sqrt{2} = 0.41` µm, but nothing makes
+two edges of one layer independent, so the tolerance is
+:math:`2 \times 0.29`, rounded to 0.6 µm. As a worked example, P5 on
+NR1S2 under BL predicts 3.8 V:
 
 .. math::
 
    \sqrt{3.8 / 3.34} &= 1.067\ \text{µm} \\
-   V_\text{low} &= 3.34 \times (1.067 - 0.3)^2 = 2.0\ \text{V} \\
-   V_\text{high} &= 3.34 \times (1.067 + 0.3)^2 = 6.2\ \text{V}
+   V_\text{low} &= 3.34 \times (1.067 - 0.6)^2 = 0.7\ \text{V} \\
+   V_\text{high} &= 3.34 \times (1.067 + 0.6)^2 = 9.3\ \text{V}
 
-The same 0.3 µm is 0.4 V to 3.0 V at 1.6 µm, a factor of seven, but
-47.3 V to 63.5 V at 5 µm, within 15 %. A rule in volts would therefore be
-too strict at the narrow gaps or too loose at the wide ones.
+The same 0.6 µm is 0 V to 5.2 V at 1.6 µm, but 40.0 V to 72.6 V at 5 µm,
+27 % below and 32 % above (:download:`calc.py <calc.py>`, section 5). A
+rule in volts would therefore be too strict at the narrow gaps or too
+loose at the wide ones.
 :numref:`tab-hvt-pt-range` gives every range. Where the simulation shows
 no punch-through before breakdown, the prediction is a lower bound: a die
 with none agrees, and one with an onset agrees if the onset lies above the
@@ -617,6 +638,97 @@ tolerance of a ratio of breakdown voltages; the 1 V covers the 0.8 V by
 which the second simulator's ring differs from the first
 (:numref:`tab-hvt-crosscheck-ring`). Above the end of the simulated sweep
 the step has no prediction.
+
+Substrate doping of the gap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The punch-through voltage of a gap depends on the substrate doping, and
+the ring-sense structures were simulated on the nominal substrate only.
+For a uniform substrate the two depletion regions meet when
+:math:`V = q N g_\text{e}^2 / 2 \varepsilon_\text{Si}`, so at a fixed
+effective gap :math:`g_\text{e}` the voltage is in proportion to the
+doping :math:`N`. The effective gap changes as well, because each edge
+lies where the graded N-well falls to the substrate doping.
+
+One gap was simulated at three dopings: NR3_2, at 2 µm, under BLlo, BL
+and BLhi, with :math:`2`, :math:`3.56` and
+:math:`5 \times 10^{15}` cm\ :sup:`-3`. Its onset is 1.55 V, 4.00 V and
+6.88 V. Proportion alone gives 2.25 V and 5.62 V, 45 % high and 18 % low.
+Moving the effective gap by a fixed amount per e-fold of doping fits both
+(:numref:`fig-hvt-pt-doping`):
+
+.. math::
+
+   V(f) &= k \, f \left(\sqrt{V_0 / k} + S \ln f\right)^2 \\
+   f &= N / N_0
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`V(f)`, :math:`V_0`
+     - Predicted punch-through voltage at doping :math:`N` and on the
+       nominal substrate
+     - V
+   * - :math:`N`, :math:`N_0`
+     - Substrate doping of the dies, and the nominal
+       :math:`3.56 \times 10^{15}`
+     - cm\ :sup:`-3`
+   * - :math:`f`
+     - Doping relative to the nominal
+     - None
+   * - :math:`k`
+     - Coefficient of the fit of `Floating-ring potential (P3)`_
+     - V/µm\ :sup:`2`
+   * - :math:`S`
+     - Change of the effective gap per e-fold of doping, 0.328 µm, by
+       least squares to NR3_2
+     - µm
+
+It gives 1.54 V and 6.82 V, within 1 % of the simulation
+(:download:`calc.py <calc.py>`, section 5). The shift rests on one
+structure, because no other gap was simulated at other dopings. As a
+worked example, P5 on NR1S5, at 5 µm, predicts 55.1 V on the nominal
+substrate. At :math:`2 \times 10^{15}` cm\ :sup:`-3`:
+
+.. math::
+
+   f &= 2 / 3.56 = 0.562 \\
+   \sqrt{55.1 / 3.34} + 0.328 \ln 0.562 &= 4.062 - 0.189
+     = 3.873\ \text{µm} \\
+   V &= 3.34 \times 0.562 \times 3.873^2 = 28.1\ \text{V}
+
+.. figure:: hvt-pt-doping.svg
+   :name: fig-hvt-pt-doping
+   :alt: Graph of the onset voltage of NR3_2 against substrate doping
+         from 2e15 to 5e15 per cubic centimetre. Three simulated points
+         at 1.55 V, 4.00 V and 6.88 V. A dashed straight line through the
+         nominal point, proportion alone, passes above the low point and
+         below the high one. A solid curve with the effective gap moving
+         0.328 µm per e-fold passes through all three.
+
+   Ring onset of NR3_2 against substrate doping: proportion alone and with
+   the moving edge.
+
+The doping :math:`f` comes from P2: the substrate doping it measures,
+divided by the doping that the same reduction finds on the simulated
+curve of the selected deep layer. That is
+:math:`2.85 \times 10^{15}` cm\ :sup:`-3` under L and
+:math:`3.03 \times 10^{15}` under D, against the
+:math:`3.56 \times 10^{15}` simulated. Dividing cancels the error of the
+reduction, which reads low where the depletion region spreads into the
+graded N-well.
+
+The simulated curve under L is known at 0 V, 1 V, 2 V, 3 V, 5 V, 7 V and
+10 V only (:numref:`tab-hvt-mc-cap`), and is taken as linear between
+them. Under D it is known only to lie within 4 % of the published model,
+so the model itself serves. When P2 gives no doping, the band runs over
+the simulated range, :math:`f` from 0.562 to 1.404. The last column of
+:numref:`tab-hvt-pt-range` gives that range for P5. A prediction of no
+punch-through is a bound and is moved in the same way.
 
 .. _hvt-p4:
 
@@ -852,8 +964,9 @@ voltage. The median over the dies is compared with the prediction by the
 rule of P3, through the equivalent gap (:numref:`tab-hvt-pt-range`); when
 half the dies or more reach no 1 nA, the result is "none". The
 predictions of P5 come from the nominal process of each family alone,
-because p5.json holds no other member, so its range is narrower than that
-of P3 for the same structure.
+because p5.json holds no other member. They are moved to the substrate
+doping of the dies as in P3 (`Substrate doping of the gap`_), or span the
+simulated range of dopings when P2 gives none.
 
 The result is the spacing rule for wells at different voltages. Rule NW.2b
 allows 1.4 µm, for circuits at 6 V or less (:numref:`tab-hvt-rules`). The
@@ -1026,8 +1139,9 @@ breakdown ratios give no answer, the capacitance call stands alone.
      - Not possible
    * - Ratio :math:`s` of CVN and CVN2, and of CVNA2 and CVNA, at 7 V or
        10 V
-     - Below the threshold of :numref:`tab-hvt-layer-rule`
-     - At or above it
+     - Below the threshold of :numref:`tab-hvt-layer-rule`, down to
+       0.05 below the L value
+     - At or above it, up to 1.123; outside both, neither
    * - Profile of CVNA and CVNA2 beyond 10 V
      - Reported only: no simulated capacitance
      - Reported only: no simulated capacitance
@@ -1058,6 +1172,20 @@ the predicted one. A ratio cancels most of the
 error of the ionisation coefficients, as long as both structures lie in
 the same regime.
 
+A die on which the structure does not break down by the end of its sweep
+gives a lower bound on its ratio: the highest voltage reached over the
+reference. The median over the dies is then a lower bound too, unless
+every bound lies above it. A lower bound above 1.15 times the predicted
+ratio disagrees. One between 0.85 and 1.15 times it agrees as far as a
+bound can, and one below 0.85 times it is inconclusive. A reference
+without breakdown gives no ratio on that die.
+
+As a worked example, a structure predicted at 1.59 times NT20 holds
+150 V, the end of the sweep, on a die where NT20 breaks down at 109 V. Its
+ratio is above :math:`150 / 109 = 1.38`, inside the range
+:math:`0.85 \times 1.59 = 1.35` to :math:`1.15 \times 1.59 = 1.83`, so it
+agrees.
+
 .. list-table:: Reference structure of the ratio under each assumption
    :name: tab-hvt-refs
    :header-rows: 1
@@ -1080,6 +1208,49 @@ the same regime.
      - Every deep N-well
      - DT20
 
+A reference that breaks down on no die, for instance because it is
+shorted on every die, is replaced by structures whose prediction equals
+its own within 2 % under every simulated process
+(:numref:`tab-hvt-stand-ins`). The copies of NT20 differ from it by up to
+1.6 % in the simulation (NT20c under BD), so a stand-in differs no more
+than a copy does.
+
+The first row of stand-ins with a measured member is used, and the report
+names it. The decision of :numref:`tab-hvt-decision` uses the same
+stand-ins for the values of groups 1 and 3. NT1, NA0p6C0 and DC0 are not
+stand-ins: their predictions differ, by 40 %, 31 % and 3.5 % under BL.
+
+.. list-table:: Stand-ins for a reference that breaks down on no die
+   :name: tab-hvt-stand-ins
+   :header-rows: 1
+   :widths: 24 34 42
+
+   * - Reference
+     - Stand-ins, in order
+     - Remarks
+   * - NT20
+     - NT20b and NT20c; then NT20L and NT20V; then NT5
+     - –
+   * - Group 1, the mean of NT20, NT20b and NT20c
+     - NT20L and NT20V; then NT5
+     - With NT5 as the group 1 value, the test of NT5 against group 1 is
+       empty
+   * - Mean of NW0 and NW0b, under A
+     - NT20, NT20b and NT20c; then NT20L and NT20V; then NT5
+     - For ratios only, under A, where every N-well has one prediction.
+       The decision has no stand-in: NW0 and NW0b alone have drawn P-well
+       against them, and only they show B
+   * - NA0p6
+     - NA0p6b; then NA0p6T10
+     - With NA0p6T10, the check of the P+ ring
+       (:numref:`tab-hvt-inconclusive`) is empty
+   * - Group 3, the mean of NA0p6 and NA0p6b
+     - NA0p6T10
+     - As above
+   * - DT20
+     - DT20b; then DT2p6
+     - –
+
 There are two regimes. Where a heavily doped surface limits, as at
 P-well, the model reads high, and where the lightly doped substrate
 limits it may read low (:ref:`hv-test-predictions`). A ratio across the
@@ -1098,7 +1269,23 @@ choices, set by the direction of the model's error in each regime.
 The measured value used is the median over the dies, from the first
 sweep at 25 °C, at 1 µA. A short is left out. A die without breakdown
 counts at the highest voltage it reached, and the median is then a lower
-bound if half the dies or more had none. A structure outside its range is reported with the
+bound if half the dies or more had none.
+
+Each die is checked against the others first. For every structure that
+broke down on three dies or more, the die's value is divided by the
+median over all dies. The die's factor is the median of these quotients
+over its structures, and a die whose factor lies outside 0.85 to 1.15 is
+named in the report.
+
+The 0.15 is the tolerance of "the same" and of a ratio. A whole die
+further off than that differs from the others by more than two structures
+may, which points to another wafer, a wrong setting or a probing fault
+rather than spread. The medians keep the die, since one outlier moves a
+median over five dies little. Its own ratios cancel a factor common to
+the die.
+
+The report repeats the decision without the flagged dies and lists every
+verdict that then changes. A structure outside its range is reported with the
 direction and size of the difference. Differences in one direction across
 a group point to a wrong profile or oxide charge, which the capacitance
 and gated-diode results then correct. A difference on one structure alone
@@ -1151,7 +1338,8 @@ The report opens with the decision of :numref:`tab-hvt-decision` and
 behind it, the absolute windows among them. One row per structure then
 gives the median, the number of dies, the spread, the reference, the
 measured and predicted ratios with their verdict, and the agreement range
-with the absolute verdict. P2 to P5 follow, each with the verdict of its
+with the absolute verdict. The factor of each die and the result without
+any outlier follow, then P2 to P5, each with the verdict of its
 rule, and "no prediction" for every quantity the simulation does not
 give. The report ends with the inconclusive items of
 :numref:`tab-hvt-inconclusive` that the records show, the current balance
@@ -1169,13 +1357,17 @@ the file and row named.
 ``--example DIR`` writes a synthetic set of records under BL, so that the
 script can be tried without silicon. Those files are not measurements.
 Each breakdown sweep is an ideal diode at the predicted voltage with a
-spread of 3 % between dies. The capacitance comes from a one-sided
-junction on the nominal substrate, with a heavy layer 2.2 µm under the
-junction under D. ``test_analyse.py`` runs the script on such sets under
-five families, also with every prediction scaled by 0.7 and by 1.5. It
-checks that the script recovers each family, the substrate doping within
-5 %, the punch-through voltages within one step and a flagged current
-balance:
+spread of 3 % between dies. The area capacitance is the published model
+times the simulated ratio of :numref:`tab-hvt-mc-cap`, linear between its
+biases, under L, and the model itself under D.
+
+``test_analyse.py`` runs the script on such sets under five families,
+also with every prediction scaled by 0.7 and by 1.5. It checks that the
+script recovers each family, the doping of the simulated curve within
+1 %, the punch-through voltages within one step and a flagged current
+balance. It also checks a ratio beyond the sweep as a lower bound, an
+outlier die, lost references and their stand-ins, a capacitance that
+fits neither curve, and P5 at another substrate doping:
 
 .. code-block:: sh
 
@@ -1368,6 +1560,10 @@ check for each (:numref:`tab-hvt-inconclusive`).
    * - Poor substrate contact
      - Resistance between two substrate pads above a few tens of ohms
      - Probes reseated
+   * - A die unlike the others
+     - The die's factor, the median of its values over those of all
+       dies, outside 0.85 to 1.15
+     - Named in the report, and the decision repeated without it
 
 Open questions
 --------------
@@ -1376,10 +1572,15 @@ Open questions
   of 30 V and the widths of the agreement range wide enough for the
   spread across a die and between dies? The windows of 8 V, 25 V and
   40 V are reported only, and do not decide.
-* Are the tolerances of the other procedures right: 0.3 µm of equivalent
+* Are the tolerances of the other procedures right: 0.6 µm of equivalent
   gap for punch-through, 15 % or 1 V for the ring step, and the
   capacitance threshold half-way between L and D? Each rests on the
   simulation's own spread, not on silicon.
+* Does the shift of the effective gap with doping, 0.328 µm per e-fold,
+  hold at gaps other than 2 µm? Only NR3_2 was simulated at three
+  dopings.
+* Is a band of 0.85 to 1.15 right for the outlier check by die? It rests
+  on the tolerance of a ratio, not on a measured spread between dies.
 * Does the deep P layer, if it exists, lie where the capacitance test
   expects it? No simulated capacitance extends beyond 10 V, so the deeper
   profile of CVNA and CVNA2 has no prediction to meet.
