@@ -110,7 +110,7 @@ that shows each one.
        DVSS
      - :numref:`fig-esd-io-gds-pad-net`, :numref:`fig-esd-io-gds-driver`
    * - 110 Ω resistor
-     - Four polysilicon resistors side by side
+     - Four polysilicon resistors in a row
      - :numref:`fig-esd-io-gds-secondary`
    * - Two 40 µm² diodes
      - Two strips of 20 µm × 1 µm for each diode: P+ strips to DVDD, N+
@@ -128,7 +128,7 @@ that shows each one.
    * - Three inverters
      - The three inverters between the clamp transistor and the timer
      - :numref:`fig-esd-io-gds-clamp`
-   * - Clamp NMOS, 4000 µm
+   * - Clamp NMOS, 4000 µm of gate
      - Four blocks of 20 fingers, each finger 50 µm wide
      - :numref:`fig-esd-io-gds-clamp`
    * - Diode from DVSS to DVDD, 160 µm²
@@ -169,15 +169,15 @@ drain it connects to, in the layout.
 .. figure:: figures/gds-pad-net.svg
    :name: fig-esd-io-gds-pad-net
    :alt: Layout of the pad end of the bidirectional pad, with its layers in
-         grey. The metal 2 of the PAD net is ruled with black lines and
-         outlined in black: it runs from the bond pad as a bus over both
-         output drivers. Under the bus, four NMOS drains and six PMOS
+         grey. Beyond the bond pad, the metal 2 of the PAD net is ruled
+         with black lines and outlined in black: it runs as a bus over
+         both output drivers. Under the bus, four NMOS drains and six PMOS
          drains are drawn red and labelled as the drain diodes, with
-         304 µm and 480 µm of gate. Gaps in the ruling show gaps in the
-         metal over the sources. A metal 2 wire 2 µm wide runs on to the
-         110 Ω of the secondary protection. In grey lettering: a gap in
-         the metal, the pre-drivers, the output signal buffers, the
-         pull-up and pull-down resistors and the 110 Ω.
+         304 µm and 480 µm of gate. Ten outlined, unruled shapes are gaps
+         in the metal over the sources. A metal 2 wire 2 µm wide runs on
+         to the 110 Ω of the secondary protection. In grey lettering: a
+         gap in the metal, the pre-drivers, the output signal buffers,
+         the pull-up and pull-down resistors and the 110 Ω.
    :width: 100%
 
    The primary protection of :numref:`fig-esd-io-cell-primary` in the
@@ -190,18 +190,19 @@ The cross-section :numref:`fig-esd-driver-section` cuts across the gates.
 above, in the layout, with the rings that surround them. The line A–A′
 in the layout is the cut that the cross-section draws for the NMOS: from
 the drain contacts at A, across the blocked drain, the gate and the
-source, to the P+ ring at A′. The cross-section runs across the page, with
-the PMOS at the left. The layouts have the NMOS at the left, nearer the
-pad, and their cuts run up the page.
+source, to the P+ ring at A′. The cross-section has the NMOS at the left,
+as the layouts do. Its cuts run across the page, and the layouts' cuts
+run up the page.
 
 .. figure:: figures/driver-section.svg
    :name: fig-esd-driver-section
-   :alt: Cross-section of the two output transistors. Left, a PMOS in an
+   :alt: Cross-section of the two output transistors. Right, a PMOS in an
          N-well on DVDD: its P+ drain, connected to PAD and silicide
          blocked for 2.78 µm beside the gate, forms a diode from PAD to
-         DVDD with the N-well, 480 µm of gate in all. Right, an NMOS in a P-well on
-         DVSS: its N+ drain, connected to PAD and silicide blocked for
-         3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm of
+         DVDD with the N-well, 480 µm of gate in all. Left, an NMOS in a
+         P-well on DVSS: its N+ drain, connected to PAD and silicide
+         blocked for 3.78 µm, forms a diode from DVSS to PAD with the
+         P-well, 304 µm of
          gate in all. The NMOS gate is 1.15 µm long and the PMOS gate
          0.7 µm. A dashed red line follows each diode's current through
          its well, between the drain and the guard ring. The P-well has a
@@ -494,8 +495,9 @@ the first case along the rails to a supply pad, and
 .. figure:: figures/gds-ring.svg
    :name: fig-esd-io-gds-ring
    :alt: The pad ends of a bidirectional pad cell, above, and a DVSS supply
-         pad cell, below. Stripes of metal 3 to 5, ruled in magenta for
-         DVDD and in green for DVSS, cross both cells. A red path with arrowheads, in
+         pad cell, below. Beyond the bond pads, stripes of metal 3 to 5,
+         ruled in magenta for DVDD and in green for DVSS, cross both
+         cells. A red path with arrowheads, in
          five numbered steps, runs from the PAD bond pad to the PMOS
          drains, onto the DVDD stripes, along them into the supply pad,
          through the clamp transistor and back to the DVSS bond pad.
