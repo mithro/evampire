@@ -165,6 +165,17 @@ the chuck is left floating instead, the same check holds; a grounded
 chuck on another channel would make the well current exceed channel B's
 current on every structure.
 
+The check is numerical. At every step where the well current is 100 nA or
+more, the substrate current must equal it within 10 %. In P5 the ring
+current is added to the substrate current. A larger difference marks the
+sweep inconclusive (:numref:`tab-hvt-inconclusive`). The 10 % is the
+same fraction as the OPEN check: a leak as large as OPEN's current, a
+tenth of the reading, moves the balance by 10 %. Below 100 nA an offset
+of either channel, or a leak of a few picoamperes, can be a large
+fraction of the current, so the check starts at the second level that the
+sweep already records. A P1 record without the substrate current is not
+checked, and the report says so.
+
 .. _hvt-p2:
 
 Capacitance against voltage (P2)
@@ -199,12 +210,23 @@ steps of 0.25 V. It stays below 80 % of the breakdown voltage that P1
 gives for the same well on another die. Under assumption An that is about
 50 V for CVNA and CVNA2, from the prediction for NA0p6, which has the same
 edge on a small well (:numref:`tab-hvt-pred-a`). The bias then comes
-from an external source of 60 V where the meter's own range is lower. The capacitance is read at 100 kHz and at 1 MHz. The two
-readings agree, and the dissipation factor is below 0.1, when the series
-resistance of the well and substrate is negligible.
+from an external source of 60 V where the meter's own range is lower. The
+sweep reaches at least 10 V on CVN and CVN2 where that limit allows,
+because the layer test below needs 7 V or more. The capacitance is read at
+100 kHz and at 1 MHz. The two readings agree, and the dissipation factor
+is below 0.1, when the series resistance of the well and substrate is
+negligible.
 
-The same sweep on OPEN gives the capacitance of a pad, its lead and the
-probe, which is subtracted at each bias. A Metal5 pad of 100 µm by 100 µm
+The two conditions are one. A series resistance :math:`R` makes a meter
+in parallel mode read :math:`C / (1 + D^2)`, with :math:`D = \omega R C`,
+so a dissipation factor of 0.1 lowers the reading by 1 %. The readings at
+the two frequencies therefore agree within 1 %, and a larger difference
+marks the sweep inconclusive. The reduction uses the 100 kHz readings,
+where :math:`D` is ten times smaller.
+
+The same sweep on OPEN, on the same die, gives the capacitance of a pad,
+its lead and the probe. It is subtracted at each bias, interpolated
+linearly between OPEN's own steps. A Metal5 pad of 100 µm by 100 µm
 directly over the substrate would have about 58 fF. Dummy Metal4 fill lies
 under every pad, which raises that value by an amount the layout does not
 fix. OPEN carries the same fill, so the subtraction removes it. The two
@@ -333,16 +355,122 @@ has NAT round it for that reason: if NAT clears the P-well from its edge,
 its bias can go several times higher. Its area and perimeter equal those
 of CVN2, so the two together also show what the NAT layer changes.
 
+The measured profile is reduced in three steps, on each die and for each
+pair: CVN with CVN2, and CVNA2 with CVNA.
+
+#. The slope of :math:`1/C^2` is fitted by least squares over a window of
+   1 V round each bias, five readings at 0.25 V steps. Neighbouring
+   readings differ by only tens of femtofarads at 10 V, so a slope from
+   two readings alone would carry the meter's 10 fF resolution several
+   times over.
+#. The substrate doping is the lowest doping of the profile at biases of
+   1 V and more. Nearer 0 V the depletion region also spreads into the
+   graded edge of the N-well, which makes the profile read low: the
+   published model gives :math:`1.9 \times 10^{15}` cm\ :sup:`-3` at
+   0 V on its own.
+#. The median over the dies is compared with the substrate doping of the
+   simulated processes (:numref:`tab-hvt-processes`): nominally
+   :math:`3.56 \times 10^{15}` cm\ :sup:`-3`
+   (:numref:`tab-hvt-profiles`), with members at
+   :math:`2 \times 10^{15}` and :math:`5 \times 10^{15}`. A value
+   inside that range agrees. A value outside it means that no simulated
+   process has the doping of the silicon, and the report gives the
+   factor.
+
+The same reduction applied to the published model and to the simulated
+curve under L gives :math:`3.8` to :math:`5.1 \times 10^{15}` and
+:math:`2.9 \times 10^{15}` cm\ :sup:`-3` between 2 V and 5 V
+(:download:`calc.py <calc.py>`, section 5). Both lie inside the range, so
+the substrate doping alone does not answer the question of the deep
+layer.
+
 The sweep also shows whether a heavily doped P layer lies a few
 micrometres under the N-well. Such a layer stops the depletion region from
 spreading, so the capacitance falls more slowly with voltage than over
-light substrate alone. In the simulation the two cases already differ
-measurably at 5 V and by about a quarter at 10 V
-(:numref:`tab-hvt-mc-cap`). CVN and CVN2 therefore answer the question
-below 10 V, even if P-well surrounds them and they break down early.
-CVNA and CVNA2 extend the sweep to higher voltages if NAT clears their
-edges, where the capacitance stops falling altogether once the depletion
-region meets the layer.
+light substrate alone. The simulation gives that difference against the
+published model (:numref:`tab-hvt-mc-cap`): under D within 4 % of it at
+every bias, and under L 10 % low at 5 V and 17 % low at 10 V. The test
+compares the shape of the measured area capacitance with that of the
+model, so that an error in the area or in the model's zero-bias value
+cancels:
+
+.. math::
+
+   s(V) &= \frac{C_\text{a}(V) / C_\text{m}(V)}
+               {C_\text{a}(0) / C_\text{m}(0)} \\
+   C_\text{m}(V) &= \frac{C_\text{m0}}
+                        {(1 + V / V_\text{bi})^{M}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`s(V)`
+     - Measured capacitance at bias :math:`V` relative to the model,
+       divided by the same at 0 V
+     - None
+   * - :math:`C_\text{a}(V)`
+     - Measured capacitance per area of the flat bottom, from the two
+       wells of a pair
+     - F/µm\ :sup:`2`
+   * - :math:`C_\text{m}(V)`
+     - Published model of the same, with :math:`C_\text{m0} = 1.4914
+       \times 10^{-4}` F/m², :math:`V_\text{bi} = 0.43905` V and
+       :math:`M = 0.30525` [HV-GF180-MODELS]_
+     - F/µm\ :sup:`2`
+   * - :math:`V`
+     - Reverse bias
+     - V
+
+Under L the simulation gives :math:`s(10\ \text{V}) = 0.83 / 1.00 =
+0.830`. Under D it gives at least :math:`0.96 / 1.03 = 0.932`, the worst
+case of the 4 % at both ends. The threshold lies half-way:
+
+.. math::
+
+   s_\text{t}(10\ \text{V}) = \frac{0.830 + 0.932}{2} = 0.881
+
+A pair whose :math:`s` is at or above the threshold selects D, and one
+below it selects L (:numref:`tab-hvt-layer-rule`). The test uses the
+highest of 10 V and 7 V that the sweep reached. At 5 V the L value, 0.900,
+lies only 0.032 below the D range. An error of 2.5 % in the reading, the
+OPEN subtraction or the separation of the area moves :math:`s` by up to
+0.05, so 5 V gives no call. When CVN and CVN2 and
+CVNA2 and CVNA both give a call and the two differ, the result is
+undecided.
+
+.. list-table:: Thresholds of the capacitance test for the deep P layer
+   :name: tab-hvt-layer-rule
+   :header-rows: 1
+   :widths: 20 20 30 30
+
+   * - Bias (V)
+     - :math:`s` under L
+     - Lowest :math:`s` under D
+     - Threshold
+   * - 5
+     - 0.900
+     - 0.932
+     - None: too close
+   * - 7
+     - 0.870
+     - 0.932
+     - 0.901
+   * - 10
+     - 0.830
+     - 0.932
+     - 0.881
+
+CVN and CVN2 therefore answer the question by 10 V, even if P-well
+surrounds them and they break down early. CVNA and CVNA2 extend the
+profile to higher voltages if NAT clears their edges. Beyond 10 V there
+is no simulated capacitance, so their deeper profile is reported without a
+verdict. CVD has no partner of a different size, and its capacitance is
+reported alone. The edge part :math:`C_\text{p}` is reported beside the
+published model's value, since no simulation gives it.
 
 .. _hvt-p3:
 
@@ -408,7 +536,87 @@ therefore expected and is not a fault.
 The punch-through voltage is the well voltage at which the ring reaches
 1 V. The step is the well voltage minus the ring voltage at the highest
 well voltage reached. Both are compared with the simulated ring potential
-(:numref:`fig-hvt-pred-ring`).
+(:numref:`fig-hvt-pred-ring`). The median over the dies is used; when
+half the dies or more show no onset, the result is "none" up to the
+median of the highest well voltages.
+
+The punch-through voltage rises with the square of the gap, so the same
+error in micrometres is a small error in volts at a wide gap and a large
+one at a narrow gap. The simulated values follow
+
+.. math::
+
+   V_\text{pt} &= k \, (g - g_0)^2 \\
+   \Delta g &= \frac{\sqrt{V_\text{m}} - \sqrt{V_\text{p}}}{\sqrt{k}}
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 60 20
+
+   * - Symbol
+     - Meaning
+     - Unit
+   * - :math:`V_\text{pt}`
+     - Punch-through voltage of a ring at gap :math:`g`
+     - V
+   * - :math:`g`, :math:`g_0`
+     - Drawn gap from the well to ring 1, and the gap at which the two
+       depletion regions already touch at 0 V
+     - µm
+   * - :math:`k`
+     - Fitted coefficient
+     - V/µm\ :sup:`2`
+   * - :math:`V_\text{m}`, :math:`V_\text{p}`
+     - Measured and predicted punch-through voltage
+     - V
+   * - :math:`\Delta g`
+     - Equivalent error of the gap
+     - µm
+
+The fit is a least-squares line of :math:`\sqrt{V}` against the gap,
+under B, where every gap is bare substrate. Under BL it gives
+:math:`k = 3.33` V/µm² and :math:`g_0 = 0.91` µm for the ring onsets of
+P3, and :math:`k = 3.34` V/µm² and :math:`g_0 = 0.97` µm for the values
+of P5 (:download:`calc.py <calc.py>`, section 5). NAT gives the same values
+under An, and under A only gaps of 1.6 µm or less punch through before
+breakdown, so each family uses the fit of B with its own deep layer.
+
+A measured punch-through voltage agrees when its equivalent gap lies
+within 0.3 µm of the predicted band. The band runs over the processes of
+the family that predictions.json holds, so it includes oxide charge and
+substrate doping where they were simulated. The 0.3 µm is one lateral
+spread of the N-well's deep part, 0.29 µm in :numref:`tab-hvt-profiles`,
+which no published value fixes. As a worked example, P5 on NR1S2 under BL
+predicts 3.8 V:
+
+.. math::
+
+   \sqrt{3.8 / 3.34} &= 1.067\ \text{µm} \\
+   V_\text{low} &= 3.34 \times (1.067 - 0.3)^2 = 2.0\ \text{V} \\
+   V_\text{high} &= 3.34 \times (1.067 + 0.3)^2 = 6.2\ \text{V}
+
+The same 0.3 µm is 0.4 V to 3.0 V at 1.6 µm, a factor of seven, but
+47.3 V to 63.5 V at 5 µm, within 15 %. A rule in volts would therefore be
+too strict at the narrow gaps or too loose at the wide ones.
+:numref:`tab-hvt-pt-range` gives every range. Where the simulation shows
+no punch-through before breakdown, the prediction is a lower bound: a die
+with none agrees, and one with an onset agrees if the onset lies above the
+lower end. A die with none whose sweep ended inside the range is
+inconclusive.
+
+.. csv-table:: Predicted punch-through voltages of P3 and P5 and their
+               agreement ranges
+   :name: tab-hvt-pt-range
+   :file: hvt-tab-pt-range.csv
+   :header-rows: 1
+
+The step is compared at the highest well voltage the measurement reached.
+Its band is the step of every process of the family at that voltage,
+widened at each end by 15 % or 1 V, whichever is larger. The 15 % is the
+tolerance of a ratio of breakdown voltages; the 1 V covers the 0.8 V by
+which the second simulator's ring differs from the first
+(:numref:`tab-hvt-crosscheck-ring`). Above the end of the simulated sweep
+the step has no prediction.
 
 .. _hvt-p4:
 
@@ -559,12 +767,38 @@ first part therefore needs 10 fA resolution and long integration. It is
 repeated at 85 °C, where the intrinsic carrier density, and the step with
 it, is about forty times larger.
 
+The flat-band voltage and the field threshold are read from each plate
+sweep by levels, not by eye. The accumulation level is the median current
+of the first tenth of the sweep, the inversion level that of the last
+tenth, and the peak the largest of a running median over five readings.
+The flat-band voltage is the plate voltage at which that running median
+first reaches the geometric mean of the accumulation level and the peak.
+The field threshold is the plate voltage after the peak at which it falls
+to the geometric mean of the peak and the inversion level. A step smaller
+than a factor of 2 counts as not resolved, and a current that never falls
+gives no threshold in the range. The doping under the plate is the value
+that makes the threshold equation give the measured difference between
+the thresholds at the two well voltages, and it is compared with the
+substrate dopings of the simulated processes by the rule of P2.
+
+No simulation gives the flat-band voltage, the field threshold or the
+current step. The report prints, beside each threshold, the estimate of
+the equation above with the nominal substrate doping and the flat-band
+voltage of :ref:`hv-metal-gate`, and gives no verdict on it. Where P-well
+lies beside the well under the family, there is no estimate.
+
 The second part does not depend on small currents. It repeats the
 breakdown sweep at several plate voltages. A negative plate strengthens
 the field at the well edge and lowers the breakdown voltage, and a
-positive plate relieves it. The breakdown voltage against plate voltage is
-compared with the simulation of the same structure with its plate at 0 V
-(:numref:`tab-hvt-pred-g`).
+positive plate relieves it. Only two of these voltages have a simulated
+counterpart. With the plate joined to the well, the P1 sweep is compared
+as for any structure. With the plate at 0 V, the G processes of the
+family give the prediction (:numref:`tab-hvt-pred-g`), compared in two
+ways as in `Comparison with predictions`_. The breakdown voltage at 0 V
+divided by that with the plate joined, on the same die, agrees within
+15 % of the predicted ratio. The median breakdown voltage lies in the
+agreement range of the G band. At −10 V, +10 V and +20 V the report says
+"no prediction".
 
 The voltage between the well and a Metal1 plate stays within 80 V. The
 plate starts 0.5 µm inside the well edge. Its Metal1 lies 1.2 µm from
@@ -614,7 +848,12 @@ which the ring current reaches 1 nA. Where the current goes names the
 mechanism: punch-through current leaves by the ring pad, and avalanche
 current leaves by the substrate pads. The ring current against well
 voltage also gives the current available to the meter in P3 at each
-voltage.
+voltage. The median over the dies is compared with the prediction by the
+rule of P3, through the equivalent gap (:numref:`tab-hvt-pt-range`); when
+half the dies or more reach no 1 nA, the result is "none". The
+predictions of P5 come from the nominal process of each family alone,
+because p5.json holds no other member, so its range is narrower than that
+of P3 for the same structure.
 
 The result is the spacing rule for wells at different voltages. Rule NW.2b
 allows 1.4 µm, for circuits at 6 V or less (:numref:`tab-hvt-rules`). The
@@ -649,7 +888,8 @@ may fail first.
    :alt: Flow of ten steps on each die. 1, contact check between
          substrate pads, and OPEN swept to 150 V. 2, P1 on groups 1 to 4.
          3, the decision table selects the process assumption. 4, P2 on
-         the large wells. 5, P1 on groups 5 and 6 except the polysilicon
+         the large wells and OPEN, to 10 V if 80 % of their breakdown
+         allows. 5, P1 on groups 5 and 6 except the polysilicon
          plates. 6, P3 and P5 on the ring-sense structures. 7, P4 on the
          gated diodes. 8, P1 at 85 °C on a subset. 9, P1 on the
          polysilicon plates NP1, NP2, NP4, NPM12 and NGP4. 10, comparison
@@ -667,14 +907,32 @@ everywhere except beside NAT (An), or only where drawn (B). The second is
 whether a heavily doped P layer lies a few micrometres under the N-wells
 (D) or only under deep N-wells (L).
 
-Three terms have fixed meanings. "Near 14 V" is a breakdown voltage
-between 8 V and 25 V, around the published 10 V minimum and 14 V typical
-[HV-GF180-EP-5]_. "Much higher" is above 40 V. Two values are "the same"
-when they differ by less than 15 % of the lower one or 3 V, whichever is
-larger. These limits are choices. The copies NT20b, NT20c, NW0b, NC0b, NM1_6b, NA0p6b
-and DT20b
-show whether the spread across a die fits inside them. The same limits apply to the
-ratios of the next section.
+The decision rests on the pattern between structures, not on absolute
+voltages, so that a model that reads high or low by one factor for every
+structure still gives the right answer. Two terms have fixed meanings. Two
+values are "the same" when they differ by less than 15 % of the lower one
+or 3 V, whichever is larger. One value is "much higher" than another when
+it is at least twice as large.
+
+The factor of 2 follows from the predictions. In every family a well
+limited by a heavy surface breaks down at 17.8 V or less, and one limited
+by the light substrate at 61.2 V or more, a factor of 3.44
+(:download:`calc.py <calc.py>`, section 5). Two is about the geometric
+mean of that factor and the 1.15 of "the same", so it lies as far, in
+ratio, from either.
+
+One absolute limit stays. A common value for every N-well selects A or An
+only if it is below 30 V, the border below which a heavy surface limits
+(`Comparison with predictions`_), and B needs the plain wells at 30 V or
+more. A value on the wrong side of 30 V is not a scale error of the model
+but a different mechanism, and leaves the decision undecided. Scaling
+every prediction by 0.7 to 1.5 keeps every family on its side. The windows of the published values are reported
+beside the pattern without deciding: "near 14 V" is 8 V to 25 V, round
+the published 10 V minimum and 14 V typical [HV-GF180-EP-5]_, and "above
+40 V" marks a well clear of P-well. The limits are choices. The copies
+NT20b, NT20c, NW0b, NC0b, NM1_6b, NA0p6b and DT20b show whether the spread
+across a die fits inside them. The same limits apply to the ratios of the
+next section.
 
 The pattern across groups 1 to 3 answers the first question
 (:numref:`tab-hvt-decision`). Each structure's value is its median over
@@ -693,23 +951,24 @@ checked first and, if it matches, decides.
      - Group 2, drawn P-well
      - Group 3, NAT beside an N-well
      - Conclusion
-   * - Near 14 V at every ring distance
+   * - NT1, NT5 and the group 1 value the same, below 30 V
      - The same as group 1 at every distance
-     - Much higher
+     - Much higher than group 1
      - An: the foundry generates P-well everywhere, and NAT blocks it,
        also in the strip beside an N-well
-   * - Near 14 V at every ring distance
+   * - NT1, NT5 and the group 1 value the same, below 30 V
      - The same as group 1 at every distance
      - The same as group 1
      - A: P-well everywhere, and either it fills the strip between an
        N-well and NAT, or NAT does not block it without a transistor. The
        die cannot tell these two apart
-   * - Much higher from 5 µm of ring distance
-     - Near 14 V at 0 µm. Rises with distance to the group 1 value
+   * - NT5 the same as the group 1 value, 30 V or more
+     - NW0 much lower than group 1. Rises with distance to the same as
+       group 1 at NW6
      - The same as group 1
      - B: only drawn P-well exists
-   * - Near 14 V at every ring distance
-     - Rises with distance
+   * - NT5 the same as the group 1 value
+     - Rises with distance, without the pattern of B
      - Any
      - Drawing any P-well stops the generation in that structure. A
        distant drawn P-well is then itself a way to clear the edge
@@ -732,9 +991,16 @@ every N-well breaks down at its surface first. Under An the plate on a
 plain N-well is limited by P-well, so the plate under NAT, NAM1_6, takes
 its place in the first row. The capacitance of the large wells answers the
 question in every case. Of the breakdown measurements, the first and third
-rows decide: one structure above the range of its D prediction selects L,
-and otherwise the ratio of the first row selects the answer it agrees
-with, within 15 %.
+rows decide, both by ratios. One N-well structure whose ratio to its
+reference exceeds the ratio predicted under D by more than 15 % selects L.
+Otherwise the ratio of the first row selects the answer it agrees with,
+within 15 %. Whether a structure lies above the agreement range of its D
+prediction in volts is reported beside them, without deciding.
+
+The capacitance call of `Capacitance against voltage (P2)`_ joins them.
+Under A it is the only answer. Under An and B it confirms the breakdown
+result; if the two disagree, the deep layer is undecided. If the
+breakdown ratios give no answer, the capacitance call stands alone.
 
 .. list-table:: Measurements that show a deep P layer under the N-wells
    :name: tab-hvt-deep
@@ -754,16 +1020,17 @@ with, within 15 %.
      - Higher than the plain well, by different amounts
      - The same as the plain well: all stop at one voltage, set at the
        bottom of the well
-   * - Any N-well structure above the agreement range of its D
-       prediction (:numref:`tab-hvt-pred-band`)
+   * - Any N-well structure whose ratio to its reference exceeds its D
+       prediction (:numref:`tab-hvt-pred-band`) by more than 15 %
      - Possible
      - Not possible
-   * - Capacitance of CVN and CVN2 from 0 V to 10 V
-     - Falls as over light substrate
-     - Falls more slowly, by the amounts of :numref:`tab-hvt-mc-cap`
-   * - Capacitance of CVNA and CVNA2 beyond about 15 V
-     - Keeps falling
-     - Stops falling at the depth of the layer
+   * - Ratio :math:`s` of CVN and CVN2, and of CVNA2 and CVNA, at 7 V or
+       10 V
+     - Below the threshold of :numref:`tab-hvt-layer-rule`
+     - At or above it
+   * - Profile of CVNA and CVNA2 beyond 10 V
+     - Reported only: no simulated capacitance
+     - Reported only: no simulated capacitance
 
 Group 4 checks the picture of the deep layer itself. Every deep N-well
 structure is predicted to break down near 30 V, at the bottom of the
@@ -867,40 +1134,48 @@ is given and writes a report in Markdown:
 
 .. figure:: hvt-analysis.svg
    :name: fig-hvt-analysis
-   :alt: Flow of six steps. 1, the sweep records, one CSV file per sweep.
-         2, the breakdown voltage of each die, from the first sweep at
-         25 °C, at 1 µA and at 100 nA. 3, the median over the dies, with
-         the spread, shorts left out. 4, the decision: A, An or B, and L or
-         D, or undecided. 5, the comparison: the ratio to the reference
-         structure and the agreement range. 6, the report, with the
-         verdicts, the P3 and P5 results and the inconclusive items.
+   :alt: Flow of seven steps. 1, the sweep records, one CSV file per
+         sweep. 2, the breakdown voltage of each die, from the first sweep
+         at 25 °C, at 1 µA and at 100 nA. 3, the median over the dies,
+         with the spread, shorts left out. 4, the decision: A, An or B by
+         the pattern, and L or D with the capacitance of P2, or
+         undecided. 5, the comparison: the ratio to the reference
+         structure and the agreement range. 6, P2 to P5 against their
+         rules. 7, the report, with the verdicts, the quantities that have
+         no prediction and the inconclusive items.
 
    Steps of the analysis script from the records to the report.
 
 The report opens with the decision of :numref:`tab-hvt-decision` and
 :numref:`tab-hvt-deep`, or the reason it is undecided, and the values
-behind it. One row per structure then gives the median, the number of
-dies, the spread, the reference, the measured and predicted ratios with
-their verdict, and the agreement range with the absolute verdict. The
-punch-through voltages of P3 and P5 follow beside their predictions,
-since no agreement rule is set for them. The report ends with the
-inconclusive items of :numref:`tab-hvt-inconclusive` that the records show,
-and with any file it could not use.
+behind it, the absolute windows among them. One row per structure then
+gives the median, the number of dies, the spread, the reference, the
+measured and predicted ratios with their verdict, and the agreement range
+with the absolute verdict. P2 to P5 follow, each with the verdict of its
+rule, and "no prediction" for every quantity the simulation does not
+give. The report ends with the inconclusive items of
+:numref:`tab-hvt-inconclusive` that the records show, the current balance
+among them, and with any file it could not use.
 
 The script takes the reference structures, the predicted ratios, the
 bands and the agreement ranges from the code that writes the tables of
-:ref:`hv-test-predictions`, so the two cannot differ. ``--family`` compares
-under a family named by hand, for instance when the decision is
-undecided. It reads P2 records and the plate sweeps of P4, and checks
-them, but does not reduce them. Its exit status is 0 whatever the
-comparison shows, and 2 when a record cannot be read, with the file and
-row named.
+:ref:`hv-test-predictions`. It takes the rules of P2 to P5 from the code
+that writes :numref:`tab-hvt-pt-range` and prints the numbers of this
+page. The page and the script therefore cannot differ. ``--family`` compares under a family named by
+hand, for instance when the decision is undecided. Its exit status is 0
+whatever the comparison shows, and 2 when a record cannot be read, with
+the file and row named.
 
 ``--example DIR`` writes a synthetic set of records under BL, so that the
-script can be tried without silicon. Those files are not measurements:
-each is an ideal diode at the predicted voltage with a spread of 3 %
-between dies. ``test_analyse.py`` runs the script on such sets under five
-families and checks that it recovers each one:
+script can be tried without silicon. Those files are not measurements.
+Each breakdown sweep is an ideal diode at the predicted voltage with a
+spread of 3 % between dies. The capacitance comes from a one-sided
+junction on the nominal substrate, with a heavy layer 2.2 µm under the
+junction under D. ``test_analyse.py`` runs the script on such sets under
+five families, also with every prediction scaled by 0.7 and by 1.5. It
+checks that the script recovers each family, the substrate doping within
+5 %, the punch-through voltages within one step and a flagged current
+balance:
 
 .. code-block:: sh
 
@@ -950,7 +1225,8 @@ structures, and some not at all (:numref:`tab-hvt-tell`).
    * - Deep P layer under N-wells or not, when P-well lies against every
        N-well
      - By capacitance only
-     - CVN and CVN2 below 10 V. No breakdown voltage differs
+     - CVN and CVN2 at 7 V or 10 V (:numref:`tab-hvt-layer-rule`). No
+       breakdown voltage differs
    * - Under A: P-well in the strip beside NAT, or NAT that blocks
        nothing
      - No
@@ -1081,9 +1357,14 @@ check for each (:numref:`tab-hvt-inconclusive`).
        The polysilicon plates are swept last on each die, and a hard
        short is recorded apart from avalanche
    * - Series resistance in a capacitance reading
-     - Readings at 100 kHz and 1 MHz differ, or the dissipation factor
-       exceeds 0.1
+     - Readings at 100 kHz and 1 MHz differ by more than 1 %, or the
+       dissipation factor exceeds 0.1
      - Lower frequency. The smaller well, which has less resistance
+   * - Current leaves by another path
+     - Above 100 nA, the substrate current, with the ring current in P5,
+       differs from the well current by more than 10 %
+     - Probes, the second pad and the chuck connection checked, and the
+       sweep repeated
    * - Poor substrate contact
      - Resistance between two substrate pads above a few tens of ohms
      - Probes reseated
@@ -1091,9 +1372,17 @@ check for each (:numref:`tab-hvt-inconclusive`).
 Open questions
 --------------
 
-* Are the decision limits of 8 V, 25 V and 40 V, and the widths of the
-  agreement range, wide enough for the spread across a die and between
-  dies?
+* Are "the same" (15 % or 3 V), "much higher" (a factor of 2), the border
+  of 30 V and the widths of the agreement range wide enough for the
+  spread across a die and between dies? The windows of 8 V, 25 V and
+  40 V are reported only, and do not decide.
+* Are the tolerances of the other procedures right: 0.3 µm of equivalent
+  gap for punch-through, 15 % or 1 V for the ring step, and the
+  capacitance threshold half-way between L and D? Each rests on the
+  simulation's own spread, not on silicon.
+* Does the deep P layer, if it exists, lie where the capacitance test
+  expects it? No simulated capacitance extends beyond 10 V, so the deeper
+  profile of CVNA and CVNA2 has no prediction to meet.
 * Under A, does P-well fill the strip beside NAT, or does NAT not block
   it? No structure on the die separates the two.
 * What breakdown voltage does a large well have? It bounds the bias, and
