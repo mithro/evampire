@@ -11,7 +11,7 @@ bidirectional pad.
 
 Every layout figure is drawn from the foundry's GDS file, in the version
 for five metal layers, by the script in :ref:`esd-layout-method`. The
-figures share five conventions:
+figures share six conventions:
 
 * The bond pad is at the left and the chip's core at the right, as in the
   schematic :numref:`fig-esd-io-cell`. This turns the foundry's drawing a
@@ -26,9 +26,13 @@ figures share five conventions:
   has there: :numref:`fig-esd-gds-nmos-driver` and
   :numref:`fig-esd-gds-silicide-block`. The cross-section gives its P-well
   the substrate's colour and a dashed edge, because no P-well is drawn
-  under the transistors (:ref:`esd-layout-driver-parts`). The remaining
-  figures colour each diffusion and each metal by its net: dark red for
-  PAD, magenta for DVDD and green for DVSS.
+  under the transistors (:ref:`esd-layout-driver-parts`).
+* The figures that match the paths diagram :numref:`fig-esd-paths` colour
+  diffusion and metal by net: :numref:`fig-esd-gds-paths` and
+  :numref:`fig-esd-gds-ring`, and also :numref:`fig-esd-gds-clamp-fingers`.
+  Drains on PAD are dark red and the PAD bond pad a lighter red. Magenta
+  is DVDD and green is DVSS. Grey lettering names what that diagram leaves
+  out.
 * Red marks the primary protection and the discharge current, blue the
   secondary protection and orange the rail clamp, as in the schematic.
   The schematic's wires are black, so the grey figures rule the metal of
@@ -285,10 +289,10 @@ which is the diode's other terminal.
          arrives from the left on a
          metal 2 wire and ends on four polysilicon resistors drawn blue, 2.5
          µm by 2.8 µm each and in parallel, under a hatched silicide block.
-         The wire after them, ruled and outlined in black, sends a
+         The protected net after them, ruled and outlined in black, sends a
          branch to the pull-up and pull-down resistors. It passes over two P+
          diode strips of 20 µm by 1 µm in an N-well held on DVDD, and two N+
-         diode strips of the same size in substrate held on DVSS. It leaves
+         diode strips of the same size in P-type silicon held on DVSS. It leaves
          at the right for the gates of the input buffer. Grey lettering
          names an N+ ring round the resistors and an outer ring round each
          diode.

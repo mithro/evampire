@@ -30,9 +30,10 @@ them contain the protection structures that follow:
 Protection structure
 --------------------
 
-The protection of the bidirectional pad has three parts: the output
-driver, the secondary protection of the input gates and the rail clamp.
-:numref:`fig-esd-io-cell` shows them, with the clamps of the supply pads.
+Three parts protect the bidirectional pad. Two are inside it: the output
+driver and the secondary protection of the input gates. The third, the
+rail clamp, is inside each supply pad, beside a :term:`rail diode`.
+:numref:`fig-esd-io-cell` shows them all.
 :numref:`fig-esd-io-gds-cell` shows the same parts in the layouts of both
 cells, drawn from the foundry's GDS files: the output driver and the
 secondary protection in the bidirectional pad, and the rail clamp in a
@@ -48,12 +49,12 @@ DVSS.
          On the left, the PAD connects to a diode up to DVDD,
          labelled drain diode of PMOS drivers 480 µm wide, and a diode up
          from DVSS, labelled drain diode of NMOS drivers 304 µm wide. A 110 ohm
-         resistor, four 440 ohm resistors in parallel, leads to an inner
-         node with two small 40 square micrometre diodes to the rails and
-         the input buffer. On the right, a rail clamp: a 360 kilohm
+         resistor, four 440 ohm resistors in parallel, leads to the
+         protected net, with two small 40 square micrometre diodes to the
+         rails and the input buffer. On the right, a rail clamp: a 360 kilohm
          resistor from DVDD and a MOS capacitor to DVSS meet at a node that
          drives three inverters, which drive the gate of a 4000 µm NMOS
-         transistor connected between DVDD and DVSS. Beside it, a diode of
+         wide transistor connected between DVDD and DVSS. Beside it, a diode of
          160 square micrometres, in four parts, points from DVSS to DVDD.
    :width: 100%
 
@@ -65,8 +66,9 @@ DVSS.
    :alt: Two layouts, each 350 µm long and 75 µm wide, with their layers
          in grey. Above, the bidirectional pad. From the left: the bond
          pad, labelled PAD. Two groups of red drains, labelled drain diode
-         of NMOS drivers 304 µm wide and drain diode of PMOS drivers 480 µm
-         wide. In grey lettering, the pre-drivers,
+         of NMOS drivers 304 µm wide, 8 gates of 38 µm, and drain diode of
+         PMOS drivers 480 µm wide, 12 gates of 40 µm. In grey lettering,
+         the pre-drivers,
          output signal buffers and pull-up and pull-down resistors, which
          the schematic leaves out. Three blue blocks labelled
          110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
@@ -186,8 +188,9 @@ source, to the P+ ring at A′.
          DVDD with the N-well, 480 µm in all. Right, an NMOS in a P-well on
          DVSS: its N+ drain, connected to PAD and silicide blocked for
          3.78 µm, forms a diode from DVSS to PAD with the P-well, 304 µm in
-         all; its gate is 1.15 µm long and the PMOS gate 0.7 µm. The P-well
-         has a dashed edge, because the layout draws no P-well shape there.
+         all. The NMOS gate is 1.15 µm long and the PMOS gate 0.7 µm. A
+         dashed red line follows each diode's current through its well to
+         the guard ring. The P-well has a dashed edge, because the layout draws no P-well shape there.
          A hatched bar over each blocked drain is the silicide block, and
          each transistor's source and guard ring are named. The letters A,
          at the NMOS drain, and A′, at the P+ guard ring, mark the cut A–A′
@@ -267,10 +270,10 @@ the layout.
    :name: fig-esd-io-gds-secondary
    :alt: Layout of the secondary protection, with its layers in grey. PAD
          arrives from the left on a metal 2 wire and ends on four blue
-         polysilicon resistors in parallel, labelled 110 Ω. The wire
-         after them, ruled and outlined in black, passes over two blue P+
+         polysilicon resistors in parallel, labelled 110 Ω. The protected
+         net after them, ruled and outlined in black, passes over two blue P+
          diode strips in an N-well on DVDD and two N+ diode strips in
-         substrate on DVSS, and leaves at the right for the input buffer.
+         P-type silicon on DVSS, and leaves at the right for the input buffer.
          Grey lettering names three outer rings that the schematic leaves
          out.
    :width: 100%
@@ -297,7 +300,7 @@ rail clamp ([ESD-DVDD-CDL]_):
 #. The transistor turns on and conducts the discharge current from DVDD to
    DVSS at a few volts.
 
-Each supply pad also holds a diode from DVSS to DVDD, the rail diode, in
+Each supply pad also holds a diode from DVSS to DVDD, the :term:`rail diode`, in
 four parts of 40 µm², 160 µm² in all ([ESD-DVDD-CDL]_, line 50). It
 conducts when DVSS rises above DVDD.
 
@@ -436,7 +439,7 @@ follows the first path along the rails to a supply pad.
          from each drain to the sources beside it. (b) Negative
          discharges: in the NMOS drivers, red arrows run from the P+ ring
          on DVSS to the N+ drains. Grey lettering names the outer guard
-         rings, which the diagram of the paths leaves out. The avalanche
+         rings, which the paths diagram leaves out. The avalanche
          of the PMOS drains and the rail clamp are not drawn.
    :width: 100%
 
