@@ -308,8 +308,8 @@ As :term:`power sourcing equipment`, evampire:
   two as Type 2, and up to four or five as Type 3 or Type 4
   (:clause:`33.2.6.2`, :clause:`145.2.8`). A powered device without LLDP
   then receives the full power of its assigned class, unless it uses
-  :ref:`Autoclass <poe-autoclass>` and port B supports it, which is an
-  open question (:doc:`power/poe/power-sourcing`);
+  :ref:`Autoclass <poe-autoclass>` and port B supports it
+  (:doc:`power/poe/power-sourcing`);
 * never relies on one class event and LLDP to grant class 4, although
   :clause:`33.2.6.2` allows it for Type 2;
 * answers LLDP power requests, allocating power in steps of 0.1 W within

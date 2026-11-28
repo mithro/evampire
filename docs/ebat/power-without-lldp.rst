@@ -96,7 +96,8 @@ Allocation changes on port B
 On a board that does not pass Ethernet data through, port B has no LLDP
 exchange with its powered device (:ref:`req-ebat-no-lldp`). Without that
 exchange, the powered device receives the full power of its assigned
-class, as from evampire (:ref:`req-poe-classification`). Port B changes
+class, as from evampire, unless it uses :ref:`Autoclass <poe-autoclass>`
+and port B supports it (:ref:`req-poe-classification`). Port B changes
 its allocation only in the ways of :ref:`poe-allocation-changes` that need
 no LLDP. On a board with data pass-through, LLDP frames pass between the far ends and can change the
 allocation (:ref:`ebat-pass-through-lldp`).
@@ -123,10 +124,10 @@ of a device that requests class 4 or higher (:ref:`poe-demotion`).
 
 :ref:`Autoclass <poe-autoclass>` at power-up is part of Physical Layer
 classification and needs no LLDP (:clause:`145.2.8.2`). If port B
-supports Autoclass, an open question (:doc:`../power/poe/power-sourcing`),
-and a single-signature powered device uses it, port B can allocate it less
-than the full class power (:doc:`../power/poe/translation`). The request
-for a new measurement over LLDP is not available to ebat.
+supports Autoclass (:doc:`../power/poe/power-sourcing`) and a
+single-signature powered device uses it, port B can allocate it less than
+the full class power (:doc:`../power/poe/translation`). The request for a
+new measurement over LLDP is not available on port B.
 
 Open questions
 --------------
