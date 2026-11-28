@@ -382,3 +382,6 @@ Open questions
 * The measurement method for detection, forced currents or applied
   voltages, and the number of points.
 * Whether port B supports dual-signature powered devices.
+* Whether port B supports :ref:`Autoclass <poe-autoclass>`, which lets
+  it allocate a single-signature powered device less than the power of
+  its class.
