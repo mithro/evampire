@@ -76,10 +76,10 @@ def nmos_driver():
     return f
 
 
-def _panel(window, title):
+def _panel(window, title, fill=INK):
     f = Fig(CELL, window, 30, left=20, top=78, right=20, bottom=112)
     devices(f)
-    f.title(title, up=44)
+    f.title(title, up=44, fill=fill)
     return f
 
 
@@ -124,7 +124,8 @@ def silicide_block():
     b.note(INK, "(a): 8 such gates of 38 µm, 304 µm of gate", kind="plain")
     b.note(INK, "(b): 12 such gates of 40 µm, 480 µm of gate", kind="plain")
     b.note(INK, "B–B′: the PMOS cut of the cross-section", kind="cut")
-    c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, to compare")
+    c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, to compare",
+               fill=GREY)
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm",
           side="below", colour=GREY)
     bot = c.oy + c.dh + 30

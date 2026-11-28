@@ -312,10 +312,10 @@ class Fig:
         self.keys += [k for k in other.keys if k not in self.keys]
         self.alpha = {**other.alpha, **self.alpha}
 
-    def title(self, s, up=10):
+    def title(self, s, up=10, fill=INK):
         """A panel title above the top-left corner of the layout."""
         self.text(self.ox, self.oy - up, s, anchor="start", weight="bold",
-                  halo=False)
+                  halo=False, fill=fill)
 
     # -- furniture --------------------------------------------------------
     def note(self, colour, text, kind="label"):
