@@ -59,13 +59,15 @@ def note(d, x, y, text, color="black", halign="left"):
 
 
 def tester_loop(d, y, c_label, r_label, l_label, title, r_colour,
-                title_dy=5.4):
+                title_dy=5.4, c_loc="top"):
     """Capacitor, resistor and wiring inductance, switched into a pin whose
     protection conducts to the grounded pin, with the simulation's values.
+    c_loc is the side of the capacitor that carries its label: "top" is
+    its left and "bottom" its right.
     """
     note(d, 0, y + title_dy, title, halign="left")
     d += elm.Capacitor().up().at((0.6, y)).to((0.6, y + 3)).label(
-        c_label, loc="top", ofst=0.25)
+        c_label, loc=c_loc, ofst=0.25)
     d += elm.Line().at((0.6, y + 3)).to((1.0, y + 3))
     d += elm.Resistor().right().at((1.0, y + 3)).to((3.6, y + 3)).color(
         r_colour).label(r_label, loc="top")
@@ -87,12 +89,11 @@ def testers():
     with schemdraw.Drawing(show=False) as d:
         tester_loop(d, 10.6, "100 pF", "1500 Ω", "5 µH",
                     "Human body model, 2 kV", HOT)
-        note(d, 2.3, 12.5, "≈ 1990 V across it", color=HOT,
-             halign="center")
+        note(d, 1.0, 12.5, "≈ 1990 V across it", color=HOT)
         note(d, 9.4, 12.1, "≈ 10 V on the pin,\n1.33 A at 2 kV", color=CHIP)
         tester_loop(d, 2.6, "150 pF", "330 Ω", "2 µH",
                     "IEC 61000-4-2, through a metal tip", "black",
-                    title_dy=6.4)
+                    title_dy=6.4, c_loc="bottom")
         # The fast branch that forms the IEC first peak, fitted.
         y = 2.6
         d += elm.Line().at((-0.8, y)).to((0.6, y))
@@ -236,9 +237,11 @@ def drift_clamp(d, x):
     d += elm.Resistor().down().at((x + 0.8, 7.0)).to((x + 0.8, 4.2)).label(
         "R", loc="bottom")
     d += elm.Dot().at((x + 0.8, 4.2))
-    d += elm.Capacitor().down().at((x + 0.8, 4.2)).to((x + 0.8, 2.0)).label(
+    # The capacitor is long, so that its plates and label lie below the
+    # driver's box.
+    d += elm.Capacitor().down().at((x + 0.8, 4.2)).to((x + 0.8, 1.4)).label(
         "C", loc="bottom")
-    d += elm.Ground().at((x + 0.8, 2.0))
+    d += elm.Ground().at((x + 0.8, 1.4))
     d += elm.Line().at((x + 0.8, 4.2)).to((x + 1.1, 4.2))
     box(d, x + 1.1, 3.2, x + 3.3, 5.2, "invert-\ning\ndriver")
     d += elm.Line().at((x + 3.3, 4.2)).to((x + 3.4, 4.2))
@@ -255,7 +258,7 @@ def hv_clamps():
     with schemdraw.Drawing(show=False) as d:
         snapback_stack(d, 0)
         drift_clamp(d, 8.2)
-        extent(d, -2.6, 18.6, 1.0)
+        extent(d, -2.6, 18.6, 0.4)
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "hv-clamps.svg"))
 

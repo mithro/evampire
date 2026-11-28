@@ -59,11 +59,12 @@ def section():
     b.append(rect(25, SURF, 170, 70, SUB, INK, 1.0, rx=8))
     b.append(text(110, SURF + 60, "p-well", 10, "middle"))
     b.append(rect(245, SURF, 170, 70, NWELL, INK, 1.0, rx=8))
-    b.append(text(330, SURF + 60, "n-well", 10, "middle"))
+    # The two n-well names sit beside markers 4 and 6, not under them.
+    b.append(text(285, SURF + 60, "n-well", 10, "middle"))
     b.append(rect(465, SURF, 195, 100, NWELL, INK, 1.0, rx=8))
     b.append(rect(480, SURF, 165, 62, SUB, INK, 1.0, rx=8))
     b.append(text(562, SURF + 54, "p-well", 10, "middle"))
-    b.append(text(562, SURF + 92, "deep n-well", 10, "middle"))
+    b.append(text(610, SURF + 92, "deep n-well", 10, "middle"))
     # Field oxide between the wells.
     for x in (195, 415):
         b.append(rect(x - 4, SURF - 8, 58, 18, FOX, INK, 0.8, rx=6))

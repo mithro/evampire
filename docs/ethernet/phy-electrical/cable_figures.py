@@ -61,7 +61,7 @@ def cable():
             fig.line(66, cy[c], 150, y + dy, stroke=colour, width=1.8)
         twisted(fig, 150, 290, y, colour)
         twisted(fig, 330, 440, y, colour)
-        fig.text(462, y, p, size=14, weight="bold", fill=colour,
+        fig.text(446, y, p, size=14, weight="bold", fill=colour,
                  anchor="start")
     # Break marks: the cable continues for up to 100 m.
     for x in (300, 320):

@@ -251,7 +251,7 @@ def sensor_cell(ox, oy, kind):
                  "its threshold is measured")
     b.insert(0, text(ox + 150, oy + 6, title, size=13, weight="bold"))
     for k, s in enumerate(notes):
-        b.append(text(ox + 160, oy + 70 + k * 16, s, anchor="start",
+        b.append(text(ox + 148, oy + 70 + k * 16, s, anchor="start",
                       size=12))
     return b
 

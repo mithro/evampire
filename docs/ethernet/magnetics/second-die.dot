@@ -31,7 +31,7 @@ digraph second_die {
 
     node [shape=plaintext, style="", width=1.9, height=0.35, fontsize=9];
     l1 [pos="1.95,2.42!", label="byte interface: 8 bits each\nway at 125 MHz, 1 Gbit/s"];
-    l2 [pos="2.0,0.92!", label="converter samples:\nseveral times more data"];
+    l2 [pos="2.15,0.92!", label="converter samples:\nseveral times\nmore data"];
     l3 [pos="2.7,-0.1!", width=4.8,
         label="power crosses too: from Power over Ethernet or an isolated supply"];
 

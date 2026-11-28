@@ -141,12 +141,13 @@ def ripple():
     for a, b, v in steps:
         body.append(rect(p.x(a), p.y(0.6), p.x(b) - p.x(a), p.y(v)
                          - p.y(0.6), BAD, "none"))
-        if v > 0.15:
+        if v > 0.1:
             body.append(text(p.x(math.sqrt(a * b)), p.y(v) - 6,
                              f"{v:g} Vpp", 10, "middle"))
         else:
-            body.append(text(p.x(b) - 4, p.y(v) + (30 if v == 0.1 else 16),
-                             f"{v:g} Vpp", 10, "end"))
+            # Under its own step: above it, the label would cross the riser.
+            body.append(text(p.x(b) - 4, p.y(v) + 13, f"{v:g} Vpp", 10,
+                             "end"))
     body.append(p.frame())
     pts = []
     for a, b, v in steps:

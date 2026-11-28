@@ -69,7 +69,7 @@ def panel(d, ox, oy, mode):
     note(d, ox + 1.1, oy + 4.5, "PMOS\ndrain", halign="right")
     note(d, ox + 1.1, oy + 1.5, "NMOS\ndrain", halign="right")
     # Output NMOS, which snaps back from PAD to DVSS.
-    for y0, y1 in ((3.0, 2.3), (1.0, 0.0)):
+    for y0, y1 in ((3.0, 2.3), (0.8, 0.0)):
         d += style(elm.Line().at((ox + 3.5, oy + y0)).to((ox + 3.5, oy + y1)),
                    "nmos", main, second)
     box(d, ox + 2.3, oy + 0.8, ox + 4.7, oy + 2.3, "output\nNMOS",

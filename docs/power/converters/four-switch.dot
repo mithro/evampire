@@ -31,9 +31,9 @@ graph four_switch {
            width=0.7, height=0.2];
     out_l [pos="6.875,2.22!", shape=plaintext, style="", label="Vout",
            width=0.5, height=0.2];
-    buck_l  [pos="1.9,0.42!", shape=plaintext, style="",
+    buck_l  [pos="1.4,0.42!", shape=plaintext, style="",
              label="buck half bridge", width=1.4, height=0.2];
-    boost_l [pos="5.2,0.42!", shape=plaintext, style="",
+    boost_l [pos="5.6,0.42!", shape=plaintext, style="",
              label="boost half bridge", width=1.4, height=0.2];
 
     // Junctions and corners.
