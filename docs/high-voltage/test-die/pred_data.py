@@ -124,6 +124,11 @@ def served(name, fam):
     return [fam] + [f for f in ORDER if f != fam and stands_in(name, f) == fam]
 
 
+# The structures whose measured values are averaged, die by die, to give a
+# reference's measured value; a reference not named here is measured alone.
+REF_MEMBERS = {"NW0": ("NW0", "NW0b")}
+
+
 def reference(name, fam):
     """The structure whose breakdown a ratio is taken against: DT20 for a
     deep N-well; under A, NW0 (measured as the mean of NW0 and NW0b); under
@@ -147,16 +152,33 @@ def nominal(name, fam):
     return lo
 
 
-def ratio(name, fam):
+def ratio_value(name, fam):
+    """(reference, predicted ratio or None, whether the ratio is a test).
+    A ratio across the two regimes, one value below REGIME and the other
+    not, is not a test."""
     ref = reference(name, fam)
     if ref == name:
-        return ref, "1 (reference)"
+        return ref, 1.0, True
     a, b = nominal(name, fam), nominal(ref, fam)
     if not (a and b):
+        return ref, None, False
+    return ref, a / b, (a < REGIME) == (b < REGIME)
+
+
+def ratio_agrees(measured, predicted):
+    """True when a measured ratio lies within RATIO of the predicted one."""
+    return abs(measured / predicted - 1) <= RATIO
+
+
+def ratio(name, fam):
+    ref, r, test = ratio_value(name, fam)
+    if ref == name:
+        return ref, "1 (reference)"
+    if r is None:
         return ref, "–"
-    if (a < REGIME) != (b < REGIME):    # one limited by a heavy surface
-        return ref, f"{a / b:.2f}, across regimes: not a test"
-    return ref, f"{a / b:.2f}"
+    if not test:                        # one limited by a heavy surface
+        return ref, f"{r:.2f}, across regimes: not a test"
+    return ref, f"{r:.2f}"
 
 
 def entry(name, proc):
@@ -250,12 +272,17 @@ def widen(v):
     return WIDEN_LOW if v < REGIME else WIDEN_HIGH
 
 
+def agreement(lo, hi):
+    """The agreement range of a band: each end widened by its own rule."""
+    return lo * (1 - widen(lo)[0]), hi * (1 + widen(hi)[1])
+
+
 def span(lo, hi, wide=False):
     """A band as text; wide=True widens it into the agreement range."""
     if lo is None:
         return "–"
     if wide:
-        lo, hi = lo * (1 - widen(lo)[0]), hi * (1 + widen(hi)[1])
+        lo, hi = agreement(lo, hi)
     return f"{lo:.1f} to {hi:.1f}"
 
 
