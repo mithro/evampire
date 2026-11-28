@@ -37,23 +37,20 @@ STYLES = {
     "contact": ("#333333", "none", "contact"),
     "metal": (METAL, "#6b7684", "bond pad metal"),
     "pad": ("none", INK, "pad opening"),
-    "padnet": (HOT, "#7d1f14", "PAD net, metal 2"),
-    "padtop": (HOT, "#7d1f14", "PAD net, bond pad and metal 2"),
+    "padtop": (HOT, "#7d1f14", "PAD net, bond pad"),
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
     "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD, metal 3 to 5"),
     "dvssrail": ("#a3d2ca", "#0d5045", "DVSS, metal 3 to 5"),
-    "dvsslink": ("#6fb3a8", "#0d5045", "DVSS pad, metal 2"),
-    "innet": (SECONDARY, "#12305f", "protected net, metal 1 and 2"),
     "other": ("#b3b9c0", "#8a9199", "other diffusion"),
-    "resistor": ("none", SECONDARY, "resistor body"),
     "gate": ("#7d8a2e", "#444d14", "gate"),
-    # Figures that pair with the schematic: its wires are black.
-    "padwire": ("#444444", INK, "PAD net, metal 2"),
+    # Figures that pair with the schematic: its wires are black, so metal
+    # is ruled in black, which shows which side of an edge is metal.
+    "padwire": ("url(#wire)", INK, "PAD net, metal 2"),
+    "nextwire": ("url(#wire2)", INK, "wire after the 110 Ω"),
     "primdrain": (HOT, "#7d1f14", "primary: drain on the PAD net"),
     "secpart": (SECONDARY, "#12305f", "secondary: resistor, diode strip"),
-    "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
 }
 FONT = 14
 # Layers of a figure drawn without colour, from the wells up.
@@ -86,7 +83,6 @@ class Fig:
         self.body, self.over, self.keys, self.panels = [], [], [], []
         self.alpha, self.notes = {}, []
         self.wells = True   # False for a figure that draws no silicon
-        self.grey_names = ("nwell", "pdiff", "ndiff", "poly", "gate")
         self.body.append(
             f'<rect x="{self.ox:.1f}" y="{self.oy:.1f}" width="{self.dw:.1f}" '
             f'height="{self.dh:.1f}" fill="{SUB}"/>')
@@ -149,9 +145,11 @@ class Fig:
             geom = (lay["poly"].intersection(lay["comp"]) if name == "gate"
                     else derived(self.cell, name))
             d = self._path(gdskit.clip(geom, self.win))
+            if not d:
+                continue
             self.body.append(f'<path d="{d}" fill="{fill}" stroke="#808080" '
                              'stroke-width="0.5" fill-rule="evenodd"/>')
-            if named and d and name in self.grey_names:
+            if named:
                 self.note((fill, "#808080", 1.0),
                           STYLES[name][2] + ", in grey", kind="tint")
         if not named:
@@ -170,11 +168,14 @@ class Fig:
         self.over.append(f'<rect {at} fill="none" stroke="{colour}" '
                          f'stroke-width="{width}"/>')
 
-    def outline(self, geom, colour, width=2.0, dash=None):
+    def outline(self, geom, colour, width=2.0, tint=0.0):
+        """The edge of a geometry, with a tint on the side that is inside."""
         d = self._path(gdskit.clip(geom, self.win))
-        extra = f' stroke-dasharray="{dash}"' if dash else ""
-        self.over.append(f'<path d="{d}" fill="none" stroke="{colour}" '
-                         f'stroke-width="{width}"{extra}/>')
+        if d:
+            self.over.append(
+                f'<path d="{d}" fill="{colour}" fill-opacity="{tint}" '
+                f'fill-rule="evenodd" stroke="{colour}" '
+                f'stroke-width="{width}"/>')
 
     # -- annotation -------------------------------------------------------
     def text(self, x, y, s, anchor="middle", size=FONT, fill=INK,
@@ -371,6 +372,11 @@ class Fig:
             'patternUnits="userSpaceOnUse"><rect width="5" height="5" '
             'fill="#c4c4c4"/><circle cx="2.5" cy="2.5" r="1.1" '
             'fill="#4a4a4a"/></pattern>']
+        for name, line in (("wire", "M0,2.5 H5"), ("wire2", "M2.5,0 V5")):
+            defs.append(
+                f'<pattern id="{name}" width="5" height="5" '
+                f'patternUnits="userSpaceOnUse"><path d="{line}" '
+                f'stroke="{INK}" stroke-width="0.9"/></pattern>')
         for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
                 f'<marker id="arrow-{name}" viewBox="-1 -1 12 12" refX="7" '
