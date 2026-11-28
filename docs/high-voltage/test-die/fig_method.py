@@ -244,8 +244,8 @@ def order():
         ("2", "P1 on groups 1 to 4", "plain wells, drawn P-well, NAT, deep "
          "N-well"),
         ("3", "Decision table", "select the process assumption"),
-        ("4", "P2 on the large wells", "doping profile; bias kept below "
-         "their breakdown"),
+        ("4", "P2 on large wells and OPEN", "to 10 V where "
+         "breakdown allows"),
         ("5", "P1 on groups 5 and 6", "plates and rings; not polysilicon"),
         ("6", "P3 and P5", "ring potential and punch-through"),
         ("7", "P4", "gated diodes"),
@@ -275,9 +275,10 @@ def analysis():
          "table"),
         ("2", "Breakdown per die", "first sweep at 25 °C: 1 µA and 100 nA"),
         ("3", "Median over the dies", "with the spread; shorts left out"),
-        ("4", "Decision", "A, An or B, and L or D, or undecided"),
+        ("4", "Decision", "A, An or B by pattern; L or D, with P2"),
         ("5", "Comparison", "ratio to the reference; agreement range"),
-        ("6", "Report", "verdicts, P3 and P5, inconclusive items"),
+        ("6", "Other procedures", "P2 to P5 against their rules"),
+        ("7", "Report", "verdicts, no prediction, inconclusive items"),
     ])
 
 
