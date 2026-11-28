@@ -120,8 +120,9 @@ helpers that the scripts above import, so run the script, not the helper:
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
 - `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
   `pred_data.py`, `pred_extra.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
-  every `fig_*.py` (and `measure.py`, `decide.py` and `synth.py`, the helpers
-  of `analyse.py`);
+  every `fig_*.py` (and `measure.py`, `decide.py`, `cv.py`, `procs.py`,
+  `rules.py` and `synth.py`, the helpers of `analyse.py`; `rules.py` also
+  writes `hvt-tab-pt-range.csv` through `figures.py`);
 - `docs/esd/gds/`: `gdskit.py`, `layfig.py`, `laykey.py` and every `figs_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
@@ -217,9 +218,13 @@ uv run --with klayout python silicon/hvtest/export.py silicon/hvtest/structures.
   compares measured sweep records (the CSV format of `method.rst`, table
   `tab-hvt-record`) with `predictions.json` and writes a Markdown report;
   `--example DIR` writes a synthetic set to try it on. Its helpers are
-  `measure.py`, `decide.py` and `synth.py`. It takes every comparison rule
-  (reference, ratio, band, agreement range) from `pred_data.py`, so change a
-  rule there and in `method.rst`, never in `decide.py` alone. Its self-test
+  `measure.py`, `decide.py`, `cv.py` (P2), `procs.py` (P2 to P5),
+  `rules.py` and `synth.py`. It takes every comparison rule of the
+  breakdown voltages (reference, ratio, band, agreement range) from
+  `pred_data.py`, and those of P2 to P5 (capacitance threshold, substrate
+  doping, equivalent gap, ring step, gated band) from `rules.py`, whose
+  numbers `calc.py` section 5 prints; change a rule there and in
+  `method.rst`, never in `decide.py` or `procs.py` alone. Its self-test
   is `uv run --with pytest pytest docs/high-voltage/test-die/test_analyse.py`.
 - `docs/high-voltage/test-die/reproduction.rst` lists the command and the
   pass condition of every rebuild (layout, tables, simulation records,
