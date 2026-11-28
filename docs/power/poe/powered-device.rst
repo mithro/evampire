@@ -337,10 +337,20 @@ highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
 :clause:`Table 145-28 <145>`). Autoclass only lets the power sourcing
 equipment allocate less than the assigned class: the measured power plus a
-margin, up to the power of the assigned class (:clause:`145.2.8`). If the
+margin, up to the power of the assigned class. A measured power of 4 W or
+less leaves the allocation at the power of the assigned class
+(:clause:`145.2.8`). If the
 powered device drew more than class 1 power during the measurement, it then
 draws no more than the measured power, unless it negotiates more over
 LLDP, up to its requested class (:clause:`145.3.8.2`).
+
+Autoclass is defined only for single-signature powered devices of Type 3
+and Type 4 (:clause:`145.2.8.2`, :clause:`Table 145-19 <145>`), although
+:clause:`145.2.8` also names it for the per-pair-set power of a
+dual-signature one. The power sourcing equipment measures after power-up
+(:clause:`145.2.8.2`), so it must first be able to power the device. With
+less than class 3 power available, it does not power a device that
+requests more (:ref:`poe-pse-classification`).
 
 Turn-on hysteresis
 ------------------

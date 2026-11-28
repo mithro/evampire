@@ -206,6 +206,8 @@ compares the two kinds of powered device.
          circuit 2 on pair set B, and each shows a valid signature.
    :align: center
 
+.. _poe-pse-classification:
+
 Classification
 --------------
 
