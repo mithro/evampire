@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Design documentation for evampire, a gf180mcu chip made through wafer.space.
 It is a three-port gigabit Ethernet hub with a RISC-V processor that moves
-power between Power over Ethernet and USB Type-C. There is no silicon and no
-RTL yet. The repository is a Sphinx site published on Read the Docs
+power between Power over Ethernet and USB Type-C. There is no RTL yet, and the
+only layout is a test die of high-voltage structures (`silicon/hvtest/`). The repository is a Sphinx site published on Read the Docs
 (https://evampire.readthedocs.io/). Every pull request gets a preview at
 `https://evampire--<PR>.org.readthedocs.build/en/<PR>/`.
 
@@ -68,6 +68,7 @@ uv run python docs/power/poe/voltage_timeline.py docs/power/poe/voltage-timeline
 uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
 uv run python docs/high-voltage/figures.py docs/high-voltage  # every high-voltage figure
+uv run python docs/high-voltage/test-die/figures.py  # test-die figures and tables
 uv run python docs/architecture/figures.py docs/architecture
 uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
 uv run docs/esd/sim/tlp_plot.py
@@ -117,6 +118,11 @@ Each script's docstring names the files it writes. These modules are
 helpers that the scripts above import, so run the script, not the helper:
 
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
+- `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
+  `pred_data.py`, `pred_extra.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
+  every `fig_*.py` (and `measure.py`, `decide.py`, `p1rules.py`, `cv.py`, `procs.py`,
+  `rules.py` and `synth.py`, the helpers of `analyse.py`; `rules.py` also
+  writes `hvt-tab-pt-range.csv` through `figures.py`);
 - `docs/esd/gds/`: `gdskit.py`, `layfig.py`, `laykey.py` and every `figs_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
@@ -129,6 +135,32 @@ helpers that the scripts above import, so run the script, not the helper:
 `FONT_SCALE` in `docs/power/usb-pd/svgfig.py` sets the text size of every
 USB Power Delivery graph. Every script reproduces its committed files byte
 for byte, so a rerun that changes a file means its inputs changed.
+
+The test-die script reads these inputs. `silicon/hvtest/structures.json`
+is written by `silicon/hvtest/export.py`, and `silicon/hvtest/PRECHECK.txt`
+by the layout build. `docs/high-voltage/test-die/manifest.json`
+is the floor plan: copy it from the second argument of
+`uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json`
+whenever the layout changes. `docs/high-voltage/test-die/predictions.json`
+holds the simulated breakdown voltages. It is written by
+`uv run python docs/high-voltage/test-die/import_predictions.py RECORD.json ...`
+from the records in `results/hv-junction/` of mithro/gf180-tcad; its schema
+is in the docstring of `pred_data.py`. The same script with `--p5 P5.json`
+writes `p5.json` from the runs with ring 1 held at 0 V; never pass those
+records without the option, because their case names equal the ordinary
+ones. The pages say "not yet simulated" while `p5.json` is absent. `crosscheck.json` in the same folder
+holds the second-simulator results and `model_checks.json` the values
+from the final review that no simulation record holds yet; both are edited
+by hand. Rerun `figures.py` after changing any of them.
+
+`figures.py` also writes the structure catalogue:
+`docs/high-voltage/test-die/catalogue.rst` and everything in
+`docs/high-voltage/test-die/catalogue/` are generated, so never edit them
+by hand. The written part of each entry is in `catalogue.py` and the
+`cat_*.py` modules beside it, one entry per structure. The script stops
+if a structure in `manifest.json` has no entry or an entry names a
+structure that is not on the die, so a new structure needs its entry
+before the figures can be regenerated.
 
 The ESD simulation (`docs/esd/sim/esd_sim.py`) writes the ESD figures and
 the tables in `docs/esd/sim/results/`. It needs ngspice and the gf180mcu
@@ -144,17 +176,60 @@ names a checkout of the gf180mcu I/O cell repository at the commit
 the bond pad at the left.
 `check.py` fails if a device's size in the layout differs from its netlist.
 
-Four scripts print the numbers their pages quote, so re-run one after
+Five scripts print the numbers their pages quote, so re-run one after
 changing an input and update the page to match:
 
 - `docs/power/usb-pd/calc.py`
 - `docs/power/converters/calc.py`
 - `docs/high-voltage/calc.py`
+- `docs/high-voltage/test-die/calc.py`
 - `docs/usb-serial/calc.py`
 
 `docs/usb-serial/calc.py` prints its last table only when given the path to
 the gf180mcu I/O liberty file `gf180mcu_fd_io__bi_t__tt_025C_3v30.lib`, which
 comes from the gf180mcu PDK and is not in this repository.
+
+## Test die (`silicon/hvtest/`)
+
+The one piece of layout in the repository: a full-custom gf180mcuD test die of
+high-voltage junction structures for a wafer.space shuttle, described on
+`docs/high-voltage/test-die.rst` and its pages. It needs Docker and the
+`ghcr.io/wafer-space/gf180mcu-precheck` image.
+
+```sh
+uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json   # the layout
+uv run python silicon/hvtest/drc.py OUT.gds WORKDIR                         # KLayout DRC only
+uv run python silicon/hvtest/flow.py OUT.gds MANIFEST.json WORKDIR          # nets, seal ring, fill, precheck
+uv run --with klayout python silicon/hvtest/probe_view.py OUT.gds OUT.png 1400   # the die-view figures (see its docstring)
+uv run --with klayout python silicon/hvtest/export.py silicon/hvtest/structures.json
+```
+
+- `structures.py` is the list of structures and `junction.py` draws one. After
+  changing either, rerun `export.py`, the flow (about an hour), and commit
+  `hvtest.oas`, `manifest.json` and `PRECHECK.txt` from its work directory;
+  then copy the manifest to `docs/high-voltage/test-die/` and rerun the
+  test-die figures script.
+- `check_nets.py` extracts the nets from the layout. DRC cannot see an open or
+  a wrong connection, and one was found that way, so the flow runs it first.
+- The simulated predictions come from mithro/gf180-tcad
+  (`experiments/hv-junction`), which holds a copy of `structures.json`.
+  `docs/high-voltage/test-die/import_predictions.py` reads its records.
+- `docs/high-voltage/test-die/analyse.py MEASUREMENT_DIR [--out REPORT.md]`
+  compares measured sweep records (the CSV format of `method.rst`, table
+  `tab-hvt-record`) with `predictions.json` and writes a Markdown report;
+  `--example DIR` writes a synthetic set to try it on. Its helpers are
+  `measure.py`, `decide.py`, `p1rules.py` (stand-in references), `cv.py` (P2), `procs.py` (P2 to P5),
+  `rules.py` and `synth.py`. It takes every comparison rule of the
+  breakdown voltages (reference, ratio, band, agreement range) from
+  `pred_data.py`, and those of P2 to P5 (capacitance threshold, substrate
+  doping, equivalent gap, ring step, gated band) from `rules.py`, whose
+  numbers `calc.py` section 5 prints; change a rule there and in
+  `method.rst`, never in `decide.py` or `procs.py` alone. Its self-test
+  is `uv run --with pytest pytest docs/high-voltage/test-die/test_analyse.py`.
+- `docs/high-voltage/test-die/reproduction.rst` lists the command and the
+  pass condition of every rebuild (layout, tables, simulation records,
+  predictions, comparison). Update it when one of those commands changes.
+- WORKDIR must be outside the repository; the precheck container writes there.
 
 ## Structure
 

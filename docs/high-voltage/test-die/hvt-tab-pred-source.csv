@@ -1,0 +1,17 @@
+Item,Value
+Commit,"31d1842c0942, 336aff416dd0, 37fa71eff4e3, 4c8062b2f45e, 53386a8dba79, 597d7c069240, 5e624bfb7803, 86b458c7b1eb, a44971fc57c3, fd092ff880ff"
+Repository,"mithro/gf180-tcad, experiments/hv-junction"
+Simulator,DEVSIM 2.11.1 (gf180-tcad dev image)
+Status,"DEVSIM 2.11.1 drift-diffusion, breakdown by the ionisation integral"
+Results left out,"Structures no longer on the die: DAo1C0, DAo1T35, DC15, DGM1, DM1_10, DM1_3, DPM12, DT10, DT35, DT5, DW1p5, DW3, DW6, NA0p6T35, NA2, NA4, NT10, NT35"
+Record main.json,"554 cases, commit 86b458c7b1eb; 79 cases gave no result: DAo1 BLq edge, DAo1C0 BLq edge, DAo1T35 BLq edge, DC0 BLq edge, DC15 BLq edge, DC15 BLq corner, DGM1@g0 BLq edge, DGM1@gw BLq edge, DPM12 BLq edge, DT20 BLq edge, DT20b BLq edge, DT2p6 BLq edge, DT35 BLq edge, DT5 BLq edge, DW1p5 BLq edge, DW3 BLq edge, NAGM1@gw AL edge, NR1S3 AL edge, NR1S3 BL corner, NR1_1p4 AL edge, NR1_2 AL edge, NR1_2 BD edge, NR1_2 BLq corner, NR1_3 AL edge, NR1_3 BL corner, NR1_3 BLq corner, NR3M1 BL edge, NR3M1 BL corner, NR3M1 BD edge, NR3M1 BD corner, NR3M1 BLq edge, NR3M1 BLq corner, NR3W1 BL edge, NR3W1 BL corner, NR3W1 BD edge, NR3W1 BD corner, NR3W1 BLq edge, NR3W1 BLq corner, NR3W3 AL edge, NR3W3 BL edge, NR3W3 BL corner, NR3W3 BD edge, NR3W3 BD corner, NR3W3 BLq edge, NR3W3 BLq corner, NR3_1p5 BL edge, NR3_1p5 BL corner, NR3_1p5 BD edge, NR3_1p5 BD corner, NR3_1p5 BLq edge, NR3_1p5 BLq corner, NR3_2 AL edge, NR3_2 BL edge, NR3_2 BL corner, NR3_2 BD edge, NR3_2 BD corner, NR3_2 BLq edge, NR3_2 BLq corner, NR4S AL edge, NR4S BL edge, NR4S BL corner, NR4S BD edge, NR4S BD corner, NR4S BLq edge, NR4S BLq corner, NR5_1p4 AL edge, NR5_1p4 BL edge, NR5_1p4 BL corner, NR5_1p4 BD edge, NR5_1p4 BD corner, NR5_1p4 BLq edge, NR5_1p4 BLq corner, NR5_2 AL edge, NR5_2 BL edge, NR5_2 BL corner, NR5_2 BD edge, NR5_2 BD corner, NR5_2 BLq edge, NR5_2 BLq corner"
+Record rest.json,"74 cases, commit 37fa71eff4e3; 5 cases gave no result: NR4S AL edge, NR5_1p4 AL edge, NR5_1p4 BLq corner, NR5_2 AL edge, NR5_2 BLq edge"
+Record rest2.json,"46 cases, commit 31d1842c0942; 6 cases gave no result: NR1S12 AL edge, NR1S5 AL edge, NR1S8 AL edge, NR5_1p4 AL edge, NR5_1p4 BLq edge, NR5_1p4 BLq corner"
+Record rest3.json,"35 cases, commit 5e624bfb7803; 0 cases gave no result"
+Record mem.json,"6 cases, commit 597d7c069240; 2 cases gave no result: NR5_1p4 BLq corner, NR5_1p4 BLq edge"
+Record gaps.json,"6 cases, commit 4c8062b2f45e; 2 cases gave no result: NR5_1p4 BLq edge, NR5_2 BLq edge"
+Record sharp.json,"21 cases, commit 53386a8dba79; 0 cases gave no result"
+Record rest5.json,"108 cases, commit a44971fc57c3; 0 cases gave no result"
+Record ring128.json,"3 cases, commit 336aff416dd0; 3 cases gave no result: NR5_1p4 BLq corner, NR5_1p4 BLq edge, NR5_2 BLq edge"
+Record family.json,"124 cases, commit 37fa71eff4e3; 0 cases gave no result"
+Record family3.json,"5 cases, commit fd092ff880ff; 0 cases gave no result"

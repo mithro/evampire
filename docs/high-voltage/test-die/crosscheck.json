@@ -1,0 +1,115 @@
+{
+ "source": {
+  "simulator": "Sandia Charon 2.2.0, control-volume Scharfetter-Gummel scheme",
+  "mesh and doping": "identical to the DEVSIM case, node for node",
+  "impact ionisation": "generation term in the equations, Selberherr form; electron coefficients as in the ionisation integral, hole coefficients of the low-field branch only",
+  "carrier lifetime": "1e-9 s in Charon, 1e-5 s in DEVSIM",
+  "doping of the die sections": "the first doping family, before the refit to the deep N-well, except the two cases marked present model; for the others the comparison is of the method, not of the present predictions",
+  "peak silicon field, Charon over DEVSIM": "0.9985 to 0.9988 on the bare N-well edge; 1.5 % to 2.5 % lower on the die sections, 0.1 % lower on the deep N-well; not explained",
+  "corner sections": "none: Charon has no axisymmetric option",
+  "repository": "mithro/gf180-tcad, experiments/hv-junction"
+ },
+ "cases": [
+  {
+   "name": "Diode strip, 1e17",
+   "description": "One-sided abrupt junction, 1e17 cm^-3; current value where Charon's avalanche current diverges",
+   "devsim_v": 14.888,
+   "charon_integral_v": 14.889,
+   "charon_current_v": 14.25
+  },
+  {
+   "name": "Diode strip, 1e16",
+   "description": "One-sided abrupt junction, 1e16 cm^-3; current value where Charon's avalanche current diverges",
+   "devsim_v": 55.344,
+   "charon_integral_v": 55.348,
+   "charon_current_v": 55.25
+  },
+  {
+   "name": "Bare N-well edge",
+   "description": "N-well edge in substrate of 3e15 cm^-3, 23597 silicon nodes; current value at a 100-fold rise of the current, last converged point 78.5 V",
+   "devsim_v": 77.44,
+   "charon_integral_v": 77.55,
+   "charon_current_v": 78.27
+  },
+  {
+   "name": "NT20, P-well at the edge",
+   "description": "Plain N-well edge under assumption A; current value is Charon's last converged avalanche solution",
+   "devsim_v": 18.07,
+   "charon_integral_v": 18.5,
+   "charon_current_v": 18.19
+  },
+  {
+   "name": "NT20, bare substrate",
+   "description": "Plain N-well edge under assumption B; current value is Charon's last converged avalanche solution",
+   "devsim_v": 67.56,
+   "charon_integral_v": 68.29,
+   "charon_current_v": 68.76
+  },
+  {
+   "name": "NM1_6, Metal1 plate",
+   "description": "Metal1 field plate of 6 um under assumption B; last converged avalanche solution",
+   "devsim_v": 92.23,
+   "charon_integral_v": 92.59,
+   "charon_current_v": 93.75
+  },
+  {
+   "name": "NR1_2, one ring",
+   "description": "One floating ring at 2 um under assumption B; last converged avalanche solution, with a 100-fold current rise at 102.74 V",
+   "devsim_v": 98.74,
+   "charon_integral_v": 101.05,
+   "charon_current_v": 102.82
+  },
+  {
+   "name": "DT20, deep N-well",
+   "description": "Deep N-well edge under assumption B; last converged avalanche solution",
+   "devsim_v": 94.25,
+   "charon_integral_v": 94.33,
+   "charon_current_v": 94.94
+  },
+  {
+   "name": "NW1p5, drawn P-well",
+   "description": "Drawn P-well 1.5 um from the edge under assumption B; last converged avalanche solution",
+   "devsim_v": 51.88,
+   "charon_integral_v": 52.16,
+   "charon_current_v": 52.64
+  },
+  {
+   "name": "NP4, polysilicon plate (present model)",
+   "description": "Polysilicon plate 4 um beyond the edge under BL, present doping family; 100-fold rise of the avalanche current",
+   "devsim_v": 94.4,
+   "charon_integral_v": 94.52,
+   "charon_current_v": 95.51
+  },
+  {
+   "name": "NT20 under BD (present model)",
+   "description": "Plain N-well edge with the deep P layer under the whole wafer, present doping family; 100-fold rise of the avalanche current",
+   "devsim_v": 62.85,
+   "charon_integral_v": 62.86,
+   "charon_current_v": 62.44
+  }
+ ],
+ "ring_rise": {
+  "case": "NR1_2, one ring",
+  "well_v": [
+   12,
+   24,
+   48,
+   72,
+   96
+  ],
+  "devsim_v": [
+   7.05,
+   15.64,
+   32.62,
+   49.24,
+   65.5
+  ],
+  "charon_v": [
+   6.44,
+   14.97,
+   31.91,
+   48.44,
+   64.73
+  ]
+ }
+}

@@ -24,6 +24,53 @@ gf180mcu process data
    <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_pr/blob/9f992d5a9186d1f7820c58f039c484ad35b2edea/models/ngspice/sm141064.ngspice#L38162-L38220>`__,
    commit 9f992d5, lines 38162–38220.
 
+.. [HV-GF180-EP-5-1] GlobalFoundries, `gf180mcu electrical parameters,
+   section 5.1, Sheet Resistance
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/spice/elec_specs/elec_specs_5_1.html>`__.
+
+.. [HV-GF180-IA-343] GlobalFoundries, `gf180mcu interconnect
+   specification, section 3.43, 1P5M structure with 11 kÅ top metal and
+   MIM option B
+   <https://gf180mcu-pdk.readthedocs.io/en/latest/analog/layout/inter_specs/inter_specs_3_43.html>`__,
+   the cross-section of the metal stack that wafer.space uses.
+
+.. [HV-GF180-DRM] GlobalFoundries, gf180mcu design manual, sections
+   `4.4, topological truth table <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_04_4.html>`__,
+   `7.2, Dnwell <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_07_03.html>`__,
+   `7.3, Lvpwell <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_07_04.html>`__,
+   `7.4, Nwell <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_07_05.html>`__,
+   `7.5, Comp <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_07_06.html>`__,
+   `9.2, bond pad guidelines <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_09_2.html>`__,
+   `9.4.5, probe pad design guidelines <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_09_4_5.html>`__,
+   `10.5, native Vt NMOS <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_10_05.html>`__,
+   `10.8, dummy exclude layers <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_10_08.html>`__ and
+   `10.12.1, 10 V LDNMOS rules <https://gf180mcu-pdk.readthedocs.io/en/latest/physical_verification/design_manual/drm_10_12_1.html>`__.
+
+.. [HV-GF180-PV] GlobalFoundries and contributors, gf180mcu_fd_pv KLayout
+   rule decks, commit 0df548b:
+   `nwell.rb <https://github.com/fossi-foundation/globalfoundries-pdk-libs-gf180mcu_fd_pv/blob/0df548b2ba5a255b6a914b107d89bd7ed1063a39/klayout/drc/rule_decks/nwell.rb>`__
+   (N-well spacing by net) and
+   `dnwell.rb <https://github.com/fossi-foundation/globalfoundries-pdk-libs-gf180mcu_fd_pv/blob/0df548b2ba5a255b6a914b107d89bd7ed1063a39/klayout/drc/rule_decks/dnwell.rb>`__
+   (rule DN.3).
+
+.. [HV-GF180-IO] GlobalFoundries and Google, `gf180mcu_fd_io, netlist of
+   the analogue pad cell asig_5p0
+   <https://github.com/google/globalfoundries-pdk-libs-gf180mcu_fd_io/blob/main/cells/asig_5p0/gf180mcu_fd_io__asig_5p0.cdl>`__,
+   which has a diode from the pad to each supply rail.
+
+.. [HV-WS-SITE] wafer.space, `Technology
+   <https://wafer.space/technology>`__: bare dies delivered on tape and
+   reel, and pad rings left to the designer.
+
+.. [HV-WS-PRECHECK] wafer.space, `gf180mcu-precheck
+   <https://github.com/wafer-space/gf180mcu-precheck>`__, the checks a
+   submitted layout must pass, with the die size of each slot.
+
+.. [HV-GF180-TCAD] `mithro/gf180-tcad
+   <https://github.com/mithro/gf180-tcad>`__, device simulation of
+   gf180mcu structures; the junction simulations are in
+   ``experiments/hv-junction``.
+
 .. [HV-OPENPDKS-EXTRACT] R. T. Edwards and contributors, `open_pdks,
    gf180mcu/magic/gf180mcu-extract.tech
    <https://github.com/RTimothyEdwards/open_pdks/blob/bb8c82ecc7a9750faabeea98d5ca13e76e4ae744/gf180mcu/magic/gf180mcu-extract.tech#L464-L616>`__,
@@ -91,6 +138,21 @@ Semiconductor physics
    solutions for the breakdown voltage of abrupt cylindrical and spherical
    junctions <https://doi.org/10.1016/0038-1101(76)90152-0>`__, Solid-State
    Electronics 19 (1976), pp. 739–744.
+
+.. [HV-VANOVERSTRAETEN] R. van Overstraeten and H. de Man, `Measurement
+   of the ionization rates in diffused silicon p-n junctions
+   <https://doi.org/10.1016/0038-1101(70)90139-5>`__, Solid-State
+   Electronics 13 (1970), pp. 583–608.
+
+.. [HV-SZE-NG] S. M. Sze and K. K. Ng, `Physics of Semiconductor Devices
+   <https://doi.org/10.1002/0470068329>`__, 3rd edition, Wiley, 2006,
+   chapter 2, p-n junctions.
+
+.. [HV-GROVE-FITZGERALD] A. S. Grove and D. J. Fitzgerald, `Surface
+   effects on p-n junctions: characteristics of surface space-charge
+   regions under non-equilibrium conditions
+   <https://doi.org/10.1016/0038-1101(66)90118-3>`__, Solid-State
+   Electronics 9 (1966), pp. 783–806.
 
 .. [HV-KAO-WOLLEY] Y. C. Kao and E. D. Wolley, `High-voltage planar p-n
    junctions <https://doi.org/10.1109/PROC.1967.5842>`__, Proceedings of

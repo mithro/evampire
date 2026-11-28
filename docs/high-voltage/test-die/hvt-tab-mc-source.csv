@@ -1,0 +1,6 @@
+Values,Where they come from
+Capacitance (tab-hvt-mc-cap),"mithro/gf180-tcad, results/hv-junction/capacitance.json, read at commit 1d88f7c59496 (branch hv/junction), written by experiments/hv-junction/capacitance.py: keys bias_v, L.over_model and D.over_model"
+Ceiling under D (tab-hvt-cap-sens),"estimate with no committed record: the same script, with the depth of the deep P layer and deep N-well changed"
+Sharp corner (tab-hvt-mc-corner),"last point: mithro/gf180-tcad, results/hv-junction/main.json, case NC0|BL|corner, reached_v 36.34 V; integral, slope and extrapolation: estimate with no committed record; converged value: predictions.json (record sharp.json)"
+One-sided junctions (tab-hvt-mc-onesided),"integral at 1e15, 1e16 and 1e17 cm⁻³: mithro/gf180-tcad, results/hv-junction/diodes.json (commit a44971fc57c3), keys 1e+15, 1e+16 and 1e+17, bv_v; at 3.56e15 cm⁻³: estimate with no committed record; closed form: computed by pred_extra.py"
+Corner radius (tab-hvt-mc-radius),"mithro/gf180-tcad, results/hv-junction/radius.json (commit a44971fc57c3), cases NC0r0.5 to NC0r4.0, bv_v; 8 µm: predictions.json, NT20 corner"

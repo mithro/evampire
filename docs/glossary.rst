@@ -739,3 +739,55 @@ Glossary
       threshold voltage is close to 0 V. The gf180mcu PDK has a 6 V native
       NMOS (see :wikipedia:`threshold voltage <Threshold_voltage>` and
       :ref:`usbpd-rd-circuit`).
+
+   Electrometer
+      A voltmeter whose input draws almost no current, femtoamperes or
+      less, so that it can read the potential of a node that nothing
+      drives (see :ref:`hv-test-method`).
+
+   Flat-band voltage
+      The voltage on a plate over an insulator at which the silicon surface
+      below it is neither depleted nor enriched in carriers. Charge in the
+      insulator shifts it (see :ref:`hv-metal-gate`).
+
+   Gated diode
+      A P-N junction with a separate plate over the insulator beside its
+      edge. The plate's voltage sets the state of the silicon surface
+      there while the junction is measured (see :ref:`hv-test-method`).
+
+   Ionisation integral
+      The number of further carrier pairs that one carrier, with all its
+      descendants, frees while crossing a depletion region. Avalanche
+      breakdown is the voltage at which it reaches 1 (see
+      :ref:`hv-test-predictions`).
+
+   LCR meter
+      An instrument that measures capacitance, inductance and resistance
+      with a small alternating signal, here with a DC bias added (see
+      :ref:`hv-test-method`).
+
+   N-well
+      The N-type region of a CMOS process in which PMOS transistors are
+      built. Its junction to the P-type substrate isolates it while the
+      junction is reverse-biased (see :ref:`hv-junctions`).
+
+   P-well
+      The P-type region in which NMOS transistors are built, more heavily
+      doped than the substrate. In gf180mcu the foundry generates its mask
+      from the other layers (see :ref:`hv-test-structures`).
+
+   Punch-through
+      Conduction between two regions of the same type when the depletion
+      region of one reaches the other through the opposite-type silicon
+      between them (see :ref:`hv-test-method`).
+
+   Source-measure unit
+   SMU
+      An instrument that forces a voltage and measures the current, or
+      forces a current and measures the voltage, with a programmed limit
+      on the measured quantity (see :ref:`hv-test-method`).
+
+   Walk-out
+      A rise in a junction's breakdown voltage from one sweep to the next,
+      caused by carriers from the avalanche lodging in the insulator
+      beside the junction (see :ref:`hv-test-method`).

@@ -1,0 +1,9 @@
+Item,Value
+Simulator,"Sandia Charon 2.2.0, control-volume Scharfetter-Gummel scheme"
+Mesh and doping,"identical to the DEVSIM case, node for node"
+Impact ionisation,"generation term in the equations, Selberherr form; electron coefficients as in the ionisation integral, hole coefficients of the low-field branch only"
+Carrier lifetime,"1e-9 s in Charon, 1e-5 s in DEVSIM"
+Doping of the die sections,"the first doping family, before the refit to the deep N-well, except the two cases marked present model; for the others the comparison is of the method, not of the present predictions"
+"Peak silicon field, charon over devsim","0.9985 to 0.9988 on the bare N-well edge; 1.5 % to 2.5 % lower on the die sections, 0.1 % lower on the deep N-well; not explained"
+Corner sections,none: Charon has no axisymmetric option
+Repository,"mithro/gf180-tcad, experiments/hv-junction"

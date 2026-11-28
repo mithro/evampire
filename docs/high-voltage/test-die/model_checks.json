@@ -1,0 +1,174 @@
+{
+ "source": {
+  "capacitance": "mithro/gf180-tcad, results/hv-junction/capacitance.json, read at commit 1d88f7c59496 (branch hv/junction), written by experiments/hv-junction/capacitance.py: keys bias_v, L.over_model and D.over_model",
+  "ceiling": "estimate with no committed record: the same script, with the depth of the deep P layer and deep N-well changed",
+  "corner": "last point: mithro/gf180-tcad, results/hv-junction/main.json, case NC0|BL|corner, reached_v 36.34 V; integral, slope and extrapolation: estimate with no committed record; converged value: predictions.json (record sharp.json)",
+  "one_sided": "integral at 1e15, 1e16 and 1e17 cm\u207b\u00b3: mithro/gf180-tcad, results/hv-junction/diodes.json (commit a44971fc57c3), keys 1e+15, 1e+16 and 1e+17, bv_v; at 3.56e15 cm\u207b\u00b3: estimate with no committed record; closed form: computed by pred_extra.py",
+  "corner_radius": "mithro/gf180-tcad, results/hv-junction/radius.json (commit a44971fc57c3), cases NC0r0.5 to NC0r4.0, bv_v; 8 \u00b5m: predictions.json, NT20 corner"
+ },
+ "capacitance": {
+  "note": "N-well capacitance per area, simulated over the published model, without the deep P layer under the N-well (L) and with it (D); depletion approximation of profile1d.py on the fitted doping family",
+  "record": "mithro/gf180-tcad, results/hv-junction/capacitance.json, read at commit 1d88f7c59496 (branch hv/junction), written by experiments/hv-junction/capacitance.py: keys bias_v, L.over_model and D.over_model",
+  "volts": [
+   0.0,
+   1.0,
+   2.0,
+   3.0,
+   5.0,
+   7.0,
+   10.0
+  ],
+  "without_layer": [
+   1.004284557912161,
+   1.0109378934896418,
+   0.9792877275158476,
+   0.950214964878965,
+   0.904080198792492,
+   0.8694705286475813,
+   0.8301242965150157
+  ],
+  "with_layer": [
+   1.0042901951675736,
+   1.0112656931501518,
+   0.9818742097039034,
+   0.9623583459046571,
+   0.9648373120831147,
+   0.9891690881069428,
+   1.027789061251582
+  ]
+ },
+ "ceiling": {
+  "note": "breakdown of the flat bottom of a plain N-well under D; an estimate with no committed record (see source)",
+  "rows": [
+   [
+    "Shape of the layer changed, deep N-well fixed",
+    "58 to 64"
+   ],
+   [
+    "Layer and deep N-well both 1.0 \u00b5m shallower",
+    "41"
+   ],
+   [
+    "Both 0.25 \u00b5m shallower",
+    "58"
+   ],
+   [
+    "Both 0.25 \u00b5m deeper",
+    "69"
+   ],
+   [
+    "Both 1.0 \u00b5m deeper",
+    "84"
+   ],
+   [
+    "Range if the published capacitance is right to a few per cent",
+    "55 to 75"
+   ]
+  ]
+ },
+ "corner": {
+  "structure": "NC0",
+  "process": "BL",
+  "radius_um": 1.0,
+  "last_volts": 36.3,
+  "integral": 0.694,
+  "slope_per_volt": 0.035,
+  "extrapolated_volts": 46,
+  "same_pattern": "BD, BLq, and NA0p6C0",
+  "note": "the last point is the reached_v of the stalled double-precision case in main.json; the integral there, its slope and the extrapolation come from the review's script, and no record holds them; the converged 128-bit result is read from predictions.json for comparison"
+ },
+ "one_sided": {
+  "note": "one-sided abrupt junctions: breakdown by the ionisation integral with the van Overstraeten-de Man coefficients of the simulation, against the Sze-Gibbons closed form 60 V x (N / 1e16 cm^-3)^-0.75. Where a record exists, integral_v is its 1D DEVSIM diode (N side 1e19 cm^-3); review_estimate_v is the review script's value, kept for comparison. The row at 3.56e15 has only the estimate.",
+  "rows": [
+   {
+    "doping_cm3": "1e17",
+    "integral_v": 14.88,
+    "record": "diodes.json, key 1e+17",
+    "review_estimate_v": 14.7
+   },
+   {
+    "doping_cm3": "1e16",
+    "integral_v": 55.35,
+    "record": "diodes.json, key 1e+16",
+    "review_estimate_v": 55.2
+   },
+   {
+    "doping_cm3": "3.56e15",
+    "integral_v": 109.0,
+    "record": null,
+    "review_estimate_v": 109.0
+   },
+   {
+    "doping_cm3": "1e15",
+    "integral_v": 265.08,
+    "record": "diodes.json, key 1e+15",
+    "review_estimate_v": 265.0
+   }
+  ]
+ },
+ "corner_radius": {
+  "note": "Cylindrical sections of the plain N-well at several radii, 128-bit; the 8 um row is the corner section of NT20. gf180-tcad record radius.json (0.5 to 4 um, cases NC0r0.5 to NC0r4.0) and predictions.json (8 um).",
+  "cases": [
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 0.5,
+    "volts": 45.4
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 1.0,
+    "volts": 46.0
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 2.0,
+    "volts": 53.4
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 4.0,
+    "volts": 59.8
+   },
+   {
+    "structure": "NC0",
+    "process": "BD",
+    "radius_um": 8.0,
+    "volts": 61.2
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 0.5,
+    "volts": 45.4
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 1.0,
+    "volts": 46.1
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 2.0,
+    "volts": 53.7
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 4.0,
+    "volts": 61.1
+   },
+   {
+    "structure": "NC0",
+    "process": "BL",
+    "radius_um": 8.0,
+    "volts": 67.0
+   }
+  ]
+ }
+}

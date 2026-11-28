@@ -1,0 +1,203 @@
+{
+ "source": {
+  "criterion": "ring current of 1 nA, as in procedure P5",
+  "records": [
+   {
+    "cases": 18,
+    "commit": "5e624bfb7803c417aaae214a87892bc3191ee9a4",
+    "record": "p5.json"
+   },
+   {
+    "cases": 10,
+    "commit": "a44971fc57c3, b1564cf9fa68",
+    "record": "p5b.json"
+   }
+  ]
+ },
+ "structures": {
+  "NAR1S3": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 135.5,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "AnD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 135.5,
+    "punch_through_v": 13.3,
+    "reached_v": 65.6
+   },
+   "AnL": {
+    "breakdown_v": 69.1,
+    "perimeter_um": 135.5,
+    "punch_through_v": 13.2,
+    "reached_v": 72.6
+   },
+   "BD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 135.5,
+    "punch_through_v": 13.3,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 69.1,
+    "perimeter_um": 135.5,
+    "punch_through_v": 13.2,
+    "reached_v": 72.6
+   }
+  },
+  "NAR1S8": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "AnD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 65.6
+   },
+   "AnL": {
+    "breakdown_v": 75.2,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 79.6
+   },
+   "BD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 75.2,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 79.6
+   }
+  },
+  "NR1S12": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 195.2,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "BD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 195.2,
+    "punch_through_v": null,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 75.2,
+    "perimeter_um": 195.2,
+    "punch_through_v": null,
+    "reached_v": 79.6
+   }
+  },
+  "NR1S2": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 128.9,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "BD": {
+    "breakdown_v": 62.7,
+    "perimeter_um": 128.9,
+    "punch_through_v": 3.8,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 63.9,
+    "perimeter_um": 128.9,
+    "punch_through_v": 3.8,
+    "reached_v": 67.6
+   }
+  },
+  "NR1S3": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 135.5,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "BD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 135.5,
+    "punch_through_v": 13.3,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 69.1,
+    "perimeter_um": 135.5,
+    "punch_through_v": 13.2,
+    "reached_v": 72.6
+   }
+  },
+  "NR1S5": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 148.8,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "BD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 148.8,
+    "punch_through_v": 58.6,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 75.3,
+    "perimeter_um": 148.8,
+    "punch_through_v": 55.1,
+    "reached_v": 79.6
+   }
+  },
+  "NR1S8": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 19.6
+   },
+   "BD": {
+    "breakdown_v": 62.6,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 75.2,
+    "perimeter_um": 168.7,
+    "punch_through_v": null,
+    "reached_v": 79.6
+   }
+  },
+  "NR4S": {
+   "AL": {
+    "breakdown_v": 18.1,
+    "perimeter_um": 126.2,
+    "punch_through_v": 15.2,
+    "reached_v": 19.1
+   },
+   "BD": {
+    "breakdown_v": 62.2,
+    "perimeter_um": 126.2,
+    "punch_through_v": 1.4,
+    "reached_v": 65.6
+   },
+   "BL": {
+    "breakdown_v": 63.0,
+    "perimeter_um": 126.2,
+    "punch_through_v": 1.4,
+    "reached_v": 66.6
+   }
+  }
+ }
+}

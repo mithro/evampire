@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="sans-serif" font-size="13">
+<rect width="640" height="400" fill="white"/>
+<text x="20" y="24" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">Predicted punch-through to a grounded ring against the gap</text>
+<rect x="80" y="44" width="440" height="270" rx="0" fill="none" stroke="#222222"/>
+<line x1="147.7" y1="44" x2="147.7" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="147.7" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">2</text>
+<line x1="181.5" y1="44" x2="181.5" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="181.5" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">3</text>
+<line x1="249.2" y1="44" x2="249.2" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="249.2" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">5</text>
+<line x1="350.8" y1="44" x2="350.8" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="350.8" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">8</text>
+<line x1="486.2" y1="44" x2="486.2" y2="314" stroke="#dddddd" stroke-width="1"/>
+<text x="486.2" y="331" text-anchor="middle" font-size="12" font-weight="normal" fill="#222222">12</text>
+<line x1="80" y1="314.0" x2="520" y2="314.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="318.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">0</text>
+<line x1="80" y1="224.0" x2="520" y2="224.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="228.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">20</text>
+<line x1="80" y1="134.0" x2="520" y2="134.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="138.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">40</text>
+<line x1="80" y1="44.0" x2="520" y2="44.0" stroke="#dddddd" stroke-width="1"/>
+<text x="74" y="48.0" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">60</text>
+<text x="300.0" y="352" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222">gap from the well edge to ring 1 (µm)</text>
+<text x="30" y="179.0" text-anchor="middle" font-size="13" font-weight="normal" fill="#222222" transform="rotate(-90 30 179.0)">well voltage at 1 nA of ring current (V)</text>
+<path d="M143.7,221.8 L151.7,225.8 L143.7,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M177.5,221.8 L185.5,225.8 L177.5,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M245.2,221.8 L253.2,225.8 L245.2,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M346.8,221.8 L354.8,225.8 L346.8,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M482.2,221.8 L490.2,225.8 L482.2,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<circle cx="536.0" cy="54.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="58" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AL</text>
+<polyline points="147.7,296.9 181.5,254.6 249.2,66.0" stroke="#2e86de" stroke-width="1.6" fill="none"/>
+<circle cx="147.7" cy="296.9" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<circle cx="181.5" cy="254.6" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.2" cy="66.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<path d="M346.8,-48.2 L354.8,-44.2 L346.8,-40.2 Z" fill="white" stroke="#2e86de" stroke-width="1.3"/>
+<path d="M482.2,-48.2 L490.2,-44.2 L482.2,-40.2 Z" fill="white" stroke="#2e86de" stroke-width="1.3"/>
+<circle cx="536.0" cy="72.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="76" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BL</text>
+<polyline points="147.7,296.9 181.5,254.2 249.2,50.3" stroke="#1b3a6b" stroke-width="1.6" fill="none"/>
+<circle cx="147.7" cy="296.9" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="181.5" cy="254.2" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<circle cx="249.2" cy="50.3" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<path d="M346.8,14.8 L354.8,18.8 L346.8,22.8 Z" fill="white" stroke="#1b3a6b" stroke-width="1.3"/>
+<path d="M482.2,14.8 L490.2,18.8 L482.2,22.8 Z" fill="white" stroke="#1b3a6b" stroke-width="1.3"/>
+<circle cx="536.0" cy="90.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="94" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BD</text>
+<path d="M177.5,221.8 L185.5,225.8 L177.5,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<path d="M346.8,221.8 L354.8,225.8 L346.8,229.8 Z" fill="white" stroke="#c0392b" stroke-width="1.3"/>
+<circle cx="536.0" cy="108.0" r="3.6" fill="#c0392b" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="112" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">AL, under NAT</text>
+<circle cx="181.5" cy="254.6" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<path d="M346.8,-48.2 L354.8,-44.2 L346.8,-40.2 Z" fill="white" stroke="#2e86de" stroke-width="1.3"/>
+<circle cx="536.0" cy="126.0" r="3.6" fill="#2e86de" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="130" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BL, under NAT</text>
+<circle cx="181.5" cy="254.2" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<path d="M346.8,14.8 L354.8,18.8 L346.8,22.8 Z" fill="white" stroke="#1b3a6b" stroke-width="1.3"/>
+<circle cx="536.0" cy="144.0" r="3.6" fill="#1b3a6b" stroke="#222222" stroke-width="0.6"/>
+<text x="546" y="148" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">BD, under NAT</text>
+<text x="20" y="372" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Dashed: NAR1S3 and NAR1S8, the contacted rings under NAT.</text>
+<text x="20" y="388" text-anchor="start" font-size="11" font-weight="normal" fill="#222222">Open triangle: the ring current did not reach 1 nA by the end of the sweep.</text>
+</svg>

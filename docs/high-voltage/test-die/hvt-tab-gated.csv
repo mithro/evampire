@@ -1,0 +1,4 @@
+Name,Well,Plate,Plate length (µm),NAT start (µm),"Plate pad x, y (µm)","Pad centre x, y (µm)"
+:ref:`NGP4 <hvt-s-ngp4>`,N-well,polysilicon,4,–,"290, 745","290, 595"
+:ref:`NGM1 <hvt-s-ngm1>`,N-well,Metal1,6,–,"590, 745","590, 595"
+:ref:`NAGM1 <hvt-s-nagm1>`,N-well,Metal1,6,0.6,"890, 745","890, 595"

@@ -1,0 +1,232 @@
+Structure,Family,Band (V),Agreement range (V),Reference,Predicted ratio,Gaps in the simulation
+NR1S2,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1S2,BL,89.6 to 89.8,76.2 to 112.2,NT20,1.34,None
+NR1S2,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NR1S3,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1S3,BL,90.3 to 91.9,76.8 to 114.9,NT20,1.35,None
+NR1S3,BD,61.1 to 61.1,51.9 to 76.4,NT20,1.00,None
+NR4S,"AL, AD, AnL, AnD",18.1 to 18.1,12.7 to 20.8,NW0,1.02,AL corner not simulated
+NR4S,BL,106.3 to 107.4,90.4 to 134.2,NT20,1.59,None
+NR4S,BD,61.1 to 61.1,51.9 to 76.4,NT20,1.00,None
+NR1S5,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1S5,BL,67.1 to 71.7,57.0 to 89.6,NT20,1.00,None
+NR1S5,BD,60.7 to 60.7,51.6 to 75.9,NT20,0.99,None
+NR1S8,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1S8,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NR1S8,BD,62.2 to 62.2,52.9 to 77.8,NT20,1.02,None
+NR1S12,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1S12,BL,67.0 to 70.2,56.9 to 87.8,NT20,1.00,None
+NR1S12,BD,60.7 to 60.7,51.6 to 75.9,NT20,0.99,None
+NGP4,"AL, AD, AnL, AnD",17.3 to 17.3,12.1 to 19.9,NW0,0.98,AL corner not simulated
+NGP4,BL,89.2 to 89.5,75.8 to 111.9,NT20,1.33,None
+NGP4,BD,60.3 to 60.3,51.3 to 75.4,NT20,0.99,None
+NGM1,"AL, AD, AnL, AnD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NGM1,BL,84.8 to 85.4,72.1 to 106.8,NT20,1.27,None
+NGM1,BD,60.1 to 60.1,51.1 to 75.1,NT20,0.98,None
+NAGM1,"AL, AD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NAGM1,AnL,84.8 to 84.8,72.1 to 106.0,NA0p6,1.27,None
+NAGM1,AnD,60.1 to 60.1,51.1 to 75.1,NA0p6,0.97,None
+NAGM1,BL,84.8 to 85.4,72.1 to 106.8,NT20,1.27,None
+NAGM1,BD,60.1 to 60.1,51.1 to 75.1,NT20,0.98,None
+NAR1S3,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NAR1S3,AnL,90.4 to 90.4,76.8 to 113.0,NA0p6,1.35,None
+NAR1S3,AnD,61.1 to 61.1,51.9 to 76.4,NA0p6,0.99,None
+NAR1S3,BL,90.3 to 91.8,76.8 to 114.8,NT20,1.35,None
+NAR1S3,BD,60.7 to 60.7,51.6 to 75.9,NT20,0.99,None
+NAR1S8,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NAR1S8,AnL,67.0 to 67.0,56.9 to 83.8,NA0p6,1.00,None
+NAR1S8,AnD,62.2 to 62.2,52.9 to 77.8,NA0p6,1.01,None
+NAR1S8,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NAR1S8,BD,62.2 to 62.2,52.9 to 77.8,NT20,1.02,None
+DT20b,"AL, AnL",30.0 to 30.0,25.5 to 37.5,DT20,1.00,None
+DT20b,"AD, AnD",31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DT20b,BL,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DT20b,BD,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+NT1,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NT1,BL,39.8 to 40.5,33.8 to 50.6,NT20,0.60,None
+NT1,BD,40.7 to 40.7,34.6 to 50.9,NT20,0.67,None
+NT5,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NT5,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NT5,BD,61.7 to 61.7,52.4 to 77.1,NT20,1.01,None
+NT20,"AL, AD, AnL, AnD",17.7 to 17.9,12.4 to 20.6,NW0,1.00,"AL, ALhi corner not simulated"
+NT20,BL,60.2 to 79.4,51.2 to 99.2,NT20,1 (reference),None
+NT20,BD,59.2 to 61.2,50.3 to 76.5,NT20,1 (reference),None
+NW0b,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NW0b,BL,17.7 to 17.8,12.4 to 20.5,NT20,"0.27, across regimes: not a test",None
+NW0b,BD,17.8 to 17.8,12.5 to 20.5,NT20,"0.29, across regimes: not a test",None
+NC0,"AL, AD, AnL, AnD",17.7 to 17.9,12.4 to 20.6,NW0,1.00,"AL, ALhi corner not simulated"
+NC0,BL,44.1 to 52.1,37.5 to 65.1,NT20,0.69,None
+NC0,BD,44.1 to 49.3,37.5 to 61.6,NT20,0.75,None
+NC15,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NC15,BL,70.6 to 74.1,60.0 to 92.6,NT20,1.05,None
+NC15,BD,59.6 to 59.6,50.7 to 74.5,NT20,0.97,None
+NW0,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1 (reference),AL corner not simulated
+NW0,BL,17.7 to 17.8,12.4 to 20.5,NT20,"0.27, across regimes: not a test",None
+NW0,BD,17.8 to 17.8,12.5 to 20.5,NT20,"0.29, across regimes: not a test",None
+NW1p5,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NW1p5,BL,51.3 to 51.9,43.6 to 64.9,NT20,0.77,None
+NW1p5,BD,51.0 to 51.0,43.4 to 63.8,NT20,0.83,None
+NW3,"AL, AD, AnL, AnD",17.7 to 17.9,12.4 to 20.6,NW0,1.00,"AL, ALhi corner not simulated"
+NW3,BL,59.7 to 72.9,50.7 to 91.1,NT20,0.97,None
+NW3,BD,58.8 to 61.2,50.0 to 76.5,NT20,1.00,None
+NW6,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NW6,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NW6,BD,61.7 to 61.7,52.4 to 77.1,NT20,1.01,None
+NA0p6,"AL, AD",17.7 to 17.8,12.4 to 20.5,NW0,1.00,"AL, ALhi corner not simulated"
+NA0p6,AnL,67.0 to 67.0,56.9 to 83.8,NT20,"3.79, across regimes: not a test",None
+NA0p6,AnD,61.7 to 61.7,52.4 to 77.1,NT20,"3.49, across regimes: not a test",None
+NA0p6,BL,60.2 to 79.4,51.2 to 99.2,NT20,1.00,None
+NA0p6,BD,59.2 to 61.2,50.3 to 76.5,NT20,1.00,None
+NC0b,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NC0b,BL,46.1 to 48.0,39.2 to 60.0,NT20,0.69,None
+NC0b,BD,46.0 to 46.0,39.1 to 57.5,NT20,0.75,None
+NA0p6T10,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NA0p6T10,AnL,67.0 to 67.0,56.9 to 83.8,NA0p6,1.00,None
+NA0p6T10,AnD,61.7 to 61.7,52.4 to 77.1,NA0p6,1.00,None
+NA0p6T10,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NA0p6T10,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NA0p6C0,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NA0p6C0,AnL,46.1 to 46.1,39.2 to 57.6,NA0p6,0.69,None
+NA0p6C0,AnD,46.0 to 46.0,39.1 to 57.5,NA0p6,0.75,None
+NA0p6C0,BL,46.1 to 48.0,39.2 to 60.0,NT20,0.69,None
+NA0p6C0,BD,46.0 to 46.0,39.1 to 57.5,NT20,0.75,None
+NAM1_3,"AL, AD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NAM1_3,AnL,83.2 to 83.2,70.7 to 104.0,NA0p6,1.24,None
+NAM1_3,AnD,61.2 to 61.2,52.0 to 76.5,NA0p6,0.99,None
+NAM1_3,BL,83.2 to 83.7,70.7 to 104.6,NT20,1.24,None
+NAM1_3,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NAM1_6,"AL, AD",17.5 to 17.6,12.2 to 20.2,NW0,0.99,"AL, ALhi corner not simulated"
+NAM1_6,AnL,84.8 to 84.8,72.1 to 106.0,NA0p6,1.27,None
+NAM1_6,AnD,59.6 to 59.6,50.7 to 74.5,NA0p6,0.97,None
+NAM1_6,BL,75.7 to 105.8,64.3 to 132.2,NT20,1.27,None
+NAM1_6,BD,59.5 to 61.0,50.6 to 76.2,NT20,0.97,None
+NAM1_10,"AL, AD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NAM1_10,AnL,85.2 to 85.2,72.4 to 106.5,NA0p6,1.27,None
+NAM1_10,AnD,60.8 to 60.8,51.7 to 76.0,NA0p6,0.99,None
+NAM1_10,BL,85.2 to 85.9,72.4 to 107.4,NT20,1.27,None
+NAM1_10,BD,60.8 to 60.8,51.7 to 76.0,NT20,0.99,None
+NAM2_12,"AL, AD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulated
+NAM2_12,AnL,82.3 to 82.3,70.0 to 102.9,NA0p6,1.23,None
+NAM2_12,AnD,60.8 to 60.8,51.7 to 76.0,NA0p6,0.99,None
+NAM2_12,BL,82.3 to 83.0,70.0 to 103.8,NT20,1.23,None
+NAM2_12,BD,60.8 to 60.8,51.7 to 76.0,NT20,0.99,None
+NP1,"AL, AD, AnL, AnD",17.4 to 17.4,12.2 to 20.0,NW0,0.98,AL corner not simulated
+NP1,BL,81.7 to 82.1,69.4 to 102.6,NT20,1.22,None
+NP1,BD,59.6 to 59.6,50.7 to 74.5,NT20,0.97,None
+NP2,"AL, AD, AnL, AnD",17.4 to 17.4,12.2 to 20.0,NW0,0.98,"AL, ALhi corner not simulated"
+NP2,BL,76.2 to 102.0,64.8 to 127.5,NT20,1.27,None
+NP2,BD,60.0 to 61.2,51.0 to 76.5,NT20,1.00,None
+NP4,"AL, AD, AnL, AnD",17.4 to 17.4,12.2 to 20.0,NW0,0.98,AL corner not simulated
+NP4,BL,89.2 to 89.5,75.8 to 111.9,NT20,1.33,None
+NP4,BD,60.8 to 60.8,51.7 to 76.0,NT20,0.99,None
+NM1_3,"AL, AD, AnL, AnD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulated
+NM1_3,BL,83.2 to 83.7,70.7 to 104.6,NT20,1.24,None
+NM1_3,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NM1_6,"AL, AD, AnL, AnD",17.6 to 17.7,12.3 to 20.4,NW0,0.99,"AL, ALhi corner not simulated"
+NM1_6,BL,75.7 to 105.8,64.3 to 132.2,NT20,1.27,None
+NM1_6,BD,59.5 to 61.0,50.6 to 76.2,NT20,0.97,None
+NM1_10,"AL, AD, AnL, AnD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulated
+NM1_10,BL,85.2 to 85.9,72.4 to 107.4,NT20,1.27,None
+NM1_10,BD,60.8 to 60.8,51.7 to 76.0,NT20,0.99,None
+NM2_6,"AL, AD, AnL, AnD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulated
+NM2_6,BL,82.1 to 82.8,69.8 to 103.5,NT20,1.23,None
+NM2_6,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NM2_12,"AL, AD, AnL, AnD",17.6 to 17.6,12.3 to 20.2,NW0,0.99,AL corner not simulated
+NM2_12,BL,82.3 to 83.0,70.0 to 103.8,NT20,1.23,None
+NM2_12,BD,60.8 to 60.8,51.7 to 76.0,NT20,0.99,None
+NPM12,"AL, AD, AnL, AnD",17.4 to 17.4,12.2 to 20.0,NW0,0.98,AL corner not simulated
+NPM12,BL,87.1 to 87.6,74.0 to 109.5,NT20,1.30,None
+NPM12,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NR1_1p4,"AL, AD, AnL, AnD",21.8 to 21.8,15.3 to 25.1,NW0,1.23,AL corner not simulated
+NR1_1p4,BL,74.6 to 76.1,63.4 to 95.1,NT20,1.11,None
+NR1_1p4,BD,61.1 to 61.1,51.9 to 76.4,NT20,1.00,None
+NR1_2,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1_2,BL,89.6 to 89.8,76.2 to 112.2,NT20,1.34,None
+NR1_2,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NR1_3,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1_3,BL,90.3 to 91.8,76.8 to 114.8,NT20,1.35,None
+NR1_3,BD,61.1 to 61.1,51.9 to 76.4,NT20,1.00,None
+NR3_1p5,"AL, AD, AnL, AnD",–,–,NW0,–,AL edge not resolved above 16.7 V; AL corner not simulated
+NR3_1p5,BL,107.1 to 108.2,91.0 to 135.2,NT20,1.60,None
+NR3_1p5,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NR3_2,"AL, AD, AnL, AnD",17.7 to 17.9,12.4 to 20.6,NW0,1.00,"AL, ALhi corner not simulated"
+NR3_2,BL,84.0 to 142.9,71.4 to 178.6,NT20,1.51,BLlo edge not resolved above 150.0 V
+NR3_2,BD,59.4 to 61.1,50.5 to 76.4,NT20,1.00,None
+NR3W1,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR3W1,BL,95.3 to 96.4,81.0 to 120.5,NT20,1.42,None
+NR3W1,BD,60.2 to 60.2,51.2 to 75.2,NT20,0.98,None
+NR3W3,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR3W3,BL,103.4 to 104.8,87.9 to 131.0,NT20,1.54,None
+NR3W3,BD,60.6 to 60.6,51.5 to 75.8,NT20,0.99,None
+NR5_1p4,"AL, AD, AnL, AnD",–,–,NW0,–,AL edge not resolved above 12.2 V; AL corner not simulated
+NR5_1p4,BL,109.2 to 109.2,92.8 to 136.5,NT20,1.63,BLq corner gave no result
+NR5_1p4,BD,59.8 to 59.8,50.8 to 74.8,NT20,0.98,None
+NR5_2,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR5_2,BL,101.2 to 101.2,86.0 to 126.5,NT20,1.51,BLq edge gave no result
+NR5_2,BD,61.0 to 61.0,51.9 to 76.2,NT20,1.00,None
+NR3M1,"AL, AD, AnL, AnD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NR3M1,BL,103.4 to 104.3,87.9 to 130.4,NT20,1.54,None
+NR3M1,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+DT2p6,"AL, AnL",30.0 to 30.0,25.5 to 37.5,DT20,1.00,None
+DT2p6,"AD, AnD",31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DT2p6,BL,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DT2p6,BD,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DT20,"AL, AnL",30.0 to 30.3,25.5 to 37.9,DT20,1 (reference),None
+DT20,"AD, AnD",31.3 to 31.3,26.6 to 39.1,DT20,1 (reference),None
+DT20,BL,30.3 to 31.3,25.8 to 39.1,DT20,1 (reference),None
+DT20,BD,31.2 to 31.3,26.5 to 39.1,DT20,1 (reference),None
+DC0,"AL, AnL",32.4 to 32.4,27.5 to 40.5,DT20,1.08,None
+DC0,"AD, AnD",32.4 to 32.4,27.5 to 40.5,DT20,1.04,None
+DC0,BL,32.3 to 32.4,27.5 to 40.5,DT20,1.04,None
+DC0,BD,32.4 to 32.4,27.5 to 40.5,DT20,1.04,None
+DM1_6,"AL, AnL",30.4 to 31.3,25.8 to 39.1,DT20,1.04,None
+DM1_6,"AD, AnD",31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DM1_6,BL,30.3 to 31.3,25.8 to 39.1,DT20,0.97,None
+DM1_6,BD,30.1 to 31.3,25.6 to 39.1,DT20,1.00,None
+DAo1,AL,31.1 to 31.3,26.4 to 39.1,DT20,1.04,None
+DAo1,AD,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DAo1,BL,30.3 to 31.3,25.8 to 39.1,DT20,1.00,None
+DAo1,BD,31.2 to 31.3,26.5 to 39.1,DT20,1.00,None
+NAR1_2,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NAR1_2,AnL,89.8 to 89.8,76.3 to 112.2,NA0p6,1.34,None
+NAR1_2,AnD,61.2 to 61.2,52.0 to 76.5,NA0p6,0.99,None
+NAR1_2,BL,89.6 to 89.8,76.2 to 112.2,NT20,1.34,None
+NAR1_2,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NAR3_2,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NAR3_2,AnL,101.2 to 101.2,86.0 to 126.5,NA0p6,1.51,None
+NAR3_2,AnD,60.1 to 60.1,51.1 to 75.1,NA0p6,0.97,None
+NAR3_2,BL,101.2 to 102.6,86.0 to 128.2,NT20,1.51,None
+NAR3_2,BD,61.1 to 61.1,51.9 to 76.4,NT20,1.00,None
+DAo1M1_6,AL,30.3 to 30.3,25.8 to 37.9,DT20,1.01,None
+DAo1M1_6,AD,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+DAo1M1_6,BL,30.3 to 31.3,25.8 to 39.1,DT20,0.97,None
+DAo1M1_6,BD,31.3 to 31.3,26.6 to 39.1,DT20,1.00,None
+NT20b,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NT20b,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NT20b,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NA0p6b,"AL, AD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NA0p6b,AnL,67.0 to 67.0,56.9 to 83.8,NT20,"3.79, across regimes: not a test",None
+NA0p6b,AnD,61.7 to 61.7,52.4 to 77.1,NT20,"3.49, across regimes: not a test",None
+NA0p6b,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NA0p6b,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NT20L,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NT20L,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NT20L,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NT20c,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NT20c,BL,67.0 to 70.2,56.9 to 87.8,NT20,1.00,None
+NT20c,BD,62.2 to 62.2,52.9 to 77.8,NT20,1.02,None
+NM1_6b,"AL, AD, AnL, AnD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NM1_6b,BL,84.8 to 85.4,72.1 to 106.8,NT20,1.27,None
+NM1_6b,BD,60.1 to 60.1,51.1 to 75.1,NT20,0.98,None
+NM1_6L,"AL, AD, AnL, AnD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NM1_6L,BL,84.8 to 85.4,72.1 to 106.8,NT20,1.27,None
+NM1_6L,BD,60.1 to 60.1,51.1 to 75.1,NT20,0.98,None
+NM1_6C0,"AL, AD, AnL, AnD",17.5 to 17.5,12.2 to 20.1,NW0,0.99,AL corner not simulated
+NM1_6C0,BL,63.6 to 65.9,54.1 to 82.4,NT20,0.95,None
+NM1_6C0,BD,62.9 to 62.9,53.5 to 78.6,NT20,1.03,None
+NR1_2L,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NR1_2L,BL,89.6 to 89.8,76.2 to 112.2,NT20,1.34,None
+NR1_2L,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
+NT20V,"AL, AD, AnL, AnD",17.7 to 17.7,12.4 to 20.4,NW0,1.00,AL corner not simulated
+NT20V,BL,67.0 to 70.3,56.9 to 87.9,NT20,1.00,None
+NT20V,BD,61.2 to 61.2,52.0 to 76.5,NT20,1.00,None
