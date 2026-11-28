@@ -25,18 +25,27 @@ HOT = "#c0392b"
 SNAP = "#8e44ad"
 
 
+W = 660   # the drawing's width; it is mirrored, as explained below
+FLIP = {"start": "end", "end": "start", "middle": "middle"}
+
+
+# Each helper mirrors x: the figure is laid out with the PMOS at the left
+# and drawn with the NMOS at the left, the order of the layout figures.
 def rect(x, y, w, h, fill, stroke=INK, dash=None):
+    x = W - x - w
     d = f' stroke-dasharray="{dash}"' if dash else ""
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill}" '
             f'stroke="{stroke}"{d}/>')
 
 
 def text(x, y, s, anchor="middle", size=13, fill=INK, weight="normal"):
+    x, anchor = W - x, FLIP[anchor]
     return (f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-size="{size}" '
             f'fill="{fill}" font-weight="{weight}">{s}</text>')
 
 
 def line(x1, y1, x2, y2, stroke=INK, width=1.5, dash=None, arrow=False):
+    x1, x2 = W - x1, W - x2
     d = f' stroke-dasharray="{dash}"' if dash else ""
     m = ' marker-end="url(#arrow)"' if arrow else ""
     return (f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke}" '
@@ -49,8 +58,9 @@ def diode(x, y, up):
     The symbol is centred on the junction, with a lead into the region on
     each side, so the anode and cathode sit in the regions that form them.
     """
-    t = (f"{x - 8},{y + 7} {x + 8},{y + 7} {x},{y - 7}" if up
-         else f"{x - 8},{y - 7} {x + 8},{y - 7} {x},{y + 7}")
+    m = W - x
+    t = (f"{m - 8},{y + 7} {m + 8},{y + 7} {m},{y - 7}" if up
+         else f"{m - 8},{y - 7} {m + 8},{y - 7} {m},{y + 7}")
     bar = y - 7 if up else y + 7
     return [line(x, y - 15, x, y + 15, stroke=HOT, width=2),
             f'<polygon points="{t}" fill="{HOT}" stroke="{HOT}"/>',
@@ -65,7 +75,7 @@ def bracket(x1, x2, y, label, anchor="middle"):
 
 
 def driver_section():
-    w, h = 660, 400
+    w, h = W, 400
     b = ['<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
          'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
          f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker>'
@@ -164,7 +174,7 @@ def driver_section():
               ((606, top + 41), (606, top + 82), (488, top + 82)),
               ((488, top + 82), (370, top + 82), (370, top + 37)))
     for k, pts in enumerate(routes):
-        d = " ".join(f"{x},{y}" for x, y in pts)
+        d = " ".join(f"{W - x},{y}" for x, y in pts)
         head = ' marker-end="url(#arrow-hot)"' if k % 2 == 0 else ""
         b.append(f'<polyline points="{d}" fill="none" stroke="{HOT}" '
                  f'stroke-width="1.6" stroke-dasharray="5,3"{head}/>')
@@ -178,7 +188,6 @@ def driver_section():
     b.append(line(bx, by - 5, 470, top + 24, stroke=SNAP, width=2))
     b.append(line(bx, by + 5, 530, top + 24, stroke=SNAP, width=2,
                   arrow=True))
-    b.append(line(bx, by, bx - 10, by, stroke=SNAP, width=2))
     b.append(text(640, top + 172, "parasitic NPN (drain, P-well, source): "
                   "triggers at 10.7 V,", size=12, fill=SNAP, anchor="end"))
     b.append(text(640, top + 188, "snaps back to about 6 V", size=12,
