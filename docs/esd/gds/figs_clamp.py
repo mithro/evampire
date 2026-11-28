@@ -60,8 +60,8 @@ def clamp(alone=True):
     f.note((CLAMP, CLAMP, 0.3), "rail clamp and its diode", kind="tint")
     f.note(*figs_pad.PADMETAL, kind="tint")
     f.note(GREY, "not in the schematic")
-    f.note(INK, "each supply pad holds one such clamp and diode: those of "
-           "the DVSS pad are the same", kind="plain")
+    f.note(INK, "each supply pad holds one such clamp and diode: the DVSS "
+           "pad's netlist is the same", kind="plain")
     if alone:
         f.note(INK, "PAD, primary, secondary, input buffer: in the "
                "bidirectional pad", kind="plain")
@@ -141,9 +141,9 @@ def ring():
     pad = gdskit.net("bi_t", "PAD")
     # Metal 2 first, in plain pale fills, as the layout has it. The
     # stripes of metal 3 to 5 lie over it and are ruled, not filled, so no
-    # two colours blend. The DVSS bond pad's metal 2 runs on as six buses
-    # over the clamp transistor, whose sources connect to it; five strips
-    # join its drains to DVDD.
+    # two colours blend. The DVSS bond pad's metal 2 runs on as six buses;
+    # the clamp transistor's sources connect to the four middle ones. Five
+    # strips join its drains to DVDD.
     dvss = gdskit.net("dvss", "DVSS")
     f.geom(translate(dvss["metal5"].intersection(box(0, 0, 75, 66)),
                      xoff=PITCH), "dvsspad")
