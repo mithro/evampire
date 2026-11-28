@@ -42,13 +42,13 @@
 <text x="567.8" y="80.8" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">drivers: 480 µm of gate,</text>
 <text x="567.8" y="97.6" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">6 drains, each between</text>
 <text x="567.8" y="114.4" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">2 gates of 40 µm</text>
-<polyline points="752.6,119.4 711.0,255.8" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="752.6,119.4 711.0,255.8" fill="none" stroke="#222222" stroke-width="1.3"/>
+<polyline points="741.0,119.4 711.0,255.8" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="741.0,119.4 711.0,255.8" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="711.0" cy="255.8" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="752.6" y="64.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">metal 2 wire,</text>
-<text x="752.6" y="80.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">2 µm wide, on</text>
-<text x="752.6" y="97.6" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">to the secondary</text>
-<text x="752.6" y="114.4" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">protection</text>
+<text x="741.0" y="64.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">metal 2 wire,</text>
+<text x="741.0" y="80.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">2 µm wide, on</text>
+<text x="741.0" y="97.6" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">to the secondary</text>
+<text x="741.0" y="114.4" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">protection</text>
 <polyline points="937.4,119.6 917.9,120.0 917.9,144.5" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
 <polyline points="937.4,119.6 917.9,120.0 917.9,144.5" fill="none" stroke="#666666" stroke-width="1.3"/>
 <circle cx="917.9" cy="144.5" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
@@ -75,11 +75,11 @@
 <circle cx="845.0" cy="364.3" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
 <text x="845.0" y="409.5" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">output signal</text>
 <text x="845.0" y="426.3" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">buffers</text>
-<polyline points="874.7,440.5 917.9,387.5 917.9,305.9" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="874.7,440.5 917.9,387.5 917.9,305.9" fill="none" stroke="#666666" stroke-width="1.3"/>
+<polyline points="858.2,440.5 917.9,387.5 917.9,305.9" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="858.2,440.5 917.9,387.5 917.9,305.9" fill="none" stroke="#666666" stroke-width="1.3"/>
 <circle cx="917.9" cy="305.9" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
-<text x="874.7" y="455.5" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">110 Ω of the secondary</text>
-<text x="874.7" y="472.3" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">protection</text>
+<text x="858.2" y="455.5" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">110 Ω of the secondary</text>
+<text x="858.2" y="472.3" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">protection</text>
 <text x="20.0" y="18.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">gf180mcu_fd_io__bi_t: the PAD net</text>
 <rect x="20.0" y="501.5" width="165.0" height="6" fill="#222222"/>
 <text x="193.0" y="509.5" font-size="14" fill="#222222">50 µm</text>
