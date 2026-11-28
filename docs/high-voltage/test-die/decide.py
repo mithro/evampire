@@ -16,6 +16,7 @@ SPDX-License-Identifier: Apache-2.0
 import statistics
 
 import measure
+import p1rules
 import pred_data as pd
 
 NEAR = (8.0, 25.0)     # V: "near 14 V", a secondary statement only
@@ -23,7 +24,7 @@ HIGHER = 40.0          # V: "above 40 V", a secondary statement only
 SAME = (0.15, 3.0)     # "the same": less than 15 % of the lower or 3 V
 MUCH = 2.0             # "much higher": a factor of two or more
 FEW = 5                # fewer dies than this is reported
-G1 = ("NT20", "NT20b", "NT20c")          # the group 1 value
+G1 = p1rules.G1                          # the group 1 value
 G2 = (("NW0", "NW0b"), ("NW1p5",), ("NW3",), ("NW6",))   # by distance
 G3 = ("NA0p6", "NA0p6b")                 # NAT beside an N-well
 RISE = ("NA0p6T10", "NA0p6")             # P+ ring at 10 um and at 20 um
@@ -71,32 +72,64 @@ def same(a, b):
 
 
 class Data:
-    """The summaries of every structure, and helpers over them."""
+    """The summaries of every structure, and helpers over them. A
+    reference lost on every die is replaced by its stand-ins (p1rules),
+    and each replacement is noted once in self.notes."""
 
     def __init__(self, summaries):
         self.s = summaries
+        self.notes = []
 
-    def value(self, names):
-        """Mean of the medians of the measured, resolved members."""
+    def measured(self, name):
+        return name in self.s and any(b.kind == "bv"
+                                      for b in self.s[name].per_die.values())
+
+    def resolve(self, names, pw=None):
+        names, note = p1rules.stand_in(tuple(names), self.measured, pw)
+        if note and note not in self.notes:
+            self.notes.append(note)
+        return names
+
+    def value(self, names, sub=False):
+        """Mean of the medians of the measured, resolved members; with sub,
+        a lost group is replaced by its stand-ins."""
+        if sub:
+            names = self.resolve(names)
         vals = [self.s[n].median for n in names
                 if n in self.s and self.s[n].median is not None
                 and not self.s[n].bound]
         return sum(vals) / len(vals) if vals else None
 
-    def die_mean(self, names, die):
-        vals = [self.s[n].bv(die) for n in names if n in self.s]
-        vals = [v for v in vals if v is not None]
-        return sum(vals) / len(vals) if vals else None
+    def die_mean(self, names, die, bounds=False):
+        """(mean on one die, whether it is a lower bound). With bounds, a
+        member without breakdown counts at the highest voltage it
+        reached, as a lower bound."""
+        vals, bound = [], False
+        for n in names:
+            b = self.s[n].per_die.get(die) if n in self.s else None
+            if b is not None and b.kind == "bv":
+                vals.append(b.bv)
+            elif bounds and b is not None and b.kind == "none":
+                vals.append(b.limit)
+                bound = True
+        return (sum(vals) / len(vals) if vals else None), bound
 
-    def ratio(self, names, refs):
-        """Median over the dies of the die's ratio, and the dies used."""
+    def ratio(self, names, refs, pw=None):
+        """(median over the dies of the die's ratio, dies used, whether it
+        is a lower bound). A die where the structure did not break down
+        gives a lower bound; the reference must break down."""
+        refs = self.resolve(refs, pw)
         dies = sorted({d for n in names if n in self.s for d in self.s[n].per_die})
         rs = []
         for d in dies:
-            a, b = self.die_mean(names, d), self.die_mean(refs, d)
+            (a, bound), b = self.die_mean(names, d, True), \
+                self.die_mean(refs, d)[0]
             if a is not None and b:
-                rs.append(a / b)
-        return (statistics.median(rs) if rs else None), len(rs)
+                rs.append((a / b, bound))
+        if not rs:
+            return None, 0, False
+        m, bound = p1rules.bound_median(rs)
+        return m, len(rs), bound
 
 
 def fmt(v):
@@ -105,9 +138,10 @@ def fmt(v):
 
 def pwell(data, ev):
     """(A, An, B or None, reason), with the evidence appended to ev."""
-    g1, nt1, nt5 = data.value(G1), data.value(("NT1",)), data.value(("NT5",))
+    g1, nt1, nt5 = data.value(G1, True), data.value(("NT1",)), \
+        data.value(("NT5",))
     g2 = [data.value(m) for m in G2]
-    g3 = data.value(G3)
+    g3 = data.value(G3, True)
     ev.append(f"Group 1: NT1 {fmt(nt1)}, NT5 {fmt(nt5)}, mean of NT20, "
               f"NT20b and NT20c {fmt(g1)}")
     ev.append("Group 2 by P-well distance: " + ", ".join(
@@ -129,7 +163,11 @@ def pwell(data, ev):
         miss = [n for n, v in (("group 1", g1), ("NT1", nt1), ("NT5", nt5),
                                ("group 3", g3)) if v is None]
         miss += [m[0] for m, v in zip(G2, g2) if v is None]
-        return None, "no resolved value for " + ", ".join(miss)
+        why = "no resolved value for " + ", ".join(miss)
+        if g2[0] is None:
+            why += (" (NW0 and NW0b are the only wells with P-well drawn "
+                    "against them, so nothing stands in for them here)")
+        return None, why
     flat = same(nt1, g1) and same(nt5, g1) and all(same(v, g1) for v in g2)
     rising = all(b >= a or same(a, b) for a, b in zip(g2, g2[1:]))
     levels(ev, g1, g2[0], g3)
@@ -193,11 +231,12 @@ def deep(data, pw, ev, cap=(None, "no capacitance result")):
 def deep_breakdown(data, pw, ev):
     """(L, D or None, reason) from the breakdown rows of tab-hvt-deep."""
     num, den = DEEP[pw]
-    m, n = data.ratio(num, den)
+    m, n, mb = data.ratio(num, den, pw)
     pl = pd.ratio_value(num[0], pw + "L")[1]
     ev.append(f"Deep layer: mean of {', '.join(num)} over the mean of "
               f"{', '.join(den)}: measured "
-              + ("–" if m is None else f"{m:.2f} on {n} dies")
+              + ("–" if m is None else
+                 f"{'> ' if mb else ''}{m:.2f} on {n} dies")
               + f"; predicted {pl:.2f} under {pw}L and 1 under {pw}D")
     over, above = [], []
     for name, s in sorted(data.s.items()):
@@ -207,7 +246,7 @@ def deep_breakdown(data, pw, ev):
         ref, pr, test = pd.ratio_value(name, pw + "D")
         refs = pd.REF_MEMBERS.get(ref, (ref,))
         if test and pr and name not in refs:
-            r = data.ratio((name,), refs)[0]
+            r = data.ratio((name,), refs, pw)[0]   # a bound counts too
             if r is not None and r > pr * (1 + pd.RATIO):
                 over.append(f"{name} ({r:.2f} against {pr:.2f})")
         lo, hi, _ = pd.band(name, pw + "D")
@@ -223,7 +262,13 @@ def deep_breakdown(data, pw, ev):
                      "than D allows")
     if m is None:
         return None, f"no die has both {num[0]} and its reference measured"
-    ok_l, ok_d = pd.ratio_agrees(m, pl), pd.ratio_agrees(m, 1.0)
+    if mb:      # a lower bound rules out only what lies wholly below it
+        ok_l, ok_d = m <= pl * (1 + pd.RATIO), m <= 1 + pd.RATIO
+        if ok_l and ok_d:
+            return None, (f"the plate ratio is only a lower bound, > {m:.2f}, "
+                          "which leaves both L and D open")
+    else:
+        ok_l, ok_d = pd.ratio_agrees(m, pl), pd.ratio_agrees(m, 1.0)
     if ok_l and not ok_d:
         return "L", "the plate ratio agrees with the L prediction"
     if ok_d and not ok_l:
@@ -248,7 +293,12 @@ def compare(data, name, fam):
         else (None, None, False)
     row["ref"], row["p_ratio"] = ref, pr
     refs = pd.REF_MEMBERS.get(ref, (ref,))
-    row["m_ratio"] = data.ratio((name,), refs)[0] if ref else None
+    pw = pd.parse(fam)[1]
+    used = data.resolve(refs, pw) if ref else ()
+    if ref and used != tuple(refs):
+        row["ref"] = f"{ref} ({', '.join(used)} stand in)"
+    row["m_ratio"], _, row["m_bound"] = data.ratio((name,), refs, pw) \
+        if ref else (None, 0, False)
     if ref is None:
         row["ratio"] = "not simulated"
     elif ref == name or name in refs:
@@ -257,11 +307,13 @@ def compare(data, name, fam):
         row["ratio"] = "no predicted ratio"
     elif not test:
         row["ratio"] = "across regimes: not a test"
+    elif s.median is None:
+        row["ratio"] = "no value"
     elif row["m_ratio"] is None:
         row["ratio"] = f"{ref} not measured on the same die"
     else:
-        row["ratio"] = ("agrees" if pd.ratio_agrees(row["m_ratio"], pr)
-                        else "disagrees")
+        row["ratio"] = p1rules.ratio_verdict(row["m_ratio"], pr,
+                                             row["m_bound"])
     lo, hi, _ = pd.band(name, fam) if name in pd.STRUCTS else (None, None, 0)
     row["band"] = (lo, hi)
     row["range"] = pd.agreement(lo, hi) if lo is not None else None

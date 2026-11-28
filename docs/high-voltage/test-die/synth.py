@@ -2,7 +2,8 @@
 
 The records are SYNTHETIC: ideal diode sweeps whose breakdown voltage is
 the prediction of predictions.json under one process, times a factor,
-with a die-to-die spread drawn from a fixed seed. They follow the record
+with a die-to-die spread drawn from a fixed seed, and capacitance sweeps
+that follow the simulated curve of model_checks.json. They follow the record
 format of method.rst (table tab-hvt-record), so that analyse.py can be
 tried without silicon, and test_analyse.py uses them to check it. No
 value in them is a measurement.
@@ -12,11 +13,11 @@ analyse.py --example and test_analyse.py call this module.
 SPDX-License-Identifier: Apache-2.0
 """
 
-import functools
 import math
 import pathlib
 import random
 
+import cv
 import measure
 import physics as ph
 import pred_data as pd
@@ -100,8 +101,9 @@ def p5_rows(pt, bv):
 
 
 def make(out, hyp, factor=1.0, dies=5, spread=0.03, seed=1, sweeps=1,
-         extra=False, edits=None):
-    """Write a measurement set under process `hyp` into out. edits maps
+         extra=False, edits=None, dope=1.0):
+    """Write a measurement set under process `hyp` into out, with the
+    substrate doping dope times the nominal in P2 and P5. edits maps
     (structure, die number or None for every die) to "short", "none" (no
     breakdown), "drop" (no file) or "leak" (the substrate returns 70 % of
     the well current). Returns {(structure, die): the
@@ -130,7 +132,7 @@ def make(out, hyp, factor=1.0, dies=5, spread=0.03, seed=1, sweeps=1,
                             what == "short", back=0.7 if what == "leak"
                             else 1.0))
             if extra:
-                extras(out, die, st, hyp, factor, bv, sweeps)
+                extras(out, die, st, hyp, factor, bv, sweeps, dope)
     if extra:
         (out / "README.txt").write_text(NOTE.format(
             hyp=hyp, factor=factor, spread=spread, seed=seed),
@@ -138,7 +140,7 @@ def make(out, hyp, factor=1.0, dies=5, spread=0.03, seed=1, sweeps=1,
     return truth
 
 
-def extras(out, die, st, hyp, factor, bv, sweeps):
+def extras(out, die, st, hyp, factor, bv, sweeps, dope=1.0):
     """The P2 to P5 records and an 85 C sweep for one structure on a die."""
     p = pd.STRUCTS[st]
     idx = sweeps + 1
@@ -149,57 +151,33 @@ def extras(out, die, st, hyp, factor, bv, sweeps):
         write(out, die, st, "P3", 1, ring_rows(bv, curve, factor))
         e = rules.p5_entry(st, hyp) or {}
         pt, b5 = e.get("punch_through_v"), e.get("breakdown_v")
+        k = rules.gap_fit(hyp, "P5")[0]
         write(out, die, st, "P5", 1, p5_rows(
-            None if pt is None else pt * factor,
+            None if pt is None else rules.pt_scaled(pt, dope, k) * factor,
             None if b5 is None else b5 * factor))
     if p["half"] >= 50 or st == "OPEN":
-        write(out, die, st, "P2", 1, cv_rows(st, pd.parse(hyp)[2] == "D"))
+        write(out, die, st, "P2", 1, cv_rows(st, pd.parse(hyp)[2], dope))
     if p["gate"]:
         gated(out, die, st, hyp, factor, bv)
 
 
-# P2: a one-sided junction on a known substrate doping, with or without a
-# buried heavy layer, whose depletion width W solves
-# V + VBI = (q / eps) * integral from 0 to W of x N(x) dx.
-VBI = 0.7              # V, built-in voltage of the synthetic junction
-LAYER = (2.2e-4, 0.3e-4, 5e17)   # depth below the junction, spread (cm), peak
-OPEN_C = 0.15e-12      # F, pad, lead and probe
-GRID = 2e-7            # cm, step of the integral
+# P2: the area part is the published model times the simulated ratio of
+# cv.sim_ratio (L: 0.83 at 10 V; D: 1), linear between the documented
+# biases; a doping dope times the nominal multiplies it by sqrt(dope), as
+# for a one-sided junction, so 1/C^2 falls by dope. The edge part is the
+# published model, and OPEN_C is the pad, lead and probe.
+OPEN_C = 0.15e-12      # F
 
 
-def doping(x, layer):
-    n = rules.SUB_NOMINAL
-    if layer:
-        d, s, peak = LAYER
-        n += peak * math.exp(-((x - d) / s) ** 2 / 2)
-    return n
-
-
-@functools.lru_cache(maxsize=None)
-def depletion(layer, volts):
-    """{bias: depletion width in cm} of the synthetic junction."""
-    out, x, acc, k = {}, 0.0, 0.0, 0
-    targets = sorted(volts)
-    while k < len(targets) and x < 20e-4:
-        step = ph.Q / ph.EPS * (x + GRID / 2) * doping(x + GRID / 2, layer) \
-            * GRID
-        while k < len(targets) and acc + step >= targets[k] + VBI:
-            out[targets[k]] = x + GRID * (targets[k] + VBI - acc) / step
-            k += 1
-        acc, x = acc + step, x + GRID
-    return out
-
-
-def cv_rows(st, layer, top=10.0):
-    """P2 rows of a large well or OPEN: area part from the synthetic
-    junction, edge part from the published model, plus OPEN."""
+def cv_rows(st, deep, dope=1.0, top=10.0):
+    """P2 rows of a large well or OPEN under deep layer "L" or "D"."""
     volts = [0.25 * k for k in range(int(top / 0.25) + 1)]
-    w = depletion(layer, tuple(volts))
     area, per = (0, 0) if st == "OPEN" else ph.octagon(
         pd.STRUCTS[st]["half"], pd.STRUCTS[st]["corner"])
     rows = []
     for v in volts:
-        c = OPEN_C + ph.EPS / w[v] * area * 1e-8 + ph.c_junction(
+        ca = cv.model(v) * cv.sim_ratio(deep, v) * math.sqrt(dope)
+        c = OPEN_C + ca * area * 1e-8 + ph.c_junction(
             ph.NW_CP * 1e-6, ph.NW_VBI, ph.NW_M, v) * per
         for f in (1e5, 1e6):
             rows.append({"v_well_v": v, "c_f": c, "d": 0.01, "freq_hz": f})

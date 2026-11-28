@@ -48,6 +48,10 @@ def procedures(sweeps, first, fam, cap):
             p4a.setdefault((w.structure, well), {})[w.die] = \
                 measure.gated_levels(w)
     out = {"P2": cap, "P3": [], "P4": [], "P4a": [], "P5": []}
+    # P3 and P5 are read at the substrate doping P2 gives, relative to the
+    # simulation; over the simulated range of dopings when it gives none.
+    dope = cv.doping_factor(cap, pd.parse(fam)[2]) if fam else None
+    cap["dope"] = dope
     for st, by in sorted(p3.items()):
         ons = [x[0] for x in by.values()]
         on = med(ons)
@@ -58,9 +62,8 @@ def procedures(sweeps, first, fam, cap):
         row = {"name": st, "dies": len(by), "onset": meas, "top": top,
                "step": step, "verdict": "no family", "step_verdict": "–"}
         if fam:
-            rng = rules.pt_range(st, fam, "P3")
-            row["range"] = rng
-            row["verdict"] = rules.pt_verdict(st, fam, "P3", meas, top)
+            row["range"] = rules.pt_range(st, fam, "P3", dope)
+            row["verdict"] = rules.pt_verdict(st, fam, "P3", meas, top, dope)
             srange = rules.step_range(st, fam, top)
             if srange[0] is None:
                 row["step_verdict"] = srange[1]
@@ -78,8 +81,8 @@ def procedures(sweeps, first, fam, cap):
         row = {"name": st, "dies": len(by), "pt": meas, "top": top,
                "mech": mech, "verdict": "no family"}
         if fam:
-            row["range"] = rules.pt_range(st, fam, "P5")
-            row["verdict"] = rules.pt_verdict(st, fam, "P5", meas, top)
+            row["range"] = rules.pt_range(st, fam, "P5", dope)
+            row["verdict"] = rules.pt_verdict(st, fam, "P5", meas, top, dope)
         out["P5"].append(row)
     for (st, plate), by in sorted(p4.items()):
         out["P4"].append(gated_row(st, plate, by, first, fam))
@@ -172,6 +175,15 @@ def markdown(o, fam):
            f"Compared under {f} by the rules of method.rst. \"No "
            "prediction\" marks a quantity the simulation does not give.", ""]
     out += p2_md(o["P2"])
+    d = o["P2"].get("dope")
+    if o["P3"] or o["P5"]:
+        out += ["Punch-through ranges of P3 and P5 at a substrate doping "
+                + ("not measured: over the simulated range "
+                   f"{rules.DOPE_RANGE[0]:.2f} to {rules.DOPE_RANGE[1]:.2f} "
+                   "times the nominal" if d is None else
+                   f"{d:.2f} times the nominal, from P2 against the "
+                   "same reduction of the simulated curve")
+                + f"; equivalent gap within {rules.GAP_TOL:g} µm.", ""]
     if o["P3"]:
         out += ["### P3, floating-ring potential", "",
                 "| Structure | Dies | Onset at 1 V (V) | Agreement range (V) "

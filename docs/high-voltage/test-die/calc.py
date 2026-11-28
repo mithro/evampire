@@ -149,6 +149,25 @@ def agreement_rules():
              if v1 >= 2 and v2 <= 5]
         print(f"  doping from 1/C2 between 2 V and 5 V, {name}: "
               f"{min(n):.2e} to {max(n):.2e} cm^-3")
+    for v in (7, 10):
+        lo, thr, hi = rules.layer_window(v)
+        print(f"  P2 at {v:2d} V: L from {lo:.3f} to {thr:.3f}, D from "
+              f"{thr:.3f} to {hi:.3f}, neither outside")
+    import cv
+    import p1rules
+    for deep in ("L", "D"):
+        print(f"  P2 reduction of the simulated curve under {deep}: "
+              f"{cv.reference_doping(deep):.3g} cm^-3")
+    kp3 = rules.gap_fit("BL", "P3")[0]
+    pts = rules.doping_points()
+    v0 = dict(pts)[1.0]
+    print(f"  doping scaling: edge shift {rules.EDGE_SHIFT:.3f} um per "
+          f"e-fold; NR3_2 onsets " + ", ".join(
+              f"{f:.3f} x nominal {v:.2f} V (proportional {v0 * f:.2f} V, "
+              f"scaled {rules.pt_scaled(v0, f, kp3):.2f} V)" for f, v in pts))
+    print(f"  doping range {rules.DOPE_RANGE[0]:.3f} to "
+          f"{rules.DOPE_RANGE[1]:.3f} x nominal; die band 1 +- "
+          f"{p1rules.DIE_BAND}; stand-ins within {p1rules.SAME_PRED}")
     for which in ("P5", "P3"):
         for fam in ("BL", "BD"):
             k, g0, f = rules.gap_fit(fam, which)

@@ -33,6 +33,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 import decide  # noqa: E402
 import measure  # noqa: E402
+import p1rules  # noqa: E402
 import pred_data as pd  # noqa: E402
 import procs  # noqa: E402
 
@@ -40,11 +41,13 @@ import procs  # noqa: E402
 class Result:
     """Everything the report holds, for the report and for the tests."""
 
-    def __init__(self, top, family=None):
+    def __init__(self, top, family=None, leave_out=()):
         sweeps, self.errors = measure.read_dir(top)
-        self.unusable = []
+        self.unusable, self.left_out = [], tuple(leave_out)
         known = []
         for w in sweeps:
+            if w.die in self.left_out:
+                continue
             if w.structure not in pd.STRUCTS:
                 self.unusable.append(f"{w.path}: no structure "
                                      f"{w.structure} on the die")
@@ -70,7 +73,16 @@ class Result:
         self.other = procs.procedures(
             known, self.first, self.families[0] if self.families else None,
             self.cap)
-        self.issues = self.inconclusive()
+        self.issues = self.inconclusive() + self.data.notes
+        self.factors = p1rules.die_factors(self.first)
+        self.outliers = p1rules.outliers(self.factors)
+        self.issues += [f"{d}: its structures lie at {self.factors[d][0]:.2f} "
+                        "times the median of all dies, outside "
+                        f"1 ± {p1rules.DIE_BAND:g}; the medians keep it, and "
+                        "the report repeats the decision without it."
+                        for d in self.outliers]
+        self.without = Result(top, family, self.outliers) \
+            if self.outliers and not leave_out else None
 
     def inconclusive(self):
         out = []
@@ -143,6 +155,36 @@ def v(x, bound=False):
     return "–" if x is None else ("> " if bound else "") + f"{x:.1f}"
 
 
+def dies_md(r):
+    """The outlier check by die, and the result without the outliers."""
+    out = ["", "## Dies", "",
+           "Median over the structures of the die's breakdown voltage over "
+           "the median of all dies, flagged outside "
+           f"1 ± {p1rules.DIE_BAND:g}.", "",
+           "| Die | Factor | Structures | Flag |", "|---|---|---|---|"]
+    out += [f"| {d} | {f:.2f} | {n} | "
+            + ("outlier" if d in r.outliers else "–") + " |"
+            for d, (f, n) in sorted(r.factors.items())] or \
+        [f"| – | fewer than {p1rules.DIE_MIN} dies: not checked | | |"]
+    w = r.without
+    if w is None:
+        return out
+    out += ["", f"Without {', '.join(r.outliers)}: surface P-well "
+            f"**{w.pwell or 'undecided'}**, deep P layer "
+            f"**{w.deep or 'undecided'}**."]
+    old = {(x["name"], x["family"]): x for x in r.rows}
+    changed = [f"{x['name']} ({x['family']}): ratio {old[k]['ratio']} to "
+               f"{x['ratio']}; absolute {old[k]['absolute']} to "
+               f"{x['absolute']}"
+               for x in w.rows for k in [(x["name"], x["family"])]
+               if k in old and (old[k]["ratio"], old[k]["absolute"])
+               != (x["ratio"], x["absolute"])]
+    out.append(f"{len(changed)} rows change verdict without "
+               f"{', '.join(r.outliers)}" + (":" if changed else "."))
+    out += [f"- {c}" for c in changed]
+    return out
+
+
 def report(r):
     out = ["# Test die: measurements against predictions", "",
            f"{len(r.dies)} dies, {len(r.sweeps)} records read.", "",
@@ -154,6 +196,7 @@ def report(r):
     elif r.families:
         out.append(f"- Compared under: {', '.join(r.families)}.")
     out += ["", "Evidence:", ""] + [f"- {e}" for e in r.evidence]
+    out += [f"- Stand-in: {n}" for n in r.data.notes]
     out += ["", "## Structures", "",
             "Breakdown voltage at 1 µA, first sweep at 25 °C, median over "
             "the dies. Ratio: to the reference on the same die, median over "
@@ -168,7 +211,8 @@ def report(r):
         out.append("| " + " | ".join([
             row["name"], row["family"], v(row["median"], row["bound"]),
             str(row["n"]), f"{v(lo)} to {v(hi)}", row["ref"] or "–",
-            "–" if row["m_ratio"] is None else f"{row['m_ratio']:.2f}",
+            "–" if row["m_ratio"] is None else
+            ("> " if row["m_bound"] else "") + f"{row['m_ratio']:.2f}",
             "–" if row["p_ratio"] is None else f"{row['p_ratio']:.2f}",
             row["ratio"], f"{v(row['band'][0])} to {v(row['band'][1])}",
             "–" if rng is None else f"{v(rng[0])} to {v(rng[1])}",
@@ -176,6 +220,7 @@ def report(r):
     if not r.rows:
         out.append("| – | No family selected: nothing compared. |"
                    + " |" * 10)
+    out += dies_md(r)
     out += procs.markdown(r.other, r.families[0] if r.families else None)
     out += ["", "## Inconclusive items", ""]
     out += [f"- {i}" for i in r.issues] or ["- None."]

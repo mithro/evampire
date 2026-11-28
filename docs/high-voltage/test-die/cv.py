@@ -6,11 +6,18 @@ parts are separated, and the area part gives the doping against depth
 from the slope of 1/C^2. The substrate doping and the layer call follow
 the rules of rules.py. CVD has no partner and is reported alone.
 
-analyse.py calls reduce(). Standard library only.
+sim_ratio() is the simulated area capacitance over the published model,
+linear between the biases model_checks.json gives (0 V to 10 V) and
+nothing outside them; under D it is 1, the middle of the documented
+range. reference_doping() is the doping the same reduction finds on that
+curve, against which a measured doping is read.
+
+analyse.py calls reduce(), synth.py sim_ratio(). Standard library only.
 
 SPDX-License-Identifier: Apache-2.0
 """
 
+import functools
 import statistics
 
 import physics as ph
@@ -63,6 +70,27 @@ def checks(sw):
 def model(v):
     """Area capacitance of the published model, F/cm^2."""
     return ph.c_junction(ph.NW_CA * 1e-4, ph.NW_VBI, ph.NW_M, v)
+
+
+def sim_ratio(deep, v):
+    """Simulated area capacitance over the published model at bias v under
+    deep layer "L" or "D"; None outside the documented biases."""
+    pts = sorted(rules.CAP_L.items())
+    if not pts[0][0] <= v <= pts[-1][0]:
+        return None
+    if deep == "D":
+        return 1.0
+    return at(pts, v)
+
+
+@functools.lru_cache(maxsize=None)
+def reference_doping(deep, step=0.25):
+    """The substrate doping that reduce() finds on the simulated curve of a
+    deep layer: the lowest of its profile from rules.SUB_FROM up."""
+    top = max(rules.CAP_L)
+    vs = [step * k for k in range(int(top / step) + 1)]
+    ca = [model(v) * sim_ratio(deep, v) for v in vs]
+    return min(n for v, _, n in profile(vs, ca) if v >= rules.SUB_FROM - 1e-9)
 
 
 def profile(vs, ca):
@@ -172,7 +200,13 @@ def reduce(sweeps):
                   if ("OPEN", d) in f else None for d, w in cs]
             alone.append((name, len(cs), med(c0)))
     calls = {r["call"] for r in pairs if r["call"]}
-    if len(calls) == 1:
+    odd = [r for r in pairs if r["call"] == "neither"]
+    if odd:
+        call, why = None, "the area capacitance falls as under neither L " \
+            "nor D (" + "; ".join(
+                f"{r['pair'][0]} and {r['pair'][1]}: {r['s']:.3f} at "
+                f"{r['v']:g} V, outside {window(r['v'])}" for r in odd) + ")"
+    elif len(calls) == 1:
         call = calls.pop()
         why = "the area capacitance falls as under " + call + " (" + \
             "; ".join(f"{r['pair'][0]} and {r['pair'][1]}: "
@@ -187,6 +221,20 @@ def reduce(sweeps):
                "separate" if pairs else "no P2 records of the large wells")
     return {"pairs": pairs, "alone": alone, "issues": issues, "call": call,
             "why": why}
+
+
+def window(v):
+    lo, thr, hi = rules.layer_window(v)
+    return f"L {lo:.3f} to {thr:.3f} and D {thr:.3f} to {hi:.3f}"
+
+
+def doping_factor(cap, deep):
+    """Measured substrate doping over the reference doping of the deep
+    layer, median over the pairs, or None."""
+    ns = [r["n_sub"] for r in cap["pairs"] if r["n_sub"] is not None]
+    if not ns or deep not in ("L", "D"):
+        return None
+    return statistics.median(ns) / reference_doping(deep)
 
 
 def nat_effect(sweeps):
