@@ -352,11 +352,18 @@ equipment measures after power-up (:clause:`145.2.8.2`), so it must first
 be able to power the device
 (:ref:`power sourcing equipment classification <poe-pse-classification>`).
 A device that is already powered gets a new measurement this way only if
-the power is removed and it is classified again. Over LLDP, a device can
-instead request a measurement while it stays powered. A power sourcing
-equipment that supports Autoclass then measures as in
-:clause:`145.2.8.2` and may update the allocation (:clause:`145.5.7`,
-:clause:`79.3.2.12`).
+the power is removed and it is classified again.
+
+Over LLDP, a single-signature device can instead request a measurement
+while it stays powered. It can do so only if the power sourcing equipment
+advertises Autoclass support in the Autoclass field of its LLDP frames
+(:clause:`79.3.2.12`, :clause:`145.5.7`). The device must already be
+drawing its maximum power when it sends the request (:clause:`145.5.7`).
+The power sourcing equipment then measures as in :clause:`145.2.8.2`, may
+update the allocation, and reports that the measurement is complete
+(:clause:`145.5.7`). The device then draws no more than the measured
+power, unless it negotiates more over LLDP, up to its requested class
+(:clause:`145.3.8.2`).
 
 Turn-on hysteresis
 ------------------
