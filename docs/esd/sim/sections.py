@@ -152,23 +152,24 @@ def driver_section():
     b += diode(270, top + 22, False)
     b.append(text(170, top + 128, "P+ drain to N-well: diode from PAD",
                   size=12, fill=HOT, anchor="middle"))
-    b.append(text(170, top + 144, "to DVDD, 480 µm wide in all", size=12,
+    b.append(text(170, top + 144, "to DVDD, 480 µm of gate in all", size=12,
                   fill=HOT))
     b += diode(370, top + 22, True)
     # The route of each diode's current through its well, to the guard
     # ring: the arrows that the layout figures draw from above.
-    routes = (((270, top + 37), (270, top + 72), (50, top + 72),
-               (50, top + 41)),
-              ((606, top + 41), (606, top + 82), (370, top + 82),
-               (370, top + 37)))
-    for pts in routes:
+    # Each has its arrowhead half-way, clear of the diode symbol.
+    routes = (((270, top + 37), (270, top + 72), (160, top + 72)),
+              ((160, top + 72), (50, top + 72), (50, top + 41)),
+              ((606, top + 41), (606, top + 82), (488, top + 82)),
+              ((488, top + 82), (370, top + 82), (370, top + 37)))
+    for k, pts in enumerate(routes):
         d = " ".join(f"{x},{y}" for x, y in pts)
+        head = ' marker-end="url(#arrow-hot)"' if k % 2 == 0 else ""
         b.append(f'<polyline points="{d}" fill="none" stroke="{HOT}" '
-                 'stroke-width="1.6" stroke-dasharray="5,3" '
-                 'marker-end="url(#arrow-hot)"/>')
+                 f'stroke-width="1.6" stroke-dasharray="5,3"{head}/>')
     b.append(text(450, top + 128, "P-well to N+ drain: diode from DVSS",
                   size=12, fill=HOT))
-    b.append(text(450, top + 144, "to PAD, 304 µm wide in all", size=12,
+    b.append(text(450, top + 144, "to PAD, 304 µm of gate in all", size=12,
                   fill=HOT))
     # Parasitic NPN: drain collector, P-well base, source emitter.
     bx, by = 497, top + 52
