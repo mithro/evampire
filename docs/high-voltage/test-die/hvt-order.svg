@@ -18,8 +18,8 @@
 <line x1="320" y1="122" x2="320" y2="135" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
 <rect x="60" y="182" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
 <text x="40" y="203" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">4</text>
-<text x="72" y="203" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P2 on the large wells</text>
-<text x="568" y="203" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">doping profile; bias kept below their breakdown</text>
+<text x="72" y="203" text-anchor="start" font-size="13" font-weight="bold" fill="#222222">P2 on large wells and OPEN</text>
+<text x="568" y="203" text-anchor="end" font-size="12" font-weight="normal" fill="#222222">to 10 V where breakdown allows</text>
 <line x1="320" y1="168" x2="320" y2="181" stroke="#222222" stroke-width="1.4" marker-end="url(#arrow)"/>
 <rect x="60" y="228" width="520" height="32" rx="5" fill="#eef3f8" stroke="#222222"/>
 <text x="40" y="249" text-anchor="middle" font-size="13" font-weight="bold" fill="#222222">5</text>
