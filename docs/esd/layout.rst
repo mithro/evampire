@@ -19,8 +19,8 @@ figures share six conventions:
 * The figures that match the schematic draw the layers in grey:
   :numref:`fig-esd-gds-cell`, :numref:`fig-esd-gds-pad-net`,
   :numref:`fig-esd-gds-secondary` and :numref:`fig-esd-gds-clamp`. Their
-  colours mark the parts of the schematic, under the schematic's labels,
-  and grey lettering names what the schematic leaves out.
+  colours mark the parts of the schematic, with labels that start as the
+  schematic's do, and grey lettering names what the schematic leaves out.
 * The figures that match the cross-section
   :numref:`fig-esd-driver-section` give each silicon layer the colour it
   has there: :numref:`fig-esd-gds-nmos-driver` and
@@ -31,12 +31,13 @@ figures share six conventions:
   diffusion and metal by net: :numref:`fig-esd-gds-paths` and
   :numref:`fig-esd-gds-ring`, and also :numref:`fig-esd-gds-clamp-fingers`.
   Drains on PAD are dark red and the PAD bond pad a lighter red. Magenta
-  is DVDD and green is DVSS. Grey lettering names what that diagram leaves
-  out.
-* Red marks the primary protection and the discharge current, blue the
+  is DVDD and green is DVSS. In :numref:`fig-esd-gds-paths`, grey lettering
+  names what that diagram leaves out.
+* In the grey figures, red marks the primary protection, blue the
   secondary protection and orange the rail clamp, as in the schematic.
-  The schematic's wires are black, so the grey figures rule the metal of
-  the PAD net with black lines. A purple arrow marks snapback, as in the
+  The schematic's wires are black, so these figures rule the metal of the
+  PAD net with black lines. A red arrow marks a discharge current in every
+  figure. A purple arrow marks snapback, as in the
   cross-section, and nothing else is purple.
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
@@ -73,8 +74,8 @@ largest part of the cell, and they are also its primary ESD protection
          orange note says the rail clamp and rail diode are not in this
          cell, only in the supply pads. The layout is drawn with
          its layers in grey. From the left: the bond pad, labelled PAD. Two
-         groups of red drains, labelled drain diode of NMOS drivers 304 µm
-         wide and drain diode of PMOS drivers 480 µm wide. In grey
+         groups of red drains, labelled drain diode of NMOS drivers, 304 µm
+         of gate, and drain diode of PMOS drivers, 480 µm of gate. In grey
          lettering, the pre-drivers,
          output signal buffers and pull-up and pull-down resistors, which
          the schematic leaves out. Three blue blocks labelled
@@ -108,7 +109,7 @@ except through the drains and that wire.
          The bond pad, metal 2 to metal 5 stacked, joins a metal 2 bus
          over both output drivers. Under the bus, four NMOS drains and six
          PMOS drains are drawn red and labelled as the drain diodes, 304 µm
-         and 480 µm wide; each lies between two gates. A metal 2 wire 2 µm
+         and 480 µm of gate; each lies between two gates. A metal 2 wire 2 µm
          wide runs on from the bus to a blue block labelled 110 Ω. In grey
          lettering, the pre-drivers, output signal buffers and pull
          resistors.
