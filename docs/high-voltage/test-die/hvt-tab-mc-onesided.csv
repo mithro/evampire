@@ -1,5 +1,5 @@
-Doping of the light side (cm⁻³),Ionisation integral (V),Closed form (V),Integral over closed form
-10\ :sup:`17`,14.7,10.7,+37 %
-10\ :sup:`16`,55.2,60,-8 %
-3.56 × 10\ :sup:`15`,109,130,-16 %
-10\ :sup:`15`,265,337,-21 %
+Doping of the light side (cm⁻³),Ionisation integral (V),Closed form (V),Integral over closed form,Source
+10\ :sup:`17`,14.9,10.7,+39 %,"record diodes.json, key 1e+17"
+10\ :sup:`16`,55.4,60.0,-8 %,"record diodes.json, key 1e+16"
+3.56 × 10\ :sup:`15`,109.0,130.2,-16 %,"estimate, no record"
+10\ :sup:`15`,265.1,337.4,-21 %,"record diodes.json, key 1e+15"

@@ -1,6 +1,6 @@
 Item,Value
 Section,"NC0 under BL, corner radius 1 µm"
-Last point of the stalled sweep,36 V
+Last point of the stalled sweep,36.3 V
 Ionisation integral there,0.694
 Rise of the integral,0.035 per volt
 "Integral reaches 1, by straight-line extrapolation",about 46 V
