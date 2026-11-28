@@ -15,7 +15,6 @@ import pathlib
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
 SUB = "#dbe8f5"      # P substrate
-PWELL = "#b9cfe8"
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
@@ -92,7 +91,7 @@ def driver_section():
     # substrate's colour here, as in the layout figures, and a dashed edge.
     b.append(rect(340, top, 300, 110, SUB, dash="5,3"))
     b.append(text(490, top + 88, "P-well, on DVSS:", size=12))
-    b.append(text(490, top + 103, "generated, not drawn in the layout",
+    b.append(text(490, top + 103, "the layout draws no P-well shape here",
                   size=11))
     b.append(rect(355, top, 120, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
@@ -106,8 +105,7 @@ def driver_section():
     # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
     b.append(text(387, top - 6, "A", size=13, weight="bold"))
     b.append(text(614, top - 6, "A′", size=13, weight="bold"))
-    b.append(text(455, top - 54, "NMOS: cut A–A′ of the layout",
-                  size=11))
+    b.append(text(455, top - 54, "NMOS: cut A–A′", size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):
         b.append(text(x, top + 16, s, size=11))
     # Under each, the name the layout figures give it.
@@ -137,8 +135,9 @@ def driver_section():
         b.append(rect(x - 3, 110, 6, top - 110, METAL))
     b.append(rect(538, 106, 65, 6, METAL))
     b.append(text(570, 98, "DVSS", size=13, weight="bold"))
-    b.append(text(153, top - 22, "gate, 0.7 µm", size=11))
-    b.append(text(186, top - 46, "PMOS: cut B–B′, panel (b)", size=11))
+    b.append(text(112, top - 24, "gate length: 0.7 µm", size=11,
+                  anchor="start"))
+    b.append(text(186, top - 46, "PMOS: cut B–B′, layout (b)", size=11))
     b.append(text(251, top - 6, "B", size=13, weight="bold"))
     b.append(text(26, top - 6, "B′", size=13, weight="bold"))
     # Diodes the drains form with their wells, each drawn across the
@@ -146,12 +145,12 @@ def driver_section():
     b += diode(270, top + 22, False)
     b.append(text(170, top + 128, "P+ drain to N-well: diode from PAD",
                   size=12, fill=HOT, anchor="middle"))
-    b.append(text(170, top + 144, "to DVDD, 480 µm in all", size=12,
+    b.append(text(170, top + 144, "to DVDD, 480 µm wide in all", size=12,
                   fill=HOT))
     b += diode(370, top + 22, True)
     b.append(text(450, top + 128, "P-well to N+ drain: diode from DVSS",
                   size=12, fill=HOT))
-    b.append(text(450, top + 144, "to PAD, 304 µm in all", size=12,
+    b.append(text(450, top + 144, "to PAD, 304 µm wide in all", size=12,
                   fill=HOT))
     # Parasitic NPN: drain collector, P-well base, source emitter.
     bx, by = 497, top + 52
