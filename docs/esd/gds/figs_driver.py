@@ -10,9 +10,9 @@ from layfig import DVSS, GREY, INK, SNAP, Fig
 CELL = "bi_t"
 
 
-def devices(f, **kw):
+def devices(f):
     """Silicon, with the gates darker where they cross diffusion."""
-    f.silicon(**kw)
+    f.silicon()
     f.layer("contact")
     f.layer("sab", width=1.0)
 
@@ -107,8 +107,8 @@ def silicide_block():
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
     _inside(b, "Drain contacts, on PAD", 14.75, 145.3, 15.405)
     _above(b, "Source contacts on DVDD, outside the block", 11.1, 152.4)
-    x, y = b.px(9.6, 145.2)
-    b.text(x, y + 5, "N+ guard ring, on DVDD, above", anchor="start")
+    x, y = b.px(9.9, 148.3)
+    b.label("N+ guard ring, on DVDD", (7.6, 148.3), (x, y + 5))
     # The cut that the cross-section draws for the PMOS, and its diode.
     b.line((15.405, 155.2), (7.9, 155.2), width=2.0, dash="9,3,2,3")
     for gx, name, dy in ((15.405, "B", 16), (7.9, "B′", -6)):
