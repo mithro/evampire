@@ -69,6 +69,9 @@ def driver_section():
     b = ['<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
          'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
          f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker>'
+         '<marker id="arrow-hot" viewBox="0 0 10 10" refX="9" refY="5" '
+         'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
+         f'<path d="M0,0 L10,5 L0,10 z" fill="{HOT}"/></marker>'
          '<pattern id="hatch" width="4" height="4" '
          'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
          f'<line x1="0" y1="0" x2="0" y2="4" stroke="{INK}" '
@@ -80,9 +83,9 @@ def driver_section():
     b.append(rect(20, top, 300, 110, NWELL))
     b.append(text(170, top + 100, "N-well, on DVDD", size=12))
     b.append(rect(30, top, 30, 22, NPLUS))
-    b.append(rect(80, top, 45, 22, PPLUS))
+    b.append(rect(80, top, 50, 22, PPLUS))
     b.append(rect(130, top - 10, 30, 10, GATE))
-    b.append(rect(165, top, 120, 22, PPLUS))
+    b.append(rect(160, top, 125, 22, PPLUS))
     b.append(text(225, top + 16, "P+ drain", size=12))
     b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
     b.append(text(200, top - 10, "silicide block", size=11))
@@ -90,15 +93,15 @@ def driver_section():
     # The layout draws no P-well under these transistors, so it has the
     # substrate's colour here, as in the layout figures, and a dashed edge.
     b.append(rect(340, top, 300, 110, SUB, dash="5,3"))
-    b.append(text(490, top + 88, "P-well, on DVSS:", size=12))
-    b.append(text(490, top + 103, "the layout draws no P-well shape here",
-                  size=11))
-    b.append(rect(355, top, 120, 22, NPLUS))
+    b.append(text(490, top + 102, "P-well, on DVSS: no P-well shape in "
+                  "the layout", size=11))
+    b.append(rect(355, top, 125, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
     b.append(rect(480, top - 10, 34, 10, GATE))
-    b.append(rect(519, top, 45, 22, NPLUS))
+    b.append(rect(514, top, 50, 22, NPLUS))
     b.append(rect(585, top, 30, 22, PPLUS))
-    b += bracket(399, 480, top + 38, "blocked drain: 3.78 µm", anchor="end")
+    b += bracket(399, 480, top + 38, "blocked drain:", anchor="end")
+    b.append(text(480, top + 67, "3.78 µm", anchor="end", size=11))
     b.append(text(440, top - 10, "silicide block", size=11))
     b.append(text(530, top - 36, "gate length: 1.15 µm", size=11,
                   anchor="end"))
@@ -113,13 +116,17 @@ def driver_section():
                  (606, "guard ring")):
         b.append(text(x, top + 35, s, size=11))
     # The silicide block, hatched as in the layout figures.
-    # It also covers the gate, as the layout draws it.
+    # It also covers the gate and a little of the source, as the layout
+    # draws it.
     for x, bw in ((160, 76), (399, 81)):
         b.append(rect(x, top - 5, bw, 5, "url(#hatch)"))
-    for x, bw in ((130, 30), (480, 34)):
+    for x, bw in ((125, 35), (480, 39)):
         b.append(rect(x, top - 15, bw, 5, "url(#hatch)"))
+    for x in (125, 514):
+        b.append(rect(x, top - 5, 5, 5, "url(#hatch)"))
     b.append(text(640, 392, "not to scale", size=11, anchor="end"))
-    b.append(text(497, top - 20, "gate", size=11))
+    b.append(text(20, 392, "grey bars: metal, which the layout figures "
+                  "do not draw", size=11, anchor="start"))
     # Wiring: PAD to both drains, DVDD and DVSS to sources and taps.
     for x in (270, 370):
         b.append(rect(x - 4, 60, 8, top - 60, METAL))
@@ -148,6 +155,17 @@ def driver_section():
     b.append(text(170, top + 144, "to DVDD, 480 µm wide in all", size=12,
                   fill=HOT))
     b += diode(370, top + 22, True)
+    # The route of each diode's current through its well, to the guard
+    # ring: the arrows that the layout figures draw from above.
+    routes = (((270, top + 37), (270, top + 72), (50, top + 72),
+               (50, top + 41)),
+              ((606, top + 41), (606, top + 82), (370, top + 82),
+               (370, top + 37)))
+    for pts in routes:
+        d = " ".join(f"{x},{y}" for x, y in pts)
+        b.append(f'<polyline points="{d}" fill="none" stroke="{HOT}" '
+                 'stroke-width="1.6" stroke-dasharray="5,3" '
+                 'marker-end="url(#arrow-hot)"/>')
     b.append(text(450, top + 128, "P-well to N+ drain: diode from DVSS",
                   size=12, fill=HOT))
     b.append(text(450, top + 144, "to PAD, 304 µm wide in all", size=12,
