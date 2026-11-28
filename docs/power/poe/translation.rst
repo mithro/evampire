@@ -65,14 +65,20 @@ The software first works out the power left for the outputs, as on
 It then offers the highest class whose power at the power sourcing
 equipment, :math:`P_\text{class}` in :numref:`tab-poe-classes`, is no more
 than :math:`P_\text{out}`. That column already includes the worst-case loss
-in the outgoing cable, so no cable term is needed. Class 3 or higher is
-offered by issuing the number of class events that allows it
-(:numref:`tab-poe-events`). Class 1 or 2 cannot be offered that way,
-because one class event already allows class 3 (:ref:`poe-demotion`).
-When only class 1 or 2 fits, the port powers a device that requests no
-more than that class. It lowers or refuses any other device in one of the
-:ref:`ways that need no LLDP <poe-allocation-changes>`. The allocation can
-later be adjusted over LLDP (:doc:`lldp`).
+in the outgoing cable, so no cable term is needed.
+
+The number of class events limits the class only to 3, 4, 6 or 8
+(:ref:`poe-demotion`). When the highest class that fits is one of these,
+the port issues the events for it. When it is 5 or 7, the port gives that
+class to a device that requests it, and class 4 or 6 to one that requests
+more. The examples below give a highest class of 5 or 7 in this way.
+
+When the highest class that fits is 1 or 2, the port powers a device that
+requests no more than that class. It refuses a single-signature device
+that requests more (:ref:`poe-pse-classification`). It can power a
+dual-signature device on one pair set when that pair set's class fits
+(:ref:`poe-allocation-changes`). The allocation can later be adjusted over
+LLDP (:doc:`lldp`).
 
 The board's own power is not known, so the examples below give, for each
 input, the highest class and the largest board power at which it still
