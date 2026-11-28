@@ -37,7 +37,8 @@ def clamp(alone=True):
     x, y = f.px(37.5, 32)
     # Grey: the schematic has the DVDD ring, but no symbol for its pad.
     f.text(x, y - 6, "DVDD", size=18, fill=GREY)
-    f.text(x, y + 14, "bond pad", fill=GREY)
+    f.text(x, y + 14, "bond pad,", fill=GREY)
+    f.text(x, y + 31, "on the DVDD ring", fill=GREY)
     for region in (FET, INVERTERS, CAPS, RES, DIODES):
         f.region(region, CLAMP)
     top = f.oy - 34
@@ -54,11 +55,11 @@ def clamp(alone=True):
     f.label("160 µm² diode\nfrom DVSS to DVDD:\n4 strips of 40 µm × 1 µm",
             (62.7, 306),
             (f.px(0, 300)[0], bot), colour=CLAMP, weight="bold")
-    f.label("4 supply\ncapacitors", (64, 337.8), (f.px(0, 347)[0], bot),
-            colour=GREY)
+    f.label("4 supply\ncapacitors", (9.5, 337.8), (f.ox + f.dw, top),
+            anchor="end", colour=GREY)
     f.note((CLAMP, CLAMP, 0.3), "rail clamp and its diode", kind="tint")
-    f.note(GREY, "not in the schematic")
     f.note(*figs_pad.PADMETAL, kind="tint")
+    f.note(GREY, "not in the schematic")
     f.note(INK, "each supply pad holds one such clamp and diode: those of "
            "the DVSS pad are the same", kind="plain")
     if alone:
@@ -146,14 +147,14 @@ def ring():
     dvss = gdskit.net("dvss", "DVSS")
     f.geom(translate(dvss["metal5"].intersection(box(0, 0, 75, 66)),
                      xoff=PITCH), "dvsspad")
-    f.geom(translate(dvss["metal2"].intersection(box(0, 66, 75, 200)),
+    f.geom(translate(dvss["metal2"].intersection(box(0, 66, 75, 222)),
                      xoff=PITCH), "dvssm2")
     feed = gdskit.net("dvss", "DVDD")["metal2"].intersection(
-        box(0, 66, 75, 200))
+        box(0, 66, 75, 222))
     f.geom(translate(feed, xoff=PITCH), "dvddm2")
     f.geom(pad["metal5"].intersection(box(0, 0, 75, 66)), "padtop",
            opacity=0.6)
-    f.geom(pad["metal2"].intersection(box(0, 66, 75, 201)), "padm2")
+    f.geom(pad["metal2"].intersection(box(0, 66, 75, 222)), "padm2")
     f.geom(pad["comp"], "paddrain")
     for cell, shift in (("bi_t", 0.0), ("dvss", PITCH)):
         for name, style in (("DVDD", "dvddrail"), ("DVSS", "dvssrail")):
