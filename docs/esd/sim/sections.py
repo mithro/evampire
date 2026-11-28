@@ -103,8 +103,8 @@ def driver_section():
     # The layout draws no P-well under these transistors, so it has the
     # substrate's colour here, as in the layout figures, and a dashed edge.
     b.append(rect(340, top, 300, 110, SUB, dash="5,3"))
-    b.append(text(490, top + 102, "P-well, on DVSS: no P-well shape in "
-                  "the layout", size=11))
+    b.append(text(490, top + 102, "P-well, on DVSS: the layout draws no "
+                  "P-well here", size=11))
     b.append(rect(355, top, 125, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
     b.append(rect(480, top - 10, 34, 10, GATE))
@@ -113,6 +113,8 @@ def driver_section():
     b += bracket(399, 480, top + 38, "blocked drain:", anchor="end")
     b.append(text(480, top + 67, "3.78 µm", anchor="end", size=11))
     b.append(text(440, top - 10, "silicide block", size=11))
+    b.append(line(497, top - 33, 497, top - 16, width=1))
+    b.append(line(145, top - 21, 145, top - 16, width=1))
     b.append(text(530, top - 36, "gate length: 1.15 µm", size=11,
                   anchor="end"))
     # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
