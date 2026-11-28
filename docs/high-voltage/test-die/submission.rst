@@ -267,43 +267,99 @@ done.
 A fourth review, by a reader with no prior involvement, verified the
 connections on the committed file with its own extraction, found no
 blocker and advised taping out the layout as it is. It also gave its
-confidence twice: as it found the die, and after the changes in the rows
-marked "Fourth", when it checked the final file again and advised taping
-out as it is (:numref:`tab-hvt-confidence-4`). The estimates are that
-reviewer's alone.
+confidence three times: as it found the die, after the changes in the
+rows marked "Fourth", when it checked the final file again and advised
+taping out as it is, and at a third check of the analysis
+(:numref:`tab-hvt-confidence-4`). The estimates are that reviewer's
+alone.
 
-.. list-table:: Confidence stated by the fourth review, before and after
-                its changes
+.. list-table:: Confidence stated by the fourth review at its three checks
    :name: tab-hvt-confidence-4
    :header-rows: 1
-   :widths: 60 20 20
+   :widths: 52 16 16 16
 
    * - Statement
      - As found
      - After the changes
+     - Third check
    * - The layout passes the wafer.space precheck
      - 95 %
+     - 96 %
      - 96 %
    * - The breakdown measurements work as intended
      - 85 %
      - 86 %
+     - 86 %
    * - The results are comparable with the simulation as patterns
      - 85 %
      - 87 %
+     - 88 %
    * - The results are comparable as ratios, within 15 %
      - 60 %
+     - 65 %
      - 65 %
    * - Absolute values fall within the agreement range
      - 40 %
      - 50 %
+     - 50 %
    * - The variants suffice, a valid negative result included
      - 70 %
      - 82 %
+     - 82 %
+
+At its third check the reviewer ran the self-test of the analysis script
+and ten adversarial measurement sets through it. The sets were synthetic:
+truth AD; truth AnD; BD on two dies; AL 25 % low; BL 25 % low; BL 25 %
+high; and BL at 1.6 times, with structures beyond 150 V.
+
+The other three were AnL with NAT ineffective, BL with the group 1
+references shorted, and BL with one die at half value. The decision was
+right in nine sets. In the one with the references shorted it was
+undecided, appropriately, since the script then had no stand-in for them.
+
+The reviewer also rebuilt predictions.json, p5.json, the figures and the
+manifest, byte for byte. Asked whether anything further was worth doing
+before tape-out, it answered no. It found the defects of the analysis in
+:numref:`tab-hvt-review-defects`, each of which is now fixed in the
+script and in the rule of :ref:`hv-test-method` that it applies.
+
+.. list-table:: Defects of the analysis found at the fourth review's
+                third check, and their fixes
+   :name: tab-hvt-review-defects
+   :header-rows: 1
+   :widths: 50 50
+
+   * - Defect
+     - Fix
+   * - A structure that did not break down by 150 V reported its reference
+       as not measured
+     - The ratio is a lower bound, with a verdict that a bound allows
+   * - No check of one die against the others
+     - Outlier check by die, outside 0.85 to 1.15, with the decision
+       repeated without the die
+   * - References shorted on every die left everything undecided and
+       uncompared
+     - Stand-ins with the same prediction within 2 %, named in the report
+       (:numref:`tab-hvt-stand-ins`)
+   * - The capacitance call had no outcome for a curve that fits neither
+       L nor D, and the synthetic capacitance was an abrupt junction
+     - A "neither" outcome with stated bounds; the synthetic sets follow
+       the simulated curves
+   * - P5 was compared with the nominal substrate only, and the
+       tolerance of 0.3 µm counted one well edge
+     - P3 and P5 moved to the substrate doping that P2 measures; 0.6 µm,
+       two edges of one implant
+   * - Values of the model checks were attributed to a reviewer's script
+       as a whole
+     - Each value names its record, or is stated as an estimate with none
+       (:numref:`tab-hvt-mc-source`)
 
 At the second check the reviewer attributed what remains of the two lowest
 figures to things only silicon can settle: the doping profiles, the depth
 of the deep layer, the vertices and the foundry's handling of NAT with no
-transistor.
+transistor. At the third check it held the same view: only measured
+silicon, or the foundry's own description of its process, can settle what
+holds those two figures down.
 
 The reviewer named what limits each low figure. The absolute values are
 held down by the unmeasured doping profiles and the error of the
