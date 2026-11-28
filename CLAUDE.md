@@ -199,6 +199,7 @@ high-voltage junction structures for a wafer.space shuttle, described on
 uv run --with klayout python silicon/hvtest/chip.py OUT.gds MANIFEST.json   # the layout
 uv run python silicon/hvtest/drc.py OUT.gds WORKDIR                         # KLayout DRC only
 uv run python silicon/hvtest/flow.py OUT.gds MANIFEST.json WORKDIR          # nets, seal ring, fill, precheck
+uv run --with klayout python silicon/hvtest/probe_view.py OUT.gds OUT.png 1400   # the die-view figures (see its docstring)
 uv run --with klayout python silicon/hvtest/export.py silicon/hvtest/structures.json
 ```
 
