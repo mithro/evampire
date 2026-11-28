@@ -15,29 +15,37 @@ import pathlib
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
 SUB = "#dbe8f5"      # P substrate
-PWELL = "#b9cfe8"
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
-GATE = "#8e5bb5"       # polysilicon over a channel, as in the layout figures
+GATE = "#7d8a2e"       # polysilicon over a channel, as in the layout figures
 METAL = "#9aa5b1"
 INK = "#222222"
 HOT = "#c0392b"
 SNAP = "#8e44ad"
 
 
+W = 660   # the drawing's width; it is mirrored, as explained below
+FLIP = {"start": "end", "end": "start", "middle": "middle"}
+
+
+# Each helper mirrors x: the figure is laid out with the PMOS at the left
+# and drawn with the NMOS at the left, the order of the layout figures.
 def rect(x, y, w, h, fill, stroke=INK, dash=None):
+    x = W - x - w
     d = f' stroke-dasharray="{dash}"' if dash else ""
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill}" '
             f'stroke="{stroke}"{d}/>')
 
 
 def text(x, y, s, anchor="middle", size=13, fill=INK, weight="normal"):
+    x, anchor = W - x, FLIP[anchor]
     return (f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-size="{size}" '
             f'fill="{fill}" font-weight="{weight}">{s}</text>')
 
 
 def line(x1, y1, x2, y2, stroke=INK, width=1.5, dash=None, arrow=False):
+    x1, x2 = W - x1, W - x2
     d = f' stroke-dasharray="{dash}"' if dash else ""
     m = ' marker-end="url(#arrow)"' if arrow else ""
     return (f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke}" '
@@ -50,8 +58,9 @@ def diode(x, y, up):
     The symbol is centred on the junction, with a lead into the region on
     each side, so the anode and cathode sit in the regions that form them.
     """
-    t = (f"{x - 8},{y + 7} {x + 8},{y + 7} {x},{y - 7}" if up
-         else f"{x - 8},{y - 7} {x + 8},{y - 7} {x},{y + 7}")
+    m = W - x
+    t = (f"{m - 8},{y + 7} {m + 8},{y + 7} {m},{y - 7}" if up
+         else f"{m - 8},{y - 7} {m + 8},{y - 7} {m},{y + 7}")
     bar = y - 7 if up else y + 7
     return [line(x, y - 15, x, y + 15, stroke=HOT, width=2),
             f'<polygon points="{t}" fill="{HOT}" stroke="{HOT}"/>',
@@ -66,10 +75,17 @@ def bracket(x1, x2, y, label, anchor="middle"):
 
 
 def driver_section():
-    w, h = 660, 400
+    w, h = W, 400
     b = ['<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" '
          'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
-         f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker></defs>']
+         f'<path d="M0,0 L10,5 L0,10 z" fill="{SNAP}"/></marker>'
+         '<marker id="arrow-hot" viewBox="0 0 10 10" refX="9" refY="5" '
+         'markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
+         f'<path d="M0,0 L10,5 L0,10 z" fill="{HOT}"/></marker>'
+         '<pattern id="hatch" width="4" height="4" '
+         'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+         f'<line x1="0" y1="0" x2="0" y2="4" stroke="{INK}" '
+         'stroke-width="1"/></pattern></defs>']
     top = 170
     b.append(rect(10, top, 640, 200, SUB))
     b.append(text(20, 362, "P substrate", size=13, anchor="start"))
@@ -77,29 +93,53 @@ def driver_section():
     b.append(rect(20, top, 300, 110, NWELL))
     b.append(text(170, top + 100, "N-well, on DVDD", size=12))
     b.append(rect(30, top, 30, 22, NPLUS))
-    b.append(rect(80, top, 45, 22, PPLUS))
+    b.append(rect(80, top, 50, 22, PPLUS))
     b.append(rect(130, top - 10, 30, 10, GATE))
-    b.append(rect(165, top, 120, 22, PPLUS))
+    b.append(rect(160, top, 125, 22, PPLUS))
     b.append(text(225, top + 16, "P+ drain", size=12))
     b += bracket(160, 236, top + 38, "blocked drain: 2.78 µm")
+    b.append(text(200, top - 10, "silicide block", size=11))
     # NMOS in a P-well tied to DVSS.
-    b.append(rect(340, top, 300, 110, PWELL))
-    b.append(text(490, top + 100, "P-well, on DVSS", size=12))
-    b.append(rect(355, top, 120, 22, NPLUS))
+    # The layout draws no P-well under these transistors, so it has the
+    # substrate's colour here, as in the layout figures, and a dashed edge.
+    b.append(rect(340, top, 300, 110, SUB, dash="5,3"))
+    b.append(text(490, top + 102, "P-well, on DVSS: the layout draws no "
+                  "P-well here", size=11))
+    b.append(rect(355, top, 125, 22, NPLUS))
     b.append(text(415, top + 16, "N+ drain", size=12))
     b.append(rect(480, top - 10, 34, 10, GATE))
-    b.append(rect(519, top, 45, 22, NPLUS))
+    b.append(rect(514, top, 50, 22, NPLUS))
     b.append(rect(585, top, 30, 22, PPLUS))
-    b += bracket(399, 480, top + 38, "blocked drain: 3.78 µm", anchor="end")
-    b.append(text(530, top - 16, "gate length: 1.15 µm", size=11,
+    b += bracket(399, 480, top + 38, "blocked drain:", anchor="end")
+    b.append(text(480, top + 67, "3.78 µm", anchor="end", size=11))
+    b.append(text(440, top - 10, "silicide block", size=11))
+    b.append(line(497, top - 33, 497, top - 16, width=1))
+    b.append(line(145, top - 21, 145, top - 16, width=1))
+    b.append(text(530, top - 36, "gate length: 1.15 µm", size=11,
                   anchor="end"))
     # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
     b.append(text(387, top - 6, "A", size=13, weight="bold"))
     b.append(text(614, top - 6, "A′", size=13, weight="bold"))
-    b.append(text(455, top - 36, "cut A–A′ of the layout",
+    b.append(text(456, top - 54, "NMOS: cut A–A′, corner view",
                   size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):
         b.append(text(x, top + 16, s, size=11))
+    # Under each, the name the layout figures give it.
+    for x, s in ((50, "guard ring"), (104, "source"), (553, "source"),
+                 (606, "guard ring")):
+        b.append(text(x, top + 35, s, size=11))
+    # The silicide block, hatched as in the layout figures.
+    # It also covers the gate and a little of the source, as the layout
+    # draws it.
+    for x, bw in ((160, 76), (399, 81)):
+        b.append(rect(x, top - 5, bw, 5, "url(#hatch)"))
+    for x, bw in ((125, 35), (480, 39)):
+        b.append(rect(x, top - 15, bw, 5, "url(#hatch)"))
+    for x in (125, 514):
+        b.append(rect(x, top - 5, 5, 5, "url(#hatch)"))
+    b.append(text(640, 392, "not to scale", size=11, anchor="end"))
+    b.append(text(20, 392, "grey bars: metal, which the layouts of these "
+                  "two cuts do not draw", size=11, anchor="start"))
     # Wiring: PAD to both drains, DVDD and DVSS to sources and taps.
     for x in (270, 370):
         b.append(rect(x - 4, 60, 8, top - 60, METAL))
@@ -115,26 +155,44 @@ def driver_section():
         b.append(rect(x - 3, 110, 6, top - 110, METAL))
     b.append(rect(538, 106, 65, 6, METAL))
     b.append(text(570, 98, "DVSS", size=13, weight="bold"))
-    b.append(text(145, top - 16, "gate", size=11))
+    b.append(text(112, top - 24, "gate length: 0.7 µm", size=11,
+                  anchor="start"))
+    b.append(text(186, top - 46, "PMOS: cut B–B′, layout (b)", size=11))
+    b.append(text(251, top - 6, "B", size=13, weight="bold"))
+    b.append(text(26, top - 6, "B′", size=13, weight="bold"))
     # Diodes the drains form with their wells, each drawn across the
     # bottom of its drain, under the metal that connects the drain to PAD.
     b += diode(270, top + 22, False)
     b.append(text(170, top + 128, "P+ drain to N-well: diode from PAD",
                   size=12, fill=HOT, anchor="middle"))
-    b.append(text(170, top + 144, "to DVDD, 480 µm in all", size=12,
+    b.append(text(170, top + 144, "to DVDD, 480 µm of gate in all", size=12,
                   fill=HOT))
     b += diode(370, top + 22, True)
+    # The route of each diode's current through its well, to the guard
+    # ring: the arrows that the layout figures draw from above.
+    # Each has its arrowhead half-way, clear of the diode symbol.
+    routes = (((270, top + 37), (270, top + 72), (160, top + 72)),
+              ((160, top + 72), (50, top + 72), (50, top + 41)),
+              ((606, top + 41), (606, top + 82), (488, top + 82)),
+              ((488, top + 82), (370, top + 82), (370, top + 37)))
+    for k, pts in enumerate(routes):
+        d = " ".join(f"{W - x},{y}" for x, y in pts)
+        head = ' marker-end="url(#arrow-hot)"' if k % 2 == 0 else ""
+        b.append(f'<polyline points="{d}" fill="none" stroke="{HOT}" '
+                 f'stroke-width="1.6" stroke-dasharray="5,3"{head}/>')
     b.append(text(450, top + 128, "P-well to N+ drain: diode from DVSS",
                   size=12, fill=HOT))
-    b.append(text(450, top + 144, "to PAD, 304 µm in all", size=12,
+    b.append(text(450, top + 144, "to PAD, 304 µm of gate in all", size=12,
                   fill=HOT))
     # Parasitic NPN: drain collector, P-well base, source emitter.
     bx, by = 497, top + 52
-    b.append(line(bx, by - 12, bx, by + 12, stroke=SNAP, width=3))
-    b.append(line(bx, by - 5, 470, top + 24, stroke=SNAP, width=2))
-    b.append(line(bx, by + 5, 530, top + 24, stroke=SNAP, width=2,
+    # A transistor symbol on its side: the base bar lies flat under the
+    # gate, with its lead down into the P-well.
+    b.append(line(bx - 13, by, bx + 13, by, stroke=SNAP, width=3))
+    b.append(line(bx, by, bx, by + 13, stroke=SNAP, width=2))
+    b.append(line(bx - 6, by, 476, top + 24, stroke=SNAP, width=2))
+    b.append(line(bx + 6, by, 530, top + 24, stroke=SNAP, width=2,
                   arrow=True))
-    b.append(line(bx, by, bx - 10, by, stroke=SNAP, width=2))
     b.append(text(640, top + 172, "parasitic NPN (drain, P-well, source): "
                   "triggers at 10.7 V,", size=12, fill=SNAP, anchor="end"))
     b.append(text(640, top + 188, "snaps back to about 6 V", size=12,

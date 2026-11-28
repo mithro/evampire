@@ -34,6 +34,17 @@ MODES = [
      {"dp"}, "PMOS drain\navalanches\nabove 9.7 V"),
 ]
 XS = {"a": (0.6, 1.5), "b": (1.5, 3.5), "c": (3.5, 7.2)}
+# Arrowheads on the main path of each mode, as (tail, head) on a rail or
+# on the PAD wire: the current leaves a positive PAD and enters a negative
+# one.
+OUT_OF_PAD, INTO_PAD = ((0.72, 3), (1.32, 3)), ((1.38, 3), (0.78, 3))
+ALONG = {"dvdd": ((4.6, 6), (5.7, 6)), "dvss": ((5.7, 0), (4.6, 0))}
+ARROWS = [
+    (OUT_OF_PAD, ALONG["dvdd"], ALONG["dvss"]),
+    (INTO_PAD, ((0.72, 0), (1.32, 0))),
+    (OUT_OF_PAD, ((1.38, 6), (0.78, 6))),
+    (INTO_PAD, ALONG["dvdd"], ALONG["dvss"]),
+]
 
 
 def style(el, part, main, second):
@@ -44,7 +55,7 @@ def style(el, part, main, second):
     return el.color("#999999")
 
 
-def panel(d, ox, oy, mode):
+def panel(d, ox, oy, mode, arrows):
     title, ground, sign, main, second, note2 = mode
     note(d, ox + 0.2, oy + 7.4, title, halign="left")
     for name, y in (("dvdd", 6.0), ("dvss", 0.0)):
@@ -87,15 +98,20 @@ def panel(d, ox, oy, mode):
     if note2:
         note(d, ox + 2.0, oy + 4.6 if "PMOS" in note2 else oy - 1.0, note2,
              color=SECOND, halign="left")
+    for (x0, y0), (x1, y1) in arrows:
+        d += (elm.Line(arrow="->", arrowwidth=0.42, arrowlength=0.5)
+              .at((ox + x0, oy + y0))
+              .to((ox + x1, oy + y1)).color(HOT).linewidth(3.2))
 
 
 def main():
     with schemdraw.Drawing(show=False, fontsize=18) as d:
         for k, mode in enumerate(MODES):
-            panel(d, (k % 2) * 13.0, -(k // 2) * 10.4, mode)
+            panel(d, (k % 2) * 13.0, -(k // 2) * 10.4, mode, ARROWS[k])
         extent(d, -1.8, 24.6, -11.6)
-        note(d, 0.2, -12.0, "thick red: the main path; dashed purple: a "
-             "second path\nat higher voltage", color=GREY, halign="left")
+        note(d, 0.2, -12.0, "thick red: the main path, with its "
+             "direction; dashed purple: a second\npath at higher voltage",
+             color=GREY, halign="left")
         OUT.mkdir(exist_ok=True)
         d.save(str(OUT / "paths.svg"))
 

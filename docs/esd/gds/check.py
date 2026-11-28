@@ -157,7 +157,7 @@ def rows():
     strips = gdskit.net("bi_t", "IN")["comp"]
     for name, model, implant in (
             ("Secondary diode to DVDD", "diode_pd2nw_06v0", "pplus"),
-            ("Secondary diode to DVSS", "diode_nd2ps_06v0", "nplus")):
+            ("Secondary diode from DVSS", "diode_nd2ps_06v0", "nplus")):
         (dev,) = [line for line in lines if model in line and " n20 " in line]
         parts = gdskit.parts(strips.intersection(lay[implant]))
         (area,) = {round(p.area, 4) for p in parts}
@@ -193,9 +193,9 @@ def rows():
     (dio,) = [line for line in lines if line.startswith("D")]
     parts = gdskit.parts(lay["comp"].intersection(lay["diode"]))
     (area,) = {round(p.area, 4) for p in parts}
-    add("Supply diode", "Count", "", value(dio, "m"), len(parts))
-    add("Supply diode", "Area of each", "µm²", value(dio, "AREA") * UM * UM,
-        area)
+    name = "Diode from DVSS to DVDD"
+    add(name, "Count", "", value(dio, "m"), len(parts))
+    add(name, "Area of each", "µm²", value(dio, "AREA") * UM * UM, area)
     return out
 
 

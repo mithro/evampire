@@ -69,7 +69,7 @@ uv run docs/power/usb-pd/masks.py          # writes tx-mask.svg and rx-mask.svg
 uv run docs/power/converters/waveforms.py  # writes buck-waveforms.dot
 uv run python docs/high-voltage/figures.py docs/high-voltage  # every high-voltage figure
 uv run python docs/architecture/figures.py docs/architecture
-uv run docs/esd/sim/schematic.py           # writes docs/esd/figures/io-cell.svg
+uv run docs/esd/sim/schematic.py           # writes io-cell.svg and io-cell-*.svg
 uv run docs/esd/sim/tlp_plot.py
 uv run docs/esd/sim/circuits.py
 uv run docs/esd/sim/paths.py

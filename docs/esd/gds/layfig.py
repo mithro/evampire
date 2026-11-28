@@ -15,7 +15,7 @@ SUB = "#dbe8f5"        # P-type silicon: every area with no N-well drawn
 NWELL = "#fbd9b5"
 NPLUS = "#f5b46e"
 PPLUS = "#7fa7d6"
-POLY = "#c9a0dc"
+POLY = "#c9cf96"         # olive, so that purple is snapback only
 METAL = "#9aa5b1"
 INK = "#222222"
 GREY = "#666666"
@@ -32,26 +32,36 @@ STYLES = {
     "nwell": (NWELL, "#c98f4f", "N-well"),
     "ndiff": (NPLUS, "#a8651c", "N+ diffusion"),
     "pdiff": (PPLUS, "#3d6294", "P+ diffusion"),
-    "poly": (POLY, "#6f3f93", "polysilicon"),
+    "poly": (POLY, "#5c6620", "polysilicon"),
     "sab": ("url(#hatch)", INK, "silicide block, over any layer"),
     "contact": ("#333333", "none", "contact"),
     "metal": (METAL, "#6b7684", "bond pad metal"),
     "pad": ("none", INK, "pad opening"),
-    "padnet": (HOT, "#7d1f14", "PAD net, metal 2"),
-    "padtop": (HOT, "#7d1f14", "PAD net, bond pad and metal 2"),
+    "padtop": (HOT, "#7d1f14", "PAD net, bond pad"),
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
-    "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD, metal 3 to 5"),
-    "dvssrail": ("#a3d2ca", "#0d5045", "DVSS, metal 3 to 5"),
-    "dvsslink": ("#6fb3a8", "#0d5045", "DVSS pad, metal 2"),
-    "innet": (SECONDARY, "#12305f", "protected net, metal 1 and 2"),
-    "other": ("#c4c9cf", "#8a9199", "other diffusion"),
-    "resistor": ("none", SECONDARY, "resistor body"),
-    "gate": ("#8e5bb5", "#4f2a70", "gate over diffusion"),
-    "clampfet": (CLAMP, "#8a5500", "clamp transistor"),
+    # Stripes are ruled in their net's colour, over the metal 2 they cover.
+    "dvddrail": ("url(#rule-dvdd)", "#6a1c53", "DVDD stripes, metal 3 to 5"),
+    "dvssrail": ("url(#rule-dvss)", "#0d5045", "DVSS stripes, metal 3 to 5"),
+    "dvddm2": ("#eebbdd", "#a02c7d",
+               "DVDD metal 2: 5 strips, under the stripes"),
+    "dvssm2": ("#cfe8e3", "#0d5045", "DVSS pad's metal 2, under the stripes"),
+    "padm2": ("#e2e2e2", "#7d1f14", "PAD net's metal 2, under the stripes"),
+    "dvsspad": ("#a3d2ca", "#0d5045", "DVSS bond pad"),
+    "other": ("#b3b9c0", "#8a9199", "other diffusion"),
+    "gate": ("#7d8a2e", "#444d14", "gate"),
+    # Figures that pair with the schematic: its wires are black, so metal
+    # is ruled in black, which shows which side of an edge is metal.
+    "padwire": ("url(#wire)", INK, "PAD net, metal 2"),
+    "nextwire": ("url(#wire2)", INK, "protected net"),
+    "primdrain": (HOT, "#7d1f14", "primary: drain on the PAD net"),
 }
 FONT = 14
+# Layers of a figure drawn without colour, from the wells up.
+GREYS = (("nwell", "#e6e6e6"), ("pdiff", "#c4c4c4"), ("ndiff", "#8e8e8e"),
+         ("poly", "#666666"), ("gate", "#444444"))
+PAPER = "#fafafa"      # behind the layers of a grey figure
 
 
 def derived(cell, name):
@@ -116,18 +126,51 @@ class Fig:
         """Draw a layer of the figure's cell in the style of its name."""
         self.geom(derived(self.cell, name), name, **kw)
 
-    def silicon(self, **kw):
+    def silicon(self):
         """The layers that make the devices, from the wells up."""
         for name in ("nwell", "pdiff", "ndiff", "poly"):
-            self.layer(name, **kw)
+            self.layer(name)
         lay = gdskit.load(self.cell)
-        self.geom(lay["poly"].intersection(lay["comp"]), "gate", **kw)
+        self.geom(lay["poly"].intersection(lay["comp"]), "gate")
 
-    def outline(self, geom, colour, width=2.0, dash=None):
+    def grey_silicon(self):
+        """The device layers in greys.
+
+        For a figure that pairs with the schematic: colour is then free to
+        mark the schematic's parts, and no layer shares a part's colour.
+        """
+        self.wells = False
+        self.body[0] = self.body[0].replace(SUB, PAPER)
+        lay = gdskit.load(self.cell)
+        for name, fill in GREYS:
+            geom = (lay["poly"].intersection(lay["comp"]) if name == "gate"
+                    else derived(self.cell, name))
+            d = self._path(gdskit.clip(geom, self.win))
+            if not d:
+                continue
+            self.body.append(f'<path d="{d}" fill="{fill}" stroke="#808080" '
+                             'stroke-width="0.5" fill-rule="evenodd"/>')
+        self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey",
+                  kind="tint")
+
+    def region(self, window, colour, opacity=0.3, width=3.0):
+        """Fill and outline a block of the layout in a schematic colour."""
+        (xa, ya), (xb, yb) = self.px(window[0], window[1]), self.px(
+            window[2], window[3])
+        at = (f'x="{min(xa, xb):.1f}" y="{min(ya, yb):.1f}" '
+              f'width="{abs(xb - xa):.1f}" height="{abs(yb - ya):.1f}"')
+        self.over.append(f'<rect {at} fill="{colour}" '
+                         f'fill-opacity="{opacity}" stroke="#ffffff" '
+                         f'stroke-width="{width + 2.5}"/>')
+        self.over.append(f'<rect {at} fill="none" stroke="{colour}" '
+                         f'stroke-width="{width}"/>')
+
+    def outline(self, geom, colour, width=2.0):
+        """Every edge of a geometry, over the layout."""
         d = self._path(gdskit.clip(geom, self.win))
-        extra = f' stroke-dasharray="{dash}"' if dash else ""
-        self.over.append(f'<path d="{d}" fill="none" stroke="{colour}" '
-                         f'stroke-width="{width}"{extra}/>')
+        if d:
+            self.over.append(f'<path d="{d}" fill="none" stroke="{colour}" '
+                             f'stroke-width="{width}"/>')
 
     # -- annotation -------------------------------------------------------
     def text(self, x, y, s, anchor="middle", size=FONT, fill=INK,
@@ -218,22 +261,20 @@ class Fig:
                 'stroke="{}" stroke-width="1.5"/>'.format(*seg, colour))
         self.text(*tpos, s, anchor=anchor, fill=colour, weight="bold")
 
-    def flow(self, points, colour=HOT, width=4.0, dash=None,
-             key="discharge current", head=True):
+    def flow(self, points, colour=HOT, width=4.0, key="discharge current",
+             head=True):
         """An arrow along layout points: the direction of a current."""
         pts = [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
         mid = {HOT: "hot", SNAP: "snap"}[colour]
-        kind = "dashes" if dash else "arrow"
-        if key and (kind, colour, key) not in self.notes:
-            self.notes.append((kind, colour, key))
-        extra = f' stroke-dasharray="{dash}"' if dash else ""
+        if key and ("arrow", colour, key) not in self.notes:
+            self.notes.append(("arrow", colour, key))
         self.over.append(f'<polyline points="{d}" fill="none" stroke="#fff" '
                          f'stroke-width="{width + 3}" opacity="0.9" '
                          'stroke-linejoin="round"/>')
         self.over.append(
             f'<polyline points="{d}" fill="none" stroke="{colour}" '
-            f'stroke-width="{width}" stroke-linejoin="round"{extra}'
+            f'stroke-width="{width}" stroke-linejoin="round"'
             + (f' marker-end="url(#arrow-{mid})"/>' if head else "/>"))
 
     def box(self, window, colour=INK, dash="6,4", width=1.6):
@@ -252,16 +293,29 @@ class Fig:
     def attach(self, other, gap=24):
         """Put another figure of the same scale to the right as a panel."""
         assert other.s == self.s, "panels share one scale bar"
-        self.panels.append((other, self.w - 20 + gap))
+        self.panels.append((other, self.w - 20 + gap, 0))
         self.w += gap + other.w - 20
         self.h = max(self.h, other.h)
         self.keys += [k for k in other.keys if k not in self.keys]
         self.alpha = {**other.alpha, **self.alpha}
 
-    def title(self, s, up=10):
+    def stack(self, other, overlap=80):
+        """Put another figure of the same scale under this one.
+
+        `overlap` is the room this figure kept for its own legend, which
+        the pair now shares below both.
+        """
+        assert other.s == self.s, "panels share one scale bar"
+        dy = self.h - overlap
+        self.panels.append((other, 0, dy))
+        self.w, self.h = max(self.w, other.w), dy + other.h
+        self.keys += [k for k in other.keys if k not in self.keys]
+        self.alpha = {**other.alpha, **self.alpha}
+
+    def title(self, s, up=10, fill=INK):
         """A panel title above the top-left corner of the layout."""
         self.text(self.ox, self.oy - up, s, anchor="start", weight="bold",
-                  halo=False)
+                  halo=False, fill=fill)
 
     # -- furniture --------------------------------------------------------
     def note(self, colour, text, kind="label"):
@@ -292,9 +346,9 @@ class Fig:
         import laykey   # here, because laykey imports this module's palette
         base = self.h - 44
         bar, x = laykey.scalebar(self, base)
-        for other, _ in self.panels:
+        for other, _, _ in self.panels:
             self.notes += [n for n in other.notes if n not in self.notes]
-        drawn = self._content() + [line for other, _ in self.panels
+        drawn = self._content() + [line for other, _, _ in self.panels
                                    for line in other._content()]
         crop = ("crop", GREY, "layout continues")
         if (crop not in self.notes
@@ -306,7 +360,17 @@ class Fig:
             '<pattern id="hatch" width="6" height="6" '
             'patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
             f'<line x1="0" y1="0" x2="0" y2="6" stroke="{INK}" '
-            'stroke-width="1.2"/></pattern>']
+            'stroke-width="1.2"/></pattern>'
+            ]
+        rules = (("wire", "M0,1.7 H3.4", INK, 0.9, 3.4),
+                 ("wire2", "M1.7,0 V3.4", INK, 0.9, 3.4),
+                 ("rule-dvdd", "M2.5,0 V5", DVDD, 1.3, 5),
+                 ("rule-dvss", "M2.5,0 V5", DVSS, 1.3, 5))
+        for name, line, ink, w, p in rules:
+            defs.append(
+                f'<pattern id="{name}" width="{p}" height="{p}" '
+                f'patternUnits="userSpaceOnUse"><path d="{line}" '
+                f'stroke="{ink}" stroke-width="{w}"/></pattern>')
         for name, colour in (("hot", HOT), ("snap", SNAP)):
             defs.append(
                 f'<marker id="arrow-{name}" viewBox="-1 -1 12 12" refX="7" '
@@ -320,8 +384,8 @@ class Fig:
                "<defs>" + "".join(defs) + "</defs>",
                f'<rect width="{self.w:.0f}" height="{h:.0f}" fill="#ffffff"/>',
                *self._content()]
-        for other, dx in self.panels:
-            svg += [f'<g transform="translate({dx:.1f},0)">',
+        for other, dx, dy in self.panels:
+            svg += [f'<g transform="translate({dx:.1f},{dy:.1f})">',
                     *other._content(), "</g>"]
         svg += [*bar, *legend, "</svg>"]
         path.write_text("\n".join(svg) + "\n")

@@ -5,31 +5,33 @@ Helper for figures.py: run that script, not this module.
 SPDX-License-Identifier: Apache-2.0
 """
 
-from layfig import DVDD, DVSS, HOT, INK, Fig
+from layfig import DVSS, GREY, INK, SNAP, Fig
 
 CELL = "bi_t"
 
 
-def devices(f, **kw):
+def devices(f):
     """Silicon, with the gates darker where they cross diffusion."""
-    f.silicon(**kw)
+    f.silicon()
     f.layer("contact")
     f.layer("sab", width=1.0)
 
 
 def nmos_driver():
     """One corner of the NMOS output drivers, with every part named."""
-    f = Fig(CELL, (4.6, 66.9, 28.4, 99.6), 22, top=64, right=350, bottom=104)
+    f = Fig(CELL, (4.6, 66.9, 28.4, 99.6), 22, top=92, right=350, bottom=104)
     devices(f)
     top = f.oy - 34
     f.label("P+ bar along the pad side,\non the core ground VSS", (5.6, 67.75),
-            (f.px(0, 67.75)[0] + 72, top - 6))
-    f.label("N+ guard ring in an\nN-well, on DVDD", (7.2, 84),
-            (f.px(0, 84)[0], top - 6), colour=DVDD, weight="bold")
+            (f.px(0, 67.75)[0] + 72, top - 6), colour=GREY)
+    f.label("second guard ring round the\nNMOS: N+ in an N-well, on DVDD",
+            (7.2, 84), (f.px(0, 84)[0], top - 6), colour=GREY)
+    f.title("Corner view of the NMOS output drivers, with the cut A–A′",
+            up=74)
     # The P+ ring lies under the N+ ring, so its label sits in the gap
     # between it and the fingers, where no leader has to cross a ring.
-    x, y = f.px(12.75, 92)
-    f.label("P+ guard ring, on DVSS", (11.0, 92), (x, y + 5), colour=DVSS,
+    x, y = f.px(12.75, 83)
+    f.label("P+ guard ring, on DVSS", (11.0, 83), (x, y + 5), colour=DVSS,
             weight="bold")
     # Finger parts, named in the right margin in the order they are drawn.
     x = f.ox + f.dw + 16
@@ -37,40 +39,47 @@ def nmos_driver():
         (14.12, "Source, on DVSS", DVSS),
         (15.1, "Gate of the first finger", INK),
         (17.6, "Drain under the silicide block", INK),
-        (19.78, "Drain contacts, on the PAD net", HOT),
-        (21.9, "Drain, second finger's side", INK),
-        (24.47, "Gate of the second finger", INK),
-        (25.65, "Source shared by two fingers, on DVSS", DVSS),
-        (26.83, "Gate of the third finger", INK),
+        (19.78, "Drain contacts, on the PAD net", INK),
+        (21.9, "Drain, second finger's side", GREY),
+        (24.47, "Gate of the second finger", GREY),
+        (25.65, "Source shared by two fingers", GREY),
+        (26.83, "Gate of the third finger", GREY),
     ]
     for gx, text, colour in rows:
         y = f.px(gx, 0)[1]
         f.label(text, (gx, 99.2), (x, y + 5), anchor="start", colour=colour,
-                lead="left", weight="bold" if colour != INK else "normal")
+                lead="left")
     f.dim((15.67, 82.5), (19.45, 82.5), "blocked drain: 3.78 µm",
           side="below")
     f.dim((14.52, 78.4), (15.67, 78.4), "gate length: 1.15 µm", side="below")
     bot = f.oy + f.dh + 30
     f.label("Gate contacts, a pair at each end of every gate, to a pre-driver",
             (26.83, 75.05), (f.px(0, 75.05)[0] + 200, bot),
-            elbow=(f.px(0, 75.05)[0], f.oy + f.dh + 8))
+            elbow=(f.px(0, 75.05)[0], f.oy + f.dh + 8), colour=GREY)
     # The cut that the cross-section of sections.py draws for the NMOS:
     # from a drain's contacts across the gate and source to the P+ ring.
     f.line((19.78, 96.6), (11.0, 96.6), width=2.0, dash="9,3,2,3")
     for gx, name, dy in ((19.78, "A", 16), (11.0, "A′", -6)):
         x, y = f.px(gx, 96.6)
         f.text(x, y + dy, name, weight="bold")
+    # The cross-section's diode and its NPN transistor, as currents.
+    # The diode current crosses the P-well under the source and gate.
+    f.flow([(11.3, 93.0), (19.4, 93.0)],
+           key="drain diode: P+ ring, under source and gate, to N+ drain")
+    f.flow([(16.4, 94.9), (13.9, 94.9)], colour=SNAP,
+           key="NPN in snapback: drain to source")
     f.note(INK, "A–A′: the cut of the cross-section", kind="cut")
     f.note(DVSS, "on DVSS")
-    f.note(DVDD, "on DVDD")
-    f.note(HOT, "on the PAD net")
+    f.note(GREY, "beyond the cut: not in the cross-section")
+    f.note(INK, "metal: not drawn", kind="plain")
+    f.note(INK, "8 such gates, each 38 µm wide: 304 µm of gate", kind="plain")
     return f
 
 
-def _panel(window, title):
+def _panel(window, title, fill=INK):
     f = Fig(CELL, window, 30, left=20, top=78, right=20, bottom=112)
     devices(f)
-    f.title(title, up=44)
+    f.title(title, up=44, fill=fill)
     return f
 
 
@@ -87,26 +96,47 @@ def _above(f, text, gx, gy):
 
 def silicide_block():
     """The blocked drains of both drivers beside an ordinary transistor."""
-    a = _panel((13.2, 74.6, 26.8, 83.8), "(a) NMOS output driver, blocked")
+    a = _panel((13.2, 74.6, 26.8, 83.8), "(a) NMOS output driver")
     a.dim((15.67, 82.9), (19.45, 82.9), "blocked drain: 3.78 µm")
     a.dim((20.11, 82.9), (23.89, 82.9), "blocked drain: 3.78 µm")
     a.dim((14.52, 76.2), (15.67, 76.2), "gate length: 1.15 µm", side="below")
-    _inside(a, "Drain contacts", 20.95, 75.0, 19.78)
-    _above(a, "Source contacts, outside the block", 14.0, 79.4)
-    b = _panel((10.2, 144.9, 23.8, 154.1), "(b) PMOS output driver, blocked")
+    _inside(a, "Drain contacts, on PAD", 20.95, 75.0, 19.78)
+    _above(a, "Source contacts on DVSS, outside the block", 14.0, 79.4)
+    b = _panel((6.6, 144.9, 20.2, 157.0), "(b) PMOS output driver, with B–B′")
     b.dim((12.295, 153.2), (15.075, 153.2), "blocked drain: 2.78 µm")
     b.dim((15.735, 153.2), (18.515, 153.2), "blocked drain: 2.78 µm")
     b.dim((11.595, 146.5), (12.295, 146.5), "gate length: 0.7 µm", side="below")
-    _inside(b, "Drain contacts", 14.75, 145.3, 15.405)
-    _above(b, "Source contacts, outside the block", 11.1, 149.7)
-    c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, not blocked")
-    c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
+    _inside(b, "Drain contacts, on PAD", 14.75, 145.3, 15.405)
+    # The ring is named from above; the source row from the gap beside
+    # it, so that no leader crosses the ring.
+    _above(b, "N+ guard ring, on DVDD", 7.6, 150.5)
+    x, y = b.px(9.9, 145.3)
+    b.label("Source contacts, on DVDD", (11.1, 148.0),
+            (x, y + 5), anchor="start")
+    # The cut that the cross-section draws for the PMOS, and its diode.
+    b.line((15.405, 155.2), (7.9, 155.2), width=2.0, dash="9,3,2,3")
+    for gx, name, dy in ((15.405, "B", 16), (7.9, "B′", -6)):
+        x, y = b.px(gx, 155.2)
+        b.text(x, y + dy, name, weight="bold")
+    b.flow([(15.1, 156.2), (8.5, 156.2)],
+           key="drain diode: P+ drain, through the N-well, to N+ ring")
+    b.note(INK, "metal: not drawn", kind="plain")
+    b.note(INK, "(a): 8 such gates of 38 µm, 304 µm of gate", kind="plain")
+    b.note(INK, "(b): 12 such gates of 40 µm, 480 µm of gate", kind="plain")
+    b.note(INK, "B–B′: the PMOS cut of the cross-section", kind="cut")
+    c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, to compare",
+               fill=GREY)
+    c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm",
+          side="below", colour=GREY)
     bot = c.oy + c.dh + 30
-    c.label("Contacts beside every gate, between gates\n0.52 µm apart, all silicided", (32.7, 217.5),
-            (c.px(0, 217.5)[0], bot))
+    c.label("Contacts beside every gate, in the 0.52 µm\nbetween two "
+            "gates, all silicided", (32.7, 217.5), (c.px(0, 217.5)[0], bot),
+            colour=GREY)
+    c.note(GREY, "(c): not in the cross-section")
     a.attach(b)
     a.attach(c)
     return a
 
 
-FIGURES = {"gds-nmos-driver": nmos_driver, "gds-silicide-block": silicide_block}
+FIGURES = {"gds-nmos-driver": nmos_driver,
+           "gds-silicide-block": silicide_block}
