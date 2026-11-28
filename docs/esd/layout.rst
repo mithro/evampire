@@ -21,17 +21,19 @@ figures share five conventions:
   :numref:`fig-esd-gds-secondary` and :numref:`fig-esd-gds-clamp`. Their
   colours mark the parts of the schematic, under the schematic's labels,
   and grey lettering names what the schematic leaves out.
-* In the other figures each layer has one colour, and the silicon layers
-  have the colours of the cross-section :numref:`fig-esd-driver-section`.
-  The cross-section gives its P-well the substrate's colour and a dashed
-  edge, because no P-well is drawn under the transistors
-  (:ref:`esd-layout-driver-parts`).
-* Red marks the primary protection, the PAD net and the discharge current,
-  blue the secondary
-  protection and orange the rail clamp, as in the schematic. A purple
-  arrow marks snapback, as in the cross-section, and nothing else is
-  purple. Magenta marks what
-  connects to DVDD and green what connects to DVSS.
+* The figures that match the cross-section
+  :numref:`fig-esd-driver-section` give each silicon layer the colour it
+  has there: :numref:`fig-esd-gds-nmos-driver` and
+  :numref:`fig-esd-gds-silicide-block`. The cross-section gives its P-well
+  the substrate's colour and a dashed edge, because no P-well is drawn
+  under the transistors (:ref:`esd-layout-driver-parts`). The remaining
+  figures colour each diffusion and each metal by its net: dark red for
+  PAD, magenta for DVDD and green for DVSS.
+* Red marks the primary protection and the discharge current, blue the
+  secondary protection and orange the rail clamp, as in the schematic.
+  The schematic's wires are black, so the grey figures rule the metal of
+  the PAD net with black lines. A purple arrow marks snapback, as in the
+  cross-section, and nothing else is purple.
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
 
@@ -51,9 +53,9 @@ towards the core (:numref:`fig-esd-gds-cell`):
    N-well.
 #. The four pre-drivers that switch the output drivers' gates, and the
    buffers of the signals that control them.
-#. The secondary protection. The foundry's name for this block,
-   ``comp018green_esd_cdm``, suggests its purpose: the
-   :term:`charged device model`.
+#. The secondary protection, beside the pull-up and pull-down resistors.
+   The foundry's name for this block, ``comp018green_esd_cdm``, suggests
+   its purpose: the :term:`charged device model`.
 #. The input buffer and the rest of the logic, next to the core.
 
 The two output drivers and their guard rings reach from 69 µm to 208 µm
@@ -67,8 +69,9 @@ largest part of the cell, and they are also its primary ESD protection
          orange note says the rail clamp and rail diode are not in this
          cell, only in the supply pads. The layout is drawn with
          its layers in grey. From the left: the bond pad, labelled PAD. Two
-         red blocks, labelled drain diode of NMOS drivers 304 µm and drain
-         diode of PMOS drivers 480 µm. In grey lettering, the pre-drivers,
+         groups of red drains, labelled drain diode of NMOS drivers 304 µm
+         wide and drain diode of PMOS drivers 480 µm wide. In grey
+         lettering, the pre-drivers,
          output signal buffers and pull-up and pull-down resistors, which
          the schematic leaves out. Three blue blocks labelled
          110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
@@ -97,12 +100,14 @@ except through the drains and that wire.
 .. figure:: figures/gds-pad-net.svg
    :name: fig-esd-gds-pad-net
    :alt: Layout of the pad end of the bidirectional pad, with its layers in
-         grey and the metal of the PAD net in darker grey. The bond pad, metal 2 to metal 5
-         stacked, joins a metal 2 bus over both output drivers. Under the
-         bus, four NMOS drains and six PMOS drains are drawn red and
-         labelled as the drain diodes of 304 µm and 480 µm; each lies
-         between two gates. A metal 2 wire 2 µm wide runs on from the bus
-         to a blue block labelled 110 Ω.
+         grey and the metal 2 of the PAD net ruled and outlined in black.
+         The bond pad, metal 2 to metal 5 stacked, joins a metal 2 bus
+         over both output drivers. Under the bus, four NMOS drains and six
+         PMOS drains are drawn red and labelled as the drain diodes, 304 µm
+         and 480 µm wide; each lies between two gates. A metal 2 wire 2 µm
+         wide runs on from the bus to a blue block labelled 110 Ω. In grey
+         lettering, the pre-drivers, output signal buffers and pull
+         resistors.
    :width: 100%
 
    The PAD net of gf180mcu_fd_io__bi_t: the bond pad, the metal 2 bus and
@@ -157,7 +162,9 @@ layout figures colour every area with no N-well as P-type silicon.
          by two fingers, and the gate of the third finger. Each gate has
          contacts at its end, which connect to the pre-drivers. A dash-dot
          line A–A′ runs from the drain contacts across the first gate and
-         source to the P+ guard ring.
+         source to the P+ guard ring. Beside it, a red arrow from the P+
+         ring to the drain contacts marks the drain diode, and a purple
+         arrow from the drain to the source marks the NPN transistor.
    :width: 100%
 
    One corner of the NMOS output drivers of gf180mcu_fd_io__bi_t. Three of
@@ -174,6 +181,10 @@ from the gate over an NMOS drain and 2.78 µm over a PMOS drain. Between
 the two blocked parts of a drain a strip 0.66 µm wide stays silicided, and
 the drain contacts stand on it. On the source side the block reaches only
 0.28 µm past the gate.
+
+The line B–B′ in panel (b) is the cut that the cross-section
+:numref:`fig-esd-driver-section` draws for the PMOS, from the drain
+contacts to the N+ guard ring of the N-well.
 
 A drain's current must therefore cross 3.78 µm or 2.78 µm of unsilicided
 diffusion between the contacts and the gate. That length is the added
@@ -234,14 +245,15 @@ drain diode adds to the foundry's test diode (:ref:`esd-simulation`).
    :name: fig-esd-gds-paths
    :alt: Two layouts with each diffusion coloured by its net: drains on PAD
          dark red, diffusion on DVDD magenta, diffusion on DVSS green. (a)
-         Negative discharges, the NMOS drivers: red arrows run from the P+
-         ring on DVSS inwards to the N+ drains, through the NMOS drain
-         diode. (b) Positive discharges, both drivers: red arrows run
-         outwards from the P+ drains of the PMOS drivers across the N-well
-         to its N+ ring on DVDD, through the PMOS drain diode. Purple
-         arrows in the NMOS drivers run from each drain to the sources
-         beside it, the snapback above 10.7 V. The avalanche of the PMOS
-         drains and the rail clamp are not drawn.
+         Positive discharges, both drivers: red arrows run outwards from
+         the P+ drains of the PMOS drivers across the N-well to its N+
+         ring on DVDD, through the PMOS drain diode. Purple arrows in the
+         NMOS drivers run from each drain to the sources beside it, the
+         snapback above 10.7 V. (b) Negative discharges, the NMOS drivers:
+         red arrows run from the P+ ring on DVSS inwards to the N+ drains,
+         through the NMOS drain diode. Grey lettering names the outer
+         guard rings. The avalanche of the PMOS drains and the rail clamp
+         are not drawn.
    :width: 100%
 
    The discharge currents drawn on the output drivers of
@@ -273,11 +285,13 @@ which is the diode's other terminal.
          arrives from the left on a
          metal 2 wire and ends on four polysilicon resistors drawn blue, 2.5
          µm by 2.8 µm each and in parallel, under a hatched silicide block.
-         The wire after them, outlined in black, sends a
+         The wire after them, ruled and outlined in black, sends a
          branch to the pull-up and pull-down resistors. It passes over two P+
          diode strips of 20 µm by 1 µm in an N-well held on DVDD, and two N+
          diode strips of the same size in substrate held on DVSS. It leaves
-         at the right for the gates of the input buffer.
+         at the right for the gates of the input buffer. Grey lettering
+         names an N+ ring round the resistors and an outer ring round each
+         diode.
    :width: 100%
 
    The secondary protection of gf180mcu_fd_io__bi_t: four resistors and
@@ -294,7 +308,8 @@ bidirectional pad, and the rail clamp fills most of it ([ESD-DVDD-GDS]_,
 output drivers: four blocks of 20 fingers, each finger 50 µm wide. Behind
 it lie the three inverters, the eight timer capacitors and the twelve
 timer resistors of :ref:`esd-io-cells`. The last part of the cell holds
-four diodes from DVSS to DVDD and four capacitors between the rails.
+the rail diode, in four strips from DVSS to DVDD, and four capacitors
+between the rails.
 
 .. figure:: figures/gds-clamp.svg
    :name: fig-esd-gds-clamp
@@ -380,13 +395,14 @@ the voltage at the pad (:doc:`results-hbm`).
          pad cell, below, side by side as on the pad ring. Stripes of metal 3
          to 5 cross both cells, some DVDD in magenta and some DVSS in green,
          each continuing from one cell into the other. The metal 2 under
-         them is drawn in outline. A red path with
-         arrowheads marks the current. Step 1, from the PAD bond pad along
-         metal 2 to the PMOS drains. Step 2, through the PMOS drain diode onto the DVDD stripes
-         above. Step 3, along the DVDD rail into the supply pad. Step 4,
-         down a DVDD metal 2 strip and across the rail clamp's NMOS in
-         each of four orange blocks to metal 2 of the DVSS pad. Step 5, along the
-         metal 2 buses that run over the clamp, back to the DVSS bond pad.
+         them is drawn as an edge with a light tint inside. A red path
+         with arrowheads marks the current. Step 1, from the PAD bond pad
+         along metal 2 to the PMOS drains. Step 2, through the PMOS drain
+         diode onto the DVDD stripes above. Step 3, along the DVDD rail
+         into the supply pad. Step 4, along one of five DVDD metal 2
+         strips and across the rail clamp's NMOS in each of four orange
+         blocks to metal 2 of the DVSS pad. Step 5, along the metal 2
+         buses that run over the clamp, back to the DVSS bond pad.
    :width: 100%
 
    A positive discharge from PAD to DVSS, through gf180mcu_fd_io__bi_t and
