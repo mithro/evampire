@@ -49,11 +49,10 @@ def legend(fig, x, y):
             out.append(f'<text x="{cx:.1f}" y="{cy}" font-size="{FONT}" '
                        f'fill="{INK}">{name}</text>')
             continue
-        if kind in ("box", "outline"):
-            d = ' stroke-dasharray="5,4"' if kind == "box" else ""
+        if kind == "outline":
             out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
                        f'height="14" fill="none" stroke="{style}" '
-                       f'stroke-width="2"{d}/>')
+                       'stroke-width="2"/>')
         elif kind == "tint":   # translucent metal with a firm edge
             fill, stroke, alpha = style
             out.append(f'<rect x="{cx:.1f}" y="{cy - 12}" width="26" '
@@ -67,10 +66,6 @@ def legend(fig, x, y):
             out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 26:.1f}" '
                        f'y2="{cy - 5}" stroke="{INK}" stroke-width="1.3" '
                        'stroke-dasharray="7,5"/>')
-        elif kind == "dashes":
-            out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 27:.1f}" '
-                       f'y2="{cy - 5}" stroke="{style}" stroke-width="4" '
-                       'stroke-dasharray="7,4"/>')
         elif kind == "arrow":
             out.append(f'<line x1="{cx:.1f}" y1="{cy - 5}" x2="{cx + 18:.1f}" '
                        f'y2="{cy - 5}" stroke="{style}" stroke-width="4"/>')

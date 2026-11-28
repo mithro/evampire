@@ -41,20 +41,20 @@ STYLES = {
     "paddrain": ("#7d1f14", "#4a0f08", "drain on the PAD net"),
     "dvdd": (DVDD, "#6a1c53", "diffusion on DVDD"),
     "dvss": (DVSS, "#0d5045", "diffusion on DVSS"),
-    "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD, metal 3 to 5"),
-    "dvssrail": ("#a3d2ca", "#0d5045", "DVSS, metal 3 to 5"),
+    "dvddrail": ("#dfa8cc", "#6a1c53", "DVDD stripes, metal 3 to 5"),
+    "dvssrail": ("#a3d2ca", "#0d5045", "DVSS stripes, metal 3 to 5"),
     "other": ("#b3b9c0", "#8a9199", "other diffusion"),
     "gate": ("#7d8a2e", "#444d14", "gate"),
     # Figures that pair with the schematic: its wires are black, so metal
     # is ruled in black, which shows which side of an edge is metal.
     "padwire": ("url(#wire)", INK, "PAD net, metal 2"),
-    "nextwire": ("url(#wire2)", INK, "wire after the 110 Ω"),
+    "nextwire": ("url(#wire2)", INK, "protected net"),
     "primdrain": (HOT, "#7d1f14", "primary: drain on the PAD net"),
     "secpart": (SECONDARY, "#12305f", "secondary: resistor, diode strip"),
 }
 FONT = 14
 # Layers of a figure drawn without colour, from the wells up.
-GREYS = (("nwell", "#ededed"), ("pdiff", "#d2d2d2"), ("ndiff", "#a4a4a4"),
+GREYS = (("nwell", "#e2e2e2"), ("pdiff", "#c6c6c6"), ("ndiff", "#a4a4a4"),
          ("poly", "#7c7c7c"), ("gate", "#5c5c5c"))
 PAPER = "#fafafa"      # behind the layers of a grey figure
 
@@ -121,12 +121,12 @@ class Fig:
         """Draw a layer of the figure's cell in the style of its name."""
         self.geom(derived(self.cell, name), name, **kw)
 
-    def silicon(self, **kw):
+    def silicon(self):
         """The layers that make the devices, from the wells up."""
         for name in ("nwell", "pdiff", "ndiff", "poly"):
-            self.layer(name, **kw)
+            self.layer(name)
         lay = gdskit.load(self.cell)
-        self.geom(lay["poly"].intersection(lay["comp"]), "gate", **kw)
+        self.geom(lay["poly"].intersection(lay["comp"]), "gate")
 
     def grey_silicon(self, named=False):
         """The device layers in greys.
@@ -153,7 +153,8 @@ class Fig:
                 self.note((fill, "#808080", 1.0),
                           STYLES[name][2] + ", in grey", kind="tint")
         if not named:
-            self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey",
+            self.note(("#b9b9b9", "#808080", 1.0), "layout layers, in grey; "
+                      "those with no label are not in the schematic",
                       kind="tint")
 
     def region(self, window, colour, opacity=0.3, width=3.0):
@@ -266,22 +267,20 @@ class Fig:
                 'stroke="{}" stroke-width="1.5"/>'.format(*seg, colour))
         self.text(*tpos, s, anchor=anchor, fill=colour, weight="bold")
 
-    def flow(self, points, colour=HOT, width=4.0, dash=None,
-             key="discharge current", head=True):
+    def flow(self, points, colour=HOT, width=4.0, key="discharge current",
+             head=True):
         """An arrow along layout points: the direction of a current."""
         pts = [self.px(*p) for p in points]
         d = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
         mid = {HOT: "hot", SNAP: "snap"}[colour]
-        kind = "dashes" if dash else "arrow"
-        if key and (kind, colour, key) not in self.notes:
-            self.notes.append((kind, colour, key))
-        extra = f' stroke-dasharray="{dash}"' if dash else ""
+        if key and ("arrow", colour, key) not in self.notes:
+            self.notes.append(("arrow", colour, key))
         self.over.append(f'<polyline points="{d}" fill="none" stroke="#fff" '
                          f'stroke-width="{width + 3}" opacity="0.9" '
                          'stroke-linejoin="round"/>')
         self.over.append(
             f'<polyline points="{d}" fill="none" stroke="{colour}" '
-            f'stroke-width="{width}" stroke-linejoin="round"{extra}'
+            f'stroke-width="{width}" stroke-linejoin="round"'
             + (f' marker-end="url(#arrow-{mid})"/>' if head else "/>"))
 
     def box(self, window, colour=INK, dash="6,4", width=1.6):
