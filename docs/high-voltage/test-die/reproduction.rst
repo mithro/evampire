@@ -122,8 +122,11 @@ Rerun against the records
 A rerun of recorded cases is checked by ``verify.py``. It rebuilds each
 named case, confirms that its parameters are those of the record, runs it
 in the sandbox, and compares the breakdown voltage and the bias points
-with the record. It prints one line per case and exits non-zero on a
-mismatch:
+with the record. It prints one line per case and exits non-zero when a
+breakdown voltage differs by more than 0.1 V. A case recorded with the
+present sweep code reproduces its recorded value exactly. A case of the
+first record was run with an earlier voltage ramp, and differed by up to
+0.07 V in the nine cases tried:
 
 .. code-block:: sh
 

@@ -593,6 +593,42 @@ positions of each structure are in the table of its group.
    Floor plan of the test die, drawn from the positions the layout
    generator reports.
 
+Seen from above, the die shows its Metal5 pads and names brightest, with
+the Metal1 buses and the wells dimmer beneath them
+(:numref:`fig-hvt-die-view`). The view is drawn from the layout itself,
+before the seal ring and the dummy metal fill are added, and its colours
+are chosen for legibility. A second pad carries its structure's name with
+the suffix .R for a ring or .G for a gated plate
+(:numref:`fig-hvt-die-view-detail`).
+
+.. figure:: hvt-die-view.png
+   :name: fig-hvt-die-view
+   :width: 100%
+   :alt: View of the whole die from above, north up. Pale square pads
+         stand in six columns and thirteen rows, each with its
+         structure's name above it and a thin lead running west to a
+         small octagonal structure. Grey bus lines frame each column and
+         join six pads marked SUB along the south edge and one at the
+         north-east. Five large wells with their pads, CVN, CVD, CVN2,
+         CVNA and CVNA2, lie along the north edge. One site, OPEN, has a
+         pad and a lead but no structure.
+
+   The die as drawn in the layout, seen from above
+   (``silicon/hvtest/probe_view.py``).
+
+.. figure:: hvt-die-view-detail.png
+   :name: fig-hvt-die-view-detail
+   :width: 100%
+   :alt: Close view of the south-west corner of the die. Two octagonal
+         structures, NR1S2 and NR1S3, each have a lead east to the pad
+         bearing that name. A thin grey line runs from the ring of each
+         structure north and then east to a second pad, named NR1S2.R
+         and NR1S3.R. Below the bus along the south edge are two pads
+         marked SUB.
+
+   The south-west corner of the die: two ring-sense structures, their
+   second pads and two substrate pads.
+
 .. csv-table:: Substrate pads and second pads
    :name: tab-hvt-pads
    :file: hvt-tab-pads.csv
