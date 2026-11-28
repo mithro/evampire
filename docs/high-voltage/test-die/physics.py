@@ -20,6 +20,14 @@ AP_LO, BP_LO = 1.582e6, 2.036e6     # holes, field up to 4e5 V/cm
 AP_HI, BP_HI = 6.71e5, 1.693e6      # holes, field above 4e5 V/cm
 E_SWITCH = 4.0e5
 
+# Published N-well junction model nwp_6p0 of the gf180mcu models: area
+# capacitance (F/m^2), edge capacitance (F/m), built-in voltage (V) and
+# grading coefficient.
+NW_CA, NW_CP, NW_VBI, NW_M = 1.4914e-4, 5.8719e-10, 0.43905, 0.30525
+# Capacitance per area under a plate, Metal1 and polysilicon, F/cm^2.
+COX = {"m1": 2.9304e-9, "poly": 1.1067e-8}
+VFB_ILLUSTRATION = -0.9   # V, the flat-band voltage of metal-gate.rst
+
 
 def alpha_n(e):
     return AN * math.exp(-BN / e) if e > 1 else 0.0
