@@ -122,11 +122,17 @@ Rerun against the records
 A rerun of recorded cases is checked by ``verify.py``. It rebuilds each
 named case, confirms that its parameters are those of the record, runs it
 in the sandbox, and compares the breakdown voltage and the bias points
-with the record. It prints one line per case and exits non-zero when a
-breakdown voltage differs by more than 0.1 V. A case recorded with the
-present sweep code reproduces its recorded value exactly. A case of the
-first record was run with an earlier voltage ramp, and differed by up to
-0.07 V in the nine cases tried:
+with the record. It refuses a stored result in WORKDIR whose parameters
+differ from the case's, so that an earlier run is never compared as a new
+one. It prints one line per case and exits non-zero when a breakdown
+voltage differs by more than 0.1 V.
+
+The 0.1 V was set after a first pass at 0.05 V, in which one case of the
+first record lay 0.067 V from its recorded value. The second pass, at
+0.1 V, compared the same results again and did not rerun them. A case
+recorded with the present sweep code reproduces its recorded value
+exactly. The cases of the first record were run with an earlier voltage
+ramp, and differed by up to 0.07 V in the nine tried:
 
 .. code-block:: sh
 
@@ -137,8 +143,10 @@ first record was run with an earlier voltage ramp, and differed by up to
 
 A case is named as in the records, structure, process and shape.
 ``--sample N`` picks N cases at random from those that take minutes
-rather than hours. WORKDIR lies outside the repository, because the
-sandbox refuses it. The sandbox test reruns one short case in the same way,
+rather than hours. It leaves out the cases with a floating ring and those
+run in 128-bit arithmetic, the slowest, which ``--slow`` adds back; each
+of those takes up to hours. WORKDIR lies outside the repository, because
+the sandbox refuses it. The sandbox test reruns one short case in the same way,
 and needs Docker:
 
 .. code-block:: sh
