@@ -210,18 +210,24 @@ of class events gives a device that requests class 1 to 3 a lower class
 (:numref:`tab-poe-events`, :clause:`Table 145-11 <145>`). With Type 1
 and Type 2 power sourcing equipment, one class event gives the class that
 the class signature shows, 0 to 3 (:clause:`33.2.6.1`,
-:clause:`Table 33-9 <33>`). Equipment that does not classify assigns
-class 0, which has the power of class 3 (:clause:`33.2.6`,
-:clause:`Table 33-7 <33>`).
+:clause:`Table 33-9 <33>`). Type 1 equipment that does not classify
+assigns class 0, which has the power of class 3 (:clause:`33.2.6`,
+:clause:`Table 33-7 <33>`). Type 2 equipment always classifies
+(:clause:`Table 33-8 <33>`).
 
-The number of class events limits the class only to 3, 4, 6 or 8
-(:numref:`tab-poe-events`). A device that requests class 5 gets it from
-four events, which give class 6 to a device that requests class 6 to 8.
-Power sourcing equipment that can supply class 5 but not class 6
-therefore issues four events only to a device that requests class 5. It
-stops at three events, class 4, for one that requests more
-(:clause:`145.2.8.1`). It learns the requested class within three events
-(:clause:`145.3.6`). Class 7 works the same way, with five events or four.
+For a single-signature powered device, the number of class events limits
+the class only to 3, 4, 6 or 8 (:clause:`145.3.6.1`,
+:numref:`tab-poe-events`). For each pair set of a dual-signature one, the
+limits are 3, 4 and 5 (:clause:`145.3.6.1`, :clause:`Table 145-11 <145>`).
+A single-signature device that requests class 5 gets it from four events,
+which give class 6 to a device that requests class 6 to 8. Power sourcing
+equipment that can supply class 5 but not class 6 therefore issues four
+events only to a device that requests class 5. It assigns class 4, with
+three events, to one that requests more (:clause:`145.2.8`,
+:clause:`145.2.8.1`). It learns the requested class within three events
+(:clause:`145.3.6`). Equipment that can supply class 7 but not class 8
+issues five events only to a device that requests class 7, and four,
+class 6, to one that requests class 8.
 
 Demotion follows from the power sourcing equipment's capability, not from
 a missing LLDP exchange. The powered device conforms to its assigned class
