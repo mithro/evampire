@@ -15,9 +15,10 @@ CELL = "bi_t"
 # placement of the foundry's sub-cells.
 PREDRIVERS = (2.0, 211.7, 73.3, 242.3)   # comp018green_out_predrv, four
 BUFFERS = (3.6, 245.5, 70.4, 264.1)      # out_sigbuf_oe, _a and sigbuf_1
-INPUT = (3.5, 311.6, 71.8, 341.8)        # in_cms_smt, in_drv, four sigbuf
+# in_cms_smt and in_drv, with four sigbuf cells and four small diodes.
+INPUT = (3.5, 311.6, 71.8, 341.8)
 PULLS = (3.8, 266.7, 18.8, 309.5)        # comp018green_in_pupd resistors
-# The resistors and the two diode blocks inside SECOND.
+# The resistors and the two diode blocks inside comp018green_esd_cdm.
 SECOND_PARTS = ((21.7, 266.7, 52.7, 277.5), (21.7, 277.9, 52.7, 293.2),
                 (21.7, 293.6, 52.7, 309.9))
 RINGS = ("DVDD and DVSS rings: stripes of metal 3 to 5 across the cell, "
@@ -65,7 +66,7 @@ def cell(alone=True):
             colour=GREY)
     f.label("pull-up and\npull-down\nresistors", (3.8, 288),
             (f.px(0, 291)[0], top - 17), colour=GREY)
-    f.label("input\nbuffer", (3.5, 327), (f.px(0, 327)[0], top),
+    f.label("input buffer\nand logic", (3.5, 327), (f.px(0, 327)[0], top),
             weight="bold")
     bot = f.oy + f.dh + 30
     # Each leader drops straight out of the cell before it turns.
@@ -73,15 +74,15 @@ def cell(alone=True):
             ("110 Ω: 4 of\n440 Ω in parallel", 272.1, 228, 0),
             ("40 µm² diode to\nDVDD: 2 strips of\n20 µm × 1 µm", 285.5, 286,
              0),
-            ("40 µm² diode from\nDVSS: 2 strips of\n20 µm × 1 µm", 301.7, 330,
-             62)):
+            ("40 µm² diode from\nDVSS: 2 strips of\n20 µm × 1 µm", 301.7, 334,
+             70)):
         f.label(text, (52.7, gy), (f.px(0, at)[0], bot + drop),
                 colour=SECONDARY, weight="bold", elbow=f.px(76.5, gy))
     f.note((SECONDARY, SECONDARY, 0.3), "secondary", kind="tint")
-    f.note((INK, INK, 0.12), "input buffer", kind="tint")
+    f.note((INK, INK, 0.12), "input buffer and logic", kind="tint")
+    f.note(*PADMETAL, kind="tint")
     f.note(GREY, "not in the schematic")
     f.note(INK, RINGS, kind="plain")
-    f.note(*PADMETAL, kind="tint")
     f.note(INK, "metal of the PAD net beyond the bond pad: not drawn",
            kind="plain")
     f.title("gf180mcu_fd_io__bi_t, the bidirectional pad", up=114)
@@ -113,7 +114,7 @@ def pad_net():
     f.geom(lay["metal5"].intersection(box(0, 0, 75, 66)), "metal",
            opacity=0.55, key=False)
     f.note(*PADMETAL, kind="tint")
-    metal = net["metal2"].intersection(box(0, 65.4, 75, 278))
+    metal = net["metal2"].intersection(box(0, 65.2, 75, 278))
     f.geom(metal, "padwire", width=0, key=False)
     f.outline(metal, INK, width=1.1)
     f.note(("url(#wire)", INK, 1.0), "PAD net, metal 2 beyond the bond pad: "
@@ -146,13 +147,14 @@ def pad_net():
     f.label("pre-drivers", (73.3, 222), (f.px(0, 222)[0], bot), colour=GREY)
     f.label("output signal\nbuffers", (70.4, 250), (f.px(0, 250)[0], bot),
             colour=GREY)
-    f.label("110 Ω of the secondary protection", (52.7, 272.1),
-            (f.ox + f.dw, bot + 46), anchor="end", colour=GREY,
+    f.label("110 Ω of the secondary\nprotection", (52.7, 272.1),
+            (f.px(0, 259)[0], bot + 46), colour=GREY,
             elbow=(f.px(0, 272.1)[0], f.oy + f.dh + 8))
     f.note(GREY, "not in the schematic's primary protection")
-    f.note(INK, "NMOS drains: diodes from the P-type silicon on DVSS",
-           kind="plain")
-    f.note(INK, "PMOS drains: diodes to the N-well on DVDD", kind="plain")
+    f.note(INK, "NMOS drains: diodes from the P-type silicon, on DVSS "
+           "through the P+ ring round them", kind="plain")
+    f.note(INK, "PMOS drains: diodes to the N-well, on DVDD through the N+ "
+           "ring round them", kind="plain")
     f.note(INK, RINGS, kind="plain")
     f.note(INK, "40 µm² diodes, input buffer: further right", kind="plain")
     f.note(INK, "rail clamp and its diode: in the supply pads", kind="plain")
@@ -285,12 +287,14 @@ def secondary():
     top = f.oy - 40
     f.label("110 Ω: 4 of 440 Ω in parallel,\npolysilicon, each 2.5 µm wide\n"
             "and 2.8 µm long, left to right,\nunder the silicide block",
-            (31.2, 272.1), (f.ox + 60, top - 34), colour=SECONDARY,
+            (31.2, 272.1), (f.ox + 44, top - 34), colour=SECONDARY,
             weight="bold")
-    f.label("N+ guard ring,\non DVDD", (26.05, 283), (f.px(0, 283)[0], top))
+    f.label("N+ guard ring,\non DVDD: the diode's\nDVDD end", (26.05, 283),
+            (f.px(0, 282.6)[0], top - 17))
     f.label("also to pull-up,\npull-down resistors", (22.3, 292.9),
             (f.px(0, 292.9)[0], top), colour=GREY)
-    f.label("P+ guard ring,\non DVSS", (26.05, 302), (f.px(0, 302)[0], top))
+    f.label("P+ guard ring,\non DVSS: the diode's\nDVSS end", (26.05, 302),
+            (f.px(0, 303)[0], top - 17))
     # The rings that the schematic has no symbol for, in grey. Their
     # targets lie beside the metal, where the ring shows.
     y = f.px(28, 0)[1] + 5
