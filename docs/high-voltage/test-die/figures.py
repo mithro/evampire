@@ -39,7 +39,7 @@ REMOVED = {"DT5", "DT35", "DC15", "DW3", "DW6", "DM1_3", "CVD2", "NT35",
            "DPM12", "DAo1C0", "NT10", "NA2"}
 NAME = re.compile(r"\b(?:[ND][A-Za-z]{1,3}\d[A-Za-z0-9_]*|CV[NDA]+2?|OPEN)\b")
 PAGES = ("structures.rst", "method.rst", "predictions.rst", "submission.rst",
-         "../test-die.rst", "cat_plain.py", "cat_nat.py", "cat_rings.py",
+         "reproduction.rst", "../test-die.rst", "cat_plain.py", "cat_nat.py", "cat_rings.py",
          "cat_deep.py", "cat_groups.py")
 
 

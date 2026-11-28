@@ -24,6 +24,9 @@ comparing the results with device simulation.
 :doc:`test-die/submission`
    The slot, the build steps, the checks the layout passes and the file
    to submit.
+:doc:`test-die/reproduction`
+   The command that rebuilds each result, from the layout to the
+   comparison of measurements, and what a pass looks like.
 
 .. toctree::
    :hidden:
@@ -33,3 +36,4 @@ comparing the results with device simulation.
    test-die/method
    test-die/predictions
    test-die/submission
+   test-die/reproduction
