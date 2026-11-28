@@ -84,7 +84,7 @@
 <text x="210" y="314" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="normal">to PAD, 304 µm of gate in all</text>
 <line x1="176" y1="222" x2="150" y2="222" stroke="#8e44ad" stroke-width="3"/>
 <line x1="163" y1="222" x2="163" y2="235" stroke="#8e44ad" stroke-width="2"/>
-<line x1="169" y1="222" x2="190" y2="194" stroke="#8e44ad" stroke-width="2"/>
+<line x1="169" y1="222" x2="184" y2="194" stroke="#8e44ad" stroke-width="2"/>
 <line x1="157" y1="222" x2="130" y2="194" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow)"/>
 <text x="20" y="342" text-anchor="start" font-size="12" fill="#8e44ad" font-weight="normal">parasitic NPN (drain, P-well, source): triggers at 10.7 V,</text>
 <text x="20" y="358" text-anchor="start" font-size="12" fill="#8e44ad" font-weight="normal">snaps back to about 6 V</text>
