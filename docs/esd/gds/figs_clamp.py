@@ -35,13 +35,14 @@ def clamp():
            opacity=0.55, key=False)
     f.layer("pad", width=1.6, dash="5,3", key=False)
     x, y = f.px(37.5, 32)
-    f.text(x, y - 6, "DVDD", weight="bold", size=18)
-    f.text(x, y + 14, "bond pad")
+    # Grey: the schematic has the DVDD ring, but no symbol for its pad.
+    f.text(x, y - 6, "DVDD", size=18, fill=GREY)
+    f.text(x, y + 14, "bond pad", fill=GREY)
     for region in (FET, INVERTERS, CAPS, RES, DIODES):
         f.region(region, CLAMP)
     top = f.oy - 34
-    f.label("clamp NMOS 4000 µm:\n4 blocks of 20 fingers,\n"
-            "each 50 µm wide", (9.0, 131), (f.px(0, 131)[0], top - 17),
+    f.label("clamp NMOS 4000 µm:\n80 gates of 50 µm,\n"
+            "in 4 blocks", (9.0, 131), (f.px(0, 131)[0], top - 17),
             colour=CLAMP, weight="bold")
     f.label("three\ninverters", (15.8, 205), (f.px(0, 203)[0], top),
             colour=CLAMP, weight="bold")
@@ -57,7 +58,7 @@ def clamp():
     f.note((CLAMP, CLAMP, 0.3), "rail clamp and rail diode", kind="tint")
     f.note(GREY, "not in the schematic")
     f.note(INK, "the DVSS pad holds the same clamp and diode", kind="plain")
-    f.note(INK, "DVDD and DVSS supply rings, metal 3 to 5: not drawn", kind="plain")
+    f.note(INK, figs_pad.RINGS, kind="plain")
     f.title("gf180mcu_fd_io__dvdd, the DVDD supply pad", up=88)
     f.dim((75, 0), (75, 350), "350 µm", offset=92, side="below")
     f.dim((0, 350), (75, 350), "75 µm", offset=14, side="below")
@@ -80,7 +81,6 @@ def clamp_fingers():
     f.geom(nets["DVSS"], "dvss", opacity=0.7)
     f.layer("poly")
     f.geom(lay["poly"].intersection(lay["comp"]), "gate")
-    f.layer("sab", width=1.0)   # draws nothing: no silicide block here
     f.note(DVDD, "on DVDD")
     f.note(DVSS, "on DVSS")
     f.layer("contact")
@@ -125,7 +125,7 @@ def _stack(cell, name):
 def ring():
     """A positive pulse from PAD to DVSS, across two cells of the ring."""
     f = Fig("bi_t", (0, 0, 2 * PITCH, 222), 3.7, left=20, top=104, right=215,
-            bottom=136)
+            bottom=180)
     f.wells = False
     lay = gdskit.load("dvss")
     fet = lay["comp"].intersection(lay["nplus"]).intersection(
@@ -163,9 +163,12 @@ def ring():
     f.outline(translate(fet.buffer(0.3).buffer(-0.3), xoff=PITCH), CLAMP,
               width=3.0)
     f.note(CLAMP, "rail clamp's NMOS, under the metal", kind="outline")
-    f.note(INK, "the dashed purple second path, the output NMOS's "
-           "snapback: not drawn", kind="plain")
-    f.note(INK, "the diagram's other three panels: not drawn", kind="plain")
+    f.note(INK, "the second path, the output NMOS's snapback: not drawn",
+           kind="plain")
+    f.note(INK, "the other three discharges of the paths diagram: not drawn",
+           kind="plain")
+    f.note(INK, "metal 2 is tinted, so colours blend where it lies under "
+           "a stripe", kind="plain")
     f.title("Positive, PAD to DVSS: the main path, across two cells", up=84)
     x0, y0 = f.px(PITCH, 0)
     x1, _ = f.px(PITCH, 222)
@@ -177,7 +180,8 @@ def ring():
         f.text(x, y - 4, f"{name} bond pad", weight="bold")
         f.text(x, y + 14, kind)
     x, y = f.px(66.5, 95)
-    f.text(x, y + 5, "drains of the output NMOS: no current on the main path")
+    f.label("drains of the output NMOS: no current on the main path",
+            (55.0, 95), (x, y + 5))
     x, y = f.px(69.5, 166)
     f.text(x, y + 5, "PMOS drains")
     x, y = f.px(PITCH, 0)
@@ -190,7 +194,7 @@ def ring():
     route = [(43.3, 56), (43.3, y_rail), (strip, y_rail), (strip, 86)]
     f.flow(route, width=5.0, head=False)
     for gy in (176, 146, 116, 86):
-        f.flow([(strip - 0.7, gy), (bus - 0.3, gy)], width=3.0)
+        f.flow([(strip - 0.7, gy), (bus - 0.3, gy)], width=4.2)
     f.flow([(bus, 176), (bus, 56)], width=5.0)
     # A head part-way along the first two runs; the last has the end's.
     for (ax, ay), (bx, by) in list(zip(route, route[1:]))[:2]:
@@ -205,14 +209,14 @@ def ring():
             colour=HOT, leader=INK, weight="bold")
     bot = f.oy + f.dh + 30
     f.label("5  DVSS metal 2 over the rail\nclamp, back to the DVSS bond pad",
-            (bus, 66), (f.px(0, 40)[0], bot), colour=HOT, leader=INK,
+            (bus, 66), (f.px(0, 40)[0], bot + 46), colour=HOT, leader=INK,
             weight="bold")
     f.label("4  Rail clamp: along a DVDD metal 2 strip (one of five is\n"
-            "drawn), then across the NMOS of each block to the DVSS metal 2",
-            (strip + 3.5, 146),
+            "drawn), then across the NMOS of each orange block to the DVSS "
+            "metal 2", (strip, 131),
             (f.px(0, 150)[0], bot), colour=HOT, leader=INK, weight="bold")
     x, y = f.px(PITCH + 5, y_rail)
-    f.label("3  Along the DVDD rail\ninto the DVSS supply\npad cell",
+    f.label("3  Along the DVDD stripes\ninto the DVSS supply\npad cell",
             (PITCH + 5, y_rail), (f.ox + f.dw + 14, y), anchor="start",
             colour=HOT, leader=INK, weight="bold", lead="left")
     return f
