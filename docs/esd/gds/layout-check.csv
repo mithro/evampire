@@ -26,5 +26,5 @@ Timer capacitor,Count,,8,8
 Timer capacitor,Plate area of each,µm²,250,250
 Supply capacitor,Count,,4,4
 Supply capacitor,Plate area of each,µm²,225,225
-Rail diode,Count,,4,4
-Rail diode,Area of each,µm²,40,40
+Diode from DVSS to DVDD,Count,,4,4
+Diode from DVSS to DVDD,Area of each,µm²,40,40

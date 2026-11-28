@@ -539,11 +539,6 @@ Glossary
       during a fast ESD event and carries its current at a few volts (see
       :doc:`esd/io-cells`).
 
-   Rail diode
-      A diode from a chip's ground ring to its supply ring, inside a supply
-      pad. It conducts when the ground ring rises above the supply ring
-      (see :doc:`esd/io-cells`).
-
    Second breakdown current
    It2
       The current at which an ESD device fails by overheating in a

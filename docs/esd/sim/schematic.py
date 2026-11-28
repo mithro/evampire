@@ -29,12 +29,12 @@ OUT = pathlib.Path(__file__).resolve().parent.parent / "figures"
 schemdraw.use("svg")
 schemdraw.config(fontsize=17, inches_per_unit=0.42, lw=1.6, margin=1.0)
 
-TOP = 9.0    # DVDD rail
+TOP = 10.0   # DVDD rail
 BOT = 0.0    # DVSS rail
-MID = 4.5    # pad level
+MID = 5.0    # pad level
 FET = 20.6   # the clamp transistor's column, nearest the bond pad
 RC = 25.4    # the clamp timer's column
-DIODE = 30.4  # the rail diode's column
+DIODE = 30.4  # the column of the diode between the rails
 
 GROUPS = {"primary": "#c0392b", "secondary": "#1f4e9c", "clamp": "#e08a00"}
 DIM = "#b4b4b4"   # a group that the figure does not show
@@ -132,7 +132,7 @@ def draw(path, show=None):
         d += elm.Dot().at((RC, TOP))
         d += elm.Dot().at((RC, BOT))
 
-        # Rail diode, four parts, in each DVDD and DVSS pad cell.
+        # The diode between the rails, in each DVDD and DVSS pad cell.
         d += (elm.Diode().up().at((DIODE, BOT)).to((DIODE, TOP))
               .color(clamp).label("160 µm²:\n4 of 40 µm²", loc="bottom",
                                    ofst=0.2))
@@ -144,7 +144,7 @@ def draw(path, show=None):
         d += elm.Label().at((10.5, TOP + 1.0)).label("secondary",
                                                        color=secondary)
         d += elm.Label().at((RC, TOP + 1.0)).label(
-            "rail clamp and rail diode", color=clamp)
+            "rail clamp and its diode", color=clamp)
         # The rings run through every cell; each box is one cell's parts.
         cell_box(d, -0.5, 15.2, "gf180mcu_fd_io__bi_t")
         cell_box(d, 15.6, 34.8, "each of gf180mcu_fd_io__dvdd and "
