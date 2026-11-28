@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1043" height="891" viewBox="0 0 1043 891" font-family="sans-serif">
-<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><pattern id="wire" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0,2.5 H5" stroke="#222222" stroke-width="0.9"/></pattern><pattern id="wire2" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#222222" stroke-width="0.9"/></pattern><pattern id="rule-dvdd" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#a02c7d" stroke-width="1.3"/></pattern><pattern id="rule-dvss" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#16806f" stroke-width="1.3"/></pattern><marker id="arrow-hot" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker><marker id="arrow-snap" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker></defs>
-<rect width="1043" height="891" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1043" height="915" viewBox="0 0 1043 915" font-family="sans-serif">
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#222222" stroke-width="1.2"/></pattern><pattern id="wire" width="3.4" height="3.4" patternUnits="userSpaceOnUse"><path d="M0,1.7 H3.4" stroke="#222222" stroke-width="0.9"/></pattern><pattern id="wire2" width="3.4" height="3.4" patternUnits="userSpaceOnUse"><path d="M1.7,0 V3.4" stroke="#222222" stroke-width="0.9"/></pattern><pattern id="rule-dvdd" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#a02c7d" stroke-width="1.3"/></pattern><pattern id="rule-dvss" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5,0 V5" stroke="#16806f" stroke-width="1.3"/></pattern><marker id="arrow-hot" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker><marker id="arrow-snap" viewBox="-1 -1 12 12" refX="7" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e44ad" stroke="#ffffff" stroke-width="0.7" stroke-linejoin="round"/></marker></defs>
+<rect width="1043" height="915" fill="#ffffff"/>
 <rect x="20.0" y="78.0" width="276.0" height="408.0" fill="#dbe8f5"/>
 <path d="M52.7,93.9L296.0,93.9L296.0,486.0L52.7,486.0L52.7,456.9L52.7,446.1L52.7,280.8L52.7,270.0L52.7,104.7Z" fill="#f5b46e" stroke="#a8651c" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
 <path d="M25.1,398.7L39.5,398.7L296.0,398.7L296.0,433.2L39.5,433.2L25.1,433.2L25.1,428.2L25.1,404.2ZM25.1,117.6L39.5,117.6L296.0,117.6L296.0,152.1L39.5,152.1L25.1,152.1L25.1,147.2L25.1,123.2ZM39.5,469.8L296.0,469.8L296.0,486.0L25.1,486.0L25.1,475.3L25.1,469.8L39.5,469.8Z" fill="#c9cf96" stroke="#5c6620" stroke-width="0.8" fill-rule="evenodd" opacity="1.0"/>
@@ -88,14 +88,14 @@
 <polyline points="76.0,327.5 69.5,342.1" fill="none" stroke="#222222" stroke-width="1.3"/>
 <circle cx="69.5" cy="342.1" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
 <text x="76.0" y="322.5" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Drain contacts, on PAD</text>
-<polyline points="245.0,69.0 245.0,213.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="245.0,69.0 245.0,213.0" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="245.0" cy="213.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="245.0" y="64.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Source contacts on DVDD, outside the block</text>
-<polyline points="122.0,167.0 122.0,108.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="122.0,167.0 122.0,108.0" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="122.0" cy="108.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="122.0" y="182.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">N+ guard ring, on DVDD</text>
+<polyline points="188.0,69.0 188.0,108.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="188.0,69.0 188.0,108.0" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="188.0" cy="108.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="188.0" y="64.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">N+ guard ring, on DVDD</text>
+<polyline points="32.0,187.0 113.0,213.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
+<polyline points="32.0,187.0 113.0,213.0" fill="none" stroke="#222222" stroke-width="1.3"/>
+<circle cx="113.0" cy="213.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
+<text x="32.0" y="182.0" text-anchor="start" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Source contacts, on DVDD</text>
 <line x1="329.0" y1="342.1" x2="329.0" y2="117.0" stroke="#fff" stroke-width="4.4" opacity="0.85"/>
 <line x1="329.0" y1="342.1" x2="329.0" y2="117.0" stroke="#222222" stroke-width="2.0" stroke-dasharray="9,3,2,3"/>
 <text x="329.0" y="358.1" text-anchor="middle" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">B</text>
@@ -120,17 +120,17 @@
 <line x1="20.0" y1="486.0" x2="296.0" y2="486.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
 <text x="20.0" y="34.0" text-anchor="start" font-size="14" fill="#222222" font-weight="bold">(c) PMOS pre-driver, to compare</text>
 <line x1="65.0" y1="284.1" x2="65.0" y2="305.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="65.0" y1="284.1" x2="65.0" y2="305.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="65.0" y1="284.1" x2="65.0" y2="305.1" stroke="#666666" stroke-width="1.5"/>
 <line x1="60.0" y1="284.1" x2="70.0" y2="284.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="60.0" y1="284.1" x2="70.0" y2="284.1" stroke="#222222" stroke-width="1.5"/>
+<line x1="60.0" y1="284.1" x2="70.0" y2="284.1" stroke="#666666" stroke-width="1.5"/>
 <line x1="60.0" y1="305.1" x2="70.0" y2="305.1" stroke="#fff" stroke-width="4" opacity="0.85"/>
-<line x1="60.0" y1="305.1" x2="70.0" y2="305.1" stroke="#222222" stroke-width="1.5"/>
-<text x="73.0" y="299.6" text-anchor="start" font-size="14" fill="#222222" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 0.7 µm</text>
+<line x1="60.0" y1="305.1" x2="70.0" y2="305.1" stroke="#666666" stroke-width="1.5"/>
+<text x="73.0" y="299.6" text-anchor="start" font-size="14" fill="#666666" font-weight="bold" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">gate length: 0.7 µm</text>
 <polyline points="158.0,501.0 158.0,450.0" fill="none" stroke="#fff" stroke-width="3.2" opacity="0.85"/>
-<polyline points="158.0,501.0 158.0,450.0" fill="none" stroke="#222222" stroke-width="1.3"/>
-<circle cx="158.0" cy="450.0" r="3.2" fill="#222222" stroke="#fff" stroke-width="1"/>
-<text x="158.0" y="516.0" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Contacts beside every gate, in the 0.52 µm</text>
-<text x="158.0" y="532.8" text-anchor="middle" font-size="14" fill="#222222" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">between two gates, all silicided</text>
+<polyline points="158.0,501.0 158.0,450.0" fill="none" stroke="#666666" stroke-width="1.3"/>
+<circle cx="158.0" cy="450.0" r="3.2" fill="#666666" stroke="#fff" stroke-width="1"/>
+<text x="158.0" y="516.0" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">Contacts beside every gate, in the 0.52 µm</text>
+<text x="158.0" y="532.8" text-anchor="middle" font-size="14" fill="#666666" font-weight="normal" stroke="#ffffff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">between two gates, all silicided</text>
 </g>
 <rect x="20.0" y="554.0" width="30.0" height="6" fill="#222222"/>
 <text x="58.0" y="562.0" font-size="14" fill="#222222">1 µm, all panels</text>
@@ -166,6 +166,8 @@
 <text x="216.4" y="827.0" font-size="14" fill="#222222">(b): 12 such gates of 40 µm, 480 µm of gate</text>
 <line x1="216.4" y1="846.0" x2="243.4" y2="846.0" stroke="#222222" stroke-width="2" stroke-dasharray="9,3,2,3"/>
 <text x="250.4" y="851.0" font-size="14" fill="#222222">B–B′: the PMOS cut of the cross-section</text>
-<line x1="216.4" y1="870.0" x2="242.4" y2="870.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
-<text x="250.4" y="875.0" font-size="14" fill="#222222">layout continues</text>
+<text x="216.4" y="875.0" font-size="14" font-weight="bold" fill="#666666">Abc</text>
+<text x="250.4" y="875.0" font-size="14" fill="#222222">(c): not in the cross-section</text>
+<line x1="216.4" y1="894.0" x2="242.4" y2="894.0" stroke="#222222" stroke-width="1.3" stroke-dasharray="7,5"/>
+<text x="250.4" y="899.0" font-size="14" fill="#222222">layout continues</text>
 </svg>
