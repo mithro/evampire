@@ -6,7 +6,8 @@ Writes, into this folder: the structure catalogue (catalogue.rst and
 the pages and figures in catalogue/, through gen_catalogue.py), the
 hvt-*.svg figures of fig_struct.py,
 fig_floor.py, fig_method.py, fig_sim.py and fig_pred.py, and the
-hvt-tab-*.csv tables of tables.py and pred_data.py. Inputs:
+hvt-tab-*.csv tables of tables.py, pred_data.py, pred_extra.py and
+rules.py. Inputs:
 silicon/hvtest/structures.json, manifest.json (the floor plan written by
 silicon/hvtest/chip.py), predictions.json (simulated breakdown voltages,
 written by import_predictions.py) and crosscheck.json (results of the
@@ -29,6 +30,7 @@ import fig_struct
 import gen_catalogue
 import pred_data
 import pred_extra
+import rules
 import tables
 
 
@@ -70,6 +72,7 @@ def main():
     files.update(tables.tables())
     files.update(pred_data.tables())
     files.update(pred_extra.tables())
+    files.update(rules.tables())
     files.update(gen_catalogue.generate())
     check_names(out, files)
     (out / "catalogue").mkdir(exist_ok=True)
