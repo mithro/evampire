@@ -12,13 +12,16 @@ analyse.py --example and test_analyse.py call this module.
 SPDX-License-Identifier: Apache-2.0
 """
 
+import functools
 import math
 import pathlib
 import random
 
 import measure
+import physics as ph
 import pred_data as pd
-import pred_extra
+import procs
+import rules
 
 STEP, TOP, LIMIT = 0.5, 150.0, 1e-5   # the settings of P1
 SLOPE = 0.15           # V per e-fold of the avalanche current
@@ -41,9 +44,10 @@ def write(out, die, st, proc, idx, rows, temp=25.0, direction="up"):
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def diode(bv, leak=1e-12, short=False, aux=None):
+def diode(bv, leak=1e-12, short=False, aux=None, back=1.0):
     """Rows of a breakdown sweep: 0 V upwards in 0.5 V steps until the
-    current reaches the limit or the voltage 150 V. bv None: no breakdown."""
+    current reaches the limit or the voltage 150 V. bv None: no breakdown.
+    back is the fraction of the well current that the substrate returns."""
     rows = []
     for k in range(int(TOP / STEP) + 1):
         v = k * STEP
@@ -53,7 +57,8 @@ def diode(bv, leak=1e-12, short=False, aux=None):
         if bv is not None:
             i += 1e-6 * math.exp(min((v - bv) / SLOPE, 50))
         i = min(i, LIMIT)
-        rows.append({"v_well_v": v, "i_well_a": i, "i_sub_a": -i, **(aux or {})})
+        rows.append({"v_well_v": v, "i_well_a": i, "i_sub_a": -back * i,
+                     **(aux or {})})
         if i >= LIMIT:
             break
     return rows
@@ -84,10 +89,12 @@ def p5_rows(pt, bv):
         ring = 1e-15 if pt is None else 1e-9 * math.exp(min((v - pt) / 0.4, 50))
         sub = 1e-12 + (0 if bv is None else
                        1e-6 * math.exp(min((v - bv) / SLOPE, 50)))
-        well = min(ring + sub, LIMIT)
+        scale = min(1.0, LIMIT / (ring + sub))   # the limit holds the sum
+        ring, sub = ring * scale, sub * scale
+        well = ring + sub
         rows.append({"v_well_v": v, "i_well_a": well, "i_sub_a": -sub,
-                     "v_aux_v": 0.0, "i_aux_a": -min(ring, LIMIT)})
-        if well >= LIMIT:
+                     "v_aux_v": 0.0, "i_aux_a": -ring})
+        if well >= LIMIT * 0.999:
             break
     return rows
 
@@ -96,7 +103,8 @@ def make(out, hyp, factor=1.0, dies=5, spread=0.03, seed=1, sweeps=1,
          extra=False, edits=None):
     """Write a measurement set under process `hyp` into out. edits maps
     (structure, die number or None for every die) to "short", "none" (no
-    breakdown) or "drop" (no file). Returns {(structure, die): the
+    breakdown), "drop" (no file) or "leak" (the substrate returns 70 % of
+    the well current). Returns {(structure, die): the
     breakdown voltage written, or None}."""
     out = pathlib.Path(out)
     out.mkdir(parents=True, exist_ok=True)
@@ -119,7 +127,8 @@ def make(out, hyp, factor=1.0, dies=5, spread=0.03, seed=1, sweeps=1,
                 walk = 0.1 * (idx - 1) if bv is not None else 0
                 write(out, die, st, "P1", idx,
                       diode(None if bv is None else bv + walk, leak,
-                            what == "short"))
+                            what == "short", back=0.7 if what == "leak"
+                            else 1.0))
             if extra:
                 extras(out, die, st, hyp, factor, bv, sweeps)
     if extra:
@@ -138,25 +147,87 @@ def extras(out, die, st, hyp, factor, bv, sweeps):
     if p["sense"]:
         curve = (pd.entry(st, hyp) or {}).get("ring_v") or []
         write(out, die, st, "P3", 1, ring_rows(bv, curve, factor))
-        e = pred_extra.P5.get(st, {}).get(hyp) or {}
+        e = rules.p5_entry(st, hyp) or {}
         pt, b5 = e.get("punch_through_v"), e.get("breakdown_v")
         write(out, die, st, "P5", 1, p5_rows(
             None if pt is None else pt * factor,
             None if b5 is None else b5 * factor))
-    if p["half"] >= 50:
-        rows = []
-        for k in range(41):
-            v = 0.25 * k
-            for f in (1e5, 1e6):
-                rows.append({"v_well_v": v, "c_f": 6e-12 / math.sqrt(1 + v / 0.7),
-                             "d": 0.01, "freq_hz": f})
-        write(out, die, st, "P2", 1, rows)
+    if p["half"] >= 50 or st == "OPEN":
+        write(out, die, st, "P2", 1, cv_rows(st, pd.parse(hyp)[2] == "D"))
     if p["gate"]:
+        gated(out, die, st, hyp, factor, bv)
+
+
+# P2: a one-sided junction on a known substrate doping, with or without a
+# buried heavy layer, whose depletion width W solves
+# V + VBI = (q / eps) * integral from 0 to W of x N(x) dx.
+VBI = 0.7              # V, built-in voltage of the synthetic junction
+LAYER = (2.2e-4, 0.3e-4, 5e17)   # depth below the junction, spread (cm), peak
+OPEN_C = 0.15e-12      # F, pad, lead and probe
+GRID = 2e-7            # cm, step of the integral
+
+
+def doping(x, layer):
+    n = rules.SUB_NOMINAL
+    if layer:
+        d, s, peak = LAYER
+        n += peak * math.exp(-((x - d) / s) ** 2 / 2)
+    return n
+
+
+@functools.lru_cache(maxsize=None)
+def depletion(layer, volts):
+    """{bias: depletion width in cm} of the synthetic junction."""
+    out, x, acc, k = {}, 0.0, 0.0, 0
+    targets = sorted(volts)
+    while k < len(targets) and x < 20e-4:
+        step = ph.Q / ph.EPS * (x + GRID / 2) * doping(x + GRID / 2, layer) \
+            * GRID
+        while k < len(targets) and acc + step >= targets[k] + VBI:
+            out[targets[k]] = x + GRID * (targets[k] + VBI - acc) / step
+            k += 1
+        acc, x = acc + step, x + GRID
+    return out
+
+
+def cv_rows(st, layer, top=10.0):
+    """P2 rows of a large well or OPEN: area part from the synthetic
+    junction, edge part from the published model, plus OPEN."""
+    volts = [0.25 * k for k in range(int(top / 0.25) + 1)]
+    w = depletion(layer, tuple(volts))
+    area, per = (0, 0) if st == "OPEN" else ph.octagon(
+        pd.STRUCTS[st]["half"], pd.STRUCTS[st]["corner"])
+    rows = []
+    for v in volts:
+        c = OPEN_C + ph.EPS / w[v] * area * 1e-8 + ph.c_junction(
+            ph.NW_CP * 1e-6, ph.NW_VBI, ph.NW_M, v) * per
+        for f in (1e5, 1e6):
+            rows.append({"v_well_v": v, "c_f": c, "d": 0.01, "freq_hz": f})
+    return rows
+
+
+def gated(out, die, st, hyp, factor, bv):
+    """P4: plate sweeps at two well voltages, then breakdown sweeps with
+    the plate at 0 V (the G prediction) and at +10 V."""
+    layer = next(iter(pd.STRUCTS[st]["plates"]))
+    cox = ph.COX[layer]
+    wells, low = ((0.0, 2.0), -10.0) if layer == "poly" else ((2.0, 5.0), -20.0)
+    pwell = procs.surface_is_pwell(st, hyp)
+    for idx, vr in enumerate(wells, start=1):
+        vt = None if pwell else ph.field_threshold(
+            rules.SUB_NOMINAL, cox, vr, ph.VFB_ILLUSTRATION)
         rows = []
-        for k in range(321):
-            vp = -20 + 0.25 * k
-            rows.append({"v_well_v": 2.0, "i_well_a": 1e-14 * (1 + (vp > -1)),
-                         "v_aux_v": vp, "i_aux_a": 0.0})
-        write(out, die, st, "P4", 1, rows)
-        write(out, die, st, "P4", 2, diode(bv, aux={"v_aux_v": 0.0,
-                                                    "i_aux_a": 0.0}))
+        for k in range(int((60.0 - low) / 0.25) + 1):
+            vp = low + 0.25 * k
+            i = 1e-14 + 2e-13 / (1 + math.exp(-(vp - ph.VFB_ILLUSTRATION)
+                                               / 0.3))
+            if vt is not None:
+                i -= 1.4e-13 / (1 + math.exp(-(vp - vt) / 0.3))
+            rows.append({"v_well_v": vr, "i_well_a": i, "v_aux_v": vp,
+                         "i_aux_a": 0.0})
+        write(out, die, st, "P4", idx, rows)
+    g = pd.band_of(["G" + hyp], st)[0]
+    for idx, plate in ((3, 0.0), (4, 10.0)):
+        b = None if g is None else g * factor * (1 + 0.1 * plate / 10)
+        write(out, die, st, "P4", idx, diode(b, aux={"v_aux_v": plate,
+                                                     "i_aux_a": 0.0}))

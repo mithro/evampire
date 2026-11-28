@@ -19,6 +19,8 @@ import pytest
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 import analyse  # noqa: E402
+import cv  # noqa: E402
+import rules  # noqa: E402
 import synth  # noqa: E402
 
 HYPOTHESES = ["AL", "AnL", "AnD", "BL", "BD"]
@@ -99,9 +101,7 @@ def test_walk_out_and_temperature(tmp_path):
     _, r = run(tmp_path, "BL", dies=2, sweeps=3, extra=True)
     assert not any("walk-out" in i for i in r.issues)    # 0.2 V: one step
     assert not any("85 °C" in i for i in r.issues)       # the knee moved up
-    assert {row[0] for row in r.other["P5"]} >= {"NR1S2", "NR1S3"}
-    p5 = {row[0]: row for row in r.other["P5"]}["NR1S2"]
-    assert abs(p5[2] - p5[6]["punch_through_v"]) <= synth.STEP
+    assert {row["name"] for row in r.other["P5"]} >= {"NR1S2", "NR1S3"}
 
 
 def test_cli_report_and_errors(tmp_path, capsys):
@@ -124,3 +124,94 @@ def test_example(tmp_path):
     assert "SYNTHETIC" in (tmp_path / "ex" / "README.txt").read_text()
     r = analyse.Result(tmp_path / "ex")
     assert (r.pwell, r.deep, r.families) == ("B", "L", ["BL"])
+
+
+@pytest.mark.parametrize("factor", [0.7, 1.5])
+@pytest.mark.parametrize("hyp", HYPOTHESES)
+def test_scaled_decision(tmp_path, hyp, factor):
+    """Every prediction scaled by one factor: the pattern still decides,
+    and under A the capacitance answers the deep-layer question."""
+    _, r = run(tmp_path, hyp, factor=factor, dies=3, extra=True)
+    assert r.pwell == hyp[:-1], r.pwell_why
+    assert r.deep == hyp[-1], r.deep_why
+    assert r.families == [hyp]
+
+
+@pytest.mark.parametrize("hyp,call", [("BL", "L"), ("BD", "D")])
+def test_capacitance(tmp_path, hyp, call):
+    """P2 on a uniform substrate (L) and with a buried heavy layer (D):
+    the substrate doping within 5 % and the right call from both pairs."""
+    _, r = run(tmp_path, hyp, dies=2, extra=True)
+    assert r.cap["call"] == call, r.cap["why"]
+    assert len(r.cap["pairs"]) == 2 and not r.cap["issues"]
+    for row in r.cap["pairs"]:
+        assert row["call"] == call and row["v"] == 10
+        assert abs(row["n_sub"] / rules.SUB_NOMINAL - 1) < 0.05, row
+        assert abs(row["cp0"] * 1e6 / synth.ph.NW_CP - 1) < 0.01
+
+
+def test_capacitance_profile():
+    """The doping profile of the synthetic junction itself: flat on the
+    uniform substrate, and rising at the buried layer."""
+    vs = [0.25 * k for k in range(41)]
+    for layer in (False, True):
+        w = synth.depletion(layer, tuple(vs))
+        prof = cv.profile(vs, [synth.ph.EPS / w[v] for v in vs])
+        shallow = [n for v, _, n in prof if v <= 1.5]
+        assert all(abs(n / rules.SUB_NOMINAL - 1) < 0.05 for n in shallow)
+        assert (max(n for *_, n in prof) > 3 * rules.SUB_NOMINAL) == layer
+
+
+def test_layer_rule():
+    assert rules.layer_rule(5) is None          # L and D too close
+    lo, d, thr = rules.layer_rule(10)
+    assert lo < thr < d and rules.layer_bias(12) == 10
+    assert rules.layer_bias(8) == 7 and rules.layer_bias(6) is None
+
+
+def test_ring_and_punch_through(tmp_path):
+    """P3 and P5 recovered from synthetic sweeps, and the verdicts."""
+    _, r = run(tmp_path, "BL", dies=2, extra=True)
+    p3 = {row["name"]: row for row in r.other["P3"]}
+    p5 = {row["name"]: row for row in r.other["P5"]}
+    for name in ("NR4S", "NR1S2", "NR1S3", "NR1S5"):
+        on = rules.ring_prediction(name, "BL")[0]
+        assert abs(p3[name]["onset"] - on) <= synth.STEP, name
+        assert p3[name]["verdict"] == "agrees"
+        pt = rules.p5_entry(name, "BL")["punch_through_v"]
+        assert abs(p5[name]["pt"] - pt) <= synth.STEP, name
+        assert p5[name]["verdict"] == "agrees"
+    assert p5["NR1S8"]["pt"] is None
+    assert p5["NR1S8"]["verdict"].startswith("agrees")
+    assert all(row["step_verdict"] == "agrees" for row in r.other["P3"])
+    # twice the predicted voltage at 3 um: about 0.8 um of gap too wide
+    v = rules.pt_verdict("NR1S3", "BL", "P5", 26.4, 70)
+    assert v.startswith("disagrees: equivalent gap +")
+    assert rules.pt_verdict("NR1S3", "BL", "P5", None, 40).startswith(
+        "disagrees: none by 40.0 V")
+    assert rules.pt_verdict("NR1S3", "BL", "P5", None, 12).startswith(
+        "inconclusive")
+    assert rules.pt_range("NR1S2", "AnL", "P5") == rules.pt_range(
+        "NR1S2", "AL", "P5")
+
+
+def test_current_balance(tmp_path):
+    _, r = run(tmp_path, "BL", dies=2, edits={("NT5", 1): "leak"})
+    bad = [i for i in r.issues if "returned current" in i]
+    assert len(bad) == 1 and bad[0].startswith("NT5 on SYN1, P1 sweep 1")
+    assert "30 %" in bad[0]
+
+
+def test_gated_diode(tmp_path):
+    _, r = run(tmp_path, "BL", dies=2, extra=True)
+    rows = {(row["name"], row["plate"]): row for row in r.other["P4"]}
+    assert rows[("NGM1", 0.0)]["verdict"] == "in range"
+    assert rows[("NGM1", 0.0)]["ratio"] == "agrees"
+    assert rows[("NGM1", 10.0)]["verdict"] == "no prediction"
+    dop = {st: n for st, n, _ in r.other["P4doping"]}
+    for st in ("NGM1", "NGP4", "NAGM1"):
+        assert abs(dop[st] / rules.SUB_NOMINAL - 1) < 0.05, st
+    _, r = run(tmp_path / "a", "AL", dies=1, extra=True)
+    p4a = [row for row in r.other["P4a"] if row["name"] == "NGM1"]
+    assert p4a and all(row["vt"] is None and row["estimate"] is None
+                       for row in p4a)
