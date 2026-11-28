@@ -68,17 +68,19 @@ than :math:`P_\text{out}`. That column already includes the worst-case loss
 in the outgoing cable, so no cable term is needed.
 
 For a single-signature powered device, the number of class events limits
-the class only to 3, 4, 6 or 8 (:ref:`poe-demotion`). When the highest
+the class only to 3, 4, 6 or 8, and for each pair set of a dual-signature
+one to 3, 4 or 5 (:ref:`poe-demotion`). When the highest
 class that fits is one of these, the port issues the events for it. When
 it is 5 or 7, the port gives that class to a device that requests it, and
 class 4 or 6 to one that requests more. Such a device requests class 6 or
 higher, so it supports LLDP (:numref:`tab-poe-class-methods`). The port
-then raises its allocation over LLDP to the power of class 5 or 7, 40.0 W
-or 62.0 W at the powered device (:clause:`Table 145-12 <145>`,
-:doc:`lldp`). The device takes it by requesting up to its own maximum,
-which for class 6 to 8 is above both values (:clause:`145.5.3.3.1`,
-:clause:`Figure 145-44 <145>`). The examples below give class 5 in this
-way.
+can then raise its allocation over LLDP, up to the power of class 5 or 7,
+40.0 W or 62.0 W at the powered device (:clause:`Table 145-12 <145>`,
+:doc:`lldp`). The device takes the raise only by requesting it, and the
+port allocates no more than the device requests. The highest request is
+above 40.0 W for classes 6 to 8, and above 62.0 W for class 8
+(:clause:`145.5.3.3.1`, :clause:`Figure 145-44 <145>`). The examples below
+give class 5 in this way.
 
 When the highest class that fits is 1 or 2, the port powers a device that
 requests no more than that class, and refuses a single-signature device
@@ -237,9 +239,8 @@ power at the power sourcing equipment than it gives at the powered device
 0.6 W for the board, so class 5 applies in practice, up to
 :math:`60.6\ \text{W} - 45\ \text{W} = 15.6\ \text{W}` of board power.
 
-Two measures recover some of the margin. If port B supports Autoclass,
-an open question (:doc:`power-sourcing`), and the powered device on port B
-uses it, the software can measure its real draw and allocate that plus a
+Two measures recover some of the margin. If port B supports Autoclass
+(:doc:`power-sourcing`) and the powered device on port B uses it, the software can measure its real draw and allocate that plus a
 margin, as given with :ref:`Autoclass <poe-autoclass>`. The margin is at least 0.5 W for an
 assigned class of 1 to 4, 0.75 W for 5 or 6, and 1.5 W for 7 or 8
 (:clause:`Table 145-15 <145>`). And the
