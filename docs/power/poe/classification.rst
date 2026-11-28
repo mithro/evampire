@@ -204,6 +204,15 @@ type or its power budget, issues fewer class events (:clause:`145.2.8.1`,
 Ethernet Alliance overview calls it :term:`power demotion` [POE-EA-BT]_
 (Section 5).
 
+Demotion lowers only a powered device that requests class 4 or higher.
+One class event already assigns class 1, 2 or 3 as requested, so no number
+of class events gives a device that requests class 1 to 3 a lower class
+(:numref:`tab-poe-events`, :clause:`Table 145-11 <145>`). Type 1 and
+Type 2 power sourcing equipment is no different. One class event gives the
+class that the class signature shows, 0 to 3. Equipment that does not
+classify assigns class 0, which has the power of class 3
+(:clause:`33.2.6`, :clause:`Table 33-7 <33>`).
+
 Demotion follows from the power sourcing equipment's capability, not from
 a missing LLDP exchange. The powered device conforms to its assigned class
 whatever class it requested, and gives an active indication when
