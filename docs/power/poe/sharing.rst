@@ -66,9 +66,18 @@ Over LLDP
    (:numref:`tab-poe-class-methods`), and evampire's port always answers
    (:ref:`req-poe-classification`).
 By classifying again
-   Removing the power and running classification again with fewer class
-   events. This interrupts the powered device, so it is the last resort for
-   a powered device of class 1 to 3 without LLDP.
+   Removing the power and running classification again with a different
+   number of class events, which interrupts the powered device. One class
+   event already allows class 3, so this moves a device that requests
+   class 4 to 8 only between class 3 and its requested class
+   (:clause:`Table 145-11 <145>`).
+
+A powered device that requests class 1 to 3 is assigned its requested
+class whatever the number of class events (:clause:`Table 145-11 <145>`),
+and it may lack Data Link Layer classification (:clause:`145.3.6`).
+Without LLDP, the power sourcing equipment can allocate it less than its
+class power only through Autoclass, if the device supports it
+(:clause:`145.2.8.2`), or by not powering it.
 
 Power sourcing equipment may base its allocation on more than the class,
 but not only on how much power the powered device has drawn in the past

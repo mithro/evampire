@@ -62,9 +62,12 @@ Devices that support LLDP
 
 :numref:`tab-poe-class-methods` lists which devices must support the
 exchange: every Type 2 powered device, and every powered device that
-requests class 4 or higher. A powered device that does not support it can
-have its power changed only by removing the power and classifying it
-again.
+requests class 4 or higher. A powered device that does not support it
+requests class 3 or lower. One class event already allows class 3, so
+classifying it again cannot change its assigned class
+(:clause:`Table 145-11 <145>`). Only Autoclass, if the device supports it,
+lets the power sourcing equipment allocate it less without refusing power
+(:clause:`145.2.8.2`).
 
 The allocated value sets the assigned class (:clause:`Table 145-12 <145>`),
 as in :numref:`tab-poe-dll-class`.
