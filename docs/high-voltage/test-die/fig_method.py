@@ -7,6 +7,7 @@ hvt-ring-follow.svg  ring potential against well voltage.
 hvt-gated-iv.svg   well current against plate voltage.
 hvt-order.svg      the order of work.
 hvt-build.svg      the steps from the layout generator to the submission.
+hvt-analysis.svg   the steps of analyse.py from the records to the report.
 
 The curves are schematic: they show the shapes that the procedures look
 for, not predictions. figures.py calls this module; it writes no files
@@ -267,6 +268,18 @@ def build():
     ])
 
 
+def analysis():
+    return flow("From the records to the report: analyse.py", [
+        ("1", "Sweep records", "one CSV file per sweep, as in the record "
+         "table"),
+        ("2", "Breakdown per die", "first sweep at 25 °C: 1 µA and 100 nA"),
+        ("3", "Median over the dies", "with the spread; shorts left out"),
+        ("4", "Decision", "A, An or B, and L or D, or undecided"),
+        ("5", "Comparison", "ratio to the reference; agreement range"),
+        ("6", "Report", "verdicts, P3 and P5, inconclusive items"),
+    ])
+
+
 def flow(title, steps):
     w, h = 640, 60 + 46 * len(steps)
     b = [ARROW, text(20, 24, title, anchor="start", weight="bold")]
@@ -285,4 +298,5 @@ FIGURES = {"hvt-conn-p1.svg": p1, "hvt-conn-p2.svg": p2,
            "hvt-conn-p3.svg": p3, "hvt-conn-p4.svg": p4,
            "hvt-conn-p5.svg": p5, "hvt-iv.svg": iv,
            "hvt-ring-follow.svg": ring_follow, "hvt-gated-iv.svg": gated_iv,
-           "hvt-order.svg": order, "hvt-build.svg": build}
+           "hvt-order.svg": order, "hvt-build.svg": build,
+           "hvt-analysis.svg": analysis}
