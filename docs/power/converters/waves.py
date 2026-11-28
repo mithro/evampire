@@ -139,9 +139,12 @@ def conduction_modes():
                 pts += [(t0, 0), (t0 + t_on, peak), (t0 + t_on + t_off, 0)]
             pts.append((8, 0))
             s.poly(a.P(pts), stroke=BLUE)
+            avg = 0.5 * peak * (t_on + t_off) / T_US
             t0 = t_on + t_off
             s.rect(a.X(t0), a.Y(0.35), a.X(T_US) - a.X(t0), a.Y(0) - a.Y(0.35),
                    fill=FILL_GREEN, stroke="none")
+            s.line(a.X(0), a.Y(avg), a.X(8), a.Y(avg), stroke=GREY,
+                   dash="5 4", width=1)
             s.text((a.X(t0) + a.X(T_US)) / 2, a.Y(0.6), "iL = 0,\nvL = 0",
                    size=11, fill=GREEN)
     s.save(HERE / "conduction-modes.svg")
@@ -186,8 +189,9 @@ def boost_waves():
     s.poly(a5.P(pts), stroke=ORANGE)
     s.line(a5.X(0), a5.Y(0.556), a5.X(2 * t_per), a5.Y(0.556), stroke=GREY,
            dash="5 4", width=1)
-    s.text(a5.X(1.0), a5.Y(0.556) - 9, "average 0.556 A = output current",
-           size=11, fill=GREY, anchor="start")
+    # Between the two S2 pulses, clear of their edges.
+    s.text(a5.X((1 + d / 2) * t_per), a5.Y(0.556) - 17,
+           "average 0.556 A\n= output current", size=11, fill=GREY)
     for name, y in rows:
         s.text(112, y + 15, name, size=12, anchor="end")
     s.line(120, 445, 520, 445, stroke=INK, width=1)

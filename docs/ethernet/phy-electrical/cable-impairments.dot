@@ -32,7 +32,7 @@ digraph impairments {
             label="2  echo of its own signal"];
     l_next [pos="1.85,1.8!", shape=plaintext, style="", width=1.2, height=0.4,
             label="3  near-end\ncrosstalk"];
-    l_fext [pos="4.35,1.45!", shape=plaintext, style="", width=1.5, height=0.25,
+    l_fext [pos="4.35,1.2!", shape=plaintext, style="", width=1.5, height=0.25,
             label="4  far-end crosstalk"];
 
     // Corner points for the echo loop.

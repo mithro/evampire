@@ -34,7 +34,7 @@ digraph high_bus {
     node   [shape=plaintext, style="", fontsize=10, width=0.9, height=0.35];
     l_pa   [pos="2.95,2.75!", label="pass-through"];
     l_pb   [pos="1.95,1.45!", label="pass-through"];
-    l_reg  [pos="2.55,0.3!", label="regulated"];
+    l_reg  [pos="2.6,0.0!", label="regulated"];
     l_bi   [pos="5.1,2.25!", label="either\ndirection"];
 
     port_a -> bus;

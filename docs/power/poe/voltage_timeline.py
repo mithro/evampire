@@ -28,8 +28,9 @@ SEGMENTS = [
     ("mark", 1.2, 8.5),
 ]
 RAMP = 0.5                # rise from the last mark event to full voltage
-POWERED = [("inrush\n50–75 ms", 2.4), ("held to\n80 ms", 2.0),
-           ("full\npower", 1.6)]
+# Each width leaves room for its label between the ramp and the next label.
+POWERED = [("inrush\n50–75 ms", 2.6), ("held to\n80 ms", 1.9),
+           ("full\npower", 1.5)]
 V_ON = 54.0
 
 BANDS = [
@@ -115,6 +116,11 @@ def main(out_path):
     # Segment labels above each level.
     for label, xa, xb, v in seg_spans:
         if not label:
+            continue
+        if label == "detect":
+            # Wider than its step: end it short of the next rising edge.
+            parts.append(text(xb - 4, ty(v) - 20, label, size=13,
+                              anchor="end"))
             continue
         dy = 16 if label == "mark" else -20
         parts.append(text((xa + xb) / 2, ty(v) + dy, label, size=13))

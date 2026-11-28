@@ -84,16 +84,16 @@ digraph evampire {
     mux_a   -> rgmii_a [penwidth=2.5];
 
     // Frames copied to the processor.
-    fifo_ab -> filt [penwidth=2.5];
-    fifo_ba -> filt [penwidth=2.5];
+    fifo_ab:s -> filt:w [penwidth=2.5];
+    fifo_ba:n -> filt:w [penwidth=2.5];
     filt    -> rxbuf [penwidth=2.5];
     rxbuf   -> cpu [penwidth=2.5];
 
     // Frames sent by the processor.
     cpu   -> txbuf [penwidth=2.5];
     txbuf -> txgen [penwidth=2.5];
-    txgen -> mux_a [penwidth=2.5];
-    txgen -> mux_b [penwidth=2.5];
+    txgen:w -> mux_a:s [penwidth=2.5];
+    txgen:w -> mux_b:n [penwidth=2.5];
 
     // Control.
     cpu -> mdio  [style=dashed];

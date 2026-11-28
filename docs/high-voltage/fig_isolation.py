@@ -174,18 +174,18 @@ def oxide_isolation():
     # Silicon on insulator.
     y = 210
     body += islands(y, 46, 0)
-    body.append(rect(8, y + 46, 244, 20, OXIDE))
-    body.append(text(130, y + 61, "buried oxide", size=14))
-    body.append(rect(8, y + 66, 244, 84, SUB))
-    body.append(text(130, y + 114, "handle wafer", size=15))
+    body.append(rect(8, y + 46, 254, 20, OXIDE))
+    body.append(text(135, y + 61, "buried oxide", size=14))
+    body.append(rect(8, y + 66, 254, 84, SUB))
+    body.append(text(135, y + 114, "handle wafer", size=15))
     body += labels(y, ("Silicon on insulator", "trenches and the",
                        "buried oxide hold", "the voltage"))
     # Thinned bulk die.
     y = 400
     body += islands(y, 62, 12)
-    body.append(rect(8, y + 62, 244, 18, OXIDE))
-    body.append(rect(8, y + 80, 244, 70, CARRIER))
-    body.append(text(130, y + 120, "insulating carrier", size=15))
+    body.append(rect(8, y + 62, 254, 18, OXIDE))
+    body.append(rect(8, y + 80, 254, 70, CARRIER))
+    body.append(text(135, y + 120, "insulating carrier", size=15))
     body += labels(y, ("Thinned bulk die", "trenches etched from",
                        "the back stop on the", "shallow trench",
                        "isolation (dark grey)"))

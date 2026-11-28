@@ -209,7 +209,8 @@ def breakdown_sites():
     body += region(550, 134, 95, 6, "#ffffff")
     body += region(560, 124, 75, 10, METAL)
     body.append(text(597, 210, "MIM capacitor", 10, "middle"))
-    marks = [(125, 166, 40, "1"), (190, 188, 70, "2"), (150, 179, 100, "3"),
+    # Mark 2 ends on the bottom edge of the drain, beside its "N+" label.
+    marks = [(125, 166, 40, "1"), (203, 188, 70, "2"), (150, 179, 100, "3"),
              (330, 230, 130, "4"), (440, 162, 40, "5"), (597, 137, 70, "6")]
     for x, y, ytop, n in marks:
         body.append(line(x, y, x, ytop + 6, INK, 0.8))

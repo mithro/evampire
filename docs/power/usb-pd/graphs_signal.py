@@ -28,7 +28,8 @@ from svgfig import (CABLE, FILL, GREY, INK, SNK, SNK_INK, SRC, SRC_INK,
 
 
 def rx_thresholds():
-    p = Plot(70, 20, 560, 300, (0, 3), (0, 1.0))
+    # The left margin keeps the six-character tick labels off the axis title.
+    p = Plot(90, 20, 540, 300, (0, 3), (0, 1.0))
     body = [rect(p.left, p.y(0.6425), p.w, p.y(0.4825) - p.y(0.6425),
                  FILL, "none")]
     body.append(p.frame())
@@ -55,10 +56,10 @@ def rx_thresholds():
                          f"rising {rise * 1000:g} mV", 11, anc, fill=col))
         body.append(text(xc + side * 6, p.y(fall) + 4,
                          f"falling {fall * 1000:g} mV", 11, anc, fill=col))
-    body.append(text(p.left - 60, p.bottom + 58, "Bars: the inner receive "
+    body.append(text(p.left - 80, p.bottom + 58, "Bars: the inner receive "
                      "mask (the eye). Grey band: 0.4825 to 0.6425 V, inside "
                      "every eye.", 12, fill=GREY))
-    body.append(text(p.left - 60, p.bottom + 76, "Arrows: TPS65987D "
+    body.append(text(p.left - 80, p.bottom + 76, "Arrows: TPS65987D "
                      "switching levels, typical, a reference example.", 12,
                      fill=GREY))
     return svg(680, int(p.bottom + 88), body, "BMC receiver levels")

@@ -38,7 +38,7 @@ digraph drp_states {
     twsnk -> asnk [style=invis, weight=5];
 
     any -> err [style=dotted, label=" when directed"];
-    err -> usrc [style=dotted, label="after\ntErrorRecovery"];
+    err -> usrc [style=dotted, label="  after\l  tErrorRecovery\l"];
     usrc -> usnk [label="toggle"];
     usnk -> usrc [label="toggle", constraint=false];
     usnk -> awsnk [label="Rp seen"];

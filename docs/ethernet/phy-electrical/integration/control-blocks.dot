@@ -33,9 +33,10 @@ digraph control {
     np -> arb [dir=both];
     tim -> rx;
     tim -> arb;
-    p1 [pos="3.75,-0.3!", shape=point, width=0.01];
-    p2 [pos="3.75,1.6!", shape=point, width=0.01];
-    tim -> p1 [arrowhead=none];
+    // The path to the transmit state machine leaves the top edge of the
+    // timers box (y = 0.01) and passes to the right of the receive one.
+    p1 [pos="3.7,0.01!", shape=point, width=0.01];
+    p2 [pos="3.7,1.6!", shape=point, width=0.01];
     p1 -> p2 [arrowhead=none];
     p2 -> tx;
     reg -> arb [dir=both];

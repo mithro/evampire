@@ -84,8 +84,10 @@ def offer_currents():
             pts = [(x, y) for x, y in pts if x <= 60]
         body.append(polyline(p.pts(pts), col, 2.2, dash))
         x0 = start if start else 2
-        body.append(text(p.x(x0) + 6, p.y(min(ilim, x0 / v)) + 16,
-                         f"{v} V", 12, fill=col))
+        # The 9 V label sits left of its line, clear of the 19 W example.
+        dx, anchor = (-4, "end") if v == 9 else (6, "start")
+        body.append(text(p.x(x0) + dx, p.y(min(ilim, x0 / v)) + 16,
+                         f"{v} V", 12, anchor, fill=col))
     five = [(x, min(5.0, x / 20)) for x in range(60, 101)]
     body.append(polyline(p.pts(five), INK, 2.2, "6,3"))
     body.append(text(p.x(62), p.y(4.6), "20 V with a 5 A cable", 11))
@@ -93,7 +95,7 @@ def offer_currents():
     body.append(text(p.x(62), p.y(2.7) + 14, "cable caps the PDP at 60 W", 11))
     for x, lab in ((8, "8"), (19, "19"), (42, "42"), (61, "61")):
         body.append(line(p.x(x), p.top, p.x(x), p.bottom, GREY, 1.0, "3,3"))
-        body.append(text(p.x(x), p.top + 12, f"{lab} W", 10, "middle"))
+        body.append(text(p.x(x) + 3, p.top + 12, f"{lab} W", 10))
     body += p.xticks([0, 15, 27, 45, 60, 80, 100], "Port Present PDP (W)",
                      grid=False)
     body.append(text(p.left, p.bottom + 58, "Each line starts where the "
