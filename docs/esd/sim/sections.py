@@ -186,9 +186,12 @@ def driver_section():
                   fill=HOT))
     # Parasitic NPN: drain collector, P-well base, source emitter.
     bx, by = 497, top + 52
-    b.append(line(bx, by - 12, bx, by + 12, stroke=SNAP, width=3))
-    b.append(line(bx, by - 5, 470, top + 24, stroke=SNAP, width=2))
-    b.append(line(bx, by + 5, 530, top + 24, stroke=SNAP, width=2,
+    # A transistor symbol on its side: the base bar lies flat under the
+    # gate, with its lead down into the P-well.
+    b.append(line(bx - 13, by, bx + 13, by, stroke=SNAP, width=3))
+    b.append(line(bx, by, bx, by + 13, stroke=SNAP, width=2))
+    b.append(line(bx - 6, by, 470, top + 24, stroke=SNAP, width=2))
+    b.append(line(bx + 6, by, 530, top + 24, stroke=SNAP, width=2,
                   arrow=True))
     b.append(text(640, top + 172, "parasitic NPN (drain, P-well, source): "
                   "triggers at 10.7 V,", size=12, fill=SNAP, anchor="end"))
