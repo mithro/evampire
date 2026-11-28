@@ -66,16 +66,15 @@ def corner_now(name, proc):
 
 
 def check_tables():
-    """The tables of model_checks.json: values from the final review that
-    no simulation record holds yet."""
+    """The tables of model_checks.json, each with its source."""
     cap, cor = CHECKS["capacitance"], CHECKS["corner"]
-    rows = [["Reverse voltage (V)", "Layer under deep N-well only",
-             "Layer under the N-well too",
+    rows = [["Reverse voltage (V)", "Layer under deep N-well only (L)",
+             "Layer under the N-well too (D)",
              "Capacitance with the layer over without"]]
-    for v, r in zip(cap["volts"], cap["without_layer"]):
-        d = cap["difference_percent"].get(str(v))
-        rows.append([str(v), f"{r:.2f}", cap["with_layer"] if v == 0
-                     else "as above", f"+{d} %" if d else "–"])
+    for v, lo, dd in zip(cap["volts"], cap["without_layer"],
+                         cap["with_layer"]):
+        rows.append([f"{v:g}", f"{lo:.3f}", f"{dd:.3f}",
+                     f"{100 * (dd / lo - 1):+.1f} %"])
     corner = [["Item", "Value"],
               ["Section", f"{cor['structure']} under {cor['process']}, "
                f"corner radius {cor['radius_um']:g} µm"],
