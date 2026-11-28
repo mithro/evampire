@@ -40,7 +40,7 @@ def ionisation():
 def cv():
     head("2. method: capacitance of the large wells")
     structs, _ = tdkit.load()
-    ca, cp, vbi, m = 1.4914e-4, 5.8719e-10, 0.43905, 0.30525   # F/m2, F/m
+    ca, cp, vbi, m = ph.NW_CA, ph.NW_CP, ph.NW_VBI, ph.NW_M   # F/m2, F/m
     got = {}
     for name in ("CVN", "CVN2"):
         p = structs[name]
@@ -71,9 +71,10 @@ def cv():
 
 def gated():
     head("3. method: field threshold under a plate with the well biased")
-    for layer, cox in (("Metal1", 2.9304e-9), ("poly", 1.1067e-8)):
+    for layer, cox in (("Metal1", ph.COX["m1"]), ("poly", ph.COX["poly"])):
         for n in (3.0e15, 4.8e15):
-            row = [ph.field_threshold(n, cox, vr, -0.9) for vr in (0, 5, 10)]
+            row = [ph.field_threshold(n, cox, vr, ph.VFB_ILLUSTRATION)
+                   for vr in (0, 5, 10)]
             print(f"  {layer}, N = {n:.1e}: VT at VR = 0, 5, 10 V: "
                   + ", ".join(f"{v:.1f}" for v in row) + " V")
     n, cox = 3.0e15, 2.9304e-9
@@ -120,10 +121,62 @@ def currents():
           f"{64 / 0.32e-4 / 1e6:.1f} MV/cm")
 
 
+def agreement_rules():
+    head("5. method: the agreement rules of P2 to P5 and the decision")
+    import decide
+    import pred_data as pd
+    import rules
+    for v in (5, 7, 10):
+        r = rules.layer_rule(v)
+        lv = rules.CAP_L[v] / rules.CAP_L[0]
+        print(f"  P2 at {v:2d} V: L {lv:.3f}, D from "
+              f"{rules.CAP_D[0] / rules.CAP_D[1]:.3f} to "
+              f"{rules.CAP_D[1] / rules.CAP_D[0]:.3f}: "
+              + ("no call" if r is None else f"threshold {r[2]:.3f}"))
+    c0 = ph.NW_CA * 1e-4
+    print(f"  published model at 0 V: doping from the slope of 1/C2 "
+          f"{ph.NW_VBI * c0 ** 2 / (ph.Q * ph.EPS * ph.NW_M):.2e} cm^-3")
+    print(f"  substrate doping of the processes: "
+          + ", ".join(f"{p} {n:.3g}" for p, n in sorted(rules.SUB.items())))
+    vs = [0.25 * k for k in range(41)]
+    ca = [ph.c_junction(ph.NW_CA * 1e-4, ph.NW_VBI, ph.NW_M, v) for v in vs]
+    lcap = [c * rules.CAP_L[v] for v, c in zip(vs, ca) if v in rules.CAP_L]
+    for name, cs, xs in (("model (D)", ca, vs),
+                         ("model times the L ratios", lcap,
+                          sorted(rules.CAP_L))):
+        n = [2 / (ph.Q * ph.EPS * (1 / c2 ** 2 - 1 / c1 ** 2) / (v2 - v1))
+             for (v1, c1), (v2, c2) in zip(zip(xs, cs), zip(xs[1:], cs[1:]))
+             if v1 >= 2 and v2 <= 5]
+        print(f"  doping from 1/C2 between 2 V and 5 V, {name}: "
+              f"{min(n):.2e} to {max(n):.2e} cm^-3")
+    for which in ("P5", "P3"):
+        for fam in ("BL", "BD"):
+            k, g0, f = rules.gap_fit(fam, which)
+            print(f"  {which} under {f}: V = {k:.2f} V/um2 x (gap - "
+                  f"{g0:.2f} um)^2 from " + ", ".join(
+                      f"{g:g} um {v:.1f} V"
+                      for g, v in sorted(set(rules.points(f, which)))))
+    k = rules.gap_fit("BL", "P5")[0]
+    for g, v in ((1.6, 1.4), (2.0, 3.8), (3.0, 13.2), (5.0, 55.1)):
+        print(f"  {rules.GAP_TOL} um of gap at {g:g} um ({v} V): "
+              f"{rules.widen_gap(v, k, -1):.1f} V to "
+              f"{rules.widen_gap(v, k, 1):.1f} V")
+    low = [pd.nominal(n, f) for f in ("AL", "AnL", "AnD", "BL", "BD")
+           for n in ("NT20", "NW0", "NA0p6") if pd.nominal(n, f) < pd.REGIME]
+    high = [pd.nominal(n, f) for f in ("AnL", "AnD", "BL", "BD")
+            for n in ("NT20", "NA0p6") if pd.nominal(n, f) >= pd.REGIME]
+    r = min(high) / max(low)
+    print(f"  decision: heavy surface up to {max(low):.1f} V, light "
+          f"substrate from {min(high):.1f} V: ratio {r:.2f}; geometric mean "
+          f"with 1 + {decide.SAME[0]:g}: {math.sqrt(r * (1 + decide.SAME[0])):.2f}"
+          f"; MUCH = {decide.MUCH:g}")
+
+
 if __name__ == "__main__":
     ionisation()
     cv()
     gated()
     currents()
+    agreement_rules()
     print()
     print(json.dumps({"structures": len(tdkit.load()[0])}))
