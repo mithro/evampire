@@ -47,7 +47,7 @@ STYLES = {
     "dvddm2": ("#eebbdd", "#a02c7d",
                "DVDD metal 2: 5 strips, under the stripes"),
     "dvssm2": ("#cfe8e3", "#0d5045", "DVSS pad's metal 2, under the stripes"),
-    "padm2": ("#f4d3cd", "#7d1f14", "PAD net's metal 2, under the stripes"),
+    "padm2": ("#e2e2e2", "#7d1f14", "PAD net's metal 2, under the stripes"),
     "dvsspad": ("#a3d2ca", "#0d5045", "DVSS bond pad"),
     "other": ("#b3b9c0", "#8a9199", "other diffusion"),
     "gate": ("#7d8a2e", "#444d14", "gate"),
