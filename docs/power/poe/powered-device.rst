@@ -320,7 +320,7 @@ these states and the thresholds between them.
          its last class event. From powered, a fall below the turn-off
          voltage of at least 30 V returns it to idle. A note on the class event state
          says that a first event longer than 75.5 to 87.5 ms identifies
-         Type 3 or 4 power sourcing equipment, and that autoclass drops to
+         Type 3 or 4 power sourcing equipment, and that Autoclass drops to
          signature 0 from that time.
    :align: center
 
@@ -331,16 +331,57 @@ pulses (:doc:`sequence`).
 
 .. _poe-autoclass:
 
-With the optional *autoclass*, a powered device drops to class signature 0
+With the optional *Autoclass*, a powered device drops to class signature 0
 between 75.5 ms and 87.5 ms into the first class event. It then draws its
 highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
 :clause:`Table 145-28 <145>`). Autoclass only lets the power sourcing
 equipment allocate less than the assigned class: the measured power plus a
-margin, up to the power of the assigned class (:clause:`145.2.8`). If the
+margin, up to the power of the assigned class. A measured power of 4 W or
+less leaves the allocation at the power of the assigned class
+(:clause:`145.2.8`). A port that measured with 4-pair power and then
+supplies 2-pair power adds at least Pac_extra to the allocation
+(:clause:`145.2.8`, :clause:`145.2.8.2`, :clause:`Equation 145-4 <145>`).
+If the
 powered device drew more than class 1 power during the measurement, it then
 draws no more than the measured power, unless it negotiates more over
 LLDP, up to its requested class (:clause:`145.3.8.2`).
+
+Autoclass is defined only for single-signature powered devices of Type 3
+and Type 4 (:clause:`145.2.8.2`, :clause:`Table 145-19 <145>`), although
+:clause:`145.2.8` also names it for the per-pair-set power of a
+dual-signature one. In Physical Layer classification the power sourcing
+equipment measures after power-up (:clause:`145.2.8.2`), so it must first
+be able to power the device
+(:ref:`power sourcing equipment classification <poe-pse-classification>`).
+A device that is already powered gets a new measurement this way only if
+the power is removed and it is classified again.
+
+Over LLDP, a single-signature device can instead request a measurement
+while it stays powered. It can do so only if the power sourcing equipment
+advertises Autoclass support in the Autoclass field of its LLDP frames
+(:clause:`79.3.2.12`, :clause:`145.5.7`). The device must already be
+drawing its maximum power when it sends the request (:clause:`145.5.7`).
+The power sourcing equipment then measures as in :clause:`145.2.8.2`, may
+update the allocation, and reports that the measurement is complete. The
+device then clears its request (:clause:`145.5.7`). It draws no more than
+the measured power, unless it negotiates more over LLDP, up to its
+requested class (:clause:`145.3.8.2`). :numref:`fig-poe-autoclass-lldp`
+shows the order.
+
+.. graphviz:: autoclass-lldp.dot
+   :name: fig-poe-autoclass-lldp
+   :caption: An Autoclass measurement requested over LLDP while the
+             powered device stays powered.
+   :alt: Sequence diagram with two lifelines, the powered device on the
+         left and the power sourcing equipment port on the right. First
+         the powered device draws its maximum power. It then sends an
+         LLDP frame with the Autoclass request bit set to 1. The port
+         measures the power and may update the allocation. It sends an
+         LLDP frame with the Autoclass completed bit set to 1. The powered
+         device clears its request bit and draws no more than the measured
+         power.
+   :align: center
 
 Turn-on hysteresis
 ------------------
@@ -576,7 +617,7 @@ Open questions
 
 * Diode, Schottky or MOSFET bridges, which trades loss against leakage and
   complexity.
-* Whether the powered-device port supports autoclass.
+* Whether the powered-device port supports Autoclass.
 * Whether the powered-device port accepts a passive 24 V or 48 V input, and
   how the software then sets the power budget.
 * How the board gives the active indication when it is underpowered.

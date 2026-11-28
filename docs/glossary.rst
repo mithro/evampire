@@ -355,7 +355,8 @@ Glossary
       Its Power over Ethernet and USB Type-C circuits are evampire's.
       Without LLDP, it requests at most class 3 when it receives Power over
       Ethernet, and changes the allocation of a powered device it supplies
-      only by classifying it again (see :doc:`ebat/index`).
+      only in ways that need no LLDP, such as classifying it again (see
+      :doc:`ebat/index`).
 
    Return loss
       How much weaker, in decibels, a reflection is than the signal that

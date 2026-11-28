@@ -180,8 +180,9 @@ Each port starts with a share of the budget. A USB Power Delivery source can
 change its offer while a device is connected, by sending a new list of
 offers. Power sourcing equipment can change the power it allocates to a
 powered device through :term:`LLDP` (:clause:`145.5`, :clause:`79`), when
-the powered device supports it. :doc:`poe/sharing` gives which powered
-devices do, and the alternative for those that don't.
+the powered device supports it. Without LLDP the port can lower an
+allocation only by removing power, or for some devices by Autoclass or by
+powering one pair set (:ref:`poe-allocation-changes`).
 
 The software uses these changes to move power between ports. When a device
 on one port is unplugged or uses less than its share, the software raises

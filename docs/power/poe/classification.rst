@@ -204,6 +204,32 @@ type or its power budget, issues fewer class events (:clause:`145.2.8.1`,
 Ethernet Alliance overview calls it :term:`power demotion` [POE-EA-BT]_
 (Section 5).
 
+Demotion lowers only a powered device that requests class 4 or higher.
+One class event already assigns class 1, 2 or 3 as requested, so no number
+of class events gives a device that requests class 1 to 3 a lower class
+(:numref:`tab-poe-events`, :clause:`Table 145-11 <145>`). With Type 1
+and Type 2 power sourcing equipment, one class event gives the class that
+the class signature shows, 0 to 3 (:clause:`33.2.6.1`,
+:clause:`Table 33-9 <33>`). Type 1 equipment that does not classify
+assigns class 0, which has the power of class 3 (:clause:`33.2.6`,
+:clause:`Table 33-7 <33>`). Type 2 equipment always classifies
+(:clause:`Table 33-8 <33>`).
+
+For a single-signature powered device, the number of class events limits
+the class only to 3, 4, 6 or 8 (:clause:`145.3.6.1`,
+:numref:`tab-poe-events`). For each pair set of a dual-signature one, the
+limits are 3, 4 and 5 (:clause:`145.3.6.1`, :clause:`Table 145-11 <145>`).
+A single-signature device that requests class 5 gets it from four events,
+which give class 6 to a device that requests class 6 to 8. Power sourcing
+equipment that can supply class 5 but not class 6 therefore issues four
+events only to a device that requests class 5. It assigns class 4, with
+three events, to one that requests more (:clause:`145.2.8`,
+:clause:`145.2.8.1`). It learns the requested class within three events
+(:clause:`145.3.6`). Equipment that can supply class 7 but not class 8
+issues five events only to a device that requests class 7. It assigns
+class 6, with four events, to one that requests class 8
+(:clause:`145.2.8`, :clause:`145.2.8.1`).
+
 Demotion follows from the power sourcing equipment's capability, not from
 a missing LLDP exchange. The powered device conforms to its assigned class
 whatever class it requested, and gives an active indication when
@@ -215,7 +241,7 @@ cannot ask for more than its requested class: the variable
 ``pd_dllmax_value`` limits its request to the power of that class for
 classes 1 to 7, and to 99.9 W for class 8 (:clause:`145.5.3.3.1`,
 :clause:`145.3.8.2.1`).
-Autoclass only lowers the allocation (:ref:`autoclass <poe-autoclass>`).
+Autoclass only lowers the allocation (:ref:`Autoclass <poe-autoclass>`).
 
 Before classification is complete, and in the first 80 ms after turn-on,
 the powered device stays within the

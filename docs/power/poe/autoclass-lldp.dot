@@ -1,0 +1,49 @@
+// An Autoclass measurement requested over LLDP while the powered device
+// stays powered. Time runs from top to bottom; not to scale. From
+// powered-device.rst (IEEE 802.3 145.5.7, 79.3.2.12, 145.3.8.2).
+//
+// Two lifelines with pinned positions. Actions are boxes on a lifeline;
+// each LLDP frame is an arrow between invisible points on the lifelines,
+// with its label as a separate node above the arrow.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+digraph autoclass_lldp {
+    graph [layout=neato, splines=false, overlap=true, outputorder=edgesfirst,
+           fontname="Helvetica"];
+    node  [fontname="Helvetica", fontsize=10];
+    edge  [arrowsize=0.7];
+
+    pd  [pos="0,0!", shape=box, style="rounded,filled", fillcolor="#e2f0d9",
+         label="Powered device", width=1.5, height=0.4, fontsize=11];
+    pse [pos="2.8,0!", shape=box, style="rounded,filled", fillcolor="#dbe8f5",
+         label="Power sourcing\nequipment port", width=1.5, height=0.45,
+         fontsize=11];
+
+    // Lifeline ends.
+    node [shape=point, width=0.01, color="#999999"];
+    pd_end  [pos="0,-4.4!"];
+    pse_end [pos="2.8,-4.4!"];
+    edge [arrowhead=none, style=dashed, color="#999999"];
+    pd -> pd_end;
+    pse -> pse_end;
+
+    // Actions on the lifelines.
+    node [shape=box, style="rounded,filled", fillcolor="#ffffff",
+          color="#000000", width=1.6, height=0.45];
+    max    [pos="0,-0.8!",  label="draws its\nmaximum power"];
+    meas   [pos="2.8,-2.4!", label="measures the power;\nmay update the\nallocation", height=0.6];
+    clear  [pos="0,-3.95!", label="request = 0;\ndraws no more than\nthe measured power", height=0.6];
+
+    // LLDP frames.
+    node [shape=point, width=0.05, color="#555555"];
+    req_a [pos="0,-1.55!"];  req_b [pos="2.8,-1.55!"];
+    cmp_a [pos="2.8,-3.2!"]; cmp_b [pos="0,-3.2!"];
+    edge [arrowhead=normal, style=solid, color="#000000"];
+    req_a -> req_b;
+    cmp_a -> cmp_b;
+
+    node [shape=plaintext, width=0, height=0, fontsize=9];
+    req_l [pos="1.4,-1.38!", label="LLDP: Autoclass request = 1"];
+    cmp_l [pos="1.4,-3.03!", label="LLDP: Autoclass completed = 1"];
+}

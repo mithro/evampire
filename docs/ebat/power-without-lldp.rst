@@ -4,9 +4,10 @@ Power over Ethernet without LLDP
 ================================
 
 Without LLDP, ebat receives Power over Ethernet at class 3 or lower, at
-most 13 W at its input, and changes the power it supplies on an Ethernet
-port only by classifying the powered device again. The highest class it
-supplies is class 8, as on evampire.
+most 13 W at its input. When it supplies power on an Ethernet port, it
+changes the allocation only in ways that need no LLDP, such as classifying
+the powered device again. The highest class it supplies is class 8, as on
+evampire.
 
 .. _ebat-lldp-class-4:
 
@@ -43,11 +44,12 @@ The class 3 rows of evampire's examples give it for illustrative values:
   (:numref:`tab-usbpd-translation-examples`);
 * Ethernet in, Ethernet out: class 2 on port B, with an efficiency of 0.85,
   while the board uses no more than 4.3 W (:numref:`tab-poe-pass-through`).
-  Port B can then power only a device that requests class 1 or 2, because
-  even one class event assigns class 3 to a device that requests class 3
-  or higher (:clause:`Table 145-11 <145>`, :numref:`tab-poe-events`). Port
-  B refuses power to such a device, unless the device supports Autoclass
-  (:ref:`ebat-port-b-allocation`).
+  Port B can then power a device that requests class 1 or 2, and refuses
+  a single-signature device that requests more
+  (:ref:`power sourcing equipment classification <poe-pse-classification>`).
+  It can power a dual-signature device on one pair set when that pair
+  set's class fits, under the conditions given with
+  :ref:`the allocation changes <poe-allocation-changes>`.
 
 An ebat board has no transceivers, so its own power has no transceiver
 share. Its value is unknown, as on evampire, and the power for the outputs
@@ -94,22 +96,17 @@ Allocation changes on port B
 On a board that does not pass Ethernet data through, port B has no LLDP
 exchange with its powered device (:ref:`req-ebat-no-lldp`). Without that
 exchange, the powered device receives the full power of its assigned
-class, as from evampire (:ref:`req-poe-classification`). Its class changes
-only when port B removes the power and classifies it again, including
-after demotion (:ref:`poe-demotion`). On a board with data pass-through, LLDP frames pass between the far ends
-and can change the allocation (:ref:`ebat-pass-through-lldp`).
+class, as from evampire, unless it uses :ref:`Autoclass <poe-autoclass>`
+and port B supports it (:ref:`req-poe-classification`). Port B changes
+its allocation only in the ways of :ref:`poe-allocation-changes` that need
+no LLDP. On a board with data pass-through, LLDP frames pass between the far ends and can change the
+allocation (:ref:`ebat-pass-through-lldp`).
 
-To change port B's allocation, the software removes the power, runs
-detection again and classifies the powered device with a different number
-of class events (:doc:`../power/poe/sharing`). The powered device is
-unpowered while this happens. :numref:`fig-ebat-reclassify` shows the
-order. The device gets the lower of its requested class and the class
-that the number of class events allows, 3, 4, 6 or 8
-(:numref:`tab-poe-events`, :ref:`poe-demotion`). Classifying again
-therefore moves a device that requests class 4 to 8 between class 3 and
-its requested class, and cannot lower a device that requests class 1
-to 3. To give such a device less than its class power, port B uses
-Autoclass, if the device supports it, or refuses power.
+To classify again, the software removes the power, runs detection again
+and classifies the powered device with a different number of class
+events. The powered device is unpowered while this happens.
+:numref:`fig-ebat-reclassify` shows the order. This changes the class only
+of a device that requests class 4 or higher (:ref:`poe-demotion`).
 
 .. graphviz:: reclassify.dot
    :name: fig-ebat-reclassify
@@ -125,10 +122,12 @@ Autoclass, if the device supports it, or refuses power.
          powered device has no power.
    :align: center
 
-:ref:`Autoclass <poe-autoclass>` is part of Physical Layer classification
-and needs no LLDP (:clause:`145.2.8.2`). If the powered device supports
-it, ebat can use it to allocate less than the full class power
-(:doc:`../power/poe/translation`).
+:ref:`Autoclass <poe-autoclass>` at power-up is part of Physical Layer
+classification and needs no LLDP (:clause:`145.2.8.2`). If port B
+supports Autoclass (:doc:`../power/poe/power-sourcing`) and a
+single-signature powered device uses it, port B can allocate it less than
+the full class power (:doc:`../power/poe/translation`). The request for a
+new measurement over LLDP is not available on port B.
 
 Open questions
 --------------
