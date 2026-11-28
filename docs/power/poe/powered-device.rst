@@ -320,7 +320,7 @@ these states and the thresholds between them.
          its last class event. From powered, a fall below the turn-off
          voltage of at least 30 V returns it to idle. A note on the class event state
          says that a first event longer than 75.5 to 87.5 ms identifies
-         Type 3 or 4 power sourcing equipment, and that autoclass drops to
+         Type 3 or 4 power sourcing equipment, and that Autoclass drops to
          signature 0 from that time.
    :align: center
 
@@ -331,7 +331,7 @@ pulses (:doc:`sequence`).
 
 .. _poe-autoclass:
 
-With the optional *autoclass*, a powered device drops to class signature 0
+With the optional *Autoclass*, a powered device drops to class signature 0
 between 75.5 ms and 87.5 ms into the first class event. It then draws its
 highest power from 1.35 s to at least 3.65 s after power-up, so that the
 power sourcing equipment can measure it (:clause:`145.3.6.2`,
@@ -576,7 +576,7 @@ Open questions
 
 * Diode, Schottky or MOSFET bridges, which trades loss against leakage and
   complexity.
-* Whether the powered-device port supports autoclass.
+* Whether the powered-device port supports Autoclass.
 * Whether the powered-device port accepts a passive 24 V or 48 V input, and
   how the software then sets the power budget.
 * How the board gives the active indication when it is underpowered.

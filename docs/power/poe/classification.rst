@@ -224,7 +224,7 @@ cannot ask for more than its requested class: the variable
 ``pd_dllmax_value`` limits its request to the power of that class for
 classes 1 to 7, and to 99.9 W for class 8 (:clause:`145.5.3.3.1`,
 :clause:`145.3.8.2.1`).
-Autoclass only lowers the allocation (:ref:`autoclass <poe-autoclass>`).
+Autoclass only lowers the allocation (:ref:`Autoclass <poe-autoclass>`).
 
 Before classification is complete, and in the first 80 ms after turn-on,
 the powered device stays within the
