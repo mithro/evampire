@@ -32,7 +32,7 @@ figures share seven conventions:
 * The figures that match the paths diagram :numref:`fig-esd-paths` colour
   by net: :numref:`fig-esd-gds-paths` and :numref:`fig-esd-gds-ring`, and
   also :numref:`fig-esd-gds-clamp-fingers`. Magenta is DVDD and green is
-  DVSS. Drains on PAD that carry the current shown are dark red.
+  DVSS. Drains on PAD are dark red.
 * :numref:`fig-esd-gds-pad-net` and :numref:`fig-esd-gds-secondary` rule
   the metal of the PAD net and of the protected net with black lines, as
   the schematic's wires are black. :numref:`fig-esd-gds-ring` rules the
@@ -81,7 +81,7 @@ largest part of the cell, and they are also its primary ESD protection
          output signal buffers and pull-up and pull-down resistors, which
          the schematic leaves out. Three blue blocks labelled
          110 Ω, 40 µm² diode to DVDD and 40 µm² diode from DVSS. A black
-         block labelled input buffer.
+         block labelled input buffer and logic.
    :width: 100%
 
    The parts of gf180mcu_fd_io__bi_t, drawn from its layout.

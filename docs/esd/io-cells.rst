@@ -71,7 +71,7 @@ DVSS.
          lettering, the pre-drivers, output signal buffers and pull-up and
          pull-down resistors, which the schematic leaves out. Three blue
          blocks labelled 110 Ω, 40 µm² diode to DVDD and 40 µm² diode from
-         DVSS. A black block labelled input buffer. Below, the
+         DVSS. A black block labelled input buffer and logic. Below, the
          DVDD supply pad. From the left: the DVDD bond pad, then orange
          blocks labelled clamp NMOS, 4000 µm of gate, three inverters, MOS
          capacitor, 360 kΩ and 160 µm² diode from DVSS to DVDD. In grey
@@ -459,7 +459,8 @@ the first case along the rails to a supply pad, and
 .. figure:: figures/paths.svg
    :name: fig-esd-paths
    :alt: Four copies of the pad's protection between DVDD and DVSS, one
-         per discharge mode, with the current's path drawn thick. Positive,
+         per discharge mode, with the current's path drawn thick and
+         arrowheads for its direction. Positive,
          PAD to DVSS: through the PMOS drain diode onto DVDD, the rail clamp
          and DVSS to ground; above 10.7 V the output NMOS also snaps back
          from PAD to DVSS. Negative, PAD to DVSS: from ground through the
