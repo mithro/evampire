@@ -14,8 +14,8 @@ Secondary resistor,Width,µm,2.5,2.5
 Secondary resistor,Length,µm,2.8,2.8
 Secondary diode to DVDD,Count,,2,2
 Secondary diode to DVDD,Area of each,µm²,20,20
-Secondary diode to DVSS,Count,,2,2
-Secondary diode to DVSS,Area of each,µm²,20,20
+Secondary diode from DVSS,Count,,2,2
+Secondary diode from DVSS,Area of each,µm²,20,20
 Clamp transistor,Fingers,,80,80
 Clamp transistor,Total width,µm,4000,4000
 Clamp transistor,Gate length,µm,0.7,0.7
