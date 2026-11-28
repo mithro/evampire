@@ -181,7 +181,8 @@ change its offer while a device is connected, by sending a new list of
 offers. Power sourcing equipment can change the power it allocates to a
 powered device through :term:`LLDP` (:clause:`145.5`, :clause:`79`), when
 the powered device supports it. Without LLDP there are fewer ways, and
-none of them lowers every powered device (:ref:`poe-allocation-changes`).
+none of them lowers the allocation of every powered device while keeping
+it powered (:ref:`poe-allocation-changes`).
 
 The software uses these changes to move power between ports. When a device
 on one port is unplugged or uses less than its share, the software raises

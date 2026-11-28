@@ -44,8 +44,11 @@ The class 3 rows of evampire's examples give it for illustrative values:
   (:numref:`tab-usbpd-translation-examples`);
 * Ethernet in, Ethernet out: class 2 on port B, with an efficiency of 0.85,
   while the board uses no more than 4.3 W (:numref:`tab-poe-pass-through`).
-  Port B can then power only a device that requests class 1 or 2, and
-  refuses any other (:ref:`poe-demotion`, :ref:`poe-pse-classification`).
+  Port B can then power a device that requests class 1 or 2, and refuses
+  a single-signature device that requests more (:ref:`poe-demotion`). It
+  can power a dual-signature device on one pair set when that pair set's
+  class fits, only if port B supports dual-signature devices, an open
+  question (:doc:`../power/poe/power-sourcing`).
 
 An ebat board has no transceivers, so its own power has no transceiver
 share. Its value is unknown, as on evampire, and the power for the outputs
@@ -117,10 +120,11 @@ of a device that requests class 4 or higher (:ref:`poe-demotion`).
          powered device has no power.
    :align: center
 
-:ref:`Autoclass <poe-autoclass>` is part of Physical Layer classification
-and needs no LLDP (:clause:`145.2.8.2`). If a single-signature powered
-device supports it, port B can use it to allocate less than the full class
-power (:doc:`../power/poe/translation`).
+:ref:`Autoclass <poe-autoclass>` at power-up is part of Physical Layer
+classification and needs no LLDP (:clause:`145.2.8.2`). If a
+single-signature powered device supports it, port B can use it to allocate
+less than the full class power (:doc:`../power/poe/translation`). The
+request for a new measurement over LLDP is not available to ebat.
 
 Open questions
 --------------
