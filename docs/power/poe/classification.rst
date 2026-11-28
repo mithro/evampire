@@ -227,7 +227,8 @@ three events, to one that requests more (:clause:`145.2.8`,
 :clause:`145.2.8.1`). It learns the requested class within three events
 (:clause:`145.3.6`). Equipment that can supply class 7 but not class 8
 issues five events only to a device that requests class 7, and four,
-class 6, to one that requests class 8.
+class 6, to one that requests class 8 (:clause:`145.2.8`,
+:clause:`145.2.8.1`).
 
 Demotion follows from the power sourcing equipment's capability, not from
 a missing LLDP exchange. The powered device conforms to its assigned class
