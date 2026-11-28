@@ -28,9 +28,8 @@ SEGMENTS = [
     ("mark", 1.2, 8.5),
 ]
 RAMP = 0.5                # rise from the last mark event to full voltage
-# Each width leaves room for its label between the ramp and the next label.
-POWERED = [("inrush\n50–75 ms", 2.6), ("held to\n80 ms", 1.9),
-           ("full\npower", 1.5)]
+POWERED = [("inrush\n50–75 ms", 2.4), ("held to\n80 ms", 2.0),
+           ("full\npower", 1.6)]
 V_ON = 54.0
 
 BANDS = [
@@ -129,7 +128,8 @@ def main(out_path):
             parts.append(f'<line x1="{xa:.1f}" y1="{ty(V_ON) - 4:.1f}" '
                          f'x2="{xa:.1f}" y2="{ty(V_ON) + 4:.1f}" '
                          'stroke="#1f4e79" stroke-width="1.5"/>')
-        parts.append(text((xa + xb) / 2, ty(V_ON) + 24, label, size=13))
+        # Above the line, where the ramp leaves the first label room.
+        parts.append(text((xa + xb) / 2, ty(V_ON) - 24, label, size=13))
 
     # Phase brackets under the time axis.
     det = (seg_spans[1][1], seg_spans[2][2], "detection")
