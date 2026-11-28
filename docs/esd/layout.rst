@@ -11,34 +11,35 @@ bidirectional pad.
 
 Every layout figure is drawn from the foundry's GDS file, in the version
 for five metal layers, by the script in :ref:`esd-layout-method`. The
-figures share six conventions:
+figures share seven conventions:
 
 * The bond pad is at the left and the chip's core at the right, as in the
   schematic :numref:`fig-esd-io-cell`. This turns the foundry's drawing a
   quarter turn clockwise.
-* The figures that match the schematic draw the layers in grey:
-  :numref:`fig-esd-gds-cell`, :numref:`fig-esd-gds-pad-net`,
-  :numref:`fig-esd-gds-secondary` and :numref:`fig-esd-gds-clamp`. Their
-  colours mark the parts of the schematic, with labels that start as the
-  schematic's do, and grey lettering names what the schematic leaves out.
+* Three figures that match the schematic draw the layers in grey:
+  :numref:`fig-esd-gds-cell`, :numref:`fig-esd-gds-pad-net` and
+  :numref:`fig-esd-gds-clamp`. In them, red marks the primary protection,
+  blue the secondary protection and orange the rail clamp, as in the
+  schematic, with labels that start as the schematic's do.
 * The figures that match the cross-section
   :numref:`fig-esd-driver-section` give each silicon layer the colour it
   has there: :numref:`fig-esd-gds-nmos-driver` and
-  :numref:`fig-esd-gds-silicide-block`. The cross-section gives its P-well
-  the substrate's colour and a dashed edge, because no P-well is drawn
-  under the transistors (:ref:`esd-layout-driver-parts`).
+  :numref:`fig-esd-gds-silicide-block`. :numref:`fig-esd-gds-secondary`
+  uses the same colours and outlines the schematic's parts in blue. The
+  cross-section gives its P-well the substrate's colour and a dashed edge,
+  because no P-well is drawn under the transistors
+  (:ref:`esd-layout-driver-parts`).
 * The figures that match the paths diagram :numref:`fig-esd-paths` colour
-  diffusion and metal by net: :numref:`fig-esd-gds-paths` and
-  :numref:`fig-esd-gds-ring`, and also :numref:`fig-esd-gds-clamp-fingers`.
-  Drains on PAD are dark red and the PAD bond pad a lighter red. Magenta
-  is DVDD and green is DVSS. In :numref:`fig-esd-gds-paths`, grey lettering
-  names what that diagram leaves out.
-* In the grey figures, red marks the primary protection, blue the
-  secondary protection and orange the rail clamp, as in the schematic.
-  The schematic's wires are black, so these figures rule the metal of the
-  PAD net with black lines. A red arrow marks a discharge current in every
-  figure. A purple arrow marks snapback, as in the
-  cross-section, and nothing else is purple.
+  by net: :numref:`fig-esd-gds-paths` and :numref:`fig-esd-gds-ring`, and
+  also :numref:`fig-esd-gds-clamp-fingers`. Magenta is DVDD and green is
+  DVSS. Drains on PAD that carry the current shown are dark red.
+* Metal of the PAD net and of the protected net is ruled with black
+  lines, as the schematic's wires are black. A gap in the ruling is a gap
+  in the metal. :numref:`fig-esd-gds-ring` rules the DVDD and DVSS stripes
+  in their colours instead.
+* Grey lettering names what the paired diagram leaves out. A red arrow
+  marks a discharge current. A purple arrow marks snapback, as in the
+  cross-section.
 * A bar under each figure gives its scale, and a dashed edge of the frame
   shows where the layout continues beyond the figure.
 
@@ -71,7 +72,7 @@ largest part of the cell, and they are also its primary ESD protection
 .. figure:: figures/gds-cell.svg
    :name: fig-esd-gds-cell
    :alt: Layout of the bidirectional pad, 350 µm long and 75 µm wide. An
-         orange note says the rail clamp and rail diode are not in this
+         orange note says the rail clamp and its diode are not in this
          cell, only in the supply pads. The layout is drawn with
          its layers in grey. From the left: the bond pad, labelled PAD. Two
          groups of red drains, labelled drain diode of NMOS drivers, 304 µm
@@ -109,10 +110,12 @@ except through the drains and that wire.
          The bond pad, metal 2 to metal 5 stacked, joins a metal 2 bus
          over both output drivers. Under the bus, four NMOS drains and six
          PMOS drains are drawn red and labelled as the drain diodes, 304 µm
-         and 480 µm of gate; each lies between two gates. A metal 2 wire 2 µm
-         wide runs on from the bus to a blue block labelled 110 Ω. In grey
-         lettering, the pre-drivers, output signal buffers and pull
-         resistors.
+         and 480 µm of gate; each lies between two gates. Gaps in the
+         ruling show gaps in the metal over the sources. A metal 2 wire
+         2 µm wide runs on from the bus to the 110 Ω of the secondary
+         protection. In grey lettering: a gap in the metal, the
+         pre-drivers, the output signal buffers, the pull-up and pull-down
+         resistors and the 110 Ω.
    :width: 100%
 
    The PAD net of gf180mcu_fd_io__bi_t: the bond pad, the metal 2 bus and
@@ -278,7 +281,7 @@ diodes and continues to the gates of the input buffer:
 
 * Two P+ strips, each 20 µm × 1 µm, in an N-well tied to DVDD. They are
   the diode from the protected net to DVDD.
-* Two N+ strips of the same size in the P substrate, inside an N-well
+* Two N+ strips of the same size in P-type silicon, inside an N-well
   ring. They are the diode from DVSS to the protected net.
 
 Each strip has a ring of the opposite diffusion round it, 0.84 µm away,
@@ -286,10 +289,10 @@ which is the diode's other terminal.
 
 .. figure:: figures/gds-secondary.svg
    :name: fig-esd-gds-secondary
-   :alt: Layout of the secondary protection, with its layers in grey. PAD
-         arrives from the left on a
-         metal 2 wire and ends on four polysilicon resistors drawn blue, 2.5
-         µm by 2.8 µm each and in parallel, under a hatched silicide block.
+   :alt: Layout of the secondary protection, in the colours of the
+         cross-section. PAD arrives from the left on a metal 2 wire and
+         ends on four polysilicon resistors outlined in blue, 2.5 µm by
+         2.8 µm each and in parallel, under a hatched silicide block.
          The protected net after them, ruled and outlined in black, sends a
          branch to the pull-up and pull-down resistors. It passes over two P+
          diode strips of 20 µm by 1 µm in an N-well held on DVDD, and two N+
@@ -300,7 +303,7 @@ which is the diode's other terminal.
    :width: 100%
 
    The secondary protection of gf180mcu_fd_io__bi_t: four resistors and
-   two pairs of diodes.
+   two diodes of two strips each.
 
 .. _esd-layout-clamp:
 
@@ -313,14 +316,14 @@ bidirectional pad, and the rail clamp fills most of it ([ESD-DVDD-GDS]_,
 output drivers: four blocks of 20 fingers, each finger 50 µm wide. Behind
 it lie the three inverters, the eight timer capacitors and the twelve
 timer resistors of :ref:`esd-io-cells`. The last part of the cell holds
-the rail diode, in four strips from DVSS to DVDD, and four capacitors
-between the rails.
+a diode from DVSS to DVDD, in four strips, and four capacitors between
+the rails.
 
 .. figure:: figures/gds-clamp.svg
    :name: fig-esd-gds-clamp
    :alt: Layout of the DVDD supply pad, 350 µm long, with its layers in
          grey. From the left: the DVDD bond pad, then four orange blocks
-         labelled clamp NMOS 4000 µm, three inverters, MOS capacitor and
+         labelled clamp NMOS, 4000 µm of gate, three inverters, MOS capacitor and
          360 kΩ, and a fifth labelled 160 µm² diode from DVSS to DVDD. In
          grey lettering, four supply capacitors, which the schematic
          leaves out.
@@ -398,9 +401,9 @@ the voltage at the pad (:doc:`results-hbm`).
    :name: fig-esd-gds-ring
    :alt: The pad ends of a bidirectional pad cell, above, and a DVSS supply
          pad cell, below, side by side as on the pad ring. Stripes of metal 3
-         to 5 cross both cells, some DVDD in magenta and some DVSS in green,
-         each continuing from one cell into the other. The metal 2 under
-         them is drawn as an edge with a light tint inside. A red path
+         to 5 cross both cells, ruled in magenta for DVDD and in green for
+         DVSS, each continuing from one cell into the other. The metal 2
+         under them has a pale fill in its net's colour. A red path
          with arrowheads marks the current. Step 1, from the PAD bond pad
          along metal 2 to the PMOS drains. Step 2, through the PMOS drain
          diode onto the DVDD stripes above. Step 3, along the DVDD rail
@@ -469,11 +472,13 @@ The other modules in the same folder do the work:
   :download:`gds/figs_driver.py <gds/figs_driver.py>` and
   :download:`gds/figs_clamp.py <gds/figs_clamp.py>` hold the figures.
 
-The figures show what the layout draws, with two changes. N+ diffusion is
-the active area inside the N+ implant, and P+ diffusion the active area
+The figures show what the layout draws, with three changes. N+ diffusion
+is the active area inside the N+ implant, and P+ diffusion the active area
 inside the P+ implant, so each diffusion has the colour of its doping.
 Most figures leave out the metal, vias and contacts that would hide the
 silicon, and show only the metal of the net in question.
+:numref:`fig-esd-gds-ring` closes the slots narrower than 3 µm in its
+wide metal, so that each net reads as one shape.
 
 A net is followed through diffusion, polysilicon, metal, contacts and
 vias. A transistor's
