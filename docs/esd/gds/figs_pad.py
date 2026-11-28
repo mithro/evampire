@@ -8,8 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 from shapely.geometry import box
 
 import gdskit
-from layfig import (CLAMP, DVDD, DVSS, GREY, HOT, INK, PAPER, SECONDARY,
-                    SNAP, Fig)
+from layfig import CLAMP, DVDD, DVSS, GREY, HOT, INK, SECONDARY, SNAP, Fig
 
 CELL = "bi_t"
 # Blocks of the cell, as (x0, y0, x1, y1) in GDS micrometres, from the
@@ -17,8 +16,7 @@ CELL = "bi_t"
 PREDRIVERS = (2.0, 211.7, 73.3, 242.3)   # comp018green_out_predrv, four
 BUFFERS = (3.6, 245.5, 70.4, 264.1)      # out_sigbuf_oe, _a and sigbuf_1
 SECOND = (21.7, 266.7, 52.7, 309.9)      # comp018green_esd_cdm
-# The rest of comp018green_inpath_cms_smt, round the two blocks above.
-INPUT = ((3.5, 311.6, 71.8, 341.8), (54.0, 266.7, 71.6, 311.6))
+INPUT = (3.5, 311.6, 71.8, 341.8)        # in_cms_smt, in_drv, four sigbuf
 PULLS = (3.8, 266.7, 18.8, 309.5)        # comp018green_in_pupd resistors
 # The resistors and the two diode blocks inside SECOND.
 SECOND_PARTS = ((21.7, 266.7, 52.7, 277.5), (21.7, 277.9, 52.7, 293.2),
@@ -54,14 +52,12 @@ def cell(alone=True):
     f.geom(gdskit.net(CELL, "PAD")["comp"], "primdrain")
     for part in SECOND_PARTS:
         f.region(part, SECONDARY, width=2.2)
-    for region in INPUT:
-        f.region(region, INK, opacity=0.12)
+    f.region(INPUT, INK, opacity=0.12)
     top = f.oy - 46
-    f.label("drain diode of\nNMOS drivers:\n304 µm of gate,\n8 gates of 38 µm",
+    f.label("drain diode of\nNMOS drivers:\n304 µm of gate,\non 4 drains",
             (19.78, 97), (f.px(0, 97)[0], top - 34), colour=HOT,
             weight="bold")
-    f.label("drain diode of\nPMOS drivers:\n480 µm of gate,\n"
-            "12 gates of 40 µm",
+    f.label("drain diode of\nPMOS drivers:\n480 µm of gate,\non 6 drains",
             (15.4, 166), (f.px(0, 166)[0], top - 34), colour=HOT,
             weight="bold")
     f.label("pre-\ndrivers", (2.0, 222), (f.px(0, 222)[0], top),
@@ -86,10 +82,12 @@ def cell(alone=True):
     f.note(*PADMETAL, kind="tint")
     f.note(INK, "metal of the PAD net beyond the bond pad: not drawn",
            kind="plain")
+    f.note(INK, "gates: the dark bars on each side of a red drain",
+           kind="plain")
     f.title("gf180mcu_fd_io__bi_t, the bidirectional pad", up=114)
     if alone:
         # In the schematic's orange, where the reader looks for those parts.
-        f.text(f.ox + f.dw, f.oy - 114, "rail clamp and rail diode: not in "
+        f.text(f.ox + f.dw, f.oy - 114, "rail clamp and its diode: not in "
                "this cell, only in the supply pads", anchor="end",
                fill=CLAMP, weight="bold", halo=False)
     f.dim((75, 0), (75, 350), "350 µm", offset=78, side="below")
@@ -105,16 +103,15 @@ def pad_net():
     f.grey_silicon()
     f.geom(net["comp"], "primdrain")
     # Under the metal, so that its edge crosses them unbroken.
-    for region in (PREDRIVERS, BUFFERS, (*PULLS[:3], 278)):
+    for region in (PREDRIVERS, BUFFERS, (*PULLS[:3], 278), SECOND_PARTS[0]):
         f.box(region, colour=GREY, dash="5,4", width=1.4)
-    # The metal with its small slots closed, ruled and outlined as one
-    # piece from the bond pad to the far end of the wire.
-    metal = net["metal2"].buffer(1.5).buffer(-1.5)
-    f.geom(metal, "padwire", key=False)
-    f.outline(metal, INK, width=1.3)
-    f.note(("url(#wire)", INK, 1.0),
-           "PAD net, metal 2: ruled, outlined in black", kind="tint")
-    f.region(SECOND_PARTS[0], SECONDARY, width=2.2)
+    # The metal as the layout draws it, ruled, with only its outer edge
+    # outlined: a gap in the ruling is then a gap in the metal.
+    metal = net["metal2"]
+    f.geom(metal, "padwire", width=0, key=False)
+    f.outline(metal, INK, width=1.3, holes=False)
+    f.note(("url(#wire)", INK, 1.0), "PAD net, metal 2: ruled; a gap in the "
+           "ruling is a gap in the metal", kind="tint")
     f.layer("pad", width=1.6, dash="5,3", key=False)
     x, y = f.px(37.5, 32)
     # A plain patch under the words, clear of the ruling.
@@ -131,34 +128,34 @@ def pad_net():
     f.label("drain diode of PMOS\ndrivers: 480 µm of gate,\n6 drains, "
             "each between\n2 gates of 40 µm", (15.4, 166),
             (f.px(0, 166)[0], top), colour=HOT, weight="bold")
-    f.label("a gate", (24.47, 112), (f.px(0, 128)[0], top + 51), colour=GREY)
-    f.label("metal 2 wire,\n2 µm wide, from\nPAD to the 110 Ω", (37.5, 232),
-            (f.px(0, 232)[0], top + 17), weight="bold")
+    f.label("metal 2 wire,\n2 µm wide, on\nto the secondary\nprotection",
+            (37.5, 222), (f.px(0, 222)[0], top), weight="bold")
     f.label("pull-up and\npull-down\nresistors", (3.8, 272.1),
             (f.ox + f.dw, top + 17), anchor="end", colour=GREY,
             elbow=(f.px(0, 272.1)[0], f.oy - 12))
     bot = f.oy + f.dh + 30
-    f.label("slot in the metal over an\nNMOS source; the PMOS\nsources "
-            "have none", (61.0, 80), (f.px(0, 84)[0], bot), colour=GREY)
+    # Inside a gap, beside the last NMOS source.
+    f.label("gap in the metal 2,\nover a source", (62.2, 90),
+            (f.px(0, 86)[0], bot), colour=GREY)
     # A point well inside the metal between the two drivers.
-    join = metal.intersection(box(60, 118, 71, 134)).representative_point()
+    join = metal.intersection(box(63, 118, 70, 124)).representative_point()
     f.label("metal 2 joining PAD to the\ndrains of both drivers",
             (join.x, join.y), (f.px(0, 152)[0], bot), weight="bold")
     f.label("pre-drivers", (73.3, 222), (f.px(0, 222)[0], bot), colour=GREY)
-    f.label("output signal\nbuffers", (70.4, 252), (f.px(0, 252)[0], bot),
+    f.label("output signal\nbuffers", (70.4, 250), (f.px(0, 250)[0], bot),
             colour=GREY)
-    f.label("110 Ω: 4 of 440 Ω in parallel", (52.7, 272.1),
-            (f.ox + f.dw, bot + 46), anchor="end", colour=SECONDARY,
-            weight="bold", elbow=(f.px(0, 272.1)[0], f.oy + f.dh + 8))
-    f.note((SECONDARY, SECONDARY, 0.3), "secondary", kind="tint")
-    f.note(GREY, "not in the schematic")
+    f.label("110 Ω of the secondary protection", (52.7, 272.1),
+            (f.ox + f.dw, bot + 46), anchor="end", colour=GREY,
+            elbow=(f.px(0, 272.1)[0], f.oy + f.dh + 8))
+    f.note(GREY, "not in the schematic's primary protection")
+    f.note(INK, "gates: the dark bars on each side of a red drain",
+           kind="plain")
     f.note(INK, "NMOS drains: diodes from the P-type silicon on DVSS",
            kind="plain")
     f.note(INK, "PMOS drains: diodes to the N-well on DVDD", kind="plain")
     f.note(INK, RINGS, kind="plain")
     f.note(INK, "40 µm² diodes, input buffer: further right", kind="plain")
-    f.note(INK, "rail clamp and rail diode: in the supply pads",
-           kind="plain")
+    f.note(INK, "rail clamp and its diode: in the supply pads", kind="plain")
     f.title("gf180mcu_fd_io__bi_t: the PAD net", up=114)
     return f
 
@@ -197,23 +194,25 @@ def paths():
         a.flow([(gx, 185.5), (gx, 196.6)], key=diode)
         a.flow([(gx, 146.6), (gx, 134.6)], key=diode)
     # Snapback: from each NMOS drain to the sources on both sides of it.
-    # Neighbouring drains' arrows are staggered, so no two tips meet.
-    for k, drain in enumerate((19.78, 31.5, 43.3, 55.0)):
-        mid = 99 if k % 2 == 0 else 111
+    for drain in (19.78, 31.5, 43.3, 55.0):
         for side in (-1, 1):
-            # The pair is offset too, so it does not read as one arrow
-            # with two heads.
-            gy = mid + side * 2.4
+            # The two arrows of a drain are offset along it, so that they
+            # do not read as one arrow with two heads, and no two tips
+            # meet on a shared source.
+            gy = 96 + side * 2.6
             a.flow([(drain + side * 0.4, gy), (drain + side * 5.2, gy)],
                    colour=SNAP, width=3.2, key=snap)
     x, y = a.px(7.3, 65.5)
     a.text(x, y + 5, "NMOS output drivers", anchor="start", weight="bold")
+    x, y = a.px(72.2, 66)
+    a.text(x, y + 5, "rings round the NMOS: named in (b)", anchor="start",
+           fill=GREY)
     x, y = a.px(3.4, 146)
     a.text(x, y + 5, "PMOS output drivers", weight="bold")
     top = a.oy - 56
     a.label("output NMOS, the same drains as the NMOS\ndrain diode: snaps "
             "back above 10.7 V\n(Positive, PAD to DVSS), from each drain\n"
-            "to the sources beside it, on DVSS", (22.6, 101.4),
+            "to the sources beside it, on DVSS", (22.6, 98.6),
             (a.px(0, 97)[0], top - 17), colour=SNAP, weight="bold")
     a.label("PMOS drain: from the P+ drains, on PAD, into\nthe N-well and "
             "out through its N+ guard ring\non DVDD. To DVSS, on through "
@@ -256,30 +255,26 @@ def paths():
 
 
 def secondary():
-    """The secondary protection: four resistors and two pairs of diodes."""
+    """The secondary protection: four resistors and two diodes."""
     f = Fig(CELL, (21.5, 264.5, 53.5, 311.5), 14, left=178, top=126,
             right=195, bottom=130)
-    lay = gdskit.load(CELL)
-    # Grey layers: blue is then the schematic's secondary protection only.
-    f.grey_silicon(named=True)
-    # The only polysilicon left grey is at the two ends of each resistor.
-    f.notes = [(k, c, t + ": the resistors' ends" if "polysilicon" in t else t)
-               for k, c, t in f.notes]
-    pad, inn = gdskit.net(CELL, "PAD"), gdskit.net(CELL, "IN")
-    # Blue is the schematic's three parts; its wires are black, so the
-    # metal is too. The parts are drawn over the metal that covers them.
-    f.geom(pad["metal2"], "padwire", key=False)
-    f.note(("url(#wire)", INK, 1.0), "PAD net, metal 2", kind="tint")
-    f.outline(pad["metal2"], INK, width=1.1)
-    metal = inn["metal2"].union(inn["metal1"])
-    f.geom(metal, "nextwire", key=False)
-    f.outline(metal, INK, width=1.0)
-    bodies = lay["poly"].intersection(lay["resistor"]).intersection(
-        box(*SECOND))
-    f.geom(bodies, "secpart", opacity=0.85)
-    f.geom(inn["comp"].intersection(lay["pplus"]), "secpart", opacity=0.85)
-    f.geom(inn["comp"].intersection(lay["nplus"]), "secpart", opacity=0.85)
+    # The cross-section's colours: wells and diffusions then differ by
+    # hue, also under the ruled metal. The schematic's three parts have a
+    # blue outline.
+    f.silicon()
     f.layer("sab", width=1.0)
+    pad, inn = gdskit.net(CELL, "PAD"), gdskit.net(CELL, "IN")
+    f.geom(pad["metal2"], "padwire", width=0, key=False)
+    f.outline(pad["metal2"], INK, width=1.1, holes=False)
+    f.note(("url(#wire)", INK, 1.0), "PAD net, metal 2", kind="tint")
+    metal = inn["metal2"].union(inn["metal1"])
+    f.geom(metal, "nextwire", width=0, key=False)
+    f.outline(metal, INK, width=1.0, holes=False)
+    f.box((31.2, 270.3, 43.8, 273.9), colour=SECONDARY, dash="1,0",
+          width=2.6)
+    f.outline(inn["comp"].buffer(0.3), SECONDARY, width=2.6)
+    f.note(SECONDARY, "secondary: the four resistors, the four diode strips",
+           kind="outline")
     y = f.px(37.5, 0)[1] + 5
     f.label("PAD, on a metal 2\nwire from the\ndrivers", (37.5, 265.4),
             (f.ox - 12, y - 17), anchor="end", weight="bold", lead="right")
@@ -291,23 +286,20 @@ def secondary():
             "and 2.8 µm long under the\nsilicide block",
             (31.2, 272.1), (f.ox + 60, top - 34), colour=SECONDARY,
             weight="bold")
-    # One outline round the four, for the label's one leader.
-    f.box((31.2, 270.3, 43.8, 273.9), colour=SECONDARY, dash="1,0",
-          width=2.0)
     f.label("N+ guard ring,\non DVDD", (26.05, 283), (f.px(0, 283)[0], top))
     f.label("also to pull-up,\npull-down resistors", (22.3, 292.9),
             (f.px(0, 292.9)[0], top), colour=GREY)
     f.label("P+ guard ring,\non DVSS", (26.05, 302), (f.px(0, 302)[0], top))
-    # The rings that the schematic has no symbol for, in grey.
+    # The rings that the schematic has no symbol for, in grey. Their
+    # targets lie beside the metal, where the ring shows.
     y = f.px(28, 0)[1] + 5
     f.label("N+ ring in an N-well,\non DVDD, round the\nresistors",
             (28, 268.0), (f.ox - 12, y - 17), anchor="end", colour=GREY,
             lead="right")
-    y = f.px(47, 0)[1] + 5
-    # Their targets lie beside the metal, where the ring shows.
+    y = f.px(51, 0)[1] + 5
     f.label("outer P+ ring, on\nDVSS, round the\ndiode to DVDD",
             (50.9, 279.2), (f.ox - 12, y - 17), anchor="end", colour=GREY,
-            lead="right")
+            lead="right", elbow=(f.px(50.9, 266.5)))
     f.label("outer N+ ring in\nan N-well, on DVDD,\nround the diode\n"
             "from DVSS", (50.9, 307.8), (f.ox + f.dw + 12, y - 25),
             anchor="start", colour=GREY, lead="left")
@@ -320,18 +312,14 @@ def secondary():
             "P-type silicon held on\nDVSS by the P+ guard ring round them",
             (46.5, 304.05), (f.px(0, 304)[0], bot), colour=SECONDARY,
             weight="bold", also=[(46.5, 299.38)])
-    f.note(("url(#wire2)", INK, 1.0),
-           "protected net, after the 110 Ω: metal 1 and 2, with openings",
-           kind="tint")
-    f.note((PAPER, "#808080", 1.0), "P-type silicon, no N-well", kind="tint")
-    f.note(INK, "the blue strips are drawn over the metal that covers them",
-           kind="plain")
-    f.note(INK, "contacts and vias: not drawn", kind="plain")
+    f.note(("url(#wire2)", INK, 1.0), "protected net, after the 110 Ω: "
+           "metal 1 and 2; a gap in the ruling is an opening", kind="tint")
+    f.note(INK, "the protected net contacts only the four diode strips; "
+           "contacts and vias are not drawn", kind="plain")
     f.note(GREY, "not in the schematic")
     f.note(INK, RINGS, kind="plain")
     f.note(INK, "primary: nearer the pad, left of this view", kind="plain")
-    f.note(INK, "rail clamp and rail diode: in the supply pads",
-           kind="plain")
+    f.note(INK, "rail clamp and its diode: in the supply pads", kind="plain")
     f.title("gf180mcu_fd_io__bi_t: the secondary protection", up=108)
     return f
 
