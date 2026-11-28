@@ -4,8 +4,9 @@
 # ///
 """Draw the ESD protection inside gf180mcu_fd_io__bi_t and the supply pads.
 
-Device sizes are from the cell netlists gf180mcu_fd_io__bi_t.cdl and
-gf180mcu_fd_io__dvdd.cdl of the gf180mcu_fd_io library.
+Writes docs/esd/figures/io-cell.svg. Device sizes are from the cell
+netlists gf180mcu_fd_io__bi_t.cdl and gf180mcu_fd_io__dvdd.cdl of the
+gf180mcu_fd_io library; gf180mcu_fd_io__dvss.cdl has the same devices.
 
 Run with:  uv run docs/esd/sim/schematic.py
 
@@ -48,13 +49,14 @@ def cell_box(d, x0, x1, name):
     y0, y1 = BOT - 0.9, TOP + 1.6
     corners = [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
     for a, b in zip(corners, corners[1:]):
-        d += elm.Line().at(a).to(b).linestyle("--").color("#666666").linewidth(1.2)
+        d += (elm.Line().at(a).to(b).linestyle("--").color("#666666")
+              .linewidth(1.2))
     d += elm.Label().at(((x0 + x1) / 2, y1 + 0.5)).label("inside " + name)
 
 
 def main():
     with schemdraw.Drawing(show=False) as d:
-        rails(d, 1.5, 31.6)
+        rails(d, 1.5, 33.6)
 
         # Bond pad.
         corners = [(0, MID - 0.6), (1.2, MID - 0.6), (1.2, MID + 0.6),
@@ -68,11 +70,11 @@ def main():
         # Primary protection: the output drivers' drain diodes.
         d += elm.Line().at((3.5, MID)).to((3.5, MID + 0.8))
         d += (elm.Diode().up().at((3.5, MID + 0.8)).to((3.5, TOP))
-              .color(PRIMARY).label("drain diode of\nPMOS drivers\n480 µm",
+              .color(PRIMARY).label("drain diode of\nPMOS drivers\n480 µm wide",
                                      loc="bottom", ofst=0.25))
         d += elm.Line().at((3.5, MID)).to((3.5, MID - 0.8))
         d += (elm.Diode().up().at((3.5, BOT)).to((3.5, MID - 0.8))
-              .color(PRIMARY).label("drain diode of\nNMOS drivers\n304 µm",
+              .color(PRIMARY).label("drain diode of\nNMOS drivers\n304 µm wide",
                                      loc="bottom", ofst=0.25))
         d += elm.Dot().at((3.5, TOP))
         d += elm.Dot().at((3.5, BOT))
@@ -119,7 +121,7 @@ def main():
 
         # Rail diode, four parts, in each DVDD and DVSS pad cell.
         d += (elm.Diode().up().at((28.0, BOT)).to((28.0, TOP))
-              .color(CLAMP).label("160 µm²\n(4 × 40 µm²)", loc="bottom",
+              .color(CLAMP).label("160 µm²:\n4 of 40 µm²", loc="bottom",
                                    ofst=0.2))
         d += elm.Dot().at((28.0, TOP))
         d += elm.Dot().at((28.0, BOT))
@@ -132,8 +134,8 @@ def main():
         d += elm.Label().at((22.0, TOP + 1.0)).label(
             "rail clamp and rail diode", color=CLAMP)
         # The rings run through every cell; each box is one cell's parts.
-        cell_box(d, -0.5, 14.3, "gf180mcu_fd_io__bi_t")
-        cell_box(d, 14.6, 31.0,
+        cell_box(d, -0.5, 15.2, "gf180mcu_fd_io__bi_t")
+        cell_box(d, 15.6, 33.0,
                  "gf180mcu_fd_io__dvdd and gf180mcu_fd_io__dvss")
 
         OUT.mkdir(exist_ok=True)
