@@ -62,14 +62,15 @@ Allocation changes
 A USB Power Delivery source can change its offer while a device is
 connected, by sending a new list of offers. A power sourcing equipment port
 changes the power it allocates to a powered device, or stops supplying it,
-in five ways. :numref:`fig-poe-allocation-ways` shows which of them remove
-the power and which need LLDP.
+in five ways. :numref:`fig-poe-allocation-ways` shows what each changes
+and whether the device stays powered.
 
 By LLDP
    Changes the allocation in steps of 0.1 W while the device stays
    powered. The device must support the exchange: every powered device
    that requests class 4 or higher does (:numref:`tab-poe-class-methods`),
-   and evampire's port always answers (:ref:`req-poe-classification`).
+   and evampire's port always answers (:ref:`req-poe-classification`). A
+   device can also request a new Autoclass measurement this way.
 By classifying again
    Changes the assigned class, and removes the power while the port
    classifies the device with a different number of class events. It can
@@ -78,9 +79,9 @@ By classifying again
 By Autoclass
    Lowers the allocation to the device's measured draw plus a margin, for
    a single-signature device that supports
-   :ref:`Autoclass <poe-autoclass>`. Like classifying again, it takes
-   effect only after a power-up, which needs the power of class 3, or of
-   a lower requested class, available.
+   :ref:`Autoclass <poe-autoclass>`. Without LLDP it acts only at
+   power-up, so a device that is already powered loses power first, as
+   when classifying again.
 By powering one pair set
    Removes the class power of one pair set of a
    :term:`dual-signature powered device`, which the port classifies and
@@ -89,33 +90,31 @@ By powering one pair set
    (:clause:`145.3.4`) and class signature (:clause:`145.3.6.1`) on the
    unpowered pair set.
 By refusing power
-   Removes the power, or never switches it on. A port with less than
-   class 3 power available refuses a device that requests more
-   (:ref:`poe-pse-classification`).
+   Removes the power, or never switches it on.
+   :ref:`Power sourcing equipment classification <poe-pse-classification>`
+   gives when the port must refuse.
 
 .. graphviz:: allocation-ways.dot
    :name: fig-poe-allocation-ways
    :caption: The five ways a power sourcing equipment port changes the
-             power of a powered device, what each changes, and whether it
-             removes the power or needs LLDP.
-   :alt: Five boxes stacked from top to bottom. By LLDP, green: changes the
-         allocation in 0.1 W steps; the device stays powered; needs LLDP.
-         By classifying again, orange: changes the class, only for a device
-         that requests class 4 or higher; the power is removed; no LLDP.
-         By Autoclass, orange: lowers the allocation to the measured draw
-         plus a margin; takes effect at the next power-up; no LLDP;
-         single-signature devices only. By powering one pair set, yellow:
-         removes one pair set's class power; the other pair set stays
-         powered; no LLDP; dual-signature devices only. By refusing power,
-         orange: no power; the power is removed; no LLDP. A key at the top
-         gives the colours: stays powered, one pair set unpowered, power
-         removed.
+             power of a powered device, what each changes, and whether the
+             device stays powered.
+   :alt: Five boxes stacked from top to bottom, each giving the way, what
+         it changes and whether the device stays powered. By LLDP, green:
+         the allocation, in 0.1 W steps; stays powered. By classifying
+         again, orange: the class, if the requested class is 4 or higher;
+         power removed. By Autoclass, orange: the allocation, to the
+         measured draw; at power-up, with the power removed if the device
+         was powered. By powering one pair set, yellow: one pair set's
+         power; the other pair set stays powered. By refusing power,
+         orange: no power; power removed.
    :align: center
 
-The standard requires the signatures on the unpowered pair set, not that a
-dual-signature device keeps working on the other one alone. It describes a
-change from 4-pair to 2-pair power only with the LLDP exchange
-(:clause:`145.5.6.1`). evampire's port B can power one pair set only if it
+The standard requires the signatures on the unpowered pair set. Only a
+single-signature device that requests class 4 or less must work on any
+valid arrangement of pairs. Other devices, dual-signature ones included,
+may need 4-pair power to work at their nominal power level
+(:clause:`145.3.2`). evampire's port B can power one pair set only if it
 powers both pair sets and supports dual-signature devices, which are open
 questions (:doc:`basics`, :doc:`power-sourcing`).
 
@@ -133,8 +132,9 @@ A powered device that requests class 1 to 3 may lack
 powered device (:clause:`Table 33-8 <33>`). Without it, the port can lower
 the power it must be able to supply only by Autoclass, for a
 single-signature Type 3 or Type 4 powered device, or by powering one pair
-set of a dual-signature one (:clause:`Table 145-19 <145>`). Otherwise it
-refuses power. A Type 1 powered device supports neither.
+set of a dual-signature one (:clause:`Table 145-19 <145>`). Otherwise its
+only choices are the full class power or refusing power. A Type 1 powered
+device supports neither.
 
 Moving power between ports
 --------------------------
