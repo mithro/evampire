@@ -259,7 +259,7 @@ def paths():
 
 def secondary():
     """The secondary protection: four resistors and two diodes."""
-    f = Fig(CELL, (21.5, 264.5, 53.5, 311.5), 14, left=178, top=126,
+    f = Fig(CELL, (21.5, 264.5, 53.5, 311.5), 14, left=178, top=146,
             right=195, bottom=130)
     # The cross-section's colours: wells and diffusions then differ by
     # hue, also under the ruled metal. The schematic's three parts have a
@@ -291,8 +291,9 @@ def secondary():
             weight="bold")
     f.label("N+ guard ring,\non DVDD: the diode's\nDVDD end", (26.05, 283),
             (f.px(0, 282.6)[0], top - 17))
-    f.label("also to\npull-up, pull-down\nresistors", (22.3, 292.9),
-            (f.px(0, 292.9)[0], top - 17), colour=GREY)
+    # A row above its neighbours, so that no two lines run together.
+    f.label("also to pull-up,\npull-down resistors", (22.3, 292.9),
+            (f.px(0, 292.9)[0], top - 56), colour=GREY)
     f.label("P+ guard ring,\non DVSS: the diode's\nDVSS end", (26.05, 302),
             (f.px(0, 303)[0], top - 17))
     # The rings that the schematic has no symbol for, in grey. Their
@@ -326,7 +327,7 @@ def secondary():
     f.note(INK, RINGS, kind="plain")
     f.note(INK, "primary: nearer the pad, left of this view", kind="plain")
     f.note(INK, "rail clamp and its diode: in the supply pads", kind="plain")
-    f.title("gf180mcu_fd_io__bi_t: the secondary protection", up=108)
+    f.title("gf180mcu_fd_io__bi_t: the secondary protection", up=128)
     return f
 
 
