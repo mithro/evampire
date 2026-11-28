@@ -210,6 +210,10 @@ def thresholds():
     for r, name, a, b, fill in rows:
         yc = p.y(r)
         body.append(rect(p.x(a), yc - 11, p.x(b) - p.x(a), 22, fill))
+        if name == "reset":
+            # The range is narrower than its name: label it at its left.
+            body.append(text(p.x(a) - 4, yc + 4, name, 10, "end"))
+            continue
         body.append(text(p.x((a + b) / 2), yc + 4, name, 10, "middle"))
     yt = p.y(0.6)
     body.append(text(p.right, yt - 26, "TPS2372 thresholds (typical)", 11,
