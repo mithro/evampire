@@ -173,6 +173,24 @@ whose cases hold ring 1 at 0 V. A pass leaves both files unchanged:
        --p5 $R/p5.json $R/p5b.json
    git status --short docs/high-voltage/test-die
 
+The N-well capacitance under L and D, which the capacitance test of P2
+compares with, has its own record. ``capacitance.py`` in gf180-tcad
+rebuilds it on the host in under a second, and a pass leaves the record
+unchanged. The record test of ``test_analyse.py`` then checks that
+``model_checks.json`` holds the same curves, and the other values that
+name a record:
+
+.. code-block:: sh
+
+   uv run --locked python experiments/hv-junction/capacitance.py \
+       results/hv-junction/capacitance.json
+   git status --short results/hv-junction
+   GF180_TCAD=PATH uv run --with pytest pytest \
+       docs/high-voltage/test-die/test_analyse.py -k model_check_records
+
+The first two commands run in gf180-tcad, and the last in this
+repository, with PATH naming the gf180-tcad checkout.
+
 Measurements against predictions
 --------------------------------
 
