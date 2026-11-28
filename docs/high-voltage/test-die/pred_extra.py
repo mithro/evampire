@@ -5,8 +5,9 @@ hvt-tab-p5.csv        punch-through to a grounded ring, from p5.json if
                       simulated" otherwise.
 hvt-tab-mc-cap.csv, -corner.csv, -ceiling.csv, -source.csv,
 -onesided.csv, -radius.csv   the values of model_checks.json, which is
-                      edited by hand: the numbers of the reviews that no
-                      record holds. Its key "corner_radius" is written once
+                      edited by hand: the numbers of the reviews, with the
+                      record each comes from or the statement that none
+                      holds it (its key "source"). Its key "corner_radius" is written once
                       the radius sensitivity runs end, as {"note": text,
                       "cases": [{"structure": NAME, "process": PROCESS,
                       "radius_um": number, "volts": number or null}]};
@@ -87,8 +88,8 @@ def check_tables():
                corner_now(cor["structure"], cor["process"])]]
     ceiling = [["Change to the assumed profile",
                 "Breakdown of the flat bottom (V)"]] + CHECKS["ceiling"]["rows"]
-    src = [["Item", "Value"]] + [[k.capitalize(), v]
-                                 for k, v in CHECKS["source"].items()]
+    src = [["Values", "Where they come from"]] + [
+        [TITLES.get(k, k), v] for k, v in CHECKS["source"].items()]
     return {"hvt-tab-mc-cap.csv": tb.write(rows),
             "hvt-tab-mc-corner.csv": tb.write(corner),
             "hvt-tab-mc-ceiling.csv": tb.write(ceiling),
@@ -96,17 +97,30 @@ def check_tables():
 
 
 RADII = (0.5, 1.0, 2.0, 4.0)   # radii of the sensitivity run
+TITLES = {"capacitance": "Capacitance (tab-hvt-mc-cap)",
+          "ceiling": "Ceiling under D (tab-hvt-cap-sens)",
+          "corner": "Sharp corner (tab-hvt-mc-corner)",
+          "one_sided": "One-sided junctions (tab-hvt-mc-onesided)",
+          "corner_radius": "Corner radius (tab-hvt-mc-radius)"}
+
+
+def closed_form(n):
+    """Sze and Gibbons: 60 V x (N / 1e16 cm^-3)^-0.75."""
+    return 60.0 * (n / 1e16) ** -0.75
 
 
 def onesided_table():
     rows = [["Doping of the light side (cm⁻³)", "Ionisation integral (V)",
-             "Closed form (V)", "Integral over closed form"]]
+             "Closed form (V)", "Integral over closed form", "Source"]]
     for r in CHECKS["one_sided"]["rows"]:
         m, e = r["doping_cm3"].split("e")
         power = f"10\\ :sup:`{e}`"
+        cf = closed_form(float(r["doping_cm3"]))
         rows.append([f"{m} × {power}" if m != "1" else power,
-                     f"{r['integral_v']:g}", f"{r['closed_form_v']:g}",
-                     f"{r['difference_percent']:+d} %"])
+                     f"{r['integral_v']:.1f}", f"{cf:.1f}",
+                     f"{100 * (r['integral_v'] / cf - 1):+.0f} %",
+                     f"record {r['record']}" if r["record"] else
+                     "estimate, no record"])
     return tb.write(rows)
 
 
