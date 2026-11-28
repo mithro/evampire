@@ -72,6 +72,7 @@ def nmos_driver():
     f.note(DVSS, "on DVSS")
     f.note(GREY, "beyond the cut: not in the cross-section")
     f.note(INK, "metal: not drawn", kind="plain")
+    f.note(INK, "8 such gates, each 38 µm wide: 304 µm of gate", kind="plain")
     return f
 
 
@@ -95,7 +96,7 @@ def _above(f, text, gx, gy):
 
 def silicide_block():
     """The blocked drains of both drivers beside an ordinary transistor."""
-    a = _panel((13.2, 74.6, 26.8, 83.8), "(a) NMOS output driver, as at A–A′")
+    a = _panel((13.2, 74.6, 26.8, 83.8), "(a) NMOS output driver")
     a.dim((15.67, 82.9), (19.45, 82.9), "blocked drain: 3.78 µm")
     a.dim((20.11, 82.9), (23.89, 82.9), "blocked drain: 3.78 µm")
     a.dim((14.52, 76.2), (15.67, 76.2), "gate length: 1.15 µm", side="below")
@@ -117,6 +118,8 @@ def silicide_block():
     b.flow([(15.1, 156.2), (8.5, 156.2)],
            key="drain diode: P+ drain, through the N-well, to N+ ring")
     b.note(INK, "metal: not drawn", kind="plain")
+    b.note(INK, "(a): 8 such gates of 38 µm, 304 µm of gate", kind="plain")
+    b.note(INK, "(b): 12 such gates of 40 µm, 480 µm of gate", kind="plain")
     b.note(INK, "B–B′: the PMOS cut of the cross-section", kind="cut")
     c = _panel((20.3, 212.9, 33.9, 222.1), "(c) PMOS pre-driver, to compare")
     c.dim((27.17, 214.4), (27.87, 214.4), "gate length: 0.7 µm", side="below")
