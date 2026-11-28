@@ -339,7 +339,10 @@ power sourcing equipment can measure it (:clause:`145.3.6.2`,
 equipment allocate less than the assigned class: the measured power plus a
 margin, up to the power of the assigned class. A measured power of 4 W or
 less leaves the allocation at the power of the assigned class
-(:clause:`145.2.8`). If the
+(:clause:`145.2.8`). A port that measured with 4-pair power and then
+supplies 2-pair power adds at least Pac_extra to the allocation
+(:clause:`145.2.8`, :clause:`145.2.8.2`, :clause:`Equation 145-4 <145>`).
+If the
 powered device drew more than class 1 power during the measurement, it then
 draws no more than the measured power, unless it negotiates more over
 LLDP, up to its requested class (:clause:`145.3.8.2`).
@@ -360,10 +363,25 @@ advertises Autoclass support in the Autoclass field of its LLDP frames
 (:clause:`79.3.2.12`, :clause:`145.5.7`). The device must already be
 drawing its maximum power when it sends the request (:clause:`145.5.7`).
 The power sourcing equipment then measures as in :clause:`145.2.8.2`, may
-update the allocation, and reports that the measurement is complete
-(:clause:`145.5.7`). The device then draws no more than the measured
-power, unless it negotiates more over LLDP, up to its requested class
-(:clause:`145.3.8.2`).
+update the allocation, and reports that the measurement is complete. The
+device then clears its request (:clause:`145.5.7`). It draws no more than
+the measured power, unless it negotiates more over LLDP, up to its
+requested class (:clause:`145.3.8.2`). :numref:`fig-poe-autoclass-lldp`
+shows the order.
+
+.. graphviz:: autoclass-lldp.dot
+   :name: fig-poe-autoclass-lldp
+   :caption: An Autoclass measurement requested over LLDP while the
+             powered device stays powered.
+   :alt: Sequence diagram with two lifelines, the powered device on the
+         left and the power sourcing equipment port on the right. First
+         the powered device draws its maximum power. It then sends an
+         LLDP frame with the Autoclass request bit set to 1. The port
+         measures the power and may update the allocation. It sends an
+         LLDP frame with the Autoclass completed bit set to 1. The powered
+         device clears its request bit and draws no more than the measured
+         power.
+   :align: center
 
 Turn-on hysteresis
 ------------------
