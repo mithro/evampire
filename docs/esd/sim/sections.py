@@ -108,7 +108,8 @@ def driver_section():
     # The ends of the cut A-A' that the layout figure gds-nmos-driver marks.
     b.append(text(387, top - 6, "A", size=13, weight="bold"))
     b.append(text(614, top - 6, "A′", size=13, weight="bold"))
-    b.append(text(455, top - 54, "NMOS: cut A–A′", size=11))
+    b.append(text(456, top - 54, "NMOS: cut A–A′, corner view",
+                  size=11))
     for x, s in ((45, "N+"), (102, "P+"), (541, "N+"), (600, "P+")):
         b.append(text(x, top + 16, s, size=11))
     # Under each, the name the layout figures give it.
@@ -125,8 +126,8 @@ def driver_section():
     for x in (125, 514):
         b.append(rect(x, top - 5, 5, 5, "url(#hatch)"))
     b.append(text(640, 392, "not to scale", size=11, anchor="end"))
-    b.append(text(20, 392, "grey bars: metal, which the layout figures "
-                  "do not draw", size=11, anchor="start"))
+    b.append(text(20, 392, "grey bars: metal, which the layouts of these "
+                  "two cuts do not draw", size=11, anchor="start"))
     # Wiring: PAD to both drains, DVDD and DVSS to sources and taps.
     for x in (270, 370):
         b.append(rect(x - 4, 60, 8, top - 60, METAL))

@@ -26,7 +26,7 @@ def nmos_driver():
             (f.px(0, 67.75)[0] + 72, top - 6), colour=GREY)
     f.label("second guard ring round the\nNMOS: N+ in an N-well, on DVDD",
             (7.2, 84), (f.px(0, 84)[0], top - 6), colour=GREY)
-    f.title("One corner of the NMOS output drivers, with the cut A–A′",
+    f.title("Corner view of the NMOS output drivers, with the cut A–A′",
             up=74)
     # The P+ ring lies under the N+ ring, so its label sits in the gap
     # between it and the fingers, where no leader has to cross a ring.
@@ -42,7 +42,7 @@ def nmos_driver():
         (19.78, "Drain contacts, on the PAD net", INK),
         (21.9, "Drain, second finger's side", GREY),
         (24.47, "Gate of the second finger", GREY),
-        (25.65, "Source shared by two fingers, on DVSS", GREY),
+        (25.65, "Source shared by two fingers", GREY),
         (26.83, "Gate of the third finger", GREY),
     ]
     for gx, text, colour in rows:
