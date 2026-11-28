@@ -1,8 +1,10 @@
 """Turn reduced breakdown sweeps into the process decision and comparison.
 
-The decision follows method.rst, tables tab-hvt-decision and tab-hvt-deep,
-with the fixed meanings of "near 14 V", "much higher" and "the same". The
-comparison takes the reference structure, the predicted ratio, the band
+The decision follows method.rst, tables tab-hvt-decision and tab-hvt-deep:
+by the pattern between structures ("the same", "much higher" as a factor,
+the border of pred_data.REGIME), with the absolute windows "near 14 V" and
+"above 40 V" reported beside it, and with the capacitance call of cv.py
+for the deep layer. The comparison takes the reference structure, the predicted ratio, the band
 and the agreement range from pred_data.py, the module that writes the
 tables of predictions.rst, so that the two cannot differ.
 
@@ -16,9 +18,10 @@ import statistics
 import measure
 import pred_data as pd
 
-NEAR = (8.0, 25.0)     # V: "near 14 V"
-HIGHER = 40.0          # V: "much higher"
+NEAR = (8.0, 25.0)     # V: "near 14 V", a secondary statement only
+HIGHER = 40.0          # V: "above 40 V", a secondary statement only
 SAME = (0.15, 3.0)     # "the same": less than 15 % of the lower or 3 V
+MUCH = 2.0             # "much higher": a factor of two or more
 FEW = 5                # fewer dies than this is reported
 G1 = ("NT20", "NT20b", "NT20c")          # the group 1 value
 G2 = (("NW0", "NW0b"), ("NW1p5",), ("NW3",), ("NW6",))   # by distance
@@ -54,6 +57,11 @@ def near(v):
 
 def higher(v):
     return v is not None and v > HIGHER
+
+
+def much(a, b):
+    """a is "much higher" than b: by a factor of MUCH or more."""
+    return a is not None and b is not None and a >= MUCH * b
 
 
 def same(a, b):
@@ -122,34 +130,68 @@ def pwell(data, ev):
                                ("group 3", g3)) if v is None]
         miss += [m[0] for m, v in zip(G2, g2) if v is None]
         return None, "no resolved value for " + ", ".join(miss)
-    g1near = near(nt1) and near(nt5) and near(g1)
-    g2same = all(same(v, g1) for v in g2)
-    if g1near and g2same and higher(g3):
-        return "An", "pattern of the first row of tab-hvt-decision"
-    if g1near and g2same and same(g3, g1):
-        return "A", "pattern of the second row of tab-hvt-decision"
+    flat = same(nt1, g1) and same(nt5, g1) and all(same(v, g1) for v in g2)
     rising = all(b >= a or same(a, b) for a, b in zip(g2, g2[1:]))
-    if higher(nt5) and higher(g1) and near(g2[0]) and same(g2[-1], g1) \
-            and rising and same(g3, g1):
+    levels(ev, g1, g2[0], g3)
+    if flat and g1 < pd.REGIME:
+        if much(g3, g1):
+            return "An", "pattern of the first row of tab-hvt-decision"
+        if same(g3, g1):
+            return "A", "pattern of the second row of tab-hvt-decision"
+        return None, ("every N-well at one voltage, and group 3 neither the "
+                      "same nor much higher")
+    if flat:
+        return None, (f"every N-well at one voltage, {fmt(g1)}, which is not "
+                      f"below {pd.REGIME:g} V: no heavy surface limits it, "
+                      "and no row of tab-hvt-decision fits")
+    if much(g1, g2[0]) and same(nt5, g1) and same(g2[-1], g1) and rising \
+            and same(g3, g1) and g1 >= pd.REGIME:
         if near(nt1):
             ev.append("NT1 is near 14 V while the wells with a distant ring "
                       "are much higher: a P+ region close to the well can "
                       "explain the published value")
         return "B", "pattern of the third row of tab-hvt-decision"
-    if g1near and g2[-1] > g2[0] and not same(g2[-1], g2[0]):
-        return None, ("group 1 near 14 V and group 2 rising with distance: "
-                      "drawing P-well stops the generation (fourth row of "
-                      "tab-hvt-decision), which no simulated family holds")
+    if same(nt5, g1) and g2[-1] > g2[0] and not same(g2[-1], g2[0]):
+        return None, ("group 2 rising with distance without the pattern of "
+                      "B: drawing P-well stops the generation (fourth row "
+                      "of tab-hvt-decision), which no simulated family holds")
     return None, "the pattern matches no row of tab-hvt-decision"
 
 
-def deep(data, pw, ev):
-    """(L, D or None, reason) from tab-hvt-deep, by breakdown voltage."""
+def levels(ev, g1, nw0, g3):
+    """The absolute windows, as a statement beside the pattern."""
+    def where(v):
+        if v is None:
+            return "–"
+        return (f"{v:.1f} V, " + ("inside" if near(v) else "outside")
+                + f" {NEAR[0]:g} V to {NEAR[1]:g} V"
+                + (f", above {HIGHER:g} V" if higher(v) else ""))
+    ev.append(f"Absolute levels, beside the pattern: group 1 {where(g1)}; "
+              f"NW0 {where(nw0)}; group 3 {where(g3)}")
+
+
+def deep(data, pw, ev, cap=(None, "no capacitance result")):
+    """(L, D or None, reason) from tab-hvt-deep: the breakdown ratios where
+    some N-well edge is clear of P-well, and the capacitance call of cv.py
+    (cap = (call, reason)) in every case."""
     if pw is None:
         return None, "the P-well question is undecided"
-    if pw == "A":
-        return None, ("under A every N-well breaks down at its surface; "
-                      "only the capacitance of CVN and CVN2 (P2) answers it")
+    bd, why = (None, "under A every N-well breaks down at its surface") \
+        if pw == "A" else deep_breakdown(data, pw, ev)
+    ev.append(f"Deep layer from the capacitance (P2): {cap[0] or 'none'}: "
+              f"{cap[1]}")
+    if bd and cap[0] and bd != cap[0]:
+        return None, (f"breakdown selects {bd} ({why}) and capacitance "
+                      f"selects {cap[0]}")
+    if bd:
+        return bd, why + ("; the capacitance agrees" if cap[0] else "")
+    if cap[0]:
+        return cap[0], f"{why}; capacitance: {cap[1]}"
+    return None, f"{why}; capacitance: {cap[1]}"
+
+
+def deep_breakdown(data, pw, ev):
+    """(L, D or None, reason) from the breakdown rows of tab-hvt-deep."""
     num, den = DEEP[pw]
     m, n = data.ratio(num, den)
     pl = pd.ratio_value(num[0], pw + "L")[1]
@@ -157,19 +199,28 @@ def deep(data, pw, ev):
               f"{', '.join(den)}: measured "
               + ("–" if m is None else f"{m:.2f} on {n} dies")
               + f"; predicted {pl:.2f} under {pw}L and 1 under {pw}D")
-    over = []
+    over, above = [], []
     for name, s in sorted(data.s.items()):
         if name not in pd.STRUCTS or pd.STRUCTS[name]["kind"] != "nw" \
                 or s.median is None:
             continue
+        ref, pr, test = pd.ratio_value(name, pw + "D")
+        refs = pd.REF_MEMBERS.get(ref, (ref,))
+        if test and pr and name not in refs:
+            r = data.ratio((name,), refs)[0]
+            if r is not None and r > pr * (1 + pd.RATIO):
+                over.append(f"{name} ({r:.2f} against {pr:.2f})")
         lo, hi, _ = pd.band(name, pw + "D")
         if lo is not None and s.median > pd.agreement(lo, hi)[1]:
-            over.append(name)
+            above.append(name)
+    if above:
+        ev.append("Beside the ratios: above the agreement range of their D "
+                  "prediction: " + ", ".join(above))
     if over:
-        ev.append("Above the agreement range of their D prediction: "
-                  + ", ".join(over))
-        return "L", ("N-well structures above the agreement range of their "
-                     "D prediction, which D does not allow")
+        ev.append("Ratio to the reference above the D prediction by more "
+                  f"than {100 * pd.RATIO:.0f} %: " + ", ".join(over))
+        return "L", ("N-well structures hold more against their reference "
+                     "than D allows")
     if m is None:
         return None, f"no die has both {num[0]} and its reference measured"
     ok_l, ok_d = pd.ratio_agrees(m, pl), pd.ratio_agrees(m, 1.0)

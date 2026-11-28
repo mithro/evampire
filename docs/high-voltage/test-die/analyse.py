@@ -9,8 +9,8 @@ extracts the breakdown voltage of every P1 sweep, takes the median over
 the dies of the first sweep at 25 C, applies the process decision of
 method.rst, and compares each structure with predictions.json under the
 family the decision selects, by ratio and by agreement range. It reduces
-P3 and P5 as well, checks P2 and P4 records, and lists what makes a
-result inconclusive. --family compares under a family named by hand
+P2 to P5 as well (procs.py, cv.py), each against the rules of rules.py,
+and lists what makes a result inconclusive. --family compares under a family named by hand
 instead of the decided one.
 
 The report is Markdown, on standard output or in REPORT.md. The exit
@@ -27,7 +27,6 @@ SPDX-License-Identifier: Apache-2.0
 
 import argparse
 import pathlib
-import statistics
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -35,7 +34,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import decide  # noqa: E402
 import measure  # noqa: E402
 import pred_data as pd  # noqa: E402
-import pred_extra  # noqa: E402
+import procs  # noqa: E402
 
 
 class Result:
@@ -56,9 +55,11 @@ class Result:
         self.data = decide.Data(self.summ)
         self.dies = sorted({w.die for w in known})
         self.evidence = []
+        self.cap = procs.p2(known)
         self.pwell, self.pwell_why = decide.pwell(self.data, self.evidence)
-        self.deep, self.deep_why = decide.deep(self.data, self.pwell,
-                                               self.evidence)
+        self.deep, self.deep_why = decide.deep(
+            self.data, self.pwell, self.evidence,
+            (self.cap["call"], self.cap["why"]))
         self.forced = family
         self.families = [family] if family else decide.families(self.pwell,
                                                                 self.deep)
@@ -66,55 +67,10 @@ class Result:
                  if s["name"] in self.summ and s["name"] != "OPEN"]
         self.rows = [decide.compare(self.data, n, f)
                      for n in order for f in self.families]
-        self.other = self.procedures()
+        self.other = procs.procedures(
+            known, self.first, self.families[0] if self.families else None,
+            self.cap)
         self.issues = self.inconclusive()
-
-    def procedures(self):
-        """Rows of P3, P5 and the second part of P4; P2 and the first part
-        of P4 are listed as checked but not reduced."""
-        p3, p4, p5, checked = {}, {}, {}, {}
-        fam = self.families[0] if self.families else None
-        for w in sorted(self.sweeps, key=lambda w: w.sweep):
-            key = w.structure
-            if w.procedure == "P3" and w.direction == "up":
-                p3.setdefault(key, {}).setdefault(w.die, measure.ring_onset(w))
-            elif w.procedure == "P5" and w.direction == "up":
-                p5.setdefault(key, {}).setdefault(w.die, measure.punch(w))
-            elif w.procedure == "P4" and measure.gated_part(w) == 2:
-                plate = statistics.median(w.col("v_aux_v"))
-                b = measure.breakdown(w)
-                if b.kind == "bv":
-                    p4.setdefault((key, plate), []).append(b.bv)
-            elif w.procedure in ("P2", "P4"):
-                bad = measure.capacitance_checks(w) if w.procedure == "P2" else 0
-                c = checked.setdefault((key, w.procedure), [0, 0])
-                c[0] += 1
-                c[1] += bad
-        out = {"P3": [], "P5": [], "P4": [], "checked": []}
-        for st, by in p3.items():
-            curve = (pd.entry(st, fam) or {}).get("ring_v") if fam else None
-            pred = measure.linear_crossing(
-                [c[0] for c in curve], [c[1] for c in curve],
-                measure.RING_LEVEL) if curve else None
-            ons = [x[0] for x in by.values() if x[0] is not None]
-            out["P3"].append((st, len(by), med(ons), len(ons), pred,
-                              med([x[1] for x in by.values()])))
-        for st, by in p5.items():
-            pts = [x[0] for x in by.values() if x[0] is not None]
-            tops = [x[1] for x in by.values() if x[0] is None]
-            mech = sorted(x[2] for x in by.values())
-            e = pred_extra.P5.get(st, {}).get(fam) if fam else None
-            out["P5"].append((st, len(by), med(pts), len(pts),
-                              max(tops) if tops else None,
-                              mech[len(mech) // 2], e))
-        for (st, plate), bvs in sorted(p4.items()):
-            out["P4"].append((st, plate, med(bvs), len(bvs)))
-        for (st, proc), (n, bad) in sorted(checked.items()):
-            out["checked"].append(
-                f"{st}: {n} {proc} records read and not reduced"
-                + (f"; {bad} rows with a dissipation factor above 0.1"
-                   if bad else ""))
-        return out
 
     def inconclusive(self):
         out = []
@@ -143,6 +99,28 @@ class Result:
                 out.append(f"{n} on {d}: the knee does not move up at 85 °C "
                            f"({b1.bv:.1f} V to {bh.bv:.1f} V): not avalanche.")
         out += self.open_check()
+        out += self.balance_check()
+        return out
+
+    def balance_check(self):
+        """P1 and P5: the substrate (and ring) current returns the well
+        current within measure.BALANCE once it is above 100 nA."""
+        out, missing = [], set()
+        for w in self.sweeps:
+            if w.procedure not in ("P1", "P5") or not w.room \
+                    or w.direction != "up":
+                continue
+            d = measure.balance(w)
+            if d is None:
+                if all(r["i_sub_a"] is None for r in w.rows):
+                    missing.add(w.die)
+            elif d > measure.BALANCE:
+                out.append(f"{w.structure} on {w.die}, {w.procedure} sweep "
+                           f"{w.sweep}: the returned current differs from "
+                           f"the well current by up to {100 * d:.0f} %: "
+                           "current leaves by another path.")
+        out += [f"Substrate current not recorded on {d}: balance not "
+                "checked there." for d in sorted(missing)]
         return out
 
     def open_check(self):
@@ -198,50 +176,12 @@ def report(r):
     if not r.rows:
         out.append("| – | No family selected: nothing compared. |"
                    + " |" * 10)
-    out += procedures_md(r)
+    out += procs.markdown(r.other, r.families[0] if r.families else None)
     out += ["", "## Inconclusive items", ""]
     out += [f"- {i}" for i in r.issues] or ["- None."]
     out += ["", "## Files not used", ""]
     out += [f"- {u}" for u in r.unusable] or ["- None."]
     return "\n".join(out) + "\n"
-
-
-def procedures_md(r):
-    o = r.other
-    fam = r.families[0] if r.families else "no family"
-    out = ["", "## Other procedures", "",
-           "No agreement rule is documented for P3, P4 and P5, so the "
-           f"prediction under {fam} stands beside the measured median.", ""]
-    if o["P3"]:
-        out += ["| Structure | Dies | P3 onset at 1 V (V) | Dies with an onset "
-                "| Predicted onset (V) | Step at the top (V) |",
-                "|---|---|---|---|---|---|"]
-        out += [f"| {st} | {n} | {v(on)} | {k} | {v(pr)} | {v(step)} |"
-                for st, n, on, k, pr, step in o["P3"]]
-        out.append("")
-    if o["P5"]:
-        out += ["| Structure | Dies | P5 punch-through at 1 nA (V) "
-                "| Dies with one | Predicted (V) | Mechanism at the end |",
-                "|---|---|---|---|---|---|"]
-        for st, n, pt, k, top, mech, e in o["P5"]:
-            pr = "–" if not e else (v(e["punch_through_v"])
-                                    if e["punch_through_v"] is not None
-                                    else f"> {e['reached_v']:.1f}")
-            got = v(pt) if pt is not None else f"> {top:.1f}"
-            out.append(f"| {st} | {n} | {got} | {k} | {pr} | {mech} |")
-        out.append("")
-    if o["P4"]:
-        out += ["| Structure | P4 plate (V) | Breakdown at 1 µA, median (V) "
-                "| Dies |", "|---|---|---|---|"]
-        out += [f"| {st} | {plate:g} | {v(bv)} | {n} |"
-                for st, plate, bv, n in o["P4"]]
-        out.append("")
-    out += [f"- {c}" for c in o["checked"]]
-    return out
-
-
-def med(xs):
-    return statistics.median(xs) if xs else None
 
 
 def main(argv=None):
