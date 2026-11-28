@@ -65,9 +65,14 @@ The software first works out the power left for the outputs, as on
 It then offers the highest class whose power at the power sourcing
 equipment, :math:`P_\text{class}` in :numref:`tab-poe-classes`, is no more
 than :math:`P_\text{out}`. That column already includes the worst-case loss
-in the outgoing cable, so no cable term is needed. The class is offered by
-issuing the matching number of class events (:numref:`tab-poe-events`), and
-can later be adjusted over LLDP (:doc:`lldp`).
+in the outgoing cable, so no cable term is needed. Class 3 or higher is
+offered by issuing the number of class events that allows it
+(:numref:`tab-poe-events`). Class 1 or 2 cannot be offered that way,
+because one class event already allows class 3 (:ref:`poe-demotion`).
+When only class 1 or 2 fits, the port powers a device that requests no
+more than that class. It lowers or refuses any other device in one of the
+:ref:`ways that need no LLDP <poe-allocation-changes>`. The allocation can
+later be adjusted over LLDP (:doc:`lldp`).
 
 The board's own power is not known, so the examples below give, for each
 input, the highest class and the largest board power at which it still
@@ -219,7 +224,7 @@ power at the power sourcing equipment than it gives at the powered device
 :math:`60.6\ \text{W} - 45\ \text{W} = 15.6\ \text{W}` of board power.
 
 Two measures recover some of the margin. If the powered device on port B
-uses autoclass, the software can measure its real draw and allocate that
+uses Autoclass, the software can measure its real draw and allocate that
 plus a margin of 0.5 W to 1.5 W (:clause:`Table 145-15 <145>`). And the
 powered device on port B may ask for less over LLDP (:doc:`lldp`).
 
