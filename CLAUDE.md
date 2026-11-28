@@ -120,7 +120,8 @@ helpers that the scripts above import, so run the script, not the helper:
 - `docs/high-voltage/`: `svgdraw.py` and every `fig_*.py`;
 - `docs/high-voltage/test-die/`: `tdkit.py`, `physics.py`, `tables.py`,
   `pred_data.py`, `pred_extra.py`, `gen_catalogue.py`, `catalogue.py`, every `cat_*.py` and
-  every `fig_*.py`;
+  every `fig_*.py` (and `measure.py`, `decide.py` and `synth.py`, the helpers
+  of `analyse.py`);
 - `docs/esd/gds/`: `gdskit.py`, `layfig.py`, `laykey.py` and every `figs_*.py`;
 - `docs/ethernet/rgmii/`: `svgkit.py`, `board_figs.py`,
   `interface_figs.py`, `logic_figs.py` and `timing_figs.py`;
@@ -211,6 +212,17 @@ uv run --with klayout python silicon/hvtest/export.py silicon/hvtest/structures.
 - The simulated predictions come from mithro/gf180-tcad
   (`experiments/hv-junction`), which holds a copy of `structures.json`.
   `docs/high-voltage/test-die/import_predictions.py` reads its records.
+- `docs/high-voltage/test-die/analyse.py MEASUREMENT_DIR [--out REPORT.md]`
+  compares measured sweep records (the CSV format of `method.rst`, table
+  `tab-hvt-record`) with `predictions.json` and writes a Markdown report;
+  `--example DIR` writes a synthetic set to try it on. Its helpers are
+  `measure.py`, `decide.py` and `synth.py`. It takes every comparison rule
+  (reference, ratio, band, agreement range) from `pred_data.py`, so change a
+  rule there and in `method.rst`, never in `decide.py` alone. Its self-test
+  is `uv run --with pytest pytest docs/high-voltage/test-die/test_analyse.py`.
+- `docs/high-voltage/test-die/reproduction.rst` lists the command and the
+  pass condition of every rebuild (layout, tables, simulation records,
+  predictions, comparison). Update it when one of those commands changes.
 - WORKDIR must be outside the repository; the precheck container writes there.
 
 ## Structure
