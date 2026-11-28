@@ -340,6 +340,12 @@ a block is 0.44 µm wide. The drains connect to DVDD and the sources to
 DVSS, alternately. A bar of polysilicon at each end of the fingers joins
 the 20 gates of a block.
 
+The DVSS pad ``gf180mcu_fd_io__dvss`` has the same netlist, and its layout
+swaps the two nets' places. In the DVDD pad the end strips of each block
+are drains, six wide metal 2 buses are on DVDD and five narrow strips are
+on DVSS. In the DVSS pad the end strips are sources, the six buses are on
+DVSS and the five strips on DVDD.
+
 The difference from the output drivers follows from how each conducts.
 The inverters turn the clamp transistor on through its gate, so the
 current flows in the channel of all 80 fingers. An output driver's gate
@@ -376,8 +382,7 @@ Over its whole length the bidirectional pad has 26 stripes: 12 are DVDD,
 10 are DVSS, and two each are the core supply VDD and its ground VSS. The
 DVDD pad connects the two VDD stripes to DVDD, and the DVSS pad connects
 the two VSS stripes to DVSS. :numref:`fig-esd-gds-ring` shows the stripes
-of the first 222 µm, which are all DVDD or DVSS in every cell. It draws
-neighbouring stripes of one net as one band.
+of the first 222 µm, which are all DVDD or DVSS in every cell.
 
 A positive discharge from PAD to DVSS uses those rails
 (:numref:`tab-esd-paths`). :numref:`fig-esd-gds-ring` follows it through a
@@ -389,8 +394,9 @@ bidirectional pad and the DVSS supply pad beside it ([ESD-DVSS-GDS]_):
 #. Along the DVDD rail into the supply pad.
 #. Through the clamp transistor. Five metal 2 strips run under the DVDD
    stripes and over all four blocks, and connect the drains to DVDD. The
-   sources connect to the six metal 2 buses between and beside those
-   strips, which run from the DVSS bond pad.
+   sources connect to the four metal 2 buses between those strips. Two
+   more buses run outside the strips, and all six run from the DVSS bond
+   pad.
 #. Along those metal 2 buses to the DVSS bond pad. The DVSS stripes
    connect to the same buses, in parallel with this path.
 
@@ -404,15 +410,15 @@ the voltage at the pad (:doc:`results-hbm`).
          pad cell, below, neighbours on the pad ring. Beyond the bond
          pads, stripes of metal 3 to 5 cross both cells, ruled in magenta
          for DVDD and in green for DVSS, each continuing from one cell
-         into the other. The metal 2
-         under them has a pale fill in its net's colour. A red path
+         into the other. The metal 2 under them has a pale fill:
+         magenta for DVDD, green for DVSS and grey for PAD. A red path
          with arrowheads marks the current. Step 1, from the PAD bond pad
          along metal 2 to the PMOS drains. Step 2, through the PMOS drain
          diode onto the DVDD stripes above. Step 3, along the DVDD rail
          into the supply pad. Step 4, along one of five DVDD metal 2
          strips and across the rail clamp's NMOS in each of four orange
-         blocks to metal 2 of the DVSS pad. Step 5, along the metal 2
-         buses that run over the clamp, back to the DVSS bond pad.
+         blocks to metal 2 of the DVSS pad. Step 5, along a metal 2
+         bus that runs over the clamp, back to the DVSS bond pad.
    :width: 100%
 
    A positive discharge from PAD to DVSS, through gf180mcu_fd_io__bi_t and
@@ -474,11 +480,10 @@ The other modules in the same folder do the work:
   :download:`gds/figs_driver.py <gds/figs_driver.py>` and
   :download:`gds/figs_clamp.py <gds/figs_clamp.py>` hold the figures.
 
-The figures show what the layout draws, with two changes. N+ diffusion
-is the active area inside the N+ implant, and P+ diffusion the active area
-inside the P+ implant, so each diffusion has the colour of its doping.
-Most figures leave out the metal, vias and contacts that would hide the
-silicon, and show only the metal of the net in question.
+The figures show what the layout draws. N+ diffusion is the active area
+inside the N+ implant, and P+ diffusion the active area inside the P+
+implant. Most figures leave out the metal, vias and contacts that would
+hide the silicon, and show only the metal of the net in question.
 
 A net is followed through diffusion, polysilicon, metal, contacts and
 vias. A transistor's
