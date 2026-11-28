@@ -9,6 +9,9 @@ hvt-pred-ring.svg   predicted rise of ring 1 against well voltage, for
 hvt-crosscheck.svg  difference between the second simulator and the first.
 hvt-p5.svg          predicted punch-through voltage to a grounded ring
                     against the gap, from p5.json when it exists.
+hvt-pt-doping.svg   ring onset of NR3_2 against substrate doping: the
+                    simulated points, proportion alone, and the scaling
+                    of rules.pt_scaled().
 
 All values come from predictions.json and crosscheck.json through
 pred_data.py. figures.py calls this module; it writes no files itself.
@@ -241,6 +244,37 @@ def p5():
     return svg(w, h, b)
 
 
-FIGURES = {"hvt-p5.svg": p5, "hvt-pred-bv.svg": pred_bv, "hvt-pred-bv2.svg": pred_bv2,
+def pt_doping():
+    """Ring onset of NR3_2 against the substrate doping."""
+    import rules
+    pts = rules.doping_points()
+    k = rules.gap_fit("BL", "P3")[0]
+    v0, n0 = dict(pts)[1.0], rules.SUB_NOMINAL / 1e15
+    w, h = 640, 420
+    ax = Axes(80, 44, 500, 260, (1.5, 5.5), (0, 8), False, False)
+    b = [text(20, 24, "Ring onset of NR3_2 against substrate doping",
+              anchor="start", weight="bold")]
+    b += ax.frame([(x, f"{x:g}") for x in (2, 3, 4, 5)],
+                  [(v, str(v)) for v in range(0, 9, 2)],
+                  "substrate doping (10¹⁵ cm⁻³)", "ring onset at 1 V (V)")
+    b.append(ax.curve(lambda n: v0 * n / n0, 1.5, 5.5, stroke=GREY,
+                      width=1.6, dash="6 4"))
+    b.append(ax.curve(lambda n: rules.pt_scaled(v0, n / n0, k), 1.5, 5.5,
+                      stroke=BLUE, width=2.2))
+    for f, v in pts:
+        b.append(ax.dot(f * n0, v, DEPL))
+        x, y = ax.px(f * n0, v)
+        b.append(text(x + 8, y + 16, f"{v:.2f} V", anchor="start", size=11))
+    b.append(text(20, h - 46, "Dots: simulated onset under BLlo, BL and "
+                  "BLhi (predictions.json).", anchor="start", size=12))
+    b.append(text(20, h - 28, "Dashed: in proportion to the doping.",
+                  anchor="start", size=12))
+    b.append(text(20, h - 10, f"Solid: effective gap moving "
+                  f"{rules.EDGE_SHIFT:.3f} µm per e-fold of doping.",
+                  anchor="start", size=12))
+    return svg(w, h, b)
+
+
+FIGURES = {"hvt-p5.svg": p5, "hvt-pt-doping.svg": pt_doping, "hvt-pred-bv.svg": pred_bv, "hvt-pred-bv2.svg": pred_bv2,
            "hvt-pred-bv3.svg": pred_bv3,
            "hvt-pred-ring.svg": pred_ring, "hvt-crosscheck.svg": crosscheck}

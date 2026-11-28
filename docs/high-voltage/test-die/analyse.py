@@ -200,7 +200,7 @@ def report(r):
     out += ["", "## Structures", "",
             "Breakdown voltage at 1 µA, first sweep at 25 °C, median over "
             "the dies. Ratio: to the reference on the same die, median over "
-            "the dies.", "",
+            "the dies; \"> \" marks a lower bound.", "",
             "| Structure | Family | Median (V) | Dies | Spread (V) | Reference "
             "| Measured ratio | Predicted ratio | Ratio | Band (V) "
             "| Agreement range (V) | Absolute |",
